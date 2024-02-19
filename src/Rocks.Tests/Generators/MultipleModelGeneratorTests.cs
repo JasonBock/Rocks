@@ -97,7 +97,7 @@ public static class MultipleModelGeneratorTests
 						internal MethodExpectations(global::MockTests.ITargetCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::MockTests.ITargetCreateExpectations.Handler0, global::System.Func<int, string>, string> Retrieve(global::Rocks.Argument<int> @value)
+						internal global::MockTests.ITargetCreateExpectations.Adornments.AdornmentsForHandler0 Retrieve(global::Rocks.Argument<int> @value)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -132,6 +132,21 @@ public static class MultipleModelGeneratorTests
 						else
 						{
 							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
+					}
+					
+					internal static class Adornments
+					{
+						public interface IAdornmentsForITarget<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
+							where TAdornments : IAdornmentsForITarget<TAdornments>
+						{ }
+						
+						public sealed class AdornmentsForHandler0
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.ITargetCreateExpectations.Handler0, global::System.Func<int, string>, string>, IAdornmentsForITarget<AdornmentsForHandler0>
+						{ 
+							public AdornmentsForHandler0(global::MockTests.ITargetCreateExpectations.Handler0 handler)
+								: base(handler) { }				
 						}
 					}
 				}

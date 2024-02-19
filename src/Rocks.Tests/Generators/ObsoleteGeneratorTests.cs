@@ -91,7 +91,7 @@ public static class ObsoleteGeneratorTests
 						internal MethodExpectations(global::MockTests.IContainerCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::MockTests.IContainerCreateExpectations.Handler0, global::System.Action> Contain()
+						internal global::MockTests.IContainerCreateExpectations.Adornments.AdornmentsForHandler0 Contain()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.IContainerCreateExpectations.Handler0();
@@ -120,6 +120,21 @@ public static class ObsoleteGeneratorTests
 						else
 						{
 							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
+					}
+					
+					internal static class Adornments
+					{
+						public interface IAdornmentsForIContainer<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
+							where TAdornments : IAdornmentsForIContainer<TAdornments>
+						{ }
+						
+						public sealed class AdornmentsForHandler0
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IContainerCreateExpectations.Handler0, global::System.Action>, IAdornmentsForIContainer<AdornmentsForHandler0>
+						{ 
+							public AdornmentsForHandler0(global::MockTests.IContainerCreateExpectations.Handler0 handler)
+								: base(handler) { }				
 						}
 					}
 				}
@@ -298,7 +313,7 @@ public static class ObsoleteGeneratorTests
 						internal MethodExpectations(global::MockTests.ContainerCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::MockTests.ContainerCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
+						internal global::MockTests.ContainerCreateExpectations.Adornments.AdornmentsForHandler0 Equals(global::Rocks.Argument<object?> @obj)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@obj);
@@ -313,7 +328,7 @@ public static class ObsoleteGeneratorTests
 							return new(@handler);
 						}
 						
-						internal new global::Rocks.Adornments<global::MockTests.ContainerCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+						internal new global::MockTests.ContainerCreateExpectations.Adornments.AdornmentsForHandler1 GetHashCode()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.ContainerCreateExpectations.Handler1();
@@ -322,7 +337,7 @@ public static class ObsoleteGeneratorTests
 							return new(handler);
 						}
 						
-						internal new global::Rocks.Adornments<global::MockTests.ContainerCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+						internal new global::MockTests.ContainerCreateExpectations.Adornments.AdornmentsForHandler2 ToString()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.ContainerCreateExpectations.Handler2();
@@ -331,7 +346,7 @@ public static class ObsoleteGeneratorTests
 							return new(handler);
 						}
 						
-						internal global::Rocks.Adornments<global::MockTests.ContainerCreateExpectations.Handler3, global::System.Action> Contain()
+						internal global::MockTests.ContainerCreateExpectations.Adornments.AdornmentsForHandler3 Contain()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.ContainerCreateExpectations.Handler3();
@@ -360,6 +375,39 @@ public static class ObsoleteGeneratorTests
 						else
 						{
 							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
+					}
+					
+					internal static class Adornments
+					{
+						public interface IAdornmentsForContainer<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
+							where TAdornments : IAdornmentsForContainer<TAdornments>
+						{ }
+						
+						public sealed class AdornmentsForHandler0
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.ContainerCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForContainer<AdornmentsForHandler0>
+						{ 
+							public AdornmentsForHandler0(global::MockTests.ContainerCreateExpectations.Handler0 handler)
+								: base(handler) { }				
+						}
+						public sealed class AdornmentsForHandler1
+							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.ContainerCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForContainer<AdornmentsForHandler1>
+						{ 
+							public AdornmentsForHandler1(global::MockTests.ContainerCreateExpectations.Handler1 handler)
+								: base(handler) { }				
+						}
+						public sealed class AdornmentsForHandler2
+							: global::Rocks.Adornments<AdornmentsForHandler2, global::MockTests.ContainerCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForContainer<AdornmentsForHandler2>
+						{ 
+							public AdornmentsForHandler2(global::MockTests.ContainerCreateExpectations.Handler2 handler)
+								: base(handler) { }				
+						}
+						public sealed class AdornmentsForHandler3
+							: global::Rocks.Adornments<AdornmentsForHandler3, global::MockTests.ContainerCreateExpectations.Handler3, global::System.Action>, IAdornmentsForContainer<AdornmentsForHandler3>
+						{ 
+							public AdornmentsForHandler3(global::MockTests.ContainerCreateExpectations.Handler3 handler)
+								: base(handler) { }				
 						}
 					}
 				}
@@ -662,7 +710,7 @@ public static class ObsoleteGeneratorTests
 						internal MethodExpectations(global::MockTests.IPixelShaderCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler0, global::System.Func<uint>, uint> GetPixelOptions()
+						internal global::MockTests.IPixelShaderCreateExpectations.Adornments.AdornmentsForHandler0 GetPixelOptions()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.IPixelShaderCreateExpectations.Handler0();
@@ -681,7 +729,7 @@ public static class ObsoleteGeneratorTests
 							internal PropertyGetterExpectations(global::MockTests.IPixelShaderCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler1, global::System.Func<uint>, uint> Values()
+							internal global::MockTests.IPixelShaderCreateExpectations.Adornments.AdornmentsForHandler1 Values()
 							{
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								var handler = new global::MockTests.IPixelShaderCreateExpectations.Handler1();
@@ -719,13 +767,32 @@ public static class ObsoleteGeneratorTests
 							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
+					
+					internal static class Adornments
+					{
+						public interface IAdornmentsForIPixelShader<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
+							where TAdornments : IAdornmentsForIPixelShader<TAdornments>
+						{ }
+						
+						public sealed class AdornmentsForHandler0
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IPixelShaderCreateExpectations.Handler0, global::System.Func<uint>, uint>, IAdornmentsForIPixelShader<AdornmentsForHandler0>
+						{ 
+							public AdornmentsForHandler0(global::MockTests.IPixelShaderCreateExpectations.Handler0 handler)
+								: base(handler) { }				
+						}
+						public sealed class AdornmentsForHandler1
+							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IPixelShaderCreateExpectations.Handler1, global::System.Func<uint>, uint>, IAdornmentsForIPixelShader<AdornmentsForHandler1>
+						{ 
+							public AdornmentsForHandler1(global::MockTests.IPixelShaderCreateExpectations.Handler1 handler)
+								: base(handler) { }				
+						}
+					}
 				}
 				
 				internal static class IPixelShaderAdornmentsEventExtensions
 				{
-					internal static global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler0, global::System.Func<uint>, uint> RaiseShadingOccurred(this global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler0, global::System.Func<uint>, uint> self, global::System.EventArgs args) => 
-						self.AddRaiseEvent(new("ShadingOccurred", args));
-					internal static global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler1, global::System.Func<uint>, uint> RaiseShadingOccurred(this global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler1, global::System.Func<uint>, uint> self, global::System.EventArgs args) => 
+					internal static TAdornments RaiseShadingOccurred<TAdornments>(this TAdornments self, global::System.EventArgs args) where TAdornments : global::MockTests.IPixelShaderCreateExpectations.Adornments.IAdornmentsForIPixelShader<TAdornments> => 
 						self.AddRaiseEvent(new("ShadingOccurred", args));
 				}
 			}
@@ -874,7 +941,7 @@ public static class ObsoleteGeneratorTests
 						internal MethodExpectations(global::MockTests.IPixelShaderCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler0, global::System.Func<uint>, uint> GetPixelOptions()
+						internal global::MockTests.IPixelShaderCreateExpectations.Adornments.AdornmentsForHandler0 GetPixelOptions()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.IPixelShaderCreateExpectations.Handler0();
@@ -893,7 +960,7 @@ public static class ObsoleteGeneratorTests
 							internal PropertyGetterExpectations(global::MockTests.IPixelShaderCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler1, global::System.Func<uint>, uint> Values()
+							internal global::MockTests.IPixelShaderCreateExpectations.Adornments.AdornmentsForHandler1 Values()
 							{
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								var handler = new global::MockTests.IPixelShaderCreateExpectations.Handler1();
@@ -931,13 +998,32 @@ public static class ObsoleteGeneratorTests
 							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
+					
+					internal static class Adornments
+					{
+						public interface IAdornmentsForIPixelShader<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
+							where TAdornments : IAdornmentsForIPixelShader<TAdornments>
+						{ }
+						
+						public sealed class AdornmentsForHandler0
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IPixelShaderCreateExpectations.Handler0, global::System.Func<uint>, uint>, IAdornmentsForIPixelShader<AdornmentsForHandler0>
+						{ 
+							public AdornmentsForHandler0(global::MockTests.IPixelShaderCreateExpectations.Handler0 handler)
+								: base(handler) { }				
+						}
+						public sealed class AdornmentsForHandler1
+							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IPixelShaderCreateExpectations.Handler1, global::System.Func<uint>, uint>, IAdornmentsForIPixelShader<AdornmentsForHandler1>
+						{ 
+							public AdornmentsForHandler1(global::MockTests.IPixelShaderCreateExpectations.Handler1 handler)
+								: base(handler) { }				
+						}
+					}
 				}
 				
 				internal static class IPixelShaderAdornmentsEventExtensions
 				{
-					internal static global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler0, global::System.Func<uint>, uint> RaiseShadingOccurred(this global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler0, global::System.Func<uint>, uint> self, global::System.EventArgs args) => 
-						self.AddRaiseEvent(new("ShadingOccurred", args));
-					internal static global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler1, global::System.Func<uint>, uint> RaiseShadingOccurred(this global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler1, global::System.Func<uint>, uint> self, global::System.EventArgs args) => 
+					internal static TAdornments RaiseShadingOccurred<TAdornments>(this TAdornments self, global::System.EventArgs args) where TAdornments : global::MockTests.IPixelShaderCreateExpectations.Adornments.IAdornmentsForIPixelShader<TAdornments> => 
 						self.AddRaiseEvent(new("ShadingOccurred", args));
 				}
 			}

@@ -169,7 +169,7 @@ public static class InterfaceGeneratorTests
 					internal MethodExpectations(global::ISealedCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.Adornments<global::ISealedCreateExpectations.Handler0, global::System.Action> NonSealedMethod()
+					internal global::ISealedCreateExpectations.Adornments.AdornmentsForHandler0 NonSealedMethod()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::ISealedCreateExpectations.Handler0();
@@ -188,7 +188,7 @@ public static class InterfaceGeneratorTests
 						internal PropertyGetterExpectations(global::ISealedCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::ISealedCreateExpectations.Handler1, global::System.Func<string>, string> NonSealedData()
+						internal global::ISealedCreateExpectations.Adornments.AdornmentsForHandler1 NonSealedData()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::ISealedCreateExpectations.Handler1();
@@ -204,7 +204,7 @@ public static class InterfaceGeneratorTests
 						internal PropertySetterExpectations(global::ISealedCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::ISealedCreateExpectations.Handler2, global::System.Action<string>> NonSealedData(global::Rocks.Argument<string> @value)
+						internal global::ISealedCreateExpectations.Adornments.AdornmentsForHandler2 NonSealedData(global::Rocks.Argument<string> @value)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -248,15 +248,38 @@ public static class InterfaceGeneratorTests
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 					}
 				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForISealed<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForISealed<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::ISealedCreateExpectations.Handler0, global::System.Action>, IAdornmentsForISealed<AdornmentsForHandler0>
+					{ 
+						public AdornmentsForHandler0(global::ISealedCreateExpectations.Handler0 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler1
+						: global::Rocks.Adornments<AdornmentsForHandler1, global::ISealedCreateExpectations.Handler1, global::System.Func<string>, string>, IAdornmentsForISealed<AdornmentsForHandler1>
+					{ 
+						public AdornmentsForHandler1(global::ISealedCreateExpectations.Handler1 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler2
+						: global::Rocks.Adornments<AdornmentsForHandler2, global::ISealedCreateExpectations.Handler2, global::System.Action<string>>, IAdornmentsForISealed<AdornmentsForHandler2>
+					{ 
+						public AdornmentsForHandler2(global::ISealedCreateExpectations.Handler2 handler)
+							: base(handler) { }				
+					}
+				}
 			}
 			
 			internal static class ISealedAdornmentsEventExtensions
 			{
-				internal static global::Rocks.Adornments<global::ISealedCreateExpectations.Handler0, global::System.Action> RaiseNonSealedEvent(this global::Rocks.Adornments<global::ISealedCreateExpectations.Handler0, global::System.Action> self, global::System.EventArgs args) => 
-					self.AddRaiseEvent(new("NonSealedEvent", args));
-				internal static global::Rocks.Adornments<global::ISealedCreateExpectations.Handler1, global::System.Func<string>, string> RaiseNonSealedEvent(this global::Rocks.Adornments<global::ISealedCreateExpectations.Handler1, global::System.Func<string>, string> self, global::System.EventArgs args) => 
-					self.AddRaiseEvent(new("NonSealedEvent", args));
-				internal static global::Rocks.Adornments<global::ISealedCreateExpectations.Handler2, global::System.Action<string>> RaiseNonSealedEvent(this global::Rocks.Adornments<global::ISealedCreateExpectations.Handler2, global::System.Action<string>> self, global::System.EventArgs args) => 
+				internal static TAdornments RaiseNonSealedEvent<TAdornments>(this TAdornments self, global::System.EventArgs args) where TAdornments : global::ISealedCreateExpectations.Adornments.IAdornmentsForISealed<TAdornments> => 
 					self.AddRaiseEvent(new("NonSealedEvent", args));
 			}
 			
@@ -362,7 +385,7 @@ public static class InterfaceGeneratorTests
 					internal MethodExpectations(global::IRequestCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.Adornments<global::IRequestCreateExpectations.Handler0, global::System.Action<int>> AddInvokeMethodOptions(global::Rocks.Argument<int> @options)
+					internal global::IRequestCreateExpectations.Adornments.AdornmentsForHandler0 AddInvokeMethodOptions(global::Rocks.Argument<int> @options)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@options);
@@ -397,6 +420,21 @@ public static class InterfaceGeneratorTests
 					else
 					{
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForIRequest<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForIRequest<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IRequestCreateExpectations.Handler0, global::System.Action<int>>, IAdornmentsForIRequest<AdornmentsForHandler0>
+					{ 
+						public AdornmentsForHandler0(global::IRequestCreateExpectations.Handler0 handler)
+							: base(handler) { }				
 					}
 				}
 			}
@@ -500,7 +538,7 @@ public static class InterfaceGeneratorTests
 						internal MethodExpectations(global::MockTests.ITargetCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::MockTests.ITargetCreateExpectations.Handler0, global::System.Func<int, string>, string> Retrieve(global::Rocks.Argument<int> @value)
+						internal global::MockTests.ITargetCreateExpectations.Adornments.AdornmentsForHandler0 Retrieve(global::Rocks.Argument<int> @value)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -535,6 +573,21 @@ public static class InterfaceGeneratorTests
 						else
 						{
 							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
+					}
+					
+					internal static class Adornments
+					{
+						public interface IAdornmentsForITarget<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
+							where TAdornments : IAdornmentsForITarget<TAdornments>
+						{ }
+						
+						public sealed class AdornmentsForHandler0
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.ITargetCreateExpectations.Handler0, global::System.Func<int, string>, string>, IAdornmentsForITarget<AdornmentsForHandler0>
+						{ 
+							public AdornmentsForHandler0(global::MockTests.ITargetCreateExpectations.Handler0 handler)
+								: base(handler) { }				
 						}
 					}
 				}

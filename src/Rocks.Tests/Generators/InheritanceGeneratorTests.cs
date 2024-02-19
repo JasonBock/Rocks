@@ -215,7 +215,7 @@ public static class InheritanceGeneratorTests
 						internal MethodExpectations(global::MockTests.JsBinaryOperatorCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::MockTests.JsBinaryOperatorCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
+						internal global::MockTests.JsBinaryOperatorCreateExpectations.Adornments.AdornmentsForHandler0 Equals(global::Rocks.Argument<object?> @obj)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@obj);
@@ -230,7 +230,7 @@ public static class InheritanceGeneratorTests
 							return new(@handler);
 						}
 						
-						internal new global::Rocks.Adornments<global::MockTests.JsBinaryOperatorCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+						internal new global::MockTests.JsBinaryOperatorCreateExpectations.Adornments.AdornmentsForHandler1 GetHashCode()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.JsBinaryOperatorCreateExpectations.Handler1();
@@ -239,7 +239,7 @@ public static class InheritanceGeneratorTests
 							return new(handler);
 						}
 						
-						internal new global::Rocks.Adornments<global::MockTests.JsBinaryOperatorCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+						internal new global::MockTests.JsBinaryOperatorCreateExpectations.Adornments.AdornmentsForHandler2 ToString()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.JsBinaryOperatorCreateExpectations.Handler2();
@@ -248,7 +248,7 @@ public static class InheritanceGeneratorTests
 							return new(handler);
 						}
 						
-						internal global::Rocks.Adornments<global::MockTests.JsBinaryOperatorCreateExpectations.Handler4, global::System.Func<global::MockTests.ScriptScopeContext, object>, object> Evaluate(global::Rocks.Argument<global::MockTests.ScriptScopeContext> @scope)
+						internal global::MockTests.JsBinaryOperatorCreateExpectations.Adornments.AdornmentsForHandler4 Evaluate(global::Rocks.Argument<global::MockTests.ScriptScopeContext> @scope)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@scope);
@@ -263,7 +263,7 @@ public static class InheritanceGeneratorTests
 							return new(@handler);
 						}
 						
-						internal global::Rocks.Adornments<global::MockTests.JsBinaryOperatorCreateExpectations.Handler5, global::System.Func<object, object>, object> Evaluate(global::Rocks.Argument<object> @target)
+						internal global::MockTests.JsBinaryOperatorCreateExpectations.Adornments.AdornmentsForHandler5 Evaluate(global::Rocks.Argument<object> @target)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@target);
@@ -298,6 +298,45 @@ public static class InheritanceGeneratorTests
 						else
 						{
 							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
+					}
+					
+					internal static class Adornments
+					{
+						public interface IAdornmentsForJsBinaryOperator<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
+							where TAdornments : IAdornmentsForJsBinaryOperator<TAdornments>
+						{ }
+						
+						public sealed class AdornmentsForHandler0
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.JsBinaryOperatorCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForJsBinaryOperator<AdornmentsForHandler0>
+						{ 
+							public AdornmentsForHandler0(global::MockTests.JsBinaryOperatorCreateExpectations.Handler0 handler)
+								: base(handler) { }				
+						}
+						public sealed class AdornmentsForHandler1
+							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.JsBinaryOperatorCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForJsBinaryOperator<AdornmentsForHandler1>
+						{ 
+							public AdornmentsForHandler1(global::MockTests.JsBinaryOperatorCreateExpectations.Handler1 handler)
+								: base(handler) { }				
+						}
+						public sealed class AdornmentsForHandler2
+							: global::Rocks.Adornments<AdornmentsForHandler2, global::MockTests.JsBinaryOperatorCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForJsBinaryOperator<AdornmentsForHandler2>
+						{ 
+							public AdornmentsForHandler2(global::MockTests.JsBinaryOperatorCreateExpectations.Handler2 handler)
+								: base(handler) { }				
+						}
+						public sealed class AdornmentsForHandler4
+							: global::Rocks.Adornments<AdornmentsForHandler4, global::MockTests.JsBinaryOperatorCreateExpectations.Handler4, global::System.Func<global::MockTests.ScriptScopeContext, object>, object>, IAdornmentsForJsBinaryOperator<AdornmentsForHandler4>
+						{ 
+							public AdornmentsForHandler4(global::MockTests.JsBinaryOperatorCreateExpectations.Handler4 handler)
+								: base(handler) { }				
+						}
+						public sealed class AdornmentsForHandler5
+							: global::Rocks.Adornments<AdornmentsForHandler5, global::MockTests.JsBinaryOperatorCreateExpectations.Handler5, global::System.Func<object, object>, object>, IAdornmentsForJsBinaryOperator<AdornmentsForHandler5>
+						{ 
+							public AdornmentsForHandler5(global::MockTests.JsBinaryOperatorCreateExpectations.Handler5 handler)
+								: base(handler) { }				
 						}
 					}
 				}

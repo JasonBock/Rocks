@@ -246,7 +246,7 @@ public static class ConstructorGeneratorTests
 					internal MethodExpectations(global::AnyOfOfstring_intCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.Adornments<global::AnyOfOfstring_intCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
+					internal global::AnyOfOfstring_intCreateExpectations.Adornments.AdornmentsForHandler0 Equals(global::Rocks.Argument<object?> @obj)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
@@ -261,7 +261,7 @@ public static class ConstructorGeneratorTests
 						return new(@handler);
 					}
 					
-					internal new global::Rocks.Adornments<global::AnyOfOfstring_intCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+					internal new global::AnyOfOfstring_intCreateExpectations.Adornments.AdornmentsForHandler1 GetHashCode()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::AnyOfOfstring_intCreateExpectations.Handler1();
@@ -270,7 +270,7 @@ public static class ConstructorGeneratorTests
 						return new(handler);
 					}
 					
-					internal new global::Rocks.Adornments<global::AnyOfOfstring_intCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					internal new global::AnyOfOfstring_intCreateExpectations.Adornments.AdornmentsForHandler2 ToString()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::AnyOfOfstring_intCreateExpectations.Handler2();
@@ -279,7 +279,7 @@ public static class ConstructorGeneratorTests
 						return new(handler);
 					}
 					
-					internal global::Rocks.Adornments<global::AnyOfOfstring_intCreateExpectations.Handler3, global::System.Func<object>, object> GetValue()
+					internal global::AnyOfOfstring_intCreateExpectations.Adornments.AdornmentsForHandler3 GetValue()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::AnyOfOfstring_intCreateExpectations.Handler3();
@@ -322,6 +322,39 @@ public static class ConstructorGeneratorTests
 					else
 					{
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForAnyOfOfstring_int<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForAnyOfOfstring_int<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::AnyOfOfstring_intCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForAnyOfOfstring_int<AdornmentsForHandler0>
+					{ 
+						public AdornmentsForHandler0(global::AnyOfOfstring_intCreateExpectations.Handler0 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler1
+						: global::Rocks.Adornments<AdornmentsForHandler1, global::AnyOfOfstring_intCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForAnyOfOfstring_int<AdornmentsForHandler1>
+					{ 
+						public AdornmentsForHandler1(global::AnyOfOfstring_intCreateExpectations.Handler1 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler2
+						: global::Rocks.Adornments<AdornmentsForHandler2, global::AnyOfOfstring_intCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForAnyOfOfstring_int<AdornmentsForHandler2>
+					{ 
+						public AdornmentsForHandler2(global::AnyOfOfstring_intCreateExpectations.Handler2 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler3
+						: global::Rocks.Adornments<AdornmentsForHandler3, global::AnyOfOfstring_intCreateExpectations.Handler3, global::System.Func<object>, object>, IAdornmentsForAnyOfOfstring_int<AdornmentsForHandler3>
+					{ 
+						public AdornmentsForHandler3(global::AnyOfOfstring_intCreateExpectations.Handler3 handler)
+							: base(handler) { }				
 					}
 				}
 			}

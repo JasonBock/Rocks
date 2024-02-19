@@ -194,7 +194,7 @@ public static class DoesNotReturnGeneratorTests
 						internal MethodExpectations(global::MockTests.ClassTestCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::MockTests.ClassTestCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
+						internal global::MockTests.ClassTestCreateExpectations.Adornments.AdornmentsForHandler0 Equals(global::Rocks.Argument<object?> @obj)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@obj);
@@ -209,7 +209,7 @@ public static class DoesNotReturnGeneratorTests
 							return new(@handler);
 						}
 						
-						internal new global::Rocks.Adornments<global::MockTests.ClassTestCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+						internal new global::MockTests.ClassTestCreateExpectations.Adornments.AdornmentsForHandler1 GetHashCode()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.ClassTestCreateExpectations.Handler1();
@@ -218,7 +218,7 @@ public static class DoesNotReturnGeneratorTests
 							return new(handler);
 						}
 						
-						internal new global::Rocks.Adornments<global::MockTests.ClassTestCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+						internal new global::MockTests.ClassTestCreateExpectations.Adornments.AdornmentsForHandler2 ToString()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.ClassTestCreateExpectations.Handler2();
@@ -227,7 +227,7 @@ public static class DoesNotReturnGeneratorTests
 							return new(handler);
 						}
 						
-						internal global::Rocks.Adornments<global::MockTests.ClassTestCreateExpectations.Handler3, global::System.Action> VoidMethod()
+						internal global::MockTests.ClassTestCreateExpectations.Adornments.AdornmentsForHandler3 VoidMethod()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.ClassTestCreateExpectations.Handler3();
@@ -236,7 +236,7 @@ public static class DoesNotReturnGeneratorTests
 							return new(handler);
 						}
 						
-						internal global::Rocks.Adornments<global::MockTests.ClassTestCreateExpectations.Handler4, global::System.Func<int>, int> IntMethod()
+						internal global::MockTests.ClassTestCreateExpectations.Adornments.AdornmentsForHandler4 IntMethod()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.ClassTestCreateExpectations.Handler4();
@@ -265,6 +265,45 @@ public static class DoesNotReturnGeneratorTests
 						else
 						{
 							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
+					}
+					
+					internal static class Adornments
+					{
+						public interface IAdornmentsForClassTest<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
+							where TAdornments : IAdornmentsForClassTest<TAdornments>
+						{ }
+						
+						public sealed class AdornmentsForHandler0
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.ClassTestCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForClassTest<AdornmentsForHandler0>
+						{ 
+							public AdornmentsForHandler0(global::MockTests.ClassTestCreateExpectations.Handler0 handler)
+								: base(handler) { }				
+						}
+						public sealed class AdornmentsForHandler1
+							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.ClassTestCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForClassTest<AdornmentsForHandler1>
+						{ 
+							public AdornmentsForHandler1(global::MockTests.ClassTestCreateExpectations.Handler1 handler)
+								: base(handler) { }				
+						}
+						public sealed class AdornmentsForHandler2
+							: global::Rocks.Adornments<AdornmentsForHandler2, global::MockTests.ClassTestCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForClassTest<AdornmentsForHandler2>
+						{ 
+							public AdornmentsForHandler2(global::MockTests.ClassTestCreateExpectations.Handler2 handler)
+								: base(handler) { }				
+						}
+						public sealed class AdornmentsForHandler3
+							: global::Rocks.Adornments<AdornmentsForHandler3, global::MockTests.ClassTestCreateExpectations.Handler3, global::System.Action>, IAdornmentsForClassTest<AdornmentsForHandler3>
+						{ 
+							public AdornmentsForHandler3(global::MockTests.ClassTestCreateExpectations.Handler3 handler)
+								: base(handler) { }				
+						}
+						public sealed class AdornmentsForHandler4
+							: global::Rocks.Adornments<AdornmentsForHandler4, global::MockTests.ClassTestCreateExpectations.Handler4, global::System.Func<int>, int>, IAdornmentsForClassTest<AdornmentsForHandler4>
+						{ 
+							public AdornmentsForHandler4(global::MockTests.ClassTestCreateExpectations.Handler4 handler)
+								: base(handler) { }				
 						}
 					}
 				}
@@ -468,7 +507,7 @@ public static class DoesNotReturnGeneratorTests
 						internal MethodExpectations(global::MockTests.IInterfaceTestCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::MockTests.IInterfaceTestCreateExpectations.Handler0, global::System.Action> VoidMethod()
+						internal global::MockTests.IInterfaceTestCreateExpectations.Adornments.AdornmentsForHandler0 VoidMethod()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.IInterfaceTestCreateExpectations.Handler0();
@@ -477,7 +516,7 @@ public static class DoesNotReturnGeneratorTests
 							return new(handler);
 						}
 						
-						internal global::Rocks.Adornments<global::MockTests.IInterfaceTestCreateExpectations.Handler1, global::System.Func<int>, int> IntMethod()
+						internal global::MockTests.IInterfaceTestCreateExpectations.Adornments.AdornmentsForHandler1 IntMethod()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.IInterfaceTestCreateExpectations.Handler1();
@@ -506,6 +545,27 @@ public static class DoesNotReturnGeneratorTests
 						else
 						{
 							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
+					}
+					
+					internal static class Adornments
+					{
+						public interface IAdornmentsForIInterfaceTest<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
+							where TAdornments : IAdornmentsForIInterfaceTest<TAdornments>
+						{ }
+						
+						public sealed class AdornmentsForHandler0
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IInterfaceTestCreateExpectations.Handler0, global::System.Action>, IAdornmentsForIInterfaceTest<AdornmentsForHandler0>
+						{ 
+							public AdornmentsForHandler0(global::MockTests.IInterfaceTestCreateExpectations.Handler0 handler)
+								: base(handler) { }				
+						}
+						public sealed class AdornmentsForHandler1
+							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IInterfaceTestCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForIInterfaceTest<AdornmentsForHandler1>
+						{ 
+							public AdornmentsForHandler1(global::MockTests.IInterfaceTestCreateExpectations.Handler1 handler)
+								: base(handler) { }				
 						}
 					}
 				}

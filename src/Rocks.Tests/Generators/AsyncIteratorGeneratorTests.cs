@@ -176,7 +176,7 @@ public static class AsyncIteratorGeneratorTests
 					internal MethodExpectations(global::AsyncEnumerationCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.Adornments<global::AsyncEnumerationCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
+					internal global::AsyncEnumerationCreateExpectations.Adornments.AdornmentsForHandler0 Equals(global::Rocks.Argument<object?> @obj)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
@@ -191,7 +191,7 @@ public static class AsyncIteratorGeneratorTests
 						return new(@handler);
 					}
 					
-					internal new global::Rocks.Adornments<global::AsyncEnumerationCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+					internal new global::AsyncEnumerationCreateExpectations.Adornments.AdornmentsForHandler1 GetHashCode()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::AsyncEnumerationCreateExpectations.Handler1();
@@ -200,7 +200,7 @@ public static class AsyncIteratorGeneratorTests
 						return new(handler);
 					}
 					
-					internal new global::Rocks.Adornments<global::AsyncEnumerationCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					internal new global::AsyncEnumerationCreateExpectations.Adornments.AdornmentsForHandler2 ToString()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::AsyncEnumerationCreateExpectations.Handler2();
@@ -209,7 +209,7 @@ public static class AsyncIteratorGeneratorTests
 						return new(handler);
 					}
 					
-					internal global::Rocks.Adornments<global::AsyncEnumerationCreateExpectations.Handler3, global::System.Func<global::System.Threading.CancellationToken, global::System.Collections.Generic.IAsyncEnumerable<string>>, global::System.Collections.Generic.IAsyncEnumerable<string>> GetRecordsAsync(global::Rocks.Argument<global::System.Threading.CancellationToken> @cancellationToken)
+					internal global::AsyncEnumerationCreateExpectations.Adornments.AdornmentsForHandler3 GetRecordsAsync(global::Rocks.Argument<global::System.Threading.CancellationToken> @cancellationToken)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@cancellationToken);
@@ -223,7 +223,7 @@ public static class AsyncIteratorGeneratorTests
 						else { this.Expectations.handlers3.Add(@handler); }
 						return new(@handler);
 					}
-					internal global::Rocks.Adornments<global::AsyncEnumerationCreateExpectations.Handler3, global::System.Func<global::System.Threading.CancellationToken, global::System.Collections.Generic.IAsyncEnumerable<string>>, global::System.Collections.Generic.IAsyncEnumerable<string>> GetRecordsAsync(global::System.Threading.CancellationToken @cancellationToken = default) =>
+					internal global::AsyncEnumerationCreateExpectations.Adornments.AdornmentsForHandler3 GetRecordsAsync(global::System.Threading.CancellationToken @cancellationToken = default) =>
 						this.GetRecordsAsync(global::Rocks.Arg.Is(@cancellationToken));
 					
 					private global::AsyncEnumerationCreateExpectations Expectations { get; }
@@ -246,6 +246,39 @@ public static class AsyncIteratorGeneratorTests
 					else
 					{
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForAsyncEnumeration<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForAsyncEnumeration<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::AsyncEnumerationCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForAsyncEnumeration<AdornmentsForHandler0>
+					{ 
+						public AdornmentsForHandler0(global::AsyncEnumerationCreateExpectations.Handler0 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler1
+						: global::Rocks.Adornments<AdornmentsForHandler1, global::AsyncEnumerationCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForAsyncEnumeration<AdornmentsForHandler1>
+					{ 
+						public AdornmentsForHandler1(global::AsyncEnumerationCreateExpectations.Handler1 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler2
+						: global::Rocks.Adornments<AdornmentsForHandler2, global::AsyncEnumerationCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForAsyncEnumeration<AdornmentsForHandler2>
+					{ 
+						public AdornmentsForHandler2(global::AsyncEnumerationCreateExpectations.Handler2 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler3
+						: global::Rocks.Adornments<AdornmentsForHandler3, global::AsyncEnumerationCreateExpectations.Handler3, global::System.Func<global::System.Threading.CancellationToken, global::System.Collections.Generic.IAsyncEnumerable<string>>, global::System.Collections.Generic.IAsyncEnumerable<string>>, IAdornmentsForAsyncEnumeration<AdornmentsForHandler3>
+					{ 
+						public AdornmentsForHandler3(global::AsyncEnumerationCreateExpectations.Handler3 handler)
+							: base(handler) { }				
 					}
 				}
 			}

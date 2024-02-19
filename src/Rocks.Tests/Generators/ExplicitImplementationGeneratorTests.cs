@@ -140,7 +140,7 @@ public static class ExplicitImplementationGeneratorTests
 						internal MethodExpectations(global::MockTests.IHtmlMediaElementCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::MockTests.IHtmlMediaElementCreateExpectations.Handler0, global::System.Action> Foo()
+						internal global::MockTests.IHtmlMediaElementCreateExpectations.Adornments.AdornmentsForHandler0 Foo()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.IHtmlMediaElementCreateExpectations.Handler0();
@@ -171,11 +171,26 @@ public static class ExplicitImplementationGeneratorTests
 							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
+					
+					internal static class Adornments
+					{
+						public interface IAdornmentsForIHtmlMediaElement<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
+							where TAdornments : IAdornmentsForIHtmlMediaElement<TAdornments>
+						{ }
+						
+						public sealed class AdornmentsForHandler0
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IHtmlMediaElementCreateExpectations.Handler0, global::System.Action>, IAdornmentsForIHtmlMediaElement<AdornmentsForHandler0>
+						{ 
+							public AdornmentsForHandler0(global::MockTests.IHtmlMediaElementCreateExpectations.Handler0 handler)
+								: base(handler) { }				
+						}
+					}
 				}
 				
 				internal static class IHtmlMediaElementAdornmentsEventExtensions
 				{
-					internal static global::Rocks.Adornments<global::MockTests.IHtmlMediaElementCreateExpectations.Handler0, global::System.Action> RaiseCanPlay(this global::Rocks.Adornments<global::MockTests.IHtmlMediaElementCreateExpectations.Handler0, global::System.Action> self, global::EventStuff.Event args) => 
+					internal static TAdornments RaiseCanPlay<TAdornments>(this TAdornments self, global::EventStuff.Event args) where TAdornments : global::MockTests.IHtmlMediaElementCreateExpectations.Adornments.IAdornmentsForIHtmlMediaElement<TAdornments> => 
 						self.AddRaiseEvent(new("CanPlay", args));
 				}
 			}
@@ -470,7 +485,7 @@ public static class ExplicitImplementationGeneratorTests
 						internal ExplicitPropertyGetterExpectationsForILeft(global::ILeftRightCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::ILeftRightCreateExpectations.Handler0, global::System.Func<global::Values.Information>, global::Values.Information> Value()
+						internal global::ILeftRightCreateExpectations.Adornments.AdornmentsForHandler0 Value()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::ILeftRightCreateExpectations.Handler0();
@@ -485,7 +500,7 @@ public static class ExplicitImplementationGeneratorTests
 						internal ExplicitPropertySetterExpectationsForILeft(global::ILeftRightCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::ILeftRightCreateExpectations.Handler1, global::System.Action<global::Values.Information>> Value(global::Rocks.Argument<global::Values.Information> @value)
+						internal global::ILeftRightCreateExpectations.Adornments.AdornmentsForHandler1 Value(global::Rocks.Argument<global::Values.Information> @value)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -515,7 +530,7 @@ public static class ExplicitImplementationGeneratorTests
 						internal ExplicitPropertyGetterExpectationsForIRight(global::ILeftRightCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::ILeftRightCreateExpectations.Handler2, global::System.Func<global::Values.Information>, global::Values.Information> Value()
+						internal global::ILeftRightCreateExpectations.Adornments.AdornmentsForHandler2 Value()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::ILeftRightCreateExpectations.Handler2();
@@ -530,7 +545,7 @@ public static class ExplicitImplementationGeneratorTests
 						internal ExplicitPropertySetterExpectationsForIRight(global::ILeftRightCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::ILeftRightCreateExpectations.Handler3, global::System.Action<global::Values.Information>> Value(global::Rocks.Argument<global::Values.Information> @value)
+						internal global::ILeftRightCreateExpectations.Adornments.AdornmentsForHandler3 Value(global::Rocks.Argument<global::Values.Information> @value)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -572,6 +587,39 @@ public static class ExplicitImplementationGeneratorTests
 					else
 					{
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForILeftRight<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForILeftRight<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::ILeftRightCreateExpectations.Handler0, global::System.Func<global::Values.Information>, global::Values.Information>, IAdornmentsForILeftRight<AdornmentsForHandler0>
+					{ 
+						public AdornmentsForHandler0(global::ILeftRightCreateExpectations.Handler0 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler1
+						: global::Rocks.Adornments<AdornmentsForHandler1, global::ILeftRightCreateExpectations.Handler1, global::System.Action<global::Values.Information>>, IAdornmentsForILeftRight<AdornmentsForHandler1>
+					{ 
+						public AdornmentsForHandler1(global::ILeftRightCreateExpectations.Handler1 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler2
+						: global::Rocks.Adornments<AdornmentsForHandler2, global::ILeftRightCreateExpectations.Handler2, global::System.Func<global::Values.Information>, global::Values.Information>, IAdornmentsForILeftRight<AdornmentsForHandler2>
+					{ 
+						public AdornmentsForHandler2(global::ILeftRightCreateExpectations.Handler2 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler3
+						: global::Rocks.Adornments<AdornmentsForHandler3, global::ILeftRightCreateExpectations.Handler3, global::System.Action<global::Values.Information>>, IAdornmentsForILeftRight<AdornmentsForHandler3>
+					{ 
+						public AdornmentsForHandler3(global::ILeftRightCreateExpectations.Handler3 handler)
+							: base(handler) { }				
 					}
 				}
 			}
@@ -695,7 +743,7 @@ public static class ExplicitImplementationGeneratorTests
 					internal MethodExpectations(global::IIterableOfstringCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.Adornments<global::IIterableOfstringCreateExpectations.Handler0, global::System.Func<global::IIterator<string>>, global::IIterator<string>> GetIterator()
+					internal global::IIterableOfstringCreateExpectations.Adornments.AdornmentsForHandler0 GetIterator()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::IIterableOfstringCreateExpectations.Handler0();
@@ -711,7 +759,7 @@ public static class ExplicitImplementationGeneratorTests
 					internal ExplicitMethodExpectationsForIIterable(global::IIterableOfstringCreateExpectations expectations) =>
 						this.Expectations = expectations;
 				
-					internal global::Rocks.Adornments<global::IIterableOfstringCreateExpectations.Handler1, global::System.Func<global::IIterator>, global::IIterator> GetIterator()
+					internal global::IIterableOfstringCreateExpectations.Adornments.AdornmentsForHandler1 GetIterator()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::IIterableOfstringCreateExpectations.Handler1();
@@ -741,6 +789,27 @@ public static class ExplicitImplementationGeneratorTests
 					else
 					{
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForIIterableOfstring<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForIIterableOfstring<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IIterableOfstringCreateExpectations.Handler0, global::System.Func<global::IIterator<string>>, global::IIterator<string>>, IAdornmentsForIIterableOfstring<AdornmentsForHandler0>
+					{ 
+						public AdornmentsForHandler0(global::IIterableOfstringCreateExpectations.Handler0 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler1
+						: global::Rocks.Adornments<AdornmentsForHandler1, global::IIterableOfstringCreateExpectations.Handler1, global::System.Func<global::IIterator>, global::IIterator>, IAdornmentsForIIterableOfstring<AdornmentsForHandler1>
+					{ 
+						public AdornmentsForHandler1(global::IIterableOfstringCreateExpectations.Handler1 handler)
+							: base(handler) { }				
 					}
 				}
 			}
@@ -849,7 +918,7 @@ public static class ExplicitImplementationGeneratorTests
 					internal MethodExpectations(global::ISetupListCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.Adornments<global::ISetupListCreateExpectations.Handler0, global::System.Func<global::System.Collections.Generic.IEnumerator<global::ISetup>>, global::System.Collections.Generic.IEnumerator<global::ISetup>> GetEnumerator()
+					internal global::ISetupListCreateExpectations.Adornments.AdornmentsForHandler0 GetEnumerator()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::ISetupListCreateExpectations.Handler0();
@@ -865,7 +934,7 @@ public static class ExplicitImplementationGeneratorTests
 					internal ExplicitMethodExpectationsForIEnumerable(global::ISetupListCreateExpectations expectations) =>
 						this.Expectations = expectations;
 				
-					internal global::Rocks.Adornments<global::ISetupListCreateExpectations.Handler1, global::System.Func<global::System.Collections.IEnumerator>, global::System.Collections.IEnumerator> GetEnumerator()
+					internal global::ISetupListCreateExpectations.Adornments.AdornmentsForHandler1 GetEnumerator()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::ISetupListCreateExpectations.Handler1();
@@ -895,6 +964,27 @@ public static class ExplicitImplementationGeneratorTests
 					else
 					{
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForISetupList<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForISetupList<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::ISetupListCreateExpectations.Handler0, global::System.Func<global::System.Collections.Generic.IEnumerator<global::ISetup>>, global::System.Collections.Generic.IEnumerator<global::ISetup>>, IAdornmentsForISetupList<AdornmentsForHandler0>
+					{ 
+						public AdornmentsForHandler0(global::ISetupListCreateExpectations.Handler0 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler1
+						: global::Rocks.Adornments<AdornmentsForHandler1, global::ISetupListCreateExpectations.Handler1, global::System.Func<global::System.Collections.IEnumerator>, global::System.Collections.IEnumerator>, IAdornmentsForISetupList<AdornmentsForHandler1>
+					{ 
+						public AdornmentsForHandler1(global::ISetupListCreateExpectations.Handler1 handler)
+							: base(handler) { }				
 					}
 				}
 			}

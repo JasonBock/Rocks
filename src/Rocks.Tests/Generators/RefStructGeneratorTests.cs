@@ -134,7 +134,7 @@ public static class RefStructGeneratorTests
 					internal MethodExpectations(global::IUseSpanWithOpenGenericCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.Adornments<global::IUseSpanWithOpenGenericCreateExpectations.Handler0<TSourcePixel>, global::IUseSpanWithOpenGenericCreateExpectations.Projections.Callback_153914150755899821317490808130987399395242585077<TSourcePixel>> From<TSourcePixel>(global::IUseSpanWithOpenGenericCreateExpectations.Projections.ArgumentForReadOnlySpan<TSourcePixel> @sourcePixels) where TSourcePixel : unmanaged
+					internal global::IUseSpanWithOpenGenericCreateExpectations.Adornments.AdornmentsForHandler0<TSourcePixel> From<TSourcePixel>(global::IUseSpanWithOpenGenericCreateExpectations.Projections.ArgumentForReadOnlySpan<TSourcePixel> @sourcePixels) where TSourcePixel : unmanaged
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@sourcePixels);
@@ -169,6 +169,21 @@ public static class RefStructGeneratorTests
 					else
 					{
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForIUseSpanWithOpenGeneric<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForIUseSpanWithOpenGeneric<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0<TSourcePixel>
+						: global::Rocks.Adornments<AdornmentsForHandler0<TSourcePixel>, global::IUseSpanWithOpenGenericCreateExpectations.Handler0<TSourcePixel>, global::IUseSpanWithOpenGenericCreateExpectations.Projections.Callback_153914150755899821317490808130987399395242585077<TSourcePixel>>, IAdornmentsForIUseSpanWithOpenGeneric<AdornmentsForHandler0<TSourcePixel>> where TSourcePixel : unmanaged
+					{ 
+						public AdornmentsForHandler0(global::IUseSpanWithOpenGenericCreateExpectations.Handler0<TSourcePixel> handler)
+							: base(handler) { }				
 					}
 				}
 			}
@@ -303,7 +318,7 @@ public static class RefStructGeneratorTests
 					internal MethodExpectations(global::IHaveRefStructCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.Adornments<global::IHaveRefStructCreateExpectations.Handler0, global::IHaveRefStructCreateExpectations.Projections.Callback_635596489375752168847058244661265726662174292173> RefStructParameter(global::IHaveRefStructCreateExpectations.Projections.ArgumentForSpanOfint @values)
+					internal global::IHaveRefStructCreateExpectations.Adornments.AdornmentsForHandler0 RefStructParameter(global::IHaveRefStructCreateExpectations.Projections.ArgumentForSpanOfint @values)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@values);
@@ -338,6 +353,21 @@ public static class RefStructGeneratorTests
 					else
 					{
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForIHaveRefStruct<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForIHaveRefStruct<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IHaveRefStructCreateExpectations.Handler0, global::IHaveRefStructCreateExpectations.Projections.Callback_635596489375752168847058244661265726662174292173>, IAdornmentsForIHaveRefStruct<AdornmentsForHandler0>
+					{ 
+						public AdornmentsForHandler0(global::IHaveRefStructCreateExpectations.Handler0 handler)
+							: base(handler) { }				
 					}
 				}
 			}
@@ -431,7 +461,7 @@ public static class RefStructGeneratorTests
 					internal MethodExpectations(global::IHaveRefStructCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.Adornments<global::IHaveRefStructCreateExpectations.Handler0, global::IHaveRefStructCreateExpectations.Projections.Callback_305616756374865012389506681414051734154688895315, global::IHaveRefStructCreateExpectations.Projections.ReturnValue_305616756374865012389506681414051734154688895315> RefStructReturn()
+					internal global::IHaveRefStructCreateExpectations.Adornments.AdornmentsForHandler0 RefStructReturn()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::IHaveRefStructCreateExpectations.Handler0();
@@ -460,6 +490,21 @@ public static class RefStructGeneratorTests
 					else
 					{
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForIHaveRefStruct<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForIHaveRefStruct<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IHaveRefStructCreateExpectations.Handler0, global::IHaveRefStructCreateExpectations.Projections.Callback_305616756374865012389506681414051734154688895315, global::IHaveRefStructCreateExpectations.Projections.ReturnValue_305616756374865012389506681414051734154688895315>, IAdornmentsForIHaveRefStruct<AdornmentsForHandler0>
+					{ 
+						public AdornmentsForHandler0(global::IHaveRefStructCreateExpectations.Handler0 handler)
+							: base(handler) { }				
 					}
 				}
 			}
@@ -619,7 +664,7 @@ public static class RefStructGeneratorTests
 						internal PropertyGetterExpectations(global::IHaveRefStructCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::IHaveRefStructCreateExpectations.Handler0, global::IHaveRefStructCreateExpectations.Projections.Callback_305616756374865012389506681414051734154688895315, global::IHaveRefStructCreateExpectations.Projections.ReturnValue_305616756374865012389506681414051734154688895315> Data()
+						internal global::IHaveRefStructCreateExpectations.Adornments.AdornmentsForHandler0 Data()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::IHaveRefStructCreateExpectations.Handler0();
@@ -635,7 +680,7 @@ public static class RefStructGeneratorTests
 						internal PropertySetterExpectations(global::IHaveRefStructCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::IHaveRefStructCreateExpectations.Handler1, global::IHaveRefStructCreateExpectations.Projections.Callback_502728827610007854864150410092882302521581523006> Data(global::IHaveRefStructCreateExpectations.Projections.ArgumentForSpanOfint @value)
+						internal global::IHaveRefStructCreateExpectations.Adornments.AdornmentsForHandler1 Data(global::IHaveRefStructCreateExpectations.Projections.ArgumentForSpanOfint @value)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -676,6 +721,27 @@ public static class RefStructGeneratorTests
 					else
 					{
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForIHaveRefStruct<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForIHaveRefStruct<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IHaveRefStructCreateExpectations.Handler0, global::IHaveRefStructCreateExpectations.Projections.Callback_305616756374865012389506681414051734154688895315, global::IHaveRefStructCreateExpectations.Projections.ReturnValue_305616756374865012389506681414051734154688895315>, IAdornmentsForIHaveRefStruct<AdornmentsForHandler0>
+					{ 
+						public AdornmentsForHandler0(global::IHaveRefStructCreateExpectations.Handler0 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler1
+						: global::Rocks.Adornments<AdornmentsForHandler1, global::IHaveRefStructCreateExpectations.Handler1, global::IHaveRefStructCreateExpectations.Projections.Callback_502728827610007854864150410092882302521581523006>, IAdornmentsForIHaveRefStruct<AdornmentsForHandler1>
+					{ 
+						public AdornmentsForHandler1(global::IHaveRefStructCreateExpectations.Handler1 handler)
+							: base(handler) { }				
 					}
 				}
 			}
@@ -837,7 +903,7 @@ public static class RefStructGeneratorTests
 						internal IndexerGetterExpectations(global::IHaveRefStructCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::IHaveRefStructCreateExpectations.Handler0, global::IHaveRefStructCreateExpectations.Projections.Callback_397920719143678821085077375314001651657630906476, string> This(global::IHaveRefStructCreateExpectations.Projections.ArgumentForSpanOfint @index)
+						internal global::IHaveRefStructCreateExpectations.Adornments.AdornmentsForHandler0 This(global::IHaveRefStructCreateExpectations.Projections.ArgumentForSpanOfint @index)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@index);
@@ -859,7 +925,7 @@ public static class RefStructGeneratorTests
 						internal IndexerSetterExpectations(global::IHaveRefStructCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::IHaveRefStructCreateExpectations.Handler1, global::IHaveRefStructCreateExpectations.Projections.Callback_258506241168749478916356012154666174557408504246> This(global::Rocks.Argument<string> @value, global::IHaveRefStructCreateExpectations.Projections.ArgumentForSpanOfint @index)
+						internal global::IHaveRefStructCreateExpectations.Adornments.AdornmentsForHandler1 This(global::Rocks.Argument<string> @value, global::IHaveRefStructCreateExpectations.Projections.ArgumentForSpanOfint @index)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@index);
@@ -902,6 +968,27 @@ public static class RefStructGeneratorTests
 					else
 					{
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForIHaveRefStruct<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForIHaveRefStruct<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IHaveRefStructCreateExpectations.Handler0, global::IHaveRefStructCreateExpectations.Projections.Callback_397920719143678821085077375314001651657630906476, string>, IAdornmentsForIHaveRefStruct<AdornmentsForHandler0>
+					{ 
+						public AdornmentsForHandler0(global::IHaveRefStructCreateExpectations.Handler0 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler1
+						: global::Rocks.Adornments<AdornmentsForHandler1, global::IHaveRefStructCreateExpectations.Handler1, global::IHaveRefStructCreateExpectations.Projections.Callback_258506241168749478916356012154666174557408504246>, IAdornmentsForIHaveRefStruct<AdornmentsForHandler1>
+					{ 
+						public AdornmentsForHandler1(global::IHaveRefStructCreateExpectations.Handler1 handler)
+							: base(handler) { }				
 					}
 				}
 			}
@@ -1064,7 +1151,7 @@ public static class RefStructGeneratorTests
 						internal IndexerGetterExpectations(global::IHaveRefStructCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::IHaveRefStructCreateExpectations.Handler0, global::IHaveRefStructCreateExpectations.Projections.Callback_46972665627653922407782770464330805999184773834, global::IHaveRefStructCreateExpectations.Projections.ReturnValue_305616756374865012389506681414051734154688895315> This(global::Rocks.Argument<string> @index)
+						internal global::IHaveRefStructCreateExpectations.Adornments.AdornmentsForHandler0 This(global::Rocks.Argument<string> @index)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@index);
@@ -1086,7 +1173,7 @@ public static class RefStructGeneratorTests
 						internal IndexerSetterExpectations(global::IHaveRefStructCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::IHaveRefStructCreateExpectations.Handler1, global::IHaveRefStructCreateExpectations.Projections.Callback_68834310437553200452622631376483572509682404478> This(global::IHaveRefStructCreateExpectations.Projections.ArgumentForSpanOfint @value, global::Rocks.Argument<string> @index)
+						internal global::IHaveRefStructCreateExpectations.Adornments.AdornmentsForHandler1 This(global::IHaveRefStructCreateExpectations.Projections.ArgumentForSpanOfint @value, global::Rocks.Argument<string> @index)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@index);
@@ -1129,6 +1216,27 @@ public static class RefStructGeneratorTests
 					else
 					{
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForIHaveRefStruct<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForIHaveRefStruct<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IHaveRefStructCreateExpectations.Handler0, global::IHaveRefStructCreateExpectations.Projections.Callback_46972665627653922407782770464330805999184773834, global::IHaveRefStructCreateExpectations.Projections.ReturnValue_305616756374865012389506681414051734154688895315>, IAdornmentsForIHaveRefStruct<AdornmentsForHandler0>
+					{ 
+						public AdornmentsForHandler0(global::IHaveRefStructCreateExpectations.Handler0 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler1
+						: global::Rocks.Adornments<AdornmentsForHandler1, global::IHaveRefStructCreateExpectations.Handler1, global::IHaveRefStructCreateExpectations.Projections.Callback_68834310437553200452622631376483572509682404478>, IAdornmentsForIHaveRefStruct<AdornmentsForHandler1>
+					{ 
+						public AdornmentsForHandler1(global::IHaveRefStructCreateExpectations.Handler1 handler)
+							: base(handler) { }				
 					}
 				}
 			}

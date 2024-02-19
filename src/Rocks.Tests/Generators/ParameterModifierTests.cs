@@ -97,7 +97,7 @@ public static class ParameterModifierTests
 					internal MethodExpectations(global::IParameterModifierCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler0, global::System.Action<string>> Modify(global::Rocks.Argument<string> @value)
+					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler0 Modify(global::Rocks.Argument<string> @value)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -132,6 +132,21 @@ public static class ParameterModifierTests
 					else
 					{
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForIParameterModifier<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForIParameterModifier<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::System.Action<string>>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
+					{ 
+						public AdornmentsForHandler0(global::IParameterModifierCreateExpectations.Handler0 handler)
+							: base(handler) { }				
 					}
 				}
 			}
@@ -293,7 +308,7 @@ public static class ParameterModifierTests
 					internal MethodExpectations(global::IParameterModifierCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Projections.Callback_193235261019447779478409340058228437220444154875> Modify(global::Rocks.Argument<string> @value)
+					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler0 Modify(global::Rocks.Argument<string> @value)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -328,6 +343,21 @@ public static class ParameterModifierTests
 					else
 					{
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForIParameterModifier<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForIParameterModifier<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Projections.Callback_193235261019447779478409340058228437220444154875>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
+					{ 
+						public AdornmentsForHandler0(global::IParameterModifierCreateExpectations.Handler0 handler)
+							: base(handler) { }				
 					}
 				}
 			}
@@ -489,7 +519,7 @@ public static class ParameterModifierTests
 					internal MethodExpectations(global::IParameterModifierCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Projections.Callback_117490457623372471697910661720505969856490442481> Modify(global::Rocks.Argument<string> @value)
+					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler0 Modify(global::Rocks.Argument<string> @value)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -524,6 +554,21 @@ public static class ParameterModifierTests
 					else
 					{
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForIParameterModifier<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForIParameterModifier<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Projections.Callback_117490457623372471697910661720505969856490442481>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
+					{ 
+						public AdornmentsForHandler0(global::IParameterModifierCreateExpectations.Handler0 handler)
+							: base(handler) { }				
 					}
 				}
 			}
@@ -679,7 +724,7 @@ public static class ParameterModifierTests
 					internal MethodExpectations(global::IParameterModifierCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler0, global::System.Action<string>> Modify(global::Rocks.Argument<string> @value)
+					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler0 Modify(global::Rocks.Argument<string> @value)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -714,6 +759,21 @@ public static class ParameterModifierTests
 					else
 					{
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForIParameterModifier<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForIParameterModifier<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::System.Action<string>>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
+					{ 
+						public AdornmentsForHandler0(global::IParameterModifierCreateExpectations.Handler0 handler)
+							: base(handler) { }				
 					}
 				}
 			}
@@ -1000,7 +1060,7 @@ public static class ParameterModifierTests
 					internal MethodExpectations(global::IParameterModifierCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Projections.Callback_640457111802933967433135011802939136029252304196> RefArgument(global::Rocks.Argument<int> @a)
+					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler0 RefArgument(global::Rocks.Argument<int> @a)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@a);
@@ -1015,7 +1075,7 @@ public static class ParameterModifierTests
 						return new(@handler);
 					}
 					
-					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler1<T1, T2>, global::IParameterModifierCreateExpectations.Projections.Callback_595359563624402850359397691594068887527805892984<T1, T2>> RefArgumentsWithGenerics<T1, T2>(global::Rocks.Argument<T1> @a, global::Rocks.Argument<T2> @b)
+					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler1<T1, T2> RefArgumentsWithGenerics<T1, T2>(global::Rocks.Argument<T1> @a, global::Rocks.Argument<T2> @b)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@a);
@@ -1032,7 +1092,7 @@ public static class ParameterModifierTests
 						return new(@handler);
 					}
 					
-					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler2, global::IParameterModifierCreateExpectations.Projections.Callback_360038979746784102455204459622175388488035293924> OutArgument(global::Rocks.Argument<int> @a)
+					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler2 OutArgument(global::Rocks.Argument<int> @a)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@a);
@@ -1047,7 +1107,7 @@ public static class ParameterModifierTests
 						return new(@handler);
 					}
 					
-					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler3<T1, T2>, global::IParameterModifierCreateExpectations.Projections.Callback_376795512182245354180779374814988822523603172187<T1, T2>> OutArgumentsWithGenerics<T1, T2>(global::Rocks.Argument<T1> @a, global::Rocks.Argument<T2> @b)
+					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler3<T1, T2> OutArgumentsWithGenerics<T1, T2>(global::Rocks.Argument<T1> @a, global::Rocks.Argument<T2> @b)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@a);
@@ -1084,6 +1144,39 @@ public static class ParameterModifierTests
 					else
 					{
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForIParameterModifier<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForIParameterModifier<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Projections.Callback_640457111802933967433135011802939136029252304196>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
+					{ 
+						public AdornmentsForHandler0(global::IParameterModifierCreateExpectations.Handler0 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler1<T1, T2>
+						: global::Rocks.Adornments<AdornmentsForHandler1<T1, T2>, global::IParameterModifierCreateExpectations.Handler1<T1, T2>, global::IParameterModifierCreateExpectations.Projections.Callback_595359563624402850359397691594068887527805892984<T1, T2>>, IAdornmentsForIParameterModifier<AdornmentsForHandler1<T1, T2>>
+					{ 
+						public AdornmentsForHandler1(global::IParameterModifierCreateExpectations.Handler1<T1, T2> handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler2
+						: global::Rocks.Adornments<AdornmentsForHandler2, global::IParameterModifierCreateExpectations.Handler2, global::IParameterModifierCreateExpectations.Projections.Callback_360038979746784102455204459622175388488035293924>, IAdornmentsForIParameterModifier<AdornmentsForHandler2>
+					{ 
+						public AdornmentsForHandler2(global::IParameterModifierCreateExpectations.Handler2 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler3<T1, T2>
+						: global::Rocks.Adornments<AdornmentsForHandler3<T1, T2>, global::IParameterModifierCreateExpectations.Handler3<T1, T2>, global::IParameterModifierCreateExpectations.Projections.Callback_376795512182245354180779374814988822523603172187<T1, T2>>, IAdornmentsForIParameterModifier<AdornmentsForHandler3<T1, T2>>
+					{ 
+						public AdornmentsForHandler3(global::IParameterModifierCreateExpectations.Handler3<T1, T2> handler)
+							: base(handler) { }				
 					}
 				}
 			}

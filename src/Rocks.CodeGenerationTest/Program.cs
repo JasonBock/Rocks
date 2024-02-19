@@ -15,8 +15,8 @@ var stopwatch = Stopwatch.StartNew();
 //TestTypeValidity();
 //TestWithCode();
 //TestWithType();
-//TestWithTypes();
-TestTypesIndividually();
+TestWithTypes();
+//TestTypesIndividually();
 stopwatch.Stop();
 
 Console.WriteLine($"Total time: {stopwatch.Elapsed}");

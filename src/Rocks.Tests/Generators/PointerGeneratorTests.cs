@@ -38,33 +38,15 @@ public static class PointerGeneratorTests
 						public void** ReturnValue { get; set; }
 					}
 					
-					internal unsafe sealed class AdornmentsForvoidPointerPointer<TCallback>
+					internal unsafe class AdornmentsForvoidPointerPointer<TAdornments, TCallback>
+						: global::Rocks.Adornments<TAdornments, HandlerForvoidPointerPointer<TCallback>, TCallback>
+						where TAdornments : AdornmentsForvoidPointerPointer<TAdornments, TCallback>
 						where TCallback : global::System.Delegate
 					{
-						private readonly HandlerForvoidPointerPointer<TCallback> handler;
-					
-						internal AdornmentsForvoidPointerPointer(HandlerForvoidPointerPointer<TCallback> handler) =>
-							this.handler = handler;
+						internal AdornmentsForvoidPointerPointer(HandlerForvoidPointerPointer<TCallback> handler)
+							: base(handler) { }
 						
-						internal AdornmentsForvoidPointerPointer<TCallback> AddRaiseEvent(global::Rocks.RaiseEventInformation raiseEvent)
-						{
-							this.handler.AddRaiseEvent(raiseEvent);
-							return this;
-						}
-					
-						internal AdornmentsForvoidPointerPointer<TCallback> ExpectedCallCount(uint expectedCallCount)
-						{
-							this.handler.ExpectedCallCount = expectedCallCount;
-							return this;
-						}
-					
-						internal AdornmentsForvoidPointerPointer<TCallback> Callback(TCallback callback)
-						{
-							this.handler.Callback = callback;
-							return this;
-						}
-					
-						internal AdornmentsForvoidPointerPointer<TCallback> ReturnValue(void** returnValue)
+						internal AdornmentsForvoidPointerPointer<TAdornments, TCallback> ReturnValue(void** returnValue)
 						{
 							this.handler.ReturnValue = returnValue;
 							return this;
@@ -123,7 +105,7 @@ public static class PointerGeneratorTests
 					internal MethodExpectations(global::IPointerUsageCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::IPointerUsageCreateExpectations.Projections.AdornmentsForvoidPointerPointer<global::IPointerUsageCreateExpectations.Projections.Callback_311684193689074896480440330448335592561750954598> AsVtblPtr()
+					internal global::IPointerUsageCreateExpectations.Adornments.AdornmentsForHandler0 AsVtblPtr()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::IPointerUsageCreateExpectations.Handler0();
@@ -152,6 +134,21 @@ public static class PointerGeneratorTests
 					else
 					{
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForIPointerUsage<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForIPointerUsage<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::IPointerUsageCreateExpectations.Projections.AdornmentsForvoidPointerPointer<AdornmentsForHandler0, global::IPointerUsageCreateExpectations.Projections.Callback_311684193689074896480440330448335592561750954598>, IAdornmentsForIPointerUsage<AdornmentsForHandler0>
+					{ 
+						public AdornmentsForHandler0(global::IPointerUsageCreateExpectations.Handler0 handler)
+							: base(handler) { }				
 					}
 				}
 			}
@@ -197,33 +194,15 @@ public static class PointerGeneratorTests
 						public void*** ReturnValue { get; set; }
 					}
 					
-					internal unsafe sealed class AdornmentsForvoidPointerPointerPointer<TCallback>
+					internal unsafe class AdornmentsForvoidPointerPointerPointer<TAdornments, TCallback>
+						: global::Rocks.Adornments<TAdornments, HandlerForvoidPointerPointerPointer<TCallback>, TCallback>
+						where TAdornments : AdornmentsForvoidPointerPointerPointer<TAdornments, TCallback>
 						where TCallback : global::System.Delegate
 					{
-						private readonly HandlerForvoidPointerPointerPointer<TCallback> handler;
-					
-						internal AdornmentsForvoidPointerPointerPointer(HandlerForvoidPointerPointerPointer<TCallback> handler) =>
-							this.handler = handler;
+						internal AdornmentsForvoidPointerPointerPointer(HandlerForvoidPointerPointerPointer<TCallback> handler)
+							: base(handler) { }
 						
-						internal AdornmentsForvoidPointerPointerPointer<TCallback> AddRaiseEvent(global::Rocks.RaiseEventInformation raiseEvent)
-						{
-							this.handler.AddRaiseEvent(raiseEvent);
-							return this;
-						}
-					
-						internal AdornmentsForvoidPointerPointerPointer<TCallback> ExpectedCallCount(uint expectedCallCount)
-						{
-							this.handler.ExpectedCallCount = expectedCallCount;
-							return this;
-						}
-					
-						internal AdornmentsForvoidPointerPointerPointer<TCallback> Callback(TCallback callback)
-						{
-							this.handler.Callback = callback;
-							return this;
-						}
-					
-						internal AdornmentsForvoidPointerPointerPointer<TCallback> ReturnValue(void*** returnValue)
+						internal AdornmentsForvoidPointerPointerPointer<TAdornments, TCallback> ReturnValue(void*** returnValue)
 						{
 							this.handler.ReturnValue = returnValue;
 							return this;
@@ -282,7 +261,7 @@ public static class PointerGeneratorTests
 					internal MethodExpectations(global::IPointerUsageCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::IPointerUsageCreateExpectations.Projections.AdornmentsForvoidPointerPointerPointer<global::IPointerUsageCreateExpectations.Projections.Callback_454293505151760244294537034129468955159423240205> AsVtblPtr()
+					internal global::IPointerUsageCreateExpectations.Adornments.AdornmentsForHandler0 AsVtblPtr()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::IPointerUsageCreateExpectations.Handler0();
@@ -311,6 +290,21 @@ public static class PointerGeneratorTests
 					else
 					{
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForIPointerUsage<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForIPointerUsage<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::IPointerUsageCreateExpectations.Projections.AdornmentsForvoidPointerPointerPointer<AdornmentsForHandler0, global::IPointerUsageCreateExpectations.Projections.Callback_454293505151760244294537034129468955159423240205>, IAdornmentsForIPointerUsage<AdornmentsForHandler0>
+					{ 
+						public AdornmentsForHandler0(global::IPointerUsageCreateExpectations.Handler0 handler)
+							: base(handler) { }				
 					}
 				}
 			}
@@ -356,33 +350,15 @@ public static class PointerGeneratorTests
 						public void**** ReturnValue { get; set; }
 					}
 					
-					internal unsafe sealed class AdornmentsForvoidPointerPointerPointerPointer<TCallback>
+					internal unsafe class AdornmentsForvoidPointerPointerPointerPointer<TAdornments, TCallback>
+						: global::Rocks.Adornments<TAdornments, HandlerForvoidPointerPointerPointerPointer<TCallback>, TCallback>
+						where TAdornments : AdornmentsForvoidPointerPointerPointerPointer<TAdornments, TCallback>
 						where TCallback : global::System.Delegate
 					{
-						private readonly HandlerForvoidPointerPointerPointerPointer<TCallback> handler;
-					
-						internal AdornmentsForvoidPointerPointerPointerPointer(HandlerForvoidPointerPointerPointerPointer<TCallback> handler) =>
-							this.handler = handler;
+						internal AdornmentsForvoidPointerPointerPointerPointer(HandlerForvoidPointerPointerPointerPointer<TCallback> handler)
+							: base(handler) { }
 						
-						internal AdornmentsForvoidPointerPointerPointerPointer<TCallback> AddRaiseEvent(global::Rocks.RaiseEventInformation raiseEvent)
-						{
-							this.handler.AddRaiseEvent(raiseEvent);
-							return this;
-						}
-					
-						internal AdornmentsForvoidPointerPointerPointerPointer<TCallback> ExpectedCallCount(uint expectedCallCount)
-						{
-							this.handler.ExpectedCallCount = expectedCallCount;
-							return this;
-						}
-					
-						internal AdornmentsForvoidPointerPointerPointerPointer<TCallback> Callback(TCallback callback)
-						{
-							this.handler.Callback = callback;
-							return this;
-						}
-					
-						internal AdornmentsForvoidPointerPointerPointerPointer<TCallback> ReturnValue(void**** returnValue)
+						internal AdornmentsForvoidPointerPointerPointerPointer<TAdornments, TCallback> ReturnValue(void**** returnValue)
 						{
 							this.handler.ReturnValue = returnValue;
 							return this;
@@ -441,7 +417,7 @@ public static class PointerGeneratorTests
 					internal MethodExpectations(global::IPointerUsageCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::IPointerUsageCreateExpectations.Projections.AdornmentsForvoidPointerPointerPointerPointer<global::IPointerUsageCreateExpectations.Projections.Callback_151894571580036554918620607107927567135334329577> AsVtblPtr()
+					internal global::IPointerUsageCreateExpectations.Adornments.AdornmentsForHandler0 AsVtblPtr()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::IPointerUsageCreateExpectations.Handler0();
@@ -470,6 +446,21 @@ public static class PointerGeneratorTests
 					else
 					{
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForIPointerUsage<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForIPointerUsage<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::IPointerUsageCreateExpectations.Projections.AdornmentsForvoidPointerPointerPointerPointer<AdornmentsForHandler0, global::IPointerUsageCreateExpectations.Projections.Callback_151894571580036554918620607107927567135334329577>, IAdornmentsForIPointerUsage<AdornmentsForHandler0>
+					{ 
+						public AdornmentsForHandler0(global::IPointerUsageCreateExpectations.Handler0 handler)
+							: base(handler) { }				
 					}
 				}
 			}
@@ -619,7 +610,7 @@ public static class PointerGeneratorTests
 					internal MethodExpectations(global::ISurfaceCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.Adornments<global::ISurfaceCreateExpectations.Handler0<T>, global::ISurfaceCreateExpectations.Projections.Callback_455733297849133658792680279988631751332086808415<T>> Create<T>(global::ISurfaceCreateExpectations.Projections.ArgumentForTPointer<T> @allocator) where T : unmanaged
+					internal global::ISurfaceCreateExpectations.Adornments.AdornmentsForHandler0<T> Create<T>(global::ISurfaceCreateExpectations.Projections.ArgumentForTPointer<T> @allocator) where T : unmanaged
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@allocator);
@@ -654,6 +645,21 @@ public static class PointerGeneratorTests
 					else
 					{
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForISurface<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForISurface<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0<T>
+						: global::Rocks.Adornments<AdornmentsForHandler0<T>, global::ISurfaceCreateExpectations.Handler0<T>, global::ISurfaceCreateExpectations.Projections.Callback_455733297849133658792680279988631751332086808415<T>>, IAdornmentsForISurface<AdornmentsForHandler0<T>> where T : unmanaged
+					{ 
+						public AdornmentsForHandler0(global::ISurfaceCreateExpectations.Handler0<T> handler)
+							: base(handler) { }				
 					}
 				}
 			}
@@ -806,7 +812,7 @@ public static class PointerGeneratorTests
 						internal MethodExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_675345066879799784342630291957923402524406707040> PointerParameter(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @value)
+						internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler0 PointerParameter(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @value)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -841,6 +847,21 @@ public static class PointerGeneratorTests
 						else
 						{
 							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
+					}
+					
+					internal static class Adornments
+					{
+						public interface IAdornmentsForIHavePointers<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
+							where TAdornments : IAdornmentsForIHavePointers<TAdornments>
+						{ }
+						
+						public sealed class AdornmentsForHandler0
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_675345066879799784342630291957923402524406707040>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
+						{ 
+							public AdornmentsForHandler0(global::MockTests.IHavePointersCreateExpectations.Handler0 handler)
+								: base(handler) { }				
 						}
 					}
 				}
@@ -895,33 +916,15 @@ public static class PointerGeneratorTests
 							public int* ReturnValue { get; set; }
 						}
 						
-						internal unsafe sealed class AdornmentsForintPointer<TCallback>
+						internal unsafe class AdornmentsForintPointer<TAdornments, TCallback>
+							: global::Rocks.Adornments<TAdornments, HandlerForintPointer<TCallback>, TCallback>
+							where TAdornments : AdornmentsForintPointer<TAdornments, TCallback>
 							where TCallback : global::System.Delegate
 						{
-							private readonly HandlerForintPointer<TCallback> handler;
-						
-							internal AdornmentsForintPointer(HandlerForintPointer<TCallback> handler) =>
-								this.handler = handler;
+							internal AdornmentsForintPointer(HandlerForintPointer<TCallback> handler)
+								: base(handler) { }
 							
-							internal AdornmentsForintPointer<TCallback> AddRaiseEvent(global::Rocks.RaiseEventInformation raiseEvent)
-							{
-								this.handler.AddRaiseEvent(raiseEvent);
-								return this;
-							}
-						
-							internal AdornmentsForintPointer<TCallback> ExpectedCallCount(uint expectedCallCount)
-							{
-								this.handler.ExpectedCallCount = expectedCallCount;
-								return this;
-							}
-						
-							internal AdornmentsForintPointer<TCallback> Callback(TCallback callback)
-							{
-								this.handler.Callback = callback;
-								return this;
-							}
-						
-							internal AdornmentsForintPointer<TCallback> ReturnValue(int* returnValue)
+							internal AdornmentsForintPointer<TAdornments, TCallback> ReturnValue(int* returnValue)
 							{
 								this.handler.ReturnValue = returnValue;
 								return this;
@@ -980,7 +983,7 @@ public static class PointerGeneratorTests
 						internal MethodExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsForintPointer<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_286972840454368885027555790883633245835670430575> PointerReturn()
+						internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler0 PointerReturn()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0();
@@ -1009,6 +1012,21 @@ public static class PointerGeneratorTests
 						else
 						{
 							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
+					}
+					
+					internal static class Adornments
+					{
+						public interface IAdornmentsForIHavePointers<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
+							where TAdornments : IAdornmentsForIHavePointers<TAdornments>
+						{ }
+						
+						public sealed class AdornmentsForHandler0
+							: global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsForintPointer<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_286972840454368885027555790883633245835670430575>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
+						{ 
+							public AdornmentsForHandler0(global::MockTests.IHavePointersCreateExpectations.Handler0 handler)
+								: base(handler) { }				
 						}
 					}
 				}
@@ -1162,7 +1180,7 @@ public static class PointerGeneratorTests
 						internal MethodExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_190405175200901836134072682481961192767771721226> FunctionPointerParameter(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentFordelegatePointerOfint__void @value)
+						internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler0 FunctionPointerParameter(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentFordelegatePointerOfint__void @value)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -1197,6 +1215,21 @@ public static class PointerGeneratorTests
 						else
 						{
 							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
+					}
+					
+					internal static class Adornments
+					{
+						public interface IAdornmentsForIHavePointers<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
+							where TAdornments : IAdornmentsForIHavePointers<TAdornments>
+						{ }
+						
+						public sealed class AdornmentsForHandler0
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_190405175200901836134072682481961192767771721226>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
+						{ 
+							public AdornmentsForHandler0(global::MockTests.IHavePointersCreateExpectations.Handler0 handler)
+								: base(handler) { }				
 						}
 					}
 				}
@@ -1251,33 +1284,15 @@ public static class PointerGeneratorTests
 							public delegate*<int, void> ReturnValue { get; set; }
 						}
 						
-						internal unsafe sealed class AdornmentsFordelegatePointerOfint__void<TCallback>
+						internal unsafe class AdornmentsFordelegatePointerOfint__void<TAdornments, TCallback>
+							: global::Rocks.Adornments<TAdornments, HandlerFordelegatePointerOfint__void<TCallback>, TCallback>
+							where TAdornments : AdornmentsFordelegatePointerOfint__void<TAdornments, TCallback>
 							where TCallback : global::System.Delegate
 						{
-							private readonly HandlerFordelegatePointerOfint__void<TCallback> handler;
-						
-							internal AdornmentsFordelegatePointerOfint__void(HandlerFordelegatePointerOfint__void<TCallback> handler) =>
-								this.handler = handler;
+							internal AdornmentsFordelegatePointerOfint__void(HandlerFordelegatePointerOfint__void<TCallback> handler)
+								: base(handler) { }
 							
-							internal AdornmentsFordelegatePointerOfint__void<TCallback> AddRaiseEvent(global::Rocks.RaiseEventInformation raiseEvent)
-							{
-								this.handler.AddRaiseEvent(raiseEvent);
-								return this;
-							}
-						
-							internal AdornmentsFordelegatePointerOfint__void<TCallback> ExpectedCallCount(uint expectedCallCount)
-							{
-								this.handler.ExpectedCallCount = expectedCallCount;
-								return this;
-							}
-						
-							internal AdornmentsFordelegatePointerOfint__void<TCallback> Callback(TCallback callback)
-							{
-								this.handler.Callback = callback;
-								return this;
-							}
-						
-							internal AdornmentsFordelegatePointerOfint__void<TCallback> ReturnValue(delegate*<int, void> returnValue)
+							internal AdornmentsFordelegatePointerOfint__void<TAdornments, TCallback> ReturnValue(delegate*<int, void> returnValue)
 							{
 								this.handler.ReturnValue = returnValue;
 								return this;
@@ -1336,7 +1351,7 @@ public static class PointerGeneratorTests
 						internal MethodExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsFordelegatePointerOfint__void<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_21763219907570820974231853792762578898451171267> FunctionPointerReturn()
+						internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler0 FunctionPointerReturn()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0();
@@ -1365,6 +1380,21 @@ public static class PointerGeneratorTests
 						else
 						{
 							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
+					}
+					
+					internal static class Adornments
+					{
+						public interface IAdornmentsForIHavePointers<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
+							where TAdornments : IAdornmentsForIHavePointers<TAdornments>
+						{ }
+						
+						public sealed class AdornmentsForHandler0
+							: global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsFordelegatePointerOfint__void<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_21763219907570820974231853792762578898451171267>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
+						{ 
+							public AdornmentsForHandler0(global::MockTests.IHavePointersCreateExpectations.Handler0 handler)
+								: base(handler) { }				
 						}
 					}
 				}
@@ -1455,33 +1485,15 @@ public static class PointerGeneratorTests
 							public int* ReturnValue { get; set; }
 						}
 						
-						internal unsafe sealed class AdornmentsForintPointer<TCallback>
+						internal unsafe class AdornmentsForintPointer<TAdornments, TCallback>
+							: global::Rocks.Adornments<TAdornments, HandlerForintPointer<TCallback>, TCallback>
+							where TAdornments : AdornmentsForintPointer<TAdornments, TCallback>
 							where TCallback : global::System.Delegate
 						{
-							private readonly HandlerForintPointer<TCallback> handler;
-						
-							internal AdornmentsForintPointer(HandlerForintPointer<TCallback> handler) =>
-								this.handler = handler;
+							internal AdornmentsForintPointer(HandlerForintPointer<TCallback> handler)
+								: base(handler) { }
 							
-							internal AdornmentsForintPointer<TCallback> AddRaiseEvent(global::Rocks.RaiseEventInformation raiseEvent)
-							{
-								this.handler.AddRaiseEvent(raiseEvent);
-								return this;
-							}
-						
-							internal AdornmentsForintPointer<TCallback> ExpectedCallCount(uint expectedCallCount)
-							{
-								this.handler.ExpectedCallCount = expectedCallCount;
-								return this;
-							}
-						
-							internal AdornmentsForintPointer<TCallback> Callback(TCallback callback)
-							{
-								this.handler.Callback = callback;
-								return this;
-							}
-						
-							internal AdornmentsForintPointer<TCallback> ReturnValue(int* returnValue)
+							internal AdornmentsForintPointer<TAdornments, TCallback> ReturnValue(int* returnValue)
 							{
 								this.handler.ReturnValue = returnValue;
 								return this;
@@ -1581,7 +1593,7 @@ public static class PointerGeneratorTests
 							internal PropertyGetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsForintPointer<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_286972840454368885027555790883633245835670430575> Data()
+							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler0 Data()
 							{
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0();
@@ -1597,7 +1609,7 @@ public static class PointerGeneratorTests
 							internal PropertySetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_675345066879799784342630291957923402524406707040> Data(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @value)
+							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler1 Data(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @value)
 							{
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -1638,6 +1650,27 @@ public static class PointerGeneratorTests
 						else
 						{
 							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
+					}
+					
+					internal static class Adornments
+					{
+						public interface IAdornmentsForIHavePointers<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
+							where TAdornments : IAdornmentsForIHavePointers<TAdornments>
+						{ }
+						
+						public sealed class AdornmentsForHandler0
+							: global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsForintPointer<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_286972840454368885027555790883633245835670430575>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
+						{ 
+							public AdornmentsForHandler0(global::MockTests.IHavePointersCreateExpectations.Handler0 handler)
+								: base(handler) { }				
+						}
+						public sealed class AdornmentsForHandler1
+							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_675345066879799784342630291957923402524406707040>, IAdornmentsForIHavePointers<AdornmentsForHandler1>
+						{ 
+							public AdornmentsForHandler1(global::MockTests.IHavePointersCreateExpectations.Handler1 handler)
+								: base(handler) { }				
 						}
 					}
 				}
@@ -1728,33 +1761,15 @@ public static class PointerGeneratorTests
 							public delegate*<int, void> ReturnValue { get; set; }
 						}
 						
-						internal unsafe sealed class AdornmentsFordelegatePointerOfint__void<TCallback>
+						internal unsafe class AdornmentsFordelegatePointerOfint__void<TAdornments, TCallback>
+							: global::Rocks.Adornments<TAdornments, HandlerFordelegatePointerOfint__void<TCallback>, TCallback>
+							where TAdornments : AdornmentsFordelegatePointerOfint__void<TAdornments, TCallback>
 							where TCallback : global::System.Delegate
 						{
-							private readonly HandlerFordelegatePointerOfint__void<TCallback> handler;
-						
-							internal AdornmentsFordelegatePointerOfint__void(HandlerFordelegatePointerOfint__void<TCallback> handler) =>
-								this.handler = handler;
+							internal AdornmentsFordelegatePointerOfint__void(HandlerFordelegatePointerOfint__void<TCallback> handler)
+								: base(handler) { }
 							
-							internal AdornmentsFordelegatePointerOfint__void<TCallback> AddRaiseEvent(global::Rocks.RaiseEventInformation raiseEvent)
-							{
-								this.handler.AddRaiseEvent(raiseEvent);
-								return this;
-							}
-						
-							internal AdornmentsFordelegatePointerOfint__void<TCallback> ExpectedCallCount(uint expectedCallCount)
-							{
-								this.handler.ExpectedCallCount = expectedCallCount;
-								return this;
-							}
-						
-							internal AdornmentsFordelegatePointerOfint__void<TCallback> Callback(TCallback callback)
-							{
-								this.handler.Callback = callback;
-								return this;
-							}
-						
-							internal AdornmentsFordelegatePointerOfint__void<TCallback> ReturnValue(delegate*<int, void> returnValue)
+							internal AdornmentsFordelegatePointerOfint__void<TAdornments, TCallback> ReturnValue(delegate*<int, void> returnValue)
 							{
 								this.handler.ReturnValue = returnValue;
 								return this;
@@ -1854,7 +1869,7 @@ public static class PointerGeneratorTests
 							internal PropertyGetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsFordelegatePointerOfint__void<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_21763219907570820974231853792762578898451171267> Data()
+							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler0 Data()
 							{
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0();
@@ -1870,7 +1885,7 @@ public static class PointerGeneratorTests
 							internal PropertySetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_190405175200901836134072682481961192767771721226> Data(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentFordelegatePointerOfint__void @value)
+							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler1 Data(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentFordelegatePointerOfint__void @value)
 							{
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -1911,6 +1926,27 @@ public static class PointerGeneratorTests
 						else
 						{
 							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
+					}
+					
+					internal static class Adornments
+					{
+						public interface IAdornmentsForIHavePointers<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
+							where TAdornments : IAdornmentsForIHavePointers<TAdornments>
+						{ }
+						
+						public sealed class AdornmentsForHandler0
+							: global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsFordelegatePointerOfint__void<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_21763219907570820974231853792762578898451171267>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
+						{ 
+							public AdornmentsForHandler0(global::MockTests.IHavePointersCreateExpectations.Handler0 handler)
+								: base(handler) { }				
+						}
+						public sealed class AdornmentsForHandler1
+							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_190405175200901836134072682481961192767771721226>, IAdornmentsForIHavePointers<AdornmentsForHandler1>
+						{ 
+							public AdornmentsForHandler1(global::MockTests.IHavePointersCreateExpectations.Handler1 handler)
+								: base(handler) { }				
 						}
 					}
 				}
@@ -2091,7 +2127,7 @@ public static class PointerGeneratorTests
 							internal IndexerGetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_651512256251275256331491675489899036574746642609, string> This(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @index)
+							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler0 This(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @index)
 							{
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@index);
@@ -2113,7 +2149,7 @@ public static class PointerGeneratorTests
 							internal IndexerSetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_212973048794667040959187979763248770796810688032> This(global::Rocks.Argument<string> @value, global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @index)
+							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler1 This(global::Rocks.Argument<string> @value, global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @index)
 							{
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@index);
@@ -2156,6 +2192,27 @@ public static class PointerGeneratorTests
 						else
 						{
 							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
+					}
+					
+					internal static class Adornments
+					{
+						public interface IAdornmentsForIHavePointers<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
+							where TAdornments : IAdornmentsForIHavePointers<TAdornments>
+						{ }
+						
+						public sealed class AdornmentsForHandler0
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_651512256251275256331491675489899036574746642609, string>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
+						{ 
+							public AdornmentsForHandler0(global::MockTests.IHavePointersCreateExpectations.Handler0 handler)
+								: base(handler) { }				
+						}
+						public sealed class AdornmentsForHandler1
+							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_212973048794667040959187979763248770796810688032>, IAdornmentsForIHavePointers<AdornmentsForHandler1>
+						{ 
+							public AdornmentsForHandler1(global::MockTests.IHavePointersCreateExpectations.Handler1 handler)
+								: base(handler) { }				
 						}
 					}
 				}
@@ -2246,33 +2303,15 @@ public static class PointerGeneratorTests
 							public int* ReturnValue { get; set; }
 						}
 						
-						internal unsafe sealed class AdornmentsForintPointer<TCallback>
+						internal unsafe class AdornmentsForintPointer<TAdornments, TCallback>
+							: global::Rocks.Adornments<TAdornments, HandlerForintPointer<TCallback>, TCallback>
+							where TAdornments : AdornmentsForintPointer<TAdornments, TCallback>
 							where TCallback : global::System.Delegate
 						{
-							private readonly HandlerForintPointer<TCallback> handler;
-						
-							internal AdornmentsForintPointer(HandlerForintPointer<TCallback> handler) =>
-								this.handler = handler;
+							internal AdornmentsForintPointer(HandlerForintPointer<TCallback> handler)
+								: base(handler) { }
 							
-							internal AdornmentsForintPointer<TCallback> AddRaiseEvent(global::Rocks.RaiseEventInformation raiseEvent)
-							{
-								this.handler.AddRaiseEvent(raiseEvent);
-								return this;
-							}
-						
-							internal AdornmentsForintPointer<TCallback> ExpectedCallCount(uint expectedCallCount)
-							{
-								this.handler.ExpectedCallCount = expectedCallCount;
-								return this;
-							}
-						
-							internal AdornmentsForintPointer<TCallback> Callback(TCallback callback)
-							{
-								this.handler.Callback = callback;
-								return this;
-							}
-						
-							internal AdornmentsForintPointer<TCallback> ReturnValue(int* returnValue)
+							internal AdornmentsForintPointer<TAdornments, TCallback> ReturnValue(int* returnValue)
 							{
 								this.handler.ReturnValue = returnValue;
 								return this;
@@ -2375,7 +2414,7 @@ public static class PointerGeneratorTests
 							internal IndexerGetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsForintPointer<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_233526433170798729291170303027806441120958052344> This(global::Rocks.Argument<string> @index)
+							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler0 This(global::Rocks.Argument<string> @index)
 							{
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@index);
@@ -2397,7 +2436,7 @@ public static class PointerGeneratorTests
 							internal IndexerSetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_358052978580071937655814761903436805080473631030> This(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @value, global::Rocks.Argument<string> @index)
+							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler1 This(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @value, global::Rocks.Argument<string> @index)
 							{
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@index);
@@ -2440,6 +2479,27 @@ public static class PointerGeneratorTests
 						else
 						{
 							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
+					}
+					
+					internal static class Adornments
+					{
+						public interface IAdornmentsForIHavePointers<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
+							where TAdornments : IAdornmentsForIHavePointers<TAdornments>
+						{ }
+						
+						public sealed class AdornmentsForHandler0
+							: global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsForintPointer<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_233526433170798729291170303027806441120958052344>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
+						{ 
+							public AdornmentsForHandler0(global::MockTests.IHavePointersCreateExpectations.Handler0 handler)
+								: base(handler) { }				
+						}
+						public sealed class AdornmentsForHandler1
+							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_358052978580071937655814761903436805080473631030>, IAdornmentsForIHavePointers<AdornmentsForHandler1>
+						{ 
+							public AdornmentsForHandler1(global::MockTests.IHavePointersCreateExpectations.Handler1 handler)
+								: base(handler) { }				
 						}
 					}
 				}
@@ -2621,7 +2681,7 @@ public static class PointerGeneratorTests
 							internal IndexerGetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_569015130962673970970166158518857080183518071990, string> This(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentFordelegatePointerOfint__void @index)
+							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler0 This(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentFordelegatePointerOfint__void @index)
 							{
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@index);
@@ -2643,7 +2703,7 @@ public static class PointerGeneratorTests
 							internal IndexerSetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_685325684978960348804638980049239306739591139789> This(global::Rocks.Argument<string> @value, global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentFordelegatePointerOfint__void @index)
+							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler1 This(global::Rocks.Argument<string> @value, global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentFordelegatePointerOfint__void @index)
 							{
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@index);
@@ -2686,6 +2746,27 @@ public static class PointerGeneratorTests
 						else
 						{
 							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
+					}
+					
+					internal static class Adornments
+					{
+						public interface IAdornmentsForIHavePointers<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
+							where TAdornments : IAdornmentsForIHavePointers<TAdornments>
+						{ }
+						
+						public sealed class AdornmentsForHandler0
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_569015130962673970970166158518857080183518071990, string>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
+						{ 
+							public AdornmentsForHandler0(global::MockTests.IHavePointersCreateExpectations.Handler0 handler)
+								: base(handler) { }				
+						}
+						public sealed class AdornmentsForHandler1
+							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_685325684978960348804638980049239306739591139789>, IAdornmentsForIHavePointers<AdornmentsForHandler1>
+						{ 
+							public AdornmentsForHandler1(global::MockTests.IHavePointersCreateExpectations.Handler1 handler)
+								: base(handler) { }				
 						}
 					}
 				}
@@ -2776,33 +2857,15 @@ public static class PointerGeneratorTests
 							public delegate*<int, void> ReturnValue { get; set; }
 						}
 						
-						internal unsafe sealed class AdornmentsFordelegatePointerOfint__void<TCallback>
+						internal unsafe class AdornmentsFordelegatePointerOfint__void<TAdornments, TCallback>
+							: global::Rocks.Adornments<TAdornments, HandlerFordelegatePointerOfint__void<TCallback>, TCallback>
+							where TAdornments : AdornmentsFordelegatePointerOfint__void<TAdornments, TCallback>
 							where TCallback : global::System.Delegate
 						{
-							private readonly HandlerFordelegatePointerOfint__void<TCallback> handler;
-						
-							internal AdornmentsFordelegatePointerOfint__void(HandlerFordelegatePointerOfint__void<TCallback> handler) =>
-								this.handler = handler;
+							internal AdornmentsFordelegatePointerOfint__void(HandlerFordelegatePointerOfint__void<TCallback> handler)
+								: base(handler) { }
 							
-							internal AdornmentsFordelegatePointerOfint__void<TCallback> AddRaiseEvent(global::Rocks.RaiseEventInformation raiseEvent)
-							{
-								this.handler.AddRaiseEvent(raiseEvent);
-								return this;
-							}
-						
-							internal AdornmentsFordelegatePointerOfint__void<TCallback> ExpectedCallCount(uint expectedCallCount)
-							{
-								this.handler.ExpectedCallCount = expectedCallCount;
-								return this;
-							}
-						
-							internal AdornmentsFordelegatePointerOfint__void<TCallback> Callback(TCallback callback)
-							{
-								this.handler.Callback = callback;
-								return this;
-							}
-						
-							internal AdornmentsFordelegatePointerOfint__void<TCallback> ReturnValue(delegate*<int, void> returnValue)
+							internal AdornmentsFordelegatePointerOfint__void<TAdornments, TCallback> ReturnValue(delegate*<int, void> returnValue)
 							{
 								this.handler.ReturnValue = returnValue;
 								return this;
@@ -2905,7 +2968,7 @@ public static class PointerGeneratorTests
 							internal IndexerGetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsFordelegatePointerOfint__void<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_349909950755307474321032969938976654826966807638> This(global::Rocks.Argument<string> @index)
+							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler0 This(global::Rocks.Argument<string> @index)
 							{
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@index);
@@ -2927,7 +2990,7 @@ public static class PointerGeneratorTests
 							internal IndexerSetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_189832623536291723139685821763903856879932142527> This(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentFordelegatePointerOfint__void @value, global::Rocks.Argument<string> @index)
+							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler1 This(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentFordelegatePointerOfint__void @value, global::Rocks.Argument<string> @index)
 							{
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@index);
@@ -2970,6 +3033,27 @@ public static class PointerGeneratorTests
 						else
 						{
 							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
+					}
+					
+					internal static class Adornments
+					{
+						public interface IAdornmentsForIHavePointers<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
+							where TAdornments : IAdornmentsForIHavePointers<TAdornments>
+						{ }
+						
+						public sealed class AdornmentsForHandler0
+							: global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsFordelegatePointerOfint__void<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_349909950755307474321032969938976654826966807638>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
+						{ 
+							public AdornmentsForHandler0(global::MockTests.IHavePointersCreateExpectations.Handler0 handler)
+								: base(handler) { }				
+						}
+						public sealed class AdornmentsForHandler1
+							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_189832623536291723139685821763903856879932142527>, IAdornmentsForIHavePointers<AdornmentsForHandler1>
+						{ 
+							public AdornmentsForHandler1(global::MockTests.IHavePointersCreateExpectations.Handler1 handler)
+								: base(handler) { }				
 						}
 					}
 				}

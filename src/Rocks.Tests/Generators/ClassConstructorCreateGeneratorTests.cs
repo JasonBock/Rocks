@@ -165,7 +165,7 @@ public static class ClassConstructorCreateGeneratorTests
 						internal MethodExpectations(global::MockTests.BaseCtorCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::MockTests.BaseCtorCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
+						internal global::MockTests.BaseCtorCreateExpectations.Adornments.AdornmentsForHandler0 Equals(global::Rocks.Argument<object?> @obj)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@obj);
@@ -180,7 +180,7 @@ public static class ClassConstructorCreateGeneratorTests
 							return new(@handler);
 						}
 						
-						internal new global::Rocks.Adornments<global::MockTests.BaseCtorCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+						internal new global::MockTests.BaseCtorCreateExpectations.Adornments.AdornmentsForHandler1 GetHashCode()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.BaseCtorCreateExpectations.Handler1();
@@ -189,7 +189,7 @@ public static class ClassConstructorCreateGeneratorTests
 							return new(handler);
 						}
 						
-						internal new global::Rocks.Adornments<global::MockTests.BaseCtorCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+						internal new global::MockTests.BaseCtorCreateExpectations.Adornments.AdornmentsForHandler2 ToString()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.BaseCtorCreateExpectations.Handler2();
@@ -198,7 +198,7 @@ public static class ClassConstructorCreateGeneratorTests
 							return new(handler);
 						}
 						
-						internal global::Rocks.Adornments<global::MockTests.BaseCtorCreateExpectations.Handler3, global::System.Action> Foo()
+						internal global::MockTests.BaseCtorCreateExpectations.Adornments.AdornmentsForHandler3 Foo()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.BaseCtorCreateExpectations.Handler3();
@@ -227,6 +227,39 @@ public static class ClassConstructorCreateGeneratorTests
 						else
 						{
 							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
+					}
+					
+					internal static class Adornments
+					{
+						public interface IAdornmentsForBaseCtor<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
+							where TAdornments : IAdornmentsForBaseCtor<TAdornments>
+						{ }
+						
+						public sealed class AdornmentsForHandler0
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.BaseCtorCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForBaseCtor<AdornmentsForHandler0>
+						{ 
+							public AdornmentsForHandler0(global::MockTests.BaseCtorCreateExpectations.Handler0 handler)
+								: base(handler) { }				
+						}
+						public sealed class AdornmentsForHandler1
+							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.BaseCtorCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForBaseCtor<AdornmentsForHandler1>
+						{ 
+							public AdornmentsForHandler1(global::MockTests.BaseCtorCreateExpectations.Handler1 handler)
+								: base(handler) { }				
+						}
+						public sealed class AdornmentsForHandler2
+							: global::Rocks.Adornments<AdornmentsForHandler2, global::MockTests.BaseCtorCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForBaseCtor<AdornmentsForHandler2>
+						{ 
+							public AdornmentsForHandler2(global::MockTests.BaseCtorCreateExpectations.Handler2 handler)
+								: base(handler) { }				
+						}
+						public sealed class AdornmentsForHandler3
+							: global::Rocks.Adornments<AdornmentsForHandler3, global::MockTests.BaseCtorCreateExpectations.Handler3, global::System.Action>, IAdornmentsForBaseCtor<AdornmentsForHandler3>
+						{ 
+							public AdornmentsForHandler3(global::MockTests.BaseCtorCreateExpectations.Handler3 handler)
+								: base(handler) { }				
 						}
 					}
 				}

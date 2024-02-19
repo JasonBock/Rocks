@@ -100,7 +100,7 @@ public static class NullableAnnotationTests
 					internal MethodExpectations(global::ITypeOfNullableOfintCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.Adornments<global::ITypeOfNullableOfintCreateExpectations.Handler0, global::System.Action<int?>> Foo(global::Rocks.Argument<int?> @value)
+					internal global::ITypeOfNullableOfintCreateExpectations.Adornments.AdornmentsForHandler0 Foo(global::Rocks.Argument<int?> @value)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -135,6 +135,21 @@ public static class NullableAnnotationTests
 					else
 					{
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForITypeOfNullableOfint<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForITypeOfNullableOfint<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::ITypeOfNullableOfintCreateExpectations.Handler0, global::System.Action<int?>>, IAdornmentsForITypeOfNullableOfint<AdornmentsForHandler0>
+					{ 
+						public AdornmentsForHandler0(global::ITypeOfNullableOfintCreateExpectations.Handler0 handler)
+							: base(handler) { }				
 					}
 				}
 			}
@@ -279,7 +294,7 @@ public static class NullableAnnotationTests
 					internal MethodExpectations(global::NeedNullableCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.Adornments<global::NeedNullableCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
+					internal global::NeedNullableCreateExpectations.Adornments.AdornmentsForHandler0 Equals(global::Rocks.Argument<object?> @obj)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
@@ -294,7 +309,7 @@ public static class NullableAnnotationTests
 						return new(@handler);
 					}
 					
-					internal new global::Rocks.Adornments<global::NeedNullableCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+					internal new global::NeedNullableCreateExpectations.Adornments.AdornmentsForHandler1 GetHashCode()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::NeedNullableCreateExpectations.Handler1();
@@ -303,7 +318,7 @@ public static class NullableAnnotationTests
 						return new(handler);
 					}
 					
-					internal new global::Rocks.Adornments<global::NeedNullableCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					internal new global::NeedNullableCreateExpectations.Adornments.AdornmentsForHandler2 ToString()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::NeedNullableCreateExpectations.Handler2();
@@ -332,6 +347,33 @@ public static class NullableAnnotationTests
 					else
 					{
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForNeedNullable<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForNeedNullable<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::NeedNullableCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForNeedNullable<AdornmentsForHandler0>
+					{ 
+						public AdornmentsForHandler0(global::NeedNullableCreateExpectations.Handler0 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler1
+						: global::Rocks.Adornments<AdornmentsForHandler1, global::NeedNullableCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForNeedNullable<AdornmentsForHandler1>
+					{ 
+						public AdornmentsForHandler1(global::NeedNullableCreateExpectations.Handler1 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler2
+						: global::Rocks.Adornments<AdornmentsForHandler2, global::NeedNullableCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForNeedNullable<AdornmentsForHandler2>
+					{ 
+						public AdornmentsForHandler2(global::NeedNullableCreateExpectations.Handler2 handler)
+							: base(handler) { }				
 					}
 				}
 			}
@@ -604,7 +646,7 @@ public static class NullableAnnotationTests
 					internal MethodExpectations(global::NeedNullableCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.Adornments<global::NeedNullableCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
+					internal global::NeedNullableCreateExpectations.Adornments.AdornmentsForHandler0 Equals(global::Rocks.Argument<object?> @obj)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
@@ -619,7 +661,7 @@ public static class NullableAnnotationTests
 						return new(@handler);
 					}
 					
-					internal new global::Rocks.Adornments<global::NeedNullableCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+					internal new global::NeedNullableCreateExpectations.Adornments.AdornmentsForHandler1 GetHashCode()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::NeedNullableCreateExpectations.Handler1();
@@ -628,7 +670,7 @@ public static class NullableAnnotationTests
 						return new(handler);
 					}
 					
-					internal new global::Rocks.Adornments<global::NeedNullableCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					internal new global::NeedNullableCreateExpectations.Adornments.AdornmentsForHandler2 ToString()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::NeedNullableCreateExpectations.Handler2();
@@ -637,7 +679,7 @@ public static class NullableAnnotationTests
 						return new(handler);
 					}
 					
-					internal global::Rocks.Adornments<global::NeedNullableCreateExpectations.Handler3, global::System.Func<object?, int>, int> IntReturn(global::Rocks.Argument<object?> @initializationData)
+					internal global::NeedNullableCreateExpectations.Adornments.AdornmentsForHandler3 IntReturn(global::Rocks.Argument<object?> @initializationData)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@initializationData);
@@ -651,10 +693,10 @@ public static class NullableAnnotationTests
 						else { this.Expectations.handlers3.Add(@handler); }
 						return new(@handler);
 					}
-					internal global::Rocks.Adornments<global::NeedNullableCreateExpectations.Handler3, global::System.Func<object?, int>, int> IntReturn(object? @initializationData = null) =>
+					internal global::NeedNullableCreateExpectations.Adornments.AdornmentsForHandler3 IntReturn(object? @initializationData = null) =>
 						this.IntReturn(global::Rocks.Arg.Is(@initializationData));
 					
-					internal global::Rocks.Adornments<global::NeedNullableCreateExpectations.Handler4, global::System.Action<object?>> VoidReturn(global::Rocks.Argument<object?> @initializationData)
+					internal global::NeedNullableCreateExpectations.Adornments.AdornmentsForHandler4 VoidReturn(global::Rocks.Argument<object?> @initializationData)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@initializationData);
@@ -668,7 +710,7 @@ public static class NullableAnnotationTests
 						else { this.Expectations.handlers4.Add(@handler); }
 						return new(@handler);
 					}
-					internal global::Rocks.Adornments<global::NeedNullableCreateExpectations.Handler4, global::System.Action<object?>> VoidReturn(object? @initializationData = null) =>
+					internal global::NeedNullableCreateExpectations.Adornments.AdornmentsForHandler4 VoidReturn(object? @initializationData = null) =>
 						this.VoidReturn(global::Rocks.Arg.Is(@initializationData));
 					
 					private global::NeedNullableCreateExpectations Expectations { get; }
@@ -691,6 +733,45 @@ public static class NullableAnnotationTests
 					else
 					{
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForNeedNullable<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForNeedNullable<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::NeedNullableCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForNeedNullable<AdornmentsForHandler0>
+					{ 
+						public AdornmentsForHandler0(global::NeedNullableCreateExpectations.Handler0 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler1
+						: global::Rocks.Adornments<AdornmentsForHandler1, global::NeedNullableCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForNeedNullable<AdornmentsForHandler1>
+					{ 
+						public AdornmentsForHandler1(global::NeedNullableCreateExpectations.Handler1 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler2
+						: global::Rocks.Adornments<AdornmentsForHandler2, global::NeedNullableCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForNeedNullable<AdornmentsForHandler2>
+					{ 
+						public AdornmentsForHandler2(global::NeedNullableCreateExpectations.Handler2 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler3
+						: global::Rocks.Adornments<AdornmentsForHandler3, global::NeedNullableCreateExpectations.Handler3, global::System.Func<object?, int>, int>, IAdornmentsForNeedNullable<AdornmentsForHandler3>
+					{ 
+						public AdornmentsForHandler3(global::NeedNullableCreateExpectations.Handler3 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler4
+						: global::Rocks.Adornments<AdornmentsForHandler4, global::NeedNullableCreateExpectations.Handler4, global::System.Action<object?>>, IAdornmentsForNeedNullable<AdornmentsForHandler4>
+					{ 
+						public AdornmentsForHandler4(global::NeedNullableCreateExpectations.Handler4 handler)
+							: base(handler) { }				
 					}
 				}
 			}

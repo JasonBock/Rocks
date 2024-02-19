@@ -102,7 +102,7 @@ public static class RockAttributeGeneratorTests
 						internal MethodExpectations(global::MockTests.IContainNullableReferencesCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::MockTests.IContainNullableReferencesCreateExpectations.Handler0, global::System.Func<string?, string, string?>, string?> DoSomething(global::Rocks.Argument<string?> @a, global::Rocks.Argument<string> @b)
+						internal global::MockTests.IContainNullableReferencesCreateExpectations.Adornments.AdornmentsForHandler0 DoSomething(global::Rocks.Argument<string?> @a, global::Rocks.Argument<string> @b)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@a);
@@ -139,6 +139,21 @@ public static class RockAttributeGeneratorTests
 						else
 						{
 							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
+					}
+					
+					internal static class Adornments
+					{
+						public interface IAdornmentsForIContainNullableReferences<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
+							where TAdornments : IAdornmentsForIContainNullableReferences<TAdornments>
+						{ }
+						
+						public sealed class AdornmentsForHandler0
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IContainNullableReferencesCreateExpectations.Handler0, global::System.Func<string?, string, string?>, string?>, IAdornmentsForIContainNullableReferences<AdornmentsForHandler0>
+						{ 
+							public AdornmentsForHandler0(global::MockTests.IContainNullableReferencesCreateExpectations.Handler0 handler)
+								: base(handler) { }				
 						}
 					}
 				}
@@ -232,7 +247,7 @@ public static class RockAttributeGeneratorTests
 						internal MethodExpectations(global::MockTests.ITestCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::MockTests.ITestCreateExpectations.Handler0, global::System.Action> Foo()
+						internal global::MockTests.ITestCreateExpectations.Adornments.AdornmentsForHandler0 Foo()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.ITestCreateExpectations.Handler0();
@@ -261,6 +276,21 @@ public static class RockAttributeGeneratorTests
 						else
 						{
 							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
+					}
+					
+					internal static class Adornments
+					{
+						public interface IAdornmentsForITest<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
+							where TAdornments : IAdornmentsForITest<TAdornments>
+						{ }
+						
+						public sealed class AdornmentsForHandler0
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.ITestCreateExpectations.Handler0, global::System.Action>, IAdornmentsForITest<AdornmentsForHandler0>
+						{ 
+							public AdornmentsForHandler0(global::MockTests.ITestCreateExpectations.Handler0 handler)
+								: base(handler) { }				
 						}
 					}
 				}
@@ -349,7 +379,7 @@ public static class RockAttributeGeneratorTests
 					internal MethodExpectations(global::ITestCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.Adornments<global::ITestCreateExpectations.Handler0, global::System.Action> Foo()
+					internal global::ITestCreateExpectations.Adornments.AdornmentsForHandler0 Foo()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::ITestCreateExpectations.Handler0();
@@ -378,6 +408,21 @@ public static class RockAttributeGeneratorTests
 					else
 					{
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForITest<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForITest<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::ITestCreateExpectations.Handler0, global::System.Action>, IAdornmentsForITest<AdornmentsForHandler0>
+					{ 
+						public AdornmentsForHandler0(global::ITestCreateExpectations.Handler0 handler)
+							: base(handler) { }				
 					}
 				}
 			}
@@ -555,7 +600,7 @@ public static class RockAttributeGeneratorTests
 						internal MethodExpectations(global::MockTests.ITestCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::MockTests.ITestCreateExpectations.Handler0, global::System.Action> Foo()
+						internal global::MockTests.ITestCreateExpectations.Adornments.AdornmentsForHandler0 Foo()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.ITestCreateExpectations.Handler0();
@@ -584,6 +629,21 @@ public static class RockAttributeGeneratorTests
 						else
 						{
 							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
+					}
+					
+					internal static class Adornments
+					{
+						public interface IAdornmentsForITest<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
+							where TAdornments : IAdornmentsForITest<TAdornments>
+						{ }
+						
+						public sealed class AdornmentsForHandler0
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.ITestCreateExpectations.Handler0, global::System.Action>, IAdornmentsForITest<AdornmentsForHandler0>
+						{ 
+							public AdornmentsForHandler0(global::MockTests.ITestCreateExpectations.Handler0 handler)
+								: base(handler) { }				
 						}
 					}
 				}

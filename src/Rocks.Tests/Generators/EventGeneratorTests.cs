@@ -432,7 +432,7 @@ public static class EventGeneratorTests
 					internal ExplicitMethodExpectationsForIExplicitInterfaceImplementationOne(global::IExplicitInterfaceImplementationCreateExpectations expectations) =>
 						this.Expectations = expectations;
 				
-					internal global::Rocks.Adornments<global::IExplicitInterfaceImplementationCreateExpectations.Handler0, global::System.Action> A()
+					internal global::IExplicitInterfaceImplementationCreateExpectations.Adornments.AdornmentsForHandler0 A()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::IExplicitInterfaceImplementationCreateExpectations.Handler0();
@@ -448,7 +448,7 @@ public static class EventGeneratorTests
 					internal ExplicitMethodExpectationsForIExplicitInterfaceImplementationTwo(global::IExplicitInterfaceImplementationCreateExpectations expectations) =>
 						this.Expectations = expectations;
 				
-					internal global::Rocks.Adornments<global::IExplicitInterfaceImplementationCreateExpectations.Handler1, global::System.Action> A()
+					internal global::IExplicitInterfaceImplementationCreateExpectations.Adornments.AdornmentsForHandler1 A()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::IExplicitInterfaceImplementationCreateExpectations.Handler1();
@@ -480,13 +480,32 @@ public static class EventGeneratorTests
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 					}
 				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForIExplicitInterfaceImplementation<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForIExplicitInterfaceImplementation<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IExplicitInterfaceImplementationCreateExpectations.Handler0, global::System.Action>, IAdornmentsForIExplicitInterfaceImplementation<AdornmentsForHandler0>
+					{ 
+						public AdornmentsForHandler0(global::IExplicitInterfaceImplementationCreateExpectations.Handler0 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler1
+						: global::Rocks.Adornments<AdornmentsForHandler1, global::IExplicitInterfaceImplementationCreateExpectations.Handler1, global::System.Action>, IAdornmentsForIExplicitInterfaceImplementation<AdornmentsForHandler1>
+					{ 
+						public AdornmentsForHandler1(global::IExplicitInterfaceImplementationCreateExpectations.Handler1 handler)
+							: base(handler) { }				
+					}
+				}
 			}
 			
 			internal static class IExplicitInterfaceImplementationAdornmentsEventExtensions
 			{
-				internal static global::Rocks.Adornments<global::IExplicitInterfaceImplementationCreateExpectations.Handler0, global::System.Action> RaiseC(this global::Rocks.Adornments<global::IExplicitInterfaceImplementationCreateExpectations.Handler0, global::System.Action> self, global::System.EventArgs args) => 
-					self.AddRaiseEvent(new("C", args));
-				internal static global::Rocks.Adornments<global::IExplicitInterfaceImplementationCreateExpectations.Handler1, global::System.Action> RaiseC(this global::Rocks.Adornments<global::IExplicitInterfaceImplementationCreateExpectations.Handler1, global::System.Action> self, global::System.EventArgs args) => 
+				internal static TAdornments RaiseC<TAdornments>(this TAdornments self, global::System.EventArgs args) where TAdornments : global::IExplicitInterfaceImplementationCreateExpectations.Adornments.IAdornmentsForIExplicitInterfaceImplementation<TAdornments> => 
 					self.AddRaiseEvent(new("C", args));
 			}
 			
@@ -601,7 +620,7 @@ public static class EventGeneratorTests
 						internal MethodExpectations(global::MockTests.IHaveEventsCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::MockTests.IHaveEventsCreateExpectations.Handler0, global::System.Action> A()
+						internal global::MockTests.IHaveEventsCreateExpectations.Adornments.AdornmentsForHandler0 A()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.IHaveEventsCreateExpectations.Handler0();
@@ -632,11 +651,26 @@ public static class EventGeneratorTests
 							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
+					
+					internal static class Adornments
+					{
+						public interface IAdornmentsForIHaveEvents<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
+							where TAdornments : IAdornmentsForIHaveEvents<TAdornments>
+						{ }
+						
+						public sealed class AdornmentsForHandler0
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IHaveEventsCreateExpectations.Handler0, global::System.Action>, IAdornmentsForIHaveEvents<AdornmentsForHandler0>
+						{ 
+							public AdornmentsForHandler0(global::MockTests.IHaveEventsCreateExpectations.Handler0 handler)
+								: base(handler) { }				
+						}
+					}
 				}
 				
 				internal static class IHaveEventsAdornmentsEventExtensions
 				{
-					internal static global::Rocks.Adornments<global::MockTests.IHaveEventsCreateExpectations.Handler0, global::System.Action> RaiseServerMaintenanceEvent(this global::Rocks.Adornments<global::MockTests.IHaveEventsCreateExpectations.Handler0, global::System.Action> self, global::MockTests.ServerMaintenanceEvent args) => 
+					internal static TAdornments RaiseServerMaintenanceEvent<TAdornments>(this TAdornments self, global::MockTests.ServerMaintenanceEvent args) where TAdornments : global::MockTests.IHaveEventsCreateExpectations.Adornments.IAdornmentsForIHaveEvents<TAdornments> => 
 						self.AddRaiseEvent(new("ServerMaintenanceEvent", args));
 				}
 			}
@@ -750,7 +784,7 @@ public static class EventGeneratorTests
 						internal MethodExpectations(global::MockTests.IHaveEventsCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::MockTests.IHaveEventsCreateExpectations.Handler0, global::System.Action> A()
+						internal global::MockTests.IHaveEventsCreateExpectations.Adornments.AdornmentsForHandler0 A()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.IHaveEventsCreateExpectations.Handler0();
@@ -781,11 +815,26 @@ public static class EventGeneratorTests
 							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
+					
+					internal static class Adornments
+					{
+						public interface IAdornmentsForIHaveEvents<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
+							where TAdornments : IAdornmentsForIHaveEvents<TAdornments>
+						{ }
+						
+						public sealed class AdornmentsForHandler0
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IHaveEventsCreateExpectations.Handler0, global::System.Action>, IAdornmentsForIHaveEvents<AdornmentsForHandler0>
+						{ 
+							public AdornmentsForHandler0(global::MockTests.IHaveEventsCreateExpectations.Handler0 handler)
+								: base(handler) { }				
+						}
+					}
 				}
 				
 				internal static class IHaveEventsAdornmentsEventExtensions
 				{
-					internal static global::Rocks.Adornments<global::MockTests.IHaveEventsCreateExpectations.Handler0, global::System.Action> RaiseC(this global::Rocks.Adornments<global::MockTests.IHaveEventsCreateExpectations.Handler0, global::System.Action> self, global::System.EventArgs args) => 
+					internal static TAdornments RaiseC<TAdornments>(this TAdornments self, global::System.EventArgs args) where TAdornments : global::MockTests.IHaveEventsCreateExpectations.Adornments.IAdornmentsForIHaveEvents<TAdornments> => 
 						self.AddRaiseEvent(new("C", args));
 				}
 			}
