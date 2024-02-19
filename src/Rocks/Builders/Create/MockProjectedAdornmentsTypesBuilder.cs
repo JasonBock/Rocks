@@ -62,6 +62,9 @@ internal static partial class MockProjectedAdornmentsTypesBuilder
 		var handlerName = MockProjectedAdornmentsTypesBuilder.GetProjectedHandlerName(type);
 		var returnType = type.FullyQualifiedName;
 
+		// The reason why we don't derive from types that include the return value type
+		// is that we're dealing with pointers or function pointers, and we can't declare that
+		// with the type parameter.
 		writer.WriteLines(
 			$$"""
 			internal unsafe class {{handlerName}}<TCallback>
@@ -71,33 +74,15 @@ internal static partial class MockProjectedAdornmentsTypesBuilder
 				public {{returnType}} ReturnValue { get; set; }
 			}
 
-			internal unsafe sealed class {{adornmentName}}<TCallback>
+			internal unsafe class {{adornmentName}}<TAdornments, TCallback>
+				: global::Rocks.Adornments<TAdornments, {{handlerName}}<TCallback>, TCallback>
+				where TAdornments : {{adornmentName}}<TAdornments, TCallback>
 				where TCallback : global::System.Delegate
 			{
-				private readonly {{handlerName}}<TCallback> handler;
-			
-				internal {{adornmentName}}({{handlerName}}<TCallback> handler) =>
-					this.handler = handler;
+				internal {{adornmentName}}({{handlerName}}<TCallback> handler)
+					: base(handler) { }
 				
-				internal {{adornmentName}}<TCallback> AddRaiseEvent(global::Rocks.RaiseEventInformation raiseEvent)
-				{
-					this.handler.AddRaiseEvent(raiseEvent);
-					return this;
-				}
-
-				internal {{adornmentName}}<TCallback> ExpectedCallCount(uint expectedCallCount)
-				{
-					this.handler.ExpectedCallCount = expectedCallCount;
-					return this;
-				}
-
-				internal {{adornmentName}}<TCallback> Callback(TCallback callback)
-				{
-					this.handler.Callback = callback;
-					return this;
-				}
-
-				internal {{adornmentName}}<TCallback> ReturnValue({{returnType}} returnValue)
+				internal {{adornmentName}}<TAdornments, TCallback> ReturnValue({{returnType}} returnValue)
 				{
 					this.handler.ReturnValue = returnValue;
 					return this;

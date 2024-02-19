@@ -6,6 +6,7 @@ using Rocks.Models;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 
@@ -110,8 +111,8 @@ internal static class TestGenerator
 		{
 			references = references.Concat(new[]
 			{
-					 MetadataReference.CreateFromFile(typeToLoadAssembliesFrom.Assembly.Location)
-				});
+				MetadataReference.CreateFromFile(typeToLoadAssembliesFrom.Assembly.Location)
+			});
 		}
 
 		var compilation = CSharpCompilation.Create("generator", new[] { syntaxTree },
@@ -140,7 +141,7 @@ internal static class TestGenerator
 		return [.. validTypes];
 	}
 
-	internal static ImmutableArray<Issue> Generate(IIncrementalGenerator generator, Type[] targetTypes, Type[] typesToLoadAssembliesFrom,
+	internal static (ImmutableArray<Issue> issues, Times times) Generate(IIncrementalGenerator generator, Type[] targetTypes, Type[] typesToLoadAssembliesFrom,
 		 Dictionary<Type, Dictionary<string, string>>? genericTypeMappings, string[] aliases, BuildType buildType)
 	{
 		var isCreate = buildType == BuildType.Create;
@@ -174,9 +175,13 @@ internal static class TestGenerator
 				  specificDiagnosticOptions: TestGenerator.SpecificDiagnostics));
 
 		var driver = CSharpGeneratorDriver.Create(generator);
+		var generatorWatch = Stopwatch.StartNew();
 		driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out var diagnostics);
+		generatorWatch.Stop();
 
 		var driverHasDiagnostics = diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error || _.Severity == DiagnosticSeverity.Warning);
+
+		var emitWatch = new Stopwatch();
 
 		if (driverHasDiagnostics)
 		{
@@ -189,7 +194,9 @@ internal static class TestGenerator
 		else
 		{
 			using var outputStream = new MemoryStream();
+			emitWatch.Start();
 			var result = outputCompilation.Emit(outputStream);
+			emitWatch.Stop();
 
 			var ignoredWarnings = Array.Empty<string>();
 
@@ -200,7 +207,7 @@ internal static class TestGenerator
 			var mockCode = outputCompilation.SyntaxTrees.ToArray()[^1];
 		}
 
-		return [.. issues];
+		return ([.. issues], new(generatorWatch.Elapsed, emitWatch.Elapsed));
 	}
 
 	internal static void Generate(IIncrementalGenerator generator, string code, Type[] typesToLoadAssembliesFrom)

@@ -8,10 +8,10 @@ namespace Rocks.Builders.Create;
 internal static class MethodExpectationsMethodBuilder
 {
 	internal static void Build(IndentedTextWriter writer, MethodModel method, string expectationsFullyQualifiedName,
-		Action<string, string, string> adornmentsFQNsPipeline)
+		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		static void BuildImplementation(IndentedTextWriter writer, MethodModel method, bool isGeneratedWithDefaults, 
-			string expectationsFullyQualifiedName, Action<string, string, string> adornmentsFQNsPipeline)
+			string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 		{
 			var namingContext = new VariableNamingContext(method);
 			var needsGenerationWithDefaults = false;
@@ -68,7 +68,7 @@ internal static class MethodExpectationsMethodBuilder
 				method.ReturnType.TypeKind == TypeKind.Pointer)
 			{
 				var projectedAdornmentTypeName = MockProjectedAdornmentsTypesBuilder.GetProjectedAdornmentsFullyQualifiedNameName(method.ReturnType, method.MockType);
-				adornmentsType = $"{projectedAdornmentTypeName}<{callbackDelegateTypeName}>";
+				adornmentsType = $"{projectedAdornmentTypeName}<AdornmentsForHandler{method.MemberIdentifier}{typeArguments}, {callbackDelegateTypeName}>";
 			}
 			else
 			{
@@ -81,16 +81,15 @@ internal static class MethodExpectationsMethodBuilder
 							method.ReturnType.FullyQualifiedName;
 
 				adornmentsType = method.ReturnsVoid ?
-					$"global::Rocks.Adornments<{handlerTypeName}, {callbackDelegateTypeName}>" :
-					$"global::Rocks.Adornments<{handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
+					$"global::Rocks.Adornments<AdornmentsForHandler{method.MemberIdentifier}{typeArguments}, {handlerTypeName}, {callbackDelegateTypeName}>" :
+					$"global::Rocks.Adornments<AdornmentsForHandler{method.MemberIdentifier}{typeArguments}, {handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
 			}
 
-			var constraints = method.Constraints;
-			var extensionConstraints = constraints.Length > 0 ?
-				$" {string.Join(" ", constraints)}" : "";
+			var constraints = method.Constraints.Length > 0 ?
+				$" {string.Join(" ", method.Constraints)}" : "";
 			var hiding = method.RequiresHiding == RequiresHiding.Yes ? "new " : string.Empty;
 
-			adornmentsFQNsPipeline(adornmentsType, typeArguments, extensionConstraints);
+			adornmentsFQNsPipeline(new(adornmentsType, typeArguments, constraints, method.MemberIdentifier));
 
 			if (isGeneratedWithDefaults)
 			{
@@ -99,7 +98,7 @@ internal static class MethodExpectationsMethodBuilder
 
 				writer.WriteLines(
 					$$"""
-					internal {{hiding}}{{adornmentsType}} {{method.Name}}({{instanceParameters}}){{extensionConstraints}} =>
+					internal {{hiding}}{{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{method.MemberIdentifier}}{{typeArguments}} {{method.Name}}({{instanceParameters}}){{constraints}} =>
 						this.{{method.Name}}({{parameterValues}});
 					""");
 			}
@@ -107,7 +106,7 @@ internal static class MethodExpectationsMethodBuilder
 			{
 				writer.WriteLines(
 					$$"""
-					internal {{hiding}}{{adornmentsType}} {{method.Name}}({{instanceParameters}}){{extensionConstraints}}
+					internal {{hiding}}{{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{method.MemberIdentifier}}{{typeArguments}} {{method.Name}}({{instanceParameters}}){{constraints}}
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new {{expectationsFullyQualifiedName}}.Handler{{method.MemberIdentifier}}{{typeArguments}}();
@@ -120,7 +119,7 @@ internal static class MethodExpectationsMethodBuilder
 			else
 			{
 				var handlerContext = new VariableNamingContext(method);
-				writer.WriteLine($"internal {hiding}{adornmentsType} {method.Name}({instanceParameters}){extensionConstraints}");
+				writer.WriteLine($"internal {hiding}{expectationsFullyQualifiedName}.Adornments.AdornmentsForHandler{method.MemberIdentifier}{typeArguments} {method.Name}({instanceParameters}){constraints}");
 				writer.WriteLine("{");
 				writer.Indent++;
 				writer.WriteLine("global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);");

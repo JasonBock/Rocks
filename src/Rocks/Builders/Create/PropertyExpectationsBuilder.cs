@@ -8,7 +8,7 @@ namespace Rocks.Builders.Create;
 internal static class PropertyExpectationsBuilder
 {
 	internal static IEnumerable<ExpectationMapping> Build(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName,
-		Action<string, string, string> adornmentsFQNsPipeline)
+		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		var propertyMappings = new List<ExpectationMapping>();
 
@@ -31,7 +31,7 @@ internal static class PropertyExpectationsBuilder
 	}
 
 	private static IEnumerable<ExpectationMapping> BuildExplicitIndexers(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName, 
-		Action<string, string, string> adornmentsFQNsPipeline)
+		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		foreach (var typeGroup in mockType.Properties
 			.Where(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
@@ -163,7 +163,7 @@ internal static class PropertyExpectationsBuilder
 	}
 
 	private static IEnumerable<ExpectationMapping> BuildIndexers(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName, 
-		Action<string, string, string> adornmentsFQNsPipeline)
+		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		if (mockType.Properties.Any(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 		{
@@ -292,7 +292,7 @@ internal static class PropertyExpectationsBuilder
 	}
 
 	private static IEnumerable<ExpectationMapping> BuildExplicitProperties(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName,
-		Action<string, string, string> adornmentsFQNsPipeline)
+		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		foreach (var typeGroup in mockType.Properties
 			.Where(_ => !_.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
@@ -424,7 +424,7 @@ internal static class PropertyExpectationsBuilder
 	}
 
 	private static IEnumerable<ExpectationMapping> BuildProperties(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName, 
-		Action<string, string, string> adornmentsFQNsPipeline)
+		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		if (mockType.Properties.Any(_ => !_.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 		{

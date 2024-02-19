@@ -1,7 +1,6 @@
 ﻿using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
-using System.Collections.Immutable;
 
 namespace Rocks.Builders.Create;
 
@@ -9,7 +8,10 @@ internal static class MockBuilder
 {
 	internal static bool Build(IndentedTextWriter writer, TypeMockModel mockType)
 	{
-		var expectationsFullyQualifiedName = mockType.Type.Namespace is null ?
+		var adornments = new HashSet<AdornmentsPipeline>();
+		var adornmentsPipeline = (AdornmentsPipeline adornmentsPipelineInformation) => { adornments.Add(adornmentsPipelineInformation); };
+
+		var expectationsFQN = mockType.Type.Namespace is null ?
 			$"global::{mockType.Type.FlattenedName}CreateExpectations" :
 			$"global::{mockType.Type.Namespace}.{mockType.Type.FlattenedName}CreateExpectations";
 
@@ -21,27 +23,19 @@ internal static class MockBuilder
 			""");
 		writer.Indent++;
 
-		var wereTypesProjected = MockProjectedTypesBuilder.Build(writer, mockType);
+		var wereTypesProjected = MockProjectedTypesBuilder.Build(writer, mockType, expectationsFQN, adornmentsPipeline);
 
-		MockHandlerListBuilder.Build(writer, mockType, expectationsFullyQualifiedName);
+		MockHandlerListBuilder.Build(writer, mockType, expectationsFQN);
 		writer.WriteLine();
 
 		MockExpectationsVerifyBuilder.Build(writer, mockType);
 		writer.WriteLine();
 
-		MockTypeBuilder.Build(writer, mockType, expectationsFullyQualifiedName);
+		MockTypeBuilder.Build(writer, mockType, expectationsFQN);
 
 		var expectationMappings = new List<ExpectationMapping>();
-		var adornmentsFQNs = new HashSet<(string adornmentFQN, string typeArguments, string constraints)>();
-		var adornmentsFQNsPipeline = (string adornmentFQN, string typeArguments, string constraints) =>
-			{
-				if (mockType.Events.Length > 0)
-				{
-					adornmentsFQNs.Add((adornmentFQN, typeArguments, constraints));
-				}
-			};
 
-		expectationMappings.AddRange(MethodExpectationsBuilder.Build(writer, mockType, expectationsFullyQualifiedName, adornmentsFQNsPipeline));
+		expectationMappings.AddRange(MethodExpectationsBuilder.Build(writer, mockType, expectationsFQN, adornmentsPipeline));
 
 		if (expectationMappings.Count > 0)
 		{
@@ -50,7 +44,7 @@ internal static class MockBuilder
 
 		var currentMappingCount = expectationMappings.Count;
 
-		expectationMappings.AddRange(PropertyExpectationsBuilder.Build(writer, mockType, expectationsFullyQualifiedName, adornmentsFQNsPipeline));
+		expectationMappings.AddRange(PropertyExpectationsBuilder.Build(writer, mockType, expectationsFQN, adornmentsPipeline));
 
 		if (expectationMappings.Count != currentMappingCount)
 		{
@@ -64,14 +58,18 @@ internal static class MockBuilder
 
 		writer.WriteLine();
 
-		MockConstructorExtensionsBuilder.Build(writer, mockType, expectationsFullyQualifiedName, expectationMappings);
+		MockConstructorExtensionsBuilder.Build(writer, mockType, expectationsFQN, expectationMappings);
+
+		writer.WriteLine();
+		MockAdornmentsBuilder.Build(writer, mockType, expectationsFQN, adornments);
 
 		writer.Indent--;
 		writer.WriteLine("}");
 
-		if (adornmentsFQNs.Count > 0)
+		if (mockType.Events.Length > 0)
 		{
-			MockEventExtensionsBuilder.Build(writer, mockType, adornmentsFQNs.ToImmutableHashSet());
+			writer.WriteLine();
+			MockEventExtensionsBuilder.Build(writer, mockType, expectationsFQN);
 		}
 
 		return wereTypesProjected;

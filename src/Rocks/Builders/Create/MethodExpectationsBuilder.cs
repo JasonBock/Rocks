@@ -8,7 +8,7 @@ namespace Rocks.Builders.Create;
 internal static class MethodExpectationsBuilder
 {
 	internal static IEnumerable<ExpectationMapping> Build(IndentedTextWriter writer, TypeMockModel type, string expectationsFullyQualifiedName,
-		Action<string, string, string> adornmentsFQNsPipeline)
+		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		if (type.Methods.Length > 0)
 		{

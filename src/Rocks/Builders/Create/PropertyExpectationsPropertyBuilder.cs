@@ -9,7 +9,7 @@ namespace Rocks.Builders.Create;
 internal static class PropertyExpectationsPropertyBuilder
 {
 	private static void BuildGetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string expectationsFullyQualifiedName, 
-		Action<string, string, string> adornmentsFQNsPipeline)
+		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		var propertyGetMethod = property.GetMethod!;
 		var callbackDelegateTypeName = propertyGetMethod.RequiresProjectedDelegate ?
@@ -22,7 +22,7 @@ internal static class PropertyExpectationsPropertyBuilder
 			property.Type.TypeKind == TypeKind.Pointer)
 		{
 			var projectedAdornmentTypeName = MockProjectedAdornmentsTypesBuilder.GetProjectedAdornmentsFullyQualifiedNameName(property.Type, property.MockType);
-			adornmentsType = $"{projectedAdornmentTypeName}<{callbackDelegateTypeName}>";
+			adornmentsType = $"{projectedAdornmentTypeName}<AdornmentsForHandler{memberIdentifier}, {callbackDelegateTypeName}>";
 		}
 		else
 		{
@@ -32,14 +32,14 @@ internal static class PropertyExpectationsPropertyBuilder
 					MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
 					property.Type.FullyQualifiedName;
 
-			adornmentsType = $"global::Rocks.Adornments<{handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
+			adornmentsType = $"global::Rocks.Adornments<AdornmentsForHandler{memberIdentifier}, {handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
 		}
 
-		adornmentsFQNsPipeline(adornmentsType, string.Empty, string.Empty);
+		adornmentsFQNsPipeline(new(adornmentsType, string.Empty, string.Empty, memberIdentifier));
 
 		writer.WriteLines(
 			$$"""
-			internal {{adornmentsType}} {{property.Name}}()
+			internal {{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{memberIdentifier}} {{property.Name}}()
 			{
 				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 				var handler = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}();
@@ -51,7 +51,7 @@ internal static class PropertyExpectationsPropertyBuilder
 	}
 
 	private static void BuildSetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string expectationsFullyQualifiedName, 
-		Action<string, string, string> adornmentsFQNsPipeline)
+		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		var propertyParameterType = property.SetMethod!.Parameters[0].Type;
 		var propertyParameterValue =
@@ -63,12 +63,12 @@ internal static class PropertyExpectationsPropertyBuilder
 		var callbackDelegateTypeName = property.SetMethod!.RequiresProjectedDelegate ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, property.MockType) :
 			DelegateBuilder.Build(property.SetMethod!.Parameters);
-		var adornmentsType = $"global::Rocks.Adornments<{expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}>";
-		adornmentsFQNsPipeline(adornmentsType, string.Empty, string.Empty);
+		var adornmentsType = $"global::Rocks.Adornments<AdornmentsForHandler{memberIdentifier}, {expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}>";
+		adornmentsFQNsPipeline(new(adornmentsType, string.Empty, string.Empty, memberIdentifier));
 
 		writer.WriteLines(
 			$$"""
-			internal {{adornmentsType}} {{property.Name}}({{propertyParameterValue}} @value)
+			internal {{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{memberIdentifier}} {{property.Name}}({{propertyParameterValue}} @value)
 			{
 				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 				global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -86,7 +86,7 @@ internal static class PropertyExpectationsPropertyBuilder
 	}
 
 	internal static void Build(IndentedTextWriter writer, PropertyModel property, PropertyAccessor accessor, string expectationsFullyQualifiedName,
-		Action<string, string, string> adornmentsFQNsPipeline)
+		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		var memberIdentifier = property.MemberIdentifier;
 

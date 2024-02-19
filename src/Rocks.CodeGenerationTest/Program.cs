@@ -12,12 +12,11 @@ using System.Diagnostics;
 using System.Reflection;
 
 var stopwatch = Stopwatch.StartNew();
-
 //TestTypeValidity();
 //TestWithCode();
 //TestWithType();
-TestWithTypes();
-
+//TestWithTypes();
+TestTypesIndividually();
 stopwatch.Stop();
 
 Console.WriteLine($"Total time: {stopwatch.Elapsed}");
@@ -53,12 +52,16 @@ static void TestWithCode()
 		[]);
 }
 
-static void TestWithType() =>
-	PrintIssues(TestGenerator.Generate(new RockAttributeGenerator(),
-		[typeof(ImapMessageSet<>)],
+static void TestWithType()
+{
+	(var issues, _) = TestGenerator.Generate(new RockAttributeGenerator(),
+		[typeof(AngleSharp.IBrowsingContext)],
 		[],
-		AsposeMappings.GetMappedTypes(),
-		["AsposeEmailAlias"], BuildType.Create));
+		[],
+		[], BuildType.Create);
+
+	PrintIssues(issues);
+}
 
 static void TestWithTypes()
 {
@@ -201,12 +204,12 @@ static void TestWithTypes()
 				genericTypeMappings, targetMapping.aliases);
 
 			Console.WriteLine($"Testing {targetMapping.type.Assembly.GetName().Name} - {BuildType.Create}");
-			var createIssues = TestGenerator.Generate(
+			(var createIssues, _) = TestGenerator.Generate(
 				new RockAttributeGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases, BuildType.Create);
 			issues.AddRange(createIssues);
 
 			Console.WriteLine($"Testing {targetMapping.type.Assembly.GetName().Name} - {BuildType.Make}");
-			var makeIssues = TestGenerator.Generate(
+			(var makeIssues, _) = TestGenerator.Generate(
 				new RockAttributeGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases, BuildType.Make);
 			issues.AddRange(makeIssues);
 
@@ -224,6 +227,85 @@ static void TestWithTypes()
 		""");
 
 	PrintIssues([.. issues]);
+}
+
+static void TestTypesIndividually()
+{
+	var targetMappings = new TypeAliasesMapping[]
+	{
+		//new (typeof(object), []),
+		new (typeof(AngleSharp.BrowsingContext), []),
+	};
+
+	var typesToLoadAssembliesFrom = new Type[]
+	{
+		typeof(System.Linq.Expressions.LambdaExpression),
+		typeof(System.Net.Mail.MailMessage),
+		typeof(Microsoft.Extensions.Caching.Memory.IMemoryCache),
+		typeof(System.Diagnostics.DiagnosticSource),
+		typeof(System.Transactions.Transaction),
+		typeof(System.Text.Json.JsonSerializerOptions),
+		typeof(Uri),
+		typeof(Func<>),
+		typeof(System.Reflection.ConstructorInfo),
+		typeof(System.Xml.Linq.SaveOptions),
+		typeof(Azure.Core.Amqp.AmqpAnnotatedMessage),
+	};
+
+	var genericTypeMappings = MappedTypes.GetMappedTypes();
+	var issues = new List<Issue>();
+
+	var visitedAssemblies = new HashSet<Assembly>();
+
+	var typeGenerationTimes = new List<TypeGenerationTime>();
+
+	foreach (var targetMapping in targetMappings)
+	{
+		if (visitedAssemblies.Add(targetMapping.type.Assembly))
+		{
+			Console.WriteLine($"Getting target types for {targetMapping.type.Assembly.GetName().Name}");
+			var targetAssemblySet = new HashSet<Assembly> { targetMapping.type.Assembly };
+
+			var discoveredTypes = TestGenerator.GetTargets(targetAssemblySet, [], typesToLoadAssembliesFrom,
+				genericTypeMappings, targetMapping.aliases);
+
+			foreach (var discoveredType in discoveredTypes)
+			{
+				Console.WriteLine($"Generating for type {discoveredType.FullName}...");
+				(_, var generatorElapsedTime) = TestGenerator.Generate(
+					new RockAttributeGenerator(), [discoveredType], typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases, BuildType.Create);
+				typeGenerationTimes.Add(new(discoveredType, generatorElapsedTime));
+			}
+		}
+	}
+
+	Console.WriteLine();
+	Console.WriteLine("Slowest Generation Times");
+	foreach (var typeGenerationTime in typeGenerationTimes.OrderByDescending(_ => _.Times.GeneratorTime).Take(10))
+	{
+		Console.WriteLine($"Generation Time: {typeGenerationTime.Times.GeneratorTime}, Emit Time: {typeGenerationTime.Times.EmitTime}, Type: {typeGenerationTime.Type.FullName}");
+	}
+
+	Console.WriteLine();
+	Console.WriteLine("Slowest Emit Times");
+	foreach (var typeGenerationTime in typeGenerationTimes.OrderByDescending(_ => _.Times.EmitTime).Take(10))
+	{
+		Console.WriteLine($"Generation Time: {typeGenerationTime.Times.GeneratorTime}, Emit Time: {typeGenerationTime.Times.EmitTime}, Type: {typeGenerationTime.Type.FullName}");
+	}
+
+	Console.WriteLine();
+	Console.WriteLine("Fasted Generation Times");
+	foreach (var typeGenerationTime in typeGenerationTimes.OrderBy(_ => _.Times.GeneratorTime).Take(10))
+	{
+		Console.WriteLine($"Generation Time: {typeGenerationTime.Times.GeneratorTime}, Emit Time: {typeGenerationTime.Times.EmitTime}, Type: {typeGenerationTime.Type.FullName}");
+	}
+
+	Console.WriteLine();
+	Console.WriteLine("Fasted Emit Times");
+	foreach (var typeGenerationTime in typeGenerationTimes.OrderBy(_ => _.Times.EmitTime).Take(10))
+	{
+		Console.WriteLine($"Generation Time: {typeGenerationTime.Times.GeneratorTime}, Emit Time: {typeGenerationTime.Times.EmitTime}, Type: {typeGenerationTime.Type.FullName}");
+	}
 }
 
 static void PrintIssues(ImmutableArray<Issue> issues)
@@ -319,4 +401,3 @@ static void PrintIssues(ImmutableArray<Issue> issues)
 		Console.ForegroundColor = currentColor;
 	}
 }
-#pragma warning restore CS8321 // Local function is declared but never used

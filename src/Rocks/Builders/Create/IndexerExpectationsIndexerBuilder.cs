@@ -8,10 +8,10 @@ namespace Rocks.Builders.Create;
 internal static class IndexerExpectationsIndexerBuilder
 {
 	private static void BuildGetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string expectationsFullyQualifiedName,
-		Action<string, string, string> adornmentsFQNsPipeline)
+		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		static void BuildGetterImplementation(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, bool isGeneratedWithDefaults, 
-			string expectationsFullyQualifiedName, Action<string, string, string> adornmentsFQNsPipeline)
+			string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 		{
 			var propertyGetMethod = property.GetMethod!;
 			var namingContext = new VariableNamingContext(propertyGetMethod);
@@ -27,7 +27,7 @@ internal static class IndexerExpectationsIndexerBuilder
 				property.Type.TypeKind == TypeKind.Pointer)
 			{
 				var projectedAdornmentTypeName = MockProjectedAdornmentsTypesBuilder.GetProjectedAdornmentsFullyQualifiedNameName(property.Type, property.MockType);
-				adornmentsType = $"{projectedAdornmentTypeName}<{callbackDelegateTypeName}>";
+				adornmentsType = $"{projectedAdornmentTypeName}<AdornmentsForHandler{memberIdentifier}, {callbackDelegateTypeName}>";
 			}
 			else
 			{
@@ -37,10 +37,10 @@ internal static class IndexerExpectationsIndexerBuilder
 						MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
 						property.Type.FullyQualifiedName;
 
-				adornmentsType = $"global::Rocks.Adornments<{handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
+				adornmentsType = $"global::Rocks.Adornments<AdornmentsForHandler{memberIdentifier}, {handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
 			}
 
-			adornmentsFQNsPipeline(adornmentsType, string.Empty, string.Empty);
+			adornmentsFQNsPipeline(new(adornmentsType, string.Empty, string.Empty, memberIdentifier));
 
 			var instanceParameters = string.Join(", ", propertyGetMethod.Parameters.Select(_ =>
 				{
@@ -87,14 +87,14 @@ internal static class IndexerExpectationsIndexerBuilder
 						$"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}"));
 				writer.WriteLines(
 					$$"""
-					internal {{adornmentsType}} This({{instanceParameters}}) =>
+					internal {{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{memberIdentifier}} This({{instanceParameters}}) =>
 						this.This({{parameterValues}});
 					""");
 			}
 			else
 			{
 				var handlerContext = new VariableNamingContext(property.Parameters);
-				writer.WriteLine($"internal {adornmentsType} This({instanceParameters})");
+				writer.WriteLine($"internal {expectationsFullyQualifiedName}.Adornments.AdornmentsForHandler{memberIdentifier} This({instanceParameters})");
 				writer.WriteLine("{");
 				writer.Indent++;
 				writer.WriteLine("global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);");
@@ -150,10 +150,10 @@ internal static class IndexerExpectationsIndexerBuilder
 	}
 
 	private static void BuildSetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, 
-		string expectationsFullyQualifiedName, Action<string, string, string> adornmentsFQNsPipeline)
+		string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		static void BuildSetterImplementation(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, bool isGeneratedWithDefaults, 
-			string expectationsFullyQualifiedName, Action<string, string, string> adornmentsFQNsPipeline)
+			string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 		{
 			var propertySetMethod = property.SetMethod!;
 			var namingContext = new VariableNamingContext(propertySetMethod);
@@ -173,8 +173,8 @@ internal static class IndexerExpectationsIndexerBuilder
 			var callbackDelegateTypeName = propertySetMethod.RequiresProjectedDelegate ?
 				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertySetMethod, property.MockType) :
 				DelegateBuilder.Build(propertySetMethod.Parameters);
-			var adornmentsType = $"global::Rocks.Adornments<{expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}>";
-			adornmentsFQNsPipeline(adornmentsType, string.Empty, string.Empty);
+			var adornmentsType = $"global::Rocks.Adornments<AdornmentsForHandler{memberIdentifier}, {expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}>";
+			adornmentsFQNsPipeline(new(adornmentsType, string.Empty, string.Empty, memberIdentifier));
 
 			// We need to put the value parameter immediately after "self"
 			// and then skip the value parameter by taking only the non-value parameters.
@@ -227,14 +227,14 @@ internal static class IndexerExpectationsIndexerBuilder
 							$"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}")));
 				writer.WriteLines(
 					$$"""
-					internal {{adornmentsType}} This({{instanceParameters}}) =>
+					internal {{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{memberIdentifier}} This({{instanceParameters}}) =>
 						this.This({{parameterValues}});
 					""");
 			}
 			else
 			{
 				var handlerContext = new VariableNamingContext(property.Parameters);
-				writer.WriteLine($"internal {adornmentsType} This({instanceParameters})");
+				writer.WriteLine($"internal {expectationsFullyQualifiedName}.Adornments.AdornmentsForHandler{memberIdentifier} This({instanceParameters})");
 				writer.WriteLine("{");
 				writer.Indent++;
 				writer.WriteLine("global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);");
@@ -290,7 +290,7 @@ internal static class IndexerExpectationsIndexerBuilder
 	}
 
 	internal static void Build(IndentedTextWriter writer, PropertyModel property, PropertyAccessor accessor, string expectationsFullyQualifiedName,
-		Action<string, string, string> adornmentsFQNsPipeline)
+		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		var memberIdentifier = property.MemberIdentifier;
 

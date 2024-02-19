@@ -181,7 +181,7 @@ public static class EventGeneratorTests
 					internal MethodExpectations(global::AbstractClassMethodReturnWithEventsCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
+					internal global::AbstractClassMethodReturnWithEventsCreateExpectations.Adornments.AdornmentsForHandler0 Equals(global::Rocks.Argument<object?> @obj)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
@@ -196,7 +196,7 @@ public static class EventGeneratorTests
 						return new(@handler);
 					}
 					
-					internal new global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+					internal new global::AbstractClassMethodReturnWithEventsCreateExpectations.Adornments.AdornmentsForHandler1 GetHashCode()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler1();
@@ -205,7 +205,7 @@ public static class EventGeneratorTests
 						return new(handler);
 					}
 					
-					internal new global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					internal new global::AbstractClassMethodReturnWithEventsCreateExpectations.Adornments.AdornmentsForHandler2 ToString()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler2();
@@ -214,7 +214,7 @@ public static class EventGeneratorTests
 						return new(handler);
 					}
 					
-					internal global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler3, global::System.Func<int>, int> NoParameters()
+					internal global::AbstractClassMethodReturnWithEventsCreateExpectations.Adornments.AdornmentsForHandler3 NoParameters()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler3();
@@ -245,17 +245,44 @@ public static class EventGeneratorTests
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 					}
 				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForAbstractClassMethodReturnWithEvents<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForAbstractClassMethodReturnWithEvents<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForAbstractClassMethodReturnWithEvents<AdornmentsForHandler0>
+					{ 
+						public AdornmentsForHandler0(global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler0 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler1
+						: global::Rocks.Adornments<AdornmentsForHandler1, global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForAbstractClassMethodReturnWithEvents<AdornmentsForHandler1>
+					{ 
+						public AdornmentsForHandler1(global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler1 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler2
+						: global::Rocks.Adornments<AdornmentsForHandler2, global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForAbstractClassMethodReturnWithEvents<AdornmentsForHandler2>
+					{ 
+						public AdornmentsForHandler2(global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler2 handler)
+							: base(handler) { }				
+					}
+					public sealed class AdornmentsForHandler3
+						: global::Rocks.Adornments<AdornmentsForHandler3, global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler3, global::System.Func<int>, int>, IAdornmentsForAbstractClassMethodReturnWithEvents<AdornmentsForHandler3>
+					{ 
+						public AdornmentsForHandler3(global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler3 handler)
+							: base(handler) { }				
+					}
+				}
 			}
 			
 			internal static class AbstractClassMethodReturnWithEventsAdornmentsEventExtensions
 			{
-				internal static global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> RaiseMyEvent(this global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> self, global::System.EventArgs args) => 
-					self.AddRaiseEvent(new("MyEvent", args));
-				internal static global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler1, global::System.Func<int>, int> RaiseMyEvent(this global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler1, global::System.Func<int>, int> self, global::System.EventArgs args) => 
-					self.AddRaiseEvent(new("MyEvent", args));
-				internal static global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler2, global::System.Func<string?>, string?> RaiseMyEvent(this global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler2, global::System.Func<string?>, string?> self, global::System.EventArgs args) => 
-					self.AddRaiseEvent(new("MyEvent", args));
-				internal static global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler3, global::System.Func<int>, int> RaiseMyEvent(this global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler3, global::System.Func<int>, int> self, global::System.EventArgs args) => 
+				internal static TAdornments RaiseMyEvent<TAdornments>(this TAdornments self, global::System.EventArgs args) where TAdornments : global::AbstractClassMethodReturnWithEventsCreateExpectations.Adornments.IAdornmentsForAbstractClassMethodReturnWithEvents<TAdornments> => 
 					self.AddRaiseEvent(new("MyEvent", args));
 			}
 			
