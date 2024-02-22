@@ -210,6 +210,58 @@ internal static class TestGenerator
 		return ([.. issues], new(generatorWatch.Elapsed, emitWatch.Elapsed));
 	}
 
+	internal static (ImmutableArray<Issue> issues, Times times) GenerateNoEmit(IIncrementalGenerator generator, Type[] targetTypes, Type[] typesToLoadAssembliesFrom,
+		 Dictionary<Type, Dictionary<string, string>>? genericTypeMappings, string[] aliases, BuildType buildType)
+	{
+		var isCreate = buildType == BuildType.Create;
+		var issues = new List<Issue>();
+		var assemblies = targetTypes.Select(_ => _.Assembly).ToHashSet();
+		var code = GetCode(targetTypes, isCreate, genericTypeMappings, aliases);
+
+		var syntaxTree = CSharpSyntaxTree.ParseText(code);
+		var references = AppDomain.CurrentDomain.GetAssemblies()
+			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
+			.Select(_ => MetadataReference.CreateFromFile(_.Location))
+			.Concat(assemblies.Select(_ => MetadataReference.CreateFromFile(_.Location).WithAliases(aliases)))
+			.Concat(new[]
+			{
+				MetadataReference.CreateFromFile(typeof(RockAttributeGenerator).Assembly.Location),
+				MetadataReference.CreateFromFile(typeof(InvalidEnumArgumentException).Assembly.Location),
+			});
+
+		foreach (var typeToLoadAssembliesFrom in typesToLoadAssembliesFrom)
+		{
+			references = references.Concat(new[]
+			{
+				 MetadataReference.CreateFromFile(typeToLoadAssembliesFrom.Assembly.Location)
+			});
+		}
+
+		var compilation = CSharpCompilation.Create("generator", new[] { syntaxTree },
+			 references, new(OutputKind.DynamicallyLinkedLibrary,
+				  allowUnsafe: true,
+				  generalDiagnosticOption: ReportDiagnostic.Error,
+				  specificDiagnosticOptions: TestGenerator.SpecificDiagnostics));
+
+		var driver = CSharpGeneratorDriver.Create(generator);
+		var generatorWatch = Stopwatch.StartNew();
+		driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out var diagnostics);
+		generatorWatch.Stop();
+
+		var driverHasDiagnostics = diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error || _.Severity == DiagnosticSeverity.Warning);
+
+		if (driverHasDiagnostics)
+		{
+			issues.AddRange(diagnostics
+				 .Where(_ => _.Severity == DiagnosticSeverity.Error ||
+					  _.Severity == DiagnosticSeverity.Warning)
+				 .Select(_ => new Issue(_.Id, _.Severity, _.ToString(), _.Location)));
+			var mockCode = compilation.SyntaxTrees.ToArray()[^1];
+		}
+
+		return ([.. issues], new(generatorWatch.Elapsed, default));
+	}
+
 	internal static void Generate(IIncrementalGenerator generator, string code, Type[] typesToLoadAssembliesFrom)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);

@@ -14,8 +14,9 @@ using System.Reflection;
 var stopwatch = Stopwatch.StartNew();
 //TestTypeValidity();
 //TestWithCode();
-//TestWithType();
-TestWithTypes();
+TestWithType();
+//TestWithTypeNoEmit();
+//TestWithTypes();
 //TestTypesIndividually();
 stopwatch.Stop();
 
@@ -54,13 +55,32 @@ static void TestWithCode()
 
 static void TestWithType()
 {
-	(var issues, _) = TestGenerator.Generate(new RockAttributeGenerator(),
-		[typeof(AngleSharp.IBrowsingContext)],
-		[],
-		[],
-		[], BuildType.Create);
+	for (var i = 0; i < 10; i++)
+	{
+		(var issues, var times) = TestGenerator.Generate(new RockAttributeGenerator(),
+			[typeof(AngleSharp.Svg.Dom.ISvgSvgElement)],
+			[],
+			[],
+			[], BuildType.Create);
 
-	PrintIssues(issues);
+		Console.WriteLine($"Generation Time: {times.GeneratorTime}, Emit Time: {times.EmitTime}");
+		PrintIssues(issues);
+	}
+}
+
+static void TestWithTypeNoEmit()
+{
+	for (var i = 0; i < 50; i++)
+	{
+		(var issues, var times) = TestGenerator.GenerateNoEmit(new RockAttributeGenerator(),
+			[typeof(AngleSharp.Svg.Dom.ISvgSvgElement)],
+			[],
+			[],
+			[], BuildType.Create);
+
+		Console.WriteLine($"Generation Time: {times.GeneratorTime}, Emit Time: {times.EmitTime}");
+		PrintIssues(issues);
+	}
 }
 
 static void TestWithTypes()
@@ -233,8 +253,8 @@ static void TestTypesIndividually()
 {
 	var targetMappings = new TypeAliasesMapping[]
 	{
-		//new (typeof(object), []),
 		new (typeof(AngleSharp.BrowsingContext), []),
+		new (typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource), []),
 	};
 
 	var typesToLoadAssembliesFrom = new Type[]
