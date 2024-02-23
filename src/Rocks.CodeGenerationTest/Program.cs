@@ -14,9 +14,9 @@ using System.Reflection;
 var stopwatch = Stopwatch.StartNew();
 //TestTypeValidity();
 //TestWithCode();
-TestWithType();
+//TestWithType();
 //TestWithTypeNoEmit();
-//TestWithTypes();
+TestWithTypes();
 //TestTypesIndividually();
 stopwatch.Stop();
 

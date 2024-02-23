@@ -70,20 +70,27 @@ internal static class AttributeDataExtensions
 			};
 
 		var name = self.AttributeClass!.GetFullyQualifiedName(compilation);
-		var argumentParts = new List<string>();
 
-		if (self.ConstructorArguments.Length > 0)
+		if (self.ConstructorArguments.Length == 0 && self.NamedArguments.Length == 0)
 		{
-			argumentParts.AddRange(self.ConstructorArguments.Select(_ => GetTypedConstantValue(_, compilation)));
+			return name;
 		}
-
-		if (self.NamedArguments.Length > 0)
+		else
 		{
-			argumentParts.AddRange(self.NamedArguments.Select(_ => $"{_.Key} = {GetTypedConstantValue(_.Value, compilation)}"));
-		}
+			var argumentParts = new List<string>(self.ConstructorArguments.Length + self.NamedArguments.Length);
 
-		var arguments = argumentParts.Count > 0 ? $"({string.Join(", ", argumentParts)})" : string.Empty;
-		return $"{name}{arguments}";
+			if (self.ConstructorArguments.Length > 0)
+			{
+				argumentParts.AddRange(self.ConstructorArguments.Select(_ => GetTypedConstantValue(_, compilation)));
+			}
+
+			if (self.NamedArguments.Length > 0)
+			{
+				argumentParts.AddRange(self.NamedArguments.Select(_ => $"{_.Key} = {GetTypedConstantValue(_.Value, compilation)}"));
+			}
+
+			return $"{name}{$"({string.Join(", ", argumentParts)})"}";
+		}
 	}
 
 	internal static string GetDescription(this ImmutableArray<AttributeData> self, Compilation compilation, 
