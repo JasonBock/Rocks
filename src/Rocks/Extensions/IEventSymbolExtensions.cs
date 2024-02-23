@@ -6,20 +6,11 @@ namespace Rocks.Extensions;
 
 internal static class IEventSymbolExtensions
 {
-	internal static ImmutableArray<Diagnostic> GetObsoleteDiagnostics(
-		this IEventSymbol self, SyntaxNode node, INamedTypeSymbol obsoleteAttribute)
-	{
-		var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
+   internal static Diagnostic? GetObsoleteDiagnostic(
+	   this IEventSymbol self, SyntaxNode node, INamedTypeSymbol obsoleteAttribute) => 
+			self.Type.IsObsolete(obsoleteAttribute) ? MemberUsesObsoleteTypeDiagnostic.Create(node, self) : null;
 
-		if (self.Type.IsObsolete(obsoleteAttribute))
-		{
-			diagnostics.Add(MemberUsesObsoleteTypeDiagnostic.Create(node, self));
-		}
-
-		return diagnostics.ToImmutable();
-	}
-
-	internal static bool CanBeSeenByContainingAssembly(this IEventSymbol self, IAssemblySymbol assembly) =>
+   internal static bool CanBeSeenByContainingAssembly(this IEventSymbol self, IAssemblySymbol assembly) =>
 		((ISymbol)self).CanBeSeenByContainingAssembly(assembly) &&
 			self.Type.CanBeSeenByContainingAssembly(assembly);
 

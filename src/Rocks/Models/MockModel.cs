@@ -58,7 +58,10 @@ internal sealed record MockModel
 
 		var constructors = new MockableConstructorDiscovery(typeToMock, containingAssembly, obsoleteAttribute).Constructors;
 		var methods = new MockableMethodDiscovery(typeToMock, compilation.Assembly, shims, compilation, ref memberIdentifier).Methods;
+		var methodMemberCount = methods.Results.Length;
+
 		var properties = new MockablePropertyDiscovery(typeToMock, containingAssembly, shims, ref memberIdentifier).Properties;
+		var propertyMemberCount = (int)memberIdentifier - methodMemberCount;
 		var events = new MockableEventDiscovery(typeToMock, containingAssembly).Events;
 
 		if (constructors.Length > 1)
@@ -82,22 +85,42 @@ internal sealed record MockModel
 
 		foreach (var constructor in constructors)
 		{
-			diagnostics.AddRange(constructor.GetObsoleteDiagnostics(node, obsoleteAttribute));
+			var diagnostic = constructor.GetObsoleteDiagnostic(node, obsoleteAttribute);
+
+			if (diagnostic is not null)
+			{
+				diagnostics.Add(diagnostic);
+			}
 		}
 
 		foreach (var method in methods.Results)
 		{
-			diagnostics.AddRange(method.Value.GetObsoleteDiagnostics(node, obsoleteAttribute));
+			var diagnostic = method.Value.GetObsoleteDiagnostic(node, obsoleteAttribute);
+
+			if (diagnostic is not null)
+			{
+				diagnostics.Add(diagnostic);
+			}
 		}
 
 		foreach (var property in properties.Results)
 		{
-			diagnostics.AddRange(property.Value.GetObsoleteDiagnostics(node, obsoleteAttribute));
+			var diagnostic = property.Value.GetObsoleteDiagnostic(node, obsoleteAttribute);
+
+			if (diagnostic is not null)
+			{
+				diagnostics.Add(diagnostic);
+			}
 		}
 
 		foreach (var @event in events.Results)
 		{
-			diagnostics.AddRange(@event.Value.GetObsoleteDiagnostics(node, obsoleteAttribute));
+			var diagnostic = @event.Value.GetObsoleteDiagnostic(node, obsoleteAttribute);
+
+			if (diagnostic is not null)
+			{
+				diagnostics.Add(diagnostic);
+			}
 		}
 
 		if (methods.HasInaccessibleAbstractMembers || properties.HasInaccessibleAbstractMembers ||
@@ -131,7 +154,10 @@ internal sealed record MockModel
 
 		return new(
 			!isMockable ? null :
-				new MockModelInformation(new TypeMockModel(node, typeToMock, compilation, model, constructors, methods, properties, events, shims, shouldResolveShims), buildType),
+				new MockModelInformation(
+					new TypeMockModel(node, typeToMock, compilation, model, 
+						constructors, methods, properties, events, 
+						shims, new TypeMockModelMemberCount(methodMemberCount, propertyMemberCount), shouldResolveShims), buildType),
 			diagnostics.ToImmutable());
 	}
 

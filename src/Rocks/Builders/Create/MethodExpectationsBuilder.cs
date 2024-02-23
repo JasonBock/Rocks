@@ -26,7 +26,6 @@ internal static class MethodExpectationsBuilder
 					""");
 
 				writer.Indent++;
-				var methodAdornmentsFQNNames = new List<string>();
 
 				foreach (var method in type.Methods.Where(
 					_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))

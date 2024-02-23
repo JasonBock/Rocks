@@ -9,22 +9,14 @@ internal static class IMethodSymbolExtensions
 	private const string DoesNotReturnAttributeName =
 		"System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute";
 
-	internal static ImmutableArray<Diagnostic> GetObsoleteDiagnostics(
-		this IMethodSymbol self, SyntaxNode node, INamedTypeSymbol obsoleteAttribute)
-	{
-		var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
+   internal static Diagnostic? GetObsoleteDiagnostic(
+	   this IMethodSymbol self, SyntaxNode node, INamedTypeSymbol obsoleteAttribute) =>
+			self.Parameters.Any(_ => _.Type.IsObsolete(obsoleteAttribute)) ||
+				self.TypeParameters.Any(_ => _.IsObsolete(obsoleteAttribute)) ||
+				!self.ReturnsVoid && self.ReturnType.IsObsolete(obsoleteAttribute) ? 
+				MemberUsesObsoleteTypeDiagnostic.Create(node, self) : null;
 
-		if (self.Parameters.Any(_ => _.Type.IsObsolete(obsoleteAttribute)) ||
-			self.TypeParameters.Any(_ => _.IsObsolete(obsoleteAttribute)) ||
-			!self.ReturnsVoid && self.ReturnType.IsObsolete(obsoleteAttribute))
-		{
-			diagnostics.Add(MemberUsesObsoleteTypeDiagnostic.Create(node, self));
-		}
-
-		return diagnostics.ToImmutable();
-	}
-
-	internal static bool CanBeSeenByContainingAssembly(this IMethodSymbol self, IAssemblySymbol assembly) =>
+   internal static bool CanBeSeenByContainingAssembly(this IMethodSymbol self, IAssemblySymbol assembly) =>
 		((ISymbol)self).CanBeSeenByContainingAssembly(assembly) &&
 			self.Parameters.All(_ => _.Type.CanBeSeenByContainingAssembly(assembly)) &&
 			self.TypeParameters.All(_ => _.CanBeSeenByContainingAssembly(assembly)) &&

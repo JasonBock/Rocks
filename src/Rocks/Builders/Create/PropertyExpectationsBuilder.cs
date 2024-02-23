@@ -10,7 +10,7 @@ internal static class PropertyExpectationsBuilder
 	internal static IEnumerable<ExpectationMapping> Build(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName,
 		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
-		var propertyMappings = new List<ExpectationMapping>();
+		var propertyMappings = new List<ExpectationMapping>(mockType.MemberCount.PropertyCount);
 
 		if (mockType.Properties.Length > 0)
 		{

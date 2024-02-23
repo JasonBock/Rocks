@@ -6,21 +6,13 @@ namespace Rocks.Extensions;
 
 internal static class IPropertySymbolExtensions
 {
-	internal static ImmutableArray<Diagnostic> GetObsoleteDiagnostics(
-		this IPropertySymbol self, SyntaxNode node, INamedTypeSymbol obsoleteAttribute)
-	{
-		var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
-		
-		if (self.Parameters.Any(_ => _.Type.IsObsolete(obsoleteAttribute)) ||
-			self.Type.IsObsolete(obsoleteAttribute))
-		{
-			diagnostics.Add(MemberUsesObsoleteTypeDiagnostic.Create(node, self));
-		}
+   internal static Diagnostic? GetObsoleteDiagnostic(
+	   this IPropertySymbol self, SyntaxNode node, INamedTypeSymbol obsoleteAttribute) => 
+			self.Parameters.Any(_ => _.Type.IsObsolete(obsoleteAttribute)) ||
+				self.Type.IsObsolete(obsoleteAttribute) ? 
+				MemberUsesObsoleteTypeDiagnostic.Create(node, self) : null;
 
-		return diagnostics.ToImmutable();
-	}
-
-	internal static bool CanBeSeenByContainingAssembly(this IPropertySymbol self, IAssemblySymbol assembly) =>
+   internal static bool CanBeSeenByContainingAssembly(this IPropertySymbol self, IAssemblySymbol assembly) =>
 		((ISymbol)self).CanBeSeenByContainingAssembly(assembly) &&
 			self.Type.CanBeSeenByContainingAssembly(assembly) &&
 			self.Parameters.All(_ => _.Type.CanBeSeenByContainingAssembly(assembly));

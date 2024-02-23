@@ -11,9 +11,10 @@ internal sealed record TypeMockModel
 		SyntaxNode node, ITypeSymbol type, Compilation compilation, SemanticModel model,
 		ImmutableArray<IMethodSymbol> constructors, MockableMethods methods,
 		MockableProperties properties, MockableEvents events,
-		HashSet<ITypeSymbol> shims, bool shouldResolveShims)
+		HashSet<ITypeSymbol> shims, TypeMockModelMemberCount memberCount, bool shouldResolveShims)
 	{
 		this.Type = new TypeReferenceModel(type, compilation);
+		this.MemberCount = memberCount;
 
 		// TODO: Remember to sort all array so "equatable" will work,
 		// EXCEPT FOR parameter order (including generic parameters).
@@ -44,11 +45,12 @@ internal sealed record TypeMockModel
 	}
 
 	internal EquatableArray<string> Aliases { get; }
-	internal TypeReferenceModel Type { get; }
+	internal EquatableArray<ConstructorPropertyModel> ConstructorProperties { get; }
 	internal EquatableArray<ConstructorModel> Constructors { get; }
 	internal EquatableArray<EventModel> Events { get; }
-	internal EquatableArray<TypeMockModel> Shims { get; }
-	internal EquatableArray<ConstructorPropertyModel> ConstructorProperties { get; }
+	internal TypeMockModelMemberCount MemberCount { get; }
 	internal EquatableArray<MethodModel> Methods { get; }
 	internal EquatableArray<PropertyModel> Properties { get; }
+	internal EquatableArray<TypeMockModel> Shims { get; }
+	internal TypeReferenceModel Type { get; }
 }

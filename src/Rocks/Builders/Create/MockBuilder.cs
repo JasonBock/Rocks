@@ -33,7 +33,7 @@ internal static class MockBuilder
 
 		MockTypeBuilder.Build(writer, mockType, expectationsFQN);
 
-		var expectationMappings = new List<ExpectationMapping>();
+		var expectationMappings = new List<ExpectationMapping>(mockType.MemberCount.TotalCount);
 
 		expectationMappings.AddRange(MethodExpectationsBuilder.Build(writer, mockType, expectationsFQN, adornmentsPipeline));
 

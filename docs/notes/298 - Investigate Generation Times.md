@@ -435,3 +435,26 @@ Remaining work:
 /// referencing it, as its implementation may change.
 /// </remarks>
 ```
+
+What are some areas to try and reduce memory allocation and improve performance?
+
+* DONE - `AttributeDataExtensions.GetDescription(this AttributeData self, Compilation compilation)` - I think I can improve this with a different strategy around `argumentParts`.
+* Look for any places where lists/collections are made without an initial capacity
+  * DONE - `methodAdornmentsFQNNames` in `MethodExpectationsBuilder.Build()` - actually, it can be removed as it's no longer needed (I think)
+  * DONE - `adornments` and `expectationMappings` in `MockBuilder.Build()` - we can make a good guess as to how many will be needed based on the member + property count (though if I change how properties are managed, the count may be a bit tricky)
+  * `propertyMappings` in `PropertyExpectationsBuilder.Build()`
+  * All of the `propertyProperties` in `PropertyExpectationsBuilder`
+* Look for dead code
+  * `IPropertySymbolExtensions.GetNamespaces(this IPropertySymbol self)`, which would mean `GetNamespaces(this AttributeData self)` may be removed as well. Not entirely sure that these members aren't being used in other places.
+* DONE - I'm wondering if my usage for immutable data structure is overkill. For the models, yes, it's worth it. But when I'm building stuff, it may be better to use lists, dictionaries, etc.
+  * DONE - `IEventSymbolExtensions.GetObsoleteDiagnostics()`
+  * DONE - `IMethodSymbolExtensions.GetObsoleteDiagnostics()`
+  * DONE - `IPropertySymbolExtensions.GetObsoleteDiagnostics()`
+  * DONE - ...and other `GetObsoleteDiagnostics()`
+* In the constructor for `TypeMockModel`, I'm wondering if we can create a `List<>` for each member list of the size given, and then do `ToImmutableArray()` on those. Would that be better?
+
+
+3 methods, 4 properties, 2 of which are get/set, and 2 that are get.
+
+memberIdentifier would be 8 at the end
+get the methodCount, which would be 3, and then (8 - 3) + 1 = 6
