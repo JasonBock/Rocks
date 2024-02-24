@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed how handlers were managed in a mock (issue [#302](https://github.com/JasonBock/Rocks/issues/302))
 - Made minor updates to improve performance (issue [#298](https://github.com/JasonBock/Rocks/issues/298))
+- Added support for `scoped` parameters (issue [#304](https://github.com/JasonBock/Rocks/issues/304))
 
 ## [8.0.0] - 2024-01-22
 

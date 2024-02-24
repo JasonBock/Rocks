@@ -17,6 +17,8 @@ internal static class MockMethodValueBuilder
 		var parametersDescription = string.Join(", ", method.Parameters.Select(_ =>
 		{
 			var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
+			var scoped = _.ScopedKind == ScopedKind.ScopedRef || _.ScopedKind == ScopedKind.ScopedValue ?
+				"scoped " : string.Empty;
 			var direction = _.RefKind switch
 			{
 				RefKind.Ref => "ref ",
@@ -25,7 +27,7 @@ internal static class MockMethodValueBuilder
 				RefKind.RefReadOnlyParameter => "ref readonly ",
 				_ => string.Empty
 			};
-			return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}";
+			return $"{scoped}{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}";
 		}));
 		var explicitTypeNameDescription = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
 			$"{method.ContainingType.FullyQualifiedName}." : string.Empty;
@@ -36,6 +38,8 @@ internal static class MockMethodValueBuilder
 			var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
 			var defaultValue = _.HasExplicitDefaultValue && method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 				$" = {_.ExplicitDefaultValue}" : string.Empty;
+			var scoped = _.ScopedKind == ScopedKind.ScopedRef || _.ScopedKind == ScopedKind.ScopedValue ?
+				"scoped " : string.Empty;
 			var direction = _.RefKind switch
 			{
 				RefKind.Ref => "ref ",
@@ -44,7 +48,7 @@ internal static class MockMethodValueBuilder
 				RefKind.RefReadOnlyParameter => "ref readonly ",
 				_ => string.Empty
 			};
-			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}{defaultValue}";
+			var parameter = $"{scoped}{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}{defaultValue}";
 			var attributes = _.AttributesDescription;
 			return $"{(attributes.Length > 0 ? $"{attributes} " : string.Empty)}{parameter}";
 		}));

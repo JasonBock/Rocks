@@ -4,6 +4,9 @@ namespace Rocks.Tests.Generators;
 
 public static class MultipleModelGeneratorTests
 {
+	// This test, if it fails, may be an indication
+	// that something changed with the models such that
+	// equality broke.
 	[Test]
 	public static async Task GenerateWithMultipleCreatesAsync()
 	{

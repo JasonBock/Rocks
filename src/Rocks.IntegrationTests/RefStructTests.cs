@@ -8,6 +8,8 @@ using Rocks.IntegrationTests;
 [assembly: RockMake<IReturnSpan>]
 [assembly: RockCreate<IHaveSpan>]
 [assembly: RockMake<IHaveSpan>]
+[assembly: RockCreate<IHaveScoped>]
+[assembly: RockMake<IHaveScoped>]
 
 namespace Rocks.IntegrationTests;
 
@@ -29,8 +31,44 @@ public interface IHaveSpan
 	void Bar<T>(Span<T> values);
 }
 
+public interface IHaveScoped
+{
+	Span<int> Foo(scoped Span<int> values);
+}
+
 public static class RefStructTests
 {
+	[Test]
+	public static void CreateScoped()
+	{
+		var expectations = new IHaveScopedCreateExpectations();
+		expectations.Methods.Foo(new()).ReturnValue(() => new[] { 1, 2 }.AsSpan());
+
+		var mock = expectations.Instance();
+		var buffer = new int[] { 3 };
+
+		Assert.Multiple(() =>
+		{
+			var data = mock.Foo(new Span<int>(buffer));
+			Assert.That(data.Length, Is.EqualTo(2));
+			Assert.That(data[0], Is.EqualTo(1));
+			Assert.That(data[1], Is.EqualTo(2));
+		});
+		expectations.Verify();
+	}
+
+	[Test]
+	public static void MakeScoped()
+	{
+		var mock = new IHaveScopedMakeExpectations().Instance();
+
+		Assert.Multiple(() =>
+		{
+			var buffer = new int[] { 3 };
+			Assert.That(mock.Foo(new Span<int>(buffer)) == default, Is.True);
+		});
+	}
+
 	[Test]
 	public static void CreateInAndOut()
 	{

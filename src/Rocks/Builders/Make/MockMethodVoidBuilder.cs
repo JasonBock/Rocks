@@ -18,6 +18,8 @@ internal static class MockMethodVoidBuilder
 			var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
 			var defaultValue = _.HasExplicitDefaultValue && method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? 
 				$" = {_.ExplicitDefaultValue}" : string.Empty;
+			var scoped = _.ScopedKind == ScopedKind.ScopedRef || _.ScopedKind == ScopedKind.ScopedValue ?
+				"scoped " : string.Empty;
 			var direction = _.RefKind switch
 			{
 				RefKind.Ref => "ref ",
@@ -26,7 +28,7 @@ internal static class MockMethodVoidBuilder
 				RefKind.RefReadOnlyParameter => "ref readonly ",
 				_ => string.Empty
 			};
-			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}{defaultValue}";
+			var parameter = $"{scoped}{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}{defaultValue}";
 			var attributes = _.AttributesDescription;
 			return $"{(attributes.Length > 0 ? $"{attributes} " : string.Empty)}{parameter}";
 		}));

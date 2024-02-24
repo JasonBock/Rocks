@@ -1,0 +1,1 @@
+Even if you don't need `scoped` for a `ref int`, we're going to include it anyway. But...what does that do for the callback? In this case, it has to be a `ref`, so we're going to generated a callback for it anyway. Still should check this out to ensure it works.

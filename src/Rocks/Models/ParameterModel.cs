@@ -12,6 +12,7 @@ internal sealed record ParameterModel
 		this.RefKind = parameter.RefKind;
 		this.RequiresNullableAnnotation = parameter.RequiresForcedNullableAnnotation();
 		this.IsParams = parameter.IsParams;
+		this.ScopedKind = parameter.ScopedKind;
 
 		this.Type = new TypeReferenceModel(parameter.Type, compilation);
 
@@ -33,5 +34,6 @@ internal sealed record ParameterModel
 	internal string Name { get; }
 	internal RefKind RefKind { get; }
 	internal bool RequiresNullableAnnotation { get; }
+	internal ScopedKind ScopedKind { get; }
 	internal TypeReferenceModel Type { get; }
 }
