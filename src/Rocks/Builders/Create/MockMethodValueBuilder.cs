@@ -14,25 +14,6 @@ internal static class MockMethodValueBuilder
 
 		var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadOnly ? "ref readonly " : string.Empty;
 		var returnType = $"{returnByRef}{method.ReturnType.FullyQualifiedName}";
-		var parametersDescription = string.Join(", ", method.Parameters.Select(_ =>
-		{
-			var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
-			var scoped = _.ScopedKind == ScopedKind.ScopedRef || _.ScopedKind == ScopedKind.ScopedValue ?
-				"scoped " : string.Empty;
-			var direction = _.RefKind switch
-			{
-				RefKind.Ref => "ref ",
-				RefKind.Out => "out ",
-				RefKind.In => "in ",
-				RefKind.RefReadOnlyParameter => "ref readonly ",
-				_ => string.Empty
-			};
-			return $"{scoped}{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}";
-		}));
-		var explicitTypeNameDescription = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
-			$"{method.ContainingType.FullyQualifiedName}." : string.Empty;
-		var methodDescription = $"{returnType} {explicitTypeNameDescription}{method.Name}({parametersDescription})";
-
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 		{
 			var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
@@ -52,6 +33,9 @@ internal static class MockMethodValueBuilder
 			var attributes = _.AttributesDescription;
 			return $"{(attributes.Length > 0 ? $"{attributes} " : string.Empty)}{parameter}";
 		}));
+
+		var explicitTypeNameDescription = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
+			$"{method.ContainingType.FullyQualifiedName}." : string.Empty;
 		var isUnsafe = method.IsUnsafe ? "unsafe " : string.Empty;
 		var methodSignature =
 			$"{isUnsafe}{returnType} {explicitTypeNameDescription}{method.Name}({methodParameters})";
@@ -70,7 +54,7 @@ internal static class MockMethodValueBuilder
 			writer.WriteLine(method.ReturnTypeAttributesDescription);
 		}
 
-		writer.WriteLine($$"""[global::Rocks.MemberIdentifier({{method.MemberIdentifier}}, "{{methodDescription}}")]""");
+		writer.WriteLine($$"""[global::Rocks.MemberIdentifier({{method.MemberIdentifier}}, "{{(methodSignature.Contains('"') ? methodSignature.Replace("\"", "\\\"") : methodSignature)}}")]""");
 		var isPublic = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 			$"{method.OverridingCodeValue} " : string.Empty;
 		writer.WriteLine($"{isPublic}{(method.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{methodSignature}");
@@ -133,7 +117,7 @@ internal static class MockMethodValueBuilder
 		if (method.Parameters.Length > 0 || method.IsGenericMethod)
 		{
 			writer.WriteLine();
-			writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers match for {methodSignature.Replace("\"", "\\\"")}\");");
+			writer.WriteLine($"""throw new global::Rocks.Exceptions.ExpectationException("No handlers match for {(methodSignature.Contains('"') ? methodSignature.Replace("\"", "\\\"") : methodSignature)}");""");
 		}
 
 		writer.Indent--;
@@ -183,7 +167,7 @@ internal static class MockMethodValueBuilder
 		else
 		{
 			writer.WriteLine();
-			writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers were found for {methodSignature.Replace("\"", "\\\"")}\");");
+			writer.WriteLine($"""throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for {(methodSignature.Contains('"') ? methodSignature.Replace("\"", "\\\"") : methodSignature)}");""");
 		}
 
 		writer.Indent--;
@@ -347,7 +331,7 @@ internal static class MockMethodValueBuilder
 				}
 				else
 				{
-					throw new global::Rocks.Exceptions.ExpectationException("The provided handler does not match for {{methodSignature.Replace("\"", "\\\"")}}");
+					throw new global::Rocks.Exceptions.ExpectationException("The provided handler does not match for {{(methodSignature.Contains('"') ? methodSignature.Replace("\"", "\\\"") : methodSignature)}}");
 				}
 				""");
 		}

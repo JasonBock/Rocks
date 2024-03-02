@@ -87,6 +87,8 @@ static void TestWithTypeNoEmit()
 
 static void TestWithTypes()
 {
+	Console.WriteLine($"Creating type alias mappings...");
+
 	var targetMappings = new TypeAliasesMapping[]
 	{
 #if INCLUDE_PASSING
@@ -209,6 +211,7 @@ static void TestWithTypes()
 		typeof(Azure.Core.Amqp.AmqpAnnotatedMessage),
 	};
 
+	Console.WriteLine($"Getting mapped types...");
 	var genericTypeMappings = MappedTypes.GetMappedTypes();
 	var totalDiscoveredTypeCount = 0;
 	var issues = new List<Issue>();

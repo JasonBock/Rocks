@@ -252,22 +252,19 @@ internal static class MockIndexerBuilder
 			indexer.Accessors == PropertyAccessor.GetAndInit)
 		{
 			isGetterVisible = indexer.GetCanBeSeenByContainingAssembly;
-
-			if (isGetterVisible)
+		 if (isGetterVisible)
+		 {
+			writer.WriteLine($$"""[global::Rocks.MemberIdentifier({{memberIdentifierAttribute}}, "{{explicitTypeName}}{{(signature.Contains('"') ? signature.Replace("\"", "\\\"") : signature)}}")]""");
+			memberIdentifierAttribute++;
+		 }
+	  }
+	  if (indexer.Accessors == PropertyAccessor.Set || indexer.Accessors == PropertyAccessor.Init ||
+	  indexer.Accessors == PropertyAccessor.GetAndSet || indexer.Accessors == PropertyAccessor.GetAndInit)
+	  {
+		 isSetterVisible = indexer.SetCanBeSeenByContainingAssembly || indexer.InitCanBeSeenByContainingAssembly;
+		 if (isSetterVisible)
 			{
-				writer.WriteLine($$"""[global::Rocks.MemberIdentifier({{memberIdentifierAttribute}}, "{{explicitTypeName}}{{signature.Replace("\"", "\\\"")}}")]""");
-				memberIdentifierAttribute++;
-			}
-		}
-
-		if (indexer.Accessors == PropertyAccessor.Set || indexer.Accessors == PropertyAccessor.Init ||
-			indexer.Accessors == PropertyAccessor.GetAndSet || indexer.Accessors == PropertyAccessor.GetAndInit)
-		{
-			isSetterVisible = indexer.SetCanBeSeenByContainingAssembly || indexer.InitCanBeSeenByContainingAssembly;
-
-			if (isSetterVisible)
-			{
-				writer.WriteLine($$"""[global::Rocks.MemberIdentifier({{memberIdentifierAttribute}}, "{{explicitTypeName}}{{signature.Replace("\"", "\\\"")}}")]""");
+				writer.WriteLine($$"""[global::Rocks.MemberIdentifier({{memberIdentifierAttribute}}, "{{explicitTypeName}}{{(signature.Contains('"') ? signature.Replace("\"", "\\\"") : signature)}}")]""");
 			}
 		}
 
