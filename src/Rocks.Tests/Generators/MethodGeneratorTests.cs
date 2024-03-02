@@ -83,7 +83,7 @@ public static class MethodGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "global::System.Linq.IQueryable<TDestination> ProjectTo<TDestination>(global::System.Linq.IQueryable @source, object? @parameters, params global::System.Linq.Expressions.Expression<global::System.Func<TDestination, object>>[] @membersToExpand)")]
+						[global::Rocks.MemberIdentifier(0, "global::System.Linq.IQueryable<TDestination> ProjectTo<TDestination>(global::System.Linq.IQueryable @source, object? @parameters = null, params global::System.Linq.Expressions.Expression<global::System.Func<TDestination, object>>[] @membersToExpand)")]
 						public global::System.Linq.IQueryable<TDestination> ProjectTo<TDestination>(global::System.Linq.IQueryable @source, object? @parameters = null, params global::System.Linq.Expressions.Expression<global::System.Func<TDestination, object>>[] @membersToExpand)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -301,7 +301,7 @@ public static class MethodGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "void Foo(int @a, string @b, double @c)")]
+						[global::Rocks.MemberIdentifier(0, "void Foo(int @a, string @b = \"b\", double @c = 3.2)")]
 						public void Foo(int @a, string @b = "b", double @c = 3.2)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -472,7 +472,7 @@ public static class MethodGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "void Project(string @a, int @b, params global::System.Guid[] @values)")]
+						[global::Rocks.MemberIdentifier(0, "void Project(string @a, int @b = 22, params global::System.Guid[] @values)")]
 						public void Project(string @a, int @b = 22, params global::System.Guid[] @values)
 						{
 							if (this.Expectations.handlers0 is not null)

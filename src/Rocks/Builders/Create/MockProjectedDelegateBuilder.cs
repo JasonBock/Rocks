@@ -26,8 +26,7 @@ internal static class MockProjectedDelegateBuilder
 		var returnType = method.ReturnType.FullyQualifiedName;
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 		{
-			var scoped = _.ScopedKind == ScopedKind.ScopedRef || _.ScopedKind == ScopedKind.ScopedValue ?
-				"scoped " : string.Empty;
+			var scoped = _.IsScoped ? "scoped " : string.Empty;
 			var direction = _.RefKind == RefKind.Ref ? "ref " : _.RefKind == RefKind.Out ? "out " : string.Empty;
 			var parameter = $"{scoped}{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName} @{_.Name}";
 			return $"{_.AttributesDescription}{parameter}";

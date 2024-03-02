@@ -82,7 +82,7 @@ public static class PointerGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "void** AsVtblPtr()")]
+					[global::Rocks.MemberIdentifier(0, "unsafe void** AsVtblPtr()")]
 					public unsafe void** AsVtblPtr()
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -238,7 +238,7 @@ public static class PointerGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "void*** AsVtblPtr()")]
+					[global::Rocks.MemberIdentifier(0, "unsafe void*** AsVtblPtr()")]
 					public unsafe void*** AsVtblPtr()
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -394,7 +394,7 @@ public static class PointerGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "void**** AsVtblPtr()")]
+					[global::Rocks.MemberIdentifier(0, "unsafe void**** AsVtblPtr()")]
 					public unsafe void**** AsVtblPtr()
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -569,7 +569,7 @@ public static class PointerGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "void Create<T>(T* @allocator)")]
+					[global::Rocks.MemberIdentifier(0, "unsafe void Create<T>(T* @allocator)")]
 					public unsafe void Create<T>(T* @allocator)
 						where T : unmanaged
 					{
@@ -775,7 +775,7 @@ public static class PointerGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "void PointerParameter(int* @value)")]
+						[global::Rocks.MemberIdentifier(0, "unsafe void PointerParameter(int* @value)")]
 						public unsafe void PointerParameter(int* @value)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -960,7 +960,7 @@ public static class PointerGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "int* PointerReturn()")]
+						[global::Rocks.MemberIdentifier(0, "unsafe int* PointerReturn()")]
 						public unsafe int* PointerReturn()
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -1143,7 +1143,7 @@ public static class PointerGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "void FunctionPointerParameter(delegate*<int, void> @value)")]
+						[global::Rocks.MemberIdentifier(0, "unsafe void FunctionPointerParameter(delegate*<int, void> @value)")]
 						public unsafe void FunctionPointerParameter(delegate*<int, void> @value)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -1328,7 +1328,7 @@ public static class PointerGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "delegate*<int, void> FunctionPointerReturn()")]
+						[global::Rocks.MemberIdentifier(0, "unsafe delegate*<int, void> FunctionPointerReturn()")]
 						public unsafe delegate*<int, void> FunctionPointerReturn()
 						{
 							if (this.Expectations.handlers0 is not null)

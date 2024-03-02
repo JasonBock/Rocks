@@ -147,7 +147,7 @@ public static class NullabilityGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(3, "global::ConnectionBuilder<object> Argument<TArgumentGraphType, TArgumentType>(string @name, string? @description, TArgumentType @defaultValue)")]
+					[global::Rocks.MemberIdentifier(3, "global::ConnectionBuilder<object> Argument<TArgumentGraphType, TArgumentType>(string @name, string? @description, [global::System.Diagnostics.CodeAnalysis.AllowNullAttribute] TArgumentType @defaultValue = default!)")]
 					public override global::ConnectionBuilder<object> Argument<TArgumentGraphType, TArgumentType>(string @name, string? @description, [global::System.Diagnostics.CodeAnalysis.AllowNullAttribute] TArgumentType @defaultValue = default!)
 					{
 						if (this.Expectations.handlers3 is not null)

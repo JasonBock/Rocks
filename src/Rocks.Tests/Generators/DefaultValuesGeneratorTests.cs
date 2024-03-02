@@ -80,7 +80,7 @@ public static class DefaultValuesGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "global::System.Threading.Tasks.Task<object> Send(object @values, global::MockTests.SomeStruct @someStruct)")]
+						[global::Rocks.MemberIdentifier(0, "global::System.Threading.Tasks.Task<object> Send(object @values, global::MockTests.SomeStruct @someStruct = default)")]
 						public global::System.Threading.Tasks.Task<object> Send(object @values, global::MockTests.SomeStruct @someStruct = default)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -290,7 +290,7 @@ public static class DefaultValuesGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "void Setup<T>(T @initialValue)")]
+					[global::Rocks.MemberIdentifier(0, "void Setup<T>(T @initialValue = default!)")]
 					public void Setup<T>(T @initialValue = default!)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -502,7 +502,7 @@ public static class DefaultValuesGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "void Use(double @value)")]
+					[global::Rocks.MemberIdentifier(0, "void Use(double @value = double.PositiveInfinity)")]
 					public void Use(double @value = double.PositiveInfinity)
 					{
 						if (this.Expectations.handlers0 is not null)

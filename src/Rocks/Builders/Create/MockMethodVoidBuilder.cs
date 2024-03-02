@@ -16,8 +16,7 @@ internal static class MockMethodVoidBuilder
 			var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
 			var defaultValue = _.HasExplicitDefaultValue && method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 				$" = {_.ExplicitDefaultValue}" : string.Empty;
-			var scoped = _.ScopedKind == ScopedKind.ScopedRef || _.ScopedKind == ScopedKind.ScopedValue ?
-				"scoped " : string.Empty;
+			var scoped = _.IsScoped ? "scoped " : string.Empty;
 			var direction = _.RefKind switch
 			{
 				RefKind.Ref => "ref ",

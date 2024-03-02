@@ -679,7 +679,7 @@ public static class AttributeGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(4, "object? VisitParameter(object? @node)")]
+					[global::Rocks.MemberIdentifier(4, "object? VisitParameter([global::System.Diagnostics.CodeAnalysis.NotNullIfNotNullAttribute(\"node\")] object? @node)")]
 					public override object? VisitParameter([global::System.Diagnostics.CodeAnalysis.NotNullIfNotNullAttribute("node")] object? @node)
 					{
 						if (this.Expectations.handlers4 is not null)
@@ -1704,7 +1704,7 @@ public static class AttributeGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "void Foo(string @data)")]
+						[global::Rocks.MemberIdentifier(0, "void Foo([global::MockTests.ParameterOneAttribute, global::MockTests.ParameterTwoAttribute] string @data)")]
 						public void Foo([global::MockTests.ParameterOneAttribute, global::MockTests.ParameterTwoAttribute] string @data)
 						{
 							if (this.Expectations.handlers0 is not null)

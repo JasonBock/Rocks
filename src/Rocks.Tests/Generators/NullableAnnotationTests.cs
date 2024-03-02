@@ -585,7 +585,7 @@ public static class NullableAnnotationTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(3, "int IntReturn(object? @initializationData)")]
+					[global::Rocks.MemberIdentifier(3, "int IntReturn(object? @initializationData = null)")]
 					public override int IntReturn(object? @initializationData = null)
 					{
 						if (this.Expectations.handlers3 is not null)
@@ -609,7 +609,7 @@ public static class NullableAnnotationTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(4, "void VoidReturn(object? @initializationData)")]
+					[global::Rocks.MemberIdentifier(4, "void VoidReturn(object? @initializationData = null)")]
 					public override void VoidReturn(object? @initializationData = null)
 					{
 						if (this.Expectations.handlers4 is not null)

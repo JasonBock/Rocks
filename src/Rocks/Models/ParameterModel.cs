@@ -12,7 +12,8 @@ internal sealed record ParameterModel
 		this.RefKind = parameter.RefKind;
 		this.RequiresNullableAnnotation = parameter.RequiresForcedNullableAnnotation();
 		this.IsParams = parameter.IsParams;
-		this.ScopedKind = parameter.ScopedKind;
+		this.IsScoped = (parameter.Type.IsRefLikeType && parameter.ScopedKind == ScopedKind.ScopedValue) ||
+			(parameter.Type.IsValueType && parameter.RefKind == RefKind.Ref && parameter.ScopedKind == ScopedKind.ScopedRef);
 
 		this.Type = new TypeReferenceModel(parameter.Type, compilation);
 
@@ -30,10 +31,10 @@ internal sealed record ParameterModel
 	internal string? ExplicitDefaultValue { get; }
 	internal bool HasExplicitDefaultValue { get; }
 	internal bool IsParams { get; }
+	internal bool IsScoped { get; }
 	internal TypeReferenceModel MockType { get; }
 	internal string Name { get; }
 	internal RefKind RefKind { get; }
 	internal bool RequiresNullableAnnotation { get; }
-	internal ScopedKind ScopedKind { get; }
 	internal TypeReferenceModel Type { get; }
 }
