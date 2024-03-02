@@ -12,12 +12,14 @@ using System.Diagnostics;
 using System.Reflection;
 
 var stopwatch = Stopwatch.StartNew();
+
 //TestTypeValidity();
 //TestWithCode();
 //TestWithType();
 //TestWithTypeNoEmit();
 TestWithTypes();
 //TestTypesIndividually();
+
 stopwatch.Stop();
 
 Console.WriteLine($"Total time: {stopwatch.Elapsed}");

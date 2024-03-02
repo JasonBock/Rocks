@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<NoWarn>CA1065,CA1815,CA1054,CA1032,CA1055,CA1036,CA1711,CA1008,CA1067,CA1852</NoWarn>
+		<NoWarn>CA1065,CA1815,CA1054,CA1032,CA1055,CA1036,CA1711,CA1008,CA1067,CA1852,NU1608</NoWarn>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Rocks\Rocks.csproj" />

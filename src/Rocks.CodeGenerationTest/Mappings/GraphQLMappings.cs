@@ -32,6 +32,12 @@ namespace Rocks.CodeGenerationTest.Mappings
 					}
 				},
 				{
+					typeof(DefaultGraphTypeFactory<>), new()
+					{
+						{ "TGraphType", "global::GraphQL.Types.IGraphType" },
+					}
+				},
+				{
 					typeof(EdgeType<>), new()
 					{
 						{ "TNodeType", "global::GraphQL.Types.IGraphType" },
@@ -53,6 +59,12 @@ namespace Rocks.CodeGenerationTest.Mappings
 					typeof(IDocumentExecuter<>), new()
 					{
 						{ "TSchema", "global::GraphQL.Types.ISchema" },
+					}
+				},
+				{
+					typeof(IGraphTypeFactory<>), new()
+					{
+						{ "TGraphType", "global::GraphQL.Types.IGraphType" },
 					}
 				},
 				{
