@@ -53,7 +53,7 @@ internal static class MockMethodValueBuilder
 			writer.WriteLine(method.ReturnTypeAttributesDescription);
 		}
 
-		writer.WriteLine($$"""[global::Rocks.MemberIdentifier({{method.MemberIdentifier}}, "{{(methodSignature.Contains('"') ? methodSignature.Replace("\"", "\\\"") : methodSignature)}}")]""");
+		writer.WriteLine($"[global::Rocks.MemberIdentifier({method.MemberIdentifier})]");
 		var isPublic = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 			$"{method.OverridingCodeValue} " : string.Empty;
 		writer.WriteLine($"{isPublic}{(method.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{methodSignature}");
@@ -116,7 +116,7 @@ internal static class MockMethodValueBuilder
 		if (method.Parameters.Length > 0 || method.IsGenericMethod)
 		{
 			writer.WriteLine();
-			writer.WriteLine($"""throw new global::Rocks.Exceptions.ExpectationException("No handlers match for {(methodSignature.Contains('"') ? methodSignature.Replace("\"", "\\\"") : methodSignature)}");""");
+			writer.WriteLine($$"""throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription({{method.MemberIdentifier}})}");""");
 		}
 
 		writer.Indent--;
@@ -166,7 +166,7 @@ internal static class MockMethodValueBuilder
 		else
 		{
 			writer.WriteLine();
-			writer.WriteLine($"""throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for {(methodSignature.Contains('"') ? methodSignature.Replace("\"", "\\\"") : methodSignature)}");""");
+			writer.WriteLine($$"""throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription({{method.MemberIdentifier}})}");""");
 		}
 
 		writer.Indent--;
@@ -330,7 +330,7 @@ internal static class MockMethodValueBuilder
 				}
 				else
 				{
-					throw new global::Rocks.Exceptions.ExpectationException("The provided handler does not match for {{(methodSignature.Contains('"') ? methodSignature.Replace("\"", "\\\"") : methodSignature)}}");
+					throw new global::Rocks.Exceptions.ExpectationException($"The provided handler does not match for {this.GetType().GetMemberDescription({{memberIdentifier}})}");
 				}
 				""");
 		}

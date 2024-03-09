@@ -9,10 +9,9 @@ internal static class MockPropertyBuilder
 {
 	private static void BuildGetter(IndentedTextWriter writer,
 		PropertyModel property, string propertyVisibility,
-		uint memberIdentifier, bool raiseEvents, string explicitTypeName)
+		uint memberIdentifier, bool raiseEvents)
 	{
 		var propertyGetMethod = property.GetMethod!;
-		var methodName = propertyGetMethod.Name;
 		var methodVisibility = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 			$"{propertyGetMethod.OverridingCodeValue} " : string.Empty;
 		var visibility = methodVisibility != propertyVisibility ?
@@ -87,7 +86,7 @@ internal static class MockPropertyBuilder
 		else
 		{
 			writer.WriteLine();
-			writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers were found for {explicitTypeName}{methodName}())\");");
+			writer.WriteLine($$"""throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription({{memberIdentifier}})})");""");
 		}
 
 		writer.Indent--;
@@ -96,9 +95,8 @@ internal static class MockPropertyBuilder
 
 	private static void BuildSetter(IndentedTextWriter writer,
 		PropertyModel property, string propertyVisibility,
-		uint memberIdentifier, bool raiseEvents, string explicitTypeName)
+		uint memberIdentifier, bool raiseEvents)
 	{
-		var methodName = property.SetMethod!.Name;
 		var methodVisibility = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 			$"{property.SetMethod!.OverridingCodeValue} " : string.Empty;
 		var visibility = methodVisibility != propertyVisibility ?
@@ -123,7 +121,7 @@ internal static class MockPropertyBuilder
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for {{explicitTypeName}}{{methodName}}(value)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription({{memberIdentifier}})}");
 							}
 							
 			""");
@@ -161,7 +159,7 @@ internal static class MockPropertyBuilder
 		}
 		else
 		{
-			writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers were found for {explicitTypeName}{methodName}(value)\");");
+			writer.WriteLine($$"""throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription({{memberIdentifier}})}");""");
 		}
 
 		writer.Indent--;
@@ -193,7 +191,7 @@ internal static class MockPropertyBuilder
 
 			if (isGetterVisible)
 			{
-				writer.WriteLine($$"""[global::Rocks.MemberIdentifier({{memberIdentifierAttribute}}, "{{explicitTypeName}}{{property.GetMethod!.Name}}()")]""");
+				writer.WriteLine($"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, global::Rocks.PropertyAccessor.Get)]");
 				memberIdentifierAttribute++;
 			}
 		}
@@ -205,7 +203,7 @@ internal static class MockPropertyBuilder
 
 			if (isSetterVisible)
 			{
-				writer.WriteLine($$"""[global::Rocks.MemberIdentifier({{memberIdentifierAttribute}}, "{{explicitTypeName}}{{property.SetMethod!.Name}}(value)")]""");
+				writer.WriteLine($"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, global::Rocks.PropertyAccessor.Set)]");
 			}
 		}
 
@@ -223,13 +221,13 @@ internal static class MockPropertyBuilder
 
 		if (isGetterVisible)
 		{
-			MockPropertyBuilder.BuildGetter(writer, property, visibility, memberIdentifier, raiseEvents, explicitTypeName);
+			MockPropertyBuilder.BuildGetter(writer, property, visibility, memberIdentifier, raiseEvents);
 			memberIdentifier++;
 		}
 
 		if (isSetterVisible)
 		{
-			MockPropertyBuilder.BuildSetter(writer, property, visibility, memberIdentifier, raiseEvents, explicitTypeName);
+			MockPropertyBuilder.BuildSetter(writer, property, visibility, memberIdentifier, raiseEvents);
 		}
 
 		writer.Indent--;

@@ -76,6 +76,6 @@ public static class VerificationTests
 		Assert.That(expectations.Verify, 
 			Throws.TypeOf<VerificationException>()
 				.And.Message.EqualTo(
-					"The following verification failure(s) occured: Mock type: Rocks.IntegrationTests.IDataCreateExpectations+Mock, member: set_Value(value), messsage: The expected call count is incorrect. Expected: 1, received: 0."));
+					"The following verification failure(s) occured: Mock type: Rocks.IntegrationTests.IDataCreateExpectations+Mock, member: Void set_Value(System.String), messsage: The expected call count is incorrect. Expected: 1, received: 0."));
 	}
 }

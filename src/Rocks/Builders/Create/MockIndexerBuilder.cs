@@ -9,12 +9,12 @@ namespace Rocks.Builders.Create;
 internal static class MockIndexerBuilder
 {
 	private static void BuildGetter(IndentedTextWriter writer,
-		PropertyModel indexer, string indexerVisibility, 
-		uint memberIdentifier, bool raiseEvents, string signature)
+		PropertyModel indexer, string indexerVisibility,
+		uint memberIdentifier, bool raiseEvents)
 	{
 		var method = indexer.GetMethod!;
 		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn;
-		var methodVisibility = indexer.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? 
+		var methodVisibility = indexer.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 			$"{method.OverridingCodeValue} " : string.Empty;
 		var visibility = methodVisibility != indexerVisibility ?
 			methodVisibility : string.Empty;
@@ -72,7 +72,7 @@ internal static class MockIndexerBuilder
 		writer.WriteLine("}");
 
 		writer.WriteLine();
-		writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers match for {signature.Replace("\"", "\\\"")}\");");
+		writer.WriteLine($$"""throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription({{memberIdentifier}})}");""");
 
 		writer.Indent--;
 		writer.WriteLine("}");
@@ -108,7 +108,7 @@ internal static class MockIndexerBuilder
 		else
 		{
 			writer.WriteLine();
-			writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers were found for {signature.Replace("\"", "\\\"")})\");");
+			writer.WriteLine($$"""throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription({{memberIdentifier}})})");""");
 		}
 
 		writer.Indent--;
@@ -116,12 +116,12 @@ internal static class MockIndexerBuilder
 	}
 
 	private static void BuildSetter(IndentedTextWriter writer,
-		PropertyModel indexer, string indexerVisibility, 
-		uint memberIdentifier, bool raiseEvents, string signature)
+		PropertyModel indexer, string indexerVisibility,
+		uint memberIdentifier, bool raiseEvents)
 	{
 		var method = indexer.SetMethod!;
 		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn;
-		var methodVisibility = indexer.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? 
+		var methodVisibility = indexer.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 			$"{method.OverridingCodeValue} " : string.Empty;
 		var visibility = methodVisibility != indexerVisibility ?
 			methodVisibility : string.Empty;
@@ -189,7 +189,7 @@ internal static class MockIndexerBuilder
 		writer.WriteLine("}");
 
 		writer.WriteLine();
-		writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers match for {signature.Replace("\"", "\\\"")}\");");
+		writer.WriteLine($$"""throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription({{memberIdentifier}})}");""");
 
 		writer.Indent--;
 		writer.WriteLine("}");
@@ -224,7 +224,7 @@ internal static class MockIndexerBuilder
 		else
 		{
 			writer.WriteLine();
-			writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers were found for {signature.Replace("\"", "\\\"")})\");");
+			writer.WriteLine($$"""throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription({{memberIdentifier}})}");""");
 		}
 
 		writer.Indent--;
@@ -252,19 +252,19 @@ internal static class MockIndexerBuilder
 			indexer.Accessors == PropertyAccessor.GetAndInit)
 		{
 			isGetterVisible = indexer.GetCanBeSeenByContainingAssembly;
-		 if (isGetterVisible)
-		 {
-			writer.WriteLine($$"""[global::Rocks.MemberIdentifier({{memberIdentifierAttribute}}, "{{explicitTypeName}}{{(signature.Contains('"') ? signature.Replace("\"", "\\\"") : signature)}}")]""");
-			memberIdentifierAttribute++;
-		 }
-	  }
-	  if (indexer.Accessors == PropertyAccessor.Set || indexer.Accessors == PropertyAccessor.Init ||
-	  indexer.Accessors == PropertyAccessor.GetAndSet || indexer.Accessors == PropertyAccessor.GetAndInit)
-	  {
-		 isSetterVisible = indexer.SetCanBeSeenByContainingAssembly || indexer.InitCanBeSeenByContainingAssembly;
-		 if (isSetterVisible)
+			if (isGetterVisible)
 			{
-				writer.WriteLine($$"""[global::Rocks.MemberIdentifier({{memberIdentifierAttribute}}, "{{explicitTypeName}}{{(signature.Contains('"') ? signature.Replace("\"", "\\\"") : signature)}}")]""");
+				writer.WriteLine($"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, global::Rocks.PropertyAccessor.Get)]");
+				memberIdentifierAttribute++;
+			}
+		}
+		if (indexer.Accessors == PropertyAccessor.Set || indexer.Accessors == PropertyAccessor.Init ||
+		indexer.Accessors == PropertyAccessor.GetAndSet || indexer.Accessors == PropertyAccessor.GetAndInit)
+		{
+			isSetterVisible = indexer.SetCanBeSeenByContainingAssembly || indexer.InitCanBeSeenByContainingAssembly;
+			if (isSetterVisible)
+			{
+				writer.WriteLine($"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, global::Rocks.PropertyAccessor.Set)]");
 			}
 		}
 
@@ -283,15 +283,13 @@ internal static class MockIndexerBuilder
 
 		if (isGetterVisible)
 		{
-			MockIndexerBuilder.BuildGetter(writer, indexer,
-				visibility, memberIdentifier, raiseEvents, signature);
+			MockIndexerBuilder.BuildGetter(writer, indexer, visibility, memberIdentifier, raiseEvents);
 			memberIdentifier++;
 		}
 
 		if (isSetterVisible)
 		{
-			MockIndexerBuilder.BuildSetter(writer, indexer, 
-				visibility, memberIdentifier, raiseEvents, signature);
+			MockIndexerBuilder.BuildSetter(writer, indexer, visibility, memberIdentifier, raiseEvents);
 		}
 
 		writer.Indent--;
