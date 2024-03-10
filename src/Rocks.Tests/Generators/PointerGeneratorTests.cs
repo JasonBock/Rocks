@@ -25,6 +25,8 @@ public static class PointerGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IPointerUsageCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -82,7 +84,7 @@ public static class PointerGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "unsafe void** AsVtblPtr()")]
+					[global::Rocks.MemberIdentifier(0)]
 					public unsafe void** AsVtblPtr()
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -94,7 +96,7 @@ public static class PointerGeneratorTests
 							return @result!;
 						}
 						
-						throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for unsafe void** AsVtblPtr()");
+						throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 					}
 					
 					private global::IPointerUsageCreateExpectations Expectations { get; }
@@ -181,6 +183,8 @@ public static class PointerGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IPointerUsageCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -238,7 +242,7 @@ public static class PointerGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "unsafe void*** AsVtblPtr()")]
+					[global::Rocks.MemberIdentifier(0)]
 					public unsafe void*** AsVtblPtr()
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -250,7 +254,7 @@ public static class PointerGeneratorTests
 							return @result!;
 						}
 						
-						throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for unsafe void*** AsVtblPtr()");
+						throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 					}
 					
 					private global::IPointerUsageCreateExpectations Expectations { get; }
@@ -337,6 +341,8 @@ public static class PointerGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IPointerUsageCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -394,7 +400,7 @@ public static class PointerGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "unsafe void**** AsVtblPtr()")]
+					[global::Rocks.MemberIdentifier(0)]
 					public unsafe void**** AsVtblPtr()
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -406,7 +412,7 @@ public static class PointerGeneratorTests
 							return @result!;
 						}
 						
-						throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for unsafe void**** AsVtblPtr()");
+						throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 					}
 					
 					private global::IPointerUsageCreateExpectations Expectations { get; }
@@ -493,6 +499,8 @@ public static class PointerGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class ISurfaceCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -569,7 +577,7 @@ public static class PointerGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "unsafe void Create<T>(T* @allocator)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public unsafe void Create<T>(T* @allocator)
 						where T : unmanaged
 					{
@@ -593,12 +601,12 @@ public static class PointerGeneratorTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for unsafe void Create<T>(T* @allocator)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for unsafe void Create<T>(T* @allocator)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 						}
 					}
 					
@@ -698,6 +706,8 @@ public static class PointerGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class IHavePointersCreateExpectations
@@ -775,7 +785,7 @@ public static class PointerGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "unsafe void PointerParameter(int* @value)")]
+						[global::Rocks.MemberIdentifier(0)]
 						public unsafe void PointerParameter(int* @value)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -795,12 +805,12 @@ public static class PointerGeneratorTests
 								
 								if (!@foundMatch)
 								{
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers match for unsafe void PointerParameter(int* @value)");
+									throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 								}
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for unsafe void PointerParameter(int* @value)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 							}
 						}
 						
@@ -901,6 +911,8 @@ public static class PointerGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class IHavePointersCreateExpectations
@@ -960,7 +972,7 @@ public static class PointerGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "unsafe int* PointerReturn()")]
+						[global::Rocks.MemberIdentifier(0)]
 						public unsafe int* PointerReturn()
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -972,7 +984,7 @@ public static class PointerGeneratorTests
 								return @result!;
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for unsafe int* PointerReturn()");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 						}
 						
 						private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
@@ -1066,6 +1078,8 @@ public static class PointerGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class IHavePointersCreateExpectations
@@ -1143,7 +1157,7 @@ public static class PointerGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "unsafe void FunctionPointerParameter(delegate*<int, void> @value)")]
+						[global::Rocks.MemberIdentifier(0)]
 						public unsafe void FunctionPointerParameter(delegate*<int, void> @value)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -1163,12 +1177,12 @@ public static class PointerGeneratorTests
 								
 								if (!@foundMatch)
 								{
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers match for unsafe void FunctionPointerParameter(delegate*<int, void> @value)");
+									throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 								}
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for unsafe void FunctionPointerParameter(delegate*<int, void> @value)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 							}
 						}
 						
@@ -1269,6 +1283,8 @@ public static class PointerGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class IHavePointersCreateExpectations
@@ -1328,7 +1344,7 @@ public static class PointerGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "unsafe delegate*<int, void> FunctionPointerReturn()")]
+						[global::Rocks.MemberIdentifier(0)]
 						public unsafe delegate*<int, void> FunctionPointerReturn()
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -1340,7 +1356,7 @@ public static class PointerGeneratorTests
 								return @result!;
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for unsafe delegate*<int, void> FunctionPointerReturn()");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 						}
 						
 						private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
@@ -1433,6 +1449,8 @@ public static class PointerGeneratorTests
 			// <auto-generated/>
 			
 			#nullable enable
+			
+			using Rocks.Extensions;
 			
 			namespace MockTests
 			{
@@ -1538,8 +1556,8 @@ public static class PointerGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "get_Data()")]
-						[global::Rocks.MemberIdentifier(1, "set_Data(value)")]
+						[global::Rocks.MemberIdentifier(0, global::Rocks.PropertyAccessor.Get)]
+						[global::Rocks.MemberIdentifier(1, global::Rocks.PropertyAccessor.Set)]
 						public unsafe int* Data
 						{
 							get
@@ -1553,7 +1571,7 @@ public static class PointerGeneratorTests
 									return @result!;
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_Data())");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)})");
 							}
 							set
 							{
@@ -1570,7 +1588,7 @@ public static class PointerGeneratorTests
 											
 											if (!@foundMatch)
 											{
-												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_Data(value)");
+												throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(1)}");
 											}
 											
 											break;
@@ -1579,7 +1597,7 @@ public static class PointerGeneratorTests
 								}
 								else
 								{
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_Data(value)");
+									throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
 								}
 							}
 						}
@@ -1710,6 +1728,8 @@ public static class PointerGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class IHavePointersCreateExpectations
@@ -1814,8 +1834,8 @@ public static class PointerGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "get_Data()")]
-						[global::Rocks.MemberIdentifier(1, "set_Data(value)")]
+						[global::Rocks.MemberIdentifier(0, global::Rocks.PropertyAccessor.Get)]
+						[global::Rocks.MemberIdentifier(1, global::Rocks.PropertyAccessor.Set)]
 						public unsafe delegate*<int, void> Data
 						{
 							get
@@ -1829,7 +1849,7 @@ public static class PointerGeneratorTests
 									return @result!;
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_Data())");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)})");
 							}
 							set
 							{
@@ -1846,7 +1866,7 @@ public static class PointerGeneratorTests
 											
 											if (!@foundMatch)
 											{
-												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_Data(value)");
+												throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(1)}");
 											}
 											
 											break;
@@ -1855,7 +1875,7 @@ public static class PointerGeneratorTests
 								}
 								else
 								{
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_Data(value)");
+									throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
 								}
 							}
 						}
@@ -1986,6 +2006,8 @@ public static class PointerGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class IHavePointersCreateExpectations
@@ -2072,8 +2094,8 @@ public static class PointerGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "this[int* @index]")]
-						[global::Rocks.MemberIdentifier(1, "this[int* @index]")]
+						[global::Rocks.MemberIdentifier(0, global::Rocks.PropertyAccessor.Get)]
+						[global::Rocks.MemberIdentifier(1, global::Rocks.PropertyAccessor.Set)]
 						public unsafe string this[int* @index]
 						{
 							get
@@ -2091,10 +2113,10 @@ public static class PointerGeneratorTests
 										}
 									}
 									
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[int* @index]");
+									throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[int* @index])");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)})");
 							}
 							set
 							{
@@ -2111,10 +2133,10 @@ public static class PointerGeneratorTests
 										}
 									}
 									
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[int* @index]");
+									throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(1)}");
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[int* @index])");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
 							}
 						}
 						
@@ -2252,6 +2274,8 @@ public static class PointerGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class IHavePointersCreateExpectations
@@ -2359,8 +2383,8 @@ public static class PointerGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "this[string @index]")]
-						[global::Rocks.MemberIdentifier(1, "this[string @index]")]
+						[global::Rocks.MemberIdentifier(0, global::Rocks.PropertyAccessor.Get)]
+						[global::Rocks.MemberIdentifier(1, global::Rocks.PropertyAccessor.Set)]
 						public unsafe int* this[string @index]
 						{
 							get
@@ -2378,10 +2402,10 @@ public static class PointerGeneratorTests
 										}
 									}
 									
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[string @index]");
+									throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[string @index])");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)})");
 							}
 							set
 							{
@@ -2398,10 +2422,10 @@ public static class PointerGeneratorTests
 										}
 									}
 									
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[string @index]");
+									throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(1)}");
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[string @index])");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
 							}
 						}
 						
@@ -2540,6 +2564,8 @@ public static class PointerGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class IHavePointersCreateExpectations
@@ -2626,8 +2652,8 @@ public static class PointerGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "this[delegate*<int, void> @index]")]
-						[global::Rocks.MemberIdentifier(1, "this[delegate*<int, void> @index]")]
+						[global::Rocks.MemberIdentifier(0, global::Rocks.PropertyAccessor.Get)]
+						[global::Rocks.MemberIdentifier(1, global::Rocks.PropertyAccessor.Set)]
 						public unsafe string this[delegate*<int, void> @index]
 						{
 							get
@@ -2645,10 +2671,10 @@ public static class PointerGeneratorTests
 										}
 									}
 									
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[delegate*<int, void> @index]");
+									throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[delegate*<int, void> @index])");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)})");
 							}
 							set
 							{
@@ -2665,10 +2691,10 @@ public static class PointerGeneratorTests
 										}
 									}
 									
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[delegate*<int, void> @index]");
+									throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(1)}");
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[delegate*<int, void> @index])");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
 							}
 						}
 						
@@ -2806,6 +2832,8 @@ public static class PointerGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class IHavePointersCreateExpectations
@@ -2913,8 +2941,8 @@ public static class PointerGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "this[string @index]")]
-						[global::Rocks.MemberIdentifier(1, "this[string @index]")]
+						[global::Rocks.MemberIdentifier(0, global::Rocks.PropertyAccessor.Get)]
+						[global::Rocks.MemberIdentifier(1, global::Rocks.PropertyAccessor.Set)]
 						public unsafe delegate*<int, void> this[string @index]
 						{
 							get
@@ -2932,10 +2960,10 @@ public static class PointerGeneratorTests
 										}
 									}
 									
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[string @index]");
+									throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[string @index])");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)})");
 							}
 							set
 							{
@@ -2952,10 +2980,10 @@ public static class PointerGeneratorTests
 										}
 									}
 									
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[string @index]");
+									throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(1)}");
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[string @index])");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
 							}
 						}
 						

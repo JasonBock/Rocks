@@ -313,7 +313,7 @@ public static class PropertyModelTests
 	private static (IPropertySymbol, ITypeSymbol, Compilation) GetSymbolsCompilation(string code)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
-		var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
+		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
@@ -327,7 +327,7 @@ public static class PropertyModelTests
 	private static (IPropertySymbol, ITypeSymbol, Compilation) GetSymbolsForIndexerCompilation(string code)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
-		var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
+		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 

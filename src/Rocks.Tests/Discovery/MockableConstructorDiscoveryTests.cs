@@ -37,7 +37,7 @@ public static class MockableConstructorDiscoveryTests
 		var (typeSymbol, obsoleteAttribute) = GetTypeSymbol(code);
 
 		var containingSyntaxTree = CSharpSyntaxTree.ParseText("public class Containing { }");
-		var containingCompilation = CSharpCompilation.Create("InvocationAssembly", new SyntaxTree[] { containingSyntaxTree },
+		var containingCompilation = CSharpCompilation.Create("InvocationAssembly", [containingSyntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
 		var constructors = new MockableConstructorDiscovery(typeSymbol, containingCompilation.Assembly, obsoleteAttribute).Constructors;
@@ -58,7 +58,7 @@ public static class MockableConstructorDiscoveryTests
 	private static (ITypeSymbol type, INamedTypeSymbol obsoleteAttribute) GetTypeSymbol(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
-		var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
+		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 

@@ -13,7 +13,7 @@ public static class MockableMethodResultTests
 	{
 		var code = "public class Target { public void Foo() { } }";
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
-		var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
+		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 

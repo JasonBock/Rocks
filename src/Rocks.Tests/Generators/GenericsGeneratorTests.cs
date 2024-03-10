@@ -28,6 +28,8 @@ public static class GenericsGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IGenericsAndEventCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -71,7 +73,7 @@ public static class GenericsGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "int Work<T>(T @value)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public int Work<T>(T @value)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -91,13 +93,13 @@ public static class GenericsGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for int Work<T>(T @value)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 						}
 						
-						throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for int Work<T>(T @value)");
+						throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "int ConstrainedWork<T>(T @value)")]
+					[global::Rocks.MemberIdentifier(1)]
 					public int ConstrainedWork<T>(T @value)
 						where T : class, new()
 					{
@@ -118,10 +120,10 @@ public static class GenericsGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for int ConstrainedWork<T>(T @value)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(1)}");
 						}
 						
-						throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for int ConstrainedWork<T>(T @value)");
+						throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
 					}
 					
 					#pragma warning disable CS0067
@@ -263,6 +265,8 @@ public static class GenericsGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IServiceOfint_stringCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -298,7 +302,7 @@ public static class GenericsGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "string Service(int @data)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public string Service(int @data)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -314,10 +318,10 @@ public static class GenericsGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string Service(int @data)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 						}
 						
-						throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string Service(int @data)");
+						throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 					}
 					
 					private global::IServiceOfint_stringCreateExpectations Expectations { get; }
@@ -419,6 +423,8 @@ public static class GenericsGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class MOfobjectCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -471,7 +477,7 @@ public static class GenericsGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public override bool Equals(object? @obj)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -487,7 +493,7 @@ public static class GenericsGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 						}
 						else
 						{
@@ -495,7 +501,7 @@ public static class GenericsGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					[global::Rocks.MemberIdentifier(1)]
 					public override int GetHashCode()
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -512,7 +518,7 @@ public static class GenericsGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					[global::Rocks.MemberIdentifier(2)]
 					public override string? ToString()
 					{
 						if (this.Expectations.handlers2 is not null)
@@ -529,7 +535,7 @@ public static class GenericsGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(4, "global::Proxy<S> Bind<S>(global::System.Func<S> @f)")]
+					[global::Rocks.MemberIdentifier(4)]
 					public override global::Proxy<S> Bind<S>(global::System.Func<S> @f)
 					{
 						if (this.Expectations.handlers4 is not null)
@@ -548,7 +554,7 @@ public static class GenericsGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::Proxy<S> Bind<S>(global::System.Func<S> @f)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(4)}");
 						}
 						else
 						{
@@ -706,6 +712,8 @@ public static class GenericsGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class GenericContainerCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -763,7 +771,7 @@ public static class GenericsGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public override bool Equals(object? @obj)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -779,7 +787,7 @@ public static class GenericsGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 						}
 						else
 						{
@@ -787,7 +795,7 @@ public static class GenericsGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					[global::Rocks.MemberIdentifier(1)]
 					public override int GetHashCode()
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -804,7 +812,7 @@ public static class GenericsGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					[global::Rocks.MemberIdentifier(2)]
 					public override string? ToString()
 					{
 						if (this.Expectations.handlers2 is not null)
@@ -821,7 +829,7 @@ public static class GenericsGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(3, "global::ReferencedContainer<T> SetThings<T>()")]
+					[global::Rocks.MemberIdentifier(3)]
 					public override global::ReferencedContainer<T> SetThings<T>()
 						where T : class
 					{
@@ -840,7 +848,7 @@ public static class GenericsGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::ReferencedContainer<T> SetThings<T>()");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(3)}");
 						}
 						else
 						{
@@ -848,7 +856,7 @@ public static class GenericsGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(4, "TReturn Run<TReturn>()")]
+					[global::Rocks.MemberIdentifier(4)]
 					public override TReturn Run<TReturn>()
 					{
 						if (this.Expectations.handlers4 is not null)
@@ -866,7 +874,7 @@ public static class GenericsGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for TReturn Run<TReturn>()");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(4)}");
 						}
 						else
 						{
@@ -1029,6 +1037,8 @@ public static class GenericsGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class CriterionOfobjectCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1065,7 +1075,7 @@ public static class GenericsGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					[global::Rocks.MemberIdentifier(2)]
 					public override string? ToString()
 					{
 						if (this.Expectations.handlers2 is not null)
@@ -1082,7 +1092,7 @@ public static class GenericsGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(3, "int GetHashCode()")]
+					[global::Rocks.MemberIdentifier(3)]
 					public override int GetHashCode()
 					{
 						if (this.Expectations.handlers3 is not null)
@@ -1211,6 +1221,8 @@ public static class GenericsGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class GeometryValueComparerOfobjectCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1256,7 +1268,7 @@ public static class GenericsGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public override bool Equals(object? @obj)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -1272,7 +1284,7 @@ public static class GenericsGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 						}
 						else
 						{
@@ -1280,7 +1292,7 @@ public static class GenericsGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					[global::Rocks.MemberIdentifier(1)]
 					public override int GetHashCode()
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -1297,7 +1309,7 @@ public static class GenericsGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					[global::Rocks.MemberIdentifier(2)]
 					public override string? ToString()
 					{
 						if (this.Expectations.handlers2 is not null)
@@ -1445,6 +1457,8 @@ public static class GenericsGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class IRequestClientOfobjectCreateExpectations
@@ -1482,7 +1496,7 @@ public static class GenericsGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "global::MockTests.RequestHandle<object> Create(object @message)")]
+						[global::Rocks.MemberIdentifier(0)]
 						public global::MockTests.RequestHandle<object> Create(object @message)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -1498,10 +1512,10 @@ public static class GenericsGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::MockTests.RequestHandle<object> Create(object @message)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::MockTests.RequestHandle<object> Create(object @message)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 						}
 						
 						private global::MockTests.IRequestClientOfobjectCreateExpectations Expectations { get; }
@@ -1602,6 +1616,8 @@ public static class GenericsGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class IRequestOfobjectCreateExpectations
@@ -1648,7 +1664,7 @@ public static class GenericsGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "global::System.Threading.Tasks.Task<object> Send(global::System.Guid @requestId, object @values)")]
+						[global::Rocks.MemberIdentifier(0)]
 						public global::System.Threading.Tasks.Task<object> Send(global::System.Guid @requestId, object @values)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -1665,13 +1681,13 @@ public static class GenericsGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::System.Threading.Tasks.Task<object> Send(global::System.Guid @requestId, object @values)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::System.Threading.Tasks.Task<object> Send(global::System.Guid @requestId, object @values)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 						}
 						
-						[global::Rocks.MemberIdentifier(1, "global::System.Threading.Tasks.Task global::MockTests.IRequest<object>.Send(global::System.Guid @requestId, object @message)")]
+						[global::Rocks.MemberIdentifier(1)]
 						global::System.Threading.Tasks.Task global::MockTests.IRequest<object>.Send(global::System.Guid @requestId, object @message)
 						{
 							if (this.Expectations.handlers1 is not null)
@@ -1688,10 +1704,10 @@ public static class GenericsGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::System.Threading.Tasks.Task global::MockTests.IRequest<object>.Send(global::System.Guid @requestId, object @message)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(1)}");
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::System.Threading.Tasks.Task global::MockTests.IRequest<object>.Send(global::System.Guid @requestId, object @message)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
 						}
 						
 						private global::MockTests.IRequestOfobjectCreateExpectations Expectations { get; }

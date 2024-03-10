@@ -31,6 +31,8 @@ public static class ClassCreateGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class ClassTestCreateExpectations
@@ -83,7 +85,7 @@ public static class ClassCreateGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+						[global::Rocks.MemberIdentifier(0)]
 						public override bool Equals(object? @obj)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -99,7 +101,7 @@ public static class ClassCreateGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 							else
 							{
@@ -107,7 +109,7 @@ public static class ClassCreateGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+						[global::Rocks.MemberIdentifier(1)]
 						public override int GetHashCode()
 						{
 							if (this.Expectations.handlers1 is not null)
@@ -124,7 +126,7 @@ public static class ClassCreateGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+						[global::Rocks.MemberIdentifier(2)]
 						public override string? ToString()
 						{
 							if (this.Expectations.handlers2 is not null)
@@ -141,7 +143,7 @@ public static class ClassCreateGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(3, "void Foo()")]
+						[global::Rocks.MemberIdentifier(3)]
 						public override void Foo()
 						{
 							if (this.Expectations.handlers3 is not null)
@@ -371,6 +373,8 @@ public static class ClassCreateGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class ClassTestCreateExpectations
@@ -423,7 +427,7 @@ public static class ClassCreateGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+						[global::Rocks.MemberIdentifier(0)]
 						public override bool Equals(object? @obj)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -439,7 +443,7 @@ public static class ClassCreateGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 							else
 							{
@@ -447,7 +451,7 @@ public static class ClassCreateGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+						[global::Rocks.MemberIdentifier(1)]
 						public override int GetHashCode()
 						{
 							if (this.Expectations.handlers1 is not null)
@@ -464,7 +468,7 @@ public static class ClassCreateGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+						[global::Rocks.MemberIdentifier(2)]
 						public override string? ToString()
 						{
 							if (this.Expectations.handlers2 is not null)
@@ -481,7 +485,7 @@ public static class ClassCreateGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(3, "void Foo()")]
+						[global::Rocks.MemberIdentifier(3)]
 						public override void Foo()
 						{
 							if (this.Expectations.handlers3 is not null)
@@ -653,11 +657,10 @@ public static class ClassCreateGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] 
-			{ 
+			[ 
 				(typeof(RockAttributeGenerator), "MockTests.ClassTest_Rock_Create.g.cs", generatedCreateCode),
 				(typeof(RockAttributeGenerator), "MockTests.ClassTest_Rock_Make.g.cs", generatedMakeCode),
-			},
+			],
 			[]);
 	}
 }

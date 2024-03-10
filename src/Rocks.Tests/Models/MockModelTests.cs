@@ -48,15 +48,15 @@ public static class MockModelTests
 		var syntaxTree = CSharpSyntaxTree.ParseText(
 			$"public class Target {{ public void Test({targetTypeName} a) {{ }} }}");
 		var references = Shared.References.Value
-			.Concat(new[]
-			{
+			.Concat(
+			[
 				MetadataReference.CreateFromFile(typeof(RockAttributeGenerator).Assembly.Location)
-			})
+			])
 			.Cast<MetadataReference>()
 			.ToList();
 		references.Add(internalModel.Compilation.ToMetadataReference());
 
-		var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
+		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var compilationModel = compilation.GetSemanticModel(syntaxTree, true);
 		var parameterSymbol = compilationModel.GetDeclaredSymbol(
@@ -588,7 +588,7 @@ public static class MockModelTests
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var references = Shared.References.Value
 			.Concat([MetadataReference.CreateFromFile(typeof(RockAttributeGenerator).Assembly.Location)]);
-		var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
+		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, generalDiagnosticOption: generalDiagnosticOption));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 

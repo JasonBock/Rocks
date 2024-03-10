@@ -25,6 +25,8 @@ public static class ParameterModifierTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IParameterModifierCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -60,7 +62,7 @@ public static class ParameterModifierTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "void Modify(in string @value)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public void Modify(in string @value)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -80,12 +82,12 @@ public static class ParameterModifierTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void Modify(in string @value)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void Modify(in string @value)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 						}
 					}
 					
@@ -230,6 +232,8 @@ public static class ParameterModifierTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IParameterModifierCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -270,7 +274,7 @@ public static class ParameterModifierTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "void Modify(out string @value)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public void Modify(out string @value)
 					{
 						value = default!;
@@ -291,12 +295,12 @@ public static class ParameterModifierTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void Modify(out string @value)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void Modify(out string @value)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 						}
 					}
 					
@@ -442,6 +446,8 @@ public static class ParameterModifierTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IParameterModifierCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -482,7 +488,7 @@ public static class ParameterModifierTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "void Modify(ref string @value)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public void Modify(ref string @value)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -502,12 +508,12 @@ public static class ParameterModifierTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void Modify(ref string @value)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void Modify(ref string @value)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 						}
 					}
 					
@@ -652,6 +658,8 @@ public static class ParameterModifierTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IParameterModifierCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -687,7 +695,7 @@ public static class ParameterModifierTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "void Modify(ref readonly string @value)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public void Modify(ref readonly string @value)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -707,12 +715,12 @@ public static class ParameterModifierTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void Modify(ref readonly string @value)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void Modify(ref readonly string @value)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 						}
 					}
 					
@@ -860,6 +868,8 @@ public static class ParameterModifierTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IParameterModifierCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -926,7 +936,7 @@ public static class ParameterModifierTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "void RefArgument(ref int @a)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public void RefArgument(ref int @a)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -946,16 +956,16 @@ public static class ParameterModifierTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void RefArgument(ref int @a)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void RefArgument(ref int @a)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "void RefArgumentsWithGenerics<T1, T2>(T1 @a, ref T2 @b)")]
+					[global::Rocks.MemberIdentifier(1)]
 					public void RefArgumentsWithGenerics<T1, T2>(T1 @a, ref T2 @b)
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -979,16 +989,16 @@ public static class ParameterModifierTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void RefArgumentsWithGenerics<T1, T2>(T1 @a, ref T2 @b)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(1)}");
 							}
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void RefArgumentsWithGenerics<T1, T2>(T1 @a, ref T2 @b)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(2, "void OutArgument(out int @a)")]
+					[global::Rocks.MemberIdentifier(2)]
 					public void OutArgument(out int @a)
 					{
 						a = default!;
@@ -1009,16 +1019,16 @@ public static class ParameterModifierTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void OutArgument(out int @a)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(2)}");
 							}
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void OutArgument(out int @a)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(2)}");
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(3, "void OutArgumentsWithGenerics<T1, T2>(T1 @a, out T2 @b)")]
+					[global::Rocks.MemberIdentifier(3)]
 					public void OutArgumentsWithGenerics<T1, T2>(T1 @a, out T2 @b)
 					{
 						b = default!;
@@ -1043,12 +1053,12 @@ public static class ParameterModifierTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void OutArgumentsWithGenerics<T1, T2>(T1 @a, out T2 @b)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(3)}");
 							}
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void OutArgumentsWithGenerics<T1, T2>(T1 @a, out T2 @b)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(3)}");
 						}
 					}
 					

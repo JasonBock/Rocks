@@ -30,6 +30,8 @@ public static class VirtualsWithImplementationsGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class VoidMethodWithParamsCreateExpectations
@@ -84,7 +86,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+						[global::Rocks.MemberIdentifier(0)]
 						public override bool Equals(object? @obj)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -100,7 +102,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 							else
 							{
@@ -108,7 +110,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+						[global::Rocks.MemberIdentifier(1)]
 						public override int GetHashCode()
 						{
 							if (this.Expectations.handlers1 is not null)
@@ -125,7 +127,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+						[global::Rocks.MemberIdentifier(2)]
 						public override string? ToString()
 						{
 							if (this.Expectations.handlers2 is not null)
@@ -142,7 +144,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(3, "void CallMe(params string[] @values)")]
+						[global::Rocks.MemberIdentifier(3)]
 						public override void CallMe(params string[] @values)
 						{
 							if (this.Expectations.handlers3 is not null)
@@ -162,7 +164,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 								
 								if (!@foundMatch)
 								{
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void CallMe(params string[] @values)");
+									throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(3)}");
 								}
 							}
 							else
@@ -317,6 +319,8 @@ public static class VirtualsWithImplementationsGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class ValueMethodWithParamsCreateExpectations
@@ -371,7 +375,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+						[global::Rocks.MemberIdentifier(0)]
 						public override bool Equals(object? @obj)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -387,7 +391,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 							else
 							{
@@ -395,7 +399,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+						[global::Rocks.MemberIdentifier(1)]
 						public override int GetHashCode()
 						{
 							if (this.Expectations.handlers1 is not null)
@@ -412,7 +416,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+						[global::Rocks.MemberIdentifier(2)]
 						public override string? ToString()
 						{
 							if (this.Expectations.handlers2 is not null)
@@ -429,7 +433,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(3, "int CallMe(params string[] @values)")]
+						[global::Rocks.MemberIdentifier(3)]
 						public override int CallMe(params string[] @values)
 						{
 							if (this.Expectations.handlers3 is not null)
@@ -445,7 +449,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for int CallMe(params string[] @values)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(3)}");
 							}
 							else
 							{
@@ -599,6 +603,8 @@ public static class VirtualsWithImplementationsGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class IHaveImplementationCreateExpectations
@@ -633,7 +639,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							(this.Expectations, this.shimForIHaveImplementation) = (@expectations, new ShimIHaveImplementation(this));
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "void Foo()")]
+						[global::Rocks.MemberIdentifier(0)]
 						public void Foo()
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -746,6 +752,8 @@ public static class VirtualsWithImplementationsGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class IHaveImplementationCreateExpectations
@@ -780,7 +788,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							(this.Expectations, this.shimForIHaveImplementation) = (@expectations, new ShimIHaveImplementation(this));
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "int Foo()")]
+						[global::Rocks.MemberIdentifier(0)]
 						public int Foo()
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -895,6 +903,8 @@ public static class VirtualsWithImplementationsGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class HaveImplementationCreateExpectations
@@ -947,7 +957,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+						[global::Rocks.MemberIdentifier(0)]
 						public override bool Equals(object? @obj)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -963,7 +973,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 							else
 							{
@@ -971,7 +981,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+						[global::Rocks.MemberIdentifier(1)]
 						public override int GetHashCode()
 						{
 							if (this.Expectations.handlers1 is not null)
@@ -988,7 +998,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+						[global::Rocks.MemberIdentifier(2)]
 						public override string? ToString()
 						{
 							if (this.Expectations.handlers2 is not null)
@@ -1005,7 +1015,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(3, "void Foo()")]
+						[global::Rocks.MemberIdentifier(3)]
 						public override void Foo()
 						{
 							if (this.Expectations.handlers3 is not null)
@@ -1160,6 +1170,8 @@ public static class VirtualsWithImplementationsGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class HaveImplementationCreateExpectations
@@ -1212,7 +1224,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+						[global::Rocks.MemberIdentifier(0)]
 						public override bool Equals(object? @obj)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -1228,7 +1240,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 							else
 							{
@@ -1236,7 +1248,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+						[global::Rocks.MemberIdentifier(1)]
 						public override int GetHashCode()
 						{
 							if (this.Expectations.handlers1 is not null)
@@ -1253,7 +1265,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+						[global::Rocks.MemberIdentifier(2)]
 						public override string? ToString()
 						{
 							if (this.Expectations.handlers2 is not null)
@@ -1270,7 +1282,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(3, "int Foo()")]
+						[global::Rocks.MemberIdentifier(3)]
 						public override int Foo()
 						{
 							if (this.Expectations.handlers3 is not null)

@@ -34,6 +34,8 @@ public static class AsyncIteratorGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class AsyncEnumerationCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -86,7 +88,7 @@ public static class AsyncIteratorGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public override bool Equals(object? @obj)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -102,7 +104,7 @@ public static class AsyncIteratorGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 						}
 						else
 						{
@@ -110,7 +112,7 @@ public static class AsyncIteratorGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					[global::Rocks.MemberIdentifier(1)]
 					public override int GetHashCode()
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -127,7 +129,7 @@ public static class AsyncIteratorGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					[global::Rocks.MemberIdentifier(2)]
 					public override string? ToString()
 					{
 						if (this.Expectations.handlers2 is not null)
@@ -144,7 +146,7 @@ public static class AsyncIteratorGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(3, "global::System.Collections.Generic.IAsyncEnumerable<string> GetRecordsAsync(global::System.Threading.CancellationToken @cancellationToken = default)")]
+					[global::Rocks.MemberIdentifier(3)]
 					public override global::System.Collections.Generic.IAsyncEnumerable<string> GetRecordsAsync(global::System.Threading.CancellationToken @cancellationToken = default)
 					{
 						if (this.Expectations.handlers3 is not null)
@@ -160,7 +162,7 @@ public static class AsyncIteratorGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::System.Collections.Generic.IAsyncEnumerable<string> GetRecordsAsync(global::System.Threading.CancellationToken @cancellationToken = default)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(3)}");
 						}
 						else
 						{

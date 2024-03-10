@@ -315,7 +315,7 @@ public interface IA
 				""";
 
 			var internalSyntaxTree = CSharpSyntaxTree.ParseText(internalCode);
-			var internalCompilation = CSharpCompilation.Create("internal", new SyntaxTree[] { internalSyntaxTree },
+			var internalCompilation = CSharpCompilation.Create("internal", [internalSyntaxTree],
 				Shared.References.Value,
 				new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
@@ -328,7 +328,7 @@ public interface IA
 				""";
 
 			var externalSyntaxTree = CSharpSyntaxTree.ParseText(externalCode);
-			var externalCompilation = CSharpCompilation.Create("external", new SyntaxTree[] { externalSyntaxTree },
+			var externalCompilation = CSharpCompilation.Create("external", [externalSyntaxTree],
 				Shared.References.Value.Concat([internalCompilation.ToMetadataReference() as MetadataReference]),
 				new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
@@ -344,7 +344,7 @@ public interface IA
 		private static (ImmutableArray<AttributeData>, Compilation) GetAttributes(string source)
 		{
 			var syntaxTree = CSharpSyntaxTree.ParseText(source);
-			var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
+			var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 				Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 			var model = compilation.GetSemanticModel(syntaxTree, true);
 
@@ -358,7 +358,7 @@ public interface IA
 		private static (ImmutableArray<AttributeData>, Compilation) GetReturnAttributes(string source)
 		{
 			var syntaxTree = CSharpSyntaxTree.ParseText(source);
-			var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
+			var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 				Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 			var model = compilation.GetSemanticModel(syntaxTree, true);
 

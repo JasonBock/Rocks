@@ -111,7 +111,7 @@ public static class EventModelTests
 	private static (IEventSymbol, ITypeSymbol, Compilation) GetSymbolsCompilation(string code)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
-		var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
+		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 

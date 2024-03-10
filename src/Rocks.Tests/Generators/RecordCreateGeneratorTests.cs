@@ -31,6 +31,8 @@ public static class RecordCreateGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class RecordTestCreateExpectations
@@ -93,7 +95,7 @@ public static class RecordCreateGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(2, "void Foo()")]
+						[global::Rocks.MemberIdentifier(2)]
 						public override void Foo()
 						{
 							if (this.Expectations.handlers2 is not null)
@@ -108,7 +110,7 @@ public static class RecordCreateGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(3, "string ToString()")]
+						[global::Rocks.MemberIdentifier(3)]
 						public override string ToString()
 						{
 							if (this.Expectations.handlers3 is not null)
@@ -125,7 +127,7 @@ public static class RecordCreateGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(4, "bool PrintMembers(global::System.Text.StringBuilder @builder)")]
+						[global::Rocks.MemberIdentifier(4)]
 						protected override bool PrintMembers(global::System.Text.StringBuilder @builder)
 						{
 							if (this.Expectations.handlers4 is not null)
@@ -141,7 +143,7 @@ public static class RecordCreateGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool PrintMembers(global::System.Text.StringBuilder @builder)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(4)}");
 							}
 							else
 							{
@@ -149,7 +151,7 @@ public static class RecordCreateGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(5, "int GetHashCode()")]
+						[global::Rocks.MemberIdentifier(5)]
 						public override int GetHashCode()
 						{
 							if (this.Expectations.handlers5 is not null)
@@ -166,7 +168,7 @@ public static class RecordCreateGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(6, "get_EqualityContract()")]
+						[global::Rocks.MemberIdentifier(6, global::Rocks.PropertyAccessor.Get)]
 						protected override global::System.Type EqualityContract
 						{
 							get

@@ -34,6 +34,8 @@ public static class NullabilityGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class ConnectionBuilderOfobjectCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -89,7 +91,7 @@ public static class NullabilityGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public override bool Equals(object? @obj)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -105,7 +107,7 @@ public static class NullabilityGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 						}
 						else
 						{
@@ -113,7 +115,7 @@ public static class NullabilityGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					[global::Rocks.MemberIdentifier(1)]
 					public override int GetHashCode()
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -130,7 +132,7 @@ public static class NullabilityGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					[global::Rocks.MemberIdentifier(2)]
 					public override string? ToString()
 					{
 						if (this.Expectations.handlers2 is not null)
@@ -147,7 +149,7 @@ public static class NullabilityGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(3, "global::ConnectionBuilder<object> Argument<TArgumentGraphType, TArgumentType>(string @name, string? @description, [global::System.Diagnostics.CodeAnalysis.AllowNullAttribute] TArgumentType @defaultValue = default!)")]
+					[global::Rocks.MemberIdentifier(3)]
 					public override global::ConnectionBuilder<object> Argument<TArgumentGraphType, TArgumentType>(string @name, string? @description, [global::System.Diagnostics.CodeAnalysis.AllowNullAttribute] TArgumentType @defaultValue = default!)
 					{
 						if (this.Expectations.handlers3 is not null)
@@ -168,7 +170,7 @@ public static class NullabilityGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::ConnectionBuilder<object> Argument<TArgumentGraphType, TArgumentType>(string @name, string? @description, [global::System.Diagnostics.CodeAnalysis.AllowNullAttribute] TArgumentType @defaultValue = default!)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(3)}");
 						}
 						else
 						{
@@ -337,6 +339,8 @@ public static class NullabilityGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class SubTracerCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -394,7 +398,7 @@ public static class NullabilityGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public override bool Equals(object? @obj)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -410,7 +414,7 @@ public static class NullabilityGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 						}
 						else
 						{
@@ -418,7 +422,7 @@ public static class NullabilityGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					[global::Rocks.MemberIdentifier(1)]
 					public override int GetHashCode()
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -435,7 +439,7 @@ public static class NullabilityGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					[global::Rocks.MemberIdentifier(2)]
 					public override string? ToString()
 					{
 						if (this.Expectations.handlers2 is not null)
@@ -452,7 +456,7 @@ public static class NullabilityGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(4, "void TraceEvent(string @eventCache, string @source, string @eventType, int @id, string @format, params object[] @args)")]
+					[global::Rocks.MemberIdentifier(4)]
 					public override void TraceEvent(string @eventCache, string @source, string @eventType, int @id, string @format, params object[] @args)
 					{
 						if (this.Expectations.handlers4 is not null)
@@ -477,7 +481,7 @@ public static class NullabilityGeneratorTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void TraceEvent(string @eventCache, string @source, string @eventType, int @id, string @format, params object[] @args)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(4)}");
 							}
 						}
 						else
@@ -617,15 +621,14 @@ public static class NullabilityGeneratorTests
 		// the nullability annotations.
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			[(typeof(RockAttributeGenerator), "SubTracer_Rock_Create.g.cs", generatedCode)],
-			new[]
-			{
+			[
 				new DiagnosticResult("CS8610", DiagnosticSeverity.Error)
 					.WithSpan(18, 23, 18, 33).WithArguments("args"),
 				new DiagnosticResult("CS8765", DiagnosticSeverity.Error)
 					.WithSpan(18, 23, 18, 33).WithArguments("eventCache"),
 				new DiagnosticResult("CS8765", DiagnosticSeverity.Error)
 					.WithSpan(18, 23, 18, 33).WithArguments("format"),
-			});
+			]);
 	}
 
 	[Test]
@@ -671,6 +674,8 @@ public static class NullabilityGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IConventionSkipNavigationCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -713,7 +718,7 @@ public static class NullabilityGeneratorTests
 						(this.Expectations, this.shimForIConventionSkipNavigation) = (@expectations, new ShimIConventionSkipNavigation(this));
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "get_Inverse()")]
+					[global::Rocks.MemberIdentifier(0, global::Rocks.PropertyAccessor.Get)]
 					public global::IConventionSkipNavigation? Inverse
 					{
 						get
@@ -732,7 +737,7 @@ public static class NullabilityGeneratorTests
 							}
 						}
 					}
-					[global::Rocks.MemberIdentifier(1, "global::IReadOnlySkipNavigation.get_Inverse()")]
+					[global::Rocks.MemberIdentifier(1, global::Rocks.PropertyAccessor.Get)]
 					global::IReadOnlySkipNavigation global::IReadOnlySkipNavigation.Inverse
 					{
 						get
@@ -746,10 +751,10 @@ public static class NullabilityGeneratorTests
 								return @result!;
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::IReadOnlySkipNavigation.get_Inverse())");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)})");
 						}
 					}
-					[global::Rocks.MemberIdentifier(2, "global::IReadOnlyNavigationBase.get_Inverse()")]
+					[global::Rocks.MemberIdentifier(2, global::Rocks.PropertyAccessor.Get)]
 					global::IReadOnlyNavigationBase? global::IReadOnlyNavigationBase.Inverse
 					{
 						get
@@ -763,7 +768,7 @@ public static class NullabilityGeneratorTests
 								return @result!;
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::IReadOnlyNavigationBase.get_Inverse())");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(2)})");
 						}
 					}
 					
@@ -937,6 +942,8 @@ public static class NullabilityGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IDestinationOfobjectCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -969,7 +976,7 @@ public static class NullabilityGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "void As<T>()")]
+					[global::Rocks.MemberIdentifier(0)]
 					public void As<T>()
 						where T : notnull
 					{
@@ -983,12 +990,12 @@ public static class NullabilityGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("The provided handler does not match for void As<T>()");
+								throw new global::Rocks.Exceptions.ExpectationException($"The provided handler does not match for {this.GetType().GetMemberDescription(0)}");
 							}
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void As<T>()");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 						}
 					}
 					

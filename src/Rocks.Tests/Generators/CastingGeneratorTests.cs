@@ -32,6 +32,8 @@ public static class CastingGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class IHaveOpenGenericsOfGuidCreateExpectations
@@ -96,7 +98,7 @@ public static class CastingGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "void HasGenerics<T>(T @value, string @data, global::System.Guid @information)")]
+						[global::Rocks.MemberIdentifier(0)]
 						public void HasGenerics<T>(T @value, string @data, global::System.Guid @information)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -121,16 +123,16 @@ public static class CastingGeneratorTests
 								
 								if (!@foundMatch)
 								{
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void HasGenerics<T>(T @value, string @data, global::System.Guid @information)");
+									throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 								}
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void HasGenerics<T>(T @value, string @data, global::System.Guid @information)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(1, "T HasGenericsWithReturn<T>(T @value, string @data, global::System.Guid @information)")]
+						[global::Rocks.MemberIdentifier(1)]
 						public T HasGenericsWithReturn<T>(T @value, string @data, global::System.Guid @information)
 						{
 							if (this.Expectations.handlers1 is not null)
@@ -151,13 +153,13 @@ public static class CastingGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for T HasGenericsWithReturn<T>(T @value, string @data, global::System.Guid @information)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(1)}");
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for T HasGenericsWithReturn<T>(T @value, string @data, global::System.Guid @information)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
 						}
 						
-						[global::Rocks.MemberIdentifier(2, "void NoGenerics(int @value, string @data)")]
+						[global::Rocks.MemberIdentifier(2)]
 						public void NoGenerics(int @value, string @data)
 						{
 							if (this.Expectations.handlers2 is not null)
@@ -178,16 +180,16 @@ public static class CastingGeneratorTests
 								
 								if (!@foundMatch)
 								{
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void NoGenerics(int @value, string @data)");
+									throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(2)}");
 								}
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void NoGenerics(int @value, string @data)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(2)}");
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(3, "int NoGenericsWithReturn(int @value, string @data)")]
+						[global::Rocks.MemberIdentifier(3)]
 						public int NoGenericsWithReturn(int @value, string @data)
 						{
 							if (this.Expectations.handlers3 is not null)
@@ -204,10 +206,10 @@ public static class CastingGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for int NoGenericsWithReturn(int @value, string @data)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(3)}");
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for int NoGenericsWithReturn(int @value, string @data)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(3)}");
 						}
 						
 						private global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations Expectations { get; }

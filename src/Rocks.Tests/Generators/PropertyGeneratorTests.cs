@@ -31,6 +31,8 @@ public static class PropertyGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IMessagePublishTopologyConfiguratorCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -71,7 +73,7 @@ public static class PropertyGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "set_Exclude(value)")]
+					[global::Rocks.MemberIdentifier(0, global::Rocks.PropertyAccessor.Set)]
 					public bool Exclude
 					{
 						set
@@ -89,7 +91,7 @@ public static class PropertyGeneratorTests
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_Exclude(value)");
+											throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 										}
 										
 										break;
@@ -98,11 +100,11 @@ public static class PropertyGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_Exclude(value)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 							}
 						}
 					}
-					[global::Rocks.MemberIdentifier(1, "global::IMessagePublishTopology.get_Exclude()")]
+					[global::Rocks.MemberIdentifier(1, global::Rocks.PropertyAccessor.Get)]
 					bool global::IMessagePublishTopology.Exclude
 					{
 						get
@@ -116,7 +118,7 @@ public static class PropertyGeneratorTests
 								return @result!;
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::IMessagePublishTopology.get_Exclude())");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)})");
 						}
 					}
 					
@@ -251,6 +253,8 @@ public static class PropertyGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class PrivatePublicPropertiesCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -317,7 +321,7 @@ public static class PropertyGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public override bool Equals(object? @obj)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -333,7 +337,7 @@ public static class PropertyGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 						}
 						else
 						{
@@ -341,7 +345,7 @@ public static class PropertyGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					[global::Rocks.MemberIdentifier(1)]
 					public override int GetHashCode()
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -358,7 +362,7 @@ public static class PropertyGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					[global::Rocks.MemberIdentifier(2)]
 					public override string? ToString()
 					{
 						if (this.Expectations.handlers2 is not null)
@@ -375,7 +379,7 @@ public static class PropertyGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(3, "set_PrivateGetPublicSet1(value)")]
+					[global::Rocks.MemberIdentifier(3, global::Rocks.PropertyAccessor.Set)]
 					public override string? PrivateGetPublicSet1
 					{
 						set
@@ -393,7 +397,7 @@ public static class PropertyGeneratorTests
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_PrivateGetPublicSet1(value)");
+											throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(3)}");
 										}
 										
 										break;
@@ -406,7 +410,7 @@ public static class PropertyGeneratorTests
 							}
 						}
 					}
-					[global::Rocks.MemberIdentifier(5, "set_PrivateGetPublicSet2(value)")]
+					[global::Rocks.MemberIdentifier(5, global::Rocks.PropertyAccessor.Set)]
 					public override string? PrivateGetPublicSet2
 					{
 						set
@@ -424,7 +428,7 @@ public static class PropertyGeneratorTests
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_PrivateGetPublicSet2(value)");
+											throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(5)}");
 										}
 										
 										break;
@@ -437,7 +441,7 @@ public static class PropertyGeneratorTests
 							}
 						}
 					}
-					[global::Rocks.MemberIdentifier(7, "set_PrivateGetPublicSet3(value)")]
+					[global::Rocks.MemberIdentifier(7, global::Rocks.PropertyAccessor.Set)]
 					public override string? PrivateGetPublicSet3
 					{
 						set
@@ -455,7 +459,7 @@ public static class PropertyGeneratorTests
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_PrivateGetPublicSet3(value)");
+											throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(7)}");
 										}
 										
 										break;
@@ -669,6 +673,8 @@ public static class PropertyGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class PrivatePublicPropertyCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -721,7 +727,7 @@ public static class PropertyGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public override bool Equals(object? @obj)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -737,7 +743,7 @@ public static class PropertyGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 						}
 						else
 						{
@@ -745,7 +751,7 @@ public static class PropertyGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					[global::Rocks.MemberIdentifier(1)]
 					public override int GetHashCode()
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -762,7 +768,7 @@ public static class PropertyGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					[global::Rocks.MemberIdentifier(2)]
 					public override string? ToString()
 					{
 						if (this.Expectations.handlers2 is not null)
@@ -779,7 +785,7 @@ public static class PropertyGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(3, "set_PrivateGetPublicSet(value)")]
+					[global::Rocks.MemberIdentifier(3, global::Rocks.PropertyAccessor.Set)]
 					public override string? PrivateGetPublicSet
 					{
 						set
@@ -797,7 +803,7 @@ public static class PropertyGeneratorTests
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_PrivateGetPublicSet(value)");
+											throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(3)}");
 										}
 										
 										break;
@@ -974,6 +980,8 @@ public static class PropertyGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class MixedIndexersCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1064,7 +1072,7 @@ public static class PropertyGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public override bool Equals(object? @obj)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -1080,7 +1088,7 @@ public static class PropertyGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 						}
 						else
 						{
@@ -1088,7 +1096,7 @@ public static class PropertyGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					[global::Rocks.MemberIdentifier(1)]
 					public override int GetHashCode()
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -1105,7 +1113,7 @@ public static class PropertyGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					[global::Rocks.MemberIdentifier(2)]
 					public override string? ToString()
 					{
 						if (this.Expectations.handlers2 is not null)
@@ -1122,7 +1130,7 @@ public static class PropertyGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(3, "this[int @index]")]
+					[global::Rocks.MemberIdentifier(3, global::Rocks.PropertyAccessor.Get)]
 					public override string? this[int @index]
 					{
 						get
@@ -1140,7 +1148,7 @@ public static class PropertyGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[int @index]");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(3)}");
 							}
 							else
 							{
@@ -1148,8 +1156,8 @@ public static class PropertyGeneratorTests
 							}
 						}
 					}
-					[global::Rocks.MemberIdentifier(5, "this[long @index]")]
-					[global::Rocks.MemberIdentifier(6, "this[long @index]")]
+					[global::Rocks.MemberIdentifier(5, global::Rocks.PropertyAccessor.Get)]
+					[global::Rocks.MemberIdentifier(6, global::Rocks.PropertyAccessor.Set)]
 					public override string? this[long @index]
 					{
 						get
@@ -1167,7 +1175,7 @@ public static class PropertyGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[long @index]");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(5)}");
 							}
 							else
 							{
@@ -1189,7 +1197,7 @@ public static class PropertyGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[long @index]");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(6)}");
 							}
 							else
 							{
@@ -1197,7 +1205,7 @@ public static class PropertyGeneratorTests
 							}
 						}
 					}
-					[global::Rocks.MemberIdentifier(7, "this[global::System.Guid @index]")]
+					[global::Rocks.MemberIdentifier(7, global::Rocks.PropertyAccessor.Set)]
 					public override string? this[global::System.Guid @index]
 					{
 						set
@@ -1215,7 +1223,7 @@ public static class PropertyGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[global::System.Guid @index]");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(7)}");
 							}
 							else
 							{
@@ -1223,8 +1231,8 @@ public static class PropertyGeneratorTests
 							}
 						}
 					}
-					[global::Rocks.MemberIdentifier(9, "this[string @index]")]
-					[global::Rocks.MemberIdentifier(10, "this[string @index]")]
+					[global::Rocks.MemberIdentifier(9, global::Rocks.PropertyAccessor.Get)]
+					[global::Rocks.MemberIdentifier(10, global::Rocks.PropertyAccessor.Set)]
 					public override string? this[string @index]
 					{
 						protected get
@@ -1242,7 +1250,7 @@ public static class PropertyGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[string @index]");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(9)}");
 							}
 							else
 							{
@@ -1264,7 +1272,7 @@ public static class PropertyGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[string @index]");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(10)}");
 							}
 							else
 							{
@@ -1551,6 +1559,8 @@ public static class PropertyGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class MixedPropertiesCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1632,7 +1642,7 @@ public static class PropertyGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public override bool Equals(object? @obj)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -1648,7 +1658,7 @@ public static class PropertyGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 						}
 						else
 						{
@@ -1656,7 +1666,7 @@ public static class PropertyGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					[global::Rocks.MemberIdentifier(1)]
 					public override int GetHashCode()
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -1673,7 +1683,7 @@ public static class PropertyGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					[global::Rocks.MemberIdentifier(2)]
 					public override string? ToString()
 					{
 						if (this.Expectations.handlers2 is not null)
@@ -1690,7 +1700,7 @@ public static class PropertyGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(3, "get_PublicGetPrivateSet()")]
+					[global::Rocks.MemberIdentifier(3, global::Rocks.PropertyAccessor.Get)]
 					public override string? PublicGetPrivateSet
 					{
 						get
@@ -1709,8 +1719,8 @@ public static class PropertyGeneratorTests
 							}
 						}
 					}
-					[global::Rocks.MemberIdentifier(5, "get_PublicGetProtectedSet()")]
-					[global::Rocks.MemberIdentifier(6, "set_PublicGetProtectedSet(value)")]
+					[global::Rocks.MemberIdentifier(5, global::Rocks.PropertyAccessor.Get)]
+					[global::Rocks.MemberIdentifier(6, global::Rocks.PropertyAccessor.Set)]
 					public override string? PublicGetProtectedSet
 					{
 						get
@@ -1743,7 +1753,7 @@ public static class PropertyGeneratorTests
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_PublicGetProtectedSet(value)");
+											throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(6)}");
 										}
 										
 										break;
@@ -1756,7 +1766,7 @@ public static class PropertyGeneratorTests
 							}
 						}
 					}
-					[global::Rocks.MemberIdentifier(7, "set_PrivateGetPublicSet(value)")]
+					[global::Rocks.MemberIdentifier(7, global::Rocks.PropertyAccessor.Set)]
 					public override string? PrivateGetPublicSet
 					{
 						set
@@ -1774,7 +1784,7 @@ public static class PropertyGeneratorTests
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_PrivateGetPublicSet(value)");
+											throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(7)}");
 										}
 										
 										break;
@@ -1787,8 +1797,8 @@ public static class PropertyGeneratorTests
 							}
 						}
 					}
-					[global::Rocks.MemberIdentifier(9, "get_ProtectedGetPublicSet()")]
-					[global::Rocks.MemberIdentifier(10, "set_ProtectedGetPublicSet(value)")]
+					[global::Rocks.MemberIdentifier(9, global::Rocks.PropertyAccessor.Get)]
+					[global::Rocks.MemberIdentifier(10, global::Rocks.PropertyAccessor.Set)]
 					public override string? ProtectedGetPublicSet
 					{
 						protected get
@@ -1821,7 +1831,7 @@ public static class PropertyGeneratorTests
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_ProtectedGetPublicSet(value)");
+											throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(10)}");
 										}
 										
 										break;

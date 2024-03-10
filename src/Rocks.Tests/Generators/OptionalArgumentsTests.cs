@@ -26,6 +26,8 @@ public static class OptionalArgumentsTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IHaveOptionalArgumentsCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -80,7 +82,7 @@ public static class OptionalArgumentsTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "void Foo(int @a, string @b = \"b\", double @c = 3.2)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public void Foo(int @a, string @b = "b", double @c = 3.2)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -102,17 +104,17 @@ public static class OptionalArgumentsTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void Foo(int @a, string @b = \"b\", double @c = 3.2)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void Foo(int @a, string @b = \"b\", double @c = 3.2)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "this[int @a, string @b = \"b\"]")]
-					[global::Rocks.MemberIdentifier(2, "this[int @a, string @b = \"b\"]")]
+					[global::Rocks.MemberIdentifier(1, global::Rocks.PropertyAccessor.Get)]
+					[global::Rocks.MemberIdentifier(2, global::Rocks.PropertyAccessor.Set)]
 					public int this[int @a, string @b = "b"]
 					{
 						get
@@ -131,10 +133,10 @@ public static class OptionalArgumentsTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[int @a, string @b = \"b\"]");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(1)}");
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[int @a, string @b = \"b\"])");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)})");
 						}
 						set
 						{
@@ -152,10 +154,10 @@ public static class OptionalArgumentsTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[int @a, string @b = \"b\"]");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(2)}");
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[int @a, string @b = \"b\"])");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(2)}");
 						}
 					}
 					

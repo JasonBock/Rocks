@@ -33,6 +33,8 @@ public static class MultipleModelGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class ITargetCreateExpectations
@@ -70,7 +72,7 @@ public static class MultipleModelGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "string Retrieve(int @value)")]
+						[global::Rocks.MemberIdentifier(0)]
 						public string Retrieve(int @value)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -86,10 +88,10 @@ public static class MultipleModelGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string Retrieve(int @value)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string Retrieve(int @value)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 						}
 						
 						private global::MockTests.ITargetCreateExpectations Expectations { get; }

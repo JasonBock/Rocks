@@ -20,6 +20,7 @@ internal static class MappedTypes
 			.AddItems(AutofacMappings.GetMappedTypes())
 			.AddItems(AWSSDKCoreMappings.GetMappedTypes())
 			.AddItems(BenchmarkDotNetMappings.GetMappedTypes())
+			.AddItems(BrighterMappings.GetMappedTypes())
 			.AddItems(CoravelMappings.GetMappedTypes())
 			.AddItems(CslaMappings.GetMappedTypes())
 			.AddItems(ElasticSearchMappings.GetMappedTypes())

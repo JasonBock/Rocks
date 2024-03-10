@@ -53,6 +53,8 @@ public static class ExplicitImplementationGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class IHtmlMediaElementCreateExpectations
@@ -86,7 +88,7 @@ public static class ExplicitImplementationGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "void Foo()")]
+						[global::Rocks.MemberIdentifier(0)]
 						public void Foo()
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -98,7 +100,7 @@ public static class ExplicitImplementationGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void Foo()");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 							}
 						}
 						
@@ -333,6 +335,8 @@ public static class ExplicitImplementationGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class ILeftRightCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -385,8 +389,8 @@ public static class ExplicitImplementationGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "global::ILeft.get_Value()")]
-					[global::Rocks.MemberIdentifier(1, "global::ILeft.set_Value(value)")]
+					[global::Rocks.MemberIdentifier(0, global::Rocks.PropertyAccessor.Get)]
+					[global::Rocks.MemberIdentifier(1, global::Rocks.PropertyAccessor.Set)]
 					global::Values.Information global::ILeft.Value
 					{
 						get
@@ -400,7 +404,7 @@ public static class ExplicitImplementationGeneratorTests
 								return @result!;
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::ILeft.get_Value())");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)})");
 						}
 						set
 						{
@@ -417,7 +421,7 @@ public static class ExplicitImplementationGeneratorTests
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::ILeft.set_Value(value)");
+											throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(1)}");
 										}
 										
 										break;
@@ -426,12 +430,12 @@ public static class ExplicitImplementationGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::ILeft.set_Value(value)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
 							}
 						}
 					}
-					[global::Rocks.MemberIdentifier(2, "global::IRight.get_Value()")]
-					[global::Rocks.MemberIdentifier(3, "global::IRight.set_Value(value)")]
+					[global::Rocks.MemberIdentifier(2, global::Rocks.PropertyAccessor.Get)]
+					[global::Rocks.MemberIdentifier(3, global::Rocks.PropertyAccessor.Set)]
 					global::Values.Information global::IRight.Value
 					{
 						get
@@ -445,7 +449,7 @@ public static class ExplicitImplementationGeneratorTests
 								return @result!;
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::IRight.get_Value())");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(2)})");
 						}
 						set
 						{
@@ -462,7 +466,7 @@ public static class ExplicitImplementationGeneratorTests
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::IRight.set_Value(value)");
+											throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(3)}");
 										}
 										
 										break;
@@ -471,7 +475,7 @@ public static class ExplicitImplementationGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::IRight.set_Value(value)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(3)}");
 							}
 						}
 					}
@@ -669,6 +673,8 @@ public static class ExplicitImplementationGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IIterableOfstringCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -705,7 +711,7 @@ public static class ExplicitImplementationGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "global::IIterator<string> GetIterator()")]
+					[global::Rocks.MemberIdentifier(0)]
 					public global::IIterator<string> GetIterator()
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -717,10 +723,10 @@ public static class ExplicitImplementationGeneratorTests
 							return @result!;
 						}
 						
-						throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::IIterator<string> GetIterator()");
+						throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "global::IIterator global::IIterable.GetIterator()")]
+					[global::Rocks.MemberIdentifier(1)]
 					global::IIterator global::IIterable.GetIterator()
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -732,7 +738,7 @@ public static class ExplicitImplementationGeneratorTests
 							return @result!;
 						}
 						
-						throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::IIterator global::IIterable.GetIterator()");
+						throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
 					}
 					
 					private global::IIterableOfstringCreateExpectations Expectations { get; }
@@ -844,6 +850,8 @@ public static class ExplicitImplementationGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class ISetupListCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -880,7 +888,7 @@ public static class ExplicitImplementationGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "global::System.Collections.Generic.IEnumerator<global::ISetup> GetEnumerator()")]
+					[global::Rocks.MemberIdentifier(0)]
 					public global::System.Collections.Generic.IEnumerator<global::ISetup> GetEnumerator()
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -892,10 +900,10 @@ public static class ExplicitImplementationGeneratorTests
 							return @result!;
 						}
 						
-						throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::System.Collections.Generic.IEnumerator<global::ISetup> GetEnumerator()");
+						throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator()")]
+					[global::Rocks.MemberIdentifier(1)]
 					global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator()
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -907,7 +915,7 @@ public static class ExplicitImplementationGeneratorTests
 							return @result!;
 						}
 						
-						throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator()");
+						throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
 					}
 					
 					private global::ISetupListCreateExpectations Expectations { get; }

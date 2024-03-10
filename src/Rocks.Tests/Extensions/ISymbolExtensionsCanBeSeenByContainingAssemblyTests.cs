@@ -92,7 +92,7 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 		var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
 		var containingSyntaxTree = CSharpSyntaxTree.ParseText("public class Containing { }");
-		var containingCompilation = CSharpCompilation.Create(ContainingAssembly, new SyntaxTree[] { containingSyntaxTree },
+		var containingCompilation = CSharpCompilation.Create(ContainingAssembly, [containingSyntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
 		Assert.Multiple(() =>
@@ -115,7 +115,7 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 		var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
 		var containingSyntaxTree = CSharpSyntaxTree.ParseText("public class Containing { }");
-		var containingCompilation = CSharpCompilation.Create(ContainingAssembly, new SyntaxTree[] { containingSyntaxTree },
+		var containingCompilation = CSharpCompilation.Create(ContainingAssembly, [containingSyntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
 		Assert.Multiple(() =>
@@ -161,7 +161,7 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 		var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
 		var containingSyntaxTree = CSharpSyntaxTree.ParseText("public class Containing { }");
-		var containingCompilation = CSharpCompilation.Create(ContainingAssembly, new SyntaxTree[] { containingSyntaxTree },
+		var containingCompilation = CSharpCompilation.Create(ContainingAssembly, [containingSyntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
 		Assert.Multiple(() =>
@@ -184,7 +184,7 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 		var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
 		var containingSyntaxTree = CSharpSyntaxTree.ParseText("public class Containing { }");
-		var containingCompilation = CSharpCompilation.Create(ContainingAssembly, new SyntaxTree[] { containingSyntaxTree },
+		var containingCompilation = CSharpCompilation.Create(ContainingAssembly, [containingSyntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
 		Assert.Multiple(() =>
@@ -196,7 +196,7 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 	private static ISymbol GetSymbol(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
-		var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
+		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 

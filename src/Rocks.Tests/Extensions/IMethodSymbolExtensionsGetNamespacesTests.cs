@@ -78,7 +78,7 @@ public static class IMethodSymbolExtensionsGetNamespacesTests
 	private static IMethodSymbol GetMethod(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
-		var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
+		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 

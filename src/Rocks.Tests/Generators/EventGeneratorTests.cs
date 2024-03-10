@@ -27,6 +27,8 @@ public static class EventGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IOpenGenericAndEventCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -58,7 +60,7 @@ public static class EventGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "TService Get<TService>()")]
+					[global::Rocks.MemberIdentifier(0)]
 					public TService Get<TService>()
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -77,10 +79,10 @@ public static class EventGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for TService Get<TService>()");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 						}
 						
-						throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for TService Get<TService>()");
+						throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 					}
 					
 					#pragma warning disable CS0067
@@ -194,6 +196,8 @@ public static class EventGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class AbstractClassMethodReturnWithEventsCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -244,7 +248,7 @@ public static class EventGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public override bool Equals(object? @obj)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -261,7 +265,7 @@ public static class EventGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 						}
 						else
 						{
@@ -269,7 +273,7 @@ public static class EventGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					[global::Rocks.MemberIdentifier(1)]
 					public override int GetHashCode()
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -287,7 +291,7 @@ public static class EventGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					[global::Rocks.MemberIdentifier(2)]
 					public override string? ToString()
 					{
 						if (this.Expectations.handlers2 is not null)
@@ -305,7 +309,7 @@ public static class EventGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(3, "int NoParameters()")]
+					[global::Rocks.MemberIdentifier(3)]
 					public override int NoParameters()
 					{
 						if (this.Expectations.handlers3 is not null)
@@ -318,7 +322,7 @@ public static class EventGeneratorTests
 							return @result!;
 						}
 						
-						throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for int NoParameters()");
+						throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(3)}");
 					}
 					
 					#pragma warning disable CS0067
@@ -493,6 +497,8 @@ public static class EventGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IExplicitInterfaceImplementationCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -529,7 +535,7 @@ public static class EventGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "void global::IExplicitInterfaceImplementationOne.A()")]
+					[global::Rocks.MemberIdentifier(0)]
 					void global::IExplicitInterfaceImplementationOne.A()
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -541,11 +547,11 @@ public static class EventGeneratorTests
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void global::IExplicitInterfaceImplementationOne.A()");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "void global::IExplicitInterfaceImplementationTwo.A()")]
+					[global::Rocks.MemberIdentifier(1)]
 					void global::IExplicitInterfaceImplementationTwo.A()
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -557,7 +563,7 @@ public static class EventGeneratorTests
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void global::IExplicitInterfaceImplementationTwo.A()");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
 						}
 					}
 					
@@ -711,6 +717,8 @@ public static class EventGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class IHaveEventsCreateExpectations
@@ -744,7 +752,7 @@ public static class EventGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "void A()")]
+						[global::Rocks.MemberIdentifier(0)]
 						public void A()
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -756,7 +764,7 @@ public static class EventGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void A()");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 							}
 						}
 						
@@ -875,6 +883,8 @@ public static class EventGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class IHaveEventsCreateExpectations
@@ -908,7 +918,7 @@ public static class EventGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "void A()")]
+						[global::Rocks.MemberIdentifier(0)]
 						public void A()
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -920,7 +930,7 @@ public static class EventGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void A()");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 							}
 						}
 						

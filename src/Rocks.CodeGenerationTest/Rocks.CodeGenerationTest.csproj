@@ -74,9 +74,11 @@
 		<PackageReference Include="Ninject" />
 		<PackageReference Include="NodaTime" />
 		<PackageReference Include="NuGet.Common" />
+		<PackageReference Include="Paramore.Brighter" />
 		<PackageReference Include="Proto.Actor" />
 		<PackageReference Include="Pulumi" />
 		<PackageReference Include="Quartz" />
+		<PackageReference Include="R3" />
 		<PackageReference Include="RabbitMQ.Client" />
 		<PackageReference Include="RecordParser" />
 		<PackageReference Include="Refit" />

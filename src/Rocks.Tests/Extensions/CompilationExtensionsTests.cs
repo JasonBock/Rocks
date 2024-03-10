@@ -87,17 +87,17 @@ public static class CompilationExtensionsTests
 	{
 		var firstSource = "public class Test { }";
 		var firstSyntaxTree = CSharpSyntaxTree.ParseText(firstSource);
-		var firstCompilation = CSharpCompilation.Create(name, new SyntaxTree[] { firstSyntaxTree },
+		var firstCompilation = CSharpCompilation.Create(name, [firstSyntaxTree],
 			options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
 		var secondSource = "public class Test { }";
 		var secondSyntaxTree = CSharpSyntaxTree.ParseText(secondSource);
-		var secondCompilation = CSharpCompilation.Create(name, new SyntaxTree[] { secondSyntaxTree },
+		var secondCompilation = CSharpCompilation.Create(name, [secondSyntaxTree],
 			options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
 		var finalSource = "public class Final { }";
 		var finalSyntaxTree = CSharpSyntaxTree.ParseText(finalSource);
-		return CSharpCompilation.Create(name, new SyntaxTree[] { finalSyntaxTree },
+		return CSharpCompilation.Create(name, [finalSyntaxTree],
 			references: new [] 
 			{ 
 				firstCompilation.ToMetadataReference().WithAliases(firstAliases),

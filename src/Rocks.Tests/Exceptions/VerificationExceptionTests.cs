@@ -10,7 +10,7 @@ public static class VerificationExceptionTests
 	{
 		try
 		{
-			throw new VerificationException(new string[] { "failure one", "failure two" });
+			throw new VerificationException(["failure one", "failure two"]);
 		}
 		catch(VerificationException e)
 		{

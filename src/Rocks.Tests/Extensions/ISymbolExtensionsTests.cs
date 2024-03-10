@@ -18,7 +18,7 @@ public static class ISymbolExtensionsTests
 	public static void GetOverridingCodeValueTest(string source, bool areAssembliesIdentical, string codeValue)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
-		var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
+		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var method = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single();
@@ -34,7 +34,7 @@ public static class ISymbolExtensionsTests
 		{
 			var selfSource = "public static class Stuff { }";
 			var selfSyntaxTree = CSharpSyntaxTree.ParseText(selfSource);
-			var selfCompilation = CSharpCompilation.Create("generator", new SyntaxTree[] { selfSyntaxTree },
+			var selfCompilation = CSharpCompilation.Create("generator", [selfSyntaxTree],
 				Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 			compilationAssembly = selfCompilation.Assembly;
 		}

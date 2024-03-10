@@ -41,7 +41,7 @@ public static class TypeExtensionsTests
 
 	[Test]
 	public static void GetMemberDescriptionWhenIdentifierIsNotFound() =>
-		Assert.That(typeof(Identifiers).GetMemberDescription(2), Is.Null);
+		Assert.That(typeof(Identifiers).GetMemberDescription(0), Is.Null);
 
 	[Test]
 	public static void GetMemberDescriptionWhenAttributesDoNotExist() =>

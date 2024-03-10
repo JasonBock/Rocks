@@ -28,6 +28,8 @@ public static class NullableAnnotationTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class ITypeOfNullableOfintCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -63,7 +65,7 @@ public static class NullableAnnotationTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "void Foo(int? @value)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public void Foo(int? @value)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -83,12 +85,12 @@ public static class NullableAnnotationTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void Foo(int? @value)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void Foo(int? @value)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 						}
 					}
 					
@@ -182,6 +184,8 @@ public static class NullableAnnotationTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class NeedNullableCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -228,7 +232,7 @@ public static class NullableAnnotationTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public override bool Equals(object? @obj)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -244,7 +248,7 @@ public static class NullableAnnotationTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 						}
 						else
 						{
@@ -252,7 +256,7 @@ public static class NullableAnnotationTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					[global::Rocks.MemberIdentifier(1)]
 					public override int GetHashCode()
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -269,7 +273,7 @@ public static class NullableAnnotationTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					[global::Rocks.MemberIdentifier(2)]
 					public override string? ToString()
 					{
 						if (this.Expectations.handlers2 is not null)
@@ -468,6 +472,8 @@ public static class NullableAnnotationTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class NeedNullableCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -527,7 +533,7 @@ public static class NullableAnnotationTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public override bool Equals(object? @obj)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -543,7 +549,7 @@ public static class NullableAnnotationTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 						}
 						else
 						{
@@ -551,7 +557,7 @@ public static class NullableAnnotationTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					[global::Rocks.MemberIdentifier(1)]
 					public override int GetHashCode()
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -568,7 +574,7 @@ public static class NullableAnnotationTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					[global::Rocks.MemberIdentifier(2)]
 					public override string? ToString()
 					{
 						if (this.Expectations.handlers2 is not null)
@@ -585,7 +591,7 @@ public static class NullableAnnotationTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(3, "int IntReturn(object? @initializationData = null)")]
+					[global::Rocks.MemberIdentifier(3)]
 					public override int IntReturn(object? @initializationData = null)
 					{
 						if (this.Expectations.handlers3 is not null)
@@ -601,7 +607,7 @@ public static class NullableAnnotationTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for int IntReturn(object? @initializationData = null)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(3)}");
 						}
 						else
 						{
@@ -609,7 +615,7 @@ public static class NullableAnnotationTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(4, "void VoidReturn(object? @initializationData = null)")]
+					[global::Rocks.MemberIdentifier(4)]
 					public override void VoidReturn(object? @initializationData = null)
 					{
 						if (this.Expectations.handlers4 is not null)
@@ -629,7 +635,7 @@ public static class NullableAnnotationTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void VoidReturn(object? @initializationData = null)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(4)}");
 							}
 						}
 						else

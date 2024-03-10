@@ -28,6 +28,8 @@ public static class RefStructGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class ScopedParameterCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -126,7 +128,7 @@ public static class RefStructGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public override bool Equals(object? @obj)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -142,7 +144,7 @@ public static class RefStructGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 						}
 						else
 						{
@@ -150,7 +152,7 @@ public static class RefStructGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					[global::Rocks.MemberIdentifier(1)]
 					public override int GetHashCode()
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -167,7 +169,7 @@ public static class RefStructGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					[global::Rocks.MemberIdentifier(2)]
 					public override string? ToString()
 					{
 						if (this.Expectations.handlers2 is not null)
@@ -184,7 +186,7 @@ public static class RefStructGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(3, "global::System.Span<int> DoWorkWithSpanAndReturn(scoped global::System.Span<int> @data)")]
+					[global::Rocks.MemberIdentifier(3)]
 					public override global::System.Span<int> DoWorkWithSpanAndReturn(scoped global::System.Span<int> @data)
 					{
 						if (this.Expectations.handlers3 is not null)
@@ -200,13 +202,13 @@ public static class RefStructGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::System.Span<int> DoWorkWithSpanAndReturn(scoped global::System.Span<int> @data)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(3)}");
 						}
 						
-						throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::System.Span<int> DoWorkWithSpanAndReturn(scoped global::System.Span<int> @data)");
+						throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(3)}");
 					}
 					
-					[global::Rocks.MemberIdentifier(4, "void DoWorkWithSpan(scoped global::System.Span<int> @data)")]
+					[global::Rocks.MemberIdentifier(4)]
 					public override void DoWorkWithSpan(scoped global::System.Span<int> @data)
 					{
 						if (this.Expectations.handlers4 is not null)
@@ -226,16 +228,16 @@ public static class RefStructGeneratorTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void DoWorkWithSpan(scoped global::System.Span<int> @data)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(4)}");
 							}
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void DoWorkWithSpan(scoped global::System.Span<int> @data)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(4)}");
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(5, "int DoWorkWithInt(scoped ref int @data)")]
+					[global::Rocks.MemberIdentifier(5)]
 					public override int DoWorkWithInt(scoped ref int @data)
 					{
 						if (this.Expectations.handlers5 is not null)
@@ -251,10 +253,10 @@ public static class RefStructGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for int DoWorkWithInt(scoped ref int @data)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(5)}");
 						}
 						
-						throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for int DoWorkWithInt(scoped ref int @data)");
+						throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(5)}");
 					}
 					
 					private global::ScopedParameterCreateExpectations Expectations { get; }
@@ -517,6 +519,8 @@ public static class RefStructGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IUseSpanWithOpenGenericCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -582,7 +586,7 @@ public static class RefStructGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "void From<TSourcePixel>(global::System.ReadOnlySpan<TSourcePixel> @sourcePixels)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public void From<TSourcePixel>(global::System.ReadOnlySpan<TSourcePixel> @sourcePixels)
 						where TSourcePixel : unmanaged
 					{
@@ -606,12 +610,12 @@ public static class RefStructGeneratorTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void From<TSourcePixel>(global::System.ReadOnlySpan<TSourcePixel> @sourcePixels)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void From<TSourcePixel>(global::System.ReadOnlySpan<TSourcePixel> @sourcePixels)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 						}
 					}
 					
@@ -706,6 +710,8 @@ public static class RefStructGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IHaveRefStructCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -770,7 +776,7 @@ public static class RefStructGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "void RefStructParameter(global::System.Span<int> @values)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public void RefStructParameter(global::System.Span<int> @values)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -790,12 +796,12 @@ public static class RefStructGeneratorTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void RefStructParameter(global::System.Span<int> @values)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void RefStructParameter(global::System.Span<int> @values)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 						}
 					}
 					
@@ -890,6 +896,8 @@ public static class RefStructGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IHaveRefStructCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -927,7 +935,7 @@ public static class RefStructGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "global::System.Span<int> RefStructReturn()")]
+					[global::Rocks.MemberIdentifier(0)]
 					public global::System.Span<int> RefStructReturn()
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -939,7 +947,7 @@ public static class RefStructGeneratorTests
 							return @result!;
 						}
 						
-						throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::System.Span<int> RefStructReturn()");
+						throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 					}
 					
 					private global::IHaveRefStructCreateExpectations Expectations { get; }
@@ -1027,6 +1035,8 @@ public static class RefStructGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IHaveRefStructCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1098,8 +1108,8 @@ public static class RefStructGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "get_Data()")]
-					[global::Rocks.MemberIdentifier(1, "set_Data(value)")]
+					[global::Rocks.MemberIdentifier(0, global::Rocks.PropertyAccessor.Get)]
+					[global::Rocks.MemberIdentifier(1, global::Rocks.PropertyAccessor.Set)]
 					public global::System.Span<int> Data
 					{
 						get
@@ -1113,7 +1123,7 @@ public static class RefStructGeneratorTests
 								return @result!;
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_Data())");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)})");
 						}
 						set
 						{
@@ -1130,7 +1140,7 @@ public static class RefStructGeneratorTests
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_Data(value)");
+											throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(1)}");
 										}
 										
 										break;
@@ -1139,7 +1149,7 @@ public static class RefStructGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_Data(value)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
 							}
 						}
 					}
@@ -1264,6 +1274,8 @@ public static class RefStructGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IHaveRefStructCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1337,8 +1349,8 @@ public static class RefStructGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "this[global::System.Span<int> @index]")]
-					[global::Rocks.MemberIdentifier(1, "this[global::System.Span<int> @index]")]
+					[global::Rocks.MemberIdentifier(0, global::Rocks.PropertyAccessor.Get)]
+					[global::Rocks.MemberIdentifier(1, global::Rocks.PropertyAccessor.Set)]
 					public string this[global::System.Span<int> @index]
 					{
 						get
@@ -1356,10 +1368,10 @@ public static class RefStructGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[global::System.Span<int> @index]");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[global::System.Span<int> @index])");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)})");
 						}
 						set
 						{
@@ -1376,10 +1388,10 @@ public static class RefStructGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[global::System.Span<int> @index]");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(1)}");
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[global::System.Span<int> @index])");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
 						}
 					}
 					
@@ -1511,6 +1523,8 @@ public static class RefStructGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IHaveRefStructCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1585,8 +1599,8 @@ public static class RefStructGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "this[string @index]")]
-					[global::Rocks.MemberIdentifier(1, "this[string @index]")]
+					[global::Rocks.MemberIdentifier(0, global::Rocks.PropertyAccessor.Get)]
+					[global::Rocks.MemberIdentifier(1, global::Rocks.PropertyAccessor.Set)]
 					public global::System.Span<int> this[string @index]
 					{
 						get
@@ -1604,10 +1618,10 @@ public static class RefStructGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[string @index]");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[string @index])");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)})");
 						}
 						set
 						{
@@ -1624,10 +1638,10 @@ public static class RefStructGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[string @index]");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(1)}");
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[string @index])");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
 						}
 					}
 					

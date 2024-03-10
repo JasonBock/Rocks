@@ -97,6 +97,8 @@ public static class AttributeGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IItemsCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -129,7 +131,7 @@ public static class AttributeGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "get_Length()")]
+					[global::Rocks.MemberIdentifier(0, global::Rocks.PropertyAccessor.Get)]
 					public int Length
 					{
 						get
@@ -143,7 +145,7 @@ public static class AttributeGeneratorTests
 								return @result!;
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_Length())");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)})");
 						}
 					}
 					
@@ -240,6 +242,8 @@ public static class AttributeGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class ConventionDispatcherCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -290,7 +294,7 @@ public static class AttributeGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public override bool Equals(object? @obj)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -306,7 +310,7 @@ public static class AttributeGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 						}
 						else
 						{
@@ -314,7 +318,7 @@ public static class AttributeGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					[global::Rocks.MemberIdentifier(1)]
 					public override int GetHashCode()
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -331,7 +335,7 @@ public static class AttributeGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					[global::Rocks.MemberIdentifier(2)]
 					public override string? ToString()
 					{
 						if (this.Expectations.handlers2 is not null)
@@ -348,7 +352,7 @@ public static class AttributeGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(3, "void AssertNoScope()")]
+					[global::Rocks.MemberIdentifier(3)]
 					public override void AssertNoScope()
 					{
 						if (this.Expectations.handlers3 is not null)
@@ -510,6 +514,8 @@ public static class AttributeGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class NotNullIfNotCasesCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -596,7 +602,7 @@ public static class AttributeGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public override bool Equals(object? @obj)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -612,7 +618,7 @@ public static class AttributeGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 						}
 						else
 						{
@@ -620,7 +626,7 @@ public static class AttributeGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					[global::Rocks.MemberIdentifier(1)]
 					public override int GetHashCode()
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -637,7 +643,7 @@ public static class AttributeGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					[global::Rocks.MemberIdentifier(2)]
 					public override string? ToString()
 					{
 						if (this.Expectations.handlers2 is not null)
@@ -655,7 +661,7 @@ public static class AttributeGeneratorTests
 					}
 					
 					[return: global::System.Diagnostics.CodeAnalysis.NotNullIfNotNullAttribute("node")]
-					[global::Rocks.MemberIdentifier(3, "object? VisitMethod(object? @node)")]
+					[global::Rocks.MemberIdentifier(3)]
 					public override object? VisitMethod(object? @node)
 					{
 						if (this.Expectations.handlers3 is not null)
@@ -671,7 +677,7 @@ public static class AttributeGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for object? VisitMethod(object? @node)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(3)}");
 						}
 						else
 						{
@@ -679,7 +685,7 @@ public static class AttributeGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(4, "object? VisitParameter([global::System.Diagnostics.CodeAnalysis.NotNullIfNotNullAttribute(\"node\")] object? @node)")]
+					[global::Rocks.MemberIdentifier(4)]
 					public override object? VisitParameter([global::System.Diagnostics.CodeAnalysis.NotNullIfNotNullAttribute("node")] object? @node)
 					{
 						if (this.Expectations.handlers4 is not null)
@@ -695,7 +701,7 @@ public static class AttributeGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for object? VisitParameter([global::System.Diagnostics.CodeAnalysis.NotNullIfNotNullAttribute(\"node\")] object? @node)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(4)}");
 						}
 						else
 						{
@@ -704,8 +710,8 @@ public static class AttributeGeneratorTests
 					}
 					
 					[global::System.Diagnostics.CodeAnalysis.NotNullIfNotNullAttribute("value")]
-					[global::Rocks.MemberIdentifier(5, "get_VisitProperty()")]
-					[global::Rocks.MemberIdentifier(6, "set_VisitProperty(value)")]
+					[global::Rocks.MemberIdentifier(5, global::Rocks.PropertyAccessor.Get)]
+					[global::Rocks.MemberIdentifier(6, global::Rocks.PropertyAccessor.Set)]
 					public override string? VisitProperty
 					{
 						get
@@ -738,7 +744,7 @@ public static class AttributeGeneratorTests
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_VisitProperty(value)");
+											throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(6)}");
 										}
 										
 										break;
@@ -753,8 +759,8 @@ public static class AttributeGeneratorTests
 					}
 					
 					[global::System.Diagnostics.CodeAnalysis.NotNullIfNotNullAttribute("node")]
-					[global::Rocks.MemberIdentifier(7, "this[object? @node]")]
-					[global::Rocks.MemberIdentifier(8, "this[object? @node]")]
+					[global::Rocks.MemberIdentifier(7, global::Rocks.PropertyAccessor.Get)]
+					[global::Rocks.MemberIdentifier(8, global::Rocks.PropertyAccessor.Set)]
 					public override string? this[object? @node]
 					{
 						get
@@ -772,7 +778,7 @@ public static class AttributeGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[object? @node]");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(7)}");
 							}
 							else
 							{
@@ -794,7 +800,7 @@ public static class AttributeGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[object? @node]");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(8)}");
 							}
 							else
 							{
@@ -1082,7 +1088,7 @@ public static class AttributeGeneratorTests
 			}
 			""";
 		var tupleSyntaxTree = CSharpSyntaxTree.ParseText(tupleCode);
-		var tupleCompilation = CSharpCompilation.Create("internal", new SyntaxTree[] { tupleSyntaxTree },
+		var tupleCompilation = CSharpCompilation.Create("internal", [tupleSyntaxTree],
 			Shared.References.Value,
 			new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		using var tupleStream = new MemoryStream();
@@ -1102,6 +1108,8 @@ public static class AttributeGeneratorTests
 			// <auto-generated/>
 			
 			#nullable enable
+			
+			using Rocks.Extensions;
 			
 			internal sealed class IUseTuplesCreateExpectations
 				: global::Rocks.Expectations
@@ -1134,7 +1142,7 @@ public static class AttributeGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "get_X11()")]
+					[global::Rocks.MemberIdentifier(0, global::Rocks.PropertyAccessor.Get)]
 					public (nint Display, nuint Window)? X11
 					{
 						get
@@ -1148,7 +1156,7 @@ public static class AttributeGeneratorTests
 								return @result!;
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_X11())");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)})");
 						}
 					}
 					
@@ -1247,6 +1255,8 @@ public static class AttributeGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class HaveDynamicCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1297,7 +1307,7 @@ public static class AttributeGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public override bool Equals(object? @obj)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -1313,7 +1323,7 @@ public static class AttributeGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 						}
 						else
 						{
@@ -1321,7 +1331,7 @@ public static class AttributeGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					[global::Rocks.MemberIdentifier(1)]
 					public override int GetHashCode()
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -1338,7 +1348,7 @@ public static class AttributeGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					[global::Rocks.MemberIdentifier(2)]
 					public override string? ToString()
 					{
 						if (this.Expectations.handlers2 is not null)
@@ -1355,7 +1365,7 @@ public static class AttributeGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(3, "dynamic CreateDynamicRecord()")]
+					[global::Rocks.MemberIdentifier(3)]
 					protected override dynamic CreateDynamicRecord()
 					{
 						if (this.Expectations.handlers3 is not null)
@@ -1520,6 +1530,8 @@ public static class AttributeGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class IHaveGenericAttributeCreateExpectations
@@ -1554,7 +1566,7 @@ public static class AttributeGeneratorTests
 						}
 						
 						[global::MockTests.MyAttribute<string>]
-						[global::Rocks.MemberIdentifier(0, "void Foo()")]
+						[global::Rocks.MemberIdentifier(0)]
 						public void Foo()
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -1565,7 +1577,7 @@ public static class AttributeGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void Foo()");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 							}
 						}
 						
@@ -1667,6 +1679,8 @@ public static class AttributeGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class IHaveMultipleAttributesCreateExpectations
@@ -1704,7 +1718,7 @@ public static class AttributeGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "void Foo([global::MockTests.ParameterOneAttribute, global::MockTests.ParameterTwoAttribute] string @data)")]
+						[global::Rocks.MemberIdentifier(0)]
 						public void Foo([global::MockTests.ParameterOneAttribute, global::MockTests.ParameterTwoAttribute] string @data)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -1724,12 +1738,12 @@ public static class AttributeGeneratorTests
 								
 								if (!@foundMatch)
 								{
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void Foo([global::MockTests.ParameterOneAttribute, global::MockTests.ParameterTwoAttribute] string @data)");
+									throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 								}
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void Foo([global::MockTests.ParameterOneAttribute, global::MockTests.ParameterTwoAttribute] string @data)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 							}
 						}
 						

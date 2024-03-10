@@ -31,6 +31,8 @@ public static class AllowNullGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class IAllowCreateExpectations
@@ -74,8 +76,8 @@ public static class AllowNullGeneratorTests
 						}
 						
 						[global::System.Diagnostics.CodeAnalysis.AllowNullAttribute]
-						[global::Rocks.MemberIdentifier(0, "get_NewLine()")]
-						[global::Rocks.MemberIdentifier(1, "set_NewLine(value)")]
+						[global::Rocks.MemberIdentifier(0, global::Rocks.PropertyAccessor.Get)]
+						[global::Rocks.MemberIdentifier(1, global::Rocks.PropertyAccessor.Set)]
 						public string NewLine
 						{
 							get
@@ -89,7 +91,7 @@ public static class AllowNullGeneratorTests
 									return @result!;
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_NewLine())");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)})");
 							}
 							set
 							{
@@ -106,7 +108,7 @@ public static class AllowNullGeneratorTests
 											
 											if (!@foundMatch)
 											{
-												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NewLine(value)");
+												throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(1)}");
 											}
 											
 											break;
@@ -115,7 +117,7 @@ public static class AllowNullGeneratorTests
 								}
 								else
 								{
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_NewLine(value)");
+									throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
 								}
 							}
 						}
@@ -309,6 +311,8 @@ public static class AllowNullGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class AllowCreateExpectations
@@ -368,7 +372,7 @@ public static class AllowNullGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+						[global::Rocks.MemberIdentifier(0)]
 						public override bool Equals(object? @obj)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -384,7 +388,7 @@ public static class AllowNullGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 							else
 							{
@@ -392,7 +396,7 @@ public static class AllowNullGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+						[global::Rocks.MemberIdentifier(1)]
 						public override int GetHashCode()
 						{
 							if (this.Expectations.handlers1 is not null)
@@ -409,7 +413,7 @@ public static class AllowNullGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+						[global::Rocks.MemberIdentifier(2)]
 						public override string? ToString()
 						{
 							if (this.Expectations.handlers2 is not null)
@@ -427,8 +431,8 @@ public static class AllowNullGeneratorTests
 						}
 						
 						[global::System.Diagnostics.CodeAnalysis.AllowNullAttribute]
-						[global::Rocks.MemberIdentifier(3, "get_NewLine()")]
-						[global::Rocks.MemberIdentifier(4, "set_NewLine(value)")]
+						[global::Rocks.MemberIdentifier(3, global::Rocks.PropertyAccessor.Get)]
+						[global::Rocks.MemberIdentifier(4, global::Rocks.PropertyAccessor.Set)]
 						public override string NewLine
 						{
 							get
@@ -461,7 +465,7 @@ public static class AllowNullGeneratorTests
 											
 											if (!@foundMatch)
 											{
-												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NewLine(value)");
+												throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(4)}");
 											}
 											
 											break;

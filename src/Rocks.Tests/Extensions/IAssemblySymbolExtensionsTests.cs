@@ -68,11 +68,11 @@ public static class IAssemblySymbolExtensionsTests
 	private static void CheckExposesInternalsTo(string sourceCode, bool expectedResult)
 	{
 		var sourceSyntaxTree = CSharpSyntaxTree.ParseText(sourceCode);
-		var sourceCompilation = CSharpCompilation.Create("SourceAssembly", new SyntaxTree[] { sourceSyntaxTree },
+		var sourceCompilation = CSharpCompilation.Create("SourceAssembly", [sourceSyntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
 		var targetSyntaxTree = CSharpSyntaxTree.ParseText("public class Target { }");
-		var targetCompilation = CSharpCompilation.Create("TargetAssembly", new SyntaxTree[] { targetSyntaxTree },
+		var targetCompilation = CSharpCompilation.Create("TargetAssembly", [targetSyntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
 		Assert.That(sourceCompilation.Assembly.ExposesInternalsTo(targetCompilation.Assembly), Is.EqualTo(expectedResult));

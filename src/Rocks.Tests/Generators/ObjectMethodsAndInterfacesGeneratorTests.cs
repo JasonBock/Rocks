@@ -30,6 +30,8 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class StaticToStringCreateExpectations
@@ -72,7 +74,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+						[global::Rocks.MemberIdentifier(0)]
 						public override bool Equals(object? @obj)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -88,7 +90,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 							else
 							{
@@ -96,7 +98,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+						[global::Rocks.MemberIdentifier(1)]
 						public override int GetHashCode()
 						{
 							if (this.Expectations.handlers1 is not null)
@@ -290,6 +292,8 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class IMatchObjectOfobjectCreateExpectations
@@ -340,7 +344,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "bool global::MockTests.IMatchObject<object>.Equals(object? @other)")]
+						[global::Rocks.MemberIdentifier(0)]
 						bool global::MockTests.IMatchObject<object>.Equals(object? @other)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -356,13 +360,13 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool global::MockTests.IMatchObject<object>.Equals(object? @other)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for bool global::MockTests.IMatchObject<object>.Equals(object? @other)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 						}
 						
-						[global::Rocks.MemberIdentifier(1, "bool global::MockTests.IMatchObject<object>.ReferenceEquals(object? @objA, object? @objB)")]
+						[global::Rocks.MemberIdentifier(1)]
 						bool global::MockTests.IMatchObject<object>.ReferenceEquals(object? @objA, object? @objB)
 						{
 							if (this.Expectations.handlers1 is not null)
@@ -379,13 +383,13 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool global::MockTests.IMatchObject<object>.ReferenceEquals(object? @objA, object? @objB)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(1)}");
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for bool global::MockTests.IMatchObject<object>.ReferenceEquals(object? @objA, object? @objB)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
 						}
 						
-						[global::Rocks.MemberIdentifier(2, "object global::MockTests.IMatchObject<object>.MemberwiseClone()")]
+						[global::Rocks.MemberIdentifier(2)]
 						object global::MockTests.IMatchObject<object>.MemberwiseClone()
 						{
 							if (this.Expectations.handlers2 is not null)
@@ -397,7 +401,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 								return @result!;
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for object global::MockTests.IMatchObject<object>.MemberwiseClone()");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(2)}");
 						}
 						
 						private global::MockTests.IMatchObjectOfobjectCreateExpectations Expectations { get; }
@@ -606,6 +610,8 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class IMatchObjectOfobjectCreateExpectations
@@ -656,7 +662,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "string global::MockTests.IMatchObject<object>.Equals(object? @other)")]
+						[global::Rocks.MemberIdentifier(0)]
 						string global::MockTests.IMatchObject<object>.Equals(object? @other)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -672,13 +678,13 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string global::MockTests.IMatchObject<object>.Equals(object? @other)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string global::MockTests.IMatchObject<object>.Equals(object? @other)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 						}
 						
-						[global::Rocks.MemberIdentifier(1, "int global::MockTests.IMatchObject<object>.ReferenceEquals(object? @objA, object? @objB)")]
+						[global::Rocks.MemberIdentifier(1)]
 						int global::MockTests.IMatchObject<object>.ReferenceEquals(object? @objA, object? @objB)
 						{
 							if (this.Expectations.handlers1 is not null)
@@ -695,13 +701,13 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for int global::MockTests.IMatchObject<object>.ReferenceEquals(object? @objA, object? @objB)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(1)}");
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for int global::MockTests.IMatchObject<object>.ReferenceEquals(object? @objA, object? @objB)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
 						}
 						
-						[global::Rocks.MemberIdentifier(2, "bool global::MockTests.IMatchObject<object>.MemberwiseClone()")]
+						[global::Rocks.MemberIdentifier(2)]
 						bool global::MockTests.IMatchObject<object>.MemberwiseClone()
 						{
 							if (this.Expectations.handlers2 is not null)
@@ -713,7 +719,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 								return @result!;
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for bool global::MockTests.IMatchObject<object>.MemberwiseClone()");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(2)}");
 						}
 						
 						private global::MockTests.IMatchObjectOfobjectCreateExpectations Expectations { get; }

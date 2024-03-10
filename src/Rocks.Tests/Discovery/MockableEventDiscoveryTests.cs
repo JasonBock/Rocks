@@ -253,7 +253,7 @@ public static class MockableEventDiscoveryTests
 	private static (ITypeSymbol, Compilation) GetTypeSymbol(string source, string targetTypeName)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
-		var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
+		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 

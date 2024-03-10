@@ -12,6 +12,6 @@ internal static class GeneratorSyntaxContextFactory
 		var contextConstructor = typeof(GeneratorSyntaxContext).GetConstructor(
 			BindingFlags.Instance | BindingFlags.NonPublic, null,
 			[typeof(SyntaxNode), typeof(SemanticModel)], null)!;
-		return (GeneratorSyntaxContext)contextConstructor.Invoke(new object[] { node, model });
+		return (GeneratorSyntaxContext)contextConstructor.Invoke([node, model]);
 	}
 }

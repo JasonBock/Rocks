@@ -33,6 +33,8 @@ public static class InterfaceGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class ISealedCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -78,7 +80,7 @@ public static class InterfaceGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "void NonSealedMethod()")]
+					[global::Rocks.MemberIdentifier(0)]
 					public void NonSealedMethod()
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -90,12 +92,12 @@ public static class InterfaceGeneratorTests
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void NonSealedMethod()");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "get_NonSealedData()")]
-					[global::Rocks.MemberIdentifier(2, "set_NonSealedData(value)")]
+					[global::Rocks.MemberIdentifier(1, global::Rocks.PropertyAccessor.Get)]
+					[global::Rocks.MemberIdentifier(2, global::Rocks.PropertyAccessor.Set)]
 					public string NonSealedData
 					{
 						get
@@ -110,7 +112,7 @@ public static class InterfaceGeneratorTests
 								return @result!;
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_NonSealedData())");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)})");
 						}
 						set
 						{
@@ -127,7 +129,7 @@ public static class InterfaceGeneratorTests
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NonSealedData(value)");
+											throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(2)}");
 										}
 										
 										@handler.RaiseEvents(this);
@@ -137,7 +139,7 @@ public static class InterfaceGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_NonSealedData(value)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(2)}");
 							}
 						}
 					}
@@ -313,6 +315,8 @@ public static class InterfaceGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IRequestCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -348,7 +352,7 @@ public static class InterfaceGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "void AddInvokeMethodOptions(int @options)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public void AddInvokeMethodOptions(int @options)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -368,12 +372,12 @@ public static class InterfaceGeneratorTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void AddInvokeMethodOptions(int @options)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void AddInvokeMethodOptions(int @options)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 						}
 					}
 					
@@ -471,6 +475,8 @@ public static class InterfaceGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class ITargetCreateExpectations
@@ -508,7 +514,7 @@ public static class InterfaceGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "string Retrieve(int @value)")]
+						[global::Rocks.MemberIdentifier(0)]
 						public string Retrieve(int @value)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -524,10 +530,10 @@ public static class InterfaceGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string Retrieve(int @value)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string Retrieve(int @value)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 						}
 						
 						private global::MockTests.ITargetCreateExpectations Expectations { get; }

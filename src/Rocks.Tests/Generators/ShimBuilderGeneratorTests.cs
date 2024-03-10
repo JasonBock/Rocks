@@ -49,6 +49,8 @@ public static class ShimBuilderGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IRuntimeKeyCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -97,7 +99,7 @@ public static class ShimBuilderGeneratorTests
 						(this.Expectations, this.shimForIKey, this.shimForIReadOnlyKey) = (@expectations, new ShimIKey(this), new ShimIReadOnlyKey(this));
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "global::System.Type GetKeyType()")]
+					[global::Rocks.MemberIdentifier(0)]
 					public global::System.Type GetKeyType()
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -114,7 +116,7 @@ public static class ShimBuilderGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "bool IsPrimaryKey()")]
+					[global::Rocks.MemberIdentifier(1)]
 					public bool IsPrimaryKey()
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -131,7 +133,7 @@ public static class ShimBuilderGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(2, "get_Properties()")]
+					[global::Rocks.MemberIdentifier(2, global::Rocks.PropertyAccessor.Get)]
 					public global::System.Collections.Generic.IReadOnlyList<global::IProperty> Properties
 					{
 						get
@@ -145,10 +147,10 @@ public static class ShimBuilderGeneratorTests
 								return @result!;
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_Properties())");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(2)})");
 						}
 					}
-					[global::Rocks.MemberIdentifier(3, "global::IReadOnlyKey.get_Properties()")]
+					[global::Rocks.MemberIdentifier(3, global::Rocks.PropertyAccessor.Get)]
 					global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty> global::IReadOnlyKey.Properties
 					{
 						get
@@ -162,7 +164,7 @@ public static class ShimBuilderGeneratorTests
 								return @result!;
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::IReadOnlyKey.get_Properties())");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(3)})");
 						}
 					}
 					
@@ -370,6 +372,8 @@ public static class ShimBuilderGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IHaveDimsCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -434,7 +438,7 @@ public static class ShimBuilderGeneratorTests
 						(this.Expectations, this.shimForIHaveDims) = (@expectations, new ShimIHaveDims(this));
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "int IAmADim()")]
+					[global::Rocks.MemberIdentifier(0)]
 					public int IAmADim()
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -451,7 +455,7 @@ public static class ShimBuilderGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "int IAmNotADim()")]
+					[global::Rocks.MemberIdentifier(1)]
 					public int IAmNotADim()
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -463,10 +467,10 @@ public static class ShimBuilderGeneratorTests
 							return @result!;
 						}
 						
-						throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for int IAmNotADim()");
+						throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
 					}
 					
-					[global::Rocks.MemberIdentifier(2, "get_AmADim()")]
+					[global::Rocks.MemberIdentifier(2, global::Rocks.PropertyAccessor.Get)]
 					public int AmADim
 					{
 						get
@@ -485,7 +489,7 @@ public static class ShimBuilderGeneratorTests
 							}
 						}
 					}
-					[global::Rocks.MemberIdentifier(4, "get_NotDim()")]
+					[global::Rocks.MemberIdentifier(4, global::Rocks.PropertyAccessor.Get)]
 					public int NotDim
 					{
 						get
@@ -499,11 +503,11 @@ public static class ShimBuilderGeneratorTests
 								return @result!;
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_NotDim())");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(4)})");
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(3, "this[string @dimKey, int @dimValue]")]
+					[global::Rocks.MemberIdentifier(3, global::Rocks.PropertyAccessor.Get)]
 					public int this[string @dimKey, int @dimValue]
 					{
 						get
@@ -522,7 +526,7 @@ public static class ShimBuilderGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[string @dimKey, int @dimValue]");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(3)}");
 							}
 							else
 							{
@@ -530,7 +534,7 @@ public static class ShimBuilderGeneratorTests
 							}
 						}
 					}
-					[global::Rocks.MemberIdentifier(5, "this[string @notDimKey]")]
+					[global::Rocks.MemberIdentifier(5, global::Rocks.PropertyAccessor.Get)]
 					public int this[string @notDimKey]
 					{
 						get
@@ -548,10 +552,10 @@ public static class ShimBuilderGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[string @notDimKey]");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(5)}");
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[string @notDimKey])");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(5)})");
 						}
 					}
 					

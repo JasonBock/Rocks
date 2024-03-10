@@ -34,6 +34,8 @@ public static class DoesNotReturnGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class ClassTestCreateExpectations
@@ -91,7 +93,7 @@ public static class DoesNotReturnGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+						[global::Rocks.MemberIdentifier(0)]
 						public override bool Equals(object? @obj)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -107,7 +109,7 @@ public static class DoesNotReturnGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 							else
 							{
@@ -115,7 +117,7 @@ public static class DoesNotReturnGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+						[global::Rocks.MemberIdentifier(1)]
 						public override int GetHashCode()
 						{
 							if (this.Expectations.handlers1 is not null)
@@ -132,7 +134,7 @@ public static class DoesNotReturnGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+						[global::Rocks.MemberIdentifier(2)]
 						public override string? ToString()
 						{
 							if (this.Expectations.handlers2 is not null)
@@ -150,7 +152,7 @@ public static class DoesNotReturnGeneratorTests
 						}
 						
 						[global::System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute]
-						[global::Rocks.MemberIdentifier(3, "void VoidMethod()")]
+						[global::Rocks.MemberIdentifier(3)]
 						public override void VoidMethod()
 						{
 							if (this.Expectations.handlers3 is not null)
@@ -168,7 +170,7 @@ public static class DoesNotReturnGeneratorTests
 						}
 						
 						[global::System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute]
-						[global::Rocks.MemberIdentifier(4, "int IntMethod()")]
+						[global::Rocks.MemberIdentifier(4)]
 						public override int IntMethod()
 						{
 							if (this.Expectations.handlers4 is not null)
@@ -428,6 +430,8 @@ public static class DoesNotReturnGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class IInterfaceTestCreateExpectations
@@ -467,7 +471,7 @@ public static class DoesNotReturnGeneratorTests
 						}
 						
 						[global::System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute]
-						[global::Rocks.MemberIdentifier(0, "void VoidMethod()")]
+						[global::Rocks.MemberIdentifier(0)]
 						public void VoidMethod()
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -479,12 +483,12 @@ public static class DoesNotReturnGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void VoidMethod()");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 							}
 						}
 						
 						[global::System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute]
-						[global::Rocks.MemberIdentifier(1, "int IntMethod()")]
+						[global::Rocks.MemberIdentifier(1)]
 						public int IntMethod()
 						{
 							if (this.Expectations.handlers1 is not null)
@@ -496,7 +500,7 @@ public static class DoesNotReturnGeneratorTests
 								throw new global::Rocks.Exceptions.DoesNotReturnException();
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for int IntMethod()");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
 						}
 						
 						private global::MockTests.IInterfaceTestCreateExpectations Expectations { get; }

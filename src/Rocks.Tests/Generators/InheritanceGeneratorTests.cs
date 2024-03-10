@@ -42,6 +42,8 @@ public static class InheritanceGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class JsBinaryOperatorCreateExpectations
@@ -103,7 +105,7 @@ public static class InheritanceGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+						[global::Rocks.MemberIdentifier(0)]
 						public override bool Equals(object? @obj)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -119,7 +121,7 @@ public static class InheritanceGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 							else
 							{
@@ -127,7 +129,7 @@ public static class InheritanceGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+						[global::Rocks.MemberIdentifier(1)]
 						public override int GetHashCode()
 						{
 							if (this.Expectations.handlers1 is not null)
@@ -144,7 +146,7 @@ public static class InheritanceGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+						[global::Rocks.MemberIdentifier(2)]
 						public override string? ToString()
 						{
 							if (this.Expectations.handlers2 is not null)
@@ -161,7 +163,7 @@ public static class InheritanceGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(4, "object Evaluate(global::MockTests.ScriptScopeContext @scope)")]
+						[global::Rocks.MemberIdentifier(4)]
 						public override object Evaluate(global::MockTests.ScriptScopeContext @scope)
 						{
 							if (this.Expectations.handlers4 is not null)
@@ -177,7 +179,7 @@ public static class InheritanceGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for object Evaluate(global::MockTests.ScriptScopeContext @scope)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(4)}");
 							}
 							else
 							{
@@ -185,7 +187,7 @@ public static class InheritanceGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(5, "object Evaluate(object @target)")]
+						[global::Rocks.MemberIdentifier(5)]
 						public override object Evaluate(object @target)
 						{
 							if (this.Expectations.handlers5 is not null)
@@ -201,10 +203,10 @@ public static class InheritanceGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for object Evaluate(object @target)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(5)}");
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for object Evaluate(object @target)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(5)}");
 						}
 						
 						private global::MockTests.JsBinaryOperatorCreateExpectations Expectations { get; }

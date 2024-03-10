@@ -175,7 +175,7 @@ public static class PointerArgTypeBuilderTests
 	private static (ITypeSymbol typeToMock, ITypeSymbol type, Compilation compilation, SemanticModel model) GetTypeSymbols(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
-		var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
+		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
@@ -189,7 +189,7 @@ public static class PointerArgTypeBuilderTests
 	private static (ITypeSymbol typeToMock, Compilation compilation) GetTypeSymbolFromParameter(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
-		var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
+		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 

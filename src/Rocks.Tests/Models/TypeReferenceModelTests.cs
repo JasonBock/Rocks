@@ -201,7 +201,7 @@ public static class TypeReferenceModelTests
 	private static (ITypeSymbol, Compilation) GetSymbolAndCompilation(string code)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
-		var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
+		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
@@ -213,7 +213,7 @@ public static class TypeReferenceModelTests
 	private static (ITypeSymbol, Compilation) GetSymbolReferenceAndCompilation(string code)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
-		var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
+		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 

@@ -89,7 +89,7 @@ public static class TypeMockModelTests
 	private static (SyntaxNode, ITypeSymbol, SemanticModel) GetInformation(string code)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
-		var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
+		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 

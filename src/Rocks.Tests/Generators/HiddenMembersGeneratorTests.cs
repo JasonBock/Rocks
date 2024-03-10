@@ -40,6 +40,8 @@ public static class HiddenMembersGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class NewCopyCreateExpectations
@@ -92,7 +94,7 @@ public static class HiddenMembersGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+						[global::Rocks.MemberIdentifier(0)]
 						public override bool Equals(object? @obj)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -108,7 +110,7 @@ public static class HiddenMembersGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 							else
 							{
@@ -116,7 +118,7 @@ public static class HiddenMembersGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+						[global::Rocks.MemberIdentifier(1)]
 						public override int GetHashCode()
 						{
 							if (this.Expectations.handlers1 is not null)
@@ -133,7 +135,7 @@ public static class HiddenMembersGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+						[global::Rocks.MemberIdentifier(2)]
 						public override string? ToString()
 						{
 							if (this.Expectations.handlers2 is not null)
@@ -150,7 +152,7 @@ public static class HiddenMembersGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(3, "void Ok()")]
+						[global::Rocks.MemberIdentifier(3)]
 						public override void Ok()
 						{
 							if (this.Expectations.handlers3 is not null)
@@ -318,6 +320,8 @@ public static class HiddenMembersGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class SubClassCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -388,7 +392,7 @@ public static class HiddenMembersGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public override bool Equals(object? @obj)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -404,7 +408,7 @@ public static class HiddenMembersGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 						}
 						else
 						{
@@ -412,7 +416,7 @@ public static class HiddenMembersGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					[global::Rocks.MemberIdentifier(1)]
 					public override int GetHashCode()
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -429,7 +433,7 @@ public static class HiddenMembersGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					[global::Rocks.MemberIdentifier(2)]
 					public override string? ToString()
 					{
 						if (this.Expectations.handlers2 is not null)
@@ -446,7 +450,7 @@ public static class HiddenMembersGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(4, "int Foo()")]
+					[global::Rocks.MemberIdentifier(4)]
 					public override int Foo()
 					{
 						if (this.Expectations.handlers4 is not null)
@@ -463,8 +467,8 @@ public static class HiddenMembersGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(8, "get_Data()")]
-					[global::Rocks.MemberIdentifier(9, "set_Data(value)")]
+					[global::Rocks.MemberIdentifier(8, global::Rocks.PropertyAccessor.Get)]
+					[global::Rocks.MemberIdentifier(9, global::Rocks.PropertyAccessor.Set)]
 					public override int Data
 					{
 						get
@@ -497,7 +501,7 @@ public static class HiddenMembersGeneratorTests
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_Data(value)");
+											throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(9)}");
 										}
 										
 										break;
@@ -511,7 +515,7 @@ public static class HiddenMembersGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(10, "this[int @a, string @b]")]
+					[global::Rocks.MemberIdentifier(10, global::Rocks.PropertyAccessor.Get)]
 					public override int this[int @a, string @b]
 					{
 						get
@@ -530,7 +534,7 @@ public static class HiddenMembersGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[int @a, string @b]");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(10)}");
 							}
 							else
 							{
@@ -789,6 +793,8 @@ public static class HiddenMembersGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class ISubCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -867,7 +873,7 @@ public static class HiddenMembersGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "int Foo()")]
+					[global::Rocks.MemberIdentifier(0)]
 					public int Foo()
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -879,10 +885,10 @@ public static class HiddenMembersGeneratorTests
 							return @result!;
 						}
 						
-						throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for int Foo()");
+						throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "void global::IBase.Foo()")]
+					[global::Rocks.MemberIdentifier(1)]
 					void global::IBase.Foo()
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -893,12 +899,12 @@ public static class HiddenMembersGeneratorTests
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void global::IBase.Foo()");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(2, "get_Data()")]
-					[global::Rocks.MemberIdentifier(3, "set_Data(value)")]
+					[global::Rocks.MemberIdentifier(2, global::Rocks.PropertyAccessor.Get)]
+					[global::Rocks.MemberIdentifier(3, global::Rocks.PropertyAccessor.Set)]
 					public int Data
 					{
 						get
@@ -912,7 +918,7 @@ public static class HiddenMembersGeneratorTests
 								return @result!;
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_Data())");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(2)})");
 						}
 						set
 						{
@@ -929,7 +935,7 @@ public static class HiddenMembersGeneratorTests
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_Data(value)");
+											throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(3)}");
 										}
 										
 										break;
@@ -938,12 +944,12 @@ public static class HiddenMembersGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_Data(value)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(3)}");
 							}
 						}
 					}
-					[global::Rocks.MemberIdentifier(5, "global::IBase.get_Data()")]
-					[global::Rocks.MemberIdentifier(6, "global::IBase.set_Data(value)")]
+					[global::Rocks.MemberIdentifier(5, global::Rocks.PropertyAccessor.Get)]
+					[global::Rocks.MemberIdentifier(6, global::Rocks.PropertyAccessor.Set)]
 					string global::IBase.Data
 					{
 						get
@@ -957,7 +963,7 @@ public static class HiddenMembersGeneratorTests
 								return @result!;
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::IBase.get_Data())");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(5)})");
 						}
 						set
 						{
@@ -974,7 +980,7 @@ public static class HiddenMembersGeneratorTests
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::IBase.set_Data(value)");
+											throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(6)}");
 										}
 										
 										break;
@@ -983,12 +989,12 @@ public static class HiddenMembersGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::IBase.set_Data(value)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(6)}");
 							}
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(4, "this[int @a, string @b]")]
+					[global::Rocks.MemberIdentifier(4, global::Rocks.PropertyAccessor.Get)]
 					public int this[int @a, string @b]
 					{
 						get
@@ -1007,13 +1013,13 @@ public static class HiddenMembersGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[int @a, string @b]");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(4)}");
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[int @a, string @b])");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(4)})");
 						}
 					}
-					[global::Rocks.MemberIdentifier(7, "global::IBase.this[int @a, string @b]")]
+					[global::Rocks.MemberIdentifier(7, global::Rocks.PropertyAccessor.Get)]
 					string global::IBase.this[int @a, string @b]
 					{
 						get
@@ -1032,10 +1038,10 @@ public static class HiddenMembersGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[int @a, string @b]");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(7)}");
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[int @a, string @b])");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(7)})");
 						}
 					}
 					

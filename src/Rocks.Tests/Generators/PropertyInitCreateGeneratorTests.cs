@@ -34,6 +34,8 @@ public static class PropertyInitCreateGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class ITestCreateExpectations
@@ -119,8 +121,8 @@ public static class PropertyInitCreateGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "get_NonNullableValueType()")]
-						[global::Rocks.MemberIdentifier(1, "set_NonNullableValueType(value)")]
+						[global::Rocks.MemberIdentifier(0, global::Rocks.PropertyAccessor.Get)]
+						[global::Rocks.MemberIdentifier(1, global::Rocks.PropertyAccessor.Set)]
 						public int NonNullableValueType
 						{
 							get
@@ -134,7 +136,7 @@ public static class PropertyInitCreateGeneratorTests
 									return @result!;
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_NonNullableValueType())");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)})");
 							}
 							init
 							{
@@ -151,7 +153,7 @@ public static class PropertyInitCreateGeneratorTests
 											
 											if (!@foundMatch)
 											{
-												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NonNullableValueType(value)");
+												throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(1)}");
 											}
 											
 											break;
@@ -160,12 +162,12 @@ public static class PropertyInitCreateGeneratorTests
 								}
 								else
 								{
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_NonNullableValueType(value)");
+									throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
 								}
 							}
 						}
-						[global::Rocks.MemberIdentifier(2, "get_NullableValueType()")]
-						[global::Rocks.MemberIdentifier(3, "set_NullableValueType(value)")]
+						[global::Rocks.MemberIdentifier(2, global::Rocks.PropertyAccessor.Get)]
+						[global::Rocks.MemberIdentifier(3, global::Rocks.PropertyAccessor.Set)]
 						public int? NullableValueType
 						{
 							get
@@ -179,7 +181,7 @@ public static class PropertyInitCreateGeneratorTests
 									return @result!;
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_NullableValueType())");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(2)})");
 							}
 							init
 							{
@@ -196,7 +198,7 @@ public static class PropertyInitCreateGeneratorTests
 											
 											if (!@foundMatch)
 											{
-												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NullableValueType(value)");
+												throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(3)}");
 											}
 											
 											break;
@@ -205,12 +207,12 @@ public static class PropertyInitCreateGeneratorTests
 								}
 								else
 								{
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_NullableValueType(value)");
+									throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(3)}");
 								}
 							}
 						}
-						[global::Rocks.MemberIdentifier(4, "get_NonNullableReferenceType()")]
-						[global::Rocks.MemberIdentifier(5, "set_NonNullableReferenceType(value)")]
+						[global::Rocks.MemberIdentifier(4, global::Rocks.PropertyAccessor.Get)]
+						[global::Rocks.MemberIdentifier(5, global::Rocks.PropertyAccessor.Set)]
 						public string NonNullableReferenceType
 						{
 							get
@@ -224,7 +226,7 @@ public static class PropertyInitCreateGeneratorTests
 									return @result!;
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_NonNullableReferenceType())");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(4)})");
 							}
 							init
 							{
@@ -241,7 +243,7 @@ public static class PropertyInitCreateGeneratorTests
 											
 											if (!@foundMatch)
 											{
-												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NonNullableReferenceType(value)");
+												throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(5)}");
 											}
 											
 											break;
@@ -250,12 +252,12 @@ public static class PropertyInitCreateGeneratorTests
 								}
 								else
 								{
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_NonNullableReferenceType(value)");
+									throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(5)}");
 								}
 							}
 						}
-						[global::Rocks.MemberIdentifier(6, "get_NullableReferenceType()")]
-						[global::Rocks.MemberIdentifier(7, "set_NullableReferenceType(value)")]
+						[global::Rocks.MemberIdentifier(6, global::Rocks.PropertyAccessor.Get)]
+						[global::Rocks.MemberIdentifier(7, global::Rocks.PropertyAccessor.Set)]
 						public string? NullableReferenceType
 						{
 							get
@@ -269,7 +271,7 @@ public static class PropertyInitCreateGeneratorTests
 									return @result!;
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_NullableReferenceType())");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(6)})");
 							}
 							init
 							{
@@ -286,7 +288,7 @@ public static class PropertyInitCreateGeneratorTests
 											
 											if (!@foundMatch)
 											{
-												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NullableReferenceType(value)");
+												throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(7)}");
 											}
 											
 											break;
@@ -295,7 +297,7 @@ public static class PropertyInitCreateGeneratorTests
 								}
 								else
 								{
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_NullableReferenceType(value)");
+									throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(7)}");
 								}
 							}
 						}
@@ -537,6 +539,8 @@ public static class PropertyInitCreateGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class TestCreateExpectations
@@ -591,7 +595,7 @@ public static class PropertyInitCreateGeneratorTests
 							this.Data = @constructorProperties.Data;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+						[global::Rocks.MemberIdentifier(0)]
 						public override bool Equals(object? @obj)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -607,7 +611,7 @@ public static class PropertyInitCreateGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 							else
 							{
@@ -615,7 +619,7 @@ public static class PropertyInitCreateGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+						[global::Rocks.MemberIdentifier(1)]
 						public override int GetHashCode()
 						{
 							if (this.Expectations.handlers1 is not null)
@@ -632,7 +636,7 @@ public static class PropertyInitCreateGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+						[global::Rocks.MemberIdentifier(2)]
 						public override string? ToString()
 						{
 							if (this.Expectations.handlers2 is not null)
@@ -649,7 +653,7 @@ public static class PropertyInitCreateGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(3, "void Foo()")]
+						[global::Rocks.MemberIdentifier(3)]
 						public override void Foo()
 						{
 							if (this.Expectations.handlers3 is not null)

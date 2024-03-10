@@ -27,6 +27,8 @@ public static class ConstraintsGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class BaseStuffCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -80,7 +82,7 @@ public static class ConstraintsGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public override bool Equals(object? @obj)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -96,7 +98,7 @@ public static class ConstraintsGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 						}
 						else
 						{
@@ -104,7 +106,7 @@ public static class ConstraintsGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					[global::Rocks.MemberIdentifier(1)]
 					public override int GetHashCode()
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -121,7 +123,7 @@ public static class ConstraintsGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					[global::Rocks.MemberIdentifier(2)]
 					public override string? ToString()
 					{
 						if (this.Expectations.handlers2 is not null)
@@ -138,7 +140,7 @@ public static class ConstraintsGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(3, "T? GetService<T>(object[] @args)")]
+					[global::Rocks.MemberIdentifier(3)]
 					public override T? GetService<T>(object[] @args)
 						where T : class
 					{
@@ -158,7 +160,7 @@ public static class ConstraintsGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for T? GetService<T>(object[] @args)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(3)}");
 						}
 						else
 						{
@@ -313,6 +315,8 @@ public static class ConstraintsGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class INeedDelegateCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -355,7 +359,7 @@ public static class ConstraintsGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "void Foo<T>(ref int @a, global::Frame<T> @frame)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public void Foo<T>(ref int @a, global::Frame<T> @frame)
 						where T : unmanaged, global::IDot<T>
 					{
@@ -380,12 +384,12 @@ public static class ConstraintsGeneratorTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void Foo<T>(ref int @a, global::Frame<T> @frame)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void Foo<T>(ref int @a, global::Frame<T> @frame)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 						}
 					}
 					
@@ -493,6 +497,8 @@ public static class ConstraintsGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class ITypeConstraintsCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -570,7 +576,7 @@ public static class ConstraintsGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "void HasUnmanaged<T>()")]
+					[global::Rocks.MemberIdentifier(0)]
 					public void HasUnmanaged<T>()
 						where T : unmanaged
 					{
@@ -584,16 +590,16 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("The provided handler does not match for void HasUnmanaged<T>()");
+								throw new global::Rocks.Exceptions.ExpectationException($"The provided handler does not match for {this.GetType().GetMemberDescription(0)}");
 							}
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void HasUnmanaged<T>()");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "void HasNotNull<T>()")]
+					[global::Rocks.MemberIdentifier(1)]
 					public void HasNotNull<T>()
 						where T : notnull
 					{
@@ -607,16 +613,16 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("The provided handler does not match for void HasNotNull<T>()");
+								throw new global::Rocks.Exceptions.ExpectationException($"The provided handler does not match for {this.GetType().GetMemberDescription(1)}");
 							}
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void HasNotNull<T>()");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(2, "void HasClass<T>()")]
+					[global::Rocks.MemberIdentifier(2)]
 					public void HasClass<T>()
 						where T : class
 					{
@@ -630,16 +636,16 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("The provided handler does not match for void HasClass<T>()");
+								throw new global::Rocks.Exceptions.ExpectationException($"The provided handler does not match for {this.GetType().GetMemberDescription(2)}");
 							}
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void HasClass<T>()");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(2)}");
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(3, "void HasStruct<T>()")]
+					[global::Rocks.MemberIdentifier(3)]
 					public void HasStruct<T>()
 						where T : struct
 					{
@@ -653,16 +659,16 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("The provided handler does not match for void HasStruct<T>()");
+								throw new global::Rocks.Exceptions.ExpectationException($"The provided handler does not match for {this.GetType().GetMemberDescription(3)}");
 							}
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void HasStruct<T>()");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(3)}");
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(4, "void HasClassTypeConstraint<T>()")]
+					[global::Rocks.MemberIdentifier(4)]
 					public void HasClassTypeConstraint<T>()
 						where T : global::ClassConstraint
 					{
@@ -676,16 +682,16 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("The provided handler does not match for void HasClassTypeConstraint<T>()");
+								throw new global::Rocks.Exceptions.ExpectationException($"The provided handler does not match for {this.GetType().GetMemberDescription(4)}");
 							}
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void HasClassTypeConstraint<T>()");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(4)}");
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(5, "void HasInterfaceTypeConstraint<T>()")]
+					[global::Rocks.MemberIdentifier(5)]
 					public void HasInterfaceTypeConstraint<T>()
 						where T : global::InterfaceConstraint
 					{
@@ -699,16 +705,16 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("The provided handler does not match for void HasInterfaceTypeConstraint<T>()");
+								throw new global::Rocks.Exceptions.ExpectationException($"The provided handler does not match for {this.GetType().GetMemberDescription(5)}");
 							}
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void HasInterfaceTypeConstraint<T>()");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(5)}");
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(6, "void HasConstructorConstraint<T>()")]
+					[global::Rocks.MemberIdentifier(6)]
 					public void HasConstructorConstraint<T>()
 						where T : new()
 					{
@@ -722,16 +728,16 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("The provided handler does not match for void HasConstructorConstraint<T>()");
+								throw new global::Rocks.Exceptions.ExpectationException($"The provided handler does not match for {this.GetType().GetMemberDescription(6)}");
 							}
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void HasConstructorConstraint<T>()");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(6)}");
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(7, "TData? HasNullableValue<TData>(TData? @data)")]
+					[global::Rocks.MemberIdentifier(7)]
 					public TData? HasNullableValue<TData>(TData? @data)
 					{
 						if (this.Expectations.handlers7 is not null)
@@ -750,10 +756,10 @@ public static class ConstraintsGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for TData? HasNullableValue<TData>(TData? @data)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(7)}");
 						}
 						
-						throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for TData? HasNullableValue<TData>(TData? @data)");
+						throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(7)}");
 					}
 					
 					private global::ITypeConstraintsCreateExpectations Expectations { get; }
@@ -1055,6 +1061,8 @@ public static class ConstraintsGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class TypeConstraintsCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1149,7 +1157,7 @@ public static class ConstraintsGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public override bool Equals(object? @obj)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -1165,7 +1173,7 @@ public static class ConstraintsGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 						}
 						else
 						{
@@ -1173,7 +1181,7 @@ public static class ConstraintsGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					[global::Rocks.MemberIdentifier(1)]
 					public override int GetHashCode()
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -1190,7 +1198,7 @@ public static class ConstraintsGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					[global::Rocks.MemberIdentifier(2)]
 					public override string? ToString()
 					{
 						if (this.Expectations.handlers2 is not null)
@@ -1207,7 +1215,7 @@ public static class ConstraintsGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(3, "void HasUnmanaged<T>()")]
+					[global::Rocks.MemberIdentifier(3)]
 					public override void HasUnmanaged<T>()
 						where T : struct
 					{
@@ -1221,7 +1229,7 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("The provided handler does not match for void HasUnmanaged<T>()");
+								throw new global::Rocks.Exceptions.ExpectationException($"The provided handler does not match for {this.GetType().GetMemberDescription(3)}");
 							}
 						}
 						else
@@ -1230,7 +1238,7 @@ public static class ConstraintsGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(4, "void HasNotNull<T>()")]
+					[global::Rocks.MemberIdentifier(4)]
 					public override void HasNotNull<T>()
 					{
 						if (this.Expectations.handlers4 is not null)
@@ -1243,7 +1251,7 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("The provided handler does not match for void HasNotNull<T>()");
+								throw new global::Rocks.Exceptions.ExpectationException($"The provided handler does not match for {this.GetType().GetMemberDescription(4)}");
 							}
 						}
 						else
@@ -1252,7 +1260,7 @@ public static class ConstraintsGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(5, "void HasClass<T>()")]
+					[global::Rocks.MemberIdentifier(5)]
 					public override void HasClass<T>()
 						where T : class
 					{
@@ -1266,7 +1274,7 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("The provided handler does not match for void HasClass<T>()");
+								throw new global::Rocks.Exceptions.ExpectationException($"The provided handler does not match for {this.GetType().GetMemberDescription(5)}");
 							}
 						}
 						else
@@ -1275,7 +1283,7 @@ public static class ConstraintsGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(6, "void HasStruct<T>()")]
+					[global::Rocks.MemberIdentifier(6)]
 					public override void HasStruct<T>()
 						where T : struct
 					{
@@ -1289,7 +1297,7 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("The provided handler does not match for void HasStruct<T>()");
+								throw new global::Rocks.Exceptions.ExpectationException($"The provided handler does not match for {this.GetType().GetMemberDescription(6)}");
 							}
 						}
 						else
@@ -1298,7 +1306,7 @@ public static class ConstraintsGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(7, "void HasClassTypeConstraint<T>()")]
+					[global::Rocks.MemberIdentifier(7)]
 					public override void HasClassTypeConstraint<T>()
 					{
 						if (this.Expectations.handlers7 is not null)
@@ -1311,7 +1319,7 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("The provided handler does not match for void HasClassTypeConstraint<T>()");
+								throw new global::Rocks.Exceptions.ExpectationException($"The provided handler does not match for {this.GetType().GetMemberDescription(7)}");
 							}
 						}
 						else
@@ -1320,7 +1328,7 @@ public static class ConstraintsGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(8, "void HasInterfaceTypeConstraint<T>()")]
+					[global::Rocks.MemberIdentifier(8)]
 					public override void HasInterfaceTypeConstraint<T>()
 					{
 						if (this.Expectations.handlers8 is not null)
@@ -1333,7 +1341,7 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("The provided handler does not match for void HasInterfaceTypeConstraint<T>()");
+								throw new global::Rocks.Exceptions.ExpectationException($"The provided handler does not match for {this.GetType().GetMemberDescription(8)}");
 							}
 						}
 						else
@@ -1342,7 +1350,7 @@ public static class ConstraintsGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(9, "void HasConstructorConstraint<T>()")]
+					[global::Rocks.MemberIdentifier(9)]
 					public override void HasConstructorConstraint<T>()
 					{
 						if (this.Expectations.handlers9 is not null)
@@ -1355,7 +1363,7 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("The provided handler does not match for void HasConstructorConstraint<T>()");
+								throw new global::Rocks.Exceptions.ExpectationException($"The provided handler does not match for {this.GetType().GetMemberDescription(9)}");
 							}
 						}
 						else
@@ -1364,7 +1372,7 @@ public static class ConstraintsGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(10, "TData? HasNullableValue<TData>(TData? @data)")]
+					[global::Rocks.MemberIdentifier(10)]
 					public override TData? HasNullableValue<TData>(TData? @data)
 						where TData : default
 					{
@@ -1384,7 +1392,7 @@ public static class ConstraintsGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for TData? HasNullableValue<TData>(TData? @data)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(10)}");
 						}
 						else
 						{
@@ -1746,6 +1754,8 @@ public static class ConstraintsGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			internal sealed class IUnmanagedValueCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1782,7 +1792,7 @@ public static class ConstraintsGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "void Use<TValue>(global::Value<TValue> @value)")]
+					[global::Rocks.MemberIdentifier(0)]
 					public void Use<TValue>(global::Value<TValue> @value)
 						where TValue : unmanaged, global::IValue<TValue>
 					{
@@ -1806,12 +1816,12 @@ public static class ConstraintsGeneratorTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void Use<TValue>(global::Value<TValue> @value)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void Use<TValue>(global::Value<TValue> @value)");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
 						}
 					}
 					
@@ -1912,6 +1922,8 @@ public static class ConstraintsGeneratorTests
 			
 			#nullable enable
 			
+			using Rocks.Extensions;
+			
 			namespace MockTests
 			{
 				internal sealed class ThingOfstringCreateExpectations
@@ -1965,7 +1977,7 @@ public static class ConstraintsGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+						[global::Rocks.MemberIdentifier(0)]
 						public override bool Equals(object? @obj)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -1981,7 +1993,7 @@ public static class ConstraintsGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(0)}");
 							}
 							else
 							{
@@ -1989,7 +2001,7 @@ public static class ConstraintsGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+						[global::Rocks.MemberIdentifier(1)]
 						public override int GetHashCode()
 						{
 							if (this.Expectations.handlers1 is not null)
@@ -2006,7 +2018,7 @@ public static class ConstraintsGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+						[global::Rocks.MemberIdentifier(2)]
 						public override string? ToString()
 						{
 							if (this.Expectations.handlers2 is not null)
@@ -2023,7 +2035,7 @@ public static class ConstraintsGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(3, "global::MockTests.Thing<TTarget> As<TTarget>()")]
+						[global::Rocks.MemberIdentifier(3)]
 						public override global::MockTests.Thing<TTarget> As<TTarget>()
 							where TTarget : class
 						{
@@ -2042,10 +2054,10 @@ public static class ConstraintsGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::MockTests.Thing<TTarget> As<TTarget>()");
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription(3)}");
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::MockTests.Thing<TTarget> As<TTarget>()");
+							throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(3)}");
 						}
 						
 						private global::MockTests.ThingOfstringCreateExpectations Expectations { get; }

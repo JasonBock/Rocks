@@ -1,24 +1,24 @@
 <Project>
   <ItemGroup>
-    <PackageVersion Include="AngleSharp" Version="1.1.1" />
+    <PackageVersion Include="AngleSharp" Version="1.1.2" />
     <PackageVersion Include="Ardalis.GuardClauses" Version="4.5.0" />
     <PackageVersion Include="Aspire.Hosting" Version="8.0.0-preview.1.23557.2" />
     <PackageVersion Include="Aspose.Email" Version="24.2.0" />
     <PackageVersion Include="Autofac" Version="8.0.0" />
     <PackageVersion Include="AutoFixture" Version="4.18.1" />
     <PackageVersion Include="AutoMapper" Version="13.0.1" />
-    <PackageVersion Include="Avalonia" Version="11.0.9" />
-    <PackageVersion Include="AWSSDK.Core" Version="3.7.302.15" />
+    <PackageVersion Include="Avalonia" Version="11.0.10" />
+    <PackageVersion Include="AWSSDK.Core" Version="3.7.302.16" />
     <PackageVersion Include="Azure.Core" Version="1.38.0" />
     <PackageVersion Include="Azure.Core.Amqp" Version="1.3.0" />
-    <PackageVersion Include="Azure.Messaging.ServiceBus" Version="7.17.3" />
+    <PackageVersion Include="Azure.Messaging.ServiceBus" Version="7.17.4" />
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.19.1" />
     <PackageVersion Include="Azure.Storage.Queues" Version="12.17.1" />
     <PackageVersion Include="Ben.Demystifier" Version="0.4.1" />
     <PackageVersion Include="BenchmarkDotNet" Version="0.13.12" />
     <PackageVersion Include="Blazored.LocalStorage" Version="4.5.0" />
     <PackageVersion Include="Blazored.Video" Version="1.0.1" />
-    <PackageVersion Include="Bogus" Version="35.4.1" />
+    <PackageVersion Include="Bogus" Version="35.5.0" />
     <PackageVersion Include="Castle.Core" Version="5.1.1" />
     <PackageVersion Include="ClangSharp" Version="17.0.1" />
     <PackageVersion Include="Confluent.Kafka" Version="2.3.0" />
@@ -26,8 +26,8 @@
     <PackageVersion Include="Csla" Version="7.0.3" />
     <PackageVersion Include="CsvHelper" Version="31.0.2" />
     <PackageVersion Include="Cursively" Version="1.2.0" />
-    <PackageVersion Include="Dapper" Version="2.1.28" />
-    <PackageVersion Include="DiffEngine" Version="15.2.1" />
+    <PackageVersion Include="Dapper" Version="2.1.35" />
+    <PackageVersion Include="DiffEngine" Version="15.2.2" />
     <PackageVersion Include="DnsClient" Version="1.7.0" />
     <PackageVersion Include="Elasticsearch.Net" Version="7.17.5" />
     <PackageVersion Include="EntityFrameworkCore.Exceptions.Common" Version="8.0.0.2" />
@@ -44,7 +44,7 @@
     <PackageVersion Include="IdentityModel" Version="6.2.0" />
     <PackageVersion Include="ILGPU" Version="1.4.0" />
     <PackageVersion Include="LanguageExt.Core" Version="4.4.8" />
-    <PackageVersion Include="Lib.Harmony" Version="2.3.0" />
+    <PackageVersion Include="Lib.Harmony" Version="2.3.1.1" />
     <PackageVersion Include="LLVMSharp" Version="16.0.0" />
     <PackageVersion Include="MassTransit" Version="8.1.3" />
     <PackageVersion Include="MathNet.Numerics" Version="5.0.0" />
@@ -63,7 +63,7 @@
     <PackageVersion Include="Microsoft.Extensions.Resilience" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="8.0.0-preview.1.23557.2" />
     <PackageVersion Include="Microsoft.Kiota.Abstractions" Version="1.7.11" />
-    <PackageVersion Include="Microsoft.OpenApi" Version="1.6.13" />
+    <PackageVersion Include="Microsoft.OpenApi" Version="1.6.14" />
     <PackageVersion Include="Microsoft.Orleans.Core" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Quantum.Standard" Version="0.28.302812" />
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
@@ -82,17 +82,19 @@
     <PackageVersion Include="NUnit" Version="3.14.0" />
     <PackageVersion Include="NUnit.Analyzers" Version="3.9.0" />
     <PackageVersion Include="NUnit3TestAdapter" Version="4.5.0" />
+    <PackageVersion Include="Paramore.Brighter" Version="9.7.6" />
     <PackageVersion Include="Polly" Version="8.2.0" />
     <PackageVersion Include="Proto.Actor" Version="1.6.0" />
-    <PackageVersion Include="Pulumi" Version="3.59.0" />
+    <PackageVersion Include="Pulumi" Version="3.60.0" />
     <PackageVersion Include="Quartz" Version="3.8.1" />
+    <PackageVersion Include="R3" Version="1.1.9" />
     <PackageVersion Include="RabbitMQ.Client" Version="7.0.0-alpha.1" />
     <PackageVersion Include="RecordParser" Version="2.3.0" />
     <PackageVersion Include="Refit" Version="7.0.0" />
     <PackageVersion Include="RestSharp" Version="110.2.1-alpha.0.16" />
-    <PackageVersion Include="Sep" Version="0.4.0" />
+    <PackageVersion Include="Sep" Version="0.4.3" />
     <PackageVersion Include="Serilog" Version="3.1.2-dev-02097" />
-    <PackageVersion Include="ServiceStack" Version="8.1.2" />
+    <PackageVersion Include="ServiceStack" Version="8.2.2" />
     <PackageVersion Include="SharpZipLib" Version="1.4.2" />
     <PackageVersion Include="Shouldly" Version="4.2.1" />
     <PackageVersion Include="Sigil" Version="5.0.0" />
@@ -101,10 +103,10 @@
     <PackageVersion Include="SixLabors.ImageSharp" Version="3.1.3" />
     <PackageVersion Include="SkiaSharp" Version="2.88.7" />
     <PackageVersion Include="StackExchange.Redis" Version="2.7.27" />
-    <PackageVersion Include="Stripe.net" Version="43.17.0" />
+    <PackageVersion Include="Stripe.net" Version="43.18.0" />
     <PackageVersion Include="Sylvan.Data.Csv" Version="1.3.7" />
     <PackageVersion Include="System.Interactive.Async" Version="6.0.1" />
-    <PackageVersion Include="System.IO.Abstractions" Version="20.0.15" />
+    <PackageVersion Include="System.IO.Abstractions" Version="20.0.28" />
     <PackageVersion Include="System.Memory.Data" Version="8.0.0" />
     <PackageVersion Include="System.Numerics.Tensors" Version="8.0.0" />
     <PackageVersion Include="System.Reactive" Version="6.0.1-preview.1" />
@@ -115,7 +117,7 @@
     <PackageVersion Include="TerraFX.Interop.Windows" Version="10.0.22621.6" />
     <PackageVersion Include="Topshelf" Version="4.3.1-develop.253" />
     <PackageVersion Include="Twilio" Version="7.0.0" />
-    <PackageVersion Include="Verify" Version="23.2.2" />
+    <PackageVersion Include="Verify" Version="23.4.0" />
     <PackageVersion Include="Wasmtime" Version="17.0.0" />
     <PackageVersion Include="Wisp" Version="0.2.0" />
   </ItemGroup>
