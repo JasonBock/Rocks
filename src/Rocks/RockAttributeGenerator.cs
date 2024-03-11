@@ -14,7 +14,7 @@ internal sealed class RockAttributeGenerator
 	public void Initialize(IncrementalGeneratorInitializationContext context)
 	{
 		static IncrementalValuesProvider<MockModelInformation> GetInformation(
-			IncrementalGeneratorInitializationContext context, string attributeName, BuildType buildType) => 
+			IncrementalGeneratorInitializationContext context, string attributeName, BuildType buildType, bool isGeneric) =>
 			context.SyntaxProvider
 				.ForAttributeWithMetadataName(attributeName, (_, _) => true,
 					(context, token) =>
@@ -29,7 +29,18 @@ internal sealed class RockAttributeGenerator
 							// well, I guess I could an add a diagnostic that informs users
 							// that the attribute was invalid.
 							var attributeClass = context.Attributes[i];
-							var typeToMock = attributeClass.AttributeClass!.TypeArguments[0];
+							var typeToMock = isGeneric ?
+								attributeClass.AttributeClass!.TypeArguments[0] :
+								(attributeClass.ConstructorArguments[0].Value as ITypeSymbol)!;
+
+							// We should only see an unbound generic type with the "typeof(...)" case,
+							// but using "typeof(IService)" won't give an unbound generic, so
+							// we'll check it in all cases.
+							if (typeToMock is INamedTypeSymbol namedType &&
+								namedType.IsUnboundGenericType)
+							{
+								typeToMock = typeToMock.OriginalDefinition;
+							}
 
 							if (!typeToMock.ContainsDiagnostics())
 							{
@@ -47,12 +58,19 @@ internal sealed class RockAttributeGenerator
 					})
 				.SelectMany((names, _) => names);
 
-		var mockCreateTypes = GetInformation(context, "Rocks.RockCreateAttribute`1", BuildType.Create);
-		var mockMakeTypes = GetInformation(context, "Rocks.RockMakeAttribute`1", BuildType.Make);  
+		var mockCreateFromGenericTypes = GetInformation(context, "Rocks.RockCreateAttribute`1", BuildType.Create, true);
+		var mockMakeFromGenericTypes = GetInformation(context, "Rocks.RockMakeAttribute`1", BuildType.Make, true);
+		var mockCreateFromNonGenericTypes = GetInformation(context, "Rocks.RockCreateAttribute", BuildType.Create, false);
+		var mockMakeFromNonGenericTypes = GetInformation(context, "Rocks.RockMakeAttribute", BuildType.Make, false);
 
-		context.RegisterSourceOutput(mockCreateTypes.Collect(),
+		// TODO: Is there some way I could combine all of these so I make one CreateOutput() call?
+		context.RegisterSourceOutput(mockCreateFromGenericTypes.Collect(),
 			(context, source) => RockAttributeGenerator.CreateOutput(source, context));
-		context.RegisterSourceOutput(mockMakeTypes.Collect(),
+		context.RegisterSourceOutput(mockMakeFromGenericTypes.Collect(),
+			(context, source) => RockAttributeGenerator.CreateOutput(source, context));
+		context.RegisterSourceOutput(mockCreateFromNonGenericTypes.Collect(),
+			(context, source) => RockAttributeGenerator.CreateOutput(source, context));
+		context.RegisterSourceOutput(mockMakeFromNonGenericTypes.Collect(),
 			(context, source) => RockAttributeGenerator.CreateOutput(source, context));
 	}
 

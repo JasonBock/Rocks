@@ -58,7 +58,7 @@ internal static class ITypeSymbolExtensions
 	internal static bool CanBeSeenByContainingAssembly(this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol)
 	{
 		static bool AreTypeParametersVisible(ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol) =>
-			self is not INamedTypeSymbol namedSelf || 
+			self is not INamedTypeSymbol namedSelf ||
 				namedSelf.TypeArguments.All(_ => _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol));
 
 		if (self.TypeKind == TypeKind.TypeParameter ||
@@ -100,7 +100,7 @@ internal static class ITypeSymbolExtensions
 		}
 	}
 
-   internal static bool IsOpenGeneric(this ITypeSymbol self) => 
+	internal static bool IsOpenGeneric(this ITypeSymbol self) =>
 		self switch
 		{
 			{ TypeKind: TypeKind.TypeParameter } => true,
@@ -108,7 +108,7 @@ internal static class ITypeSymbolExtensions
 			_ => false
 		};
 
-   internal static bool IsPointer(this ITypeSymbol self) =>
+	internal static bool IsPointer(this ITypeSymbol self) =>
 		self.Kind == SymbolKind.PointerType || self.Kind == SymbolKind.FunctionPointerType;
 
 	internal static bool IsEsoteric(this ITypeSymbol self) => self.IsPointer() || self.IsRefLikeType;

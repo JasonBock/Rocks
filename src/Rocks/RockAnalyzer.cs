@@ -89,17 +89,17 @@ public sealed class RockAnalyzer
 	/// Gets an array of supported diagnostics from this analyzer.
 	/// </summary>
 	public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics =>
-		ImmutableArray.Create(
-			CannotMockObsoleteTypeDescriptor.Create(),
-			CannotMockSealedTypeDescriptor.Create(),
-			CannotMockSpecialTypesDescriptor.Create(),
-			CannotSpecifyTypeWithOpenGenericParametersDescriptor.Create(),
-			DuplicateConstructorsDescriptor.Create(),
-			InterfaceHasStaticAbstractMembersDescriptor.Create(),
-			MemberUsesObsoleteTypeDescriptor.Create(),
-			TypeHasInaccessibleAbstractMembersDescriptor.Create(),
-			TypeHasMatchWithNonVirtualDescriptor.Create(),
-			TypeHasNoAccessibleConstructorsDescriptor.Create(),
-			TypeHasNoMockableMembersDescriptor.Create(),
-			TypeErrorDescriptor.Create());
+		[
+		   CannotMockObsoleteTypeDescriptor.Create(),
+		   CannotMockSealedTypeDescriptor.Create(),
+		   CannotMockSpecialTypesDescriptor.Create(),
+		   DuplicateConstructorsDescriptor.Create(),
+		   InterfaceHasStaticAbstractMembersDescriptor.Create(),
+		   MemberUsesObsoleteTypeDescriptor.Create(),
+		   TypeHasInaccessibleAbstractMembersDescriptor.Create(),
+		   TypeHasMatchWithNonVirtualDescriptor.Create(),
+		   TypeHasNoAccessibleConstructorsDescriptor.Create(),
+		   TypeHasNoMockableMembersDescriptor.Create(),
+		   TypeErrorDescriptor.Create(),
+		];
 }
