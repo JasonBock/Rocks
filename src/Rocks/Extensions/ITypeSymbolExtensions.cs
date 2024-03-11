@@ -161,6 +161,10 @@ internal static class ITypeSymbolExtensions
 			{
 				return flattenedName.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
 			}
+			else if (flattenedName.TypeArguments.Any(_ => _.TypeKind == TypeKind.TypeParameter))
+			{
+				return flattenedName.Name;
+			}
 			else
 			{
 				return $"{flattenedName.Name}Of{string.Join("_", flattenedName.TypeArguments.Select(_ => _.GetName(flattenedOptions)))}";

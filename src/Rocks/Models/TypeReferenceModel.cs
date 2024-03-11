@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Extensions;
+using System.Collections.Immutable;
 
 namespace Rocks.Models;
 
@@ -15,7 +16,7 @@ internal sealed record TypeReferenceModel
 		this.NullableAnnotation = type.NullableAnnotation;
 
 		this.AttributesDescription = type.GetAttributes().GetDescription(compilation, AttributeTargets.Class);
-		this.Namespace = 
+		this.Namespace =
 			type.ContainingNamespace is not null ?
 				!type.ContainingNamespace.IsGlobalNamespace ?
 					type.ContainingNamespace.ToDisplayString() :
@@ -24,6 +25,14 @@ internal sealed record TypeReferenceModel
 
 		this.Kind = type.Kind;
 		this.TypeKind = type.TypeKind;
+
+		if (type is INamedTypeSymbol namedType)
+		{
+			this.Constraints = namedType.GetConstraints(compilation);
+			this.DefaultConstraints = namedType.GetDefaultConstraints();
+			this.TypeArguments = namedType.TypeArguments.Length > 0 ?
+				namedType.TypeArguments.Select(_ => _.GetFullyQualifiedName(compilation)).ToImmutableArray() : [];
+		}
 
 		this.IsRecord = type.IsRecord;
 		this.IsReferenceType = type.IsReferenceType;
@@ -62,6 +71,8 @@ internal sealed record TypeReferenceModel
 	}
 
 	internal string AttributesDescription { get; }
+	internal EquatableArray<string> Constraints { get; }
+	internal EquatableArray<string> DefaultConstraints { get; }
 	internal string FlattenedName { get; }
 	internal string FullyQualifiedName { get; }
 	internal string IncludeGenericsName { get; }
@@ -81,5 +92,6 @@ internal sealed record TypeReferenceModel
 	internal string? RefLikeArgProjectedEvaluationDelegateName { get; }
 	internal string? RefLikeArgProjectedName { get; }
 	internal string? RefLikeArgConstructorProjectedName { get; }
+	internal EquatableArray<string> TypeArguments { get; }
 	internal TypeKind TypeKind { get; }
 }

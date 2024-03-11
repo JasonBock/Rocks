@@ -190,25 +190,6 @@ public static class MockModelTests
 	}
 
 	[Test]
-	public static void CreateWhenTypeIsOpenGeneric()
-	{
-		const string targetTypeName = "IGeneric";
-		var code =
-			$$"""
-			public interface IBase<T1, T2> 
-			{
-				void Foo(T1 a, T2 b);
-			}
-
-			public interface {{targetTypeName}}<T1> : IBase<T1, string> { }
-			""";
-
-		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
-
-		Assert.That(model.Information, Is.Null);
-	}
-
-	[Test]
 	public static void CreateWhenClassDerivesFromDelegate()
 	{
 		const string targetTypeName = "MySpecialMethod";

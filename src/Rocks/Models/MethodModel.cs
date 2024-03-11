@@ -33,8 +33,7 @@ internal sealed record MethodModel
 		this.Constraints = method.GetConstraints(compilation);
 		this.DefaultConstraints = method.GetDefaultConstraints();
 		this.TypeArguments = method.TypeArguments.Length > 0 ?
-			 method.TypeArguments.Select(_ => _.GetFullyQualifiedName(compilation)).ToImmutableArray() :
-			 ImmutableArray<string>.Empty;
+			 method.TypeArguments.Select(_ => _.GetFullyQualifiedName(compilation)).ToImmutableArray() : [];
 
 		this.Name = method.GetName(compilation);
 

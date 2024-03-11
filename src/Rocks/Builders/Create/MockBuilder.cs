@@ -1,6 +1,7 @@
 ﻿using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
+using System.Data;
 
 namespace Rocks.Builders.Create;
 
@@ -11,16 +12,33 @@ internal static class MockBuilder
 		var adornments = new HashSet<AdornmentsPipeline>();
 		var adornmentsPipeline = (AdornmentsPipeline adornmentsPipelineInformation) => { adornments.Add(adornmentsPipelineInformation); };
 
+		var typeArguments = mockType.Type.TypeArguments.Length > 0 ?
+			$"<{string.Join(", ", mockType.Type.TypeArguments)}>" : string.Empty;
+
 		var expectationsFQN = mockType.Type.Namespace is null ?
-			$"global::{mockType.Type.FlattenedName}CreateExpectations" :
-			$"global::{mockType.Type.Namespace}.{mockType.Type.FlattenedName}CreateExpectations";
+			$"global::{mockType.Type.FlattenedName}CreateExpectations{typeArguments}" :
+			$"global::{mockType.Type.Namespace}.{mockType.Type.FlattenedName}CreateExpectations{typeArguments}";
 
 		writer.WriteLines(
 			$$"""
-			internal sealed class {{mockType.Type.FlattenedName}}CreateExpectations
+			internal sealed class {{mockType.Type.FlattenedName}}CreateExpectations{{typeArguments}}
 				: global::Rocks.Expectations
-			{
 			""");
+
+		if (mockType.Type.DefaultConstraints.Length > 0)
+		{
+			writer.Indent++;
+
+			foreach (var constraint in mockType.Type.DefaultConstraints)
+			{
+				writer.WriteLine(constraint);
+			}
+
+			writer.Indent--;
+		}
+
+		writer.WriteLine("{");
+
 		writer.Indent++;
 
 		var wereTypesProjected = MockProjectedTypesBuilder.Build(writer, mockType, expectationsFQN, adornmentsPipeline);
