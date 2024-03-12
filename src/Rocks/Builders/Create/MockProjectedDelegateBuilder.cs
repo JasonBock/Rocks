@@ -9,16 +9,17 @@ internal static class MockProjectedDelegateBuilder
 	internal static string GetProjectedCallbackDelegateFullyQualifiedName(MethodModel method, TypeReferenceModel typeToMock)
 	{
 		var delegateName = method.ProjectedCallbackDelegateName;
-		var typeArguments = method.TypeArguments.Length > 0 ?
-			$"<{string.Join(", ", method.TypeArguments)}>" : string.Empty;
-
-		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations.Projections.{delegateName}{typeArguments}";
+		var typeArguments = typeToMock.TypeArguments.Length > 0 ?
+			$"<{string.Join(", ", typeToMock.TypeArguments)}>" : string.Empty;
+		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations{typeArguments}.Projections.{delegateName}";
 	}
 
 	internal static string GetProjectedReturnValueDelegateFullyQualifiedName(MethodModel method, TypeReferenceModel typeToMock)
 	{
 		var delegateName = method.ProjectedReturnValueDelegateName;
-		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations.Projections.{delegateName}";
+		var typeArguments = typeToMock.TypeArguments.Length > 0 ?
+			$"<{string.Join(", ", typeToMock.TypeArguments)}>" : string.Empty;
+		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations{typeArguments}.Projections.{delegateName}";
 	}
 
 	internal static string GetProjectedDelegate(MethodModel method)

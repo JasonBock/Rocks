@@ -8,7 +8,7 @@ namespace Rocks.Builders.Create;
 // other types are gen'd to support "esoteric" types.
 internal static class MockProjectedTypesBuilder
 {
-	internal static bool Build(IndentedTextWriter writer, TypeMockModel type, string expectationsFQN, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
+	internal static bool Build(IndentedTextWriter writer, TypeMockModel type)
 	{
 		var wereTypesProjected = false;
 

@@ -11,14 +11,18 @@ internal static class PointerArgTypeBuilder
 	{
 		var argForType = type.PointerArgProjectedName;
 		var parameterType = type.PointerArgParameterType is not null ? $"<{type.PointerArgParameterType}>" : null;
-		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations.Projections.{argForType}{parameterType}";
+		var typeArguments = typeToMock.TypeArguments.Length > 0 ?
+			$"<{string.Join(", ", typeToMock.TypeArguments)}>" : string.Empty;
+		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations{typeArguments}.Projections.{argForType}{parameterType}";
 	}
 
 	internal static string GetProjectedEvaluationDelegateFullyQualifiedName(TypeReferenceModel type, TypeReferenceModel typeToMock)
 	{
 		var argForType = type.PointerArgProjectedEvaluationDelegateName;
 		var parameterType = type.PointerArgParameterType is not null ? $"<{type.PointerArgParameterType}>" : null;
-		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations.Projections.{argForType}{parameterType}";
+		var typeArguments = typeToMock.TypeArguments.Length > 0 ?
+			$"<{string.Join(", ", typeToMock.TypeArguments)}>" : string.Empty;
+		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations{typeArguments}.Projections.{argForType}{parameterType}";
 	}
 
 	internal static void Build(IndentedTextWriter writer, TypeReferenceModel type, TypeMockModel typeModel)

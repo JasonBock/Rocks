@@ -50,13 +50,13 @@ internal static class TestGenerator
 		 Dictionary<Type, Dictionary<string, string>>? genericTypeMappings, string[] aliases)
 	{
 		var initialTypes = targetAssemblies.SelectMany(
-			 _ => _.GetTypes().Where(
-				  _ => _.IsPublic && !_.IsSubclassOf(typeof(Delegate)) && !_.IsValueType && !_.IsSealed && !typesToIgnore.Contains(_))).ToArray();
+			_ => _.GetTypes().Where(
+				_ => _.IsPublic && !_.IsSubclassOf(typeof(Delegate)) && !_.IsValueType && !_.IsSealed && !typesToIgnore.Contains(_))).ToArray();
 		return TestGenerator.GetMockableTypes(initialTypes, true, typesToLoadAssembliesFrom, genericTypeMappings, aliases);
 	}
 
 	private static Type[] GetMockableTypes(Type[] types, bool isCreate, Type[] typesToLoadAssembliesFrom,
-		  Dictionary<Type, Dictionary<string, string>>? genericTypeMappings, string[] aliases)
+		Dictionary<Type, Dictionary<string, string>>? genericTypeMappings, string[] aliases)
 	{
 		static string GetValidationCode(Type[] types, Dictionary<Type, Dictionary<string, string>>? genericTypeMappings, string[] aliases)
 		{
@@ -87,7 +87,7 @@ internal static class TestGenerator
 			for (var i = 0; i < types.Length; i++)
 			{
 				var type = types[i];
-				indentWriter.WriteLine($"\tinternal static void Target{i}({type.GetTypeDefinition(genericTypeMappings, aliases)} target) {{ }}");
+				indentWriter.WriteLine($"\tinternal static void Target{i}({type.GetTypeDefinition(genericTypeMappings, aliases, true)} target) {{ }}");
 			}
 
 			writer.WriteLine("}");
@@ -109,13 +109,13 @@ internal static class TestGenerator
 
 		foreach (var typeToLoadAssembliesFrom in typesToLoadAssembliesFrom)
 		{
-			references = references.Concat(new[]
-			{
+			references = references.Concat(
+			[
 				MetadataReference.CreateFromFile(typeToLoadAssembliesFrom.Assembly.Location)
-			});
+			]);
 		}
 
-		var compilation = CSharpCompilation.Create("generator", new[] { syntaxTree },
+		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			 references, new(OutputKind.DynamicallyLinkedLibrary,
 				  allowUnsafe: true,
 				  generalDiagnosticOption: ReportDiagnostic.Error,
@@ -128,7 +128,7 @@ internal static class TestGenerator
 			 .OfType<MethodDeclarationSyntax>())
 		{
 			var methodSymbol = model.GetDeclaredSymbol(methodNode)!;
-			var typeSymbol = methodSymbol.Parameters[0].Type;
+			var typeSymbol = methodSymbol.Parameters[0].Type.OriginalDefinition;
 
 			if (MockModel.Create(methodNode, typeSymbol, model, isCreate ? BuildType.Create : BuildType.Make, true).Information is not null)
 			{
@@ -147,7 +147,7 @@ internal static class TestGenerator
 		var isCreate = buildType == BuildType.Create;
 		var issues = new List<Issue>();
 		var assemblies = targetTypes.Select(_ => _.Assembly).ToHashSet();
-		var code = GetCode(targetTypes, isCreate, genericTypeMappings, aliases);
+		var code = TestGenerator.GetCode(targetTypes, isCreate, genericTypeMappings, aliases);
 
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
@@ -162,13 +162,13 @@ internal static class TestGenerator
 
 		foreach (var typeToLoadAssembliesFrom in typesToLoadAssembliesFrom)
 		{
-			references = references.Concat(new[]
-			{
+			references = references.Concat(
+			[
 				 MetadataReference.CreateFromFile(typeToLoadAssembliesFrom.Assembly.Location)
-			});
+			]);
 		}
 
-		var compilation = CSharpCompilation.Create("generator", new[] { syntaxTree },
+		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			 references, new(OutputKind.DynamicallyLinkedLibrary,
 				  allowUnsafe: true,
 				  generalDiagnosticOption: ReportDiagnostic.Error,
@@ -231,13 +231,13 @@ internal static class TestGenerator
 
 		foreach (var typeToLoadAssembliesFrom in typesToLoadAssembliesFrom)
 		{
-			references = references.Concat(new[]
-			{
+			references = references.Concat(
+			[
 				 MetadataReference.CreateFromFile(typeToLoadAssembliesFrom.Assembly.Location)
-			});
+			]);
 		}
 
-		var compilation = CSharpCompilation.Create("generator", new[] { syntaxTree },
+		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			 references, new(OutputKind.DynamicallyLinkedLibrary,
 				  allowUnsafe: true,
 				  generalDiagnosticOption: ReportDiagnostic.Error,
@@ -276,13 +276,13 @@ internal static class TestGenerator
 
 		foreach (var typeToLoadAssembliesFrom in typesToLoadAssembliesFrom)
 		{
-			references = references.Concat(new[]
-			{
+			references = references.Concat(
+			[
 					 MetadataReference.CreateFromFile(typeToLoadAssembliesFrom.Assembly.Location)
-				});
+				]);
 		}
 
-		var compilation = CSharpCompilation.Create("generator", new[] { syntaxTree },
+		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			 references, new(OutputKind.DynamicallyLinkedLibrary,
 				  allowUnsafe: true,
 				  generalDiagnosticOption: ReportDiagnostic.Error,
@@ -362,7 +362,17 @@ internal static class TestGenerator
 
 		for (var i = 0; i < types.Length; i++)
 		{
-			indentWriter.WriteLine($"[assembly: Rock{(isCreate ? "Create" : "Make")}<{types[i].GetTypeDefinition(genericTypeMappings, aliases)}>]");
+			var type = types[i];
+
+			if (type.IsGenericTypeDefinition || type.ContainsGenericParameters)
+			{
+				indentWriter.WriteLine($"[assembly: Rock{(isCreate ? "Create" : "Make")}(typeof({type.GetTypeDefinition(genericTypeMappings, aliases, true)}))]");
+				indentWriter.WriteLine($"[assembly: Rock{(isCreate ? "Create" : "Make")}<{type.GetTypeDefinition(genericTypeMappings, aliases, false)}>]");
+			}
+			else
+			{
+				indentWriter.WriteLine($"[assembly: Rock{(isCreate ? "Create" : "Make")}<{type.GetTypeDefinition(genericTypeMappings, aliases, false)}>]");
+			}
 		}
 
 		return writer.ToString();

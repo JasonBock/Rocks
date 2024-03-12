@@ -9,13 +9,17 @@ internal static class RefLikeArgTypeBuilder
 	internal static string GetProjectedFullyQualifiedName(TypeReferenceModel type, TypeReferenceModel typeToMock)
 	{
 		var argForType = type.RefLikeArgProjectedName;
-		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations.Projections.{argForType}";
+		var typeArguments = typeToMock.TypeArguments.Length > 0 ?
+			$"<{string.Join(", ", typeToMock.TypeArguments)}>" : string.Empty;
+		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations{typeArguments}.Projections.{argForType}";
 	}
 
 	internal static string GetProjectedEvaluationDelegateFullyQualifiedName(TypeReferenceModel type, TypeReferenceModel typeToMock)
 	{
 		var argForType = type.RefLikeArgProjectedEvaluationDelegateName;
-		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations.Projections.{argForType}";
+		var typeArguments = typeToMock.TypeArguments.Length > 0 ?
+			$"<{string.Join(", ", typeToMock.TypeArguments)}>" : string.Empty;
+		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations{typeArguments}.Projections.{argForType}";
 	}
 
 	internal static void Build(IndentedTextWriter writer, TypeReferenceModel type, TypeMockModel typeModel)

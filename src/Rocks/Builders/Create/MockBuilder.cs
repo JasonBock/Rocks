@@ -1,7 +1,6 @@
 ﻿using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
-using System.Data;
 
 namespace Rocks.Builders.Create;
 
@@ -25,11 +24,11 @@ internal static class MockBuilder
 				: global::Rocks.Expectations
 			""");
 
-		if (mockType.Type.DefaultConstraints.Length > 0)
+		if (mockType.Type.Constraints.Length > 0)
 		{
 			writer.Indent++;
 
-			foreach (var constraint in mockType.Type.DefaultConstraints)
+			foreach (var constraint in mockType.Type.Constraints)
 			{
 				writer.WriteLine(constraint);
 			}
@@ -41,7 +40,7 @@ internal static class MockBuilder
 
 		writer.Indent++;
 
-		var wereTypesProjected = MockProjectedTypesBuilder.Build(writer, mockType, expectationsFQN, adornmentsPipeline);
+		var wereTypesProjected = MockProjectedTypesBuilder.Build(writer, mockType);
 
 		MockHandlerListBuilder.Build(writer, mockType, expectationsFQN);
 		writer.WriteLine();

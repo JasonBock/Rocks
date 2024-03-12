@@ -28,10 +28,10 @@ internal sealed record TypeReferenceModel
 
 		if (type is INamedTypeSymbol namedType)
 		{
-			this.Constraints = namedType.GetConstraints(compilation);
-			this.DefaultConstraints = namedType.GetDefaultConstraints();
+			this.Constraints = namedType.GetConstraints(compilation).AddRange(namedType.GetDefaultConstraints());
 			this.TypeArguments = namedType.TypeArguments.Length > 0 ?
-				namedType.TypeArguments.Select(_ => _.GetFullyQualifiedName(compilation)).ToImmutableArray() : [];
+				namedType.TypeArguments.Where(_ => _.TypeKind == TypeKind.TypeParameter)
+					.Select(_ => _.GetFullyQualifiedName(compilation)).ToImmutableArray() : [];
 		}
 
 		this.IsRecord = type.IsRecord;
@@ -72,7 +72,6 @@ internal sealed record TypeReferenceModel
 
 	internal string AttributesDescription { get; }
 	internal EquatableArray<string> Constraints { get; }
-	internal EquatableArray<string> DefaultConstraints { get; }
 	internal string FlattenedName { get; }
 	internal string FullyQualifiedName { get; }
 	internal string IncludeGenericsName { get; }

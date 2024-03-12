@@ -7,14 +7,18 @@ using System.Runtime.Versioning;
 
 namespace Rocks.CodeGenerationTest.Extensions
 {
-   internal static class TypeExtensions
+	internal static class TypeExtensions
 	{
 		internal static string GetTypeDefinition(this Type self,
-			Dictionary<Type, Dictionary<string, string>>? genericTypeMappings, string[] aliases)
+			Dictionary<Type, Dictionary<string, string>>? genericTypeMappings, string[] aliases, bool isOpenGenericDefinition)
 		{
 			if (self.IsGenericTypeDefinition)
 			{
-				if (genericTypeMappings?.ContainsKey(self) ?? false)
+				if (isOpenGenericDefinition)
+				{
+					return $"{(aliases.Length > 0 ? $"{aliases[0]}::" : string.Empty)}{self.FullName!.Split("`")[0]}<{new string(',', self.GetGenericArguments().Length - 1)}>";
+				}
+				else if (genericTypeMappings?.ContainsKey(self) ?? false)
 				{
 					var selfGenericArguments = self.GetGenericArguments();
 					var genericArguments = new string[selfGenericArguments.Length];
@@ -66,12 +70,12 @@ namespace Rocks.CodeGenerationTest.Extensions
 		{
 			if (self.GetCustomAttribute<RequiresPreviewFeaturesAttribute>() is null)
 			{
-				var code = 
+				var code =
 					$$"""
 					{{(aliases.Length > 0 ? $"extern alias {aliases[0]}" : string.Empty)}}
 					public class Foo 
 					{ 
-						public {{self.GetTypeDefinition(genericTypeMappings, aliases)}} Data { get; } 
+						public {{self.GetTypeDefinition(genericTypeMappings, aliases, false)}} Data { get; } 
 					}
 					""";
 				var syntaxTree = CSharpSyntaxTree.ParseText(code);
@@ -79,7 +83,7 @@ namespace Rocks.CodeGenerationTest.Extensions
 					.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
 					.Select(_ => MetadataReference.CreateFromFile(_.Location))
 					.Concat(new[] { MetadataReference.CreateFromFile(self.Assembly.Location).WithAliases(aliases) });
-				var compilation = CSharpCompilation.Create("generator", new[] { syntaxTree },
+				var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 					references, new(OutputKind.DynamicallyLinkedLibrary,
 						allowUnsafe: true,
 						generalDiagnosticOption: ReportDiagnostic.Error,
@@ -89,7 +93,7 @@ namespace Rocks.CodeGenerationTest.Extensions
 				var propertySyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 					.OfType<PropertyDeclarationSyntax>().Single();
 				var symbol = model.GetDeclaredSymbol(propertySyntax)!.Type;
-				var invocation = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("public static void Foo() { }")); 
+				var invocation = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("public static void Foo() { }"));
 				var mockModel = MockModel.Create(invocation, symbol!, model, BuildType.Create, true);
 				return mockModel.Information is not null;
 			}
