@@ -2,7 +2,6 @@
 using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
-using System.Collections.Immutable;
 
 namespace Rocks.Builders.Create;
 
@@ -14,7 +13,7 @@ internal static class PropertyExpectationsPropertyBuilder
 		var propertyGetMethod = property.GetMethod!;
 		var callbackDelegateTypeName = propertyGetMethod.RequiresProjectedDelegate ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
-			DelegateBuilder.Build(ImmutableArray<ParameterModel>.Empty, property.Type);
+			DelegateBuilder.Build(propertyGetMethod);
 
 		string adornmentsType;
 
@@ -62,7 +61,7 @@ internal static class PropertyExpectationsPropertyBuilder
 				$"global::Rocks.Argument<{propertyParameterType.FullyQualifiedName}>";
 		var callbackDelegateTypeName = property.SetMethod!.RequiresProjectedDelegate ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, property.MockType) :
-			DelegateBuilder.Build(property.SetMethod!.Parameters);
+			DelegateBuilder.Build(property.SetMethod!);
 		var adornmentsType = $"global::Rocks.Adornments<AdornmentsForHandler{memberIdentifier}, {expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}>";
 		adornmentsFQNsPipeline(new(adornmentsType, string.Empty, string.Empty, memberIdentifier));
 

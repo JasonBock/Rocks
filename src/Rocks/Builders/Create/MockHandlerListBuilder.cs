@@ -2,6 +2,7 @@
 using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
+using System.Collections.Immutable;
 
 namespace Rocks.Builders.Create;
 
@@ -35,9 +36,7 @@ internal static class MockHandlerListBuilder
 		var callbackDelegateTypeName =
 			method.RequiresProjectedDelegate ?
 				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, method.MockType) :
-				method.ReturnsVoid ?
-					DelegateBuilder.Build(method.Parameters) :
-					DelegateBuilder.Build(method.Parameters, method.ReturnType);
+				DelegateBuilder.Build(method);
 
 		string handlerBaseType;
 
@@ -58,8 +57,9 @@ internal static class MockHandlerListBuilder
 			handlerBaseType = $"global::Rocks.Handler<{callbackDelegateTypeName}{returnTypeName}>";
 		}
 
+		var typeArgumentNamingContext = new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet());
 		var typeArguments = method.TypeArguments.Length > 0 ?
-			$"<{string.Join(", ", method.TypeArguments)}>" : string.Empty;
+			$"<{string.Join(", ", method.TypeArguments.Select(_ => typeArgumentNamingContext[_]))}>" : string.Empty;
 
 		writer.WriteLines(
 			$$"""
@@ -90,7 +90,7 @@ internal static class MockHandlerListBuilder
 						parameter.Type.IsPointer ?
 							$"public {PointerArgTypeBuilder.GetProjectedFullyQualifiedName(parameter.Type, method.MockType)}" :
 							$"public {RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(parameter.Type, method.MockType)}" : 
-						$"public global::Rocks.Argument<{parameter.Type.FullyQualifiedName}{requiresNullable}>";
+						$"public global::Rocks.Argument<{typeArgumentNamingContext[parameter.Type.FullyQualifiedName]}{requiresNullable}>";
 
 				writer.WriteLine($"{argumentTypeName} @{name} {{ get; set; }}");
 			}

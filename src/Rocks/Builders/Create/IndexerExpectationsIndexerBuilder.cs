@@ -19,7 +19,7 @@ internal static class IndexerExpectationsIndexerBuilder
 
 			var callbackDelegateTypeName = propertyGetMethod.RequiresProjectedDelegate ?
 				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
-				DelegateBuilder.Build(propertyGetMethod.Parameters, property.Type);
+				DelegateBuilder.Build(propertyGetMethod);
 
 			string adornmentsType;
 
@@ -172,7 +172,7 @@ internal static class IndexerExpectationsIndexerBuilder
 
 			var callbackDelegateTypeName = propertySetMethod.RequiresProjectedDelegate ?
 				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertySetMethod, property.MockType) :
-				DelegateBuilder.Build(propertySetMethod.Parameters);
+				DelegateBuilder.Build(propertySetMethod);
 			var adornmentsType = $"global::Rocks.Adornments<AdornmentsForHandler{memberIdentifier}, {expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}>";
 			adornmentsFQNsPipeline(new(adornmentsType, string.Empty, string.Empty, memberIdentifier));
 

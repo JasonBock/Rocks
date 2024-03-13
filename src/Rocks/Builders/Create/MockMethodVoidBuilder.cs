@@ -11,6 +11,8 @@ internal static class MockMethodVoidBuilder
 	internal static void Build(IndentedTextWriter writer, MethodModel method, bool raiseEvents, string expectationsFullyQualifiedName)
 	{
 		var shouldThrowDoesNotReturnException = method.ShouldThrowDoesNotReturnException;
+		var typeArgumentNamingContext = new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet());
+
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 		{
 			var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
@@ -25,7 +27,7 @@ internal static class MockMethodVoidBuilder
 				RefKind.RefReadOnlyParameter => "ref readonly ",
 				_ => string.Empty
 			};
-			var parameter = $"{scoped}{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}{defaultValue}";
+			var parameter = $"{scoped}{direction}{(_.IsParams ? "params " : string.Empty)}{typeArgumentNamingContext[_.Type.FullyQualifiedName]}{requiresNullable} @{_.Name}{defaultValue}";
 			var attributes = _.AttributesDescription;
 			return $"{(attributes.Length > 0 ? $"{attributes} " : string.Empty)}{parameter}";
 		}));
@@ -33,10 +35,11 @@ internal static class MockMethodVoidBuilder
 		var explicitTypeNameDescription = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
 			$"{method.ContainingType.FullyQualifiedName}." : string.Empty;
 		var isUnsafe = method.IsUnsafe ? "unsafe " : string.Empty;
+		var typeArguments = method.TypeArguments.Length > 0 ?
+			$"<{string.Join(", ", method.TypeArguments.Select(_ => typeArgumentNamingContext[_]))}>" : "";
+
 		var methodSignature =
-			$"{isUnsafe}void {explicitTypeNameDescription}{method.Name}({methodParameters})";
-		var methodException =
-			$"void {explicitTypeNameDescription}{method.Name}({string.Join(", ", method.Parameters.Select(_ => $"{{@{_.Name}}}"))})";
+			$"{isUnsafe}void {explicitTypeNameDescription}{method.Name}{typeArguments}({methodParameters})";
 
 		if (method.AttributesDescription.Length > 0)
 		{
@@ -91,15 +94,15 @@ internal static class MockMethodVoidBuilder
 		if (method.Parameters.Length > 0)
 		{
 			MockMethodVoidBuilder.BuildMethodValidationHandlerWithParameters(
-				writer, method, namingContext,
-				methodSignature, raiseEvents, shouldThrowDoesNotReturnException,
+				writer, method, namingContext, typeArgumentNamingContext,
+				raiseEvents, shouldThrowDoesNotReturnException,
 				expectationsFullyQualifiedName);
 		}
 		else
 		{
 			MockMethodVoidBuilder.BuildMethodValidationHandlerNoParameters(
-				writer, method, namingContext,
-				methodSignature, raiseEvents, shouldThrowDoesNotReturnException,
+				writer, method, namingContext, typeArgumentNamingContext,
+				raiseEvents, shouldThrowDoesNotReturnException,
 				expectationsFullyQualifiedName);
 		}
 
@@ -156,9 +159,9 @@ internal static class MockMethodVoidBuilder
 		writer.WriteLine();
 	}
 
-	private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer,
-		MethodModel method, VariableNamingContext namingContext,
-		string methodSignature, bool raiseEvents, bool shouldThrowDoesNotReturnException, string expectationsFullyQualifiedName)
+	private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer, MethodModel method, 
+		VariableNamingContext namingContext, VariableNamingContext typeArgumentNamingContext,
+		bool raiseEvents, bool shouldThrowDoesNotReturnException, string expectationsFullyQualifiedName)
 	{
 		var foreachHandlerName = method.IsGenericMethod ?
 			namingContext["genericHandler"] : namingContext["handler"];
@@ -169,7 +172,7 @@ internal static class MockMethodVoidBuilder
 		{
 			// We'll cast the handler to ensure the general handler type is of the
 			// closed generic handler type.
-			writer.WriteLine($"if (@{foreachHandlerName} is {expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}<{string.Join(", ", method.TypeArguments)}> @{namingContext["handler"]})");
+			writer.WriteLine($"if (@{foreachHandlerName} is {expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}<{string.Join(", ", method.TypeArguments.Select(_ => typeArgumentNamingContext[_]))}> @{namingContext["handler"]})");
 			writer.WriteLine("{");
 			writer.Indent++;
 		}
@@ -196,8 +199,8 @@ internal static class MockMethodVoidBuilder
 	}
 
 	private static void BuildMethodValidationHandlerWithParameters(IndentedTextWriter writer, MethodModel method,
-		VariableNamingContext namingContext,
-		string methodSignature, bool raiseEvents, bool shouldThrowDoesNotReturnException, string expectationsFullyQualifiedName)
+		VariableNamingContext namingContext, VariableNamingContext typeArgumentNamingContext,
+		bool raiseEvents, bool shouldThrowDoesNotReturnException, string expectationsFullyQualifiedName)
 	{
 		writer.WriteLine($"var @{namingContext["foundMatch"]} = false;");
 		writer.WriteLine();
@@ -217,7 +220,7 @@ internal static class MockMethodVoidBuilder
 		{
 			// We'll cast the handler to ensure the general handler type is of the
 			// closed generic handler type.
-			writer.WriteLine($"if (@{foreachHandlerName} is {expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}<{string.Join(", ", method.TypeArguments)}> @{namingContext["handler"]})");
+			writer.WriteLine($"if (@{foreachHandlerName} is {expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}<{string.Join(", ", method.TypeArguments.Select(_ => typeArgumentNamingContext[_]))}> @{namingContext["handler"]})");
 			writer.WriteLine("{");
 			writer.Indent++;
 		}

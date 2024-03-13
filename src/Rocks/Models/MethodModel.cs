@@ -35,7 +35,7 @@ internal sealed record MethodModel
 		this.TypeArguments = method.TypeArguments.Length > 0 ?
 			 method.TypeArguments.Select(_ => _.GetFullyQualifiedName(compilation)).ToImmutableArray() : [];
 
-		this.Name = method.GetName(compilation);
+		this.Name = method.Name;
 
 		this.Parameters = method.Parameters.Select(_ =>
 		{

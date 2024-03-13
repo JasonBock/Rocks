@@ -2,6 +2,7 @@
 using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
+using System.Collections.Immutable;
 
 namespace Rocks.Builders.Create;
 
@@ -15,6 +16,7 @@ internal static class MethodExpectationsMethodBuilder
 		{
 			var namingContext = new VariableNamingContext(method);
 			var needsGenerationWithDefaults = false;
+			var typeArgumentNamingContext = new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet());
 
 			var instanceParameters = method.Parameters.Length == 0 ? string.Empty :
 				string.Join(", ", method.Parameters.Select(_ =>
@@ -34,13 +36,13 @@ internal static class MethodExpectationsMethodBuilder
 						{
 							if (_.HasExplicitDefaultValue)
 							{
-								return $"{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name} = {_.ExplicitDefaultValue}";
+								return $"{typeArgumentNamingContext[_.Type.FullyQualifiedName]}{requiresNullable} @{_.Name} = {_.ExplicitDefaultValue}";
 							}
 							else
 							{
 								return _.IsParams ?
-									$"params {_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}" :
-									$"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
+									$"params {typeArgumentNamingContext[_.Type.FullyQualifiedName]}{requiresNullable} @{_.Name}" :
+									$"global::Rocks.Argument<{typeArgumentNamingContext[_.Type.FullyQualifiedName]}{requiresNullable}> @{_.Name}";
 							}
 						}
 
@@ -50,17 +52,15 @@ internal static class MethodExpectationsMethodBuilder
 							needsGenerationWithDefaults |= _.HasExplicitDefaultValue;
 						}
 
-						return $"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
+						return $"global::Rocks.Argument<{typeArgumentNamingContext[_.Type.FullyQualifiedName]}{requiresNullable}> @{_.Name}";
 					}
 				}));
 
-			var typeArguments = method.IsGenericMethod ?
-				$"<{string.Join(", ", method.TypeArguments)}>" : string.Empty;
+			var typeArguments = method.TypeArguments.Length > 0 ?
+				$"<{string.Join(", ", method.TypeArguments.Select(_ => typeArgumentNamingContext[_]))}>" : string.Empty;
 			var callbackDelegateTypeName = method.RequiresProjectedDelegate ?
 				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, method.MockType) :
-				method.ReturnsVoid ?
-					DelegateBuilder.Build(method.Parameters) :
-					DelegateBuilder.Build(method.Parameters, method.ReturnType);
+				DelegateBuilder.Build(method);
 
 			string adornmentsType;
 
@@ -78,7 +78,7 @@ internal static class MethodExpectationsMethodBuilder
 						string.Empty :
 						method.ReturnType.IsRefLikeType ?
 							MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(method, method.MockType) :
-							method.ReturnType.FullyQualifiedName;
+							typeArgumentNamingContext[method.ReturnType.FullyQualifiedName];
 
 				adornmentsType = method.ReturnsVoid ?
 					$"global::Rocks.Adornments<AdornmentsForHandler{method.MemberIdentifier}{typeArguments}, {handlerTypeName}, {callbackDelegateTypeName}>" :
@@ -98,7 +98,7 @@ internal static class MethodExpectationsMethodBuilder
 
 				writer.WriteLines(
 					$$"""
-					internal {{hiding}}{{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{method.MemberIdentifier}}{{typeArguments}} {{method.Name}}({{instanceParameters}}){{constraints}} =>
+					internal {{hiding}}{{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{method.MemberIdentifier}}{{typeArguments}} {{method.Name}}{{typeArguments}}({{instanceParameters}}){{constraints}} =>
 						this.{{method.Name}}({{parameterValues}});
 					""");
 			}
@@ -106,7 +106,7 @@ internal static class MethodExpectationsMethodBuilder
 			{
 				writer.WriteLines(
 					$$"""
-					internal {{hiding}}{{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{method.MemberIdentifier}}{{typeArguments}} {{method.Name}}({{instanceParameters}}){{constraints}}
+					internal {{hiding}}{{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{method.MemberIdentifier}}{{typeArguments}} {{method.Name}}{{typeArguments}}({{instanceParameters}}){{constraints}}
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new {{expectationsFullyQualifiedName}}.Handler{{method.MemberIdentifier}}{{typeArguments}}();
@@ -119,7 +119,7 @@ internal static class MethodExpectationsMethodBuilder
 			else
 			{
 				var handlerContext = new VariableNamingContext(method);
-				writer.WriteLine($"internal {hiding}{expectationsFullyQualifiedName}.Adornments.AdornmentsForHandler{method.MemberIdentifier}{typeArguments} {method.Name}({instanceParameters}){constraints}");
+				writer.WriteLine($"internal {hiding}{expectationsFullyQualifiedName}.Adornments.AdornmentsForHandler{method.MemberIdentifier}{typeArguments} {method.Name}{typeArguments}({instanceParameters}){constraints}");
 				writer.WriteLine("{");
 				writer.Indent++;
 				writer.WriteLine("global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);");

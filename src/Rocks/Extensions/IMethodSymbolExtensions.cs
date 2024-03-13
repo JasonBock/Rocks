@@ -73,13 +73,6 @@ internal static class IMethodSymbolExtensions
 	internal static bool IsUnsafe(this IMethodSymbol self) =>
 		self.Parameters.Any(_ => _.Type.IsPointer()) || (!self.ReturnsVoid && self.ReturnType.IsPointer());
 
-	internal static string GetName(this IMethodSymbol self, Compilation compilation, MethodNameOption option = MethodNameOption.IncludeGenerics, string extendedName = "")
-	{
-		var generics = option == MethodNameOption.IncludeGenerics && self.TypeArguments.Length > 0 ?
-			$"<{string.Join(", ", self.TypeArguments.Select(_ => _.GetFullyQualifiedName(compilation)))}>" : string.Empty;
-		return $"{self.Name}{extendedName}{generics}";
-	}
-
 	internal static ImmutableArray<string> GetConstraints(this IMethodSymbol self, Compilation compilation)
 	{
 		var constraints = new List<string>();

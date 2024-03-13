@@ -1,24 +1,28 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Models;
+using System.Collections.Immutable;
 
 namespace Rocks.Builders.Create;
 
 internal static class DelegateBuilder
 {
-	internal static string Build(EquatableArray<ParameterModel> parameters, TypeReferenceModel? returnType = null)
+	internal static string Build(MethodModel method)
 	{
+		var parameters = method.Parameters;
+		var typeArgumentNamingContext = new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet());
+
 		if (parameters.Length > 0)
 		{
 			var parameterTypes = string.Join(", ", parameters.Select(
-				_ => $"{_.Type.FullyQualifiedName}{(_.RequiresNullableAnnotation ? "?" : string.Empty)}"));
-			return returnType is not null ?
-				$"global::System.Func<{parameterTypes}, {returnType.FullyQualifiedName}>" :
+				_ => $"{typeArgumentNamingContext[_.Type.FullyQualifiedName]}{(_.RequiresNullableAnnotation ? "?" : string.Empty)}"));
+			return !method.ReturnsVoid ?
+				$"global::System.Func<{parameterTypes}, {typeArgumentNamingContext[method.ReturnType.FullyQualifiedName]}>" :
 				$"global::System.Action<{parameterTypes}>";
 		}
 		else
 		{
-			return returnType is not null ?
-				$"global::System.Func<{returnType.FullyQualifiedName}>" :
+			return !method.ReturnsVoid ?
+				$"global::System.Func<{typeArgumentNamingContext[method.ReturnType.FullyQualifiedName]}>" :
 				"global::System.Action";
 		}
 	}

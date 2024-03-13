@@ -4,7 +4,6 @@ using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 using Rocks.Builders.Create;
 using Rocks.Models;
-using System.Collections.Immutable;
 
 namespace Rocks.Tests.Builders.Create;
 
@@ -19,10 +18,9 @@ public static class DelegateBuilderTests
 	public static void Build(string code, string expectedValue)
 	{
 		(var method, var compilation) = DelegateBuilderTests.GetMethod(code);
-		Assert.That(DelegateBuilder.Build(
-			method.Parameters.Select(_ => new ParameterModel(_, new TypeReferenceModel(_.ContainingType, compilation), compilation)).ToImmutableArray(),
-				method.ReturnsVoid ? null : new TypeReferenceModel(method.ReturnType, compilation)), 
-			Is.EqualTo(expectedValue));
+		var methodModel = new MethodModel(method, new(method.ContainingType, compilation), 
+			compilation, RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 0u);
+		Assert.That(DelegateBuilder.Build(methodModel), Is.EqualTo(expectedValue));
 	}
 
 	private static (IMethodSymbol, Compilation) GetMethod(string source)

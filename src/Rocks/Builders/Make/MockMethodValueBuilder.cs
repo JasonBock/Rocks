@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Builders.Create;
 using Rocks.Models;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
@@ -10,6 +11,8 @@ internal static class MockMethodValueBuilder
 	internal static void Build(IndentedTextWriter writer, MethodModel method)
 	{
 		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn;
+		var typeArgumentNamingContext = new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet());
+
 		var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadOnly ? "ref readonly " : string.Empty;
 		var returnType = $"{returnByRef}{method.ReturnType.FullyQualifiedName}";
 		var explicitTypeNameDescription = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
@@ -29,11 +32,14 @@ internal static class MockMethodValueBuilder
 				RefKind.RefReadOnlyParameter => "ref readonly ",
 				_ => string.Empty
 			};
-			var parameter = $"{scoped}{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}{defaultValue}";
+			var parameter = $"{scoped}{direction}{(_.IsParams ? "params " : string.Empty)}{typeArgumentNamingContext[_.Type.FullyQualifiedName]}{requiresNullable} @{_.Name}{defaultValue}";
 			var attributes = _.AttributesDescription;
 			return $"{(attributes.Length > 0 ? $"{attributes} " : string.Empty)}{parameter}";
 		}));
-		var methodSignature = $"{returnType} {explicitTypeNameDescription}{method.Name}({methodParameters})";
+
+		var typeArguments = method.TypeArguments.Length > 0 ?
+			$"<{string.Join(", ", method.TypeArguments.Select(_ => typeArgumentNamingContext[_]))}>" : "";
+		var methodSignature = $"{returnType} {explicitTypeNameDescription}{method.Name}{typeArguments}({methodParameters})";
 
 		if (method.AttributesDescription.Length > 0)
 		{

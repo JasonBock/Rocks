@@ -367,7 +367,7 @@ internal static class TestGenerator
 			if (type.IsGenericTypeDefinition || type.ContainsGenericParameters)
 			{
 				indentWriter.WriteLine($"[assembly: Rock{(isCreate ? "Create" : "Make")}(typeof({type.GetTypeDefinition(genericTypeMappings, aliases, true)}))]");
-				indentWriter.WriteLine($"[assembly: Rock{(isCreate ? "Create" : "Make")}<{type.GetTypeDefinition(genericTypeMappings, aliases, false)}>]");
+				//indentWriter.WriteLine($"[assembly: Rock{(isCreate ? "Create" : "Make")}<{type.GetTypeDefinition(genericTypeMappings, aliases, false)}>]");
 			}
 			else
 			{

@@ -28,7 +28,7 @@ internal sealed record TypeReferenceModel
 
 		if (type is INamedTypeSymbol namedType)
 		{
-			this.Constraints = namedType.GetConstraints(compilation).AddRange(namedType.GetDefaultConstraints());
+			this.Constraints = namedType.GetConstraints(compilation);
 			this.TypeArguments = namedType.TypeArguments.Length > 0 ?
 				namedType.TypeArguments.Where(_ => _.TypeKind == TypeKind.TypeParameter)
 					.Select(_ => _.GetFullyQualifiedName(compilation)).ToImmutableArray() : [];
