@@ -53,7 +53,7 @@ internal static class ITypeSymbolExtensionsGetNameTests
 	[TestCase("public class Target { }", TypeNameOption.IncludeGenerics, "Target")]
 	[TestCase("public class Target<T, T2, TSomething> { }", TypeNameOption.IncludeGenerics, "Target<T, T2, TSomething>")]
 	[TestCase("public class Target { }", TypeNameOption.Flatten, "Target")]
-	[TestCase("public class Target<T, T2, TSomething> : Base", TypeNameOption.Flatten, "TargetOfT_T2_TSomething")]
+	[TestCase("public class Target<T, T2, TSomething> : Base", TypeNameOption.Flatten, "Target")]
 	public static void GetName(string code, TypeNameOption option, string expectedName)
 	{
 		var typeSymbol = ITypeSymbolExtensionsGetNameTests.GetTypeSymbol(code);
@@ -79,7 +79,7 @@ internal static class ITypeSymbolExtensionsGetNameTests
 	[TestCase("public class Base<T, T2, TSomething> { } public class Target { Base<int, string, Guid> Data { get; } }",
 		TypeNameOption.Flatten, "BaseOfint_string_Guid")]
 	[TestCase("public class Base<T, T2, TSomething> { } public class Target<T, TSomething> { Base<T, string, TSomething> Data { get; } }",
-		TypeNameOption.Flatten, "BaseOfT_string_TSomething")]
+		TypeNameOption.Flatten, "Base")]
 	public static void GetNameFromDeclaredType(string code, TypeNameOption option, string expectedName)
 	{
 		var parameterSymbol = ITypeSymbolExtensionsGetNameTests.GetDeclaredTypeSymbol(code);

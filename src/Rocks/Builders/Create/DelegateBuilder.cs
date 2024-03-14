@@ -9,7 +9,9 @@ internal static class DelegateBuilder
 	internal static string Build(MethodModel method)
 	{
 		var parameters = method.Parameters;
-		var typeArgumentNamingContext = new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet());
+		var typeArgumentNamingContext = method.IsGenericMethod ?
+			new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet()) :
+			new VariableNamingContext();
 
 		if (parameters.Length > 0)
 		{

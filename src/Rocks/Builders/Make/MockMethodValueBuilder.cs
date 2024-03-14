@@ -11,7 +11,9 @@ internal static class MockMethodValueBuilder
 	internal static void Build(IndentedTextWriter writer, MethodModel method)
 	{
 		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn;
-		var typeArgumentNamingContext = new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet());
+		var typeArgumentNamingContext = method.IsGenericMethod ?
+			new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet()) :
+			new VariableNamingContext();
 
 		var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadOnly ? "ref readonly " : string.Empty;
 		var returnType = $"{returnByRef}{method.ReturnType.FullyQualifiedName}";

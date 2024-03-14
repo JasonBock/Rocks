@@ -11,7 +11,9 @@ internal static class MockMethodVoidBuilder
 	internal static void Build(IndentedTextWriter writer, MethodModel method)
 	{
 		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn;
-		var typeArgumentNamingContext = new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet());
+		var typeArgumentNamingContext = method.IsGenericMethod ?
+			new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet()) :
+			new VariableNamingContext();
 
 		var explicitTypeNameDescription = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
 			$"{method.ContainingType.FullyQualifiedName}." : string.Empty;

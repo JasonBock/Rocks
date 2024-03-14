@@ -57,7 +57,10 @@ internal static class MockHandlerListBuilder
 			handlerBaseType = $"global::Rocks.Handler<{callbackDelegateTypeName}{returnTypeName}>";
 		}
 
-		var typeArgumentNamingContext = new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet());
+		var typeArgumentNamingContext = method.IsGenericMethod ?
+			new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet()) :
+			new VariableNamingContext();
+
 		var typeArguments = method.TypeArguments.Length > 0 ?
 			$"<{string.Join(", ", method.TypeArguments.Select(_ => typeArgumentNamingContext[_]))}>" : string.Empty;
 

@@ -8,6 +8,9 @@ internal sealed class VariableNamingContext
 	private readonly Dictionary<string, string> variables = [];
 	private readonly ImmutableHashSet<string> names;
 
+	internal VariableNamingContext() =>
+		this.names = ImmutableHashSet<string>.Empty;
+
 	internal VariableNamingContext(MethodModel method)
 		: this(method.Parameters) 
 	{ }

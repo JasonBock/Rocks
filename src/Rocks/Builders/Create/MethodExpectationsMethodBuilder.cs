@@ -16,7 +16,9 @@ internal static class MethodExpectationsMethodBuilder
 		{
 			var namingContext = new VariableNamingContext(method);
 			var needsGenerationWithDefaults = false;
-			var typeArgumentNamingContext = new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet());
+			var typeArgumentNamingContext = method.IsGenericMethod ?
+				new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet()) :
+				new VariableNamingContext();
 
 			var instanceParameters = method.Parameters.Length == 0 ? string.Empty :
 				string.Join(", ", method.Parameters.Select(_ =>
@@ -99,7 +101,7 @@ internal static class MethodExpectationsMethodBuilder
 				writer.WriteLines(
 					$$"""
 					internal {{hiding}}{{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{method.MemberIdentifier}}{{typeArguments}} {{method.Name}}{{typeArguments}}({{instanceParameters}}){{constraints}} =>
-						this.{{method.Name}}({{parameterValues}});
+						this.{{method.Name}}{{typeArguments}}({{parameterValues}});
 					""");
 			}
 			else if (method.Parameters.Length == 0)

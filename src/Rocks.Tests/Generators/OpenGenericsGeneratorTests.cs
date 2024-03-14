@@ -1095,7 +1095,7 @@ public static class OpenGenericsGeneratorTests
 					{
 						return global::System.Threading.Tasks.Task.CompletedTask;
 					}
-					public global::System.Threading.Tasks.Task RespondAsync<T>(T @message)
+					public global::System.Threading.Tasks.Task RespondAsync<T1>(T1 @message)
 					{
 						return global::System.Threading.Tasks.Task.CompletedTask;
 					}

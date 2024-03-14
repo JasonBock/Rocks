@@ -11,7 +11,9 @@ internal static class MockMethodVoidBuilder
 	internal static void Build(IndentedTextWriter writer, MethodModel method, bool raiseEvents, string expectationsFullyQualifiedName)
 	{
 		var shouldThrowDoesNotReturnException = method.ShouldThrowDoesNotReturnException;
-		var typeArgumentNamingContext = new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet());
+		var typeArgumentNamingContext = method.IsGenericMethod ?
+			new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet()) :
+			new VariableNamingContext();
 
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 		{
@@ -138,12 +140,12 @@ internal static class MockMethodVoidBuilder
 
 			if (shouldThrowDoesNotReturnException)
 			{
-				writer.WriteLine($"{target}.{method.Name}({passedParameter});");
+				writer.WriteLine($"{target}.{method.Name}{typeArguments}({passedParameter});");
 				writer.WriteLine("throw new global::Rocks.Exceptions.DoesNotReturnException();");
 			}
 			else
 			{
-				writer.WriteLine($"{target}.{method.Name}({passedParameter});");
+				writer.WriteLine($"{target}.{method.Name}{typeArguments}({passedParameter});");
 			}
 		}
 		else

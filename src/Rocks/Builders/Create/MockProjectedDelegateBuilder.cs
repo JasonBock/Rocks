@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Models;
 using System.CodeDom.Compiler;
+using System.Collections.Immutable;
 
 namespace Rocks.Builders.Create;
 
@@ -9,9 +10,15 @@ internal static class MockProjectedDelegateBuilder
 	internal static string GetProjectedCallbackDelegateFullyQualifiedName(MethodModel method, TypeReferenceModel typeToMock)
 	{
 		var delegateName = method.ProjectedCallbackDelegateName;
+		var typeArgumentNamingContext = method.IsGenericMethod ?
+			new VariableNamingContext(typeToMock.TypeArguments.ToImmutableHashSet()) :
+			new VariableNamingContext();
+
 		var typeArguments = typeToMock.TypeArguments.Length > 0 ?
 			$"<{string.Join(", ", typeToMock.TypeArguments)}>" : string.Empty;
-		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations{typeArguments}.Projections.{delegateName}";
+		var methodArguments = method.TypeArguments.Length > 0 ?
+			$"<{string.Join(", ", method.TypeArguments.Select(_ => typeArgumentNamingContext[_]))}>" : string.Empty;
+		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations{typeArguments}.Projections.{delegateName}{methodArguments}";
 	}
 
 	internal static string GetProjectedReturnValueDelegateFullyQualifiedName(MethodModel method, TypeReferenceModel typeToMock)

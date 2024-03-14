@@ -1,6 +1,8 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Builders.Create;
 using Rocks.Models;
 using System.CodeDom.Compiler;
+using System.Collections.Immutable;
 
 namespace Rocks.Builders.Shim;
 
@@ -12,6 +14,10 @@ internal static class ShimMethodBuilder
 			.Where(_ => _.MethodKind == MethodKind.Ordinary && !_.IsVirtual)
 			.Select(_ => _))
 		{
+			var typeArgumentNamingContext = method.IsGenericMethod ?
+				new VariableNamingContext(shimType.Type.TypeArguments.ToImmutableHashSet()) :
+				new VariableNamingContext();
+
 			writer.WriteLine();
 
 			var returnType = string.Empty;
@@ -24,7 +30,7 @@ internal static class ShimMethodBuilder
 			else
 			{
 				var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadOnly ? "ref readonly " : string.Empty;
-				returnType = $"{returnByRef}{method.ReturnType.FullyQualifiedName}";
+				returnType = $"{returnByRef}{typeArgumentNamingContext[method.ReturnType.FullyQualifiedName]}";
 				useNullForgiving = "!";
 			}
 
@@ -39,7 +45,7 @@ internal static class ShimMethodBuilder
 					RefKind.In => "in ",
 					_ => string.Empty
 				};
-				var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName} @{_.Name}{defaultValue}";
+				var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{typeArgumentNamingContext[_.Type.FullyQualifiedName]} @{_.Name}{defaultValue}";
 				return $"{(_.AttributesDescription.Length > 0 ? $"{_.AttributesDescription} " : string.Empty)}{parameter}";
 			}));
 
@@ -52,15 +58,17 @@ internal static class ShimMethodBuilder
 			var constraints = method.Constraints;
 			var (accessibility, explicitName) = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 				("public ", string.Empty) : (string.Empty, $"{method.ContainingType.FullyQualifiedName}.");
+			var typeArguments = method.TypeArguments.Length > 0 ?
+				$"<{string.Join(", ", method.TypeArguments.Select(_ => typeArgumentNamingContext[_]))}>" : string.Empty;
 
 			if (constraints.Length == 0)
 			{
-				writer.WriteLine($"{accessibility}{isUnsafe}{returnType} {explicitName}{method.Name}({methodParameters}) =>");
+				writer.WriteLine($"{accessibility}{isUnsafe}{returnType} {explicitName}{method.Name}{typeArguments}({methodParameters}) =>");
 				writer.Indent++;
 			}
 			else
 			{
-				writer.WriteLine($"{accessibility}{isUnsafe}{returnType} {explicitName}{method.Name}({methodParameters})");
+				writer.WriteLine($"{accessibility}{isUnsafe}{returnType} {explicitName}{method.Name}{typeArguments}({methodParameters})");
 				writer.Indent++;
 
 				for (var i = 0; i < constraints.Length; i++)
@@ -90,7 +98,7 @@ internal static class ShimMethodBuilder
 				return $"{direction}@{_.Name}";
 			}));
 
-			writer.WriteLine($"(({shimType.Type.FullyQualifiedName})this.mock).{method.Name}({passedParameters}){useNullForgiving};");
+			writer.WriteLine($"(({shimType.Type.FullyQualifiedName})this.mock).{method.Name}{typeArguments}({passedParameters}){useNullForgiving};");
 			writer.Indent--;
 		}
 	}

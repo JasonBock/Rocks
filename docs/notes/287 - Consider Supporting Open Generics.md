@@ -18,11 +18,13 @@ Open generic support.
 * Add to code gen tests the ability to make a closed and open version of generic types.
 
 Bugs:
-* If a method has its own type parameters, it can collide with a type parameter from the containing type. To get around this, I'll need to use a `VariableNamingContext` when I generate generic methods if the containing type is generic as well. Probably need to do this with (for methods only):
+* If a method has its own type parameters, it can collide with a type parameter from the containing type. To get around this, I'll need to use a `VariableNamingContext` when I generate generic methods if the containing type is generic as well. Note that I ONLY need to change method type names relative to the type parameter names if the method is generic. Probably need to do this with (for methods only):
     * Projected callbacks (create)
     * Maybe other projections (create)
-    * Expectations handling defaults (think where it calls `this.` to switch the parameters around)
-    * Shims (return values - think `base.CallBaseMethod<T>(...);`)
+    * DONE - Expectations handling defaults (think where it calls `this.` to switch the parameters around)
+    * DONE - Shims 
+        * DONE - Return values - think `base.CallBaseMethod<T>(...);`
+        * DONE - Builders
     * DONE - Handlers (create)
     * DONE - Mock implementations (create and make)
     * DONE - Expectation setups (create)

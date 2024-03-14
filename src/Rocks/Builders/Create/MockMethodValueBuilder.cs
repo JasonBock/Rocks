@@ -11,7 +11,9 @@ internal static class MockMethodValueBuilder
 	internal static void Build(IndentedTextWriter writer, MethodModel method, bool raiseEvents, string expectationsFullyQualifiedName)
 	{
 		var shouldThrowDoesNotReturnException = method.ShouldThrowDoesNotReturnException;
-		var typeArgumentNamingContext = new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet());
+		var typeArgumentNamingContext = method.IsGenericMethod ?
+			new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet()) :
+			new VariableNamingContext();
 
 		var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadOnly ? "ref readonly " : string.Empty;
 		var returnType = $"{returnByRef}{typeArgumentNamingContext[method.ReturnType.FullyQualifiedName]}";
@@ -155,12 +157,12 @@ internal static class MockMethodValueBuilder
 
 			if (shouldThrowDoesNotReturnException)
 			{
-				writer.WriteLine($"_ = {target}.{method.Name}({passedParameter});");
+				writer.WriteLine($"_ = {target}.{method.Name}{typeArguments}({passedParameter});");
 				writer.WriteLine("throw new global::Rocks.Exceptions.DoesNotReturnException();");
 			}
 			else
 			{
-				writer.WriteLine($"return {target}.{method.Name}({passedParameter});");
+				writer.WriteLine($"return {target}.{method.Name}{typeArguments}({passedParameter});");
 			}
 
 			writer.Indent--;

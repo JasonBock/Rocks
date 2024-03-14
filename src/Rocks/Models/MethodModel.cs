@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Builders.Create;
 using Rocks.Extensions;
 using System.Collections.Immutable;
 
@@ -54,6 +55,7 @@ internal sealed record MethodModel
 		if (this.RequiresProjectedDelegate)
 		{
 			var signature = new List<string>([this.ReturnType.FullyQualifiedName]);
+
 			signature.AddRange(this.TypeArguments);
 			signature.AddRange(this.Parameters.Select(_ =>
 				{
