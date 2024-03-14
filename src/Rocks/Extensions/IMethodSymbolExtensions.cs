@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Diagnostics;
+using Rocks.Models;
 using System.Collections.Immutable;
 
 namespace Rocks.Extensions;
@@ -39,12 +40,12 @@ internal static class IMethodSymbolExtensions
 	/// </summary>
 	/// <param name="self">The target method.</param>
 	/// <returns>A list of default constraints.</returns>
-	internal static ImmutableArray<string> GetDefaultConstraints(this IMethodSymbol self)
+	internal static EquatableArray<Constraints> GetDefaultConstraints(this IMethodSymbol self)
 	{
-		var builder = ImmutableArray.CreateBuilder<string>();
-
 		if (self.TypeParameters.Length > 0)
 		{
+			var constraints = new List<Constraints>();
+
 			foreach (var typeParameter in self.TypeParameters)
 			{
 				// TODO: This is starting to get convoluted.
@@ -53,29 +54,33 @@ internal static class IMethodSymbolExtensions
 				// GetConstraints() and GetDefaultConstraints().
 				if (typeParameter.HasReferenceTypeConstraint)
 				{
-					builder.Add($"where {typeParameter.GetName()} : class");
+					constraints.Add(new Constraints(typeParameter.GetName(), new[] { "class" }.ToImmutableArray()));
 				}
 				else if (typeParameter.HasValueTypeConstraint)
 				{
-					builder.Add($"where {typeParameter.GetName()} : struct");
+					constraints.Add(new Constraints(typeParameter.GetName(), new[] { "struct" }.ToImmutableArray()));
 				}
 				else if (self.Parameters.Any(_ => _.Type.Equals(typeParameter) && _.NullableAnnotation == NullableAnnotation.Annotated) ||
 					(!self.ReturnsVoid && self.ReturnType.Equals(typeParameter) && self.ReturnType.NullableAnnotation == NullableAnnotation.Annotated))
 				{
-					builder.Add($"where {typeParameter.GetName()} : default");
+					constraints.Add(new Constraints(typeParameter.GetName(), new[] { "default" }.ToImmutableArray()));
 				}
 			}
-		}
 
-		return builder.ToImmutable();
+			return constraints.ToImmutableArray();
+		}
+		else
+		{
+			return ImmutableArray<Constraints>.Empty;
+		}
 	}
 
 	internal static bool IsUnsafe(this IMethodSymbol self) =>
 		self.Parameters.Any(_ => _.Type.IsPointer()) || (!self.ReturnsVoid && self.ReturnType.IsPointer());
 
-	internal static ImmutableArray<string> GetConstraints(this IMethodSymbol self, Compilation compilation)
+	internal static EquatableArray<Constraints> GetConstraints(this IMethodSymbol self, Compilation compilation)
 	{
-		var constraints = new List<string>();
+		var constraints = new List<Constraints>();
 
 		if (self.TypeParameters.Length > 0)
 		{
@@ -85,12 +90,17 @@ internal static class IMethodSymbolExtensions
 
 				if (typeParameter.Equals(self.TypeArguments[i]))
 				{
-					constraints.Add(typeParameter.GetConstraints(compilation));
+					var constraint = typeParameter.GetConstraints(compilation);
+
+					if (constraint is not null)
+					{
+						constraints.Add(constraint);
+					}
 				}
 			}
 		}
 
-		return constraints.Where(_ => !string.IsNullOrWhiteSpace(_)).ToImmutableArray();
+		return constraints.ToImmutableArray();
 	}
 
 	internal static ImmutableHashSet<INamespaceSymbol> GetNamespaces(this IMethodSymbol self)

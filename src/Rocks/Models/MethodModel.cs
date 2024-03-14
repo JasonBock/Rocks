@@ -119,9 +119,9 @@ internal sealed record MethodModel
 	}
 
 	internal string AttributesDescription { get; }
-	internal EquatableArray<string> Constraints { get; }
+	internal EquatableArray<Constraints> Constraints { get; }
 	internal TypeReferenceModel ContainingType { get; }
-	internal EquatableArray<string> DefaultConstraints { get; }
+	internal EquatableArray<Constraints> DefaultConstraints { get; }
 	internal bool IsAbstract { get; }
 	internal bool IsGenericMethod { get; }
 	internal bool IsMarkedWithDoesNotReturn { get; }

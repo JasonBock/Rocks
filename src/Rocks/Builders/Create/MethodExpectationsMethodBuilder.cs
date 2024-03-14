@@ -11,12 +11,12 @@ internal static class MethodExpectationsMethodBuilder
 	internal static void Build(IndentedTextWriter writer, MethodModel method, string expectationsFullyQualifiedName,
 		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
-		static void BuildImplementation(IndentedTextWriter writer, MethodModel method, bool isGeneratedWithDefaults, 
+		static void BuildImplementation(IndentedTextWriter writer, MethodModel method, bool isGeneratedWithDefaults,
 			string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 		{
 			var namingContext = new VariableNamingContext(method);
 			var needsGenerationWithDefaults = false;
-			var typeArgumentNamingContext = method.IsGenericMethod ?
+			var typeArgumentsNamingContext = method.IsGenericMethod ?
 				new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet()) :
 				new VariableNamingContext();
 
@@ -33,18 +33,20 @@ internal static class MethodExpectationsMethodBuilder
 					else
 					{
 						var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
+						var typeName = method.IsGenericMethod && method.TypeArguments.Contains(_.Type.FullyQualifiedName) ?
+							typeArgumentsNamingContext[_.Type.FullyQualifiedName] : _.Type.FullyQualifiedName;
 
 						if (isGeneratedWithDefaults)
 						{
 							if (_.HasExplicitDefaultValue)
 							{
-								return $"{typeArgumentNamingContext[_.Type.FullyQualifiedName]}{requiresNullable} @{_.Name} = {_.ExplicitDefaultValue}";
+								return $"{typeName}{requiresNullable} @{_.Name} = {_.ExplicitDefaultValue}";
 							}
 							else
 							{
 								return _.IsParams ?
-									$"params {typeArgumentNamingContext[_.Type.FullyQualifiedName]}{requiresNullable} @{_.Name}" :
-									$"global::Rocks.Argument<{typeArgumentNamingContext[_.Type.FullyQualifiedName]}{requiresNullable}> @{_.Name}";
+									$"params {typeName}{requiresNullable} @{_.Name}" :
+									$"global::Rocks.Argument<{typeName}{requiresNullable}> @{_.Name}";
 							}
 						}
 
@@ -54,12 +56,12 @@ internal static class MethodExpectationsMethodBuilder
 							needsGenerationWithDefaults |= _.HasExplicitDefaultValue;
 						}
 
-						return $"global::Rocks.Argument<{typeArgumentNamingContext[_.Type.FullyQualifiedName]}{requiresNullable}> @{_.Name}";
+						return $"global::Rocks.Argument<{typeName}{requiresNullable}> @{_.Name}";
 					}
 				}));
 
 			var typeArguments = method.TypeArguments.Length > 0 ?
-				$"<{string.Join(", ", method.TypeArguments.Select(_ => typeArgumentNamingContext[_]))}>" : string.Empty;
+				$"<{string.Join(", ", method.TypeArguments.Select(_ => !method.MockType.TypeArguments.Contains(_) ? _ : typeArgumentsNamingContext[_]))}>" : string.Empty;
 			var callbackDelegateTypeName = method.RequiresProjectedDelegate ?
 				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, method.MockType) :
 				DelegateBuilder.Build(method);
@@ -75,12 +77,13 @@ internal static class MethodExpectationsMethodBuilder
 			else
 			{
 				var handlerTypeName = $"{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}{typeArguments}";
-				var returnType = 
-					method.ReturnsVoid ? 
+				var returnType =
+					method.ReturnsVoid ?
 						string.Empty :
 						method.ReturnType.IsRefLikeType ?
 							MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(method, method.MockType) :
-							typeArgumentNamingContext[method.ReturnType.FullyQualifiedName];
+							method.IsGenericMethod && method.TypeArguments.Contains(method.ReturnType.FullyQualifiedName) ?
+								typeArgumentsNamingContext[method.ReturnType.FullyQualifiedName] : method.ReturnType.FullyQualifiedName;
 
 				adornmentsType = method.ReturnsVoid ?
 					$"global::Rocks.Adornments<AdornmentsForHandler{method.MemberIdentifier}{typeArguments}, {handlerTypeName}, {callbackDelegateTypeName}>" :
@@ -88,7 +91,7 @@ internal static class MethodExpectationsMethodBuilder
 			}
 
 			var constraints = method.Constraints.Length > 0 ?
-				$" {string.Join(" ", method.Constraints)}" : "";
+				$" {string.Join(" ", method.Constraints.Select(_ => _.ToString(typeArgumentsNamingContext, method)))}" : "";
 			var hiding = method.RequiresHiding == RequiresHiding.Yes ? "new " : string.Empty;
 
 			adornmentsFQNsPipeline(new(adornmentsType, typeArguments, constraints, method.MemberIdentifier));

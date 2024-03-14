@@ -10,14 +10,14 @@ internal static class MockProjectedDelegateBuilder
 	internal static string GetProjectedCallbackDelegateFullyQualifiedName(MethodModel method, TypeReferenceModel typeToMock)
 	{
 		var delegateName = method.ProjectedCallbackDelegateName;
-		var typeArgumentNamingContext = method.IsGenericMethod ?
+		var typeArgumentsNamingContext = method.IsGenericMethod ?
 			new VariableNamingContext(typeToMock.TypeArguments.ToImmutableHashSet()) :
 			new VariableNamingContext();
 
 		var typeArguments = typeToMock.TypeArguments.Length > 0 ?
 			$"<{string.Join(", ", typeToMock.TypeArguments)}>" : string.Empty;
 		var methodArguments = method.TypeArguments.Length > 0 ?
-			$"<{string.Join(", ", method.TypeArguments.Select(_ => typeArgumentNamingContext[_]))}>" : string.Empty;
+			$"<{string.Join(", ", method.TypeArguments.Select(_ => typeArgumentsNamingContext[_]))}>" : string.Empty;
 		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations{typeArguments}.Projections.{delegateName}{methodArguments}";
 	}
 

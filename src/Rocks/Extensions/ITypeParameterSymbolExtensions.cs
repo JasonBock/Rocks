@@ -1,4 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Models;
+using System.Collections.Immutable;
 
 namespace Rocks.Extensions;
 
@@ -10,7 +12,7 @@ internal static class ITypeParameterSymbolExtensions
 				.Where(_ => _.TypeKind == TypeKind.Class || _.TypeKind == TypeKind.Interface)
 				.All(_ => _.CanBeSeenByContainingAssembly(assembly));
 
-	internal static string GetConstraints(this ITypeParameterSymbol self, Compilation compilation)
+	internal static Constraints? GetConstraints(this ITypeParameterSymbol self, Compilation compilation)
 	{
 		var constraints = new List<string>();
 
@@ -54,8 +56,7 @@ internal static class ITypeParameterSymbolExtensions
 			constraints.Add("new()");
 		}
 
-		return constraints.Count == 0 ? string.Empty :
-			$"where {self.Name} : {string.Join(", ", constraints)}";
+		return constraints.Count > 0 ? new Constraints(self.GetName(), constraints.ToImmutableArray()) : null;
 	}
 
 	private static bool IsNotNullRequired(this ITypeParameterSymbol self)

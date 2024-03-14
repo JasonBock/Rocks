@@ -205,9 +205,9 @@ public static class MethodModelTests
 		Assert.Multiple(() =>
 		{
 			Assert.That(model.Constraints, Has.Length.EqualTo(1));
-			Assert.That(model.Constraints[0], Is.EqualTo("where T : class"));
+			Assert.That(model.Constraints[0].ToString(), Is.EqualTo("where T : class"));
 			Assert.That(model.DefaultConstraints, Has.Length.EqualTo(1));
-			Assert.That(model.DefaultConstraints[0], Is.EqualTo("where T : class"));
+			Assert.That(model.DefaultConstraints[0].ToString(), Is.EqualTo("where T : class"));
 			Assert.That(model.IsGenericMethod, Is.True);
 		});
 	}

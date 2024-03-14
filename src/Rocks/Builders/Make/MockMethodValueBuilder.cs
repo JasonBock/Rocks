@@ -11,12 +11,14 @@ internal static class MockMethodValueBuilder
 	internal static void Build(IndentedTextWriter writer, MethodModel method)
 	{
 		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn;
-		var typeArgumentNamingContext = method.IsGenericMethod ?
+		var typeArgumentsNamingContext = method.IsGenericMethod ?
 			new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet()) :
 			new VariableNamingContext();
 
 		var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadOnly ? "ref readonly " : string.Empty;
-		var returnType = $"{returnByRef}{method.ReturnType.FullyQualifiedName}";
+		var returnTypeValue = method.IsGenericMethod && method.TypeArguments.Contains(method.ReturnType.FullyQualifiedName) ?
+			typeArgumentsNamingContext[method.ReturnType.FullyQualifiedName] : method.ReturnType.FullyQualifiedName;
+		var returnType = $"{returnByRef}{returnTypeValue}";
 		var explicitTypeNameDescription = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
 			$"{method.ContainingType.FullyQualifiedName}." : string.Empty;
 
@@ -34,13 +36,16 @@ internal static class MockMethodValueBuilder
 				RefKind.RefReadOnlyParameter => "ref readonly ",
 				_ => string.Empty
 			};
-			var parameter = $"{scoped}{direction}{(_.IsParams ? "params " : string.Empty)}{typeArgumentNamingContext[_.Type.FullyQualifiedName]}{requiresNullable} @{_.Name}{defaultValue}";
+
+			var typeName = method.IsGenericMethod && method.TypeArguments.Contains(_.Type.FullyQualifiedName) ?
+				typeArgumentsNamingContext[_.Type.FullyQualifiedName] : _.Type.FullyQualifiedName;
+			var parameter = $"{scoped}{direction}{(_.IsParams ? "params " : string.Empty)}{typeName}{requiresNullable} @{_.Name}{defaultValue}";
 			var attributes = _.AttributesDescription;
 			return $"{(attributes.Length > 0 ? $"{attributes} " : string.Empty)}{parameter}";
 		}));
 
 		var typeArguments = method.TypeArguments.Length > 0 ?
-			$"<{string.Join(", ", method.TypeArguments.Select(_ => typeArgumentNamingContext[_]))}>" : "";
+			$"<{string.Join(", ", method.TypeArguments.Select(_ => !method.MockType.TypeArguments.Contains(_) ? _ : typeArgumentsNamingContext[_]))}>" : string.Empty;
 		var methodSignature = $"{returnType} {explicitTypeNameDescription}{method.Name}{typeArguments}({methodParameters})";
 
 		if (method.AttributesDescription.Length > 0)
@@ -58,27 +63,27 @@ internal static class MockMethodValueBuilder
 			$"{method.OverridingCodeValue} " : string.Empty;
 		writer.WriteLine($"{isPublic}{isUnsafe}{(method.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{methodSignature}");
 
-		var constraints = ImmutableArray<string>.Empty;
+		var constraints = new List<Constraints>();
 
 		if (method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
 			method.ContainingType.TypeKind == TypeKind.Interface)
 		{
-			constraints = method.Constraints;
+			constraints.AddRange(method.Constraints);
 		}
 
 		if (method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ||
 			method.RequiresOverride == RequiresOverride.Yes)
 		{
-			constraints = constraints.AddRange(method.DefaultConstraints);
+			constraints.AddRange(method.DefaultConstraints);
 		}
 
-		if (constraints.Length > 0)
+		if (constraints.Count > 0)
 		{
 			writer.Indent++;
 
 			foreach (var constraint in constraints)
 			{
-				writer.WriteLine(constraint);
+				writer.WriteLine(constraint.ToString(typeArgumentsNamingContext, method));
 			}
 
 			writer.Indent--;

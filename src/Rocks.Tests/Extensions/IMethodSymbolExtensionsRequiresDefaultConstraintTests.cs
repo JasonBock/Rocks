@@ -11,21 +11,38 @@ public static class IMethodSymbolExtensionsRequiresDefaultConstraintTests
 {
 	private static IEnumerable<TestCaseData> GetDefaultConstraints()
 	{
-		yield return new TestCaseData("public class Target { public void Foo() { } }", ImmutableArray<string>.Empty);
-		yield return new TestCaseData("public class Target { public void Foo<T>() { } }", ImmutableArray<string>.Empty);
-		yield return new TestCaseData("public class Target { public void Foo<T>(T a) { } }", ImmutableArray<string>.Empty);
-		yield return new TestCaseData("public class Target { public void Foo<T>(T? a) { } }", new[] { "where T : default" }.ToImmutableArray());
-		yield return new TestCaseData("public class Target { public T Foo<T>() => default!; }", ImmutableArray<string>.Empty);
-		yield return new TestCaseData("public class Target { public T? Foo<T>() => default!; }", new[] { "where T : default" }.ToImmutableArray());
+		yield return new TestCaseData("public class Target { public void Foo<T>(T? a) { } }", "where T : default");
+		yield return new TestCaseData("public class Target { public T? Foo<T>() => default!; }", "where T : default");
+	}
+
+	private static IEnumerable<TestCaseData> GetDefaultConstraintsWhenNoneExist()
+	{
+		yield return new TestCaseData("public class Target { public void Foo() { } }");
+		yield return new TestCaseData("public class Target { public void Foo<T>() { } }");
+		yield return new TestCaseData("public class Target { public void Foo<T>(T a) { } }");
+		yield return new TestCaseData("public class Target { public T Foo<T>() => default!; }");
 	}
 
 	[TestCaseSource(nameof(GetDefaultConstraints))]
-	public static void RequiresDefaultConstraint(string code, ImmutableArray<string> expectedValue)
+	public static void RequiresDefaultConstraint(string code, string expectedValue)
 	{
 		var methodSymbol = IMethodSymbolExtensionsRequiresDefaultConstraintTests.GetMethodSymbol(code);
 		var requiresDefaultConstraints = methodSymbol.GetDefaultConstraints();
 
-		Assert.That(requiresDefaultConstraints, Is.EquivalentTo(expectedValue));
+		Assert.Multiple(() =>
+		{
+			Assert.That(requiresDefaultConstraints, Has.Length.EqualTo(1));
+			Assert.That(requiresDefaultConstraints[0].ToString(), Is.EqualTo(expectedValue));
+		});
+	}
+
+	[TestCaseSource(nameof(GetDefaultConstraintsWhenNoneExist))]
+	public static void NoDefaultConstraint(string code)
+	{
+		var methodSymbol = IMethodSymbolExtensionsRequiresDefaultConstraintTests.GetMethodSymbol(code);
+		var requiresDefaultConstraints = methodSymbol.GetDefaultConstraints();
+
+		Assert.That(requiresDefaultConstraints, Is.Empty);
 	}
 
 	private static IMethodSymbol GetMethodSymbol(string source)

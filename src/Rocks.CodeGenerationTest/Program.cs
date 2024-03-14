@@ -14,9 +14,9 @@ var stopwatch = Stopwatch.StartNew();
 
 //TestTypeValidity();
 //TestWithCode();
-//TestWithType();
+TestWithType();
 //TestWithTypeNoEmit();
-TestWithTypes();
+//TestWithTypes();
 //TestTypesIndividually();
 
 stopwatch.Stop();
@@ -71,11 +71,13 @@ static void TestWithType()
 		typeof(Azure.Core.Amqp.AmqpAnnotatedMessage),
 	};
 
+#pragma warning disable EF1001 // Internal EF Core API usage.
 	(var issues, var times) = TestGenerator.Generate(new RockAttributeGenerator(),
-		[typeof(Proto.Deduplication.DeduplicationContext<>)],
+		[typeof(SixLabors.ImageSharp.PixelFormats.PixelOperations<>)],
 		typesToLoadAssembliesFrom,
 		MappedTypes.GetMappedTypes(),
 		[], BuildType.Create);
+#pragma warning restore EF1001 // Internal EF Core API usage.
 
 	Console.WriteLine($"Generation Time: {times.GeneratorTime}, Emit Time: {times.EmitTime}");
 	PrintIssues(issues);

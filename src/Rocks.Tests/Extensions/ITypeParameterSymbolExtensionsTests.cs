@@ -8,7 +8,6 @@ namespace Rocks.Tests.Extensions;
 
 public static class ITypeParameterSymbolExtensionsTests
 {
-	[TestCase("public class Target<T> { }", "")]
 	[TestCase("public class Base { } public class Target<T> where T : Base { }", "where T : global::Base")]
 	[TestCase("public class Base { } public class Target<T> where T : Base? { }", "where T : global::Base?")]
 	[TestCase("public class Target<T, U> where T : U { }", "where T : U")]
@@ -24,9 +23,19 @@ public static class ITypeParameterSymbolExtensionsTests
 	public static void GetConstraints(string code, string expectedConstraints)
 	{
 		var (type, compilation) = ITypeParameterSymbolExtensionsTests.GetTypeParameterSymbol(code);
-		var constraints = type.GetConstraints(compilation);
+		var constraint = type.GetConstraints(compilation);
 
-		Assert.That(constraints, Is.EqualTo(expectedConstraints));
+		Assert.That(constraint!.ToString(), Is.EqualTo(expectedConstraints));
+	}
+
+	[Test]
+	public static void GetConstraintsWhenNoConstraintsExist()
+	{
+		var code = "public class Target<T> { }";
+		var (type, compilation) = ITypeParameterSymbolExtensionsTests.GetTypeParameterSymbol(code);
+		var constraint = type.GetConstraints(compilation);
+
+		Assert.That(constraint, Is.Null);
 	}
 
 	private static (ITypeParameterSymbol, Compilation) GetTypeParameterSymbol(string source)

@@ -71,7 +71,7 @@ internal sealed record TypeReferenceModel
 	}
 
 	internal string AttributesDescription { get; }
-	internal EquatableArray<string> Constraints { get; }
+	internal EquatableArray<Constraints> Constraints { get; }
 	internal string FlattenedName { get; }
 	internal string FullyQualifiedName { get; }
 	internal string IncludeGenericsName { get; }

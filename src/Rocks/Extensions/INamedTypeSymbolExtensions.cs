@@ -1,13 +1,14 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Models;
 using System.Collections.Immutable;
 
 namespace Rocks.Extensions;
 
 internal static class INamedTypeSymbolExtensions
 {
-	internal static ImmutableArray<string> GetConstraints(this INamedTypeSymbol self, Compilation compilation)
+	internal static EquatableArray<Constraints> GetConstraints(this INamedTypeSymbol self, Compilation compilation)
 	{
-		var constraints = new List<string>();
+		var constraints = new List<Constraints>();
 
 		if (self.TypeParameters.Length > 0)
 		{
@@ -17,12 +18,17 @@ internal static class INamedTypeSymbolExtensions
 
 				if (typeParameter.Equals(self.TypeArguments[i]))
 				{
-					constraints.Add(typeParameter.GetConstraints(compilation));
+					var constraint = typeParameter.GetConstraints(compilation);
+
+					if(constraint is not null)
+					{
+						constraints.Add(constraint);
+					}
 				}
 			}
 		}
 
-		return constraints.Where(_ => !string.IsNullOrWhiteSpace(_)).ToImmutableArray();
+		return constraints.ToImmutableArray();
 	}
 
 	internal static bool HasOpenGenerics(this INamedTypeSymbol self) => 
