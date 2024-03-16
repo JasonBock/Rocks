@@ -11,7 +11,7 @@ internal static class MockBuilder
 		var adornments = new HashSet<AdornmentsPipeline>();
 		var adornmentsPipeline = (AdornmentsPipeline adornmentsPipelineInformation) => { adornments.Add(adornmentsPipelineInformation); };
 
-		var typeArguments = mockType.Type.TypeArguments.Length > 0 ?
+		var typeArguments = mockType.Type.IsOpenGeneric ?
 			$"<{string.Join(", ", mockType.Type.TypeArguments)}>" : string.Empty;
 
 		var expectationsFQN = mockType.Type.Namespace is null ?

@@ -77,7 +77,7 @@ public static class RefLikeArgTypeBuilderTests
 			""";
 		var (type, compilation) = RefLikeArgTypeBuilderTests.GetTypeSymbolFromParameter(code);
 		var model = new TypeReferenceModel(type, compilation);
-		Assert.That(model.RefLikeArgProjectedEvaluationDelegateName, Is.EqualTo("ArgumentEvaluationForSpan<TSource>"));
+		Assert.That(model.RefLikeArgProjectedEvaluationDelegateName, Is.EqualTo("ArgumentEvaluationForSpan"));
 	}
 
 	private static (ITypeSymbol typeToMock, ITypeSymbol type, Compilation compilation, SemanticModel model) GetTypeSymbols(string source)

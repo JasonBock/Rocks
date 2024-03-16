@@ -9,34 +9,37 @@ internal static class RefLikeArgTypeBuilder
 {
 	internal static string GetProjectedFullyQualifiedName(TypeReferenceModel type, TypeReferenceModel typeToMock)
 	{
-		var typeArguments = typeToMock.TypeArguments.Length > 0 ?
+		var typeToMockArguments = typeToMock.IsOpenGeneric ?
 			$"<{string.Join(", ", typeToMock.TypeArguments)}>" : string.Empty;
+		var typeArguments = type.IsOpenGeneric ?
+			$"<{string.Join(", ", type.TypeArguments)}>" : string.Empty;
 		var argForType = type.RefLikeArgProjectedName;
-		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations{typeArguments}.Projections.{argForType}{typeArguments}";
+		var @namespace = typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.";
+		return $"global::{@namespace}{typeToMock.FlattenedName}CreateExpectations{typeToMockArguments}.Projections.{argForType}{typeArguments}";
 	}
 
 	private static string GetProjectedEvaluationDelegateFullyQualifiedName(TypeReferenceModel type, TypeReferenceModel typeToMock)
 	{
-		var typeArguments = typeToMock.TypeArguments.Length > 0 ?
+		var typeArguments = typeToMock.IsOpenGeneric ?
 			$"<{string.Join(", ", typeToMock.TypeArguments)}>" : string.Empty;
 		var argForType = type.RefLikeArgProjectedEvaluationDelegateName;
 		var typeArgumentsNamingContext = new VariableNamingContext(typeToMock.TypeArguments.ToImmutableHashSet());
-		var argTypeArguments = type.TypeArguments.Length > 0 ?
-			$"<{string.Join(", ", type.TypeArguments.Select(_ => typeArgumentsNamingContext[_]))}>" : "";
+		var argTypeArguments = type.IsOpenGeneric ?
+			$"<{string.Join(", ", type.TypeArguments.Select(_ => typeArgumentsNamingContext[_]))}>" : string.Empty;
 		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations{typeArguments}.Projections.{argForType}{argTypeArguments}";
 	}
 
 	internal static void Build(IndentedTextWriter writer, TypeReferenceModel type, TypeMockModel typeModel)
 	{
 		var typeArgumentsNamingContext = new VariableNamingContext(typeModel.Type.TypeArguments.ToImmutableHashSet());
-		var typeArguments = type.TypeArguments.Length > 0 ?
+		var typeArguments = type.IsOpenGeneric ?
 			$"<{string.Join(", ", type.TypeArguments.Select(_ => typeArgumentsNamingContext[_]))}>" : "";
-
+		var typeParameters = !type.IsOpenGeneric ? $"<{string.Join(", ", type.TypeArguments)}>" : typeArguments;
 		var validationDelegateName = $"{type.RefLikeArgProjectedEvaluationDelegateName}{typeArguments}";
 		var validationDelegateFullyQualifiedName = RefLikeArgTypeBuilder.GetProjectedEvaluationDelegateFullyQualifiedName(type, typeModel.Type);
 		var argName = $"{type.RefLikeArgProjectedName}{typeArguments}";
 		var argConstructorName = type.RefLikeArgConstructorProjectedName;
-		var typeName = $"{type.FullyQualifiedNameNoGenerics}{typeArguments}";
+		var typeName = $"{type.FullyQualifiedNameNoGenerics}{typeParameters}";
 
 		writer.WriteLines(
 			$$"""

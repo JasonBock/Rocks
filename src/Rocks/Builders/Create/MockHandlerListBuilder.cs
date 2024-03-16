@@ -88,12 +88,22 @@ internal static class MockHandlerListBuilder
 			{
 				var requiresNullable = parameter.RequiresNullableAnnotation ? "?" : string.Empty;
 				var name = names[parameter.Name];
-				var argumentTypeName =
-					parameter.Type.IsEsoteric ?
-						parameter.Type.IsPointer ?
-							$"public {PointerArgTypeBuilder.GetProjectedFullyQualifiedName(parameter.Type, method.MockType)}" :
-							$"public {RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(parameter.Type, method.MockType)}" : 
-						$"public global::Rocks.Argument<{(method.TypeArguments.Contains(parameter.Type.FullyQualifiedName) ? typeArgumentsNamingContext[parameter.Type.FullyQualifiedName] : parameter.Type.FullyQualifiedName)}{requiresNullable}>";
+
+				string argumentTypeName;
+
+				if (parameter.Type.IsEsoteric)
+				{
+					argumentTypeName = parameter.Type.IsPointer ?
+						$"public {PointerArgTypeBuilder.GetProjectedFullyQualifiedName(parameter.Type, method.MockType)}" :
+						$"public {RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(parameter.Type, method.MockType)}";
+				}
+				else
+				{
+					var type = method.TypeArguments.Contains(parameter.Type.FullyQualifiedName) ?
+						typeArgumentsNamingContext[parameter.Type.FullyQualifiedName] :
+						parameter.Type.FullyQualifiedName;
+					argumentTypeName = $"public global::Rocks.Argument<{type}{requiresNullable}>";
+				}
 
 				writer.WriteLine($"{argumentTypeName} @{name} {{ get; set; }}");
 			}

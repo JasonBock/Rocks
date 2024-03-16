@@ -29,9 +29,8 @@ internal sealed record TypeReferenceModel
 		{
 			this.IsOpenGeneric = namedType.IsOpenGeneric();
 			this.Constraints = namedType.GetConstraints(compilation);
-			this.TypeArguments = namedType.TypeArguments.Length > 0 ?
-				namedType.TypeArguments.Where(_ => _.TypeKind == TypeKind.TypeParameter)
-					.Select(_ => _.GetFullyQualifiedName(compilation)).ToImmutableArray() : [];
+			this.TypeArguments = namedType.TypeArguments.Select(_ => _.GetFullyQualifiedName(compilation)).ToImmutableArray();
+			this.TypeParameters = namedType.TypeParameters.Select(_ => _.GetFullyQualifiedName(compilation)).ToImmutableArray();
 		}
 
 		this.IsRecord = type.IsRecord;
@@ -92,5 +91,6 @@ internal sealed record TypeReferenceModel
 	internal string? RefLikeArgProjectedName { get; }
 	internal string? RefLikeArgConstructorProjectedName { get; }
 	internal EquatableArray<string> TypeArguments { get; }
+	internal EquatableArray<string> TypeParameters { get; }
 	internal TypeKind TypeKind { get; }
 }

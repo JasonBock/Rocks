@@ -7,7 +7,7 @@ internal static class MockExpectationBuilder
 {
 	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType)
 	{
-		var typeArguments = mockType.Type.TypeArguments.Length > 0 ?
+		var typeArguments = mockType.Type.IsOpenGeneric ?
 			$"<{string.Join(", ", mockType.Type.TypeArguments)}>" : string.Empty;
 
 		writer.WriteLine($"internal sealed class {mockType.Type.FlattenedName}MakeExpectations{typeArguments}");

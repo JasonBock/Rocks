@@ -16,16 +16,16 @@ internal static class DelegateBuilder
 		if (parameters.Length > 0)
 		{
 			var parameterTypes = string.Join(", ", parameters.Select(
-				_ => $"{typeArgumentsNamingContext[_.Type.FullyQualifiedName]}{(_.RequiresNullableAnnotation ? "?" : string.Empty)}"));
+				_ => $"{(method.TypeArguments.Contains(_.Type.FullyQualifiedName) ? typeArgumentsNamingContext[_.Type.FullyQualifiedName] : _.Type.FullyQualifiedName)}{(_.RequiresNullableAnnotation ? "?" : string.Empty)}"));
 			return !method.ReturnsVoid ?
-				$"global::System.Func<{parameterTypes}, {typeArgumentsNamingContext[method.ReturnType.FullyQualifiedName]}>" :
-				$"global::System.Action<{parameterTypes}>";
+			$"global::System.Func<{parameterTypes}, {typeArgumentsNamingContext[method.ReturnType.FullyQualifiedName]}>" :
+			$"global::System.Action<{parameterTypes}>";
 		}
 		else
 		{
 			return !method.ReturnsVoid ?
-				$"global::System.Func<{typeArgumentsNamingContext[method.ReturnType.FullyQualifiedName]}>" :
-				"global::System.Action";
+			$"global::System.Func<{typeArgumentsNamingContext[method.ReturnType.FullyQualifiedName]}>" :
+			"global::System.Action";
 		}
 	}
 }

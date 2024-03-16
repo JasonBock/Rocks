@@ -19,8 +19,6 @@ Open generic support.
 
 Bugs:
 * If a method has its own type parameters, it can collide with a type parameter from the containing type. To get around this, I'll need to use a `VariableNamingContext` when I generate generic methods if the containing type is generic as well. Note that I ONLY need to change method type names relative to the type parameter names if the method is generic. Probably need to do this with (for methods only):
-    * Projected callbacks (create)
-    * Maybe other projections (create)
     * DONE - Constraints (right now, this gives back a `string`, make this a `Constraints` class, with a `TypeName` for the associated type parameter, and `Values` as an `EquatableArray<string>` that has the constraint values - e.g. `notnull`, `class`, etc.)
         * DONE - Mock implementations (create and make)
         * DONE - Expectations (create)
@@ -47,3 +45,11 @@ Bugs:
 
 var typeName = method.IsGenericMethod && method.TypeArguments.Contains(_.Type.FullyQualifiedName) ?
     typeArgumentsNamingContext[_.Type.FullyQualifiedName] : _.Type.FullyQualifiedName;
+
+* Projected callbacks (create)
+* Maybe other projections (create)
+
+* If the generic type is closed, I need to generate for a `ref struct` this: `global::System.Span<int> @value` - see `RefStructGeneratorTests.CreateWhenParameterIsScopedAsync()`. Now I'm gen'ing `global::System.Span @value` because there are closed type arguments.
+    * Look for `namedType.TypeArguments.Length > 0`, should be `namedType.IsOpenGeneric`
+    * Argument evaluation delegate
+    * `IsValid()`

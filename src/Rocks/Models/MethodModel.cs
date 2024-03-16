@@ -33,8 +33,8 @@ internal sealed record MethodModel
 		this.MethodKind = method.MethodKind;
 		this.Constraints = method.GetConstraints(compilation);
 		this.DefaultConstraints = method.GetDefaultConstraints();
-		this.TypeArguments = method.TypeArguments.Length > 0 ?
-			 method.TypeArguments.Select(_ => _.GetFullyQualifiedName(compilation)).ToImmutableArray() : [];
+		this.TypeArguments = method.TypeArguments.Select(_ => _.GetFullyQualifiedName(compilation)).ToImmutableArray();
+		this.TypeParameters = method.TypeParameters.Select(_ => _.GetFullyQualifiedName(compilation)).ToImmutableArray();
 
 		this.Name = method.Name;
 
@@ -153,4 +153,5 @@ internal sealed record MethodModel
 	internal bool ReturnsByRefReadOnly { get; }
 	internal bool ShouldThrowDoesNotReturnException { get; }
 	internal EquatableArray<string> TypeArguments { get; }
+	internal EquatableArray<string> TypeParameters { get; }
 }
