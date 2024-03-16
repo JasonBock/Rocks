@@ -37,6 +37,11 @@ internal static class MockHandlerListBuilder
 			method.RequiresProjectedDelegate ?
 				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, method.MockType) :
 				DelegateBuilder.Build(method);
+		var typeArgumentsNamingContext = method.IsGenericMethod ?
+			new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet()) :
+			new VariableNamingContext();
+		var typeArguments = method.IsGenericMethod ?
+			$"<{string.Join(", ", method.TypeArguments.Select(_ => !method.MockType.TypeArguments.Contains(_) ? _ : typeArgumentsNamingContext[_]))}>" : string.Empty;
 
 		string handlerBaseType;
 
@@ -47,22 +52,25 @@ internal static class MockHandlerListBuilder
 		}
 		else
 		{
-			var returnTypeName =
-				method.ReturnsVoid ?
-					string.Empty :
-					method.ReturnType.IsRefLikeType ?
-						MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(method, method.MockType) :
-						method.ReturnType.FullyQualifiedName;
+			string returnTypeName;
+
+			if (method.ReturnsVoid)
+			{
+				returnTypeName = string.Empty;
+			}
+			else if (method.ReturnType.IsRefLikeType)
+			{
+				returnTypeName = MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(method, method.MockType);
+			}
+			else
+			{
+				// TODO: need to resolve type names from the return type, not from the method.
+				returnTypeName = $"{method.ReturnType.FullyQualifiedNameNoGenerics}{typeArguments}";
+			}
+
 			returnTypeName = returnTypeName == string.Empty ? string.Empty : $", {returnTypeName}";
 			handlerBaseType = $"global::Rocks.Handler<{callbackDelegateTypeName}{returnTypeName}>";
 		}
-
-		var typeArgumentsNamingContext = method.IsGenericMethod ?
-			new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet()) :
-			new VariableNamingContext();
-
-		var typeArguments = method.IsGenericMethod ?
-			$"<{string.Join(", ", method.TypeArguments.Select(_ => !method.MockType.TypeArguments.Contains(_) ? _ : typeArgumentsNamingContext[_]))}>" : string.Empty;
 
 		writer.WriteLines(
 			$$"""

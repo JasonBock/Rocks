@@ -53,3 +53,12 @@ var typeName = method.IsGenericMethod && method.TypeArguments.Contains(_.Type.Fu
     * Look for `namedType.TypeArguments.Length > 0`, should be `namedType.IsOpenGeneric`
     * Argument evaluation delegate
     * `IsValid()`
+
+With `CsvHelper.Configuration.IHasTypeConverterOptions<TClass, TMember>`, Rocks doesn't implement `Map<>`. It needs to type argument rename with:
+    * Handler
+        * The callback and return types for a handler definition
+    * Method implementation
+        * The return value on the definition
+        * Parameter types
+    * Expectations
+        * Parameter types (also for the default switcheroo)

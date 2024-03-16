@@ -24,8 +24,8 @@ internal static class DelegateBuilder
 		else
 		{
 			return !method.ReturnsVoid ?
-			$"global::System.Func<{typeArgumentsNamingContext[method.ReturnType.FullyQualifiedName]}>" :
-			"global::System.Action";
+				$"global::System.Func<{typeArgumentsNamingContext[method.ReturnType.FullyQualifiedName]}>" :
+				"global::System.Action";
 		}
 	}
 }
