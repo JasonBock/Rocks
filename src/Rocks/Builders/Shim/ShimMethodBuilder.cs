@@ -62,7 +62,7 @@ internal static class ShimMethodBuilder
 			var constraints = method.Constraints;
 			var (accessibility, explicitName) = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 				("public ", string.Empty) : (string.Empty, $"{method.ContainingType.FullyQualifiedName}.");
-			var typeArguments = method.TypeArguments.Length > 0 ?
+			var typeArguments = method.IsGenericMethod ?
 				$"<{string.Join(", ", method.TypeArguments.Select(_ => !method.MockType.TypeArguments.Contains(_) ? _ : typeArgumentsNamingContext[_]))}>" : string.Empty;
 
 			if (constraints.Length == 0)

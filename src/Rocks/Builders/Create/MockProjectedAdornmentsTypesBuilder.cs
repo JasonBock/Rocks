@@ -13,7 +13,7 @@ internal static partial class MockProjectedAdornmentsTypesBuilder
 	internal static string GetProjectedAdornmentsFullyQualifiedNameName(TypeReferenceModel type, TypeReferenceModel typeToMock)
 	{
 		var argForType = MockProjectedAdornmentsTypesBuilder.GetProjectedAdornmentsName(type);
-		var typeArguments = typeToMock.TypeArguments.Length > 0 ?
+		var typeArguments = typeToMock.IsOpenGeneric ?
 			$"<{string.Join(", ", typeToMock.TypeArguments)}>" : string.Empty;
 		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations{typeArguments}.Projections.{argForType}";
 	}
@@ -24,7 +24,7 @@ internal static partial class MockProjectedAdornmentsTypesBuilder
 	internal static string GetProjectedHandlerFullyQualifiedNameName(TypeReferenceModel type, TypeReferenceModel typeToMock)
 	{
 		var argForType = MockProjectedAdornmentsTypesBuilder.GetProjectedHandlerName(type);
-		var typeArguments = typeToMock.TypeArguments.Length > 0 ?
+		var typeArguments = typeToMock.IsOpenGeneric ?
 			$"<{string.Join(", ", typeToMock.TypeArguments)}>" : string.Empty;
 		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations{typeArguments}.Projections.{argForType}";
 	}

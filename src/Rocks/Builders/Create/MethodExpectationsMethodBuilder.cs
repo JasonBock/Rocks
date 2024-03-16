@@ -60,7 +60,7 @@ internal static class MethodExpectationsMethodBuilder
 					}
 				}));
 
-			var typeArguments = method.TypeArguments.Length > 0 ?
+			var typeArguments = method.IsGenericMethod ?
 				$"<{string.Join(", ", method.TypeArguments.Select(_ => !method.MockType.TypeArguments.Contains(_) ? _ : typeArgumentsNamingContext[_]))}>" : string.Empty;
 			var callbackDelegateTypeName = method.RequiresProjectedDelegate ?
 				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, method.MockType) :

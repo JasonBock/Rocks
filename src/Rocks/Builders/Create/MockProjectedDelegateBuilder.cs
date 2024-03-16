@@ -14,9 +14,9 @@ internal static class MockProjectedDelegateBuilder
 			new VariableNamingContext(typeToMock.TypeArguments.ToImmutableHashSet()) :
 			new VariableNamingContext();
 
-		var typeArguments = typeToMock.TypeArguments.Length > 0 ?
+		var typeArguments = typeToMock.IsOpenGeneric ?
 			$"<{string.Join(", ", typeToMock.TypeArguments)}>" : string.Empty;
-		var methodArguments = method.TypeArguments.Length > 0 ?
+		var methodArguments = method.IsGenericMethod ?
 			$"<{string.Join(", ", method.TypeArguments.Select(_ => typeArgumentsNamingContext[_]))}>" : string.Empty;
 		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations{typeArguments}.Projections.{delegateName}{methodArguments}";
 	}
@@ -24,7 +24,7 @@ internal static class MockProjectedDelegateBuilder
 	internal static string GetProjectedReturnValueDelegateFullyQualifiedName(MethodModel method, TypeReferenceModel typeToMock)
 	{
 		var delegateName = method.ProjectedReturnValueDelegateName;
-		var typeArguments = typeToMock.TypeArguments.Length > 0 ?
+		var typeArguments = typeToMock.IsOpenGeneric ?
 			$"<{string.Join(", ", typeToMock.TypeArguments)}>" : string.Empty;
 		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations{typeArguments}.Projections.{delegateName}";
 	}
@@ -43,7 +43,7 @@ internal static class MockProjectedDelegateBuilder
 		var constraints = method.Constraints;
 		var methodConstraints = constraints.Length > 0 ?
 			$" {string.Join(" ", constraints)}" : string.Empty;
-		var typeArguments = method.TypeArguments.Length > 0 ?
+		var typeArguments = method.IsGenericMethod ?
 			$"<{string.Join(", ", method.TypeArguments)}>" : string.Empty;
 
 		return $"internal {isUnsafe}delegate {returnType} {method.ProjectedCallbackDelegateName}{typeArguments}({methodParameters}){methodConstraints};";

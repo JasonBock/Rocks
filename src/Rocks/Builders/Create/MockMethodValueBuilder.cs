@@ -45,7 +45,7 @@ internal static class MockMethodValueBuilder
 			$"{method.ContainingType.FullyQualifiedName}." : string.Empty;
 		var isUnsafe = method.IsUnsafe ? "unsafe " : string.Empty;
 
-		var typeArguments = method.TypeArguments.Length > 0 ?
+		var typeArguments = method.IsGenericMethod ?
 			$"<{string.Join(", ", method.TypeArguments.Select(_ => !method.MockType.TypeArguments.Contains(_) ? _ : typeArgumentsNamingContext[_]))}>" : string.Empty;
 
 		var methodSignature =

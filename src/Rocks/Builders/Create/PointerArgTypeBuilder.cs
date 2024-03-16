@@ -11,7 +11,7 @@ internal static class PointerArgTypeBuilder
 	{
 		var argForType = type.PointerArgProjectedName;
 		var parameterType = type.PointerArgParameterType is not null ? $"<{type.PointerArgParameterType}>" : null;
-		var typeArguments = typeToMock.TypeArguments.Length > 0 ?
+		var typeArguments = typeToMock.IsOpenGeneric ?
 			$"<{string.Join(", ", typeToMock.TypeArguments)}>" : string.Empty;
 		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations{typeArguments}.Projections.{argForType}{parameterType}";
 	}
@@ -20,7 +20,7 @@ internal static class PointerArgTypeBuilder
 	{
 		var argForType = type.PointerArgProjectedEvaluationDelegateName;
 		var parameterType = type.PointerArgParameterType is not null ? $"<{type.PointerArgParameterType}>" : null;
-		var typeArguments = typeToMock.TypeArguments.Length > 0 ?
+		var typeArguments = typeToMock.IsOpenGeneric ?
 			$"<{string.Join(", ", typeToMock.TypeArguments)}>" : string.Empty;
 		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations{typeArguments}.Projections.{argForType}{parameterType}";
 	}

@@ -39,7 +39,7 @@ internal static class MockMethodVoidBuilder
 			return $"{(attributes.Length > 0 ? $"{attributes} " : string.Empty)}{parameter}";
 		}));
 
-		var typeArguments = method.TypeArguments.Length > 0 ?
+		var typeArguments = method.IsGenericMethod ?
 			$"<{string.Join(", ", method.TypeArguments.Select(_ => !method.MockType.TypeArguments.Contains(_) ? _ : typeArgumentsNamingContext[_]))}>" : string.Empty;
 		var methodSignature = $"void {explicitTypeNameDescription}{method.Name}{typeArguments}({methodParameters})";
 

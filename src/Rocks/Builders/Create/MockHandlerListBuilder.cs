@@ -61,7 +61,7 @@ internal static class MockHandlerListBuilder
 			new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet()) :
 			new VariableNamingContext();
 
-		var typeArguments = method.TypeArguments.Length > 0 ?
+		var typeArguments = method.IsGenericMethod ?
 			$"<{string.Join(", ", method.TypeArguments.Select(_ => !method.MockType.TypeArguments.Contains(_) ? _ : typeArgumentsNamingContext[_]))}>" : string.Empty;
 
 		writer.WriteLines(
