@@ -1,6 +1,7 @@
 ﻿using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
+using System.Collections.Immutable;
 
 namespace Rocks.Builders.Create;
 
@@ -8,27 +9,34 @@ internal static class RefLikeArgTypeBuilder
 {
 	internal static string GetProjectedFullyQualifiedName(TypeReferenceModel type, TypeReferenceModel typeToMock)
 	{
-		var argForType = type.RefLikeArgProjectedName;
 		var typeArguments = typeToMock.TypeArguments.Length > 0 ?
 			$"<{string.Join(", ", typeToMock.TypeArguments)}>" : string.Empty;
-		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations{typeArguments}.Projections.{argForType}";
+		var argForType = type.RefLikeArgProjectedName;
+		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations{typeArguments}.Projections.{argForType}{typeArguments}";
 	}
 
-	internal static string GetProjectedEvaluationDelegateFullyQualifiedName(TypeReferenceModel type, TypeReferenceModel typeToMock)
+	private static string GetProjectedEvaluationDelegateFullyQualifiedName(TypeReferenceModel type, TypeReferenceModel typeToMock)
 	{
-		var argForType = type.RefLikeArgProjectedEvaluationDelegateName;
 		var typeArguments = typeToMock.TypeArguments.Length > 0 ?
 			$"<{string.Join(", ", typeToMock.TypeArguments)}>" : string.Empty;
-		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations{typeArguments}.Projections.{argForType}";
+		var argForType = type.RefLikeArgProjectedEvaluationDelegateName;
+		var typeArgumentsNamingContext = new VariableNamingContext(typeToMock.TypeArguments.ToImmutableHashSet());
+		var argTypeArguments = type.TypeArguments.Length > 0 ?
+			$"<{string.Join(", ", type.TypeArguments.Select(_ => typeArgumentsNamingContext[_]))}>" : "";
+		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations{typeArguments}.Projections.{argForType}{argTypeArguments}";
 	}
 
 	internal static void Build(IndentedTextWriter writer, TypeReferenceModel type, TypeMockModel typeModel)
 	{
-		var validationDelegateName = type.RefLikeArgProjectedEvaluationDelegateName;
+		var typeArgumentsNamingContext = new VariableNamingContext(typeModel.Type.TypeArguments.ToImmutableHashSet());
+		var typeArguments = type.TypeArguments.Length > 0 ?
+			$"<{string.Join(", ", type.TypeArguments.Select(_ => typeArgumentsNamingContext[_]))}>" : "";
+
+		var validationDelegateName = $"{type.RefLikeArgProjectedEvaluationDelegateName}{typeArguments}";
 		var validationDelegateFullyQualifiedName = RefLikeArgTypeBuilder.GetProjectedEvaluationDelegateFullyQualifiedName(type, typeModel.Type);
-		var argName = type.RefLikeArgProjectedName;
+		var argName = $"{type.RefLikeArgProjectedName}{typeArguments}";
 		var argConstructorName = type.RefLikeArgConstructorProjectedName;
-		var typeName = type.FullyQualifiedName;
+		var typeName = $"{type.FullyQualifiedNameNoGenerics}{typeArguments}";
 
 		writer.WriteLines(
 			$$"""

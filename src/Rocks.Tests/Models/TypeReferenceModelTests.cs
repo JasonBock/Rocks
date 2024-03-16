@@ -25,7 +25,6 @@ public static class TypeReferenceModelTests
 			Assert.That(model.AttributesDescription, Is.Empty);
 			Assert.That(model.FlattenedName, Is.EqualTo("Target"));
 			Assert.That(model.FullyQualifiedName, Is.EqualTo("global::TargetNamespace.Target"));
-			Assert.That(model.IncludeGenericsName, Is.EqualTo("Target"));
 			Assert.That(model.IsBasedOnTypeParameter, Is.False);
 			Assert.That(model.IsEsoteric, Is.False);
 			Assert.That(model.IsPointer, Is.False);
@@ -95,8 +94,6 @@ public static class TypeReferenceModelTests
 		Assert.Multiple(() =>
 		{
 			Assert.That(model.FlattenedName, Is.EqualTo("Target"));
-			Assert.That(model.IncludeGenericsName, Is.EqualTo("Target<T>"));
-			Assert.That(model.NoGenericsName, Is.EqualTo("Target"));
 		});
 	}
 

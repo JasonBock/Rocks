@@ -80,41 +80,6 @@ public static class RefLikeArgTypeBuilderTests
 		Assert.That(model.RefLikeArgProjectedEvaluationDelegateName, Is.EqualTo("ArgumentEvaluationForSpan<TSource>"));
 	}
 
-	[TestCase(
-		"""
-		using System;
-		
-		namespace Mock 
-		{ 
-			public interface IMock 
-			{ 
-				unsafe void Foo(int* t);
-			} 
-		}
-		""",
-		"global::Mock.IMockCreateExpectations.Projections.ArgumentEvaluationForintPointer")]
-	[TestCase(
-		"""
-		using System;
-		
-		namespace Mock 
-		{ 
-			public interface IMock 
-			{ 
-				void Foo(Span<int> t);
-			} 
-		}
-		""",
-		"global::Mock.IMockCreateExpectations.Projections.ArgumentEvaluationForSpanOfint")]
-	public static void GetProjectedEvaluationDelegateFullyQualifiedName(string code, string expectedValue)
-	{
-		var (typeToMock, type, compilation, model) = RefLikeArgTypeBuilderTests.GetTypeSymbols(code);
-		var invocation = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("public static void Foo() { }"));
-		var name = RefLikeArgTypeBuilder.GetProjectedEvaluationDelegateFullyQualifiedName(
-			new TypeReferenceModel(type, compilation), MockModel.Create(invocation, typeToMock, model, BuildType.Create, true).Information!.Type.Type);
-		Assert.That(name, Is.EqualTo(expectedValue));
-	}
-
 	private static (ITypeSymbol typeToMock, ITypeSymbol type, Compilation compilation, SemanticModel model) GetTypeSymbols(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);

@@ -117,12 +117,18 @@ internal static class ITypeSymbolExtensions
 		self.DeclaringSyntaxReferences.Any(syntax =>
 			syntax.GetSyntax().GetDiagnostics().Any(_ => _.Severity == DiagnosticSeverity.Error));
 
-	internal static string GetFullyQualifiedName(this ITypeSymbol self, Compilation compilation)
+	internal static string GetFullyQualifiedName(this ITypeSymbol self, Compilation compilation, bool addGenerics = true)
 	{
 		const string GlobalPrefix = "global::";
 
 		var symbolFormatter = SymbolDisplayFormat.FullyQualifiedFormat
 			.AddMiscellaneousOptions(SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);
+
+		if (!addGenerics)
+		{
+			symbolFormatter = symbolFormatter.WithGenericsOptions(SymbolDisplayGenericsOptions.None);
+		}
+
 		var symbolName = self.ToDisplayString(symbolFormatter);
 
 		// If the symbol name has "global::" at the start,
@@ -136,7 +142,7 @@ internal static class ITypeSymbolExtensions
 
 		if (symbolName.StartsWith(GlobalPrefix))
 		{
-			var aliases = compilation.GetMetadataReference(self.ContainingAssembly)?.Properties.Aliases ?? ImmutableArray<string>.Empty;
+			var aliases = compilation.GetMetadataReference(self.ContainingAssembly)?.Properties.Aliases ?? [];
 
 			if (aliases.Length > 0)
 			{

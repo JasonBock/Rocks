@@ -9,9 +9,8 @@ internal sealed record TypeReferenceModel
 	internal TypeReferenceModel(ITypeSymbol type, Compilation compilation)
 	{
 		this.FullyQualifiedName = type.GetFullyQualifiedName(compilation);
+		this.FullyQualifiedNameNoGenerics = type.GetFullyQualifiedName(compilation, false);
 		this.FlattenedName = type.GetName(TypeNameOption.Flatten);
-		this.NoGenericsName = type.GetName(TypeNameOption.NoGenerics);
-		this.IncludeGenericsName = type.GetName(TypeNameOption.IncludeGenerics);
 
 		this.NullableAnnotation = type.NullableAnnotation;
 
@@ -28,6 +27,7 @@ internal sealed record TypeReferenceModel
 
 		if (type is INamedTypeSymbol namedType)
 		{
+			this.IsOpenGeneric = namedType.IsOpenGeneric();
 			this.Constraints = namedType.GetConstraints(compilation);
 			this.TypeArguments = namedType.TypeArguments.Length > 0 ?
 				namedType.TypeArguments.Where(_ => _.TypeKind == TypeKind.TypeParameter)
@@ -62,11 +62,11 @@ internal sealed record TypeReferenceModel
 			}
 
 			this.RefLikeArgProjectedEvaluationDelegateName =
-				$"ArgumentEvaluationFor{(type.IsOpenGeneric() ? type.GetName() : type.GetName(TypeNameOption.Flatten))}";
+				$"ArgumentEvaluationFor{type.GetName(TypeNameOption.Flatten)}";
 			this.RefLikeArgProjectedName =
-				$"ArgumentFor{(type.IsOpenGeneric() ? type.GetName() : type.GetName(TypeNameOption.Flatten))}";
+				$"ArgumentFor{type.GetName(TypeNameOption.Flatten)}";
 			this.RefLikeArgConstructorProjectedName =
-				$"ArgumentFor{(type.IsOpenGeneric() ? type.GetName(TypeNameOption.NoGenerics) : type.GetName(TypeNameOption.Flatten))}";
+				$"ArgumentFor{type.GetName(TypeNameOption.Flatten)}";
 		}
 	}
 
@@ -74,16 +74,16 @@ internal sealed record TypeReferenceModel
 	internal EquatableArray<Constraints> Constraints { get; }
 	internal string FlattenedName { get; }
 	internal string FullyQualifiedName { get; }
-	internal string IncludeGenericsName { get; }
+	internal string FullyQualifiedNameNoGenerics { get; }
 	internal bool IsBasedOnTypeParameter { get; }
 	internal bool IsEsoteric { get; }
+	internal bool IsOpenGeneric { get; }
 	internal bool IsPointer { get; }
 	internal bool IsRecord { get; }
 	internal bool IsReferenceType { get; }
 	internal bool IsRefLikeType { get; }
 	internal SymbolKind Kind { get; }
 	internal string? Namespace { get; }
-	internal string NoGenericsName { get; }
 	internal NullableAnnotation NullableAnnotation { get; }
 	internal string? PointerArgParameterType { get; }
 	internal string? PointerArgProjectedEvaluationDelegateName { get; }
