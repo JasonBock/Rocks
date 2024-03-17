@@ -116,7 +116,7 @@ public static class EventGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::IOpenGenericAndEventCreateExpectations.Handler0<TService>();
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
 						else { this.Expectations.handlers0.Add(handler); }
 						return new(handler);
 					}
@@ -153,9 +153,9 @@ public static class EventGeneratorTests
 					
 					public sealed class AdornmentsForHandler0<TService>
 						: global::Rocks.Adornments<AdornmentsForHandler0<TService>, global::IOpenGenericAndEventCreateExpectations.Handler0<TService>, global::System.Func<TService>, TService>, IAdornmentsForIOpenGenericAndEvent<AdornmentsForHandler0<TService>>
-					{ 
+					{
 						public AdornmentsForHandler0(global::IOpenGenericAndEventCreateExpectations.Handler0<TService> handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}
@@ -362,7 +362,7 @@ public static class EventGeneratorTests
 							@obj = @obj,
 						};
 						
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 						else { this.Expectations.handlers0.Add(@handler); }
 						return new(@handler);
 					}
@@ -371,7 +371,7 @@ public static class EventGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler1();
-						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(handler); }
+						if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
 						else { this.Expectations.handlers1.Add(handler); }
 						return new(handler);
 					}
@@ -380,7 +380,7 @@ public static class EventGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler2();
-						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(handler); }
+						if (this.Expectations.handlers2 is null) { this.Expectations.handlers2 = new(handler); }
 						else { this.Expectations.handlers2.Add(handler); }
 						return new(handler);
 					}
@@ -389,7 +389,7 @@ public static class EventGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler3();
-						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(handler); }
+						if (this.Expectations.handlers3 is null) { this.Expectations.handlers3 = new(handler); }
 						else { this.Expectations.handlers3.Add(handler); }
 						return new(handler);
 					}
@@ -426,27 +426,27 @@ public static class EventGeneratorTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForAbstractClassMethodReturnWithEvents<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler1
 						: global::Rocks.Adornments<AdornmentsForHandler1, global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForAbstractClassMethodReturnWithEvents<AdornmentsForHandler1>
-					{ 
+					{
 						public AdornmentsForHandler1(global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler1 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler2
 						: global::Rocks.Adornments<AdornmentsForHandler2, global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForAbstractClassMethodReturnWithEvents<AdornmentsForHandler2>
-					{ 
+					{
 						public AdornmentsForHandler2(global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler2 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler3
 						: global::Rocks.Adornments<AdornmentsForHandler3, global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler3, global::System.Func<int>, int>, IAdornmentsForAbstractClassMethodReturnWithEvents<AdornmentsForHandler3>
-					{ 
+					{
 						public AdornmentsForHandler3(global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler3 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}
@@ -609,7 +609,7 @@ public static class EventGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::IExplicitInterfaceImplementationCreateExpectations.Handler0();
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
 						else { this.Expectations.handlers0.Add(handler); }
 						return new(handler);
 					}
@@ -625,7 +625,7 @@ public static class EventGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::IExplicitInterfaceImplementationCreateExpectations.Handler1();
-						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(handler); }
+						if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
 						else { this.Expectations.handlers1.Add(handler); }
 						return new(handler);
 					}
@@ -663,15 +663,15 @@ public static class EventGeneratorTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::IExplicitInterfaceImplementationCreateExpectations.Handler0, global::System.Action>, IAdornmentsForIExplicitInterfaceImplementation<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::IExplicitInterfaceImplementationCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler1
 						: global::Rocks.Adornments<AdornmentsForHandler1, global::IExplicitInterfaceImplementationCreateExpectations.Handler1, global::System.Action>, IAdornmentsForIExplicitInterfaceImplementation<AdornmentsForHandler1>
-					{ 
+					{
 						public AdornmentsForHandler1(global::IExplicitInterfaceImplementationCreateExpectations.Handler1 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}
@@ -799,7 +799,7 @@ public static class EventGeneratorTests
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.IHaveEventsCreateExpectations.Handler0();
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(handler); }
+							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
 							else { this.Expectations.handlers0.Add(handler); }
 							return new(handler);
 						}
@@ -836,9 +836,9 @@ public static class EventGeneratorTests
 						
 						public sealed class AdornmentsForHandler0
 							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IHaveEventsCreateExpectations.Handler0, global::System.Action>, IAdornmentsForIHaveEvents<AdornmentsForHandler0>
-						{ 
+						{
 							public AdornmentsForHandler0(global::MockTests.IHaveEventsCreateExpectations.Handler0 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 					}
 				}
@@ -965,7 +965,7 @@ public static class EventGeneratorTests
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.IHaveEventsCreateExpectations.Handler0();
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(handler); }
+							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
 							else { this.Expectations.handlers0.Add(handler); }
 							return new(handler);
 						}
@@ -1002,9 +1002,9 @@ public static class EventGeneratorTests
 						
 						public sealed class AdornmentsForHandler0
 							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IHaveEventsCreateExpectations.Handler0, global::System.Action>, IAdornmentsForIHaveEvents<AdornmentsForHandler0>
-						{ 
+						{
 							public AdornmentsForHandler0(global::MockTests.IHaveEventsCreateExpectations.Handler0 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 					}
 				}

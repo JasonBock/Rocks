@@ -2,7 +2,6 @@
 using Rocks.Builders.Create;
 using Rocks.Models;
 using System.CodeDom.Compiler;
-using System.Collections.Immutable;
 
 namespace Rocks.Builders.Make;
 
@@ -12,12 +11,12 @@ internal static class MockMethodValueBuilder
 	{
 		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn;
 		var typeArgumentsNamingContext = method.IsGenericMethod ?
-			new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet()) :
-			new VariableNamingContext();
+			new TypeArgumentsNamingContext(method.MockType) :
+			new TypeArgumentsNamingContext();
 
 		var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadOnly ? "ref readonly " : string.Empty;
-		var returnTypeValue = method.IsGenericMethod && method.TypeArguments.Contains(method.ReturnType.FullyQualifiedName) ?
-			typeArgumentsNamingContext[method.ReturnType.FullyQualifiedName] : method.ReturnType.FullyQualifiedName;
+		var returnTypeValue = method.IsGenericMethod && method.TypeArguments.Any(m => m.FullyQualifiedName == method.ReturnType.FullyQualifiedName) ?
+			method.ReturnType.BuildName(typeArgumentsNamingContext) : method.ReturnType.FullyQualifiedName;
 		var returnType = $"{returnByRef}{returnTypeValue}";
 		var explicitTypeNameDescription = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
 			$"{method.ContainingType.FullyQualifiedName}." : string.Empty;
@@ -37,15 +36,15 @@ internal static class MockMethodValueBuilder
 				_ => string.Empty
 			};
 
-			var typeName = method.IsGenericMethod && method.TypeArguments.Contains(_.Type.FullyQualifiedName) ?
-				typeArgumentsNamingContext[_.Type.FullyQualifiedName] : _.Type.FullyQualifiedName;
+			var typeName = method.IsGenericMethod && method.TypeArguments.Any(m => m.FullyQualifiedName == _.Type.FullyQualifiedName) ?
+				_.Type.BuildName(typeArgumentsNamingContext) : _.Type.FullyQualifiedName;
 			var parameter = $"{scoped}{direction}{(_.IsParams ? "params " : string.Empty)}{typeName}{requiresNullable} @{_.Name}{defaultValue}";
 			var attributes = _.AttributesDescription;
 			return $"{(attributes.Length > 0 ? $"{attributes} " : string.Empty)}{parameter}";
 		}));
 
 		var typeArguments = method.IsGenericMethod ?
-			$"<{string.Join(", ", method.TypeArguments.Select(_ => !method.MockType.TypeArguments.Contains(_) ? _ : typeArgumentsNamingContext[_]))}>" : string.Empty;
+			$"<{string.Join(", ", method.TypeArguments.Select(_ => !method.MockType.TypeArguments.Any(m => m.FullyQualifiedName == _.FullyQualifiedName) ? _.FullyQualifiedName : _.BuildName(typeArgumentsNamingContext)))}>" : string.Empty;
 		var methodSignature = $"{returnType} {explicitTypeNameDescription}{method.Name}{typeArguments}({methodParameters})";
 
 		if (method.AttributesDescription.Length > 0)

@@ -73,7 +73,7 @@ static void TestWithType()
 
 #pragma warning disable EF1001 // Internal EF Core API usage.
 	(var issues, var times) = TestGenerator.Generate(new RockAttributeGenerator(),
-		[typeof(CsvHelper.Configuration.IHasTypeConverterOptions<,>)],
+		[typeof(Ninject.Syntax.IBindingToSyntax<>)],
 		typesToLoadAssembliesFrom,
 		MappedTypes.GetMappedTypes(),
 		[], BuildType.Create);
@@ -366,19 +366,7 @@ static void PrintIssues(ImmutableArray<Issue> issues)
 
 			Console.WriteLine("Error Counts");
 
-			var errorCount = 0;
-
-			foreach (var errorGroup in errors)
-			{
-				var errorGroupCount = errorGroup.Count();
-				errorCount += errorGroupCount;
-				Console.WriteLine($"\tCode: {errorGroup.Key}, Count: {errorGroupCount}");
-			}
-
-			Console.WriteLine($"Total Error Count: {errorCount}");
-			Console.WriteLine();
-
-			foreach (var errorGroup in errors)
+			foreach (var errorGroup in errors.OrderBy(_ => _.Count()))
 			{
 				foreach (var error in errorGroup)
 				{
@@ -395,6 +383,18 @@ static void PrintIssues(ImmutableArray<Issue> issues)
 						""");
 				}
 			}
+
+			var errorCount = 0;
+
+			foreach (var errorGroup in errors.OrderBy(_ => _.Count()))
+			{
+				var errorGroupCount = errorGroup.Count();
+				errorCount += errorGroupCount;
+				Console.WriteLine($"\tCode: {errorGroup.Key}, Count: {errorGroupCount}");
+			}
+
+			Console.WriteLine($"Total Error Count: {errorCount}");
+			Console.WriteLine();
 		}
 
 		var warnings = issues
@@ -408,21 +408,9 @@ static void PrintIssues(ImmutableArray<Issue> issues)
 
 			Console.WriteLine("Warning Counts");
 
-			var warningCount = 0;
-
-			foreach (var warningGroup in warnings)
+			foreach (var warningGroup in warnings.OrderBy(_ => _.Count()))
 			{
-				var warningGroupCount = warningGroup.Count();
-				warningCount += warningGroupCount;
-				Console.WriteLine($"\tCode: {warningGroup.Key}, Count: {warningGroupCount}");
-			}
-
-			Console.WriteLine($"Total Warning Count: {warningCount}");
-			Console.WriteLine();
-
-			foreach (var warningGrouip in warnings)
-			{
-				foreach (var warning in warningGrouip)
+				foreach (var warning in warningGroup)
 				{
 					var warningCode = warning.Location.SourceTree?.GetText().GetSubText(warning.Location.SourceSpan) ?? null;
 					Console.WriteLine(
@@ -437,6 +425,18 @@ static void PrintIssues(ImmutableArray<Issue> issues)
 						""");
 				}
 			}
+
+			var warningCount = 0;
+
+			foreach (var warningGroup in warnings.OrderBy(_ => _.Count()))
+			{
+				var warningGroupCount = warningGroup.Count();
+				warningCount += warningGroupCount;
+				Console.WriteLine($"\tCode: {warningGroup.Key}, Count: {warningGroupCount}");
+			}
+
+			Console.WriteLine($"Total Warning Count: {warningCount}");
+			Console.WriteLine();
 		}
 
 		Console.ForegroundColor = currentColor;

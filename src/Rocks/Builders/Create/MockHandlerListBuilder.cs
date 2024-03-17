@@ -2,7 +2,6 @@
 using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
-using System.Collections.Immutable;
 
 namespace Rocks.Builders.Create;
 
@@ -38,10 +37,10 @@ internal static class MockHandlerListBuilder
 				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, method.MockType) :
 				DelegateBuilder.Build(method);
 		var typeArgumentsNamingContext = method.IsGenericMethod ?
-			new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet()) :
-			new VariableNamingContext();
+			new TypeArgumentsNamingContext(method) :
+			new TypeArgumentsNamingContext();
 		var typeArguments = method.IsGenericMethod ?
-			$"<{string.Join(", ", method.TypeArguments.Select(_ => !method.MockType.TypeArguments.Contains(_) ? _ : typeArgumentsNamingContext[_]))}>" : string.Empty;
+			$"<{string.Join(", ", method.TypeArguments.Select(_ => _.BuildName(typeArgumentsNamingContext)))}>" : string.Empty;
 
 		string handlerBaseType;
 
@@ -64,8 +63,7 @@ internal static class MockHandlerListBuilder
 			}
 			else
 			{
-				// TODO: need to resolve type names from the return type, not from the method.
-				returnTypeName = $"{method.ReturnType.FullyQualifiedNameNoGenerics}{typeArguments}";
+				returnTypeName = method.ReturnType.BuildName(typeArgumentsNamingContext);
 			}
 
 			returnTypeName = returnTypeName == string.Empty ? string.Empty : $", {returnTypeName}";
@@ -107,8 +105,8 @@ internal static class MockHandlerListBuilder
 				}
 				else
 				{
-					var type = method.TypeArguments.Contains(parameter.Type.FullyQualifiedName) ?
-						typeArgumentsNamingContext[parameter.Type.FullyQualifiedName] :
+					var type = method.TypeArguments.Any(m => m.FullyQualifiedName == parameter.Type.FullyQualifiedName) ?
+						parameter.Type.BuildName(typeArgumentsNamingContext) :
 						parameter.Type.FullyQualifiedName;
 					argumentTypeName = $"public global::Rocks.Argument<{type}{requiresNullable}>";
 				}

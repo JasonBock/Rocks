@@ -13,7 +13,7 @@ public static class VariableNamingContextTests
 	[Test]
 	public static void ReretrieveVariableName()
 	{
-		var namingContext = new VariableNamingContext(["self", "expectations"]);
+		var namingContext = new VariablesNamingContext(["self", "expectations"]);
 		var variable = namingContext["expectations"];
 		var reretrieveVariable = namingContext["expectations"];
 
@@ -27,7 +27,7 @@ public static class VariableNamingContextTests
 	[Test]
 	public static void AddWhenThereAreNoNames()
 	{
-		var namingContext = new VariableNamingContext(ImmutableHashSet<string>.Empty);
+		var namingContext = new VariablesNamingContext(ImmutableHashSet<string>.Empty);
 		var variable = namingContext["b"];
 		Assert.That(variable, Is.EqualTo("b"));
 	}
@@ -35,7 +35,7 @@ public static class VariableNamingContextTests
 	[Test]
 	public static void AddWhenThereIsNoMatchWithNames()
 	{
-		var namingContext = new VariableNamingContext(["a"]);
+		var namingContext = new VariablesNamingContext(["a"]);
 		var variable = namingContext["b"];
 		Assert.That(variable, Is.EqualTo("b"));
 	}
@@ -43,7 +43,7 @@ public static class VariableNamingContextTests
 	[Test]
 	public static void AddWhenThereIsMatchWithNames()
 	{
-		var namingContext = new VariableNamingContext(["a"]);
+		var namingContext = new VariablesNamingContext(["a"]);
 		var variable = namingContext["a"];
 		Assert.That(variable, Is.EqualTo("a1"));
 	}
@@ -55,7 +55,7 @@ public static class VariableNamingContextTests
 		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
-		var namingContext = new VariableNamingContext(model);
+		var namingContext = new VariablesNamingContext(model);
 		var variable = namingContext["b"];
 		Assert.That(variable, Is.EqualTo("b"));
 	}
@@ -67,7 +67,7 @@ public static class VariableNamingContextTests
 		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
-		var namingContext = new VariableNamingContext(model);
+		var namingContext = new VariablesNamingContext(model);
 		var variable = namingContext["b"];
 		Assert.That(variable, Is.EqualTo("b"));
 	}
@@ -79,7 +79,7 @@ public static class VariableNamingContextTests
 		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
-		var namingContext = new VariableNamingContext(model);
+		var namingContext = new VariablesNamingContext(model);
 		var variable = namingContext["a"];
 		Assert.That(variable, Is.EqualTo("a1"));
 	}
@@ -91,7 +91,7 @@ public static class VariableNamingContextTests
 		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
-		var namingContext = new VariableNamingContext(model);
+		var namingContext = new VariablesNamingContext(model);
 		_ = namingContext["b"];
 		var variable = namingContext["b"];
 		Assert.That(variable, Is.EqualTo("b"));
@@ -104,7 +104,7 @@ public static class VariableNamingContextTests
 		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
-		var namingContext = new VariableNamingContext(model);
+		var namingContext = new VariablesNamingContext(model);
 		var variable = namingContext["a"];
 		Assert.That(variable, Is.EqualTo("a2"));
 	}
@@ -116,7 +116,7 @@ public static class VariableNamingContextTests
 		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
-		var namingContext = new VariableNamingContext(model);
+		var namingContext = new VariablesNamingContext(model);
 		_ = namingContext["a2"];
 		_ = namingContext["a3"];
 		var variable = namingContext["a"];

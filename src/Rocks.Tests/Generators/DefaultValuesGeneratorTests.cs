@@ -148,7 +148,7 @@ public static class DefaultValuesGeneratorTests
 								@someStruct = @someStruct.Transform(default),
 							};
 							
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 							else { this.Expectations.handlers0.Add(@handler); }
 							return new(@handler);
 						}
@@ -174,7 +174,7 @@ public static class DefaultValuesGeneratorTests
 								@someStruct = @someStruct,
 							};
 							
-							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(@handler); }
+							if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(@handler); }
 							else { this.Expectations.handlers1.Add(@handler); }
 							return new(@handler);
 						}
@@ -214,15 +214,15 @@ public static class DefaultValuesGeneratorTests
 						
 						public sealed class AdornmentsForHandler0
 							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IRequestOfobjectCreateExpectations.Handler0, global::System.Func<object, global::MockTests.SomeStruct, global::System.Threading.Tasks.Task<object>>, global::System.Threading.Tasks.Task<object>>, IAdornmentsForIRequestOfobject<AdornmentsForHandler0>
-						{ 
+						{
 							public AdornmentsForHandler0(global::MockTests.IRequestOfobjectCreateExpectations.Handler0 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler1
 							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IRequestOfobjectCreateExpectations.Handler1, global::System.Func<object, global::MockTests.SomeStruct, global::System.Threading.Tasks.Task>, global::System.Threading.Tasks.Task>, IAdornmentsForIRequestOfobject<AdornmentsForHandler1>
-						{ 
+						{
 							public AdornmentsForHandler1(global::MockTests.IRequestOfobjectCreateExpectations.Handler1 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 					}
 				}
@@ -344,7 +344,7 @@ public static class DefaultValuesGeneratorTests
 							@initialValue = @initialValue.Transform(default!),
 						};
 						
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 						else { this.Expectations.handlers0.Add(@handler); }
 						return new(@handler);
 					}
@@ -383,9 +383,9 @@ public static class DefaultValuesGeneratorTests
 					
 					public sealed class AdornmentsForHandler0<T>
 						: global::Rocks.Adornments<AdornmentsForHandler0<T>, global::IGenericDefaultCreateExpectations.Handler0<T>, global::System.Action<T>>, IAdornmentsForIGenericDefault<AdornmentsForHandler0<T>>
-					{ 
+					{
 						public AdornmentsForHandler0(global::IGenericDefaultCreateExpectations.Handler0<T> handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}
@@ -555,7 +555,7 @@ public static class DefaultValuesGeneratorTests
 							@value = @value.Transform(double.PositiveInfinity),
 						};
 						
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 						else { this.Expectations.handlers0.Add(@handler); }
 						return new(@handler);
 					}
@@ -594,9 +594,9 @@ public static class DefaultValuesGeneratorTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::IUseInfinityCreateExpectations.Handler0, global::System.Action<double>>, IAdornmentsForIUseInfinity<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::IUseInfinityCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}

@@ -109,7 +109,7 @@ public static class ParameterModifierTests
 							@value = @value,
 						};
 						
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 						else { this.Expectations.handlers0.Add(@handler); }
 						return new(@handler);
 					}
@@ -146,9 +146,9 @@ public static class ParameterModifierTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::System.Action<string>>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::IParameterModifierCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}
@@ -322,7 +322,7 @@ public static class ParameterModifierTests
 							@value = global::Rocks.Arg.Any<string>(),
 						};
 						
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 						else { this.Expectations.handlers0.Add(@handler); }
 						return new(@handler);
 					}
@@ -359,9 +359,9 @@ public static class ParameterModifierTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Projections.Callback_193235261019447779478409340058228437220444154875>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::IParameterModifierCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}
@@ -535,7 +535,7 @@ public static class ParameterModifierTests
 							@value = @value,
 						};
 						
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 						else { this.Expectations.handlers0.Add(@handler); }
 						return new(@handler);
 					}
@@ -572,9 +572,9 @@ public static class ParameterModifierTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Projections.Callback_117490457623372471697910661720505969856490442481>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::IParameterModifierCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}
@@ -742,7 +742,7 @@ public static class ParameterModifierTests
 							@value = @value,
 						};
 						
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 						else { this.Expectations.handlers0.Add(@handler); }
 						return new(@handler);
 					}
@@ -779,9 +779,9 @@ public static class ParameterModifierTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::System.Action<string>>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::IParameterModifierCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}
@@ -1080,7 +1080,7 @@ public static class ParameterModifierTests
 							@a = @a,
 						};
 						
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 						else { this.Expectations.handlers0.Add(@handler); }
 						return new(@handler);
 					}
@@ -1097,7 +1097,7 @@ public static class ParameterModifierTests
 							@b = @b,
 						};
 						
-						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(@handler); }
+						if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(@handler); }
 						else { this.Expectations.handlers1.Add(@handler); }
 						return new(@handler);
 					}
@@ -1112,7 +1112,7 @@ public static class ParameterModifierTests
 							@a = global::Rocks.Arg.Any<int>(),
 						};
 						
-						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(@handler); }
+						if (this.Expectations.handlers2 is null) { this.Expectations.handlers2 = new(@handler); }
 						else { this.Expectations.handlers2.Add(@handler); }
 						return new(@handler);
 					}
@@ -1129,7 +1129,7 @@ public static class ParameterModifierTests
 							@b = global::Rocks.Arg.Any<T2>(),
 						};
 						
-						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(@handler); }
+						if (this.Expectations.handlers3 is null) { this.Expectations.handlers3 = new(@handler); }
 						else { this.Expectations.handlers3.Add(@handler); }
 						return new(@handler);
 					}
@@ -1166,27 +1166,27 @@ public static class ParameterModifierTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Projections.Callback_640457111802933967433135011802939136029252304196>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::IParameterModifierCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler1<T1, T2>
 						: global::Rocks.Adornments<AdornmentsForHandler1<T1, T2>, global::IParameterModifierCreateExpectations.Handler1<T1, T2>, global::IParameterModifierCreateExpectations.Projections.Callback_595359563624402850359397691594068887527805892984<T1, T2>>, IAdornmentsForIParameterModifier<AdornmentsForHandler1<T1, T2>>
-					{ 
+					{
 						public AdornmentsForHandler1(global::IParameterModifierCreateExpectations.Handler1<T1, T2> handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler2
 						: global::Rocks.Adornments<AdornmentsForHandler2, global::IParameterModifierCreateExpectations.Handler2, global::IParameterModifierCreateExpectations.Projections.Callback_360038979746784102455204459622175388488035293924>, IAdornmentsForIParameterModifier<AdornmentsForHandler2>
-					{ 
+					{
 						public AdornmentsForHandler2(global::IParameterModifierCreateExpectations.Handler2 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler3<T1, T2>
 						: global::Rocks.Adornments<AdornmentsForHandler3<T1, T2>, global::IParameterModifierCreateExpectations.Handler3<T1, T2>, global::IParameterModifierCreateExpectations.Projections.Callback_376795512182245354180779374814988822523603172187<T1, T2>>, IAdornmentsForIParameterModifier<AdornmentsForHandler3<T1, T2>>
-					{ 
+					{
 						public AdornmentsForHandler3(global::IParameterModifierCreateExpectations.Handler3<T1, T2> handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}

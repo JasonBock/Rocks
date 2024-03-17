@@ -185,7 +185,7 @@ public static class HiddenMembersGeneratorTests
 								@obj = @obj,
 							};
 							
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 							else { this.Expectations.handlers0.Add(@handler); }
 							return new(@handler);
 						}
@@ -194,7 +194,7 @@ public static class HiddenMembersGeneratorTests
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.NewCopyCreateExpectations.Handler1();
-							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(handler); }
+							if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
 							else { this.Expectations.handlers1.Add(handler); }
 							return new(handler);
 						}
@@ -203,7 +203,7 @@ public static class HiddenMembersGeneratorTests
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.NewCopyCreateExpectations.Handler2();
-							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(handler); }
+							if (this.Expectations.handlers2 is null) { this.Expectations.handlers2 = new(handler); }
 							else { this.Expectations.handlers2.Add(handler); }
 							return new(handler);
 						}
@@ -212,7 +212,7 @@ public static class HiddenMembersGeneratorTests
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.NewCopyCreateExpectations.Handler3();
-							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(handler); }
+							if (this.Expectations.handlers3 is null) { this.Expectations.handlers3 = new(handler); }
 							else { this.Expectations.handlers3.Add(handler); }
 							return new(handler);
 						}
@@ -249,27 +249,27 @@ public static class HiddenMembersGeneratorTests
 						
 						public sealed class AdornmentsForHandler0
 							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.NewCopyCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForNewCopy<AdornmentsForHandler0>
-						{ 
+						{
 							public AdornmentsForHandler0(global::MockTests.NewCopyCreateExpectations.Handler0 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler1
 							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.NewCopyCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForNewCopy<AdornmentsForHandler1>
-						{ 
+						{
 							public AdornmentsForHandler1(global::MockTests.NewCopyCreateExpectations.Handler1 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler2
 							: global::Rocks.Adornments<AdornmentsForHandler2, global::MockTests.NewCopyCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForNewCopy<AdornmentsForHandler2>
-						{ 
+						{
 							public AdornmentsForHandler2(global::MockTests.NewCopyCreateExpectations.Handler2 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler3
 							: global::Rocks.Adornments<AdornmentsForHandler3, global::MockTests.NewCopyCreateExpectations.Handler3, global::System.Action>, IAdornmentsForNewCopy<AdornmentsForHandler3>
-						{ 
+						{
 							public AdornmentsForHandler3(global::MockTests.NewCopyCreateExpectations.Handler3 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 					}
 				}
@@ -561,7 +561,7 @@ public static class HiddenMembersGeneratorTests
 							@obj = @obj,
 						};
 						
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 						else { this.Expectations.handlers0.Add(@handler); }
 						return new(@handler);
 					}
@@ -570,7 +570,7 @@ public static class HiddenMembersGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::SubClassCreateExpectations.Handler1();
-						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(handler); }
+						if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
 						else { this.Expectations.handlers1.Add(handler); }
 						return new(handler);
 					}
@@ -579,7 +579,7 @@ public static class HiddenMembersGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::SubClassCreateExpectations.Handler2();
-						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(handler); }
+						if (this.Expectations.handlers2 is null) { this.Expectations.handlers2 = new(handler); }
 						else { this.Expectations.handlers2.Add(handler); }
 						return new(handler);
 					}
@@ -588,7 +588,7 @@ public static class HiddenMembersGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::SubClassCreateExpectations.Handler4();
-						if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(handler); }
+						if (this.Expectations.handlers4 is null) { this.Expectations.handlers4 = new(handler); }
 						else { this.Expectations.handlers4.Add(handler); }
 						return new(handler);
 					}
@@ -607,7 +607,7 @@ public static class HiddenMembersGeneratorTests
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::SubClassCreateExpectations.Handler8();
-							if (this.Expectations.handlers8 is null ) { this.Expectations.handlers8 = new(handler); }
+							if (this.Expectations.handlers8 is null) { this.Expectations.handlers8 = new(handler); }
 							else { this.Expectations.handlers8.Add(handler); }
 							return new(handler);
 						}
@@ -629,7 +629,7 @@ public static class HiddenMembersGeneratorTests
 								value = @value,
 							};
 						
-							if (this.Expectations.handlers9 is null ) { this.Expectations.handlers9 = new(handler); }
+							if (this.Expectations.handlers9 is null) { this.Expectations.handlers9 = new(handler); }
 							else { this.Expectations.handlers9.Add(handler); }
 							return new(handler);
 						}
@@ -661,7 +661,7 @@ public static class HiddenMembersGeneratorTests
 								@b = @b,
 							};
 							
-							if (this.Expectations.handlers10 is null ) { this.Expectations.handlers10 = new(@handler); }
+							if (this.Expectations.handlers10 is null) { this.Expectations.handlers10 = new(@handler); }
 							else { this.Expectations.handlers10.Add(@handler); }
 							return new(@handler);
 						}
@@ -706,45 +706,45 @@ public static class HiddenMembersGeneratorTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::SubClassCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForSubClass<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::SubClassCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler1
 						: global::Rocks.Adornments<AdornmentsForHandler1, global::SubClassCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForSubClass<AdornmentsForHandler1>
-					{ 
+					{
 						public AdornmentsForHandler1(global::SubClassCreateExpectations.Handler1 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler2
 						: global::Rocks.Adornments<AdornmentsForHandler2, global::SubClassCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForSubClass<AdornmentsForHandler2>
-					{ 
+					{
 						public AdornmentsForHandler2(global::SubClassCreateExpectations.Handler2 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler4
 						: global::Rocks.Adornments<AdornmentsForHandler4, global::SubClassCreateExpectations.Handler4, global::System.Func<int>, int>, IAdornmentsForSubClass<AdornmentsForHandler4>
-					{ 
+					{
 						public AdornmentsForHandler4(global::SubClassCreateExpectations.Handler4 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler8
 						: global::Rocks.Adornments<AdornmentsForHandler8, global::SubClassCreateExpectations.Handler8, global::System.Func<int>, int>, IAdornmentsForSubClass<AdornmentsForHandler8>
-					{ 
+					{
 						public AdornmentsForHandler8(global::SubClassCreateExpectations.Handler8 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler9
 						: global::Rocks.Adornments<AdornmentsForHandler9, global::SubClassCreateExpectations.Handler9, global::System.Action<int>>, IAdornmentsForSubClass<AdornmentsForHandler9>
-					{ 
+					{
 						public AdornmentsForHandler9(global::SubClassCreateExpectations.Handler9 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler10
 						: global::Rocks.Adornments<AdornmentsForHandler10, global::SubClassCreateExpectations.Handler10, global::System.Func<int, string, int>, int>, IAdornmentsForSubClass<AdornmentsForHandler10>
-					{ 
+					{
 						public AdornmentsForHandler10(global::SubClassCreateExpectations.Handler10 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}
@@ -1057,7 +1057,7 @@ public static class HiddenMembersGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::ISubCreateExpectations.Handler0();
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
 						else { this.Expectations.handlers0.Add(handler); }
 						return new(handler);
 					}
@@ -1073,7 +1073,7 @@ public static class HiddenMembersGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::ISubCreateExpectations.Handler1();
-						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(handler); }
+						if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
 						else { this.Expectations.handlers1.Add(handler); }
 						return new(handler);
 					}
@@ -1092,7 +1092,7 @@ public static class HiddenMembersGeneratorTests
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::ISubCreateExpectations.Handler2();
-							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(handler); }
+							if (this.Expectations.handlers2 is null) { this.Expectations.handlers2 = new(handler); }
 							else { this.Expectations.handlers2.Add(handler); }
 							return new(handler);
 						}
@@ -1114,7 +1114,7 @@ public static class HiddenMembersGeneratorTests
 								value = @value,
 							};
 						
-							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(handler); }
+							if (this.Expectations.handlers3 is null) { this.Expectations.handlers3 = new(handler); }
 							else { this.Expectations.handlers3.Add(handler); }
 							return new(handler);
 						}
@@ -1146,7 +1146,7 @@ public static class HiddenMembersGeneratorTests
 								@b = @b,
 							};
 							
-							if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(@handler); }
+							if (this.Expectations.handlers4 is null) { this.Expectations.handlers4 = new(@handler); }
 							else { this.Expectations.handlers4.Add(@handler); }
 							return new(@handler);
 						}
@@ -1170,7 +1170,7 @@ public static class HiddenMembersGeneratorTests
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::ISubCreateExpectations.Handler5();
-							if (this.Expectations.handlers5 is null ) { this.Expectations.handlers5 = new(handler); }
+							if (this.Expectations.handlers5 is null) { this.Expectations.handlers5 = new(handler); }
 							else { this.Expectations.handlers5.Add(handler); }
 							return new(handler);
 						}
@@ -1191,7 +1191,7 @@ public static class HiddenMembersGeneratorTests
 								value = @value,
 							};
 						
-							if (this.Expectations.handlers6 is null ) { this.Expectations.handlers6 = new(handler); }
+							if (this.Expectations.handlers6 is null) { this.Expectations.handlers6 = new(handler); }
 							else { this.Expectations.handlers6.Add(handler); }
 							return new(handler);
 						}
@@ -1223,7 +1223,7 @@ public static class HiddenMembersGeneratorTests
 								@b = @b,
 							};
 							
-							if (this.Expectations.handlers7 is null ) { this.Expectations.handlers7 = new(@handler); }
+							if (this.Expectations.handlers7 is null) { this.Expectations.handlers7 = new(@handler); }
 							else { this.Expectations.handlers7.Add(@handler); }
 							return new(@handler);
 						}
@@ -1270,51 +1270,51 @@ public static class HiddenMembersGeneratorTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::ISubCreateExpectations.Handler0, global::System.Func<int>, int>, IAdornmentsForISub<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::ISubCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler1
 						: global::Rocks.Adornments<AdornmentsForHandler1, global::ISubCreateExpectations.Handler1, global::System.Action>, IAdornmentsForISub<AdornmentsForHandler1>
-					{ 
+					{
 						public AdornmentsForHandler1(global::ISubCreateExpectations.Handler1 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler2
 						: global::Rocks.Adornments<AdornmentsForHandler2, global::ISubCreateExpectations.Handler2, global::System.Func<int>, int>, IAdornmentsForISub<AdornmentsForHandler2>
-					{ 
+					{
 						public AdornmentsForHandler2(global::ISubCreateExpectations.Handler2 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler3
 						: global::Rocks.Adornments<AdornmentsForHandler3, global::ISubCreateExpectations.Handler3, global::System.Action<int>>, IAdornmentsForISub<AdornmentsForHandler3>
-					{ 
+					{
 						public AdornmentsForHandler3(global::ISubCreateExpectations.Handler3 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler4
 						: global::Rocks.Adornments<AdornmentsForHandler4, global::ISubCreateExpectations.Handler4, global::System.Func<int, string, int>, int>, IAdornmentsForISub<AdornmentsForHandler4>
-					{ 
+					{
 						public AdornmentsForHandler4(global::ISubCreateExpectations.Handler4 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler5
 						: global::Rocks.Adornments<AdornmentsForHandler5, global::ISubCreateExpectations.Handler5, global::System.Func<string>, string>, IAdornmentsForISub<AdornmentsForHandler5>
-					{ 
+					{
 						public AdornmentsForHandler5(global::ISubCreateExpectations.Handler5 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler6
 						: global::Rocks.Adornments<AdornmentsForHandler6, global::ISubCreateExpectations.Handler6, global::System.Action<string>>, IAdornmentsForISub<AdornmentsForHandler6>
-					{ 
+					{
 						public AdornmentsForHandler6(global::ISubCreateExpectations.Handler6 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler7
 						: global::Rocks.Adornments<AdornmentsForHandler7, global::ISubCreateExpectations.Handler7, global::System.Func<int, string, string>, string>, IAdornmentsForISub<AdornmentsForHandler7>
-					{ 
+					{
 						public AdornmentsForHandler7(global::ISubCreateExpectations.Handler7 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}

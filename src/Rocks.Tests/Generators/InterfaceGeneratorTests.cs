@@ -175,7 +175,7 @@ public static class InterfaceGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::ISealedCreateExpectations.Handler0();
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
 						else { this.Expectations.handlers0.Add(handler); }
 						return new(handler);
 					}
@@ -194,7 +194,7 @@ public static class InterfaceGeneratorTests
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::ISealedCreateExpectations.Handler1();
-							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(handler); }
+							if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
 							else { this.Expectations.handlers1.Add(handler); }
 							return new(handler);
 						}
@@ -216,7 +216,7 @@ public static class InterfaceGeneratorTests
 								value = @value,
 							};
 						
-							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(handler); }
+							if (this.Expectations.handlers2 is null) { this.Expectations.handlers2 = new(handler); }
 							else { this.Expectations.handlers2.Add(handler); }
 							return new(handler);
 						}
@@ -260,21 +260,21 @@ public static class InterfaceGeneratorTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::ISealedCreateExpectations.Handler0, global::System.Action>, IAdornmentsForISealed<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::ISealedCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler1
 						: global::Rocks.Adornments<AdornmentsForHandler1, global::ISealedCreateExpectations.Handler1, global::System.Func<string>, string>, IAdornmentsForISealed<AdornmentsForHandler1>
-					{ 
+					{
 						public AdornmentsForHandler1(global::ISealedCreateExpectations.Handler1 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler2
 						: global::Rocks.Adornments<AdornmentsForHandler2, global::ISealedCreateExpectations.Handler2, global::System.Action<string>>, IAdornmentsForISealed<AdornmentsForHandler2>
-					{ 
+					{
 						public AdornmentsForHandler2(global::ISealedCreateExpectations.Handler2 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}
@@ -399,7 +399,7 @@ public static class InterfaceGeneratorTests
 							@options = @options,
 						};
 						
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 						else { this.Expectations.handlers0.Add(@handler); }
 						return new(@handler);
 					}
@@ -436,9 +436,9 @@ public static class InterfaceGeneratorTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::IRequestCreateExpectations.Handler0, global::System.Action<int>>, IAdornmentsForIRequest<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::IRequestCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}
@@ -554,7 +554,7 @@ public static class InterfaceGeneratorTests
 								@value = @value,
 							};
 							
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 							else { this.Expectations.handlers0.Add(@handler); }
 							return new(@handler);
 						}
@@ -591,9 +591,9 @@ public static class InterfaceGeneratorTests
 						
 						public sealed class AdornmentsForHandler0
 							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.ITargetCreateExpectations.Handler0, global::System.Func<int, string>, string>, IAdornmentsForITarget<AdornmentsForHandler0>
-						{ 
+						{
 							public AdornmentsForHandler0(global::MockTests.ITargetCreateExpectations.Handler0 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 					}
 				}

@@ -14,7 +14,7 @@ internal static class IndexerExpectationsIndexerBuilder
 			string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 		{
 			var propertyGetMethod = property.GetMethod!;
-			var namingContext = new VariableNamingContext(propertyGetMethod);
+			var namingContext = new VariablesNamingContext(propertyGetMethod);
 			var needsGenerationWithDefaults = false;
 
 			var callbackDelegateTypeName = propertyGetMethod.RequiresProjectedDelegate ?
@@ -93,7 +93,7 @@ internal static class IndexerExpectationsIndexerBuilder
 			}
 			else
 			{
-				var handlerContext = new VariableNamingContext(property.Parameters);
+				var handlerContext = new VariablesNamingContext(property.Parameters);
 				writer.WriteLine($"internal {expectationsFullyQualifiedName}.Adornments.AdornmentsForHandler{memberIdentifier} This({instanceParameters})");
 				writer.WriteLine("{");
 				writer.Indent++;
@@ -131,7 +131,7 @@ internal static class IndexerExpectationsIndexerBuilder
 					$$"""
 					};
 
-					if (this.Expectations.handlers{{memberIdentifier}} is null ) { this.Expectations.handlers{{memberIdentifier}} = new(@{{handlerContext["handler"]}}); }
+					if (this.Expectations.handlers{{memberIdentifier}} is null) { this.Expectations.handlers{{memberIdentifier}} = new(@{{handlerContext["handler"]}}); }
 					else { this.Expectations.handlers{{memberIdentifier}}.Add(@{{handlerContext["handler"]}}); }
 					return new(@{{handlerContext["handler"]}});
 					""");
@@ -156,7 +156,7 @@ internal static class IndexerExpectationsIndexerBuilder
 			string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 		{
 			var propertySetMethod = property.SetMethod!;
-			var namingContext = new VariableNamingContext(propertySetMethod);
+			var namingContext = new VariablesNamingContext(propertySetMethod);
 
 			var lastParameter = propertySetMethod.Parameters[propertySetMethod.Parameters.Length - 1];
 			var lastParameterRequiresNullable = lastParameter.RequiresNullableAnnotation ? "?" : string.Empty;
@@ -233,7 +233,7 @@ internal static class IndexerExpectationsIndexerBuilder
 			}
 			else
 			{
-				var handlerContext = new VariableNamingContext(property.Parameters);
+				var handlerContext = new VariablesNamingContext(property.Parameters);
 				writer.WriteLine($"internal {expectationsFullyQualifiedName}.Adornments.AdornmentsForHandler{memberIdentifier} This({instanceParameters})");
 				writer.WriteLine("{");
 				writer.Indent++;
@@ -271,7 +271,7 @@ internal static class IndexerExpectationsIndexerBuilder
 					$$"""
 					};
 
-					if (this.Expectations.handlers{{memberIdentifier}} is null ) { this.Expectations.handlers{{memberIdentifier}} = new(@{{handlerContext["handler"]}}); }
+					if (this.Expectations.handlers{{memberIdentifier}} is null) { this.Expectations.handlers{{memberIdentifier}} = new(@{{handlerContext["handler"]}}); }
 					else { this.Expectations.handlers{{memberIdentifier}}.Add(@{{handlerContext["handler"]}}); }
 					return new(@{{handlerContext["handler"]}});
 					""");

@@ -200,7 +200,7 @@ public static class RecordCreateGeneratorTests
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.RecordTestCreateExpectations.Handler2();
-							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(handler); }
+							if (this.Expectations.handlers2 is null) { this.Expectations.handlers2 = new(handler); }
 							else { this.Expectations.handlers2.Add(handler); }
 							return new(handler);
 						}
@@ -209,7 +209,7 @@ public static class RecordCreateGeneratorTests
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.RecordTestCreateExpectations.Handler3();
-							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(handler); }
+							if (this.Expectations.handlers3 is null) { this.Expectations.handlers3 = new(handler); }
 							else { this.Expectations.handlers3.Add(handler); }
 							return new(handler);
 						}
@@ -224,7 +224,7 @@ public static class RecordCreateGeneratorTests
 								@builder = @builder,
 							};
 							
-							if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(@handler); }
+							if (this.Expectations.handlers4 is null) { this.Expectations.handlers4 = new(@handler); }
 							else { this.Expectations.handlers4.Add(@handler); }
 							return new(@handler);
 						}
@@ -233,7 +233,7 @@ public static class RecordCreateGeneratorTests
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.RecordTestCreateExpectations.Handler5();
-							if (this.Expectations.handlers5 is null ) { this.Expectations.handlers5 = new(handler); }
+							if (this.Expectations.handlers5 is null) { this.Expectations.handlers5 = new(handler); }
 							else { this.Expectations.handlers5.Add(handler); }
 							return new(handler);
 						}
@@ -252,7 +252,7 @@ public static class RecordCreateGeneratorTests
 							{
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								var handler = new global::MockTests.RecordTestCreateExpectations.Handler6();
-								if (this.Expectations.handlers6 is null ) { this.Expectations.handlers6 = new(handler); }
+								if (this.Expectations.handlers6 is null) { this.Expectations.handlers6 = new(handler); }
 								else { this.Expectations.handlers6.Add(handler); }
 								return new(handler);
 							}
@@ -310,33 +310,33 @@ public static class RecordCreateGeneratorTests
 						
 						public sealed class AdornmentsForHandler2
 							: global::Rocks.Adornments<AdornmentsForHandler2, global::MockTests.RecordTestCreateExpectations.Handler2, global::System.Action>, IAdornmentsForRecordTest<AdornmentsForHandler2>
-						{ 
+						{
 							public AdornmentsForHandler2(global::MockTests.RecordTestCreateExpectations.Handler2 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler3
 							: global::Rocks.Adornments<AdornmentsForHandler3, global::MockTests.RecordTestCreateExpectations.Handler3, global::System.Func<string>, string>, IAdornmentsForRecordTest<AdornmentsForHandler3>
-						{ 
+						{
 							public AdornmentsForHandler3(global::MockTests.RecordTestCreateExpectations.Handler3 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler4
 							: global::Rocks.Adornments<AdornmentsForHandler4, global::MockTests.RecordTestCreateExpectations.Handler4, global::System.Func<global::System.Text.StringBuilder, bool>, bool>, IAdornmentsForRecordTest<AdornmentsForHandler4>
-						{ 
+						{
 							public AdornmentsForHandler4(global::MockTests.RecordTestCreateExpectations.Handler4 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler5
 							: global::Rocks.Adornments<AdornmentsForHandler5, global::MockTests.RecordTestCreateExpectations.Handler5, global::System.Func<int>, int>, IAdornmentsForRecordTest<AdornmentsForHandler5>
-						{ 
+						{
 							public AdornmentsForHandler5(global::MockTests.RecordTestCreateExpectations.Handler5 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler6
 							: global::Rocks.Adornments<AdornmentsForHandler6, global::MockTests.RecordTestCreateExpectations.Handler6, global::System.Func<global::System.Type>, global::System.Type>, IAdornmentsForRecordTest<AdornmentsForHandler6>
-						{ 
+						{
 							public AdornmentsForHandler6(global::MockTests.RecordTestCreateExpectations.Handler6 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 					}
 				}

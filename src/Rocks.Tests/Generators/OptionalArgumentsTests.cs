@@ -183,7 +183,7 @@ public static class OptionalArgumentsTests
 							@c = @c.Transform(3.2),
 						};
 						
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 						else { this.Expectations.handlers0.Add(@handler); }
 						return new(@handler);
 					}
@@ -212,7 +212,7 @@ public static class OptionalArgumentsTests
 								@b = @b.Transform("b"),
 							};
 							
-							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(@handler); }
+							if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(@handler); }
 							else { this.Expectations.handlers1.Add(@handler); }
 							return new(@handler);
 						}
@@ -240,7 +240,7 @@ public static class OptionalArgumentsTests
 								@value = @value,
 							};
 							
-							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(@handler); }
+							if (this.Expectations.handlers2 is null) { this.Expectations.handlers2 = new(@handler); }
 							else { this.Expectations.handlers2.Add(@handler); }
 							return new(@handler);
 						}
@@ -286,21 +286,21 @@ public static class OptionalArgumentsTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::IHaveOptionalArgumentsCreateExpectations.Handler0, global::System.Action<int, string, double>>, IAdornmentsForIHaveOptionalArguments<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::IHaveOptionalArgumentsCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler1
 						: global::Rocks.Adornments<AdornmentsForHandler1, global::IHaveOptionalArgumentsCreateExpectations.Handler1, global::System.Func<int, string, int>, int>, IAdornmentsForIHaveOptionalArguments<AdornmentsForHandler1>
-					{ 
+					{
 						public AdornmentsForHandler1(global::IHaveOptionalArgumentsCreateExpectations.Handler1 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler2
 						: global::Rocks.Adornments<AdornmentsForHandler2, global::IHaveOptionalArgumentsCreateExpectations.Handler2, global::System.Action<int, string, int>>, IAdornmentsForIHaveOptionalArguments<AdornmentsForHandler2>
-					{ 
+					{
 						public AdornmentsForHandler2(global::IHaveOptionalArgumentsCreateExpectations.Handler2 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}

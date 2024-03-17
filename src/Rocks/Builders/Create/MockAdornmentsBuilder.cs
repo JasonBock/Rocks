@@ -31,9 +31,9 @@ internal static class MockAdornmentsBuilder
 				$$"""
 				public sealed class AdornmentsForHandler{{adornments.MemberIdentifier}}{{adornments.TypeArguments}}
 					: {{adornments.FullyQualifiedName}}, IAdornmentsFor{{mockType.Type.FlattenedName}}<AdornmentsForHandler{{adornments.MemberIdentifier}}{{adornments.TypeArguments}}>{{adornments.Constraints}}
-				{ 
+				{
 					public AdornmentsForHandler{{adornments.MemberIdentifier}}({{expectationsFQN}}.Handler{{adornments.MemberIdentifier}}{{adornments.TypeArguments}} handler)
-						: base(handler) { }				
+						: base(handler) { }
 				}
 				""");
 		}

@@ -1,7 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Models;
 using System.CodeDom.Compiler;
-using System.Collections.Immutable;
 
 namespace Rocks.Builders.Create;
 
@@ -11,13 +10,13 @@ internal static class MockProjectedDelegateBuilder
 	{
 		var delegateName = method.ProjectedCallbackDelegateName;
 		var typeArgumentsNamingContext = method.IsGenericMethod ?
-			new VariableNamingContext(typeToMock.TypeArguments.ToImmutableHashSet()) :
-			new VariableNamingContext();
+			new TypeArgumentsNamingContext(typeToMock) :
+			new TypeArgumentsNamingContext();
 
 		var typeArguments = typeToMock.IsOpenGeneric ?
 			$"<{string.Join(", ", typeToMock.TypeArguments)}>" : string.Empty;
 		var methodArguments = method.IsGenericMethod ?
-			$"<{string.Join(", ", method.TypeArguments.Select(_ => typeArgumentsNamingContext[_]))}>" : string.Empty;
+			$"<{string.Join(", ", method.TypeArguments.Select(_ => _.BuildName(typeArgumentsNamingContext)))}>" : string.Empty;
 		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations{typeArguments}.Projections.{delegateName}{methodArguments}";
 	}
 

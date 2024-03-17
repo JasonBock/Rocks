@@ -1,6 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Models;
-using System.Collections.Immutable;
 
 namespace Rocks.Builders.Create;
 
@@ -10,21 +9,21 @@ internal static class DelegateBuilder
 	{
 		var parameters = method.Parameters;
 		var typeArgumentsNamingContext = method.IsGenericMethod ?
-			new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet()) :
-			new VariableNamingContext();
+			new TypeArgumentsNamingContext(method) :
+			new TypeArgumentsNamingContext();
 
 		if (parameters.Length > 0)
 		{
 			var parameterTypes = string.Join(", ", parameters.Select(
-				_ => $"{(method.TypeArguments.Contains(_.Type.FullyQualifiedName) ? typeArgumentsNamingContext[_.Type.FullyQualifiedName] : _.Type.FullyQualifiedName)}{(_.RequiresNullableAnnotation ? "?" : string.Empty)}"));
+				_ => $"{(method.TypeArguments.Any(m => m.FullyQualifiedName == _.Type.FullyQualifiedName) ? _.Type.BuildName(typeArgumentsNamingContext) : _.Type.FullyQualifiedName)}{(_.RequiresNullableAnnotation ? "?" : string.Empty)}"));
 			return !method.ReturnsVoid ?
-			$"global::System.Func<{parameterTypes}, {typeArgumentsNamingContext[method.ReturnType.FullyQualifiedName]}>" :
-			$"global::System.Action<{parameterTypes}>";
+				$"global::System.Func<{parameterTypes}, {method.ReturnType.BuildName(typeArgumentsNamingContext)}>" :
+				$"global::System.Action<{parameterTypes}>";
 		}
 		else
 		{
 			return !method.ReturnsVoid ?
-				$"global::System.Func<{typeArgumentsNamingContext[method.ReturnType.FullyQualifiedName]}>" :
+				$"global::System.Func<{method.ReturnType.BuildName(typeArgumentsNamingContext)}>" :
 				"global::System.Action";
 		}
 	}

@@ -112,7 +112,7 @@ public static class NullableAnnotationTests
 							@value = @value,
 						};
 						
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 						else { this.Expectations.handlers0.Add(@handler); }
 						return new(@handler);
 					}
@@ -149,9 +149,9 @@ public static class NullableAnnotationTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::ITypeOfNullableOfintCreateExpectations.Handler0, global::System.Action<int?>>, IAdornmentsForITypeOfNullableOfint<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::ITypeOfNullableOfintCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}
@@ -308,7 +308,7 @@ public static class NullableAnnotationTests
 							@obj = @obj,
 						};
 						
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 						else { this.Expectations.handlers0.Add(@handler); }
 						return new(@handler);
 					}
@@ -317,7 +317,7 @@ public static class NullableAnnotationTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::NeedNullableCreateExpectations.Handler1();
-						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(handler); }
+						if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
 						else { this.Expectations.handlers1.Add(handler); }
 						return new(handler);
 					}
@@ -326,7 +326,7 @@ public static class NullableAnnotationTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::NeedNullableCreateExpectations.Handler2();
-						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(handler); }
+						if (this.Expectations.handlers2 is null) { this.Expectations.handlers2 = new(handler); }
 						else { this.Expectations.handlers2.Add(handler); }
 						return new(handler);
 					}
@@ -363,21 +363,21 @@ public static class NullableAnnotationTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::NeedNullableCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForNeedNullable<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::NeedNullableCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler1
 						: global::Rocks.Adornments<AdornmentsForHandler1, global::NeedNullableCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForNeedNullable<AdornmentsForHandler1>
-					{ 
+					{
 						public AdornmentsForHandler1(global::NeedNullableCreateExpectations.Handler1 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler2
 						: global::Rocks.Adornments<AdornmentsForHandler2, global::NeedNullableCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForNeedNullable<AdornmentsForHandler2>
-					{ 
+					{
 						public AdornmentsForHandler2(global::NeedNullableCreateExpectations.Handler2 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}
@@ -662,7 +662,7 @@ public static class NullableAnnotationTests
 							@obj = @obj,
 						};
 						
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 						else { this.Expectations.handlers0.Add(@handler); }
 						return new(@handler);
 					}
@@ -671,7 +671,7 @@ public static class NullableAnnotationTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::NeedNullableCreateExpectations.Handler1();
-						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(handler); }
+						if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
 						else { this.Expectations.handlers1.Add(handler); }
 						return new(handler);
 					}
@@ -680,7 +680,7 @@ public static class NullableAnnotationTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::NeedNullableCreateExpectations.Handler2();
-						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(handler); }
+						if (this.Expectations.handlers2 is null) { this.Expectations.handlers2 = new(handler); }
 						else { this.Expectations.handlers2.Add(handler); }
 						return new(handler);
 					}
@@ -695,7 +695,7 @@ public static class NullableAnnotationTests
 							@initializationData = @initializationData.Transform(null),
 						};
 						
-						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(@handler); }
+						if (this.Expectations.handlers3 is null) { this.Expectations.handlers3 = new(@handler); }
 						else { this.Expectations.handlers3.Add(@handler); }
 						return new(@handler);
 					}
@@ -712,7 +712,7 @@ public static class NullableAnnotationTests
 							@initializationData = @initializationData.Transform(null),
 						};
 						
-						if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(@handler); }
+						if (this.Expectations.handlers4 is null) { this.Expectations.handlers4 = new(@handler); }
 						else { this.Expectations.handlers4.Add(@handler); }
 						return new(@handler);
 					}
@@ -751,33 +751,33 @@ public static class NullableAnnotationTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::NeedNullableCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForNeedNullable<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::NeedNullableCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler1
 						: global::Rocks.Adornments<AdornmentsForHandler1, global::NeedNullableCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForNeedNullable<AdornmentsForHandler1>
-					{ 
+					{
 						public AdornmentsForHandler1(global::NeedNullableCreateExpectations.Handler1 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler2
 						: global::Rocks.Adornments<AdornmentsForHandler2, global::NeedNullableCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForNeedNullable<AdornmentsForHandler2>
-					{ 
+					{
 						public AdornmentsForHandler2(global::NeedNullableCreateExpectations.Handler2 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler3
 						: global::Rocks.Adornments<AdornmentsForHandler3, global::NeedNullableCreateExpectations.Handler3, global::System.Func<object?, int>, int>, IAdornmentsForNeedNullable<AdornmentsForHandler3>
-					{ 
+					{
 						public AdornmentsForHandler3(global::NeedNullableCreateExpectations.Handler3 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler4
 						: global::Rocks.Adornments<AdornmentsForHandler4, global::NeedNullableCreateExpectations.Handler4, global::System.Action<object?>>, IAdornmentsForNeedNullable<AdornmentsForHandler4>
-					{ 
+					{
 						public AdornmentsForHandler4(global::NeedNullableCreateExpectations.Handler4 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}

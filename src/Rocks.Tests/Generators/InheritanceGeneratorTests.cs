@@ -227,7 +227,7 @@ public static class InheritanceGeneratorTests
 								@obj = @obj,
 							};
 							
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 							else { this.Expectations.handlers0.Add(@handler); }
 							return new(@handler);
 						}
@@ -236,7 +236,7 @@ public static class InheritanceGeneratorTests
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.JsBinaryOperatorCreateExpectations.Handler1();
-							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(handler); }
+							if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
 							else { this.Expectations.handlers1.Add(handler); }
 							return new(handler);
 						}
@@ -245,7 +245,7 @@ public static class InheritanceGeneratorTests
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.JsBinaryOperatorCreateExpectations.Handler2();
-							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(handler); }
+							if (this.Expectations.handlers2 is null) { this.Expectations.handlers2 = new(handler); }
 							else { this.Expectations.handlers2.Add(handler); }
 							return new(handler);
 						}
@@ -260,7 +260,7 @@ public static class InheritanceGeneratorTests
 								@scope = @scope,
 							};
 							
-							if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(@handler); }
+							if (this.Expectations.handlers4 is null) { this.Expectations.handlers4 = new(@handler); }
 							else { this.Expectations.handlers4.Add(@handler); }
 							return new(@handler);
 						}
@@ -275,7 +275,7 @@ public static class InheritanceGeneratorTests
 								@target = @target,
 							};
 							
-							if (this.Expectations.handlers5 is null ) { this.Expectations.handlers5 = new(@handler); }
+							if (this.Expectations.handlers5 is null) { this.Expectations.handlers5 = new(@handler); }
 							else { this.Expectations.handlers5.Add(@handler); }
 							return new(@handler);
 						}
@@ -312,33 +312,33 @@ public static class InheritanceGeneratorTests
 						
 						public sealed class AdornmentsForHandler0
 							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.JsBinaryOperatorCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForJsBinaryOperator<AdornmentsForHandler0>
-						{ 
+						{
 							public AdornmentsForHandler0(global::MockTests.JsBinaryOperatorCreateExpectations.Handler0 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler1
 							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.JsBinaryOperatorCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForJsBinaryOperator<AdornmentsForHandler1>
-						{ 
+						{
 							public AdornmentsForHandler1(global::MockTests.JsBinaryOperatorCreateExpectations.Handler1 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler2
 							: global::Rocks.Adornments<AdornmentsForHandler2, global::MockTests.JsBinaryOperatorCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForJsBinaryOperator<AdornmentsForHandler2>
-						{ 
+						{
 							public AdornmentsForHandler2(global::MockTests.JsBinaryOperatorCreateExpectations.Handler2 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler4
 							: global::Rocks.Adornments<AdornmentsForHandler4, global::MockTests.JsBinaryOperatorCreateExpectations.Handler4, global::System.Func<global::MockTests.ScriptScopeContext, object>, object>, IAdornmentsForJsBinaryOperator<AdornmentsForHandler4>
-						{ 
+						{
 							public AdornmentsForHandler4(global::MockTests.JsBinaryOperatorCreateExpectations.Handler4 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler5
 							: global::Rocks.Adornments<AdornmentsForHandler5, global::MockTests.JsBinaryOperatorCreateExpectations.Handler5, global::System.Func<object, object>, object>, IAdornmentsForJsBinaryOperator<AdornmentsForHandler5>
-						{ 
+						{
 							public AdornmentsForHandler5(global::MockTests.JsBinaryOperatorCreateExpectations.Handler5 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 					}
 				}

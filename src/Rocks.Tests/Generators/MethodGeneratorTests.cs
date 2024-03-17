@@ -90,7 +90,7 @@ public static class MethodGeneratorTests
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.IMemberCreateExpectations.Handler0();
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(handler); }
+							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
 							else { this.Expectations.handlers0.Add(handler); }
 							return new(handler);
 						}
@@ -127,9 +127,9 @@ public static class MethodGeneratorTests
 						
 						public sealed class AdornmentsForHandler0
 							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IMemberCreateExpectations.Handler0, global::System.Action>, IAdornmentsForIMember<AdornmentsForHandler0>
-						{ 
+						{
 							public AdornmentsForHandler0(global::MockTests.IMemberCreateExpectations.Handler0 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 					}
 				}
@@ -299,7 +299,7 @@ public static class MethodGeneratorTests
 								@membersToExpand = @membersToExpand,
 							};
 							
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 							else { this.Expectations.handlers0.Add(@handler); }
 							return new(@handler);
 						}
@@ -320,7 +320,7 @@ public static class MethodGeneratorTests
 								@membersToExpand = @membersToExpand,
 							};
 							
-							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(@handler); }
+							if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(@handler); }
 							else { this.Expectations.handlers1.Add(@handler); }
 							return new(@handler);
 						}
@@ -357,15 +357,15 @@ public static class MethodGeneratorTests
 						
 						public sealed class AdornmentsForHandler0<TDestination>
 							: global::Rocks.Adornments<AdornmentsForHandler0<TDestination>, global::MockTests.IMapperCreateExpectations.Handler0<TDestination>, global::System.Func<global::System.Linq.IQueryable, object?, global::System.Linq.Expressions.Expression<global::System.Func<TDestination, object>>[], global::System.Linq.IQueryable<TDestination>>, global::System.Linq.IQueryable<TDestination>>, IAdornmentsForIMapper<AdornmentsForHandler0<TDestination>>
-						{ 
+						{
 							public AdornmentsForHandler0(global::MockTests.IMapperCreateExpectations.Handler0<TDestination> handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler1<TDestination>
 							: global::Rocks.Adornments<AdornmentsForHandler1<TDestination>, global::MockTests.IMapperCreateExpectations.Handler1<TDestination>, global::System.Func<global::System.Linq.IQueryable, global::System.Collections.Generic.IDictionary<string, object>, string[], global::System.Linq.IQueryable<TDestination>>, global::System.Linq.IQueryable<TDestination>>, IAdornmentsForIMapper<AdornmentsForHandler1<TDestination>>
-						{ 
+						{
 							public AdornmentsForHandler1(global::MockTests.IMapperCreateExpectations.Handler1<TDestination> handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 					}
 				}
@@ -496,7 +496,7 @@ public static class MethodGeneratorTests
 								@c = @c.Transform(3.2),
 							};
 							
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 							else { this.Expectations.handlers0.Add(@handler); }
 							return new(@handler);
 						}
@@ -535,9 +535,9 @@ public static class MethodGeneratorTests
 						
 						public sealed class AdornmentsForHandler0
 							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IHaveOptionalArgumentsCreateExpectations.Handler0, global::System.Action<int, string, double>>, IAdornmentsForIHaveOptionalArguments<AdornmentsForHandler0>
-						{ 
+						{
 							public AdornmentsForHandler0(global::MockTests.IHaveOptionalArgumentsCreateExpectations.Handler0 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 					}
 				}
@@ -669,7 +669,7 @@ public static class MethodGeneratorTests
 								@values = @values,
 							};
 							
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 							else { this.Expectations.handlers0.Add(@handler); }
 							return new(@handler);
 						}
@@ -708,9 +708,9 @@ public static class MethodGeneratorTests
 						
 						public sealed class AdornmentsForHandler0
 							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IProjectionCreateExpectations.Handler0, global::System.Action<string, int, global::System.Guid[]>>, IAdornmentsForIProjection<AdornmentsForHandler0>
-						{ 
+						{
 							public AdornmentsForHandler0(global::MockTests.IProjectionCreateExpectations.Handler0 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 					}
 				}
@@ -911,7 +911,7 @@ public static class MethodGeneratorTests
 								@i19 = @i19,
 							};
 							
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 							else { this.Expectations.handlers0.Add(@handler); }
 							return new(@handler);
 						}
@@ -948,9 +948,9 @@ public static class MethodGeneratorTests
 						
 						public sealed class AdornmentsForHandler0
 							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IHaveTooMuchCreateExpectations.Handler0, global::MockTests.IHaveTooMuchCreateExpectations.Projections.Callback_383140697323744298072430331353344056628280456971, int>, IAdornmentsForIHaveTooMuch<AdornmentsForHandler0>
-						{ 
+						{
 							public AdornmentsForHandler0(global::MockTests.IHaveTooMuchCreateExpectations.Handler0 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 					}
 				}

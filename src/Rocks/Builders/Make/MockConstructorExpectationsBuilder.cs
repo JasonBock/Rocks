@@ -128,7 +128,7 @@ internal static class MockConstructorExpectationsBuilder
 	private static void Build(IndentedTextWriter writer, TypeReferenceModel type, ImmutableArray<ParameterModel> parameters,
 		bool requiredInitObjectInitialization, bool hasRequiredProperties, string expectationsFullyQualifiedName)
 	{
-		var namingContext = new VariableNamingContext(parameters);
+		var namingContext = new VariablesNamingContext(parameters);
 		var constructorPropertiesParameter =
 			requiredInitObjectInitialization ?
 				[$"{expectationsFullyQualifiedName}.ConstructorProperties{(!hasRequiredProperties ? "?" : string.Empty)} @{namingContext["constructorProperties"]}"] :

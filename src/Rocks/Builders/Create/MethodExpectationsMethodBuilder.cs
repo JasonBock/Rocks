@@ -2,7 +2,6 @@
 using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
-using System.Collections.Immutable;
 
 namespace Rocks.Builders.Create;
 
@@ -14,11 +13,10 @@ internal static class MethodExpectationsMethodBuilder
 		static void BuildImplementation(IndentedTextWriter writer, MethodModel method, bool isGeneratedWithDefaults,
 			string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 		{
-			var namingContext = new VariableNamingContext(method);
 			var needsGenerationWithDefaults = false;
 			var typeArgumentsNamingContext = method.IsGenericMethod ?
-				new VariableNamingContext(method.MockType.TypeArguments.ToImmutableHashSet()) :
-				new VariableNamingContext();
+				new TypeArgumentsNamingContext(method.MockType) :
+				new TypeArgumentsNamingContext();
 
 			var instanceParameters = method.Parameters.Length == 0 ? string.Empty :
 				string.Join(", ", method.Parameters.Select(_ =>
@@ -33,8 +31,8 @@ internal static class MethodExpectationsMethodBuilder
 					else
 					{
 						var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
-						var typeName = method.IsGenericMethod && method.TypeArguments.Contains(_.Type.FullyQualifiedName) ?
-							typeArgumentsNamingContext[_.Type.FullyQualifiedName] : _.Type.FullyQualifiedName;
+						var typeName = method.IsGenericMethod && method.TypeArguments.Any(m => m.FullyQualifiedName == _.Type.FullyQualifiedName) ?
+							_.Type.BuildName(typeArgumentsNamingContext) : _.Type.FullyQualifiedName;
 
 						if (isGeneratedWithDefaults)
 						{
@@ -61,7 +59,7 @@ internal static class MethodExpectationsMethodBuilder
 				}));
 
 			var typeArguments = method.IsGenericMethod ?
-				$"<{string.Join(", ", method.TypeArguments.Select(_ => !method.MockType.TypeArguments.Contains(_) ? _ : typeArgumentsNamingContext[_]))}>" : string.Empty;
+				$"<{string.Join(", ", method.TypeArguments.Select(_ => !method.MockType.TypeArguments.Any(m => m.FullyQualifiedName == _.FullyQualifiedName) ? _.FullyQualifiedName : _.BuildName(typeArgumentsNamingContext)))}>" : string.Empty;
 			var callbackDelegateTypeName = method.RequiresProjectedDelegate ?
 				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, method.MockType) :
 				DelegateBuilder.Build(method);
@@ -82,8 +80,8 @@ internal static class MethodExpectationsMethodBuilder
 						string.Empty :
 						method.ReturnType.IsRefLikeType ?
 							MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(method, method.MockType) :
-							method.IsGenericMethod && method.TypeArguments.Contains(method.ReturnType.FullyQualifiedName) ?
-								typeArgumentsNamingContext[method.ReturnType.FullyQualifiedName] : method.ReturnType.FullyQualifiedName;
+							method.IsGenericMethod && method.TypeArguments.Any(m => m.FullyQualifiedName == method.ReturnType.FullyQualifiedName) ?
+								method.ReturnType.BuildName(typeArgumentsNamingContext) : method.ReturnType.FullyQualifiedName;
 
 				adornmentsType = method.ReturnsVoid ?
 					$"global::Rocks.Adornments<AdornmentsForHandler{method.MemberIdentifier}{typeArguments}, {handlerTypeName}, {callbackDelegateTypeName}>" :
@@ -115,7 +113,7 @@ internal static class MethodExpectationsMethodBuilder
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new {{expectationsFullyQualifiedName}}.Handler{{method.MemberIdentifier}}{{typeArguments}}();
-						if (this.Expectations.handlers{{method.MemberIdentifier}} is null ) { this.Expectations.handlers{{method.MemberIdentifier}} = new(handler); }
+						if (this.Expectations.handlers{{method.MemberIdentifier}} is null) { this.Expectations.handlers{{method.MemberIdentifier}} = new(handler); }
 						else { this.Expectations.handlers{{method.MemberIdentifier}}.Add(handler); }
 						return new(handler);
 					}
@@ -123,7 +121,7 @@ internal static class MethodExpectationsMethodBuilder
 			}
 			else
 			{
-				var handlerContext = new VariableNamingContext(method);
+				var handlerContext = new VariablesNamingContext(method);
 				writer.WriteLine($"internal {hiding}{expectationsFullyQualifiedName}.Adornments.AdornmentsForHandler{method.MemberIdentifier}{typeArguments} {method.Name}{typeArguments}({instanceParameters}){constraints}");
 				writer.WriteLine("{");
 				writer.Indent++;
@@ -165,7 +163,7 @@ internal static class MethodExpectationsMethodBuilder
 					$$"""
 					};
 
-					if (this.Expectations.handlers{{method.MemberIdentifier}} is null ) { this.Expectations.handlers{{method.MemberIdentifier}} = new(@{{handlerContext["handler"]}}); }
+					if (this.Expectations.handlers{{method.MemberIdentifier}} is null) { this.Expectations.handlers{{method.MemberIdentifier}} = new(@{{handlerContext["handler"]}}); }
 					else { this.Expectations.handlers{{method.MemberIdentifier}}.Add(@{{handlerContext["handler"]}}); }
 					return new(@{{handlerContext["handler"]}});
 					""");

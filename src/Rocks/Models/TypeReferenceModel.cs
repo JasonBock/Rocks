@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Builders.Create;
 using Rocks.Extensions;
 using System.Collections.Immutable;
 
@@ -11,7 +12,6 @@ internal sealed record TypeReferenceModel
 		this.FullyQualifiedName = type.GetFullyQualifiedName(compilation);
 		this.FullyQualifiedNameNoGenerics = type.GetFullyQualifiedName(compilation, false);
 		this.FlattenedName = type.GetName(TypeNameOption.Flatten);
-
 		this.NullableAnnotation = type.NullableAnnotation;
 
 		this.AttributesDescription = type.GetAttributes().GetDescription(compilation, AttributeTargets.Class);
@@ -29,8 +29,8 @@ internal sealed record TypeReferenceModel
 		{
 			this.IsOpenGeneric = namedType.IsOpenGeneric();
 			this.Constraints = namedType.GetConstraints(compilation);
-			this.TypeArguments = namedType.TypeArguments.Select(_ => _.GetFullyQualifiedName(compilation)).ToImmutableArray();
-			this.TypeParameters = namedType.TypeParameters.Select(_ => _.GetFullyQualifiedName(compilation)).ToImmutableArray();
+			this.TypeArguments = namedType.TypeArguments.Select(_ => new TypeReferenceModel(_, compilation)).ToImmutableArray();
+			this.TypeParameters = namedType.TypeParameters.Select(_ => new TypeReferenceModel(_, compilation)).ToImmutableArray();
 		}
 
 		this.IsRecord = type.IsRecord;
@@ -38,6 +38,7 @@ internal sealed record TypeReferenceModel
 		this.IsPointer = type.IsPointer();
 		this.IsEsoteric = type.IsEsoteric();
 		this.IsRefLikeType = type.IsRefLikeType;
+		this.IsTupleType = type.IsTupleType;
 
 		var typeParameterTarget = type.IsPointer() ?
 			type.Kind == SymbolKind.PointerType ?
@@ -69,7 +70,24 @@ internal sealed record TypeReferenceModel
 		}
 	}
 
-	internal string AttributesDescription { get; }
+	// TODO: If this is a value tuple, then we need to format
+	// with $"(...)"
+	private static string BuildName(TypeReferenceModel current, TypeArgumentsNamingContext parentNamingContext) => 
+		!current.IsOpenGeneric ?
+			parentNamingContext[current.FullyQualifiedName] :
+			current.IsTupleType ?
+				$"({string.Join(", ", current.TypeArguments.Select(_ => TypeReferenceModel.BuildName(_, parentNamingContext)))})" :
+				$"{current.FullyQualifiedNameNoGenerics}<{string.Join(", ", current.TypeArguments.Select(_ => TypeReferenceModel.BuildName(_, parentNamingContext)))}>";
+
+	internal string BuildName(TypeArgumentsNamingContext parentNamingContext) =>
+		TypeReferenceModel.BuildName(this, parentNamingContext);
+	
+	internal string BuildName(TypeReferenceModel parent) =>
+		TypeReferenceModel.BuildName(this, new TypeArgumentsNamingContext(parent));
+
+	public override string ToString() => this.FullyQualifiedName;
+
+   internal string AttributesDescription { get; }
 	internal EquatableArray<Constraints> Constraints { get; }
 	internal string FlattenedName { get; }
 	internal string FullyQualifiedName { get; }
@@ -81,6 +99,7 @@ internal sealed record TypeReferenceModel
 	internal bool IsRecord { get; }
 	internal bool IsReferenceType { get; }
 	internal bool IsRefLikeType { get; }
+	internal bool IsTupleType { get; }
 	internal SymbolKind Kind { get; }
 	internal string? Namespace { get; }
 	internal NullableAnnotation NullableAnnotation { get; }
@@ -90,7 +109,7 @@ internal sealed record TypeReferenceModel
 	internal string? RefLikeArgProjectedEvaluationDelegateName { get; }
 	internal string? RefLikeArgProjectedName { get; }
 	internal string? RefLikeArgConstructorProjectedName { get; }
-	internal EquatableArray<string> TypeArguments { get; }
-	internal EquatableArray<string> TypeParameters { get; }
+	internal EquatableArray<TypeReferenceModel> TypeArguments { get; }
+	internal EquatableArray<TypeReferenceModel> TypeParameters { get; }
 	internal TypeKind TypeKind { get; }
 }

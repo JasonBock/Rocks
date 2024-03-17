@@ -54,11 +54,32 @@ var typeName = method.IsGenericMethod && method.TypeArguments.Contains(_.Type.Fu
     * Argument evaluation delegate
     * `IsValid()`
 
-With `CsvHelper.Configuration.IHasTypeConverterOptions<TClass, TMember>`, Rocks doesn't implement `Map<>`. It needs to type argument rename with:
+
+Generic Types Big Change
+* DONE - Make `TypeArguments` and `TypeParameters` on both `TypeReferenceModel` and `MethodModel` collections of `TypeReferenceModel` objects. 
+* DONE - Create a method called ... `BuildName()` (?) that maybe does what `GetName()` does, but also has an overload that takes another `TypeReferenceModel parentType` value. That would be used to ensure the type returns a FQN that has renames correct, even if it recursive.
+* DONE - Look for `typeArgumentsNamingContext[` as that should no longer exist.
+* DONE - Look at all `TypeArguments` and `TypeParameters` references and determine how they should change
+    * DONE - `TypeReferenceModel.TypeArguments`
+    * DONE - `TypeReferenceModel.TypeParameters`
+    * DONE - `MethodModel.TypeArguments`
+    * DONE - `MethodModel.TypeParameters`
+* DONE (sans the CsvHelper issue below) - Ensure all Rocks.Tests pass.
+* Add tests for `BuildName()` in `TypeReferenceModel`
+* With `CsvHelper.Configuration.IHasTypeConverterOptions<TClass, TMember>`, Rocks doesn't implement `Map<>`. It needs to type argument rename with:
     * Handler
         * The callback and return types for a handler definition
+        * Argument type definitions
     * Method implementation
         * The return value on the definition
-        * Parameter types
+        * Method parameter types
     * Expectations
         * Parameter types (also for the default switcheroo)
+    * Adornments for handler
+        * Callback parameter definitions
+        * Return value
+* Ensure all Rocks.Tests pass again.
+* Ensure all Rocks.CodeGenerationTests pass.
+* Ensure all Rocks.IntegrationTests pass again.
+* Override `ToString()` on `TypeReferenceModel` to return `FullyQualifiedName` 
+* Should consider doing a test for equality on a `TypeReferenceModel`, and then look for where `.FullyQualifiedName` is used for equality

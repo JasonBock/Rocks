@@ -111,7 +111,7 @@ public static class PointerGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::IPointerUsageCreateExpectations.Handler0();
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
 						else { this.Expectations.handlers0.Add(handler); }
 						return new(handler);
 					}
@@ -148,9 +148,9 @@ public static class PointerGeneratorTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::IPointerUsageCreateExpectations.Projections.AdornmentsForvoidPointerPointer<AdornmentsForHandler0, global::IPointerUsageCreateExpectations.Projections.Callback_311684193689074896480440330448335592561750954598>, IAdornmentsForIPointerUsage<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::IPointerUsageCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}
@@ -269,7 +269,7 @@ public static class PointerGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::IPointerUsageCreateExpectations.Handler0();
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
 						else { this.Expectations.handlers0.Add(handler); }
 						return new(handler);
 					}
@@ -306,9 +306,9 @@ public static class PointerGeneratorTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::IPointerUsageCreateExpectations.Projections.AdornmentsForvoidPointerPointerPointer<AdornmentsForHandler0, global::IPointerUsageCreateExpectations.Projections.Callback_454293505151760244294537034129468955159423240205>, IAdornmentsForIPointerUsage<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::IPointerUsageCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}
@@ -427,7 +427,7 @@ public static class PointerGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::IPointerUsageCreateExpectations.Handler0();
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
 						else { this.Expectations.handlers0.Add(handler); }
 						return new(handler);
 					}
@@ -464,9 +464,9 @@ public static class PointerGeneratorTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::IPointerUsageCreateExpectations.Projections.AdornmentsForvoidPointerPointerPointerPointer<AdornmentsForHandler0, global::IPointerUsageCreateExpectations.Projections.Callback_151894571580036554918620607107927567135334329577>, IAdornmentsForIPointerUsage<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::IPointerUsageCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}
@@ -628,7 +628,7 @@ public static class PointerGeneratorTests
 							@allocator = @allocator,
 						};
 						
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 						else { this.Expectations.handlers0.Add(@handler); }
 						return new(@handler);
 					}
@@ -665,9 +665,9 @@ public static class PointerGeneratorTests
 					
 					public sealed class AdornmentsForHandler0<T>
 						: global::Rocks.Adornments<AdornmentsForHandler0<T>, global::ISurfaceCreateExpectations.Handler0<T>, global::ISurfaceCreateExpectations.Projections.Callback_455733297849133658792680279988631751332086808415<T>>, IAdornmentsForISurface<AdornmentsForHandler0<T>> where T : unmanaged
-					{ 
+					{
 						public AdornmentsForHandler0(global::ISurfaceCreateExpectations.Handler0<T> handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}
@@ -832,7 +832,7 @@ public static class PointerGeneratorTests
 								@value = @value,
 							};
 							
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 							else { this.Expectations.handlers0.Add(@handler); }
 							return new(@handler);
 						}
@@ -869,9 +869,9 @@ public static class PointerGeneratorTests
 						
 						public sealed class AdornmentsForHandler0
 							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_675345066879799784342630291957923402524406707040>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
-						{ 
+						{
 							public AdornmentsForHandler0(global::MockTests.IHavePointersCreateExpectations.Handler0 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 					}
 				}
@@ -999,7 +999,7 @@ public static class PointerGeneratorTests
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0();
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(handler); }
+							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
 							else { this.Expectations.handlers0.Add(handler); }
 							return new(handler);
 						}
@@ -1036,9 +1036,9 @@ public static class PointerGeneratorTests
 						
 						public sealed class AdornmentsForHandler0
 							: global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsForintPointer<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_286972840454368885027555790883633245835670430575>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
-						{ 
+						{
 							public AdornmentsForHandler0(global::MockTests.IHavePointersCreateExpectations.Handler0 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 					}
 				}
@@ -1204,7 +1204,7 @@ public static class PointerGeneratorTests
 								@value = @value,
 							};
 							
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 							else { this.Expectations.handlers0.Add(@handler); }
 							return new(@handler);
 						}
@@ -1241,9 +1241,9 @@ public static class PointerGeneratorTests
 						
 						public sealed class AdornmentsForHandler0
 							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_190405175200901836134072682481961192767771721226>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
-						{ 
+						{
 							public AdornmentsForHandler0(global::MockTests.IHavePointersCreateExpectations.Handler0 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 					}
 				}
@@ -1371,7 +1371,7 @@ public static class PointerGeneratorTests
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0();
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(handler); }
+							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
 							else { this.Expectations.handlers0.Add(handler); }
 							return new(handler);
 						}
@@ -1408,9 +1408,9 @@ public static class PointerGeneratorTests
 						
 						public sealed class AdornmentsForHandler0
 							: global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsFordelegatePointerOfint__void<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_21763219907570820974231853792762578898451171267>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
-						{ 
+						{
 							public AdornmentsForHandler0(global::MockTests.IHavePointersCreateExpectations.Handler0 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 					}
 				}
@@ -1615,7 +1615,7 @@ public static class PointerGeneratorTests
 							{
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0();
-								if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(handler); }
+								if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
 								else { this.Expectations.handlers0.Add(handler); }
 								return new(handler);
 							}
@@ -1637,7 +1637,7 @@ public static class PointerGeneratorTests
 									value = @value,
 								};
 							
-								if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(handler); }
+								if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
 								else { this.Expectations.handlers1.Add(handler); }
 								return new(handler);
 							}
@@ -1680,15 +1680,15 @@ public static class PointerGeneratorTests
 						
 						public sealed class AdornmentsForHandler0
 							: global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsForintPointer<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_286972840454368885027555790883633245835670430575>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
-						{ 
+						{
 							public AdornmentsForHandler0(global::MockTests.IHavePointersCreateExpectations.Handler0 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler1
 							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_675345066879799784342630291957923402524406707040>, IAdornmentsForIHavePointers<AdornmentsForHandler1>
-						{ 
+						{
 							public AdornmentsForHandler1(global::MockTests.IHavePointersCreateExpectations.Handler1 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 					}
 				}
@@ -1893,7 +1893,7 @@ public static class PointerGeneratorTests
 							{
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0();
-								if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(handler); }
+								if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
 								else { this.Expectations.handlers0.Add(handler); }
 								return new(handler);
 							}
@@ -1915,7 +1915,7 @@ public static class PointerGeneratorTests
 									value = @value,
 								};
 							
-								if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(handler); }
+								if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
 								else { this.Expectations.handlers1.Add(handler); }
 								return new(handler);
 							}
@@ -1958,15 +1958,15 @@ public static class PointerGeneratorTests
 						
 						public sealed class AdornmentsForHandler0
 							: global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsFordelegatePointerOfint__void<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_21763219907570820974231853792762578898451171267>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
-						{ 
+						{
 							public AdornmentsForHandler0(global::MockTests.IHavePointersCreateExpectations.Handler0 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler1
 							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_190405175200901836134072682481961192767771721226>, IAdornmentsForIHavePointers<AdornmentsForHandler1>
-						{ 
+						{
 							public AdornmentsForHandler1(global::MockTests.IHavePointersCreateExpectations.Handler1 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 					}
 				}
@@ -2159,7 +2159,7 @@ public static class PointerGeneratorTests
 									@index = @index,
 								};
 								
-								if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+								if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 								else { this.Expectations.handlers0.Add(@handler); }
 								return new(@handler);
 							}
@@ -2183,7 +2183,7 @@ public static class PointerGeneratorTests
 									@value = @value,
 								};
 								
-								if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(@handler); }
+								if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(@handler); }
 								else { this.Expectations.handlers1.Add(@handler); }
 								return new(@handler);
 							}
@@ -2226,15 +2226,15 @@ public static class PointerGeneratorTests
 						
 						public sealed class AdornmentsForHandler0
 							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_651512256251275256331491675489899036574746642609, string>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
-						{ 
+						{
 							public AdornmentsForHandler0(global::MockTests.IHavePointersCreateExpectations.Handler0 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler1
 							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_212973048794667040959187979763248770796810688032>, IAdornmentsForIHavePointers<AdornmentsForHandler1>
-						{ 
+						{
 							public AdornmentsForHandler1(global::MockTests.IHavePointersCreateExpectations.Handler1 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 					}
 				}
@@ -2448,7 +2448,7 @@ public static class PointerGeneratorTests
 									@index = @index,
 								};
 								
-								if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+								if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 								else { this.Expectations.handlers0.Add(@handler); }
 								return new(@handler);
 							}
@@ -2472,7 +2472,7 @@ public static class PointerGeneratorTests
 									@value = @value,
 								};
 								
-								if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(@handler); }
+								if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(@handler); }
 								else { this.Expectations.handlers1.Add(@handler); }
 								return new(@handler);
 							}
@@ -2515,15 +2515,15 @@ public static class PointerGeneratorTests
 						
 						public sealed class AdornmentsForHandler0
 							: global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsForintPointer<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_233526433170798729291170303027806441120958052344>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
-						{ 
+						{
 							public AdornmentsForHandler0(global::MockTests.IHavePointersCreateExpectations.Handler0 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler1
 							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_358052978580071937655814761903436805080473631030>, IAdornmentsForIHavePointers<AdornmentsForHandler1>
-						{ 
+						{
 							public AdornmentsForHandler1(global::MockTests.IHavePointersCreateExpectations.Handler1 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 					}
 				}
@@ -2717,7 +2717,7 @@ public static class PointerGeneratorTests
 									@index = @index,
 								};
 								
-								if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+								if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 								else { this.Expectations.handlers0.Add(@handler); }
 								return new(@handler);
 							}
@@ -2741,7 +2741,7 @@ public static class PointerGeneratorTests
 									@value = @value,
 								};
 								
-								if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(@handler); }
+								if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(@handler); }
 								else { this.Expectations.handlers1.Add(@handler); }
 								return new(@handler);
 							}
@@ -2784,15 +2784,15 @@ public static class PointerGeneratorTests
 						
 						public sealed class AdornmentsForHandler0
 							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_569015130962673970970166158518857080183518071990, string>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
-						{ 
+						{
 							public AdornmentsForHandler0(global::MockTests.IHavePointersCreateExpectations.Handler0 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler1
 							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_685325684978960348804638980049239306739591139789>, IAdornmentsForIHavePointers<AdornmentsForHandler1>
-						{ 
+						{
 							public AdornmentsForHandler1(global::MockTests.IHavePointersCreateExpectations.Handler1 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 					}
 				}
@@ -3006,7 +3006,7 @@ public static class PointerGeneratorTests
 									@index = @index,
 								};
 								
-								if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+								if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 								else { this.Expectations.handlers0.Add(@handler); }
 								return new(@handler);
 							}
@@ -3030,7 +3030,7 @@ public static class PointerGeneratorTests
 									@value = @value,
 								};
 								
-								if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(@handler); }
+								if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(@handler); }
 								else { this.Expectations.handlers1.Add(@handler); }
 								return new(@handler);
 							}
@@ -3073,15 +3073,15 @@ public static class PointerGeneratorTests
 						
 						public sealed class AdornmentsForHandler0
 							: global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsFordelegatePointerOfint__void<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_349909950755307474321032969938976654826966807638>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
-						{ 
+						{
 							public AdornmentsForHandler0(global::MockTests.IHavePointersCreateExpectations.Handler0 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler1
 							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_189832623536291723139685821763903856879932142527>, IAdornmentsForIHavePointers<AdornmentsForHandler1>
-						{ 
+						{
 							public AdornmentsForHandler1(global::MockTests.IHavePointersCreateExpectations.Handler1 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 					}
 				}

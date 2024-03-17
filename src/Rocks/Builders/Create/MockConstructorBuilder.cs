@@ -13,7 +13,7 @@ internal static class MockConstructorBuilder
 		ImmutableArray<ParameterModel> parameters, ImmutableArray<TypeMockModel> shims, string expectationsFullyQualifiedName)
 	{
 		var typeToMockName = type.Type.FullyQualifiedName;
-		var namingContext = new VariableNamingContext(parameters);
+		var namingContext = new VariablesNamingContext(parameters);
 		var hasRequiredProperties = type.ConstructorProperties.Any(_ => _.IsRequired);
 
 		var contextParameters = type.ConstructorProperties.Length == 0 ?
@@ -79,7 +79,7 @@ internal static class MockConstructorBuilder
 	}
 
 	private static void BuildFieldSetters(IndentedTextWriter writer, 
-		VariableNamingContext namingContext, EquatableArray<TypeMockModel> shims,
+		VariablesNamingContext namingContext, EquatableArray<TypeMockModel> shims,
 		EquatableArray<ConstructorPropertyModel> constructorProperties, bool hasRequiredProperties)
 	{
 		if (shims.Length == 0)

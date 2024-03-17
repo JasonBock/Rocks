@@ -277,7 +277,7 @@ public static class RefStructGeneratorTests
 							@obj = @obj,
 						};
 						
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 						else { this.Expectations.handlers0.Add(@handler); }
 						return new(@handler);
 					}
@@ -286,7 +286,7 @@ public static class RefStructGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::ScopedParameterCreateExpectations.Handler1();
-						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(handler); }
+						if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
 						else { this.Expectations.handlers1.Add(handler); }
 						return new(handler);
 					}
@@ -295,7 +295,7 @@ public static class RefStructGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::ScopedParameterCreateExpectations.Handler2();
-						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(handler); }
+						if (this.Expectations.handlers2 is null) { this.Expectations.handlers2 = new(handler); }
 						else { this.Expectations.handlers2.Add(handler); }
 						return new(handler);
 					}
@@ -310,7 +310,7 @@ public static class RefStructGeneratorTests
 							@data = @data,
 						};
 						
-						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(@handler); }
+						if (this.Expectations.handlers3 is null) { this.Expectations.handlers3 = new(@handler); }
 						else { this.Expectations.handlers3.Add(@handler); }
 						return new(@handler);
 					}
@@ -325,7 +325,7 @@ public static class RefStructGeneratorTests
 							@data = @data,
 						};
 						
-						if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(@handler); }
+						if (this.Expectations.handlers4 is null) { this.Expectations.handlers4 = new(@handler); }
 						else { this.Expectations.handlers4.Add(@handler); }
 						return new(@handler);
 					}
@@ -340,7 +340,7 @@ public static class RefStructGeneratorTests
 							@data = @data,
 						};
 						
-						if (this.Expectations.handlers5 is null ) { this.Expectations.handlers5 = new(@handler); }
+						if (this.Expectations.handlers5 is null) { this.Expectations.handlers5 = new(@handler); }
 						else { this.Expectations.handlers5.Add(@handler); }
 						return new(@handler);
 					}
@@ -377,39 +377,39 @@ public static class RefStructGeneratorTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::ScopedParameterCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForScopedParameter<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::ScopedParameterCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler1
 						: global::Rocks.Adornments<AdornmentsForHandler1, global::ScopedParameterCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForScopedParameter<AdornmentsForHandler1>
-					{ 
+					{
 						public AdornmentsForHandler1(global::ScopedParameterCreateExpectations.Handler1 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler2
 						: global::Rocks.Adornments<AdornmentsForHandler2, global::ScopedParameterCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForScopedParameter<AdornmentsForHandler2>
-					{ 
+					{
 						public AdornmentsForHandler2(global::ScopedParameterCreateExpectations.Handler2 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler3
 						: global::Rocks.Adornments<AdornmentsForHandler3, global::ScopedParameterCreateExpectations.Handler3, global::ScopedParameterCreateExpectations.Projections.Callback_37344587070653435397002258189909741093006287352, global::ScopedParameterCreateExpectations.Projections.ReturnValue_305616756374865012389506681414051734154688895315>, IAdornmentsForScopedParameter<AdornmentsForHandler3>
-					{ 
+					{
 						public AdornmentsForHandler3(global::ScopedParameterCreateExpectations.Handler3 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler4
 						: global::Rocks.Adornments<AdornmentsForHandler4, global::ScopedParameterCreateExpectations.Handler4, global::ScopedParameterCreateExpectations.Projections.Callback_664761630147355534768648333290688762182179960624>, IAdornmentsForScopedParameter<AdornmentsForHandler4>
-					{ 
+					{
 						public AdornmentsForHandler4(global::ScopedParameterCreateExpectations.Handler4 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler5
 						: global::Rocks.Adornments<AdornmentsForHandler5, global::ScopedParameterCreateExpectations.Handler5, global::ScopedParameterCreateExpectations.Projections.Callback_427010440114488187383437798228008554619544656801, int>, IAdornmentsForScopedParameter<AdornmentsForHandler5>
-					{ 
+					{
 						public AdornmentsForHandler5(global::ScopedParameterCreateExpectations.Handler5 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}
@@ -637,7 +637,7 @@ public static class RefStructGeneratorTests
 							@sourcePixels = @sourcePixels,
 						};
 						
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 						else { this.Expectations.handlers0.Add(@handler); }
 						return new(@handler);
 					}
@@ -674,9 +674,9 @@ public static class RefStructGeneratorTests
 					
 					public sealed class AdornmentsForHandler0<TSourcePixel>
 						: global::Rocks.Adornments<AdornmentsForHandler0<TSourcePixel>, global::IUseSpanWithOpenGenericCreateExpectations.Handler0<TSourcePixel>, global::IUseSpanWithOpenGenericCreateExpectations.Projections.Callback_153914150755899821317490808130987399395242585077<TSourcePixel>>, IAdornmentsForIUseSpanWithOpenGeneric<AdornmentsForHandler0<TSourcePixel>> where TSourcePixel : unmanaged
-					{ 
+					{
 						public AdornmentsForHandler0(global::IUseSpanWithOpenGenericCreateExpectations.Handler0<TSourcePixel> handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}
@@ -823,7 +823,7 @@ public static class RefStructGeneratorTests
 							@values = @values,
 						};
 						
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 						else { this.Expectations.handlers0.Add(@handler); }
 						return new(@handler);
 					}
@@ -860,9 +860,9 @@ public static class RefStructGeneratorTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::IHaveRefStructCreateExpectations.Handler0, global::IHaveRefStructCreateExpectations.Projections.Callback_635596489375752168847058244661265726662174292173>, IAdornmentsForIHaveRefStruct<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::IHaveRefStructCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}
@@ -962,7 +962,7 @@ public static class RefStructGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::IHaveRefStructCreateExpectations.Handler0();
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
 						else { this.Expectations.handlers0.Add(handler); }
 						return new(handler);
 					}
@@ -999,9 +999,9 @@ public static class RefStructGeneratorTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::IHaveRefStructCreateExpectations.Handler0, global::IHaveRefStructCreateExpectations.Projections.Callback_305616756374865012389506681414051734154688895315, global::IHaveRefStructCreateExpectations.Projections.ReturnValue_305616756374865012389506681414051734154688895315>, IAdornmentsForIHaveRefStruct<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::IHaveRefStructCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}
@@ -1167,7 +1167,7 @@ public static class RefStructGeneratorTests
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::IHaveRefStructCreateExpectations.Handler0();
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(handler); }
+							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
 							else { this.Expectations.handlers0.Add(handler); }
 							return new(handler);
 						}
@@ -1189,7 +1189,7 @@ public static class RefStructGeneratorTests
 								value = @value,
 							};
 						
-							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(handler); }
+							if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
 							else { this.Expectations.handlers1.Add(handler); }
 							return new(handler);
 						}
@@ -1232,15 +1232,15 @@ public static class RefStructGeneratorTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::IHaveRefStructCreateExpectations.Handler0, global::IHaveRefStructCreateExpectations.Projections.Callback_305616756374865012389506681414051734154688895315, global::IHaveRefStructCreateExpectations.Projections.ReturnValue_305616756374865012389506681414051734154688895315>, IAdornmentsForIHaveRefStruct<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::IHaveRefStructCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler1
 						: global::Rocks.Adornments<AdornmentsForHandler1, global::IHaveRefStructCreateExpectations.Handler1, global::IHaveRefStructCreateExpectations.Projections.Callback_502728827610007854864150410092882302521581523006>, IAdornmentsForIHaveRefStruct<AdornmentsForHandler1>
-					{ 
+					{
 						public AdornmentsForHandler1(global::IHaveRefStructCreateExpectations.Handler1 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}
@@ -1414,7 +1414,7 @@ public static class RefStructGeneratorTests
 								@index = @index,
 							};
 							
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 							else { this.Expectations.handlers0.Add(@handler); }
 							return new(@handler);
 						}
@@ -1438,7 +1438,7 @@ public static class RefStructGeneratorTests
 								@value = @value,
 							};
 							
-							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(@handler); }
+							if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(@handler); }
 							else { this.Expectations.handlers1.Add(@handler); }
 							return new(@handler);
 						}
@@ -1481,15 +1481,15 @@ public static class RefStructGeneratorTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::IHaveRefStructCreateExpectations.Handler0, global::IHaveRefStructCreateExpectations.Projections.Callback_397920719143678821085077375314001651657630906476, string>, IAdornmentsForIHaveRefStruct<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::IHaveRefStructCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler1
 						: global::Rocks.Adornments<AdornmentsForHandler1, global::IHaveRefStructCreateExpectations.Handler1, global::IHaveRefStructCreateExpectations.Projections.Callback_258506241168749478916356012154666174557408504246>, IAdornmentsForIHaveRefStruct<AdornmentsForHandler1>
-					{ 
+					{
 						public AdornmentsForHandler1(global::IHaveRefStructCreateExpectations.Handler1 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}
@@ -1664,7 +1664,7 @@ public static class RefStructGeneratorTests
 								@index = @index,
 							};
 							
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 							else { this.Expectations.handlers0.Add(@handler); }
 							return new(@handler);
 						}
@@ -1688,7 +1688,7 @@ public static class RefStructGeneratorTests
 								@value = @value,
 							};
 							
-							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(@handler); }
+							if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(@handler); }
 							else { this.Expectations.handlers1.Add(@handler); }
 							return new(@handler);
 						}
@@ -1731,15 +1731,15 @@ public static class RefStructGeneratorTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::IHaveRefStructCreateExpectations.Handler0, global::IHaveRefStructCreateExpectations.Projections.Callback_46972665627653922407782770464330805999184773834, global::IHaveRefStructCreateExpectations.Projections.ReturnValue_305616756374865012389506681414051734154688895315>, IAdornmentsForIHaveRefStruct<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::IHaveRefStructCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler1
 						: global::Rocks.Adornments<AdornmentsForHandler1, global::IHaveRefStructCreateExpectations.Handler1, global::IHaveRefStructCreateExpectations.Projections.Callback_68834310437553200452622631376483572509682404478>, IAdornmentsForIHaveRefStruct<AdornmentsForHandler1>
-					{ 
+					{
 						public AdornmentsForHandler1(global::IHaveRefStructCreateExpectations.Handler1 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}

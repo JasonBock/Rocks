@@ -188,7 +188,7 @@ public static class AsyncIteratorGeneratorTests
 							@obj = @obj,
 						};
 						
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 						else { this.Expectations.handlers0.Add(@handler); }
 						return new(@handler);
 					}
@@ -197,7 +197,7 @@ public static class AsyncIteratorGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::AsyncEnumerationCreateExpectations.Handler1();
-						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(handler); }
+						if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
 						else { this.Expectations.handlers1.Add(handler); }
 						return new(handler);
 					}
@@ -206,7 +206,7 @@ public static class AsyncIteratorGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::AsyncEnumerationCreateExpectations.Handler2();
-						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(handler); }
+						if (this.Expectations.handlers2 is null) { this.Expectations.handlers2 = new(handler); }
 						else { this.Expectations.handlers2.Add(handler); }
 						return new(handler);
 					}
@@ -221,7 +221,7 @@ public static class AsyncIteratorGeneratorTests
 							@cancellationToken = @cancellationToken.Transform(default),
 						};
 						
-						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(@handler); }
+						if (this.Expectations.handlers3 is null) { this.Expectations.handlers3 = new(@handler); }
 						else { this.Expectations.handlers3.Add(@handler); }
 						return new(@handler);
 					}
@@ -260,27 +260,27 @@ public static class AsyncIteratorGeneratorTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::AsyncEnumerationCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForAsyncEnumeration<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::AsyncEnumerationCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler1
 						: global::Rocks.Adornments<AdornmentsForHandler1, global::AsyncEnumerationCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForAsyncEnumeration<AdornmentsForHandler1>
-					{ 
+					{
 						public AdornmentsForHandler1(global::AsyncEnumerationCreateExpectations.Handler1 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler2
 						: global::Rocks.Adornments<AdornmentsForHandler2, global::AsyncEnumerationCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForAsyncEnumeration<AdornmentsForHandler2>
-					{ 
+					{
 						public AdornmentsForHandler2(global::AsyncEnumerationCreateExpectations.Handler2 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler3
 						: global::Rocks.Adornments<AdornmentsForHandler3, global::AsyncEnumerationCreateExpectations.Handler3, global::System.Func<global::System.Threading.CancellationToken, global::System.Collections.Generic.IAsyncEnumerable<string>>, global::System.Collections.Generic.IAsyncEnumerable<string>>, IAdornmentsForAsyncEnumeration<AdornmentsForHandler3>
-					{ 
+					{
 						public AdornmentsForHandler3(global::AsyncEnumerationCreateExpectations.Handler3 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}

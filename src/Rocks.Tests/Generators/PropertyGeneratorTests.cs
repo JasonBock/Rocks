@@ -141,7 +141,7 @@ public static class PropertyGeneratorTests
 								value = @value,
 							};
 						
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(handler); }
+							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
 							else { this.Expectations.handlers0.Add(handler); }
 							return new(handler);
 						}
@@ -164,7 +164,7 @@ public static class PropertyGeneratorTests
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::IMessagePublishTopologyConfiguratorCreateExpectations.Handler1();
-							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(handler); }
+							if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
 							else { this.Expectations.handlers1.Add(handler); }
 							return new(handler);
 						}
@@ -207,15 +207,15 @@ public static class PropertyGeneratorTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::IMessagePublishTopologyConfiguratorCreateExpectations.Handler0, global::System.Action<bool>>, IAdornmentsForIMessagePublishTopologyConfigurator<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::IMessagePublishTopologyConfiguratorCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler1
 						: global::Rocks.Adornments<AdornmentsForHandler1, global::IMessagePublishTopologyConfiguratorCreateExpectations.Handler1, global::System.Func<bool>, bool>, IAdornmentsForIMessagePublishTopologyConfigurator<AdornmentsForHandler1>
-					{ 
+					{
 						public AdornmentsForHandler1(global::IMessagePublishTopologyConfiguratorCreateExpectations.Handler1 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}
@@ -491,7 +491,7 @@ public static class PropertyGeneratorTests
 							@obj = @obj,
 						};
 						
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 						else { this.Expectations.handlers0.Add(@handler); }
 						return new(@handler);
 					}
@@ -500,7 +500,7 @@ public static class PropertyGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::PrivatePublicPropertiesCreateExpectations.Handler1();
-						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(handler); }
+						if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
 						else { this.Expectations.handlers1.Add(handler); }
 						return new(handler);
 					}
@@ -509,7 +509,7 @@ public static class PropertyGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::PrivatePublicPropertiesCreateExpectations.Handler2();
-						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(handler); }
+						if (this.Expectations.handlers2 is null) { this.Expectations.handlers2 = new(handler); }
 						else { this.Expectations.handlers2.Add(handler); }
 						return new(handler);
 					}
@@ -534,7 +534,7 @@ public static class PropertyGeneratorTests
 								value = @value,
 							};
 						
-							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(handler); }
+							if (this.Expectations.handlers3 is null) { this.Expectations.handlers3 = new(handler); }
 							else { this.Expectations.handlers3.Add(handler); }
 							return new(handler);
 						}
@@ -548,7 +548,7 @@ public static class PropertyGeneratorTests
 								value = @value,
 							};
 						
-							if (this.Expectations.handlers5 is null ) { this.Expectations.handlers5 = new(handler); }
+							if (this.Expectations.handlers5 is null) { this.Expectations.handlers5 = new(handler); }
 							else { this.Expectations.handlers5.Add(handler); }
 							return new(handler);
 						}
@@ -562,7 +562,7 @@ public static class PropertyGeneratorTests
 								value = @value,
 							};
 						
-							if (this.Expectations.handlers7 is null ) { this.Expectations.handlers7 = new(handler); }
+							if (this.Expectations.handlers7 is null) { this.Expectations.handlers7 = new(handler); }
 							else { this.Expectations.handlers7.Add(handler); }
 							return new(handler);
 						}
@@ -605,39 +605,39 @@ public static class PropertyGeneratorTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::PrivatePublicPropertiesCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForPrivatePublicProperties<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::PrivatePublicPropertiesCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler1
 						: global::Rocks.Adornments<AdornmentsForHandler1, global::PrivatePublicPropertiesCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForPrivatePublicProperties<AdornmentsForHandler1>
-					{ 
+					{
 						public AdornmentsForHandler1(global::PrivatePublicPropertiesCreateExpectations.Handler1 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler2
 						: global::Rocks.Adornments<AdornmentsForHandler2, global::PrivatePublicPropertiesCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForPrivatePublicProperties<AdornmentsForHandler2>
-					{ 
+					{
 						public AdornmentsForHandler2(global::PrivatePublicPropertiesCreateExpectations.Handler2 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler3
 						: global::Rocks.Adornments<AdornmentsForHandler3, global::PrivatePublicPropertiesCreateExpectations.Handler3, global::System.Action<string?>>, IAdornmentsForPrivatePublicProperties<AdornmentsForHandler3>
-					{ 
+					{
 						public AdornmentsForHandler3(global::PrivatePublicPropertiesCreateExpectations.Handler3 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler5
 						: global::Rocks.Adornments<AdornmentsForHandler5, global::PrivatePublicPropertiesCreateExpectations.Handler5, global::System.Action<string?>>, IAdornmentsForPrivatePublicProperties<AdornmentsForHandler5>
-					{ 
+					{
 						public AdornmentsForHandler5(global::PrivatePublicPropertiesCreateExpectations.Handler5 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler7
 						: global::Rocks.Adornments<AdornmentsForHandler7, global::PrivatePublicPropertiesCreateExpectations.Handler7, global::System.Action<string?>>, IAdornmentsForPrivatePublicProperties<AdornmentsForHandler7>
-					{ 
+					{
 						public AdornmentsForHandler7(global::PrivatePublicPropertiesCreateExpectations.Handler7 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}
@@ -835,7 +835,7 @@ public static class PropertyGeneratorTests
 							@obj = @obj,
 						};
 						
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 						else { this.Expectations.handlers0.Add(@handler); }
 						return new(@handler);
 					}
@@ -844,7 +844,7 @@ public static class PropertyGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::PrivatePublicPropertyCreateExpectations.Handler1();
-						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(handler); }
+						if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
 						else { this.Expectations.handlers1.Add(handler); }
 						return new(handler);
 					}
@@ -853,7 +853,7 @@ public static class PropertyGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::PrivatePublicPropertyCreateExpectations.Handler2();
-						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(handler); }
+						if (this.Expectations.handlers2 is null) { this.Expectations.handlers2 = new(handler); }
 						else { this.Expectations.handlers2.Add(handler); }
 						return new(handler);
 					}
@@ -878,7 +878,7 @@ public static class PropertyGeneratorTests
 								value = @value,
 							};
 						
-							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(handler); }
+							if (this.Expectations.handlers3 is null) { this.Expectations.handlers3 = new(handler); }
 							else { this.Expectations.handlers3.Add(handler); }
 							return new(handler);
 						}
@@ -921,27 +921,27 @@ public static class PropertyGeneratorTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::PrivatePublicPropertyCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForPrivatePublicProperty<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::PrivatePublicPropertyCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler1
 						: global::Rocks.Adornments<AdornmentsForHandler1, global::PrivatePublicPropertyCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForPrivatePublicProperty<AdornmentsForHandler1>
-					{ 
+					{
 						public AdornmentsForHandler1(global::PrivatePublicPropertyCreateExpectations.Handler1 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler2
 						: global::Rocks.Adornments<AdornmentsForHandler2, global::PrivatePublicPropertyCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForPrivatePublicProperty<AdornmentsForHandler2>
-					{ 
+					{
 						public AdornmentsForHandler2(global::PrivatePublicPropertyCreateExpectations.Handler2 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler3
 						: global::Rocks.Adornments<AdornmentsForHandler3, global::PrivatePublicPropertyCreateExpectations.Handler3, global::System.Action<string?>>, IAdornmentsForPrivatePublicProperty<AdornmentsForHandler3>
-					{ 
+					{
 						public AdornmentsForHandler3(global::PrivatePublicPropertyCreateExpectations.Handler3 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}
@@ -1299,7 +1299,7 @@ public static class PropertyGeneratorTests
 							@obj = @obj,
 						};
 						
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 						else { this.Expectations.handlers0.Add(@handler); }
 						return new(@handler);
 					}
@@ -1308,7 +1308,7 @@ public static class PropertyGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::MixedIndexersCreateExpectations.Handler1();
-						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(handler); }
+						if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
 						else { this.Expectations.handlers1.Add(handler); }
 						return new(handler);
 					}
@@ -1317,7 +1317,7 @@ public static class PropertyGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::MixedIndexersCreateExpectations.Handler2();
-						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(handler); }
+						if (this.Expectations.handlers2 is null) { this.Expectations.handlers2 = new(handler); }
 						else { this.Expectations.handlers2.Add(handler); }
 						return new(handler);
 					}
@@ -1342,7 +1342,7 @@ public static class PropertyGeneratorTests
 								@index = @index,
 							};
 							
-							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(@handler); }
+							if (this.Expectations.handlers3 is null) { this.Expectations.handlers3 = new(@handler); }
 							else { this.Expectations.handlers3.Add(@handler); }
 							return new(@handler);
 						}
@@ -1356,7 +1356,7 @@ public static class PropertyGeneratorTests
 								@index = @index,
 							};
 							
-							if (this.Expectations.handlers5 is null ) { this.Expectations.handlers5 = new(@handler); }
+							if (this.Expectations.handlers5 is null) { this.Expectations.handlers5 = new(@handler); }
 							else { this.Expectations.handlers5.Add(@handler); }
 							return new(@handler);
 						}
@@ -1370,7 +1370,7 @@ public static class PropertyGeneratorTests
 								@index = @index,
 							};
 							
-							if (this.Expectations.handlers9 is null ) { this.Expectations.handlers9 = new(@handler); }
+							if (this.Expectations.handlers9 is null) { this.Expectations.handlers9 = new(@handler); }
 							else { this.Expectations.handlers9.Add(@handler); }
 							return new(@handler);
 						}
@@ -1394,7 +1394,7 @@ public static class PropertyGeneratorTests
 								@value = @value,
 							};
 							
-							if (this.Expectations.handlers6 is null ) { this.Expectations.handlers6 = new(@handler); }
+							if (this.Expectations.handlers6 is null) { this.Expectations.handlers6 = new(@handler); }
 							else { this.Expectations.handlers6.Add(@handler); }
 							return new(@handler);
 						}
@@ -1410,7 +1410,7 @@ public static class PropertyGeneratorTests
 								@value = @value,
 							};
 							
-							if (this.Expectations.handlers7 is null ) { this.Expectations.handlers7 = new(@handler); }
+							if (this.Expectations.handlers7 is null) { this.Expectations.handlers7 = new(@handler); }
 							else { this.Expectations.handlers7.Add(@handler); }
 							return new(@handler);
 						}
@@ -1426,7 +1426,7 @@ public static class PropertyGeneratorTests
 								@value = @value,
 							};
 							
-							if (this.Expectations.handlers10 is null ) { this.Expectations.handlers10 = new(@handler); }
+							if (this.Expectations.handlers10 is null) { this.Expectations.handlers10 = new(@handler); }
 							else { this.Expectations.handlers10.Add(@handler); }
 							return new(@handler);
 						}
@@ -1470,57 +1470,57 @@ public static class PropertyGeneratorTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::MixedIndexersCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForMixedIndexers<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::MixedIndexersCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler1
 						: global::Rocks.Adornments<AdornmentsForHandler1, global::MixedIndexersCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForMixedIndexers<AdornmentsForHandler1>
-					{ 
+					{
 						public AdornmentsForHandler1(global::MixedIndexersCreateExpectations.Handler1 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler2
 						: global::Rocks.Adornments<AdornmentsForHandler2, global::MixedIndexersCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForMixedIndexers<AdornmentsForHandler2>
-					{ 
+					{
 						public AdornmentsForHandler2(global::MixedIndexersCreateExpectations.Handler2 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler3
 						: global::Rocks.Adornments<AdornmentsForHandler3, global::MixedIndexersCreateExpectations.Handler3, global::System.Func<int, string?>, string?>, IAdornmentsForMixedIndexers<AdornmentsForHandler3>
-					{ 
+					{
 						public AdornmentsForHandler3(global::MixedIndexersCreateExpectations.Handler3 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler5
 						: global::Rocks.Adornments<AdornmentsForHandler5, global::MixedIndexersCreateExpectations.Handler5, global::System.Func<long, string?>, string?>, IAdornmentsForMixedIndexers<AdornmentsForHandler5>
-					{ 
+					{
 						public AdornmentsForHandler5(global::MixedIndexersCreateExpectations.Handler5 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler9
 						: global::Rocks.Adornments<AdornmentsForHandler9, global::MixedIndexersCreateExpectations.Handler9, global::System.Func<string, string?>, string?>, IAdornmentsForMixedIndexers<AdornmentsForHandler9>
-					{ 
+					{
 						public AdornmentsForHandler9(global::MixedIndexersCreateExpectations.Handler9 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler6
 						: global::Rocks.Adornments<AdornmentsForHandler6, global::MixedIndexersCreateExpectations.Handler6, global::System.Action<long, string?>>, IAdornmentsForMixedIndexers<AdornmentsForHandler6>
-					{ 
+					{
 						public AdornmentsForHandler6(global::MixedIndexersCreateExpectations.Handler6 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler7
 						: global::Rocks.Adornments<AdornmentsForHandler7, global::MixedIndexersCreateExpectations.Handler7, global::System.Action<global::System.Guid, string?>>, IAdornmentsForMixedIndexers<AdornmentsForHandler7>
-					{ 
+					{
 						public AdornmentsForHandler7(global::MixedIndexersCreateExpectations.Handler7 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler10
 						: global::Rocks.Adornments<AdornmentsForHandler10, global::MixedIndexersCreateExpectations.Handler10, global::System.Action<string, string?>>, IAdornmentsForMixedIndexers<AdornmentsForHandler10>
-					{ 
+					{
 						public AdornmentsForHandler10(global::MixedIndexersCreateExpectations.Handler10 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}
@@ -1863,7 +1863,7 @@ public static class PropertyGeneratorTests
 							@obj = @obj,
 						};
 						
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 						else { this.Expectations.handlers0.Add(@handler); }
 						return new(@handler);
 					}
@@ -1872,7 +1872,7 @@ public static class PropertyGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::MixedPropertiesCreateExpectations.Handler1();
-						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(handler); }
+						if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
 						else { this.Expectations.handlers1.Add(handler); }
 						return new(handler);
 					}
@@ -1881,7 +1881,7 @@ public static class PropertyGeneratorTests
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::MixedPropertiesCreateExpectations.Handler2();
-						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(handler); }
+						if (this.Expectations.handlers2 is null) { this.Expectations.handlers2 = new(handler); }
 						else { this.Expectations.handlers2.Add(handler); }
 						return new(handler);
 					}
@@ -1900,7 +1900,7 @@ public static class PropertyGeneratorTests
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MixedPropertiesCreateExpectations.Handler3();
-							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(handler); }
+							if (this.Expectations.handlers3 is null) { this.Expectations.handlers3 = new(handler); }
 							else { this.Expectations.handlers3.Add(handler); }
 							return new(handler);
 						}
@@ -1908,7 +1908,7 @@ public static class PropertyGeneratorTests
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MixedPropertiesCreateExpectations.Handler5();
-							if (this.Expectations.handlers5 is null ) { this.Expectations.handlers5 = new(handler); }
+							if (this.Expectations.handlers5 is null) { this.Expectations.handlers5 = new(handler); }
 							else { this.Expectations.handlers5.Add(handler); }
 							return new(handler);
 						}
@@ -1916,7 +1916,7 @@ public static class PropertyGeneratorTests
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MixedPropertiesCreateExpectations.Handler9();
-							if (this.Expectations.handlers9 is null ) { this.Expectations.handlers9 = new(handler); }
+							if (this.Expectations.handlers9 is null) { this.Expectations.handlers9 = new(handler); }
 							else { this.Expectations.handlers9.Add(handler); }
 							return new(handler);
 						}
@@ -1938,7 +1938,7 @@ public static class PropertyGeneratorTests
 								value = @value,
 							};
 						
-							if (this.Expectations.handlers6 is null ) { this.Expectations.handlers6 = new(handler); }
+							if (this.Expectations.handlers6 is null) { this.Expectations.handlers6 = new(handler); }
 							else { this.Expectations.handlers6.Add(handler); }
 							return new(handler);
 						}
@@ -1952,7 +1952,7 @@ public static class PropertyGeneratorTests
 								value = @value,
 							};
 						
-							if (this.Expectations.handlers7 is null ) { this.Expectations.handlers7 = new(handler); }
+							if (this.Expectations.handlers7 is null) { this.Expectations.handlers7 = new(handler); }
 							else { this.Expectations.handlers7.Add(handler); }
 							return new(handler);
 						}
@@ -1966,7 +1966,7 @@ public static class PropertyGeneratorTests
 								value = @value,
 							};
 						
-							if (this.Expectations.handlers10 is null ) { this.Expectations.handlers10 = new(handler); }
+							if (this.Expectations.handlers10 is null) { this.Expectations.handlers10 = new(handler); }
 							else { this.Expectations.handlers10.Add(handler); }
 							return new(handler);
 						}
@@ -2010,57 +2010,57 @@ public static class PropertyGeneratorTests
 					
 					public sealed class AdornmentsForHandler0
 						: global::Rocks.Adornments<AdornmentsForHandler0, global::MixedPropertiesCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForMixedProperties<AdornmentsForHandler0>
-					{ 
+					{
 						public AdornmentsForHandler0(global::MixedPropertiesCreateExpectations.Handler0 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler1
 						: global::Rocks.Adornments<AdornmentsForHandler1, global::MixedPropertiesCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForMixedProperties<AdornmentsForHandler1>
-					{ 
+					{
 						public AdornmentsForHandler1(global::MixedPropertiesCreateExpectations.Handler1 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler2
 						: global::Rocks.Adornments<AdornmentsForHandler2, global::MixedPropertiesCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForMixedProperties<AdornmentsForHandler2>
-					{ 
+					{
 						public AdornmentsForHandler2(global::MixedPropertiesCreateExpectations.Handler2 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler3
 						: global::Rocks.Adornments<AdornmentsForHandler3, global::MixedPropertiesCreateExpectations.Handler3, global::System.Func<string?>, string?>, IAdornmentsForMixedProperties<AdornmentsForHandler3>
-					{ 
+					{
 						public AdornmentsForHandler3(global::MixedPropertiesCreateExpectations.Handler3 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler5
 						: global::Rocks.Adornments<AdornmentsForHandler5, global::MixedPropertiesCreateExpectations.Handler5, global::System.Func<string?>, string?>, IAdornmentsForMixedProperties<AdornmentsForHandler5>
-					{ 
+					{
 						public AdornmentsForHandler5(global::MixedPropertiesCreateExpectations.Handler5 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler9
 						: global::Rocks.Adornments<AdornmentsForHandler9, global::MixedPropertiesCreateExpectations.Handler9, global::System.Func<string?>, string?>, IAdornmentsForMixedProperties<AdornmentsForHandler9>
-					{ 
+					{
 						public AdornmentsForHandler9(global::MixedPropertiesCreateExpectations.Handler9 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler6
 						: global::Rocks.Adornments<AdornmentsForHandler6, global::MixedPropertiesCreateExpectations.Handler6, global::System.Action<string?>>, IAdornmentsForMixedProperties<AdornmentsForHandler6>
-					{ 
+					{
 						public AdornmentsForHandler6(global::MixedPropertiesCreateExpectations.Handler6 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler7
 						: global::Rocks.Adornments<AdornmentsForHandler7, global::MixedPropertiesCreateExpectations.Handler7, global::System.Action<string?>>, IAdornmentsForMixedProperties<AdornmentsForHandler7>
-					{ 
+					{
 						public AdornmentsForHandler7(global::MixedPropertiesCreateExpectations.Handler7 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler10
 						: global::Rocks.Adornments<AdornmentsForHandler10, global::MixedPropertiesCreateExpectations.Handler10, global::System.Action<string?>>, IAdornmentsForMixedProperties<AdornmentsForHandler10>
-					{ 
+					{
 						public AdornmentsForHandler10(global::MixedPropertiesCreateExpectations.Handler10 handler)
-							: base(handler) { }				
+							: base(handler) { }
 					}
 				}
 			}

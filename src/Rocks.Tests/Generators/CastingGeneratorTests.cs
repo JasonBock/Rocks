@@ -234,7 +234,7 @@ public static class CastingGeneratorTests
 								@information = @information,
 							};
 							
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 							else { this.Expectations.handlers0.Add(@handler); }
 							return new(@handler);
 						}
@@ -253,7 +253,7 @@ public static class CastingGeneratorTests
 								@information = @information,
 							};
 							
-							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(@handler); }
+							if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(@handler); }
 							else { this.Expectations.handlers1.Add(@handler); }
 							return new(@handler);
 						}
@@ -270,7 +270,7 @@ public static class CastingGeneratorTests
 								@data = @data,
 							};
 							
-							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(@handler); }
+							if (this.Expectations.handlers2 is null) { this.Expectations.handlers2 = new(@handler); }
 							else { this.Expectations.handlers2.Add(@handler); }
 							return new(@handler);
 						}
@@ -287,7 +287,7 @@ public static class CastingGeneratorTests
 								@data = @data,
 							};
 							
-							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(@handler); }
+							if (this.Expectations.handlers3 is null) { this.Expectations.handlers3 = new(@handler); }
 							else { this.Expectations.handlers3.Add(@handler); }
 							return new(@handler);
 						}
@@ -324,27 +324,27 @@ public static class CastingGeneratorTests
 						
 						public sealed class AdornmentsForHandler0<T>
 							: global::Rocks.Adornments<AdornmentsForHandler0<T>, global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler0<T>, global::System.Action<T, string, global::System.Guid>>, IAdornmentsForIHaveOpenGenericsOfGuid<AdornmentsForHandler0<T>>
-						{ 
+						{
 							public AdornmentsForHandler0(global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler0<T> handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler1<T>
 							: global::Rocks.Adornments<AdornmentsForHandler1<T>, global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler1<T>, global::System.Func<T, string, global::System.Guid, T>, T>, IAdornmentsForIHaveOpenGenericsOfGuid<AdornmentsForHandler1<T>>
-						{ 
+						{
 							public AdornmentsForHandler1(global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler1<T> handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler2
 							: global::Rocks.Adornments<AdornmentsForHandler2, global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler2, global::System.Action<int, string>>, IAdornmentsForIHaveOpenGenericsOfGuid<AdornmentsForHandler2>
-						{ 
+						{
 							public AdornmentsForHandler2(global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler2 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler3
 							: global::Rocks.Adornments<AdornmentsForHandler3, global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler3, global::System.Func<int, string, int>, int>, IAdornmentsForIHaveOpenGenericsOfGuid<AdornmentsForHandler3>
-						{ 
+						{
 							public AdornmentsForHandler3(global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler3 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 					}
 				}

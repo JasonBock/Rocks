@@ -15,8 +15,8 @@ internal static class ShimMethodBuilder
 			.Select(_ => _))
 		{
 			var typeArgumentsNamingContext = method.IsGenericMethod ?
-				new VariableNamingContext(shimType.Type.TypeArguments.ToImmutableHashSet()) :
-				new VariableNamingContext();
+				new TypeArgumentsNamingContext(shimType.Type) :
+				new TypeArgumentsNamingContext();
 
 			writer.WriteLine();
 
@@ -30,15 +30,15 @@ internal static class ShimMethodBuilder
 			else
 			{
 				var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadOnly ? "ref readonly " : string.Empty;
-				var returnTypeValue = method.IsGenericMethod && method.TypeArguments.Contains(method.ReturnType.FullyQualifiedName) ?
-					typeArgumentsNamingContext[method.ReturnType.FullyQualifiedName] : method.ReturnType.FullyQualifiedName;
+				var returnTypeValue = method.IsGenericMethod && method.TypeArguments.Any(m => m.FullyQualifiedName == method.ReturnType.FullyQualifiedName) ?
+					method.ReturnType.BuildName(typeArgumentsNamingContext) : method.ReturnType.FullyQualifiedName;
 				returnType = $"{returnByRef}{returnTypeValue}";
 				useNullForgiving = "!";
 			}
 
 			var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 			{
-				var defaultValue = _.HasExplicitDefaultValue && method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? 
+				var defaultValue = _.HasExplicitDefaultValue && method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 					$" = {_.ExplicitDefaultValue}" : string.Empty;
 				var direction = _.RefKind switch
 				{
@@ -47,8 +47,8 @@ internal static class ShimMethodBuilder
 					RefKind.In => "in ",
 					_ => string.Empty
 				};
-				var typeName = method.IsGenericMethod && method.TypeArguments.Contains(_.Type.FullyQualifiedName) ?
-					typeArgumentsNamingContext[_.Type.FullyQualifiedName] : _.Type.FullyQualifiedName;
+				var typeName = method.IsGenericMethod && method.TypeArguments.Any(m => m.FullyQualifiedName == _.Type.FullyQualifiedName) ?
+					_.Type.BuildName(typeArgumentsNamingContext) : _.Type.FullyQualifiedName;
 				var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{typeName} @{_.Name}{defaultValue}";
 				return $"{(_.AttributesDescription.Length > 0 ? $"{_.AttributesDescription} " : string.Empty)}{parameter}";
 			}));
@@ -63,7 +63,7 @@ internal static class ShimMethodBuilder
 			var (accessibility, explicitName) = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 				("public ", string.Empty) : (string.Empty, $"{method.ContainingType.FullyQualifiedName}.");
 			var typeArguments = method.IsGenericMethod ?
-				$"<{string.Join(", ", method.TypeArguments.Select(_ => !method.MockType.TypeArguments.Contains(_) ? _ : typeArgumentsNamingContext[_]))}>" : string.Empty;
+				$"<{string.Join(", ", method.TypeArguments.Select(_ => !method.MockType.TypeArguments.Contains(_) ? _.FullyQualifiedName : _.BuildName(typeArgumentsNamingContext)))}>" : string.Empty;
 
 			if (constraints.Length == 0)
 			{

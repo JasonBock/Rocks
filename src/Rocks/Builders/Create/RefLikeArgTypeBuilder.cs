@@ -1,7 +1,6 @@
 ﻿using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
-using System.Collections.Immutable;
 
 namespace Rocks.Builders.Create;
 
@@ -23,17 +22,17 @@ internal static class RefLikeArgTypeBuilder
 		var typeArguments = typeToMock.IsOpenGeneric ?
 			$"<{string.Join(", ", typeToMock.TypeArguments)}>" : string.Empty;
 		var argForType = type.RefLikeArgProjectedEvaluationDelegateName;
-		var typeArgumentsNamingContext = new VariableNamingContext(typeToMock.TypeArguments.ToImmutableHashSet());
+		var typeArgumentsNamingContext = new TypeArgumentsNamingContext(typeToMock);
 		var argTypeArguments = type.IsOpenGeneric ?
-			$"<{string.Join(", ", type.TypeArguments.Select(_ => typeArgumentsNamingContext[_]))}>" : string.Empty;
+			$"<{string.Join(", ", type.TypeArguments.Select(_ => _.BuildName(typeArgumentsNamingContext)))}>" : string.Empty;
 		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations{typeArguments}.Projections.{argForType}{argTypeArguments}";
 	}
 
 	internal static void Build(IndentedTextWriter writer, TypeReferenceModel type, TypeMockModel typeModel)
 	{
-		var typeArgumentsNamingContext = new VariableNamingContext(typeModel.Type.TypeArguments.ToImmutableHashSet());
+		var typeArgumentsNamingContext = new TypeArgumentsNamingContext(typeModel.Type);
 		var typeArguments = type.IsOpenGeneric ?
-			$"<{string.Join(", ", type.TypeArguments.Select(_ => typeArgumentsNamingContext[_]))}>" : "";
+			$"<{string.Join(", ", type.TypeArguments.Select(_ => _.BuildName(typeArgumentsNamingContext)))}>" : "";
 		var typeParameters = !type.IsOpenGeneric ? $"<{string.Join(", ", type.TypeArguments)}>" : typeArguments;
 		var validationDelegateName = $"{type.RefLikeArgProjectedEvaluationDelegateName}{typeArguments}";
 		var validationDelegateFullyQualifiedName = RefLikeArgTypeBuilder.GetProjectedEvaluationDelegateFullyQualifiedName(type, typeModel.Type);

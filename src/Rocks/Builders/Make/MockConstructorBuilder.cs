@@ -12,7 +12,7 @@ internal static class MockConstructorBuilder
 	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType, 
 		ImmutableArray<ParameterModel> parameters)
 	{
-		var namingContext = new VariableNamingContext(parameters);
+		var namingContext = new VariablesNamingContext(parameters);
 		var requiredInitPropertiesAndIndexers = mockType.ConstructorProperties;
 		var hasRequiredProperties = requiredInitPropertiesAndIndexers.Any(_ => _.IsRequired);
 
@@ -74,7 +74,7 @@ internal static class MockConstructorBuilder
 		}
 	}
 
-	private static void BuildFieldSetters(IndentedTextWriter writer, VariableNamingContext namingContext,
+	private static void BuildFieldSetters(IndentedTextWriter writer, VariablesNamingContext namingContext,
 		EquatableArray<ConstructorPropertyModel> requiredInitPropertiesAndIndexers, bool hasRequiredProperties)
 	{
 		if (requiredInitPropertiesAndIndexers.Length > 0)

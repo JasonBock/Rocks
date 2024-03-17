@@ -135,7 +135,7 @@ public static class AllowNullGeneratorTests
 							{
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								var handler = new global::MockTests.IAllowCreateExpectations.Handler0();
-								if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(handler); }
+								if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
 								else { this.Expectations.handlers0.Add(handler); }
 								return new(handler);
 							}
@@ -157,7 +157,7 @@ public static class AllowNullGeneratorTests
 									value = @value,
 								};
 							
-								if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(handler); }
+								if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
 								else { this.Expectations.handlers1.Add(handler); }
 								return new(handler);
 							}
@@ -200,15 +200,15 @@ public static class AllowNullGeneratorTests
 						
 						public sealed class AdornmentsForHandler0
 							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IAllowCreateExpectations.Handler0, global::System.Func<string>, string>, IAdornmentsForIAllow<AdornmentsForHandler0>
-						{ 
+						{
 							public AdornmentsForHandler0(global::MockTests.IAllowCreateExpectations.Handler0 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler1
 							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IAllowCreateExpectations.Handler1, global::System.Action<string>>, IAdornmentsForIAllow<AdornmentsForHandler1>
-						{ 
+						{
 							public AdornmentsForHandler1(global::MockTests.IAllowCreateExpectations.Handler1 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 					}
 				}
@@ -497,7 +497,7 @@ public static class AllowNullGeneratorTests
 								@obj = @obj,
 							};
 							
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
 							else { this.Expectations.handlers0.Add(@handler); }
 							return new(@handler);
 						}
@@ -506,7 +506,7 @@ public static class AllowNullGeneratorTests
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.AllowCreateExpectations.Handler1();
-							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(handler); }
+							if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
 							else { this.Expectations.handlers1.Add(handler); }
 							return new(handler);
 						}
@@ -515,7 +515,7 @@ public static class AllowNullGeneratorTests
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::MockTests.AllowCreateExpectations.Handler2();
-							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(handler); }
+							if (this.Expectations.handlers2 is null) { this.Expectations.handlers2 = new(handler); }
 							else { this.Expectations.handlers2.Add(handler); }
 							return new(handler);
 						}
@@ -534,7 +534,7 @@ public static class AllowNullGeneratorTests
 							{
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								var handler = new global::MockTests.AllowCreateExpectations.Handler3();
-								if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(handler); }
+								if (this.Expectations.handlers3 is null) { this.Expectations.handlers3 = new(handler); }
 								else { this.Expectations.handlers3.Add(handler); }
 								return new(handler);
 							}
@@ -556,7 +556,7 @@ public static class AllowNullGeneratorTests
 									value = @value,
 								};
 							
-								if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(handler); }
+								if (this.Expectations.handlers4 is null) { this.Expectations.handlers4 = new(handler); }
 								else { this.Expectations.handlers4.Add(handler); }
 								return new(handler);
 							}
@@ -600,33 +600,33 @@ public static class AllowNullGeneratorTests
 						
 						public sealed class AdornmentsForHandler0
 							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.AllowCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForAllow<AdornmentsForHandler0>
-						{ 
+						{
 							public AdornmentsForHandler0(global::MockTests.AllowCreateExpectations.Handler0 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler1
 							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.AllowCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForAllow<AdornmentsForHandler1>
-						{ 
+						{
 							public AdornmentsForHandler1(global::MockTests.AllowCreateExpectations.Handler1 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler2
 							: global::Rocks.Adornments<AdornmentsForHandler2, global::MockTests.AllowCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForAllow<AdornmentsForHandler2>
-						{ 
+						{
 							public AdornmentsForHandler2(global::MockTests.AllowCreateExpectations.Handler2 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler3
 							: global::Rocks.Adornments<AdornmentsForHandler3, global::MockTests.AllowCreateExpectations.Handler3, global::System.Func<string>, string>, IAdornmentsForAllow<AdornmentsForHandler3>
-						{ 
+						{
 							public AdornmentsForHandler3(global::MockTests.AllowCreateExpectations.Handler3 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler4
 							: global::Rocks.Adornments<AdornmentsForHandler4, global::MockTests.AllowCreateExpectations.Handler4, global::System.Action<string>>, IAdornmentsForAllow<AdornmentsForHandler4>
-						{ 
+						{
 							public AdornmentsForHandler4(global::MockTests.AllowCreateExpectations.Handler4 handler)
-								: base(handler) { }				
+								: base(handler) { }
 						}
 					}
 				}

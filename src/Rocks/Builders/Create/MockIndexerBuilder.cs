@@ -18,7 +18,7 @@ internal static class MockIndexerBuilder
 			$"{method.OverridingCodeValue} " : string.Empty;
 		var visibility = methodVisibility != indexerVisibility ?
 			methodVisibility : string.Empty;
-		var namingContext = new VariableNamingContext(method);
+		var namingContext = new VariablesNamingContext(method);
 
 		writer.WriteLines(
 			$$"""
@@ -125,7 +125,7 @@ internal static class MockIndexerBuilder
 			$"{method.OverridingCodeValue} " : string.Empty;
 		var visibility = methodVisibility != indexerVisibility ?
 			methodVisibility : string.Empty;
-		var namingContext = new VariableNamingContext(method);
+		var namingContext = new VariablesNamingContext(method);
 		var accessor = indexer.Accessors == PropertyAccessor.Init || indexer.Accessors == PropertyAccessor.GetAndInit ?
 			"init" : "set";
 
