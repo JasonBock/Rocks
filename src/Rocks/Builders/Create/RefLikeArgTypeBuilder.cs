@@ -1,4 +1,5 @@
-﻿using Rocks.Extensions;
+﻿using Microsoft.CodeAnalysis;
+using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
 
@@ -38,7 +39,7 @@ internal static class RefLikeArgTypeBuilder
 		var validationDelegateFullyQualifiedName = RefLikeArgTypeBuilder.GetProjectedEvaluationDelegateFullyQualifiedName(type, typeModel.Type);
 		var argName = $"{type.RefLikeArgProjectedName}{typeArguments}";
 		var argConstructorName = type.RefLikeArgConstructorProjectedName;
-		var typeName = $"{type.FullyQualifiedNameNoGenerics}{typeParameters}";
+		var typeName = $"{type.FullyQualifiedNameNoGenerics}{typeParameters}{(type.NullableAnnotation == NullableAnnotation.Annotated ? "?" : string.Empty)}";
 
 		writer.WriteLines(
 			$$"""

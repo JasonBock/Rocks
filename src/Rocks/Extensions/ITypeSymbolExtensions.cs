@@ -121,12 +121,15 @@ internal static class ITypeSymbolExtensions
 	{
 		const string GlobalPrefix = "global::";
 
-		var symbolFormatter = SymbolDisplayFormat.FullyQualifiedFormat
-			.AddMiscellaneousOptions(SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);
+		var symbolFormatter = SymbolDisplayFormat.FullyQualifiedFormat;
 
 		if (!addGenerics)
 		{
 			symbolFormatter = symbolFormatter.WithGenericsOptions(SymbolDisplayGenericsOptions.None);
+		}
+		else
+		{
+			symbolFormatter = symbolFormatter.AddMiscellaneousOptions(SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);
 		}
 
 		var symbolName = self.ToDisplayString(symbolFormatter);

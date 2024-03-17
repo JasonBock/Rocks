@@ -23,10 +23,34 @@ internal static class ITypeSymbolExtensionsGetNameTests
 	[TestCase("using System.Collections.Generic; public static class Target { public static void Foo(List<string> a) { } }", "global::System.Collections.Generic.List<string>")]
 	[TestCase("using System.Collections.Generic; using Stuff; namespace Stuff { public class Thing { } } public static class Target { public static void Foo(List<Thing> a) { } }", "global::System.Collections.Generic.List<global::Stuff.Thing>")]
 	[TestCase("using System.Collections.Generic; using Stuff; namespace Stuff { public class Thing { } } public static class Target { public static void Foo(List<Thing?> a) { } }", "global::System.Collections.Generic.List<global::Stuff.Thing?>")]
-	public static void GetReferenceableName(string code, string expectedName)
+	public static void GetFullyQualifiedName(string code, string expectedName)
 	{
 		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetNameTests.GetTypeSymbolFromParameter(code);
 		var name = typeSymbol.GetFullyQualifiedName(compilation);
+
+		Assert.That(name, Is.EqualTo(expectedName));
+	}
+
+	[TestCase("public class Target { public unsafe void Foo(int* a) { } }", "int*")]
+	[TestCase("public class Target { public void Foo(string a) { } }", "string")]
+	[TestCase("public class Target { public void Foo(string? a) { } }", "string")]
+	[TestCase("public class Target<T> { public void Foo(T a) { } }", "T")]
+	[TestCase("public class Target<T> { public void Foo(T? a) { } }", "T")]
+	[TestCase("using System; public class Target { public void Foo(Guid a) { } }", "global::System.Guid")]
+	[TestCase("using System; public class Target { public void Foo(Guid? a) { } }", "global::System.Guid?")]
+	[TestCase("public class Generic<T> { } public class Target<U> { public void Foo(Generic<U> a) { } }", "global::Generic")]
+	[TestCase("public class Generic<T> { } public class Target<U> { public void Foo(Generic<U>? a) { } }", "global::Generic")]
+	[TestCase("public class Outer { public struct Inner { public unsafe void Foo(Inner* a) { } } }", "global::Outer.Inner*")]
+	[TestCase("public class Outer { public struct Inner { public void Foo(Inner a) { } } }", "global::Outer.Inner")]
+	[TestCase("public class Outer<T> { public struct Inner { public void Foo(Inner a) { } } }", "global::Outer.Inner")]
+	[TestCase("public class Outer<T> { public struct Inner { public void Foo(Outer<object>.Inner a) { } } }", "global::Outer.Inner")]
+	[TestCase("using System.Collections.Generic; public static class Target { public static void Foo(List<string> a) { } }", "global::System.Collections.Generic.List")]
+	[TestCase("using System.Collections.Generic; using Stuff; namespace Stuff { public class Thing { } } public static class Target { public static void Foo(List<Thing> a) { } }", "global::System.Collections.Generic.List")]
+	[TestCase("using System.Collections.Generic; using Stuff; namespace Stuff { public class Thing { } } public static class Target { public static void Foo(List<Thing?> a) { } }", "global::System.Collections.Generic.List")]
+	public static void GetFullyQualifiedNameNoGenetrics(string code, string expectedName)
+	{
+		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetNameTests.GetTypeSymbolFromParameter(code);
+		var name = typeSymbol.GetFullyQualifiedName(compilation, false);
 
 		Assert.That(name, Is.EqualTo(expectedName));
 	}

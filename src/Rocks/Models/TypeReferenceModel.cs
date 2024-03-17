@@ -33,6 +33,7 @@ internal sealed record TypeReferenceModel
 			this.TypeParameters = namedType.TypeParameters.Select(_ => new TypeReferenceModel(_, compilation)).ToImmutableArray();
 		}
 
+		this.NullableAnnotation = type.NullableAnnotation;
 		this.IsRecord = type.IsRecord;
 		this.IsReferenceType = type.IsReferenceType;
 		this.IsPointer = type.IsPointer();
@@ -70,14 +71,12 @@ internal sealed record TypeReferenceModel
 		}
 	}
 
-	// TODO: If this is a value tuple, then we need to format
-	// with $"(...)"
 	private static string BuildName(TypeReferenceModel current, TypeArgumentsNamingContext parentNamingContext) => 
 		!current.IsOpenGeneric ?
 			parentNamingContext[current.FullyQualifiedName] :
 			current.IsTupleType ?
 				$"({string.Join(", ", current.TypeArguments.Select(_ => TypeReferenceModel.BuildName(_, parentNamingContext)))})" :
-				$"{current.FullyQualifiedNameNoGenerics}<{string.Join(", ", current.TypeArguments.Select(_ => TypeReferenceModel.BuildName(_, parentNamingContext)))}>";
+				$"{current.FullyQualifiedNameNoGenerics}<{string.Join(", ", current.TypeArguments.Select(_ => TypeReferenceModel.BuildName(_, parentNamingContext)))}>{(current.NullableAnnotation == NullableAnnotation.Annotated ? "?" : string.Empty)}";
 
 	internal string BuildName(TypeArgumentsNamingContext parentNamingContext) =>
 		TypeReferenceModel.BuildName(this, parentNamingContext);
