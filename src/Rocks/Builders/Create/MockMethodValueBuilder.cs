@@ -11,12 +11,11 @@ internal static class MockMethodValueBuilder
 	{
 		var shouldThrowDoesNotReturnException = method.ShouldThrowDoesNotReturnException;
 		var typeArgumentsNamingContext = method.IsGenericMethod ?
-			new TypeArgumentsNamingContext(method.MockType) :
+			new TypeArgumentsNamingContext(method) :
 			new TypeArgumentsNamingContext();
 
 		var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadOnly ? "ref readonly " : string.Empty;
-		var returnTypeValue = method.IsGenericMethod && method.TypeArguments.Any(m => m.FullyQualifiedName == method.ReturnType.FullyQualifiedName) ?
-			method.ReturnType.BuildName(typeArgumentsNamingContext) : method.ReturnType.FullyQualifiedName;
+		var returnTypeValue = method.ReturnType.BuildName(typeArgumentsNamingContext);
 		var returnType = $"{returnByRef}{returnTypeValue}";
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 		{
@@ -33,8 +32,7 @@ internal static class MockMethodValueBuilder
 				_ => string.Empty
 			};
 
-			var typeName = method.IsGenericMethod && method.TypeArguments.Any(m => m.FullyQualifiedName == _.Type.FullyQualifiedName) ?
-				_.Type.BuildName(typeArgumentsNamingContext) : _.Type.FullyQualifiedName;
+			var typeName = _.Type.BuildName(typeArgumentsNamingContext);
 			var parameter = $"{scoped}{direction}{(_.IsParams ? "params " : string.Empty)}{typeName}{requiresNullable} @{_.Name}{defaultValue}";
 			var attributes = _.AttributesDescription;
 			return $"{(attributes.Length > 0 ? $"{attributes} " : string.Empty)}{parameter}";

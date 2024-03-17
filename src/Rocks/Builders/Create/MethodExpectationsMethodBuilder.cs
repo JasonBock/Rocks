@@ -15,7 +15,7 @@ internal static class MethodExpectationsMethodBuilder
 		{
 			var needsGenerationWithDefaults = false;
 			var typeArgumentsNamingContext = method.IsGenericMethod ?
-				new TypeArgumentsNamingContext(method.MockType) :
+				new TypeArgumentsNamingContext(method) :
 				new TypeArgumentsNamingContext();
 
 			var instanceParameters = method.Parameters.Length == 0 ? string.Empty :
@@ -31,8 +31,7 @@ internal static class MethodExpectationsMethodBuilder
 					else
 					{
 						var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
-						var typeName = method.IsGenericMethod && method.TypeArguments.Any(m => m.FullyQualifiedName == _.Type.FullyQualifiedName) ?
-							_.Type.BuildName(typeArgumentsNamingContext) : _.Type.FullyQualifiedName;
+						var typeName = _.Type.BuildName(typeArgumentsNamingContext);
 
 						if (isGeneratedWithDefaults)
 						{
@@ -59,7 +58,7 @@ internal static class MethodExpectationsMethodBuilder
 				}));
 
 			var typeArguments = method.IsGenericMethod ?
-				$"<{string.Join(", ", method.TypeArguments.Select(_ => !method.MockType.TypeArguments.Any(m => m.FullyQualifiedName == _.FullyQualifiedName) ? _.FullyQualifiedName : _.BuildName(typeArgumentsNamingContext)))}>" : string.Empty;
+				$"<{string.Join(", ", method.TypeArguments.Select(_ => _.BuildName(typeArgumentsNamingContext)))}>" : string.Empty;
 			var callbackDelegateTypeName = method.RequiresProjectedDelegate ?
 				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, method.MockType) :
 				DelegateBuilder.Build(method);
@@ -80,8 +79,7 @@ internal static class MethodExpectationsMethodBuilder
 						string.Empty :
 						method.ReturnType.IsRefLikeType ?
 							MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(method, method.MockType) :
-							method.IsGenericMethod && method.TypeArguments.Any(m => m.FullyQualifiedName == method.ReturnType.FullyQualifiedName) ?
-								method.ReturnType.BuildName(typeArgumentsNamingContext) : method.ReturnType.FullyQualifiedName;
+							method.ReturnType.BuildName(typeArgumentsNamingContext);
 
 				adornmentsType = method.ReturnsVoid ?
 					$"global::Rocks.Adornments<AdornmentsForHandler{method.MemberIdentifier}{typeArguments}, {handlerTypeName}, {callbackDelegateTypeName}>" :

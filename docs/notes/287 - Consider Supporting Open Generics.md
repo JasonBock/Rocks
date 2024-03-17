@@ -65,19 +65,25 @@ Generic Types Big Change
     * DONE - `MethodModel.TypeArguments`
     * DONE - `MethodModel.TypeParameters`
 * DONE (sans the CsvHelper issue below) - Ensure all Rocks.Tests pass.
-* Add tests for `BuildName()` in `TypeReferenceModel`
-* With `CsvHelper.Configuration.IHasTypeConverterOptions<TClass, TMember>`, Rocks doesn't implement `Map<>`. It needs to type argument rename with:
-    * Handler
-        * The callback and return types for a handler definition
-        * Argument type definitions
-    * Method implementation
-        * The return value on the definition
-        * Method parameter types
-    * Expectations
-        * Parameter types (also for the default switcheroo)
-    * Adornments for handler
-        * Callback parameter definitions
-        * Return value
+
+Things are just not getting better. I feel like fix or change something, and then something else breaks somewhere.
+
+* DONE - Make a `NamingContext` abstract class that `VariableNamingContext` and a new class, `TypeArgumentNamingContext`, derive from. The first is all about variables and naming, the second is about type arguments.
+* Revisit implementation for type argument renaming
+    * Create
+        * DONE - Handlers
+            * DONE - All types for the base `Handler<...>` type must have renames
+            * DONE - All fields for the `Handler` must have renames
+        * Method implementations
+            * Signature: the return and parameter types must have renames (note the method name type arguments are fine)
+        * Method expectations
+            * All method parameter types must have renames (including the default switcheroo)
+        * Adornments
+            * All types for the base `Adornments<...>` type must have renames, seems to need the fixes starting with the 3rd parameter
+    * Make
+        * Method implementations
+            * Signature: the return and parameter types must have renames (note the method name type arguments are fine)
+* Add tests for `BuildName()` in `TypeReferenceModel`, esp. with tuple types and nested open generic values (e.g. `Dictionary<string, List<T>>` or something like that)
 * Ensure all Rocks.Tests pass again.
 * Ensure all Rocks.CodeGenerationTests pass.
 * Ensure all Rocks.IntegrationTests pass again.

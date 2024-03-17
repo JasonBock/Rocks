@@ -105,10 +105,7 @@ internal static class MockHandlerListBuilder
 				}
 				else
 				{
-					var type = method.TypeArguments.Any(m => m.FullyQualifiedName == parameter.Type.FullyQualifiedName) ?
-						parameter.Type.BuildName(typeArgumentsNamingContext) :
-						parameter.Type.FullyQualifiedName;
-					argumentTypeName = $"public global::Rocks.Argument<{type}{requiresNullable}>";
+					argumentTypeName = $"public global::Rocks.Argument<{parameter.Type.BuildName(typeArgumentsNamingContext)}{requiresNullable}>";
 				}
 
 				writer.WriteLine($"{argumentTypeName} @{name} {{ get; set; }}");

@@ -979,7 +979,7 @@ public static class OpenGenericsGeneratorTests
 					{
 					}
 					
-					public global::IHasMapOptions<TClass, TMember> Map<TMember1>(global::System.Linq.Expressions.Expression<global::System.Func<TClass, TMember>> @expression, bool @useExistingMap = true)
+					public global::IHasMapOptions<TClass, TMember1> Map<TMember1>(global::System.Linq.Expressions.Expression<global::System.Func<TClass, TMember1>> @expression, bool @useExistingMap = true)
 					{
 						return default!;
 					}

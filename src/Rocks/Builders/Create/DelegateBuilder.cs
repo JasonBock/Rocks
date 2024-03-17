@@ -15,7 +15,7 @@ internal static class DelegateBuilder
 		if (parameters.Length > 0)
 		{
 			var parameterTypes = string.Join(", ", parameters.Select(
-				_ => $"{(method.TypeArguments.Any(m => m.FullyQualifiedName == _.Type.FullyQualifiedName) ? _.Type.BuildName(typeArgumentsNamingContext) : _.Type.FullyQualifiedName)}{(_.RequiresNullableAnnotation ? "?" : string.Empty)}"));
+				_ => $"{_.Type.BuildName(typeArgumentsNamingContext)}{(_.RequiresNullableAnnotation ? "?" : string.Empty)}"));
 			return !method.ReturnsVoid ?
 				$"global::System.Func<{parameterTypes}, {method.ReturnType.BuildName(typeArgumentsNamingContext)}>" :
 				$"global::System.Action<{parameterTypes}>";
