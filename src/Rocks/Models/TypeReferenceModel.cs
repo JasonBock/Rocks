@@ -29,8 +29,23 @@ internal sealed record TypeReferenceModel
 		{
 			this.IsOpenGeneric = namedType.IsOpenGeneric();
 			this.Constraints = namedType.GetConstraints(compilation);
-			this.TypeArguments = namedType.TypeArguments.Select(_ => new TypeReferenceModel(_, compilation)).ToImmutableArray();
-			this.TypeParameters = namedType.TypeParameters.Select(_ => new TypeReferenceModel(_, compilation)).ToImmutableArray();
+			this.IsGenericType = namedType.IsGenericType;
+
+			if (this.IsGenericType && !(this.TypeKind == TypeKind.TypeParameter))
+			{
+				this.TypeArguments = namedType.TypeArguments.Select(_ => new TypeReferenceModel(_, compilation)).ToImmutableArray();
+				this.TypeParameters = namedType.TypeParameters.Select(_ => new TypeReferenceModel(_, compilation)).ToImmutableArray();
+			}
+			else
+			{
+				this.TypeArguments = ImmutableArray<TypeReferenceModel>.Empty;
+				this.TypeParameters = ImmutableArray<TypeReferenceModel>.Empty;
+			}
+		}
+		else
+		{
+			this.TypeArguments = ImmutableArray<TypeReferenceModel>.Empty;
+			this.TypeParameters = ImmutableArray<TypeReferenceModel>.Empty;
 		}
 
 		this.NullableAnnotation = type.NullableAnnotation;
@@ -71,28 +86,50 @@ internal sealed record TypeReferenceModel
 		}
 	}
 
-	private static string BuildName(TypeReferenceModel current, TypeArgumentsNamingContext parentNamingContext) => 
-		!current.IsOpenGeneric ?
+	private static string BuildName(TypeReferenceModel current, TypeArgumentsNamingContext parentNamingContext)
+	{
+		static string GetNameForGeneric(TypeReferenceModel current, TypeArgumentsNamingContext parentNamingContext)
+		{
+			// We have to look at the current's type parameter count. If it's exactly 1,
+			// then if the current's FQN is essentially the "same"
+			// as the type parameter sans the nullable (think "T?"), then we add the type argument as-is.
+			// Otherwise we keep recursive descending.
+			// I don't like this heuristic, but I can't think of another way to handle this.
+			if (current.TypeParameters.Length == 1 &&
+				current.FullyQualifiedName.Length == current.TypeParameters[0].FullyQualifiedName.Length + 1 &&
+					current.FullyQualifiedName.StartsWith(current.TypeParameters[0].FullyQualifiedName))
+			{
+				return current.FullyQualifiedName;
+			}
+			else
+			{
+				return $"{current.FullyQualifiedNameNoGenerics}<{string.Join(", ", current.TypeArguments.Select(_ => TypeReferenceModel.BuildName(_, parentNamingContext)))}>{(current.NullableAnnotation == NullableAnnotation.Annotated ? "?" : string.Empty)}";
+			}
+		}
+
+		return !current.IsOpenGeneric ?
 			parentNamingContext[current.FullyQualifiedName] :
 			current.IsTupleType ?
 				$"({string.Join(", ", current.TypeArguments.Select(_ => TypeReferenceModel.BuildName(_, parentNamingContext)))})" :
-				$"{current.FullyQualifiedNameNoGenerics}<{string.Join(", ", current.TypeArguments.Select(_ => TypeReferenceModel.BuildName(_, parentNamingContext)))}>{(current.NullableAnnotation == NullableAnnotation.Annotated ? "?" : string.Empty)}";
+				GetNameForGeneric(current, parentNamingContext);
+	}
 
 	internal string BuildName(TypeArgumentsNamingContext parentNamingContext) =>
 		TypeReferenceModel.BuildName(this, parentNamingContext);
-	
+
 	internal string BuildName(TypeReferenceModel parent) =>
 		TypeReferenceModel.BuildName(this, new TypeArgumentsNamingContext(parent));
 
 	public override string ToString() => this.FullyQualifiedName;
 
-   internal string AttributesDescription { get; }
+	internal string AttributesDescription { get; }
 	internal EquatableArray<Constraints> Constraints { get; }
 	internal string FlattenedName { get; }
 	internal string FullyQualifiedName { get; }
 	internal string FullyQualifiedNameNoGenerics { get; }
 	internal bool IsBasedOnTypeParameter { get; }
 	internal bool IsEsoteric { get; }
+	internal bool IsGenericType { get; }
 	internal bool IsOpenGeneric { get; }
 	internal bool IsPointer { get; }
 	internal bool IsRecord { get; }
