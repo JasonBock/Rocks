@@ -32,12 +32,12 @@ internal static class RefLikeArgTypeBuilder
 	internal static void Build(IndentedTextWriter writer, TypeReferenceModel type, TypeMockModel typeModel)
 	{
 		var typeArgumentsNamingContext = new TypeArgumentsNamingContext(typeModel.Type);
-		var typeArguments = type.IsOpenGeneric ?
-			$"<{string.Join(", ", type.TypeArguments.Select(_ => _.BuildName(typeArgumentsNamingContext)))}>" : "";
-		var typeParameters = !type.IsOpenGeneric ? $"<{string.Join(", ", type.TypeArguments)}>" : typeArguments;
-		var validationDelegateName = $"{type.RefLikeArgProjectedEvaluationDelegateName}{typeArguments}";
+		var typeArguments = type.IsGenericType ?
+			$"<{string.Join(", ", type.TypeArguments.Select(_ => _.BuildName(typeArgumentsNamingContext)))}>" : string.Empty;
+		var typeParameters = !type.IsGenericType ? string.Empty : typeArguments;
+		var validationDelegateName = $"{type.RefLikeArgProjectedEvaluationDelegateName}{(type.IsOpenGeneric ? typeArguments : string.Empty)}";
 		var validationDelegateFullyQualifiedName = RefLikeArgTypeBuilder.GetProjectedEvaluationDelegateFullyQualifiedName(type, typeModel.Type);
-		var argName = $"{type.RefLikeArgProjectedName}{typeArguments}";
+		var argName = $"{type.RefLikeArgProjectedName}{(type.IsOpenGeneric ? typeArguments : string.Empty)}";
 		var argConstructorName = type.RefLikeArgConstructorProjectedName;
 		var typeName = $"{type.FullyQualifiedNameNoGenerics}{typeParameters}{(type.NullableAnnotation == NullableAnnotation.Annotated ? "?" : string.Empty)}";
 

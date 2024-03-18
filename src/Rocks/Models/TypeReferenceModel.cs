@@ -90,14 +90,9 @@ internal sealed record TypeReferenceModel
 	{
 		static string GetNameForGeneric(TypeReferenceModel current, TypeArgumentsNamingContext parentNamingContext)
 		{
-			// We have to look at the current's type parameter count. If it's exactly 1,
-			// then if the current's FQN is essentially the "same"
-			// as the type parameter sans the nullable (think "T?"), then we add the type argument as-is.
-			// Otherwise we keep recursive descending.
-			// I don't like this heuristic, but I can't think of another way to handle this.
-			if (current.TypeParameters.Length == 1 &&
-				current.FullyQualifiedName.Length == current.TypeParameters[0].FullyQualifiedName.Length + 1 &&
-					current.FullyQualifiedName.StartsWith(current.TypeParameters[0].FullyQualifiedName))
+			// I don't like this heuristic, but I can't think of another way to handle the case
+			// where I get a "generic" type that's just an nullable type argument like `TElement?`.
+			if (!current.FullyQualifiedName.Contains('<'))
 			{
 				return current.FullyQualifiedName;
 			}
@@ -116,9 +111,6 @@ internal sealed record TypeReferenceModel
 
 	internal string BuildName(TypeArgumentsNamingContext parentNamingContext) =>
 		TypeReferenceModel.BuildName(this, parentNamingContext);
-
-	internal string BuildName(TypeReferenceModel parent) =>
-		TypeReferenceModel.BuildName(this, new TypeArgumentsNamingContext(parent));
 
 	public override string ToString() => this.FullyQualifiedName;
 

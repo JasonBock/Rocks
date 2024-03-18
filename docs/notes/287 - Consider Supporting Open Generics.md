@@ -69,20 +69,23 @@ Generic Types Big Change
 Things are just not getting better. I feel like fix or change something, and then something else breaks somewhere.
 
 * DONE - Make a `NamingContext` abstract class that `VariableNamingContext` and a new class, `TypeArgumentNamingContext`, derive from. The first is all about variables and naming, the second is about type arguments.
-* Revisit implementation for type argument renaming
+* DONE - Revisit implementation for type argument renaming
     * Create
         * DONE - Handlers
             * DONE - All types for the base `Handler<...>` type must have renames
             * DONE - All fields for the `Handler` must have renames
-        * Method implementations
-            * Signature: the return and parameter types must have renames (note the method name type arguments are fine)
-        * Method expectations
-            * All method parameter types must have renames (including the default switcheroo)
-        * Adornments
-            * All types for the base `Adornments<...>` type must have renames, seems to need the fixes starting with the 3rd parameter
-    * Make
-        * Method implementations
-            * Signature: the return and parameter types must have renames (note the method name type arguments are fine)
+        * DONE - Method implementations
+            * DONE - Signature: the return and parameter types must have renames (note the method name type arguments are fine)
+        * DONE - Method expectations
+            * DONE - All method parameter types must have renames (including the default switcheroo)
+        * DONE - Adornments
+            * DONE - All types for the base `Adornments<...>` type must have renames, seems to need the fixes starting with the 3rd parameter
+    * DONE - Make
+        * DONE - Method implementations
+            * DONE - Signature: the return and parameter types must have renames (note the method name type arguments are fine)
+* DONE - `FullyQualifiedNameNoGenerics` add the `?` right after if it's nullable. We need to remove that, and anyone using it needs to check for nullability after the fact.
+* DONE - Multiple nullables are causing issues
+* DONE - Duplicates of generated types, especially the "Argument" delegate + custom type, need to be handled correctly, even if the type parameter names are different. Maybe I make a custom equality comparer that gets the name without generics, and then does `<,..,>` for all the type parameters, and uses that to compare (I'm guessing I don't need to care about nullable types here)
 * Add tests for `BuildName()` in `TypeReferenceModel`, esp. with tuple types and nested open generic values (e.g. `Dictionary<string, List<T>>` or something like that)
 * Ensure all Rocks.Tests pass again.
 * Ensure all Rocks.CodeGenerationTests pass.
