@@ -1950,9 +1950,9 @@ public static class GenericsGeneratorTests
 						
 						private global::MockTests.IRequestOfobjectCreateExpectations Expectations { get; }
 					}
-					internal sealed class ExplicitMethodExpectationsForIRequestOfobject
+					internal sealed class ExplicitMethodExpectationsForIRequestOfObject
 					{
-						internal ExplicitMethodExpectationsForIRequestOfobject(global::MockTests.IRequestOfobjectCreateExpectations expectations) =>
+						internal ExplicitMethodExpectationsForIRequestOfObject(global::MockTests.IRequestOfobjectCreateExpectations expectations) =>
 							this.Expectations = expectations;
 					
 						internal global::MockTests.IRequestOfobjectCreateExpectations.Adornments.AdornmentsForHandler1 Send(global::Rocks.Argument<global::System.Guid> @requestId, global::Rocks.Argument<object> @message)
@@ -1976,10 +1976,10 @@ public static class GenericsGeneratorTests
 					}
 					
 					internal global::MockTests.IRequestOfobjectCreateExpectations.MethodExpectations Methods { get; }
-					internal global::MockTests.IRequestOfobjectCreateExpectations.ExplicitMethodExpectationsForIRequestOfobject ExplicitMethodsForIRequestOfobject { get; }
+					internal global::MockTests.IRequestOfobjectCreateExpectations.ExplicitMethodExpectationsForIRequestOfObject ExplicitMethodsForIRequestOfObject { get; }
 					
 					internal IRequestOfobjectCreateExpectations() =>
-						(this.Methods, this.ExplicitMethodsForIRequestOfobject) = (new(this), new(this));
+						(this.Methods, this.ExplicitMethodsForIRequestOfObject) = (new(this), new(this));
 					
 					internal global::MockTests.IRequest<object> Instance()
 					{

@@ -12,6 +12,7 @@ internal sealed record TypeReferenceModel
 		this.FullyQualifiedName = type.GetFullyQualifiedName(compilation);
 		this.FullyQualifiedNameNoGenerics = type.GetFullyQualifiedName(compilation, false);
 		this.FlattenedName = type.GetName(TypeNameOption.Flatten);
+		this.Name = type.GetName(TypeNameOption.NoGenerics);
 		this.NullableAnnotation = type.NullableAnnotation;
 
 		this.AttributesDescription = type.GetAttributes().GetDescription(compilation, AttributeTargets.Class);
@@ -148,6 +149,7 @@ internal sealed record TypeReferenceModel
 	internal bool IsRefLikeType { get; }
 	internal bool IsTupleType { get; }
 	internal SymbolKind Kind { get; }
+	internal string Name { get; }
 	internal string? Namespace { get; }
 	internal NullableAnnotation NullableAnnotation { get; }
 	internal string? PointerArgParameterType { get; }

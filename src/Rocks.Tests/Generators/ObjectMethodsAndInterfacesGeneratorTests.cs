@@ -424,9 +424,9 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						private global::MockTests.IMatchObjectOfobjectCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class ExplicitMethodExpectationsForIMatchObjectOfobject
+					internal sealed class ExplicitMethodExpectationsForIMatchObjectOfObject
 					{
-						internal ExplicitMethodExpectationsForIMatchObjectOfobject(global::MockTests.IMatchObjectOfobjectCreateExpectations expectations) =>
+						internal ExplicitMethodExpectationsForIMatchObjectOfObject(global::MockTests.IMatchObjectOfobjectCreateExpectations expectations) =>
 							this.Expectations = expectations;
 					
 						internal global::MockTests.IMatchObjectOfobjectCreateExpectations.Adornments.AdornmentsForHandler0 Equals(global::Rocks.Argument<object?> @other)
@@ -473,10 +473,10 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						private global::MockTests.IMatchObjectOfobjectCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.IMatchObjectOfobjectCreateExpectations.ExplicitMethodExpectationsForIMatchObjectOfobject ExplicitMethodsForIMatchObjectOfobject { get; }
+					internal global::MockTests.IMatchObjectOfobjectCreateExpectations.ExplicitMethodExpectationsForIMatchObjectOfObject ExplicitMethodsForIMatchObjectOfObject { get; }
 					
 					internal IMatchObjectOfobjectCreateExpectations() =>
-						(this.ExplicitMethodsForIMatchObjectOfobject) = (new(this));
+						(this.ExplicitMethodsForIMatchObjectOfObject) = (new(this));
 					
 					internal global::MockTests.IMatchObject<object> Instance()
 					{
@@ -756,9 +756,9 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						private global::MockTests.IMatchObjectOfobjectCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class ExplicitMethodExpectationsForIMatchObjectOfobject
+					internal sealed class ExplicitMethodExpectationsForIMatchObjectOfObject
 					{
-						internal ExplicitMethodExpectationsForIMatchObjectOfobject(global::MockTests.IMatchObjectOfobjectCreateExpectations expectations) =>
+						internal ExplicitMethodExpectationsForIMatchObjectOfObject(global::MockTests.IMatchObjectOfobjectCreateExpectations expectations) =>
 							this.Expectations = expectations;
 					
 						internal global::MockTests.IMatchObjectOfobjectCreateExpectations.Adornments.AdornmentsForHandler0 Equals(global::Rocks.Argument<object?> @other)
@@ -805,10 +805,10 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						private global::MockTests.IMatchObjectOfobjectCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.IMatchObjectOfobjectCreateExpectations.ExplicitMethodExpectationsForIMatchObjectOfobject ExplicitMethodsForIMatchObjectOfobject { get; }
+					internal global::MockTests.IMatchObjectOfobjectCreateExpectations.ExplicitMethodExpectationsForIMatchObjectOfObject ExplicitMethodsForIMatchObjectOfObject { get; }
 					
 					internal IMatchObjectOfobjectCreateExpectations() =>
-						(this.ExplicitMethodsForIMatchObjectOfobject) = (new(this));
+						(this.ExplicitMethodsForIMatchObjectOfObject) = (new(this));
 					
 					internal global::MockTests.IMatchObject<object> Instance()
 					{

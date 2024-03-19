@@ -37,7 +37,9 @@ internal static class PropertyExpectationsBuilder
 			.Where(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
 			.GroupBy(_ => _.ContainingType))
 		{
-			var containingTypeName = typeGroup.Key.FlattenedName;
+			var flattenedGenerics = typeGroup.Key.IsGenericType ?
+				$"Of{string.Join("_", typeGroup.Key.TypeArguments.Select(_ => _.Name))}" : string.Empty;
+			var containingTypeName = $"{typeGroup.Key.Name}{flattenedGenerics}";
 			var explicitTypeName = $"ExplicitIndexerExpectationsFor{containingTypeName}";
 
 			writer.WriteLines(
@@ -298,7 +300,9 @@ internal static class PropertyExpectationsBuilder
 			.Where(_ => !_.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
 			.GroupBy(_ => _.ContainingType))
 		{
-			var containingTypeName = typeGroup.Key.FlattenedName;
+			var flattenedGenerics = typeGroup.Key.IsGenericType ?
+				$"Of{string.Join("_", typeGroup.Key.TypeArguments.Select(_ => _.Name))}" : string.Empty;
+			var containingTypeName = $"{typeGroup.Key.Name}{flattenedGenerics}";
 			var explicitTypeName = $"ExplicitPropertyExpectationsFor{containingTypeName}";
 
 			writer.WriteLines(

@@ -45,9 +45,11 @@ internal static class MethodExpectationsBuilder
 			{
 				foreach (var typeGroup in type.Methods
 					.Where(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
-					.GroupBy(_ => _.ContainingType.FlattenedName))
+					.GroupBy(_ => _.ContainingType))
 				{
-					var containingTypeName = typeGroup.Key;
+					var flattenedGenerics = typeGroup.Key.IsGenericType ?
+						$"Of{string.Join("_", typeGroup.Key.TypeArguments.Select(_ => _.Name))}" : string.Empty;
+					var containingTypeName = $"{typeGroup.Key.Name}{flattenedGenerics}";
 
 					writer.WriteLines(
 						$$"""
