@@ -113,10 +113,9 @@ Things are just not getting better. I feel like fix or change something, and the
 * Update docs
     * Open generics are now supported, and how it's done
     * Event extension methods won't be created if the target type is generic, an open generic is requested, and that target type has events.
-* Override `ToString()` on `TypeReferenceModel` to return `FullyQualifiedName` 
-* Should consider doing a test for equality on a `TypeReferenceModel`, and then look for where `.FullyQualifiedName` is used for equality
 
 TODO FUTURE
 
 * I need to do a massive rethink on naming. The whole `GetName()` extension method, and how I get names, is so convoluted and inconsistent, and it's made adding some features much harder than it should be. I need to figure out what names I need, in what format, and at what times in the application, so I make things consistent. I'd rather have "String" and "Int32" than "string" and "int", though what I **really** want is consistency. Seeing `IService<int>`, I can see where doing `IServiceCreateExpectationsOfint` is "consistent" with what you typed. But you **could** type `IService<Int32>`, and then what?
 * Along with naming, maybe I can generate **all** of the names as they should be for generation. The model is purely there for the code, so...if I know a type parameter `T` needs to change to `T1` because there's a `T` on the type, just do that right away.
+* Override `ToString()` on all model to return a descriptive name. That, and/or consider adding debugging attributes (https://learn.microsoft.com/en-us/dotnet/framework/debug-trace-profile/enhancing-debugging-with-the-debugger-display-attributes). Should also consider adding attributes to types such that they can't be displayed in a debugger. 
