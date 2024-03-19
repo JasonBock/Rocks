@@ -65,11 +65,13 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
 		<PackageReference Include="Microsoft.Extensions.Logging" />
 		<PackageReference Include="Microsoft.Extensions.ServiceDiscovery" />
+		<PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" />
 		<PackageReference Include="Microsoft.Kiota.Abstractions" />
 		<PackageReference Include="Microsoft.OpenApi" />
 		<PackageReference Include="Microsoft.Orleans.Core" />
 		<PackageReference Include="Microsoft.Quantum.Standard" />
 		<PackageReference Include="Mono.Cecil" />
+		<PackageReference Include="Mscc.GenerativeAI" />
 		<PackageReference Include="NetFabric.Numerics.Tensors" />
 		<PackageReference Include="Ninject" />
 		<PackageReference Include="NodaTime" />

@@ -9,7 +9,7 @@
     - [Implementing Handled Methods](#implementing-handled-methods)
     - [Returning Values](#returning-values)
     - [Passing Constructor Arguments to a Mock](#passing-constructor-arguments-to-a-mock)
-    - [Mocking Generic Methods](#mocking-generic-methods)
+    - [Mocking Generic Methods and Types](#mocking-generic-methods-and-types)
     - [Mocking Methods with `ref/out/in` Parameters or `ref readonly` Return Values](#mocking-methods-with-refoutin-parameters-or-ref-readonly-return-values)
     - [Mocking Properties](#mocking-properties)
     - [Mocking Indexers](#mocking-indexers)
@@ -265,7 +265,7 @@ mock.Target();
 expectations.Verify();
 ```
 
-### Mocking Generic Methods
+### Mocking Generic Methods and Types
 
 If generics are in play, Rocks can handle that:
 
@@ -289,6 +289,22 @@ expectations.Verify();
 ```
 
 Note that the generated expectations class name "flattens" the generic by inserting `Of` in the name before the generic parameters are specified.
+
+Starting with Rocks 8.1.0, generic types can be mocked as an open generic:
+
+```c#
+[assembly: RockCreate(typeof(IHaveGenerics<>))]
+
+var expectations = new IHaveGenericsCreateExpectations<string>();
+expectations.Methods.Target<int>("a", 44));
+
+var mock = expectations.Instance();
+mock.Target("a", 44);
+
+expectations.Verify();
+```
+
+This allows for more flexibility, in that only one set of supporting types are generated for the target type. With closed generics, Rocks must generate all of the supporting types for each closed generic.
 
 ### Mocking Methods with `ref/out/in` Parameters or `ref readonly` Return Values
 

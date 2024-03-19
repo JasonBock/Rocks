@@ -38,6 +38,7 @@ internal static class TestGenerator
 		{ "CS8610", ReportDiagnostic.Suppress },
 		{ "CS8613", ReportDiagnostic.Suppress },
 		{ "CS8765", ReportDiagnostic.Suppress },
+		{ "FluentMultiSplitter", ReportDiagnostic.Suppress },
 		{ "SYSLIB0001", ReportDiagnostic.Info },
 		{ "SYSLIB0003", ReportDiagnostic.Info },
 		{ "SYSLIB0017", ReportDiagnostic.Info },

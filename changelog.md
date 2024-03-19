@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Made minor updates to improve performance (issue [#298](https://github.com/JasonBock/Rocks/issues/298))
 - Added support for `scoped` parameters (issue [#304](https://github.com/JasonBock/Rocks/issues/304))
 - Removed the member descriptions in generated code, and replaced with run-time discovery (issue [#307](https://github.com/JasonBock/Rocks/issues/307))
+- Open generics are now supported (e.g. `[RockCreate(typeof(IService<>))]`) (issue [#287](https://github.com/JasonBock/Rocks/issues/287))
 
 ## [8.0.0] - 2024-01-22
 

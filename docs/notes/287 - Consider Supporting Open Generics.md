@@ -90,7 +90,7 @@ Things are just not getting better. I feel like fix or change something, and the
 * DONE - For creates and makes...getting `CS8714` warning, which I really don't think I can address, even the "Generate Overrides" tool in VS doesn't realize it should add a `notnull` constraint for `TKey`. So I'll just disable/restore the warning (oh god, this is going to break a lot of unit tests because of diff). The real issue is that type I'm targeting doesn't have the constraint on it like it should. For example, if I write `public class MyDictionary<TKey, TValue> : Dictionary<TKey, TValue> { }`, the warning will show up right there because `TKey` on `Dictionary<,>` has the `notnull` constraint. So `MyDictionary<,>` **should** have the constraint as well, but it doesn't, because it's a warning, not an error. This should be done for `CS8714`, `CS8633`, and `CS8618`, so I do this in one take and not have to update all the tests three times. NOTE: Need to remove the `#pragma warning disable\restore CS8618` pair done in `Handlers` because it'll be at the top now.
 * DONE - When a type is targeted for mocking, and it's generic, and an open generic is created, and it has events...I can't create the `...EventExtensions` class, because the generic type parameters are unknown. I can't pull the static class into the expectations class because it must be a top-level class. The "extension everything" idea that's been discussed for centuries in C# **may** help in the future, but for now...I'll change Rocks so it doesn't make the helpers in this case, and I'll also need to add docs on this.
 * DONE - I noticed that when I mocked a CSLA type - `IFieldData` - I got the CSLA analyzer saying it needed to be serializable. Shouldn't this have shown up on the `Mock` type? Not because of the custom CSLA analyzer, but because the attribute...oh wait, `IFieldData` doesn't have `[Serializable]` on it, so...oh well? Should still double-check serialization rules for Rocks to see if that all still works or not.
-* `Explicit...For...` classes need to have type arguments specified, otherwise duplicate definitions occur (see `MassTransit.Request<,,,,>` "Create" for an example). Probably need to use the flattened name for these explicit expectation classes.
+* DONE - `Explicit...For...` classes need to have type arguments specified, otherwise duplicate definitions occur (see `MassTransit.Request<,,,,>` "Create" for an example). Probably need to use the flattened name for these explicit expectation classes.
     * `MethodExpectationsBuilder`
     * `PropertyExpectationsBuilder`
     * `IndexerExpectationsBuilder`
@@ -99,13 +99,17 @@ Things are just not getting better. I feel like fix or change something, and the
     * Method parameter types still seem to have some renaming issues
     * Expectation parameter types still seem to have some renaming issues
     * Adornment creation in expectation handlers has issue (`global::Rocks.Arg.Any<T1?>()`)
-* Some type parameter renames are getting truncated by one character
-    
-* When a mock returns one of the "Task" types, type parameter renames need to occur (see `Proto.Deduplication.DeduplicationContext<>`)
+* DONE - Some type parameter renames are getting truncated by one character (example: `SixLabors.ImageSharp.PixelFormats.IPixel<>`)
+    * Base type for the handler
+    * Argument type for the handler field
+    * Parameter type name (note that I'm also getting `?` for the `Equals()` parameter)
+    * Expectations parameter type name
+    * Adornment base type name
+* DONE - When a mock returns one of the "Task" types, type parameter renames need to occur (see `Proto.Deduplication.DeduplicationContext<>`)
+* DONE - Ensure all Rocks.Tests pass again.
+* DONE - Ensure all Rocks.CodeGenerationTests pass.
+* DONE - Ensure all Rocks.IntegrationTests pass again.
 * Add tests for `BuildName()` in `TypeReferenceModel`, esp. with tuple types and nested open generic values (e.g. `Dictionary<string, List<T>>` or something like that)
-* Ensure all Rocks.Tests pass again.
-* Ensure all Rocks.CodeGenerationTests pass.
-* Ensure all Rocks.IntegrationTests pass again.
 * Update docs
     * Open generics are now supported, and how it's done
     * Event extension methods won't be created if the target type is generic, an open generic is requested, and that target type has events.
@@ -114,5 +118,5 @@ Things are just not getting better. I feel like fix or change something, and the
 
 TODO FUTURE
 
-* I need to do a massive rethink on naming. The whole `GetName()` extension method, and how I get names, is so convoluted and inconsistent, and it's made adding some features much harder than it should be. I need to figure out what names I need, in what format, and at what times in the application, so I make things consistent.
+* I need to do a massive rethink on naming. The whole `GetName()` extension method, and how I get names, is so convoluted and inconsistent, and it's made adding some features much harder than it should be. I need to figure out what names I need, in what format, and at what times in the application, so I make things consistent. I'd rather have "String" and "Int32" than "string" and "int", though what I **really** want is consistency. Seeing `IService<int>`, I can see where doing `IServiceCreateExpectationsOfint` is "consistent" with what you typed. But you **could** type `IService<Int32>`, and then what?
 * Along with naming, maybe I can generate **all** of the names as they should be for generation. The model is purely there for the code, so...if I know a type parameter `T` needs to change to `T1` because there's a `T` on the type, just do that right away.
