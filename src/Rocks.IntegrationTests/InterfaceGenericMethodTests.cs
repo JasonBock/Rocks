@@ -34,7 +34,7 @@ public static class InterfaceGenericMethodTests
 
 		var expectations = new IRequestOfobjectCreateExpectations();
 		expectations.Methods.Send(requestId, values).ReturnValue(Task.FromResult(result));
-		expectations.ExplicitMethodsForIRequestOfobject.Send(requestId, message).ReturnValue(Task.CompletedTask);
+		expectations.ExplicitMethodsForIRequestOfObject.Send(requestId, message).ReturnValue(Task.CompletedTask);
 
 		var mock = expectations.Instance();
 		var sendResult = await mock.Send(requestId, values: values).ConfigureAwait(false);

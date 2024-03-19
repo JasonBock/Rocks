@@ -45,9 +45,9 @@ internal static class MockProjectedDelegateBuilder
 		var isUnsafe = method.IsUnsafe ? "unsafe " : string.Empty;
 		var constraints = method.Constraints;
 		var methodConstraints = constraints.Length > 0 ?
-			$" {string.Join(" ", constraints)}" : string.Empty;
+			$" {string.Join(" ", constraints.Select(_ => _.ToString(typeArgumentsNamingContext, method)))}" : string.Empty;
 		var typeArguments = method.IsGenericMethod ?
-			$"<{string.Join(", ", method.TypeArguments)}>" : string.Empty;
+			$"<{string.Join(", ", method.TypeArguments.Select(_ => _.BuildName(typeArgumentsNamingContext)))}>" : string.Empty;
 
 		return $"internal {isUnsafe}delegate {returnType} {method.ProjectedCallbackDelegateName}{typeArguments}({methodParameters}){methodConstraints};";
 	}

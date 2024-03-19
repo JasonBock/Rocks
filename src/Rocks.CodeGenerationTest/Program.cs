@@ -73,7 +73,7 @@ static void TestWithType()
 
 #pragma warning disable EF1001 // Internal EF Core API usage.
 	(var issues, var times) = TestGenerator.Generate(new RockAttributeGenerator(),
-		[typeof(MassTransit.Request<,,,,>)],
+		[typeof(Proto.Deduplication.DeduplicationContext<>)],
 		typesToLoadAssembliesFrom,
 		MappedTypes.GetMappedTypes(),
 		[], BuildType.Make);

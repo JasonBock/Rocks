@@ -105,21 +105,24 @@ internal sealed record TypeReferenceModel
 
 		if (!current.IsOpenGeneric)
 		{
-			return parentNamingContext[current.FullyQualifiedName];
-
-			/*
 			// This could be a type parameter. If so, we should check 
-			// its' nullable annotation, and if it's "Annotated",
+			// its' nullable annotation, and if it's "Annotated" and it ends with "?",
 			// then we should chop off the "?".
-			if (current.TypeKind == TypeKind.TypeParameter && current.NullableAnnotation == NullableAnnotation.Annotated)
+			if (current.TypeKind == TypeKind.TypeParameter)
 			{
-				return parentNamingContext[current.FullyQualifiedName.Substring(0, current.FullyQualifiedName.Length - 1)];
+				if (current.NullableAnnotation == NullableAnnotation.Annotated && current.FullyQualifiedName.EndsWith("?"))
+				{
+					return $"{parentNamingContext[current.FullyQualifiedName.Substring(0, current.FullyQualifiedName.Length - 1)]}?";
+				}
+				else
+				{
+					return parentNamingContext[current.FullyQualifiedName];
+				}
 			}
 			else
 			{
 				return parentNamingContext[current.FullyQualifiedName];
 			}
-			*/
 		}
 		else
 		{

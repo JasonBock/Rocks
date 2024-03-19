@@ -94,11 +94,13 @@ Things are just not getting better. I feel like fix or change something, and the
     * `MethodExpectationsBuilder`
     * `PropertyExpectationsBuilder`
     * `IndexerExpectationsBuilder`
-* Renames (see `MassTransit.ExceptionConsumeContext<>` "Create")
+* DONE - Renames (see `MassTransit.ExceptionConsumeContext<>` "Create")
     * Projected callback and return value delegates should have type parameters if needed, with resolved names
     * Method parameter types still seem to have some renaming issues
     * Expectation parameter types still seem to have some renaming issues
     * Adornment creation in expectation handlers has issue (`global::Rocks.Arg.Any<T1?>()`)
+* Some type parameter renames are getting truncated by one character
+    
 * When a mock returns one of the "Task" types, type parameter renames need to occur (see `Proto.Deduplication.DeduplicationContext<>`)
 * Add tests for `BuildName()` in `TypeReferenceModel`, esp. with tuple types and nested open generic values (e.g. `Dictionary<string, List<T>>` or something like that)
 * Ensure all Rocks.Tests pass again.
@@ -109,3 +111,8 @@ Things are just not getting better. I feel like fix or change something, and the
     * Event extension methods won't be created if the target type is generic, an open generic is requested, and that target type has events.
 * Override `ToString()` on `TypeReferenceModel` to return `FullyQualifiedName` 
 * Should consider doing a test for equality on a `TypeReferenceModel`, and then look for where `.FullyQualifiedName` is used for equality
+
+TODO FUTURE
+
+* I need to do a massive rethink on naming. The whole `GetName()` extension method, and how I get names, is so convoluted and inconsistent, and it's made adding some features much harder than it should be. I need to figure out what names I need, in what format, and at what times in the application, so I make things consistent.
+* Along with naming, maybe I can generate **all** of the names as they should be for generation. The model is purely there for the code, so...if I know a type parameter `T` needs to change to `T1` because there's a `T` on the type, just do that right away.
