@@ -455,6 +455,8 @@ expectations.Verify();
 
 Rocks generates extension methods for every adornments object (which is returned when an expectation is set). The naming pattern is `Raise{Event name}`. There is an `AddRaiseEvent()` method you can call directly, but the extension methods makes it convenient to pass in the right event name and its' corresponding event argument value.
 
+Note that these extension methods won't be created if the mock type is generic, an open generic is requested, and there are events on the mock type. This is due to the way the extension methods are created. This situation should be relative rare, and `AddRaiseEvent()` can still be used in this case. (This limitation is being tracked with [this issue](https://github.com/JasonBock/Rocks/issues/309) - hopefully this will be resolved in the future.)
+
 ### Optional Arguments
 
 If your method or indexer has optional arguments, you can handle them just like other arguments. You can also use `Arg.IsDefault()` if you want to use the default argument no matter what it is (or if it changes in the future). Here's what that looks like:
