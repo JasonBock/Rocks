@@ -83,11 +83,7 @@ internal static class MockBuilder
 		writer.Indent--;
 		writer.WriteLine("}");
 
-		if (mockType.Events.Length > 0)
-		{
-			writer.WriteLine();
-			MockEventExtensionsBuilder.Build(writer, mockType, expectationsFQN);
-		}
+		MockEventExtensionsBuilder.Build(writer, mockType, expectationsFQN);
 
 		return wereTypesProjected;
 	}

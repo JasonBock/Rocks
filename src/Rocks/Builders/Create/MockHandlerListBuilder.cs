@@ -9,25 +9,8 @@ internal static class MockHandlerListBuilder
 {
 	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName)
 	{
-		var hasParameters = mockType.Methods.Any(_ => _.Parameters.Length > 0) ||
-			mockType.Properties.Any(_ => (_.GetMethod?.Parameters.Length > 0) || (_.SetMethod?.Parameters.Length > 0));
-
-		if (hasParameters)
-		{
-			// CS8618 - Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-			// We know we're going to set this and we have control over that, so we emit the pragma to shut the compiler up.
-			writer.WriteLine("#pragma warning disable CS8618");
-		}
-
 		BuildMethodHandlerTypes(writer, mockType, expectationsFullyQualifiedName);
 		BuildPropertyHandlerTypes(writer, mockType, expectationsFullyQualifiedName);
-
-		if (hasParameters)
-		{
-			// CS8618 - Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-			// We know we're going to set this and we have control over that, so we emit the pragma to shut the compiler up.
-			writer.WriteLine("#pragma warning restore CS8618");
-		}
 	}
 
 	private static void BuildHandler(IndentedTextWriter writer, MethodModel method, uint memberIdentifier, string expectationsFullyQualifiedName)

@@ -102,11 +102,30 @@ internal sealed record TypeReferenceModel
 			}
 		}
 
-		return !current.IsOpenGeneric ?
-			parentNamingContext[current.FullyQualifiedName] :
-			current.IsTupleType ?
-				$"({string.Join(", ", current.TypeArguments.Select(_ => TypeReferenceModel.BuildName(_, parentNamingContext)))})" :
-				GetNameForGeneric(current, parentNamingContext);
+		if (!current.IsOpenGeneric)
+		{
+			return parentNamingContext[current.FullyQualifiedName];
+
+			/*
+			// This could be a type parameter. If so, we should check 
+			// its' nullable annotation, and if it's "Annotated",
+			// then we should chop off the "?".
+			if (current.TypeKind == TypeKind.TypeParameter && current.NullableAnnotation == NullableAnnotation.Annotated)
+			{
+				return parentNamingContext[current.FullyQualifiedName.Substring(0, current.FullyQualifiedName.Length - 1)];
+			}
+			else
+			{
+				return parentNamingContext[current.FullyQualifiedName];
+			}
+			*/
+		}
+		else
+		{
+			return current.IsTupleType ?
+				  $"({string.Join(", ", current.TypeArguments.Select(_ => TypeReferenceModel.BuildName(_, parentNamingContext)))})" :
+				  GetNameForGeneric(current, parentNamingContext);
+		}
 	}
 
 	internal string BuildName(TypeArgumentsNamingContext parentNamingContext) =>

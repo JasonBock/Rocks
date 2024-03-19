@@ -10,7 +10,7 @@ internal static class MockProjectedDelegateBuilder
 	{
 		var delegateName = method.ProjectedCallbackDelegateName;
 		var typeArgumentsNamingContext = method.IsGenericMethod ?
-			new TypeArgumentsNamingContext(typeToMock) :
+			new TypeArgumentsNamingContext(method) :
 			new TypeArgumentsNamingContext();
 
 		var typeArguments = typeToMock.IsOpenGeneric ?
@@ -30,12 +30,16 @@ internal static class MockProjectedDelegateBuilder
 
 	internal static string GetProjectedDelegate(MethodModel method)
 	{
-		var returnType = method.ReturnType.FullyQualifiedName;
+		var typeArgumentsNamingContext = method.IsGenericMethod ?
+			new TypeArgumentsNamingContext(method) :
+			new TypeArgumentsNamingContext();
+
+		var returnType = method.ReturnType.BuildName(typeArgumentsNamingContext);
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 		{
 			var scoped = _.IsScoped ? "scoped " : string.Empty;
 			var direction = _.RefKind == RefKind.Ref ? "ref " : _.RefKind == RefKind.Out ? "out " : string.Empty;
-			var parameter = $"{scoped}{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName} @{_.Name}";
+			var parameter = $"{scoped}{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.BuildName(typeArgumentsNamingContext)} @{_.Name}";
 			return $"{_.AttributesDescription}{parameter}";
 		}));
 		var isUnsafe = method.IsUnsafe ? "unsafe " : string.Empty;
@@ -48,8 +52,13 @@ internal static class MockProjectedDelegateBuilder
 		return $"internal {isUnsafe}delegate {returnType} {method.ProjectedCallbackDelegateName}{typeArguments}({methodParameters}){methodConstraints};";
 	}
 
-	internal static string GetProjectedReturnValueDelegate(MethodModel method) =>
-		$"internal {(method.IsUnsafe ? "unsafe " : string.Empty)}delegate {method.ReturnType.FullyQualifiedName} {method.ProjectedReturnValueDelegateName}();";
+	internal static string GetProjectedReturnValueDelegate(MethodModel method)
+	{
+		var typeArgumentsNamingContext = method.IsGenericMethod ?
+			new TypeArgumentsNamingContext(method) :
+			new TypeArgumentsNamingContext();
+		return $"internal {(method.IsUnsafe ? "unsafe " : string.Empty)}delegate {method.ReturnType.BuildName(typeArgumentsNamingContext)} {method.ProjectedReturnValueDelegateName}();";
+	}
 
 	internal static void Build(IndentedTextWriter writer, TypeMockModel type)
 	{
