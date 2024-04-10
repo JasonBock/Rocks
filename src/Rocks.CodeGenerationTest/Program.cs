@@ -142,6 +142,7 @@ static void TestWithTypes()
 		new (typeof(Dapper.DbString), []),
 		new (typeof(DiffEngine.BuildServerDetector), []),
 		new (typeof(DnsClient.DnsDatagramReader), ["DnsClientAlias"]),
+		new (typeof(DSharpPlus.AnsiColor), []),
 		new (typeof(Elasticsearch.Net.ApiCallDetails), []),
 		new (typeof(EntityFramework.Exceptions.Common.CannotInsertNullException), []),
 		new (typeof(FluentAssertions.AggregateExceptionExtractor),  []),

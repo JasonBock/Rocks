@@ -36,6 +36,7 @@
 		<PackageReference Include="Dapper" />
 		<PackageReference Include="DiffEngine" />
 		<PackageReference Include="DnsClient" />
+		<PackageReference Include="DSharpPlus" />
 		<PackageReference Include="Elasticsearch.Net" />
 		<PackageReference Include="EntityFrameworkCore.Exceptions.Common" />
 		<PackageReference Include="FluentAssertions" />
