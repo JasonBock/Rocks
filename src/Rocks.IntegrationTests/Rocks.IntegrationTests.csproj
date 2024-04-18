@@ -1,8 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<AssemblyName>Rocks.IntegrationTests</AssemblyName>
-		<RootNamespace>Rocks.IntegrationTests</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Rocks\Rocks.csproj" OutputItemType="Analyzer" />

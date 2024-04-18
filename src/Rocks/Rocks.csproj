@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<AssemblyName>Rocks</AssemblyName>
 		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
 		<Description>A mocking library based on the Compiler APIs (Roslyn + Mocks)</Description>
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
@@ -11,7 +10,6 @@
 		<IncludeSymbols>true</IncludeSymbols>
 		<NoWarn>RS1036</NoWarn>
 		<PackageIcon>Icon.png</PackageIcon>
-		<PackageId>Rocks</PackageId>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageProjectUrl>https://github.com/jasonbock/rocks</PackageProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
@@ -22,7 +20,6 @@
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://github.com/jasonbock/rocks</RepositoryUrl>
-		<RootNamespace>Rocks</RootNamespace>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<TargetFramework>netstandard2.0</TargetFramework>
 	</PropertyGroup>
