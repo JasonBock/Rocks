@@ -84,12 +84,6 @@ namespace Rocks.CodeGenerationTest.Mappings
 					}
 				},
 				{
-					typeof(ChildSpecificationPipeBuilder<>), new()
-					{
-						{ "T", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedPipeContext" },
-					}
-				},
-				{
 					typeof(CompensateActivityContext<,>), new()
 					{
 						{ "TActivity", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedCompensateActivity" },
@@ -604,12 +598,6 @@ namespace Rocks.CodeGenerationTest.Mappings
 					}
 				},
 				{
-					typeof(PipeBuilder<>), new()
-					{
-						{ "TContext", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedPipeContext" },
-					}
-				},
-				{
 					typeof(PipeConfigurator<>), new()
 					{
 						{ "TContext", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedPipeContext" },
@@ -721,23 +709,10 @@ namespace Rocks.CodeGenerationTest.Mappings
 					}
 				},
 				{
-					typeof(SpecificationPipeBuilder<>), new()
-					{
-						{ "TContext", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedPipeContext" },
-					}
-				},
-				{
 					typeof(SplitFilter<,>), new()
 					{
 						{ "TSplit", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedPipeContext" },
 						{ "TInput", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedPipeContext" },
-					}
-				},
-				{
-					typeof(SplitFilterPipeSpecification<,>), new()
-					{
-						{ "TContext", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedPipeContext" },
-						{ "TFilter", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedPipeContext" },
 					}
 				},
 				{
