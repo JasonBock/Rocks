@@ -14,6 +14,7 @@ internal sealed record TypeMockModel
 		HashSet<ITypeSymbol> shims, TypeMockModelMemberCount memberCount, bool shouldResolveShims)
 	{
 		this.Type = new TypeReferenceModel(type, compilation);
+		(this.ExpectationsName, this.ExpectationsNameNoGenerics, this.ExpectationsFullyQualifiedName) = compilation.GetExpectationsName(this.Type);
 		this.MemberCount = memberCount;
 
 		// TODO: Remember to sort all array so "equatable" will work,
@@ -47,6 +48,9 @@ internal sealed record TypeMockModel
 	internal EquatableArray<string> Aliases { get; }
 	internal EquatableArray<ConstructorPropertyModel> ConstructorProperties { get; }
 	internal EquatableArray<ConstructorModel> Constructors { get; }
+	internal string ExpectationsFullyQualifiedName { get; }
+	internal string ExpectationsName { get; }
+	internal string ExpectationsNameNoGenerics { get; }
 	internal EquatableArray<EventModel> Events { get; }
 	internal TypeMockModelMemberCount MemberCount { get; }
 	internal EquatableArray<MethodModel> Methods { get; }

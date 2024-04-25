@@ -11,16 +11,18 @@ internal static class MockBuilder
 		var adornments = new HashSet<AdornmentsPipeline>();
 		var adornmentsPipeline = (AdornmentsPipeline adornmentsPipelineInformation) => { adornments.Add(adornmentsPipelineInformation); };
 
-		var typeArguments = mockType.Type.IsOpenGeneric ?
-			$"<{string.Join(", ", mockType.Type.TypeArguments)}>" : string.Empty;
+		//var typeArguments = mockType.Type.IsOpenGeneric ?
+		//	$"<{string.Join(", ", mockType.Type.TypeArguments)}>" : string.Empty;
 
-		var expectationsFQN = mockType.Type.Namespace is null ?
-			$"global::{mockType.Type.FlattenedName}CreateExpectations{typeArguments}" :
-			$"global::{mockType.Type.Namespace}.{mockType.Type.FlattenedName}CreateExpectations{typeArguments}";
+		//var expectationsFQN = mockType.Type.Namespace is null ?
+		//	$"global::{mockType.Type.FlattenedName}CreateExpectations{typeArguments}" :
+		//	$"global::{mockType.Type.Namespace}.{mockType.Type.FlattenedName}CreateExpectations{typeArguments}";
+
+		var expectationsFQN = mockType.ExpectationsFullyQualifiedName;
 
 		writer.WriteLines(
 			$$"""
-			internal sealed class {{mockType.Type.FlattenedName}}CreateExpectations{{typeArguments}}
+			internal sealed class {{mockType.ExpectationsName}}
 				: global::Rocks.Expectations
 			""");
 
