@@ -10,7 +10,7 @@ internal static class MockExpectationBuilder
 		var typeArguments = mockType.Type.IsOpenGeneric ?
 			$"<{string.Join(", ", mockType.Type.TypeArguments.Select(_ => _.FullyQualifiedName))}>" : string.Empty;
 
-		writer.WriteLine($"internal sealed class {mockType.Type.FlattenedName}MakeExpectations{typeArguments}");
+		writer.WriteLine($"internal sealed class {mockType.ExpectationsName}");
 
 		if (mockType.Type.Constraints.Length > 0)
 		{
@@ -27,11 +27,7 @@ internal static class MockExpectationBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		var expectationsFullyQualifiedName = mockType.Type.Namespace is null ?
-			$"global::{mockType.Type.FlattenedName}MakeExpectations{typeArguments}" :
-			$"global::{mockType.Type.Namespace}.{mockType.Type.FlattenedName}MakeExpectations{typeArguments}";
-
-		MockConstructorExpectationsBuilder.Build(writer, mockType, expectationsFullyQualifiedName);
+		MockConstructorExpectationsBuilder.Build(writer, mockType, mockType.ExpectationsFullyQualifiedName);
 		writer.WriteLine();
 		MockMakeBuilder.Build(writer, mockType);
 

@@ -11,10 +11,10 @@ internal sealed record TypeMockModel
 		SyntaxNode node, ITypeSymbol type, Compilation compilation, SemanticModel model,
 		ImmutableArray<IMethodSymbol> constructors, MockableMethods methods,
 		MockableProperties properties, MockableEvents events,
-		HashSet<ITypeSymbol> shims, TypeMockModelMemberCount memberCount, bool shouldResolveShims)
+		HashSet<ITypeSymbol> shims, TypeMockModelMemberCount memberCount, bool shouldResolveShims, BuildType buildType)
 	{
 		this.Type = new TypeReferenceModel(type, compilation);
-		(this.ExpectationsName, this.ExpectationsNameNoGenerics, this.ExpectationsFullyQualifiedName) = compilation.GetExpectationsName(this.Type);
+		(this.ExpectationsName, this.ExpectationsNameNoGenerics, this.ExpectationsFullyQualifiedName) = compilation.GetExpectationsName(this.Type, buildType);
 		this.MemberCount = memberCount;
 
 		// TODO: Remember to sort all array so "equatable" will work,

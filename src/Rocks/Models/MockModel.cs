@@ -151,7 +151,7 @@ internal sealed record MockModel
 				new MockModelInformation(
 					new TypeMockModel(node, typeToMock, compilation, model, 
 						constructors, methods, properties, events, 
-						shims, new TypeMockModelMemberCount(methodMemberCount, propertyMemberCount), shouldResolveShims), buildType),
+						shims, new TypeMockModelMemberCount(methodMemberCount, propertyMemberCount), shouldResolveShims, buildType), buildType),
 			diagnostics.ToImmutable());
 	}
 
