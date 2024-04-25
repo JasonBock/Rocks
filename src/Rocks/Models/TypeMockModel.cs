@@ -43,6 +43,26 @@ internal sealed record TypeMockModel
 				_.CanBeSeenByContainingAssembly(compilation.Assembly))
 			.Select(_ => new ConstructorPropertyModel(_, this.Type, compilation))
 			.ToImmutableArray();
+
+		this.ExpectationsPropertyName = this.GetExpectationsPropertyName();
+	}
+
+	private string GetExpectationsPropertyName()
+	{
+		const string ExpectationsName = "Expectations";
+
+		var memberNames = new HashSet<string>(
+			this.Methods.Select(_ => _.Name).Concat(this.Properties.Select(_ => _.Name)));
+
+		var expectationsPropertyName = ExpectationsName;
+		var index = 2;
+
+		while (memberNames.Contains(expectationsPropertyName)) 
+		{
+			expectationsPropertyName = $"{ExpectationsName}{index++}";
+		}
+
+		return expectationsPropertyName;
 	}
 
 	internal EquatableArray<string> Aliases { get; }
@@ -51,6 +71,7 @@ internal sealed record TypeMockModel
 	internal string ExpectationsFullyQualifiedName { get; }
 	internal string ExpectationsName { get; }
 	internal string ExpectationsNameNoGenerics { get; }
+	internal string ExpectationsPropertyName { get; }
 	internal EquatableArray<EventModel> Events { get; }
 	internal TypeMockModelMemberCount MemberCount { get; }
 	internal EquatableArray<MethodModel> Methods { get; }

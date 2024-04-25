@@ -21,7 +21,7 @@ internal static class MethodExpectationsBuilder
 					internal sealed class MethodExpectations
 					{
 						internal MethodExpectations({{expectationsFullyQualifiedName}} expectations) =>
-							this.Expectations = expectations;
+							this.{{type.ExpectationsPropertyName}} = expectations;
 						
 					""");
 
@@ -30,11 +30,11 @@ internal static class MethodExpectationsBuilder
 				foreach (var method in type.Methods.Where(
 					_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 				{
-					MethodExpectationsMethodBuilder.Build(writer, method, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+					MethodExpectationsMethodBuilder.Build(writer, type, method, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 					writer.WriteLine();
 				}
 
-				writer.WriteLine($"private {expectationsFullyQualifiedName} Expectations {{ get; }}");
+				writer.WriteLine($"private {expectationsFullyQualifiedName} {type.ExpectationsPropertyName} {{ get; }}");
 				writer.Indent--;
 				writer.WriteLine("}");
 
@@ -56,7 +56,7 @@ internal static class MethodExpectationsBuilder
 						internal sealed class ExplicitMethodExpectationsFor{{containingTypeName}}
 						{
 							internal ExplicitMethodExpectationsFor{{containingTypeName}}({{expectationsFullyQualifiedName}} expectations) =>
-								this.Expectations = expectations;
+								this.{{type.ExpectationsPropertyName}} = expectations;
 						
 						""");
 
@@ -64,11 +64,11 @@ internal static class MethodExpectationsBuilder
 
 					foreach (var method in typeGroup)
 					{
-						MethodExpectationsMethodBuilder.Build(writer, method, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+						MethodExpectationsMethodBuilder.Build(writer, type, method, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 						writer.WriteLine();
 					}
 
-					writer.WriteLine($"private {expectationsFullyQualifiedName} Expectations {{ get; }}");
+					writer.WriteLine($"private {expectationsFullyQualifiedName} {type.ExpectationsPropertyName} {{ get; }}");
 					writer.Indent--;
 					writer.WriteLine("}");
 

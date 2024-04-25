@@ -7,10 +7,10 @@ namespace Rocks.Builders.Create;
 
 internal static class MethodExpectationsMethodBuilder
 {
-	internal static void Build(IndentedTextWriter writer, MethodModel method, string expectationsFullyQualifiedName,
+	internal static void Build(IndentedTextWriter writer, TypeMockModel type, MethodModel method, string expectationsFullyQualifiedName,
 		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
-		static void BuildImplementation(IndentedTextWriter writer, MethodModel method, bool isGeneratedWithDefaults,
+		static void BuildImplementation(IndentedTextWriter writer, TypeMockModel type, MethodModel method, bool isGeneratedWithDefaults,
 			string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 		{
 			var needsGenerationWithDefaults = false;
@@ -109,10 +109,10 @@ internal static class MethodExpectationsMethodBuilder
 					$$"""
 					internal {{hiding}}{{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{method.MemberIdentifier}}{{typeArguments}} {{method.Name}}{{typeArguments}}({{instanceParameters}}){{constraints}}
 					{
-						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.{{type.ExpectationsPropertyName}}.WasInstanceInvoked);
 						var handler = new {{expectationsFullyQualifiedName}}.Handler{{method.MemberIdentifier}}{{typeArguments}}();
-						if (this.Expectations.handlers{{method.MemberIdentifier}} is null) { this.Expectations.handlers{{method.MemberIdentifier}} = new(handler); }
-						else { this.Expectations.handlers{{method.MemberIdentifier}}.Add(handler); }
+						if (this.{{type.ExpectationsPropertyName}}.handlers{{method.MemberIdentifier}} is null) { this.{{type.ExpectationsPropertyName}}.handlers{{method.MemberIdentifier}} = new(handler); }
+						else { this.{{type.ExpectationsPropertyName}}.handlers{{method.MemberIdentifier}}.Add(handler); }
 						return new(handler);
 					}
 					""");
@@ -161,8 +161,8 @@ internal static class MethodExpectationsMethodBuilder
 					$$"""
 					};
 
-					if (this.Expectations.handlers{{method.MemberIdentifier}} is null) { this.Expectations.handlers{{method.MemberIdentifier}} = new(@{{handlerContext["handler"]}}); }
-					else { this.Expectations.handlers{{method.MemberIdentifier}}.Add(@{{handlerContext["handler"]}}); }
+					if (this.{{type.ExpectationsPropertyName}}.handlers{{method.MemberIdentifier}} is null) { this.{{type.ExpectationsPropertyName}}.handlers{{method.MemberIdentifier}} = new(@{{handlerContext["handler"]}}); }
+					else { this.{{type.ExpectationsPropertyName}}.handlers{{method.MemberIdentifier}}.Add(@{{handlerContext["handler"]}}); }
 					return new(@{{handlerContext["handler"]}});
 					""");
 
@@ -172,10 +172,10 @@ internal static class MethodExpectationsMethodBuilder
 
 			if (needsGenerationWithDefaults)
 			{
-				BuildImplementation(writer, method, true, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+				BuildImplementation(writer, type, method, true, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 			}
 		}
 
-		BuildImplementation(writer, method, false, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+		BuildImplementation(writer, type, method, false, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 	}
 }

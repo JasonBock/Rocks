@@ -7,7 +7,7 @@ namespace Rocks.Builders.Create;
 
 internal static class PropertyExpectationsPropertyBuilder
 {
-	private static void BuildGetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string expectationsFullyQualifiedName, 
+	private static void BuildGetter(IndentedTextWriter writer, TypeMockModel type, PropertyModel property, uint memberIdentifier, string expectationsFullyQualifiedName, 
 		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		var propertyGetMethod = property.GetMethod!;
@@ -40,16 +40,16 @@ internal static class PropertyExpectationsPropertyBuilder
 			$$"""
 			internal {{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{memberIdentifier}} {{property.Name}}()
 			{
-				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.{{type.ExpectationsPropertyName}}.WasInstanceInvoked);
 				var handler = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}();
-				if (this.Expectations.handlers{{memberIdentifier}} is null) { this.Expectations.handlers{{memberIdentifier}} = new(handler); }
-				else { this.Expectations.handlers{{memberIdentifier}}.Add(handler); }
+				if (this.{{type.ExpectationsPropertyName}}.handlers{{memberIdentifier}} is null) { this.{{type.ExpectationsPropertyName}}.handlers{{memberIdentifier}} = new(handler); }
+				else { this.{{type.ExpectationsPropertyName}}.handlers{{memberIdentifier}}.Add(handler); }
 				return new(handler);
 			}
 			""");
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string expectationsFullyQualifiedName, 
+	private static void BuildSetter(IndentedTextWriter writer, TypeMockModel type, PropertyModel property, uint memberIdentifier, string expectationsFullyQualifiedName, 
 		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		var propertyParameterType = property.SetMethod!.Parameters[0].Type;
@@ -69,7 +69,7 @@ internal static class PropertyExpectationsPropertyBuilder
 			$$"""
 			internal {{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{memberIdentifier}} {{property.Name}}({{propertyParameterValue}} @value)
 			{
-				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.{{type.ExpectationsPropertyName}}.WasInstanceInvoked);
 				global::System.ArgumentNullException.ThrowIfNull(@value);
 
 				var handler = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}
@@ -77,21 +77,21 @@ internal static class PropertyExpectationsPropertyBuilder
 					value = @value,
 				};
 
-				if (this.Expectations.handlers{{memberIdentifier}} is null) { this.Expectations.handlers{{memberIdentifier}} = new(handler); }
-				else { this.Expectations.handlers{{memberIdentifier}}.Add(handler); }
+				if (this.{{type.ExpectationsPropertyName}}.handlers{{memberIdentifier}} is null) { this.{{type.ExpectationsPropertyName}}.handlers{{memberIdentifier}} = new(handler); }
+				else { this.{{type.ExpectationsPropertyName}}.handlers{{memberIdentifier}}.Add(handler); }
 				return new(handler);
 			}
 			""");
 	}
 
-	internal static void Build(IndentedTextWriter writer, PropertyModel property, PropertyAccessor accessor, string expectationsFullyQualifiedName,
+	internal static void Build(IndentedTextWriter writer, TypeMockModel type, PropertyModel property, PropertyAccessor accessor, string expectationsFullyQualifiedName,
 		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		var memberIdentifier = property.MemberIdentifier;
 
 		if (accessor == PropertyAccessor.Get && property.GetCanBeSeenByContainingAssembly)
 		{
-			PropertyExpectationsPropertyBuilder.BuildGetter(writer, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+			PropertyExpectationsPropertyBuilder.BuildGetter(writer, type, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 		}
 		else if ((accessor == PropertyAccessor.Set && property.SetCanBeSeenByContainingAssembly) ||
 			(accessor == PropertyAccessor.Init && property.InitCanBeSeenByContainingAssembly))
@@ -102,7 +102,7 @@ internal static class PropertyExpectationsPropertyBuilder
 				memberIdentifier++;
 			}
 
-			PropertyExpectationsPropertyBuilder.BuildSetter(writer, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+			PropertyExpectationsPropertyBuilder.BuildSetter(writer, type, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 		}
 	}
 }

@@ -7,7 +7,7 @@ namespace Rocks.Builders.Create;
 
 internal static class MockPropertyBuilder
 {
-	private static void BuildGetter(IndentedTextWriter writer,
+	private static void BuildGetter(IndentedTextWriter writer, TypeMockModel type,
 		PropertyModel property, string propertyVisibility,
 		uint memberIdentifier, bool raiseEvents)
 	{
@@ -21,11 +21,11 @@ internal static class MockPropertyBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		writer.WriteLine($"if (this.Expectations.handlers{memberIdentifier} is not null)");
+		writer.WriteLine($"if (this.{type.ExpectationsPropertyName}.handlers{memberIdentifier} is not null)");
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		writer.WriteLine($"var @handler = this.Expectations.handlers{memberIdentifier}.First;");
+		writer.WriteLine($"var @handler = this.{type.ExpectationsPropertyName}.handlers{memberIdentifier}.First;");
 		writer.WriteLine("@handler.CallCount++;");
 
 		var returnValueCall = property.Type.IsRefLikeType ?
@@ -93,7 +93,7 @@ internal static class MockPropertyBuilder
 		writer.WriteLine("}");
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer,
+	private static void BuildSetter(IndentedTextWriter writer, TypeMockModel type,
 		PropertyModel property, string propertyVisibility,
 		uint memberIdentifier, bool raiseEvents)
 	{
@@ -108,10 +108,10 @@ internal static class MockPropertyBuilder
 			$$"""
 			{{visibility}}{{accessor}}
 			{
-				if (this.Expectations.handlers{{memberIdentifier}} is not null)
+				if (this.{{type.ExpectationsPropertyName}}.handlers{{memberIdentifier}} is not null)
 				{
 					var @foundMatch = false;
-					foreach (var @handler in this.Expectations.handlers{{memberIdentifier}})
+					foreach (var @handler in this.{{type.ExpectationsPropertyName}}.handlers{{memberIdentifier}})
 					{
 						if (@handler.value.IsValid(value!))
 						{
@@ -169,7 +169,7 @@ internal static class MockPropertyBuilder
 		writer.WriteLine("}");
 	}
 
-	internal static void Build(IndentedTextWriter writer,
+	internal static void Build(IndentedTextWriter writer, TypeMockModel type,
 		PropertyModel property, bool raiseEvents)
 	{
 		var isGetterVisible = false;
@@ -221,13 +221,13 @@ internal static class MockPropertyBuilder
 
 		if (isGetterVisible)
 		{
-			MockPropertyBuilder.BuildGetter(writer, property, visibility, memberIdentifier, raiseEvents);
+			MockPropertyBuilder.BuildGetter(writer, type, property, visibility, memberIdentifier, raiseEvents);
 			memberIdentifier++;
 		}
 
 		if (isSetterVisible)
 		{
-			MockPropertyBuilder.BuildSetter(writer, property, visibility, memberIdentifier, raiseEvents);
+			MockPropertyBuilder.BuildSetter(writer, type, property, visibility, memberIdentifier, raiseEvents);
 		}
 
 		writer.Indent--;

@@ -49,11 +49,11 @@ internal static class MockTypeBuilder
 		{
 			if (method.ReturnsVoid)
 			{
-				MockMethodVoidBuilder.Build(writer, method, canRaiseEvents, expectationsFullyQualifiedName);
+				MockMethodVoidBuilder.Build(writer, type, method, canRaiseEvents, expectationsFullyQualifiedName);
 			}
 			else
 			{
-				MockMethodValueBuilder.Build(writer, method, canRaiseEvents, expectationsFullyQualifiedName);
+				MockMethodValueBuilder.Build(writer, type, method, canRaiseEvents, expectationsFullyQualifiedName);
 			}
 		}
 
@@ -62,7 +62,7 @@ internal static class MockTypeBuilder
 		foreach (var property in type.Properties.Where(_ => !_.IsIndexer))
 		{
 			hasProperties = true;
-			MockPropertyBuilder.Build(writer, property, canRaiseEvents);
+			MockPropertyBuilder.Build(writer, type, property, canRaiseEvents);
 		}
 
 		if (hasProperties)
@@ -91,7 +91,7 @@ internal static class MockTypeBuilder
 
 		MockTypeBuilder.BuildShimTypes(writer, type);
 
-		writer.WriteLine($"private {expectationsFullyQualifiedName} Expectations {{ get; }}");
+		writer.WriteLine($"private {expectationsFullyQualifiedName} {type.ExpectationsPropertyName} {{ get; }}");
 
 		writer.Indent--;
 		writer.WriteLine("}");

@@ -7,7 +7,8 @@ namespace Rocks.Builders.Create;
 
 internal static class MockMethodVoidBuilder
 {
-	internal static void Build(IndentedTextWriter writer, MethodModel method, bool raiseEvents, string expectationsFullyQualifiedName)
+	internal static void Build(IndentedTextWriter writer, TypeMockModel type, MethodModel method, 
+		bool raiseEvents, string expectationsFullyQualifiedName)
 	{
 		var shouldThrowDoesNotReturnException = method.ShouldThrowDoesNotReturnException;
 		var typeArgumentsNamingContext = method.IsGenericMethod ?
@@ -91,21 +92,21 @@ internal static class MockMethodVoidBuilder
 
 		var namingContext = new VariablesNamingContext(method);
 
-		writer.WriteLine($"if (this.Expectations.handlers{method.MemberIdentifier} is not null)");
+		writer.WriteLine($"if (this.{type.ExpectationsPropertyName}.handlers{method.MemberIdentifier} is not null)");
 		writer.WriteLine("{");
 		writer.Indent++;
 
 		if (method.Parameters.Length > 0)
 		{
 			MockMethodVoidBuilder.BuildMethodValidationHandlerWithParameters(
-				writer, method, namingContext, typeArgumentsNamingContext,
+				writer, type, method, namingContext, typeArgumentsNamingContext,
 				raiseEvents, shouldThrowDoesNotReturnException,
 				expectationsFullyQualifiedName);
 		}
 		else
 		{
 			MockMethodVoidBuilder.BuildMethodValidationHandlerNoParameters(
-				writer, method, namingContext, typeArgumentsNamingContext,
+				writer, type, method, namingContext, typeArgumentsNamingContext,
 				raiseEvents, shouldThrowDoesNotReturnException,
 				expectationsFullyQualifiedName);
 		}
@@ -163,14 +164,14 @@ internal static class MockMethodVoidBuilder
 		writer.WriteLine();
 	}
 
-	private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer, MethodModel method, 
+	private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer, TypeMockModel type, MethodModel method, 
 		VariablesNamingContext namingContext, TypeArgumentsNamingContext typeArgumentsNamingContext,
 		bool raiseEvents, bool shouldThrowDoesNotReturnException, string expectationsFullyQualifiedName)
 	{
 		var foreachHandlerName = method.IsGenericMethod ?
 			namingContext["genericHandler"] : namingContext["handler"];
 
-		writer.WriteLine($"var @{foreachHandlerName} = this.Expectations.handlers{method.MemberIdentifier}.First;");
+		writer.WriteLine($"var @{foreachHandlerName} = this.{type.ExpectationsPropertyName}.handlers{method.MemberIdentifier}.First;");
 
 		if (method.IsGenericMethod)
 		{
@@ -202,7 +203,7 @@ internal static class MockMethodVoidBuilder
 		}
 	}
 
-	private static void BuildMethodValidationHandlerWithParameters(IndentedTextWriter writer, MethodModel method,
+	private static void BuildMethodValidationHandlerWithParameters(IndentedTextWriter writer, TypeMockModel type, MethodModel method,
 		VariablesNamingContext namingContext, TypeArgumentsNamingContext typeArgumentsNamingContext,
 		bool raiseEvents, bool shouldThrowDoesNotReturnException, string expectationsFullyQualifiedName)
 	{
@@ -212,7 +213,7 @@ internal static class MockMethodVoidBuilder
 		var foreachHandlerName = method.IsGenericMethod ?
 			namingContext["genericHandler"] : namingContext["handler"];
 
-		writer.WriteLine($"foreach (var @{foreachHandlerName} in this.Expectations.handlers{method.MemberIdentifier})");
+		writer.WriteLine($"foreach (var @{foreachHandlerName} in this.{type.ExpectationsPropertyName}.handlers{method.MemberIdentifier})");
 
 		if (method.Parameters.Length > 0)
 		{

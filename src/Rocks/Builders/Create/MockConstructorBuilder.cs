@@ -10,7 +10,8 @@ namespace Rocks.Builders.Create;
 internal static class MockConstructorBuilder
 {
 	internal static void Build(IndentedTextWriter writer, TypeMockModel type, 
-		ImmutableArray<ParameterModel> parameters, ImmutableArray<TypeMockModel> shims, string expectationsFullyQualifiedName)
+		ImmutableArray<ParameterModel> parameters, ImmutableArray<TypeMockModel> shims, 
+		string expectationsFullyQualifiedName)
 	{
 		var typeToMockName = type.Type.FullyQualifiedName;
 		var namingContext = new VariablesNamingContext(parameters);
@@ -63,7 +64,7 @@ internal static class MockConstructorBuilder
 			writer.Indent--;
 			writer.WriteLine("{");
 			writer.Indent++;
-			MockConstructorBuilder.BuildFieldSetters(writer, namingContext, shims, type.ConstructorProperties, hasRequiredProperties);
+			MockConstructorBuilder.BuildFieldSetters(writer, type, namingContext, shims, type.ConstructorProperties, hasRequiredProperties);
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
@@ -72,25 +73,25 @@ internal static class MockConstructorBuilder
 			writer.WriteLine($"public Mock({instanceParameters})");
 			writer.WriteLine("{");
 			writer.Indent++;
-			MockConstructorBuilder.BuildFieldSetters(writer, namingContext, shims, type.ConstructorProperties, hasRequiredProperties);
+			MockConstructorBuilder.BuildFieldSetters(writer, type, namingContext, shims, type.ConstructorProperties, hasRequiredProperties);
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
 	}
 
-	private static void BuildFieldSetters(IndentedTextWriter writer, 
+	private static void BuildFieldSetters(IndentedTextWriter writer, TypeMockModel type,
 		VariablesNamingContext namingContext, EquatableArray<TypeMockModel> shims,
 		EquatableArray<ConstructorPropertyModel> constructorProperties, bool hasRequiredProperties)
 	{
 		if (shims.Length == 0)
 		{
-			writer.WriteLine($"this.Expectations = @{namingContext["expectations"]};");
+			writer.WriteLine($"this.{type.ExpectationsPropertyName} = @{namingContext["expectations"]};");
 		}
 		else
 		{
 			var shimFields = string.Join(", ", shims.Select(_ => $"this.shimFor{_.Type.FlattenedName}"));
 			var shimConstructors = string.Join(", ", shims.Select(_ => $"new {ShimBuilder.GetShimName(_.Type)}(this)"));
-			writer.WriteLine($"(this.Expectations, {shimFields}) = (@{namingContext["expectations"]}, {shimConstructors});");
+			writer.WriteLine($"(this.{type.ExpectationsPropertyName}, {shimFields}) = (@{namingContext["expectations"]}, {shimConstructors});");
 		}
 
 		if (constructorProperties.Length > 0)

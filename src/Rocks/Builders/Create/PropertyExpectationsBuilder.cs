@@ -62,7 +62,7 @@ internal static class PropertyExpectationsBuilder
 					internal sealed class ExplicitIndexerGetterExpectationsFor{{containingTypeName}}
 					{
 						internal ExplicitIndexerGetterExpectationsFor{{containingTypeName}}({{expectationsFullyQualifiedName}} expectations) =>
-							this.Expectations = expectations;
+							this.{{mockType.ExpectationsPropertyName}} = expectations;
 						
 					""");
 				writer.Indent++;
@@ -73,7 +73,7 @@ internal static class PropertyExpectationsBuilder
 						PropertyAccessor.Get, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 				}
 
-				writer.WriteLine($"private {expectationsFullyQualifiedName} Expectations {{ get; }}");
+				writer.WriteLine($"private {expectationsFullyQualifiedName} {mockType.ExpectationsPropertyName} {{ get; }}");
 				writer.Indent--;
 				writer.WriteLine("}");
 
@@ -92,7 +92,7 @@ internal static class PropertyExpectationsBuilder
 					internal sealed class ExplicitIndexerSetterExpectationsFor{{containingTypeName}}
 					{
 						internal ExplicitIndexerSetterExpectationsFor{{containingTypeName}}({{expectationsFullyQualifiedName}} expectations) =>
-							this.Expectations = expectations;
+							this.{{mockType.ExpectationsPropertyName}} = expectations;
 						
 					""");
 				writer.Indent++;
@@ -103,7 +103,7 @@ internal static class PropertyExpectationsBuilder
 						PropertyAccessor.Set, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 				}
 
-				writer.WriteLine($"private {expectationsFullyQualifiedName} Expectations {{ get; }}");
+				writer.WriteLine($"private {expectationsFullyQualifiedName} {mockType.ExpectationsPropertyName} {{ get; }}");
 				writer.Indent--;
 				writer.WriteLine("}");
 
@@ -122,7 +122,7 @@ internal static class PropertyExpectationsBuilder
 					internal sealed class ExplicitIndexerInitializersExpectationsFor{{containingTypeName}}
 					{
 						internal ExplicitIndexerInitializersExpectationsFor{{containingTypeName}}({{expectationsFullyQualifiedName}} expectations) =>
-							this.Expectations = expectations;
+							this.{{mockType.ExpectationsPropertyName}} = expectations;
 						
 					""");
 				writer.Indent++;
@@ -133,7 +133,7 @@ internal static class PropertyExpectationsBuilder
 						PropertyAccessor.Init, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 				}
 
-				writer.WriteLine($"private {expectationsFullyQualifiedName} Expectations {{ get; }}");
+				writer.WriteLine($"private {expectationsFullyQualifiedName} {mockType.ExpectationsPropertyName} {{ get; }}");
 				writer.Indent--;
 				writer.WriteLine("}");
 
@@ -184,7 +184,7 @@ internal static class PropertyExpectationsBuilder
 					internal sealed class IndexerGetterExpectations
 					{
 						internal IndexerGetterExpectations({{expectationsFullyQualifiedName}} expectations) =>
-							this.Expectations = expectations;
+							this.{{mockType.ExpectationsPropertyName}} = expectations;
 						
 					""");
 				writer.Indent++;
@@ -197,7 +197,7 @@ internal static class PropertyExpectationsBuilder
 					IndexerExpectationsIndexerBuilder.Build(writer, result, PropertyAccessor.Get, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 				}
 
-				writer.WriteLine($"private {expectationsFullyQualifiedName} Expectations {{ get; }}");
+				writer.WriteLine($"private {expectationsFullyQualifiedName} {mockType.ExpectationsPropertyName} {{ get; }}");
 				writer.Indent--;
 				writer.WriteLine("}");
 
@@ -219,7 +219,7 @@ internal static class PropertyExpectationsBuilder
 					internal sealed class IndexerSetterExpectations
 					{
 						internal IndexerSetterExpectations({{expectationsFullyQualifiedName}} expectations) =>
-							this.Expectations = expectations;
+							this.{{mockType.ExpectationsPropertyName}} = expectations;
 						
 					""");
 				writer.Indent++;
@@ -232,7 +232,7 @@ internal static class PropertyExpectationsBuilder
 					IndexerExpectationsIndexerBuilder.Build(writer, result, PropertyAccessor.Set, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 				}
 
-				writer.WriteLine($"private {expectationsFullyQualifiedName} Expectations {{ get; }}");
+				writer.WriteLine($"private {expectationsFullyQualifiedName} {mockType.ExpectationsPropertyName} {{ get; }}");
 				writer.Indent--;
 				writer.WriteLine("}");
 
@@ -249,7 +249,7 @@ internal static class PropertyExpectationsBuilder
 					internal sealed class IndexerInitializerExpectations
 					{
 						internal IndexerInitializerExpectations({{expectationsFullyQualifiedName}} expectations) =>
-							this.Expectations = expectations;
+							this.{{mockType.ExpectationsPropertyName}} = expectations;
 						
 					""");
 				writer.Indent++;
@@ -262,7 +262,7 @@ internal static class PropertyExpectationsBuilder
 					IndexerExpectationsIndexerBuilder.Build(writer, result, PropertyAccessor.Init, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 				}
 
-				writer.WriteLine($"private {expectationsFullyQualifiedName} Expectations {{ get; }}");
+				writer.WriteLine($"private {expectationsFullyQualifiedName} {mockType.ExpectationsPropertyName} {{ get; }}");
 				writer.Indent--;
 				writer.WriteLine("}");
 
@@ -325,18 +325,18 @@ internal static class PropertyExpectationsBuilder
 					internal sealed class ExplicitPropertyGetterExpectationsFor{{containingTypeName}}
 					{
 						internal ExplicitPropertyGetterExpectationsFor{{containingTypeName}}({{expectationsFullyQualifiedName}} expectations) =>
-							this.Expectations = expectations;
+							this.{{mockType.ExpectationsPropertyName}} = expectations;
 						
 					""");
 				writer.Indent++;
 
 				foreach (var result in typeGroupGetters)
 				{
-					PropertyExpectationsPropertyBuilder.Build(writer, result,
+					PropertyExpectationsPropertyBuilder.Build(writer, mockType, result,
 						PropertyAccessor.Get, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 				}
 
-				writer.WriteLine($"private {expectationsFullyQualifiedName} Expectations {{ get; }}");
+				writer.WriteLine($"private {expectationsFullyQualifiedName} {mockType.ExpectationsPropertyName} {{ get; }}");
 				writer.Indent--;
 				writer.WriteLine("}");
 
@@ -355,18 +355,18 @@ internal static class PropertyExpectationsBuilder
 					internal sealed class ExplicitPropertySetterExpectationsFor{{containingTypeName}}
 					{
 						internal ExplicitPropertySetterExpectationsFor{{containingTypeName}}({{expectationsFullyQualifiedName}} expectations) =>
-							this.Expectations = expectations;
+							this.{{mockType.ExpectationsPropertyName}} = expectations;
 						
 					""");
 				writer.Indent++;
 
 				foreach (var result in typeGroupSetters)
 				{
-					PropertyExpectationsPropertyBuilder.Build(writer, result,
+					PropertyExpectationsPropertyBuilder.Build(writer, mockType, result,
 						PropertyAccessor.Set, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 				}
 
-				writer.WriteLine($"private {expectationsFullyQualifiedName} Expectations {{ get; }}");
+				writer.WriteLine($"private {expectationsFullyQualifiedName} {mockType.ExpectationsPropertyName} {{ get; }}");
 				writer.Indent--;
 				writer.WriteLine("}");
 
@@ -385,18 +385,18 @@ internal static class PropertyExpectationsBuilder
 					internal sealed class ExplicitPropertyInitializersExpectationsFor{{containingTypeName}}
 					{
 						internal ExplicitPropertyInitializersExpectationsFor{{containingTypeName}}({{expectationsFullyQualifiedName}} expectations) =>
-							this.Expectations = expectations;
+							this.{{mockType.ExpectationsPropertyName}} = expectations;
 						
 					""");
 				writer.Indent++;
 
 				foreach (var result in typeGroupInitializers)
 				{
-					PropertyExpectationsPropertyBuilder.Build(writer, result,
+					PropertyExpectationsPropertyBuilder.Build(writer, mockType, result,
 						PropertyAccessor.Init, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 				}
 
-				writer.WriteLine($"private {expectationsFullyQualifiedName} Expectations {{ get; }}");
+				writer.WriteLine($"private {expectationsFullyQualifiedName} {mockType.ExpectationsPropertyName} {{ get; }}");
 				writer.Indent--;
 				writer.WriteLine("}");
 
@@ -447,7 +447,7 @@ internal static class PropertyExpectationsBuilder
 					internal sealed class PropertyGetterExpectations
 					{
 						internal PropertyGetterExpectations({{expectationsFullyQualifiedName}} expectations) =>
-							this.Expectations = expectations;
+							this.{{mockType.ExpectationsPropertyName}} = expectations;
 						
 					""");
 				writer.Indent++;
@@ -457,10 +457,10 @@ internal static class PropertyExpectationsBuilder
 						(_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet || _.Accessors == PropertyAccessor.GetAndInit) &&
 						_.GetCanBeSeenByContainingAssembly))
 				{
-					PropertyExpectationsPropertyBuilder.Build(writer, result, PropertyAccessor.Get, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+					PropertyExpectationsPropertyBuilder.Build(writer, mockType, result, PropertyAccessor.Get, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 				}
 
-				writer.WriteLine($"private {expectationsFullyQualifiedName} Expectations {{ get; }}");
+				writer.WriteLine($"private {expectationsFullyQualifiedName} {mockType.ExpectationsPropertyName} {{ get; }}");
 				writer.Indent--;
 				writer.WriteLine("}");
 
@@ -482,7 +482,7 @@ internal static class PropertyExpectationsBuilder
 					internal sealed class PropertySetterExpectations
 					{
 						internal PropertySetterExpectations({{expectationsFullyQualifiedName}} expectations) =>
-							this.Expectations = expectations;
+							this.{{mockType.ExpectationsPropertyName}} = expectations;
 						
 					""");
 				writer.Indent++;
@@ -492,10 +492,10 @@ internal static class PropertyExpectationsBuilder
 						(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet) &&
 						_.SetCanBeSeenByContainingAssembly))
 				{
-					PropertyExpectationsPropertyBuilder.Build(writer, result, PropertyAccessor.Set, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+					PropertyExpectationsPropertyBuilder.Build(writer, mockType, result, PropertyAccessor.Set, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 				}
 
-				writer.WriteLine($"private {expectationsFullyQualifiedName} Expectations {{ get; }}");
+				writer.WriteLine($"private {expectationsFullyQualifiedName} {mockType.ExpectationsPropertyName} {{ get; }}");
 				writer.Indent--;
 				writer.WriteLine("}");
 
@@ -512,7 +512,7 @@ internal static class PropertyExpectationsBuilder
 					internal sealed class PropertyInitializerExpectations
 					{
 						internal PropertyInitializerExpectations({{expectationsFullyQualifiedName}} expectations) =>
-							this.Expectations = expectations;
+							this.{{mockType.ExpectationsPropertyName}} = expectations;
 						
 					""");
 				writer.Indent++;
@@ -522,10 +522,10 @@ internal static class PropertyExpectationsBuilder
 						(_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit) &&
 						_.InitCanBeSeenByContainingAssembly))
 				{
-					PropertyExpectationsPropertyBuilder.Build(writer, result, PropertyAccessor.Init, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+					PropertyExpectationsPropertyBuilder.Build(writer, mockType, result, PropertyAccessor.Init, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 				}
 
-				writer.WriteLine($"private {expectationsFullyQualifiedName} Expectations {{ get; }}");
+				writer.WriteLine($"private {expectationsFullyQualifiedName} {mockType.ExpectationsPropertyName} {{ get; }}");
 				writer.Indent--;
 				writer.WriteLine("}");
 
