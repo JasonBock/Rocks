@@ -15,6 +15,7 @@ internal static class MockBuilder
 
 		writer.WriteLines(
 			$$"""
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class {{mockType.ExpectationsName}}
 				: global::Rocks.Expectations
 			""");
