@@ -41,6 +41,7 @@ public static class AsyncIteratorGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class AsyncEnumerationCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -334,6 +335,7 @@ public static class AsyncIteratorGeneratorTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class AsyncEnumerationMakeExpectations
 			{
 				internal global::AsyncEnumeration Instance()

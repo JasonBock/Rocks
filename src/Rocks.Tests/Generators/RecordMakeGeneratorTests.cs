@@ -38,6 +38,7 @@ public static class RecordMakeGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class RecordTestMakeExpectations
 				{
 					internal global::MockTests.RecordTest Instance()

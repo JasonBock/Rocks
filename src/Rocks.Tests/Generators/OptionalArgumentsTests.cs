@@ -33,6 +33,7 @@ public static class OptionalArgumentsTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IHaveOptionalArgumentsCreateExpectations
 				: global::Rocks.Expectations
 			{

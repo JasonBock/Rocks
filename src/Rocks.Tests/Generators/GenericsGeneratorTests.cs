@@ -35,6 +35,7 @@ public static class GenericsGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IServiceOfint_stringCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -194,6 +195,7 @@ public static class GenericsGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IGenericsAndEventCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -438,6 +440,7 @@ public static class GenericsGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IServiceOfint_stringCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -603,6 +606,7 @@ public static class GenericsGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class MOfobjectCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -899,6 +903,7 @@ public static class GenericsGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class GenericContainerCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1231,6 +1236,7 @@ public static class GenericsGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class CriterionOfobjectCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1424,6 +1430,7 @@ public static class GenericsGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class GeometryValueComparerOfobjectCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1669,6 +1676,7 @@ public static class GenericsGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IRequestClientOfobjectCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -1835,6 +1843,7 @@ public static class GenericsGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IRequestOfobjectCreateExpectations
 					: global::Rocks.Expectations
 				{

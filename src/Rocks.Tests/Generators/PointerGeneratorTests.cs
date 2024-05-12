@@ -32,6 +32,7 @@ public static class PointerGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IPointerUsageCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -199,6 +200,7 @@ public static class PointerGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IPointerUsageCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -366,6 +368,7 @@ public static class PointerGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IPointerUsageCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -533,6 +536,7 @@ public static class PointerGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ISurfaceCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -749,6 +753,7 @@ public static class PointerGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IHavePointersCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -961,6 +966,7 @@ public static class PointerGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IHavePointersCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -1137,6 +1143,7 @@ public static class PointerGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IHavePointersCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -1349,6 +1356,7 @@ public static class PointerGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IHavePointersCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -1525,6 +1533,7 @@ public static class PointerGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IHavePointersCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -1810,6 +1819,7 @@ public static class PointerGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IHavePointersCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -2095,6 +2105,7 @@ public static class PointerGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IHavePointersCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -2370,6 +2381,7 @@ public static class PointerGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IHavePointersCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -2667,6 +2679,7 @@ public static class PointerGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IHavePointersCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -2942,6 +2955,7 @@ public static class PointerGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IHavePointersCreateExpectations
 					: global::Rocks.Expectations
 				{

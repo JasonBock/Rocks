@@ -43,6 +43,7 @@ public static class DoesNotReturnGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class ClassTestCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -362,6 +363,7 @@ public static class DoesNotReturnGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class ClassTestMakeExpectations
 				{
 					internal global::MockTests.ClassTest Instance()
@@ -453,6 +455,7 @@ public static class DoesNotReturnGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IInterfaceTestCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -642,6 +645,7 @@ public static class DoesNotReturnGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IInterfaceTestMakeExpectations
 				{
 					internal global::MockTests.IInterfaceTest Instance()

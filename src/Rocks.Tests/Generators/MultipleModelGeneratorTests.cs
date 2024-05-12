@@ -42,6 +42,7 @@ public static class MultipleModelGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class ITargetCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -204,6 +205,7 @@ public static class MultipleModelGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class ITargetMakeExpectations
 				{
 					internal global::MockTests.ITarget Instance()

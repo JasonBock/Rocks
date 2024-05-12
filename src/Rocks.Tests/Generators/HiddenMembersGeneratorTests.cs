@@ -49,6 +49,7 @@ public static class HiddenMembersGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class NewCopyCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -334,6 +335,7 @@ public static class HiddenMembersGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class SubClassCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -814,6 +816,7 @@ public static class HiddenMembersGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ISubCreateExpectations
 				: global::Rocks.Expectations
 			{

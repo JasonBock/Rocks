@@ -40,6 +40,7 @@ public static class RecordCreateGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class RecordTestCreateExpectations
 					: global::Rocks.Expectations
 				{

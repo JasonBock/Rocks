@@ -38,6 +38,7 @@ public static class ClassConstructorMakeGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class BaseCtorMakeExpectations
 				{
 					internal global::MockTests.BaseCtor Instance(int @a, ref string @b, out string @c, params string[] @d)

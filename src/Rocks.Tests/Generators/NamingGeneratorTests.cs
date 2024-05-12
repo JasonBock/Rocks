@@ -35,6 +35,7 @@ public static class NamingGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IHandleCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -296,6 +297,7 @@ public static class NamingGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IHandleCreateExpectations2
 				: global::Rocks.Expectations
 			{
@@ -443,6 +445,7 @@ public static class NamingGeneratorTests
 			
 			namespace Names
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IHandleCreateExpectations2
 					: global::Rocks.Expectations
 				{
@@ -585,6 +588,7 @@ public static class NamingGeneratorTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IHandleMakeExpectations2
 			{
 				internal global::IHandle Instance()
@@ -649,6 +653,7 @@ public static class NamingGeneratorTests
 			
 			namespace Names
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IHandleMakeExpectations2
 				{
 					internal global::Names.IHandle Instance()
@@ -711,6 +716,7 @@ public static class NamingGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IHandleCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -979,6 +985,7 @@ public static class NamingGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IUseSameNamesCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1178,6 +1185,7 @@ public static class NamingGeneratorTests
 			
 			extern alias First;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IUseSameNamesMakeExpectations
 			{
 				internal First::IUseSameNames Instance()
@@ -1245,6 +1253,7 @@ public static class NamingGeneratorTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class DbSetOfobjectMakeExpectations
 			{
 				internal global::DbSet<object> Instance()
@@ -1321,6 +1330,7 @@ public static class NamingGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IHaveDelegateCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1597,6 +1607,7 @@ public static class NamingGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IUseKeywordCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1769,6 +1780,7 @@ public static class NamingGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class HaveNamingConflictsCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -2037,6 +2049,7 @@ public static class NamingGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IHaveNamingConflictsCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -2219,6 +2232,7 @@ public static class NamingGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IHaveNamingConflictsCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -2395,6 +2409,7 @@ public static class NamingGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class HasRequiredPropertyCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -2685,6 +2700,7 @@ public static class NamingGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IUsesThingCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -2855,6 +2871,7 @@ public static class NamingGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IUseMethodInformationCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -3009,6 +3026,7 @@ public static class NamingGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IOperationCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -3171,6 +3189,7 @@ public static class NamingGeneratorTests
 			
 			namespace Namespace2
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IUseConstraintCreateExpectations
 					: global::Rocks.Expectations
 				{

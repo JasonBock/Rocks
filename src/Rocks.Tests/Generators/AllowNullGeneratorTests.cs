@@ -40,6 +40,7 @@ public static class AllowNullGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IAllowCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -262,6 +263,7 @@ public static class AllowNullGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IAllowMakeExpectations
 				{
 					internal global::MockTests.IAllow Instance()
@@ -334,6 +336,7 @@ public static class AllowNullGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class AllowCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -694,6 +697,7 @@ public static class AllowNullGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class AllowMakeExpectations
 				{
 					internal global::MockTests.Allow Instance()

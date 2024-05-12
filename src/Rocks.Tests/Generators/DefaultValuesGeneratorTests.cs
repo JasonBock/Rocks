@@ -43,6 +43,7 @@ public static class DefaultValuesGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IRequestOfobjectCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -271,6 +272,7 @@ public static class DefaultValuesGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IGenericDefaultCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -438,6 +440,7 @@ public static class DefaultValuesGeneratorTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IGenericDefaultMakeExpectations
 			{
 				internal global::IGenericDefault Instance()
@@ -499,6 +502,7 @@ public static class DefaultValuesGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IUseInfinityCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -663,6 +667,7 @@ public static class DefaultValuesGeneratorTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IUseInfinityMakeExpectations
 			{
 				internal global::IUseInfinity Instance()

@@ -61,6 +61,7 @@ public static class NonPublicMembersGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class VisibilityIssuesCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -412,6 +413,7 @@ public static class NonPublicMembersGeneratorTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class VisibilityIssuesMakeExpectations
 			{
 				internal global::VisibilityIssues Instance()
@@ -590,6 +592,7 @@ public static class NonPublicMembersGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class VisibilityIssuesCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -952,6 +955,7 @@ public static class NonPublicMembersGeneratorTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class VisibilityIssuesMakeExpectations
 			{
 				internal global::VisibilityIssues Instance()
@@ -1056,6 +1060,7 @@ public static class NonPublicMembersGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class HasInternalVirtualCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1511,6 +1516,7 @@ public static class NonPublicMembersGeneratorTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class HasInternalVirtualMakeExpectations
 			{
 				internal global::HasInternalVirtual Instance(string @key)
@@ -1605,6 +1611,7 @@ public static class NonPublicMembersGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class TestCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -2032,6 +2039,7 @@ public static class NonPublicMembersGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class TestCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -2455,6 +2463,7 @@ public static class NonPublicMembersGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class TestMakeExpectations
 				{
 					internal global::MockTests.Test Instance()
@@ -2543,6 +2552,7 @@ public static class NonPublicMembersGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class TestMakeExpectations
 				{
 					internal global::MockTests.Test Instance()

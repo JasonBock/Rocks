@@ -62,6 +62,7 @@ public static class ExplicitImplementationGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IHtmlMediaElementCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -269,6 +270,7 @@ public static class ExplicitImplementationGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IHtmlMediaElementMakeExpectations
 				{
 					internal global::MockTests.IHtmlMediaElement Instance()
@@ -358,6 +360,7 @@ public static class ExplicitImplementationGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ILeftRightCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -703,6 +706,7 @@ public static class ExplicitImplementationGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IIterableOfstringCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -889,6 +893,7 @@ public static class ExplicitImplementationGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ISetupListCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1073,6 +1078,7 @@ public static class ExplicitImplementationGeneratorTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ISetupListMakeExpectations
 			{
 				internal global::ISetupList Instance()
@@ -1153,6 +1159,7 @@ public static class ExplicitImplementationGeneratorTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IIterableOfstringMakeExpectations
 			{
 				internal global::IIterable<string> Instance()

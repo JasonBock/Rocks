@@ -34,6 +34,7 @@ public static class ConstraintsGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class BaseStuffCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -329,6 +330,7 @@ public static class ConstraintsGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class INeedDelegateCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -518,6 +520,7 @@ public static class ConstraintsGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ITypeConstraintsCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -995,6 +998,7 @@ public static class ConstraintsGeneratorTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ITypeConstraintsMakeExpectations
 			{
 				internal global::ITypeConstraints Instance()
@@ -1096,6 +1100,7 @@ public static class ConstraintsGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class TypeConstraintsCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1698,6 +1703,7 @@ public static class ConstraintsGeneratorTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class TypeConstraintsMakeExpectations
 			{
 				internal global::TypeConstraints Instance()
@@ -1803,6 +1809,7 @@ public static class ConstraintsGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IUnmanagedValueCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1980,6 +1987,7 @@ public static class ConstraintsGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class ThingOfstringCreateExpectations
 					: global::Rocks.Expectations
 				{

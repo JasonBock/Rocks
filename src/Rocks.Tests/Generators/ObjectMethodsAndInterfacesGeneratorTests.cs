@@ -39,6 +39,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class StaticToStringCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -240,6 +241,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class StaticToStringMakeExpectations
 				{
 					internal global::MockTests.StaticToString Instance()
@@ -315,6 +317,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IMatchObjectOfobjectCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -568,6 +571,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IMatchObjectOfobjectMakeExpectations
 				{
 					internal global::MockTests.IMatchObject<object> Instance()
@@ -647,6 +651,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IMatchObjectOfobjectCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -900,6 +905,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IMatchObjectOfobjectMakeExpectations
 				{
 					internal global::MockTests.IMatchObject<object> Instance()

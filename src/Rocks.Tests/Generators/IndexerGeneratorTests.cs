@@ -45,6 +45,7 @@ public static class IndexerGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ISubIndexCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -333,6 +334,7 @@ public static class IndexerGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class AbstractClassIndexerGetterSetterCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -805,6 +807,7 @@ public static class IndexerGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IHaveOptionalArgumentsCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1045,6 +1048,7 @@ public static class IndexerGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IHaveIndexersWithInitCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1397,6 +1401,7 @@ public static class IndexerGeneratorTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IHaveIndexersWithInitMakeExpectations
 			{
 				internal sealed class ConstructorProperties
@@ -1536,6 +1541,7 @@ public static class IndexerGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class TargetCreateExpectations
 					: global::Rocks.Expectations
 				{

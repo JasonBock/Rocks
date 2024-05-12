@@ -114,6 +114,7 @@ public static class ConstructorGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class AnyOfOfstring_intCreateExpectations
 				: global::Rocks.Expectations
 			{

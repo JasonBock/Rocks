@@ -40,6 +40,7 @@ public static class ClassCreateGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class ClassTestCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -314,6 +315,7 @@ public static class ClassCreateGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class ClassTestMakeExpectations
 				{
 					internal global::MockTests.ClassTest Instance()
@@ -396,6 +398,7 @@ public static class ClassCreateGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class ClassTestCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -644,6 +647,7 @@ public static class ClassCreateGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class ClassTestMakeExpectations
 				{
 					internal global::MockTests.ClassTest Instance()

@@ -71,6 +71,7 @@ public static class OpenGenericsGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IRequestCreateExpectations<TResponse, TResponse2, TResponse3>
 				: global::Rocks.Expectations
 				where TResponse : class
@@ -340,6 +341,7 @@ public static class OpenGenericsGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IConsumerContextCreateExpectations<T>
 				: global::Rocks.Expectations
 				where T : class
@@ -574,6 +576,7 @@ public static class OpenGenericsGeneratorTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IConsumerContextMakeExpectations<T>
 				where T : class
 			{
@@ -646,6 +649,7 @@ public static class OpenGenericsGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IServiceCreateExpectations<T>
 				: global::Rocks.Expectations
 			{
@@ -832,6 +836,7 @@ public static class OpenGenericsGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IServiceCreateExpectations<T, TReturn>
 				: global::Rocks.Expectations
 			{
@@ -989,6 +994,7 @@ public static class OpenGenericsGeneratorTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IServiceMakeExpectations<T, TReturn>
 			{
 				internal global::IService<T, TReturn> Instance()
@@ -1054,6 +1060,7 @@ public static class OpenGenericsGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IServiceCreateExpectations<T, TReturn>
 				: global::Rocks.Expectations
 			{
@@ -1401,6 +1408,7 @@ public static class OpenGenericsGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IServiceCreateExpectations<T, TReturn>
 				: global::Rocks.Expectations
 				where T : class
@@ -1562,6 +1570,7 @@ public static class OpenGenericsGeneratorTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IServiceMakeExpectations<T, TReturn>
 				where T : class
 				where TReturn : struct
@@ -1635,6 +1644,7 @@ public static class OpenGenericsGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IHasTypeConverterOptionsCreateExpectations<TClass, TMember>
 				: global::Rocks.Expectations
 			{
@@ -1808,6 +1818,7 @@ public static class OpenGenericsGeneratorTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IHasTypeConverterOptionsMakeExpectations<TClass, TMember>
 			{
 				internal global::IHasTypeConverterOptions<TClass, TMember> Instance()
@@ -1892,6 +1903,7 @@ public static class OpenGenericsGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IExceptionConsumeContextCreateExpectations<T>
 				: global::Rocks.Expectations
 				where T : class, global::IStory
@@ -2163,6 +2175,7 @@ public static class OpenGenericsGeneratorTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IExceptionConsumeContextMakeExpectations<T>
 				where T : class, global::IStory
 			{
@@ -2242,6 +2255,7 @@ public static class OpenGenericsGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IServiceCreateExpectations<T>
 				: global::Rocks.Expectations
 			{
@@ -2460,6 +2474,7 @@ public static class OpenGenericsGeneratorTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IServiceMakeExpectations<T>
 			{
 				internal global::IService<T> Instance()
@@ -2529,6 +2544,7 @@ public static class OpenGenericsGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IPixelOperationsCreateExpectations<TPixel>
 				: global::Rocks.Expectations
 				where TPixel : unmanaged
@@ -2723,6 +2739,7 @@ public static class OpenGenericsGeneratorTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IPixelOperationsMakeExpectations<TPixel>
 				where TPixel : unmanaged
 			{
@@ -2787,6 +2804,7 @@ public static class OpenGenericsGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class INotificationCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -2960,6 +2978,7 @@ public static class OpenGenericsGeneratorTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class INotificationMakeExpectations
 			{
 				internal global::INotification Instance()
@@ -3028,6 +3047,7 @@ public static class OpenGenericsGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IReaderWriterCreateExpectations<TCollection, TConcreteCollection, TElement>
 				: global::Rocks.Expectations
 				where TCollection : global::System.Collections.Generic.IEnumerable<TElement?>
@@ -3202,6 +3222,7 @@ public static class OpenGenericsGeneratorTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IReaderWriterMakeExpectations<TCollection, TConcreteCollection, TElement>
 				where TCollection : global::System.Collections.Generic.IEnumerable<TElement?>
 				where TElement : struct
@@ -3268,6 +3289,7 @@ public static class OpenGenericsGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class INotificationCreateExpectations<T>
 				: global::Rocks.Expectations
 			{
@@ -3425,6 +3447,7 @@ public static class OpenGenericsGeneratorTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class INotificationMakeExpectations<T>
 			{
 				internal global::INotification<T> Instance()
@@ -3490,6 +3513,7 @@ public static class OpenGenericsGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IWriterCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -3664,6 +3688,7 @@ public static class OpenGenericsGeneratorTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IWriterMakeExpectations
 			{
 				internal global::IWriter Instance()

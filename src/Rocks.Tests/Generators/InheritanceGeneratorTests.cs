@@ -51,6 +51,7 @@ public static class InheritanceGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class JsBinaryOperatorCreateExpectations
 					: global::Rocks.Expectations
 				{

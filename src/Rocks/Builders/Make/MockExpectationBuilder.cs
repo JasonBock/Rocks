@@ -1,4 +1,5 @@
-﻿using Rocks.Models;
+﻿using Rocks.Extensions;
+using Rocks.Models;
 using System.CodeDom.Compiler;
 
 namespace Rocks.Builders.Make;
@@ -10,7 +11,7 @@ internal static class MockExpectationBuilder
 		var typeArguments = mockType.Type.IsOpenGeneric ?
 			$"<{string.Join(", ", mockType.Type.TypeArguments.Select(_ => _.FullyQualifiedName))}>" : string.Empty;
 
-		writer.WriteLine(
+		writer.WriteLines(
 			$"""
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class {mockType.ExpectationsName}

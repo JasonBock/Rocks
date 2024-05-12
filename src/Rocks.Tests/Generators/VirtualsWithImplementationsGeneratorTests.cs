@@ -39,6 +39,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class VoidMethodWithParamsCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -335,6 +336,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class ValueMethodWithParamsCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -626,6 +628,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IHaveImplementationCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -784,6 +787,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IHaveImplementationCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -944,6 +948,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class HaveImplementationCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -1218,6 +1223,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class HaveImplementationCreateExpectations
 					: global::Rocks.Expectations
 				{

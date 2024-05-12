@@ -41,6 +41,7 @@ public static class PropertyInitMakeGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class ITestMakeExpectations
 				{
 					internal sealed class ConstructorProperties
@@ -144,6 +145,7 @@ public static class PropertyInitMakeGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class TestMakeExpectations
 				{
 					internal sealed class ConstructorProperties

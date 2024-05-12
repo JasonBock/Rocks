@@ -43,6 +43,7 @@ public static class ObsoleteGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IContainerCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -199,6 +200,7 @@ public static class ObsoleteGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class ContainerCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -634,6 +636,7 @@ public static class ObsoleteGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IPixelShaderCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -876,6 +879,7 @@ public static class ObsoleteGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IPixelShaderCreateExpectations
 					: global::Rocks.Expectations
 				{

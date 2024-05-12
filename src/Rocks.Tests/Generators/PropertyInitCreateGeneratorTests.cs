@@ -43,6 +43,7 @@ public static class PropertyInitCreateGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class ITestCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -555,6 +556,7 @@ public static class PropertyInitCreateGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class TestCreateExpectations
 					: global::Rocks.Expectations
 				{

@@ -41,6 +41,7 @@ public static class CastingGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IHaveOpenGenericsOfGuidCreateExpectations
 					: global::Rocks.Expectations
 				{

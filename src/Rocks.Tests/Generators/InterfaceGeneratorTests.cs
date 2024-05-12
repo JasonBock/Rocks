@@ -40,6 +40,7 @@ public static class InterfaceGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ISealedCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -329,6 +330,7 @@ public static class InterfaceGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IRequestCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -498,6 +500,7 @@ public static class InterfaceGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class ITargetCreateExpectations
 					: global::Rocks.Expectations
 				{

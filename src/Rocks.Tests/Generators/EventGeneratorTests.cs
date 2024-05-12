@@ -34,6 +34,7 @@ public static class EventGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IOpenGenericAndEventCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -212,6 +213,7 @@ public static class EventGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class AbstractClassMethodReturnWithEventsCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -520,6 +522,7 @@ public static class EventGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IExplicitInterfaceImplementationCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -751,6 +754,7 @@ public static class EventGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IHaveEventsCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -926,6 +930,7 @@ public static class EventGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IHaveEventsCreateExpectations
 					: global::Rocks.Expectations
 				{

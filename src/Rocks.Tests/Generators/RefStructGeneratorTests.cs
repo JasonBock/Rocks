@@ -35,6 +35,7 @@ public static class RefStructGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IAmNonGenericCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -230,6 +231,7 @@ public static class RefStructGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IDuplicatesCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -571,6 +573,7 @@ public static class RefStructGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ScopedParameterCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -993,6 +996,7 @@ public static class RefStructGeneratorTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ScopedParameterMakeExpectations
 			{
 				internal global::ScopedParameter Instance()
@@ -1076,6 +1080,7 @@ public static class RefStructGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IUseSpanWithOpenGenericCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1274,6 +1279,7 @@ public static class RefStructGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IHaveRefStructCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1467,6 +1473,7 @@ public static class RefStructGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IHaveRefStructCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1615,6 +1622,7 @@ public static class RefStructGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IHaveRefStructCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1861,6 +1869,7 @@ public static class RefStructGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IHaveRefStructCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -2117,6 +2126,7 @@ public static class RefStructGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IHaveRefStructCreateExpectations
 				: global::Rocks.Expectations
 			{

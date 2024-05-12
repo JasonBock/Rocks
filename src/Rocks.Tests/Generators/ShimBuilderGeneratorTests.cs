@@ -56,6 +56,7 @@ public static class ShimBuilderGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IRuntimeKeyCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -388,6 +389,7 @@ public static class ShimBuilderGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IHaveDimsCreateExpectations
 				: global::Rocks.Expectations
 			{

@@ -42,6 +42,7 @@ public static class RockAttributeGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IContainNullableReferencesCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -209,6 +210,7 @@ public static class RockAttributeGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class ITestCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -352,6 +354,7 @@ public static class RockAttributeGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ITestCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -584,6 +587,7 @@ public static class RockAttributeGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class ITestCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -733,6 +737,7 @@ public static class RockAttributeGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class ITestMakeExpectations
 				{
 					internal global::MockTests.ITest Instance()
@@ -805,6 +810,7 @@ public static class RockAttributeGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class ITestMakeExpectations
 				{
 					internal global::MockTests.ITest Instance()
@@ -940,6 +946,7 @@ public static class RockAttributeGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class ITestMakeExpectations
 				{
 					internal global::MockTests.ITest Instance()

@@ -41,6 +41,7 @@ public static class NullableAnnotationTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IUseTaskDefaultMakeExpectations<T>
 			{
 				internal global::IUseTaskDefault<T> Instance()
@@ -108,6 +109,7 @@ public static class NullableAnnotationTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ITypeOfNullableOfintCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -271,6 +273,7 @@ public static class NullableAnnotationTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class NeedNullableCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -502,6 +505,7 @@ public static class NullableAnnotationTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class NeedNullableMakeExpectations
 			{
 				internal global::NeedNullable Instance(object? @initializationData)
@@ -573,6 +577,7 @@ public static class NullableAnnotationTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class NeedNullableCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -917,6 +922,7 @@ public static class NullableAnnotationTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class NeedNullableMakeExpectations
 			{
 				internal global::NeedNullable Instance()

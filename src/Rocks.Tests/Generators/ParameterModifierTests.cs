@@ -32,6 +32,7 @@ public static class ParameterModifierTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IParameterModifierCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -193,6 +194,7 @@ public static class ParameterModifierTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IParameterModifierMakeExpectations
 			{
 				internal global::IParameterModifier Instance()
@@ -253,6 +255,7 @@ public static class ParameterModifierTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IParameterModifierCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -420,6 +423,7 @@ public static class ParameterModifierTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IParameterModifierMakeExpectations
 			{
 				internal global::IParameterModifier Instance()
@@ -481,6 +485,7 @@ public static class ParameterModifierTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IParameterModifierCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -647,6 +652,7 @@ public static class ParameterModifierTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IParameterModifierMakeExpectations
 			{
 				internal global::IParameterModifier Instance()
@@ -707,6 +713,7 @@ public static class ParameterModifierTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IParameterModifierCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -868,6 +875,7 @@ public static class ParameterModifierTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IParameterModifierMakeExpectations
 			{
 				internal global::IParameterModifier Instance()
@@ -931,6 +939,7 @@ public static class ParameterModifierTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IParameterModifierCreateExpectations
 				: global::Rocks.Expectations
 			{

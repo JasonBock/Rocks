@@ -37,6 +37,7 @@ public static class AttributeGeneratorTests
 			
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class INotNullMakeExpectations
 			{
 				internal global::INotNull Instance()
@@ -111,6 +112,7 @@ public static class AttributeGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IItemsCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -265,6 +267,7 @@ public static class AttributeGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ConventionDispatcherCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -544,6 +547,7 @@ public static class AttributeGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class NotNullIfNotCasesCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1146,6 +1150,7 @@ public static class AttributeGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IUseTuplesCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1301,6 +1306,7 @@ public static class AttributeGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class HaveDynamicCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1585,6 +1591,7 @@ public static class AttributeGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IHaveGenericAttributeCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -1743,6 +1750,7 @@ public static class AttributeGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IHaveMultipleAttributesCreateExpectations
 					: global::Rocks.Expectations
 				{

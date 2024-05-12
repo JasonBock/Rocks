@@ -38,6 +38,7 @@ public static class PropertyGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IMessagePublishTopologyConfiguratorCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -267,6 +268,7 @@ public static class PropertyGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class PrivatePublicPropertiesCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -694,6 +696,7 @@ public static class PropertyGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class PrivatePublicPropertyCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1008,6 +1011,7 @@ public static class PropertyGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class MixedIndexersCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -1594,6 +1598,7 @@ public static class PropertyGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class MixedPropertiesCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -2139,6 +2144,7 @@ public static class PropertyGeneratorTests
 
 			#nullable enable
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class MixedPropertiesMakeExpectations
 			{
 				internal global::MixedProperties Instance()

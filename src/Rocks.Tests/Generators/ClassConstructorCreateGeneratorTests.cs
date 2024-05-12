@@ -40,6 +40,7 @@ public static class ClassConstructorCreateGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class BaseCtorCreateExpectations
 					: global::Rocks.Expectations
 				{

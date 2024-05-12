@@ -37,6 +37,7 @@ public static class MethodGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IMemberCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -191,6 +192,7 @@ public static class MethodGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IMapperCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -427,6 +429,7 @@ public static class MethodGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IHaveOptionalArgumentsCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -607,6 +610,7 @@ public static class MethodGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IProjectionCreateExpectations
 					: global::Rocks.Expectations
 				{
@@ -790,6 +794,7 @@ public static class MethodGeneratorTests
 			
 			namespace MockTests
 			{
+				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IHaveTooMuchCreateExpectations
 					: global::Rocks.Expectations
 				{

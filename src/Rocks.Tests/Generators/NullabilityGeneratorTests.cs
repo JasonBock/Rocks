@@ -41,6 +41,7 @@ public static class NullabilityGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ConnectionBuilderOfobjectCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -353,6 +354,7 @@ public static class NullabilityGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class SubTracerCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -695,6 +697,7 @@ public static class NullabilityGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IConventionSkipNavigationCreateExpectations
 				: global::Rocks.Expectations
 			{
@@ -972,6 +975,7 @@ public static class NullabilityGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IDestinationOfobjectCreateExpectations
 				: global::Rocks.Expectations
 			{
