@@ -63,7 +63,7 @@ Here's how you create the mock, define its expected interactions, use the mock, 
 ```csharp
 [assembly: RockCreate<IAmSimple>]
 
-var expectations = new IAmSimpleCreateExtensions();
+var expectations = new IAmSimpleCreateExpectations();
 expectations.Methods.TargetAction();
 expectations.Methods.TargetFunc().ReturnValue(44);
 
