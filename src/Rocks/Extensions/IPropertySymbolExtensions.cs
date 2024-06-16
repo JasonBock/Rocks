@@ -28,7 +28,7 @@ internal static class IPropertySymbolExtensions
 			attributes.AddRange(self.SetMethod.Parameters[self.SetMethod.Parameters.Length - 1].GetAttributes());
 		}
 
-		return attributes.ToImmutableArray();
+		return [.. attributes];
 	}
 
 	internal static ImmutableHashSet<INamespaceSymbol> GetNamespaces(this IPropertySymbol self)

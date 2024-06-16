@@ -120,7 +120,7 @@ internal static class MockConstructorExpectationsBuilder
 		else
 		{
 			MockConstructorExpectationsBuilder.Build(writer, mockType.Type,
-				ImmutableArray<ParameterModel>.Empty, requiredInitProperties.Length > 0 || requiredInitIndexers.Length > 0, 
+				[], requiredInitProperties.Length > 0 || requiredInitIndexers.Length > 0, 
 				hasRequiredProperties, expectationsFullyQualifiedName);
 		}
 	}

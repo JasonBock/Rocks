@@ -1,4 +1,6 @@
-﻿namespace Rocks.CodeGenerationTest.Mappings
+﻿using Aspire.Hosting.ApplicationModel;
+
+namespace Rocks.CodeGenerationTest.Mappings
 {
 	internal static class AspireMappings
 	{

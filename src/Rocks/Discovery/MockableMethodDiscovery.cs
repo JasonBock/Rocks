@@ -219,7 +219,7 @@ internal sealed class MockableMethodDiscovery
 
 						if (!foundMatch)
 						{
-							baseInterfaceMethodGroups.Add(new List<IMethodSymbol>(1) { selfBaseMethod });
+							baseInterfaceMethodGroups.Add([selfBaseMethod]);
 						}
 					}
 				}

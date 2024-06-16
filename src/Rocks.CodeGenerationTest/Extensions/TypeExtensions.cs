@@ -82,7 +82,7 @@ namespace Rocks.CodeGenerationTest.Extensions
 				var references = AppDomain.CurrentDomain.GetAssemblies()
 					.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
 					.Select(_ => MetadataReference.CreateFromFile(_.Location))
-					.Concat(new[] { MetadataReference.CreateFromFile(self.Assembly.Location).WithAliases(aliases) });
+					.Concat([MetadataReference.CreateFromFile(self.Assembly.Location).WithAliases(aliases)]);
 				var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 					references, new(OutputKind.DynamicallyLinkedLibrary,
 						allowUnsafe: true,

@@ -30,7 +30,7 @@ internal static class MockMakeBuilder
 		}
 		else
 		{
-			MockConstructorBuilder.Build(writer, mockType, ImmutableArray<ParameterModel>.Empty);
+			MockConstructorBuilder.Build(writer, mockType, []);
 		}
 
 		writer.WriteLine();

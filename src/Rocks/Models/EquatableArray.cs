@@ -128,7 +128,7 @@ internal readonly struct EquatableArray<T> : IEquatable<EquatableArray<T>>, IEnu
 	/// Copies the contents of this <see cref="EquatableArray{T}"/> instance. to a mutable array.
 	/// </summary>
 	/// <returns>The newly instantiated array.</returns>
-	public T[] ToArray() => this.AsImmutableArray().ToArray();
+	public T[] ToArray() => [.. this.AsImmutableArray()];
 
 	/// <summary>
 	/// Gets an <see cref="ImmutableArray{T}.Enumerator"/> value to traverse items in the current array.

@@ -195,7 +195,7 @@ internal sealed class MockablePropertyDiscovery
 
 						if (!foundMatch)
 						{
-							baseInterfacePropertyGroups.Add(new List<IPropertySymbol>(1) { selfBaseProperty });
+							baseInterfacePropertyGroups.Add([selfBaseProperty]);
 						}
 					}
 				}

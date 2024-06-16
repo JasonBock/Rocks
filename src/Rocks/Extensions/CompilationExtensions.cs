@@ -36,9 +36,9 @@ internal static class CompilationExtensions
 				$"global::{type.Namespace}.{type.FlattenedName}{buildType}Expectations{id}{typeArguments}");
 	}
 
-	internal static ImmutableArray<string> GetAliases(this Compilation self) => 
-		self.References.Where(_ => _.Properties.Aliases.Length > 0)
+	internal static ImmutableArray<string> GetAliases(this Compilation self) =>
+		[.. self.References.Where(_ => _.Properties.Aliases.Length > 0)
 		   .Select(_ => _.Properties.Aliases[0])
 		   .Distinct()
-		   .OrderBy(_ => _).ToImmutableArray();
+		   .OrderBy(_ => _)];
 }

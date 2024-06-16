@@ -34,13 +34,12 @@ internal static class AttributeDataExtensions
 			}
 		}
 
-		var namespaces = ImmutableHashSet.CreateBuilder<INamespaceSymbol>();
-
-		namespaces.Add(self.AttributeClass!.ContainingNamespace);
-		namespaces.AddRange(self.ConstructorArguments.SelectMany(_ => GetNamespacesForValue(_)));
-		namespaces.AddRange(self.NamedArguments.SelectMany(_ => GetNamespacesForValue(_.Value)));
-
-		return namespaces.ToImmutable();
+		return
+		[
+			self.AttributeClass!.ContainingNamespace,
+			.. self.ConstructorArguments.SelectMany(_ => GetNamespacesForValue(_)),
+			.. self.NamedArguments.SelectMany(_ => GetNamespacesForValue(_.Value)),
+		];
 	}
 
 	internal static string GetDescription(this AttributeData self, Compilation compilation)
@@ -59,7 +58,7 @@ internal static class AttributeDataExtensions
 			value switch
 			{
 				TypedConstant tc => GetTypedConstantValue(tc, compilation),
-				string s => 
+				string s =>
 					$"""
 					"{s.Replace("\'", "\\\'").Replace("\"", "\\\"").Replace("\a", "\\a")
 						.Replace("\b", "\\b").Replace("\f", "\\f").Replace("\n", "\\n")
@@ -93,7 +92,7 @@ internal static class AttributeDataExtensions
 		}
 	}
 
-	internal static string GetDescription(this ImmutableArray<AttributeData> self, Compilation compilation, 
+	internal static string GetDescription(this ImmutableArray<AttributeData> self, Compilation compilation,
 		AttributeTargets? target = null)
 	{
 		if (self.Length == 0)
@@ -140,7 +139,7 @@ internal static class AttributeDataExtensions
 		var attributes = self.Where(
 			_ => _.AttributeClass is not null &&
 				(!target.HasValue || !target.Value.HasFlag(AttributeTargets.Class) ||
-					_.AttributeClass.Equals(obsoleteAttribute, SymbolEqualityComparer.Default)) && 
+					_.AttributeClass.Equals(obsoleteAttribute, SymbolEqualityComparer.Default)) &&
 				_.AttributeClass.CanBeSeenByContainingAssembly(compilation.Assembly) &&
 				!_.AttributeClass.Equals(compilerGeneratedAttribute, SymbolEqualityComparer.Default) &&
 				!_.AttributeClass.Equals(iteratorStateMachineAttribute, SymbolEqualityComparer.Default) &&

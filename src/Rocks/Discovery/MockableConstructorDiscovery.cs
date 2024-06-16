@@ -16,7 +16,7 @@ internal sealed class MockableConstructorDiscovery
 						!_.GetAttributes().Any(
 							a => a.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
 								a.ConstructorArguments.Any(_ => _.Value is bool error && error))).ToImmutableArray() :
-				ImmutableArray<IMethodSymbol>.Empty;
+				[];
 
    internal ImmutableArray<IMethodSymbol> Constructors { get; }
 }

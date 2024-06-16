@@ -36,7 +36,7 @@ internal sealed record TypeMockModel
 		this.Shims = shouldResolveShims ?
 			shims.Select(_ =>
 				MockModel.Create(node, _, model, BuildType.Create, false).Information!.Type).ToImmutableArray() :
-			ImmutableArray<TypeMockModel>.Empty;
+			[];
 
 		this.ConstructorProperties = type.GetMembers().OfType<IPropertySymbol>()
 			.Where(_ => (_.IsRequired || _.GetAccessors() == PropertyAccessor.Init || _.GetAccessors() == PropertyAccessor.GetAndInit) &&

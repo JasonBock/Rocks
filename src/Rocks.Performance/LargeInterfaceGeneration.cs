@@ -428,11 +428,11 @@ public class LargeInterfaceGeneration
 		var references = AppDomain.CurrentDomain.GetAssemblies()
 			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
 			.Select(_ => MetadataReference.CreateFromFile(_.Location))
-			.Concat(new[]
-			{
+			.Concat(
+			[
 				MetadataReference.CreateFromFile(typeof(RockAttributeGenerator).Assembly.Location),
-			});
-		this.compilation = CSharpCompilation.Create("generator", new[] { tree },
+			]);
+		this.compilation = CSharpCompilation.Create("generator", [tree],
 			references, new(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
 		this.driver = CSharpGeneratorDriver.Create(new RockAttributeGenerator());
 	}

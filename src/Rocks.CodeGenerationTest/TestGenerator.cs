@@ -99,14 +99,14 @@ internal static class TestGenerator
 		var assemblies = types.Select(_ => _.Assembly).ToHashSet();
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
-			 .Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-			 .Select(_ => MetadataReference.CreateFromFile(_.Location))
-			 .Concat(assemblies.Select(_ => MetadataReference.CreateFromFile(_.Location).WithAliases(aliases)))
-			 .Concat(new[]
-			 {
-					 MetadataReference.CreateFromFile(typeof(RockAttributeGenerator).Assembly.Location),
-					 MetadataReference.CreateFromFile(typeof(InvalidEnumArgumentException).Assembly.Location),
-			 });
+			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
+			.Select(_ => MetadataReference.CreateFromFile(_.Location))
+			.Concat(assemblies.Select(_ => MetadataReference.CreateFromFile(_.Location).WithAliases(aliases)))
+			.Concat(
+			[
+				MetadataReference.CreateFromFile(typeof(RockAttributeGenerator).Assembly.Location),
+				MetadataReference.CreateFromFile(typeof(InvalidEnumArgumentException).Assembly.Location),
+			]);
 
 		foreach (var typeToLoadAssembliesFrom in typesToLoadAssembliesFrom)
 		{
@@ -155,11 +155,11 @@ internal static class TestGenerator
 			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
 			.Select(_ => MetadataReference.CreateFromFile(_.Location))
 			.Concat(assemblies.Select(_ => MetadataReference.CreateFromFile(_.Location).WithAliases(aliases)))
-			.Concat(new[]
-			{
+			.Concat(
+			[
 				MetadataReference.CreateFromFile(typeof(RockAttributeGenerator).Assembly.Location),
 				MetadataReference.CreateFromFile(typeof(InvalidEnumArgumentException).Assembly.Location),
-			});
+			]);
 
 		foreach (var typeToLoadAssembliesFrom in typesToLoadAssembliesFrom)
 		{
@@ -224,11 +224,11 @@ internal static class TestGenerator
 			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
 			.Select(_ => MetadataReference.CreateFromFile(_.Location))
 			.Concat(assemblies.Select(_ => MetadataReference.CreateFromFile(_.Location).WithAliases(aliases)))
-			.Concat(new[]
-			{
+			.Concat(
+			[
 				MetadataReference.CreateFromFile(typeof(RockAttributeGenerator).Assembly.Location),
 				MetadataReference.CreateFromFile(typeof(InvalidEnumArgumentException).Assembly.Location),
-			});
+			]);
 
 		foreach (var typeToLoadAssembliesFrom in typesToLoadAssembliesFrom)
 		{
@@ -254,9 +254,9 @@ internal static class TestGenerator
 		if (driverHasDiagnostics)
 		{
 			issues.AddRange(diagnostics
-				 .Where(_ => _.Severity == DiagnosticSeverity.Error ||
-					  _.Severity == DiagnosticSeverity.Warning)
-				 .Select(_ => new Issue(_.Id, _.Severity, _.ToString(), _.Location)));
+				.Where(_ => _.Severity == DiagnosticSeverity.Error ||
+					_.Severity == DiagnosticSeverity.Warning)
+				.Select(_ => new Issue(_.Id, _.Severity, _.ToString(), _.Location)));
 			var mockCode = compilation.SyntaxTrees.ToArray()[^1];
 		}
 
@@ -267,27 +267,27 @@ internal static class TestGenerator
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
-			 .Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-			 .Select(_ => MetadataReference.CreateFromFile(_.Location))
-			 .Concat(new[]
-			 {
-					 MetadataReference.CreateFromFile(typeof(RockAttributeGenerator).Assembly.Location),
-					 MetadataReference.CreateFromFile(typeof(InvalidEnumArgumentException).Assembly.Location),
-			 });
+			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
+			.Select(_ => MetadataReference.CreateFromFile(_.Location))
+			.Concat(
+			[
+				MetadataReference.CreateFromFile(typeof(RockAttributeGenerator).Assembly.Location),
+				MetadataReference.CreateFromFile(typeof(InvalidEnumArgumentException).Assembly.Location),
+			]);
 
 		foreach (var typeToLoadAssembliesFrom in typesToLoadAssembliesFrom)
 		{
 			references = references.Concat(
 			[
-					 MetadataReference.CreateFromFile(typeToLoadAssembliesFrom.Assembly.Location)
-				]);
+				MetadataReference.CreateFromFile(typeToLoadAssembliesFrom.Assembly.Location)
+			]);
 		}
 
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
-			 references, new(OutputKind.DynamicallyLinkedLibrary,
-				  allowUnsafe: true,
-				  generalDiagnosticOption: ReportDiagnostic.Error,
-				  specificDiagnosticOptions: TestGenerator.SpecificDiagnostics));
+			references, new(OutputKind.DynamicallyLinkedLibrary,
+			allowUnsafe: true,
+			generalDiagnosticOption: ReportDiagnostic.Error,
+			specificDiagnosticOptions: TestGenerator.SpecificDiagnostics));
 
 		var driver = CSharpGeneratorDriver.Create(generator);
 		driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out var diagnostics);

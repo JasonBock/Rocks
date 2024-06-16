@@ -37,7 +37,7 @@
 		<PackageReference Include="DiffEngine" />
 		<PackageReference Include="DnsClient" />
 		<PackageReference Include="DSharpPlus" />
-		<PackageReference Include="Elasticsearch.Net" />
+		<PackageReference Include="Elastic.Clients.Elasticsearch" />
 		<PackageReference Include="EntityFrameworkCore.Exceptions.Common" />
 		<PackageReference Include="FluentAssertions" />
 		<PackageReference Include="FluentValidation" />
@@ -97,6 +97,7 @@
 		<PackageReference Include="SixLabors.ImageSharp" />
 		<PackageReference Include="SkiaSharp" />
 		<PackageReference Include="StackExchange.Redis" />
+		<PackageReference Include="Stateless" />
 		<PackageReference Include="Stripe.net" />
 		<PackageReference Include="Sylvan.Data.Csv" />
 		<PackageReference Include="System.IO.Abstractions" />

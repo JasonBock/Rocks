@@ -88,7 +88,7 @@ internal static class Extensions
 		}
 
 		// Need to write one more to get the last line
-		self.WriteLine(contentSpan.Slice(startIndex, content.Length - startIndex));
+		self.WriteLine(contentSpan[startIndex..content.Length]);
 
 		if (indentation > 0)
 		{

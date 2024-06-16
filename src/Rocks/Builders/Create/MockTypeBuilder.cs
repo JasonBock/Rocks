@@ -40,7 +40,7 @@ internal static class MockTypeBuilder
 		}
 		else
 		{
-			MockConstructorBuilder.Build(writer, type, ImmutableArray<ParameterModel>.Empty, type.Shims, expectationsFullyQualifiedName);
+			MockConstructorBuilder.Build(writer, type, [], type.Shims, expectationsFullyQualifiedName);
 		}
 
 		writer.WriteLine();

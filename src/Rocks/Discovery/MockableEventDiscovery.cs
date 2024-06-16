@@ -88,7 +88,7 @@ internal sealed class MockableEventDiscovery
 
 						if (!foundMatch)
 						{
-							baseInterfaceEventsGroups.Add(new List<IEventSymbol>(1) { selfBaseEvent });
+							baseInterfaceEventsGroups.Add([selfBaseEvent]);
 						}
 					}
 				}

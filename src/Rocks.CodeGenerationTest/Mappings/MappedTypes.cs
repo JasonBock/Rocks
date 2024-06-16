@@ -23,7 +23,7 @@ internal static class MappedTypes
 			.AddItems(BrighterMappings.GetMappedTypes())
 			.AddItems(CoravelMappings.GetMappedTypes())
 			.AddItems(CslaMappings.GetMappedTypes())
-			.AddItems(ElasticSearchMappings.GetMappedTypes())
+			//.AddItems(ElasticSearchMappings.GetMappedTypes())
 			.AddItems(EntityFrameworkMappings.GetMappedTypes())
 			.AddItems(FluentAssertionsMappings.GetMappedTypes())
 			.AddItems(FluentValidationMappings.GetMappedTypes())

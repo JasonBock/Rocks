@@ -98,11 +98,11 @@ public static class CompilationExtensionsTests
 		var finalSource = "public class Final { }";
 		var finalSyntaxTree = CSharpSyntaxTree.ParseText(finalSource);
 		return CSharpCompilation.Create(name, [finalSyntaxTree],
-			references: new [] 
-			{ 
+			references:
+			[
 				firstCompilation.ToMetadataReference().WithAliases(firstAliases),
 				secondCompilation.ToMetadataReference().WithAliases(secondAliases)
-			},			
+			],			
 			options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 	}
 }
