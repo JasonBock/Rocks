@@ -37,10 +37,11 @@ public static class TypeExtensions
 			};
 		}
 
-		return (from member in self.GetMembers()
-				  from memberIdentifier in member.GetCustomAttributes<MemberIdentifierAttribute>()
-				  where memberIdentifier is not null
-				  where memberIdentifier.Value == identifier
-				  select GetDescription(member, memberIdentifier.PropertyAccessor)).FirstOrDefault();
+		var bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
+		return (from member in self.GetMembers(bindingFlags)
+			from memberIdentifier in member.GetCustomAttributes<MemberIdentifierAttribute>()
+			where memberIdentifier is not null
+			where memberIdentifier.Value == identifier
+			select GetDescription(member, memberIdentifier.PropertyAccessor)).FirstOrDefault();
 	}
 }

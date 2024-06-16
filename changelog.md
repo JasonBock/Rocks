@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Rare naming collisions with the generated expectations class and property names are resolved (issue [#288](https://github.com/JasonBock/Rocks/issues/288))
 - Generated code is now excluded from code coverage (issue [#312](https://github.com/JasonBock/Rocks/issues/312))
 
+### Fixed
+
+- Non-public member descriptions are now found (issue [#317](https://github.com/JasonBock/Rocks/issues/317))
+
 ## [8.1.0] - 2024-04-16
 
 ### Changed

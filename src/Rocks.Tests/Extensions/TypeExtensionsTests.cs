@@ -1,11 +1,14 @@
 ﻿using NUnit.Framework;
 using Rocks.Extensions;
 using System.Collections.Immutable;
+using System.Security.Cryptography;
 
 namespace Rocks.Tests.Extensions;
 
-public static class Identifiers
+public class Identifiers
 {
+	private int data = RandomNumberGenerator.GetInt32(int.MaxValue);
+
 	[MemberIdentifier(1)]
 	public static void Foo() { }
 
@@ -21,6 +24,9 @@ public static class Identifiers
 
 	[MemberIdentifier(6)]
 	public static Guid Foo(ref int name) => Guid.NewGuid();
+
+	[MemberIdentifier(7)]
+	protected int ProtectedFoo() => this.data;
 }
 
 public static class NoIdentifiers
@@ -36,6 +42,7 @@ public static class TypeExtensionsTests
 	[TestCase(4u, "System.String get_Data()")]
 	[TestCase(5u, "Void set_Data(System.String)")]
 	[TestCase(6u, "System.Guid Foo(Int32 ByRef)")]
+	[TestCase(7u, "Int32 ProtectedFoo()")]
 	public static void GetMemberDescription(uint value, string expectedDescription) =>
 		Assert.That(typeof(Identifiers).GetMemberDescription(value), Is.EqualTo(expectedDescription));
 
