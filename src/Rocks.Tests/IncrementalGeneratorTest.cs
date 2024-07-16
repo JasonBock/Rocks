@@ -1,6 +1,5 @@
 ﻿using Microsoft.CodeAnalysis.CSharp.Testing;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.Testing.Verifiers;
 using Microsoft.CodeAnalysis.Testing;
 using Microsoft.CodeAnalysis;
 using System.Collections.Immutable;
@@ -8,7 +7,7 @@ using System.Collections.Immutable;
 namespace Rocks.Tests;
 
 internal sealed class IncrementalGeneratorTest<TIncrementalGenerator>
-	: CSharpSourceGeneratorTest<EmptySourceGeneratorProvider, NUnitVerifier>
+	: CSharpSourceGeneratorTest<EmptySourceGeneratorProvider, DefaultVerifier>
 	where TIncrementalGenerator : IIncrementalGenerator, new()
 {
 	public IncrementalGeneratorTest(ReportDiagnostic generalDiagnosticOption = ReportDiagnostic.Default) =>
@@ -25,11 +24,6 @@ internal sealed class IncrementalGeneratorTest<TIncrementalGenerator>
 
 			return solution;
 		});
-
-	protected override IEnumerable<ISourceGenerator> GetSourceGenerators()
-	{
-		yield return new TIncrementalGenerator().AsSourceGenerator();
-	}
 
 	protected override ParseOptions CreateParseOptions()
 	{

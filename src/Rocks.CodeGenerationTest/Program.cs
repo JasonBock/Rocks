@@ -13,10 +13,10 @@ using System.Reflection;
 var stopwatch = Stopwatch.StartNew();
 
 //TestTypeValidity();
-//TestWithCode();
+TestWithCode();
 //TestWithType();
 //TestWithTypeNoEmit();
-TestWithTypes();
+//TestWithTypes();
 //TestTypesIndividually();
 
 stopwatch.Stop();
@@ -31,27 +31,27 @@ static void TestTypeValidity() =>
 
 static void TestWithCode()
 {
+	var typesToLoadAssembliesFrom = new Type[]
+	{
+		typeof(System.Linq.Expressions.LambdaExpression),
+	};
+
 	TestGenerator.Generate(new RockAttributeGenerator(),
 		"""
 		using Rocks;
 		using System;
+		using System.Linq.Expressions;
 		
-		[assembly: RockCreate<Generator>]
+		[assembly: RockCreate(typeof(ClassMap<>))]
 
 		#nullable enable
 
-		public abstract class GeneratorBase
+		public abstract class ClassMap<TClass>
 		{
-			protected abstract string GetBuildArtifactsDirectoryPath(string assemblyLocation, string programName);
-		}
-
-		public class Generator
-			: GeneratorBase
-		{
-			protected override string GetBuildArtifactsDirectoryPath(string buildPartition, string programName) => "";
+			public virtual void Map<TMember>(Expression<Func<TClass, TMember?>> expression, bool useExistingMap = true) { }
 		}
 		""",
-		[]);
+		typesToLoadAssembliesFrom);
 }
 
 static void TestWithType()
@@ -73,7 +73,7 @@ static void TestWithType()
 
 #pragma warning disable EF1001 // Internal EF Core API usage.
 	(var issues, var times) = TestGenerator.Generate(new RockAttributeGenerator(),
-		[typeof(Proto.Deduplication.DeduplicationContext<>)],
+		[typeof(CsvHelper.Configuration.DefaultClassMap<>)],
 		typesToLoadAssembliesFrom,
 		MappedTypes.GetMappedTypes(),
 		[], BuildType.Make);

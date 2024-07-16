@@ -2,12 +2,12 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Testing;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Testing.Verifiers;
+using Microsoft.CodeAnalysis.Testing;
 
 namespace Rocks.Tests;
 
 internal sealed class AnalyzerTest<TAnalyzer>
-	: CSharpAnalyzerTest<TAnalyzer, NUnitVerifier>
+	: CSharpAnalyzerTest<TAnalyzer, DefaultVerifier>
 	where TAnalyzer : DiagnosticAnalyzer, new()
 {
    protected override ParseOptions CreateParseOptions()

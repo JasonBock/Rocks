@@ -1,7 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Testing;
-using NuGet.Frameworks;
 
 namespace Rocks.Tests;
 
@@ -15,7 +14,7 @@ internal static class TestAssistants
 	{
 		var test = new AnalyzerTest<TAnalyzer>()
 		{
-			ReferenceAssemblies = TestAssistants.GetNet80(),
+			ReferenceAssemblies = ReferenceAssemblies.Net.Net80,
 			TestState =
 			{
 				Sources = { code },
@@ -45,7 +44,7 @@ internal static class TestAssistants
 	{
 		var test = new IncrementalGeneratorTest<TGenerator>(generalDiagnosticOption)
 		{
-			ReferenceAssemblies = TestAssistants.GetNet80(),
+			ReferenceAssemblies = ReferenceAssemblies.Net.Net80,
 			TestState =
 			{
 				Sources = { code },
@@ -72,22 +71,5 @@ internal static class TestAssistants
 
 		test.TestState.ExpectedDiagnostics.AddRange(expectedDiagnostics);
 		await test.RunAsync();
-	}
-
-	private static ReferenceAssemblies GetNet80()
-	{
-		// ReferenceAssemblies.Net.Net60, // TestAssistants.GetNet60(), /* ReferenceAssemblies.Net.Net50, */
-		if (!NuGetFramework.Parse("net8.0").IsPackageBased)
-		{
-			// The NuGet version provided at runtime does not recognize the 'net7.0' target framework
-			throw new NotSupportedException("The 'net7.0' target framework is not supported by this version of NuGet.");
-		}
-
-		return new ReferenceAssemblies(
-			 "net8.0",
-			 new PackageIdentity(
-				  "Microsoft.NETCore.App.Ref",
-				  "8.0.0"),
-			 Path.Combine("ref", "net8.0"));
 	}
 }
