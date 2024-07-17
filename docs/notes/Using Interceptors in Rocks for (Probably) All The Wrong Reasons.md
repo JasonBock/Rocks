@@ -278,3 +278,7 @@ expectations.Verify();
 The problem is that it's pretty atypical that a developer will call the method directly. That is, the mock is usually passed to something else, and that's where the invocation occurs. Moreover, it's not uncommon (in fact I might argue that this is the norm) for that invocation to occur in a different library, and then there's no way to specify a location to intercept.
 
 Therefore, I really don't know how much value I'll get in using interceptors in Rocks. Even if I can do it within the test library and I document this limitation, this will still confuse users with the inconsistency.
+
+## Update: 2024.07.17
+
+One **possible** place this could be useful is if the tests are in the library itself. That is something that people do, though typically a separate library is used to test a target library. Typically, the test code is not included when the library is published and used in production, using `#ifdef`s. Then you would be able to intercept call sites that are non-virtual.
