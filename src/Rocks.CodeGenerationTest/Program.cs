@@ -13,10 +13,10 @@ using System.Reflection;
 var stopwatch = Stopwatch.StartNew();
 
 //TestTypeValidity();
-TestWithCode();
+//TestWithCode();
 //TestWithType();
 //TestWithTypeNoEmit();
-//TestWithTypes();
+TestWithTypes();
 //TestTypesIndividually();
 
 stopwatch.Stop();
@@ -137,7 +137,9 @@ static void TestWithTypes()
 		new (typeof(Confluent.Kafka.Acks), []),
 		new (typeof(Coravel.CacheServiceRegistration), []),
 		new (typeof(Csla.DataPortal<>), []),
-		new (typeof(CsvHelper.ArrayHelper), []),
+		// Removing until this is addressed:
+		// https://github.com/JasonBock/Rocks/issues/320
+		//new (typeof(CsvHelper.ArrayHelper), []),
 		new (typeof(Cursively.CsvAsyncInput), []),
 		new (typeof(Dapper.DbString), []),
 		new (typeof(DiffEngine.BuildServerDetector), []),
