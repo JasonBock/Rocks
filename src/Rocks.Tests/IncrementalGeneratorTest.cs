@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 namespace Rocks.Tests;
 
 internal sealed class IncrementalGeneratorTest<TIncrementalGenerator>
-	: CSharpSourceGeneratorTest<EmptySourceGeneratorProvider, DefaultVerifier>
+	: CSharpSourceGeneratorTest<TIncrementalGenerator, DefaultVerifier>
 	where TIncrementalGenerator : IIncrementalGenerator, new()
 {
 	public IncrementalGeneratorTest(ReportDiagnostic generalDiagnosticOption = ReportDiagnostic.Default) =>
