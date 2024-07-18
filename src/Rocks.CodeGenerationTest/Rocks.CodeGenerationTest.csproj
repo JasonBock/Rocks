@@ -30,6 +30,7 @@
 		<PackageReference Include="ClangSharp" />
 		<PackageReference Include="Confluent.Kafka" />
 		<PackageReference Include="Coravel" />
+		<PackageReference Include="CoreWCF.Primitives" />
 		<PackageReference Include="Csla" />
 		<PackageReference Include="CsvHelper" />
 		<PackageReference Include="Cursively" />
@@ -67,6 +68,7 @@
 		<PackageReference Include="Microsoft.Extensions.Logging" />
 		<PackageReference Include="Microsoft.Extensions.ServiceDiscovery" />
 		<PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" />
+		<PackageReference Include="Microsoft.Identity.Client" />
 		<PackageReference Include="Microsoft.Kiota.Abstractions" />
 		<PackageReference Include="Microsoft.OpenApi" />
 		<PackageReference Include="Microsoft.Orleans.Core" />
@@ -96,6 +98,7 @@
 		<PackageReference Include="SimpleInjector" />
 		<PackageReference Include="SixLabors.ImageSharp" />
 		<PackageReference Include="SkiaSharp" />
+		<PackageReference Include="SSH.NET" />
 		<PackageReference Include="StackExchange.Redis" />
 		<PackageReference Include="Stateless" />
 		<PackageReference Include="Stripe.net" />
@@ -112,6 +115,8 @@
 		<PackageReference Include="Twilio" />
 		<PackageReference Include="Verify" />
 		<PackageReference Include="Wasmtime" />
+		<PackageReference Include="WireMock.Net" />
 		<PackageReference Include="Wisp" />
+		<PackageReference Include="ZLogger" />
 	</ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 ﻿#define INCLUDE_PASSING
 //#define INCLUDE_FAILING
 
+using AnyOfTypes;
 using Microsoft.CodeAnalysis;
 using Rocks;
 using Rocks.CodeGenerationTest;
@@ -136,6 +137,7 @@ static void TestWithTypes()
 		new (typeof(ClangSharp.AbstractConditionalOperator), []),
 		new (typeof(Confluent.Kafka.Acks), []),
 		new (typeof(Coravel.CacheServiceRegistration), []),
+		new (typeof(CoreWCF.ActionNotSupportedException), []),
 		new (typeof(Csla.DataPortal<>), []),
 		// Removing until this is addressed:
 		// https://github.com/JasonBock/Rocks/issues/320
@@ -170,6 +172,7 @@ static void TestWithTypes()
 		new (typeof(Microsoft.Extensions.Logging.LogDefineOptions), []),
 		new (typeof(Microsoft.Extensions.ServiceDiscovery.ConfigurationServiceEndpointProviderOptions), []),
 		new (typeof(Microsoft.FluentUI.AspNetCore.Components.AccordionChangeEventArgs), []),
+		new (typeof(Microsoft.Identity.Client.AadAuthorityAudience), []),
 		new (typeof(Microsoft.Kiota.Abstractions.ApiClientBuilder), []),
 		new (typeof(Microsoft.OpenApi.Any.AnyType), []),
 		new (typeof(Microsoft.Quantum.AmplitudeAmplification.AmpAmpByOracle), []),
@@ -189,6 +192,7 @@ static void TestWithTypes()
 		new (typeof(RabbitMQ.Client.AmqpTcpEndpoint), []),
 		new (typeof(RecordParser.Builders.Reader.FixedLengthReaderBuilder<>), []),
 		new (typeof(Refit.AliasAsAttribute), []),
+		new (typeof(Renci.SshNet.AuthenticationMethod), []),
 		new (typeof(RestSharp.BodyParameter), []),
 		new (typeof(Serilog.Core.IDestructuringPolicy), []),
 		new (typeof(ServiceStack.ActionExecExtensions), []),
@@ -212,7 +216,9 @@ static void TestWithTypes()
 		new (typeof(Twilio.Base.Page<>), []),
 		new (typeof(VerifyTests.AsStringResult), []),
 		new (typeof(Wasmtime.ActionResult), []),
+		new (typeof(WireMock.IMapping), []),
 		new (typeof(Wisp.IByteReader), []),
+		new (typeof(ZLogger.AsyncStreamLineMessageWriter), []),
 #endif
 #if INCLUDE_FAILING
 #endif
@@ -220,6 +226,9 @@ static void TestWithTypes()
 
 	var typesToLoadAssembliesFrom = new Type[]
 	{
+		typeof(AnyOfTypes.AnyOf<,>),
+		typeof(Microsoft.IdentityModel.Tokens.Saml2.Saml2SecurityTokenHandler),
+		typeof(System.Security.Claims.ClaimsPrincipal),
 		typeof(System.Linq.Expressions.LambdaExpression),
 		typeof(System.Net.Mail.MailMessage),
 		typeof(Microsoft.Extensions.Caching.Memory.IMemoryCache),
