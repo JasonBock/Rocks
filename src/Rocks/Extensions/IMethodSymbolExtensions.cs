@@ -42,6 +42,12 @@ internal static class IMethodSymbolExtensions
 	/// <returns>A list of default constraints.</returns>
 	internal static EquatableArray<Constraints> GetDefaultConstraints(this IMethodSymbol self)
 	{
+		static bool IsAnnotated(ITypeSymbol type, ITypeParameterSymbol typeParameter)
+		{
+			return (type.Equals(typeParameter) && type.NullableAnnotation == NullableAnnotation.Annotated) ||
+				type.IsOpenGeneric() && ((type as INamedTypeSymbol)?.TypeArguments.Any(_ => IsAnnotated(_, typeParameter)) ?? false);
+		}
+
 		if (self.TypeParameters.Length > 0)
 		{
 			var constraints = new List<Constraints>();
@@ -60,8 +66,8 @@ internal static class IMethodSymbolExtensions
 				{
 					constraints.Add(new Constraints(typeParameter.GetName(), new[] { "struct" }.ToImmutableArray()));
 				}
-				else if (self.Parameters.Any(_ => _.Type.Equals(typeParameter) && _.NullableAnnotation == NullableAnnotation.Annotated) ||
-					(!self.ReturnsVoid && self.ReturnType.Equals(typeParameter) && self.ReturnType.NullableAnnotation == NullableAnnotation.Annotated))
+				else if (self.Parameters.Any(_ => IsAnnotated(_.Type, typeParameter)) ||
+					(!self.ReturnsVoid && IsAnnotated(self.ReturnType, typeParameter)))
 				{
 					constraints.Add(new Constraints(typeParameter.GetName(), new[] { "default" }.ToImmutableArray()));
 				}

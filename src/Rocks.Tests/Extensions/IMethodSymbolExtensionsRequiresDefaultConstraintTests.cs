@@ -12,7 +12,9 @@ public static class IMethodSymbolExtensionsRequiresDefaultConstraintTests
 	private static IEnumerable<TestCaseData> GetDefaultConstraints()
 	{
 		yield return new TestCaseData("public class Target { public void Foo<T>(T? a) { } }", "where T : default");
+		yield return new TestCaseData("public interface IGeneric<T> { } public class Target { public void Foo<T>(IGeneric<T?> a) { } }", "where T : default");
 		yield return new TestCaseData("public class Target { public T? Foo<T>() => default!; }", "where T : default");
+		yield return new TestCaseData("public interface IGeneric<T> { } public class Target { public IGeneric<T?> Foo<T>() => default!; }", "where T : default");
 	}
 
 	private static IEnumerable<TestCaseData> GetDefaultConstraintsWhenNoneExist()
