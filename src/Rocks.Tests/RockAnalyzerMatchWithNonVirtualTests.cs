@@ -15,7 +15,7 @@ public static class RockAnalyzerMatchWithNonVirtualTests
 			using Rocks;
 			
 			[assembly: RockCreate<TypeConverter<TypeNode>>]
-			
+						
 			public class TypeNode { }
 			
 			public interface IIRTypeContext { }
@@ -42,8 +42,10 @@ public static class RockAnalyzerMatchWithNonVirtualTests
 			}
 			""";
 
-		var diagnostic = new DiagnosticResult(TypeHasMatchWithNonVirtualDescriptor.Id, DiagnosticSeverity.Error)
+		var nonVirtualDiagnostic = new DiagnosticResult(TypeHasMatchWithNonVirtualDescriptor.Id, DiagnosticSeverity.Error)
 			.WithSpan(3, 12, 3, 47);
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic]);
+		var closedGenericDiagnostic = new DiagnosticResult(TypeIsClosedGenericDescriptor.Id, DiagnosticSeverity.Warning)
+			.WithSpan(3, 12, 3, 47);
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [closedGenericDiagnostic, nonVirtualDiagnostic]);
 	}
 }

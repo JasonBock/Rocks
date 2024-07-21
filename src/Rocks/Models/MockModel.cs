@@ -36,6 +36,11 @@ internal sealed record MockModel
 			diagnostics.Add(CannotMockSealedTypeDiagnostic.Create(node, typeToMock));
 		}
 
+		if (typeToMock is INamedTypeSymbol namedTypeToMock && namedTypeToMock.IsGenericType && !namedTypeToMock.IsOpenGeneric())
+		{
+			diagnostics.Add(TypeIsClosedGenericDiagnostic.Create(node, typeToMock));
+		}
+
 		var attributes = typeToMock.GetAttributes();
 
 		var obsoleteAttribute = model.Compilation.GetTypeByMetadataName(typeof(ObsoleteAttribute).FullName)!;

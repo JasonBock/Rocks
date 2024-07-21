@@ -102,6 +102,7 @@ public sealed class RockAnalyzer
 		   TypeHasMatchWithNonVirtualDescriptor.Create(),
 		   TypeHasNoAccessibleConstructorsDescriptor.Create(),
 		   TypeHasNoMockableMembersDescriptor.Create(),
-		   TypeErrorDescriptor.Create(),
+			TypeIsClosedGenericDescriptor.Create(),
+			TypeErrorDescriptor.Create(),
 		];
 }

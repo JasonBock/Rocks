@@ -5,10 +5,12 @@ namespace Rocks.Descriptors;
 
 internal static class TypeIsClosedGenericDescriptor
 {
+	// TODO: In 9.0.0, this should change
+	// to an Error level.
 	internal static DiagnosticDescriptor Create() =>
 		new(TypeIsClosedGenericDescriptor.Id, TypeIsClosedGenericDescriptor.Title,
 			TypeIsClosedGenericDescriptor.Message,
-			DiagnosticConstants.Usage, DiagnosticSeverity.Error, true,
+			DiagnosticConstants.Usage, DiagnosticSeverity.Warning, true,
 			helpLinkUri: HelpUrlBuilder.Build(
 				TypeIsClosedGenericDescriptor.Id, TypeIsClosedGenericDescriptor.Title));
 
