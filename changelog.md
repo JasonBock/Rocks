@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Minor project changes: removed GitHub source linking, embedded debug information, and added NuGet auditing (issue [#321](https://github.com/JasonBock/Rocks/issues/321))
 
+### Fixed
+
+- Nullable types within type definitions are now constrained correctly (issue [#320](https://github.com/JasonBock/Rocks/issues/320))
+
 ## [8.2.0] - 2024-07-17
 
 ### Changed

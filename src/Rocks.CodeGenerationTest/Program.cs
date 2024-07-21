@@ -139,9 +139,7 @@ static void TestWithTypes()
 		new (typeof(Coravel.CacheServiceRegistration), []),
 		new (typeof(CoreWCF.ActionNotSupportedException), []),
 		new (typeof(Csla.DataPortal<>), []),
-		// Removing until this is addressed:
-		// https://github.com/JasonBock/Rocks/issues/320
-		//new (typeof(CsvHelper.ArrayHelper), []),
+		new (typeof(CsvHelper.ArrayHelper), []),
 		new (typeof(Cursively.CsvAsyncInput), []),
 		new (typeof(Dapper.DbString), []),
 		new (typeof(DiffEngine.BuildServerDetector), []),
