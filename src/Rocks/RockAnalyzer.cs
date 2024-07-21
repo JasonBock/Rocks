@@ -33,6 +33,8 @@ public sealed class RockAnalyzer
 
 		context.RegisterCompilationStartAction(compilationContext =>
 		{
+			// TODO: This needs to include the non-generic versions
+			// as well as the upcoming new RockAttribute.
 			var createAttributeSymbol = compilationContext.Compilation.GetTypeByMetadataName(
 				typeof(RockCreateAttribute<>).FullName)!;
 			var makeAttributeSymbol = compilationContext.Compilation.GetTypeByMetadataName(
