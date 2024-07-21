@@ -3,12 +3,12 @@
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<AssemblyName>Rocks</AssemblyName>
 		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+		<DebugType>embedded</DebugType>
 		<Description>A mocking library based on the Compiler APIs (Roslyn + Mocks)</Description>
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 		<EnforceExtendedAnalyzerRules>false</EnforceExtendedAnalyzerRules>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<IncludeSymbols>true</IncludeSymbols>
 		<NoWarn>RS1036</NoWarn>
 		<PackageIcon>Icon.png</PackageIcon>
 		<PackageId>Rocks</PackageId>
@@ -23,7 +23,6 @@
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://github.com/jasonbock/rocks</RepositoryUrl>
 		<RootNamespace>Rocks</RootNamespace>
-		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<TargetFramework>netstandard2.0</TargetFramework>
 	</PropertyGroup>
 	<ItemGroup>
@@ -33,7 +32,6 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="all" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Include="..\..\README.md" Pack="true" PackagePath="" />
