@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.3.0] - Not Yet Released
 
+### Added
+
+- Added a diagnostic to warn about mocking closed generic types (issue [#326](https://github.com/JasonBock/Rocks/issues/326))
+
 ### Changed
 
 - Minor project changes: removed GitHub source linking, embedded debug information, and added NuGet auditing (issue [#321](https://github.com/JasonBock/Rocks/issues/321))
