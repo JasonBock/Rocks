@@ -21,12 +21,17 @@ internal static class EquatableArray
 	/// <returns>An <see cref="EquatableArray{T}"/> instance from a given <see cref="ImmutableArray{T}"/>.</returns>
 	public static EquatableArray<T> AsEquatableArray<T>(this ImmutableArray<T> array)
 		where T : IEquatable<T> => new(array);
+
+	public static EquatableArray<T> Create<T>(ReadOnlySpan<T> values)
+		where T : IEquatable<T> =>
+		new EquatableArray<T>(values.ToImmutableArray());
 }
 
 /// <summary>
 /// An imutable, equatable array. This is equivalent to <see cref="ImmutableArray{T}"/> but with value equality support.
 /// </summary>
 /// <typeparam name="T">The type of values in the array.</typeparam>
+[CollectionBuilder(typeof(EquatableArray), nameof(EquatableArray.Create))]
 internal readonly struct EquatableArray<T> : IEquatable<EquatableArray<T>>, IEnumerable<T>
 	 where T : IEquatable<T>
 {

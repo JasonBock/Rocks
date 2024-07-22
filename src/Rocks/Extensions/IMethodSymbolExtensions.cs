@@ -60,16 +60,16 @@ internal static class IMethodSymbolExtensions
 				// GetConstraints() and GetDefaultConstraints().
 				if (typeParameter.HasReferenceTypeConstraint)
 				{
-					constraints.Add(new Constraints(typeParameter.GetName(), new[] { "class" }.ToImmutableArray()));
+					constraints.Add(new Constraints(typeParameter.GetName(), ["class"]));
 				}
 				else if (typeParameter.HasValueTypeConstraint)
 				{
-					constraints.Add(new Constraints(typeParameter.GetName(), new[] { "struct" }.ToImmutableArray()));
+					constraints.Add(new Constraints(typeParameter.GetName(), ["struct"]));
 				}
 				else if (self.Parameters.Any(_ => IsAnnotated(_.Type, typeParameter)) ||
 					(!self.ReturnsVoid && IsAnnotated(self.ReturnType, typeParameter)))
 				{
-					constraints.Add(new Constraints(typeParameter.GetName(), new[] { "default" }.ToImmutableArray()));
+					constraints.Add(new Constraints(typeParameter.GetName(), ["default"]));
 				}
 			}
 
