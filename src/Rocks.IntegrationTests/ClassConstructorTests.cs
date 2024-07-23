@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.ClassConstructorTestTypes;
 
 public class ClassConstructorWithSpecialParameters
 {
@@ -39,7 +39,6 @@ public class ClassConstructor
 public static class ClassConstructorTests
 {
 	[Test]
-	[RockCreate<ClassConstructorWithSpecialParameters>]
 	public static void CreateSpecialConstructor()
 	{
 		var bValue = "b";
@@ -65,7 +64,6 @@ public static class ClassConstructorTests
 	}
 
 	[Test]
-	[RockMake<ClassConstructorWithSpecialParameters>]
 	public static void MakeSpecialConstructor()
 	{
 		var bValue = "b";
@@ -85,7 +83,6 @@ public static class ClassConstructorTests
 	}
 
 	[Test]
-	[RockCreate<ClassConstructor>]
 	public static void CreateWithNoParametersAndPublicConstructor()
 	{
 		var expectations = new ClassConstructorCreateExpectations();
@@ -104,7 +101,6 @@ public static class ClassConstructorTests
 	}
 
 	[Test]
-	[RockMake<ClassConstructor>]
 	public static void MakeWithNoParametersAndPublicConstructor()
 	{
 		var mock = new ClassConstructorMakeExpectations().Instance(3);
@@ -114,7 +110,6 @@ public static class ClassConstructorTests
 	}
 
 	[Test]
-	[RockCreate<ClassConstructor>]
 	public static void CreateWithNoParametersAndProtectedConstructor()
 	{
 		var expectations = new ClassConstructorCreateExpectations();
@@ -133,7 +128,6 @@ public static class ClassConstructorTests
 	}
 
 	[Test]
-	[RockMake<ClassConstructor>]
 	public static void MakeWithNoParametersAndProtectedConstructor()
 	{
 		var mock = new ClassConstructorMakeExpectations().Instance("b");

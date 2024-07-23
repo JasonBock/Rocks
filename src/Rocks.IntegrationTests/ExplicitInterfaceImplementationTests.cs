@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.ExplicitInterfaceImplementationTestTypes;
 
 public interface IExplicitInterfaceImplementationOne
 {
@@ -49,10 +49,9 @@ public interface IIterable<out T>
 public static class ExplicitInterfaceImplementationTests
 {
 	[Test]
-	[RockCreate<IIterable<string>>]
 	public static void CreateDifferByReturnTypeOnly()
 	{
-		var expectations = new IIterableOfstringCreateExpectations();
+		var expectations = new IIterableCreateExpectations<string>();
 		expectations.Methods.GetIterator();
 		expectations.ExplicitMethodsForIIterable.GetIterator();
 
@@ -64,7 +63,6 @@ public static class ExplicitInterfaceImplementationTests
 	}
 
 	[Test]
-	[RockCreate<IExplicitInterfaceImplementation>]
 	public static void CreateMethod()
 	{
 		var expectations = new IExplicitInterfaceImplementationCreateExpectations();
@@ -79,7 +77,6 @@ public static class ExplicitInterfaceImplementationTests
 	}
 
 	[Test]
-	[RockMake<IExplicitInterfaceImplementation>]
 	public static void MakeMethod()
 	{
 		var mock = new IExplicitInterfaceImplementationMakeExpectations().Instance();
@@ -92,7 +89,6 @@ public static class ExplicitInterfaceImplementationTests
 	}
 
 	[Test]
-	[RockCreate<IExplicitInterfaceImplementation>]
 	public static void CreateProperty()
 	{
 		var expectations = new IExplicitInterfaceImplementationCreateExpectations();
@@ -111,7 +107,6 @@ public static class ExplicitInterfaceImplementationTests
 	}
 
 	[Test]
-	[RockCreate<IExplicitInterfaceImplementation>]
 	public static void CreatePropertyWithInit()
 	{
 		var expectations = new IExplicitInterfaceImplementationCreateExpectations();
@@ -126,7 +121,6 @@ public static class ExplicitInterfaceImplementationTests
 	}
 
 	[Test]
-	[RockMake<IExplicitInterfaceImplementation>]
 	public static void MakeProperty()
 	{
 		var mock = new IExplicitInterfaceImplementationMakeExpectations().Instance();
@@ -143,7 +137,6 @@ public static class ExplicitInterfaceImplementationTests
 	}
 
 	[Test]
-	[RockMake<IExplicitInterfaceImplementation>]
 	public static void MakePropertyWithInit()
 	{
 		var mock = new IExplicitInterfaceImplementationMakeExpectations().Instance();
@@ -158,7 +151,6 @@ public static class ExplicitInterfaceImplementationTests
 	}
 
 	[Test]
-	[RockCreate<IExplicitInterfaceImplementation>]
 	public static void CreateIndexer()
 	{
 		var expectations = new IExplicitInterfaceImplementationCreateExpectations();
@@ -177,7 +169,6 @@ public static class ExplicitInterfaceImplementationTests
 	}
 
 	[Test]
-	[RockMake<IExplicitInterfaceImplementation>]
 	public static void MakeIndexer()
 	{
 		var mock = new IExplicitInterfaceImplementationMakeExpectations().Instance();

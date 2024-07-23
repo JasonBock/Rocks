@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.AbstractClassMethodVoidWithEventsTestTypes;
 
 public abstract class AbstractClassMethodVoidWithEvents
 {
@@ -11,7 +11,6 @@ public abstract class AbstractClassMethodVoidWithEvents
 public static class AbstractClassMethodVoidWithEventsTests
 {
 	[Test]
-	[RockCreate<AbstractClassMethodVoidWithEvents>]
 	public static void CreateEvent()
 	{
 		var expectations = new AbstractClassMethodVoidWithEventsCreateExpectations();
@@ -28,7 +27,6 @@ public static class AbstractClassMethodVoidWithEventsTests
 	}
 
 	[Test]
-	[RockCreate<AbstractClassMethodVoidWithEvents>]
 	public static void CreateEventWithCallback()
 	{
 		var wasCallbackInvoked = false;
@@ -52,7 +50,6 @@ public static class AbstractClassMethodVoidWithEventsTests
 	}
 
 	[Test]
-	[RockCreate<AbstractClassMethodVoidWithEvents>]
 	public static void CreateEventWithMultipleCalls()
 	{
 		var expectations = new AbstractClassMethodVoidWithEventsCreateExpectations();
@@ -72,7 +69,6 @@ public static class AbstractClassMethodVoidWithEventsTests
 	}
 
 	[Test]
-	[RockCreate<AbstractClassMethodVoidWithEvents>]
 	public static void CreateEventWithMultipleCallsWithCallback()
 	{
 		var callbackInvokedCount = 0;

@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using Rocks.Exceptions;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.VerificationTestTypes;
 
 public interface IData
 {
@@ -13,7 +13,6 @@ public interface IData
 public static class VerificationTests
 {
 	[Test]
-	[RockCreate<IData>]
 	public static void VerifyWhenVoidCallbackThrowsException()
 	{
 		var expectations = new IDataCreateExpectations();
@@ -26,7 +25,6 @@ public static class VerificationTests
 	}
 
 	[Test]
-	[RockCreate<IData>]
 	public static void VerifyWhenIntCallbackThrowsException()
 	{
 		var expectations = new IDataCreateExpectations();
@@ -39,7 +37,6 @@ public static class VerificationTests
 	}
 
 	[Test]
-	[RockCreate<IData>]
 	public static void VerifyWhenGetterCallbackThrowsException()
 	{
 		var expectations = new IDataCreateExpectations();
@@ -52,7 +49,6 @@ public static class VerificationTests
 	}
 
 	[Test]
-	[RockCreate<IData>]
 	public static void VerifyWhenSetterCallbackThrowsException()
 	{
 		var expectations = new IDataCreateExpectations();
@@ -65,7 +61,6 @@ public static class VerificationTests
 	}
 
 	[Test]
-	[RockCreate<IData>]
 	public static void VerifyWhenPropertyExpectationIsNotMet()
 	{
 		var expectations = new IDataCreateExpectations();
@@ -76,6 +71,6 @@ public static class VerificationTests
 		Assert.That(expectations.Verify, 
 			Throws.TypeOf<VerificationException>()
 				.And.Message.EqualTo(
-					"The following verification failure(s) occured: Mock type: Rocks.IntegrationTests.IDataCreateExpectations+Mock, member: Void set_Value(System.String), messsage: The expected call count is incorrect. Expected: 1, received: 0."));
+					"The following verification failure(s) occured: Mock type: Rocks.IntegrationTests.VerificationTestTypes.IDataCreateExpectations+Mock, member: Void set_Value(System.String), messsage: The expected call count is incorrect. Expected: 1, received: 0."));
 	}
 }

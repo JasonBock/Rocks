@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.AllowNullTestTypes;
 
 public interface IAllow
 {
@@ -18,7 +18,6 @@ public class Allow
 public static class AllowNullTests
 {
 	[Test]
-	[RockCreate<IAllow>]
 	public static void CreateWithAbstract()
 	{
 		var expectations = new IAllowCreateExpectations();
@@ -31,7 +30,6 @@ public static class AllowNullTests
 	}
 
 	[Test]
-	[RockMake<IAllow>]
 	public static void MakeWithAbstract()
 	{
 		var mock = new IAllowMakeExpectations().Instance();
@@ -39,7 +37,6 @@ public static class AllowNullTests
 	}
 
 	[Test]
-	[RockCreate<Allow>]
 	public static void CreateWithNonAbstract()
 	{
 		var expectations = new AllowCreateExpectations();
@@ -52,7 +49,6 @@ public static class AllowNullTests
 	}
 
 	[Test]
-	[RockMake<Allow>]
 	public static void MakeWithNonAbstract()
 	{
 		var mock = new AllowMakeExpectations().Instance();

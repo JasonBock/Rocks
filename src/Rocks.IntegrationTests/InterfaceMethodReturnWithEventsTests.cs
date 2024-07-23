@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.InterfaceMethodReturnWithEventsTestTypes;
 
 public interface IInterfaceMethodReturnWithEvents
 {
@@ -11,7 +11,6 @@ public interface IInterfaceMethodReturnWithEvents
 public static class InterfaceMethodReturnWithEventsTests
 {
 	[Test]
-	[RockCreate<IInterfaceMethodReturnWithEvents>]
 	public static void CreateRaiseEvent()
 	{
 		var expectations = new IInterfaceMethodReturnWithEventsCreateExpectations();
@@ -33,7 +32,6 @@ public static class InterfaceMethodReturnWithEventsTests
 	}
 
 	[Test]
-	[RockCreate<IInterfaceMethodReturnWithEvents>]
 	public static void CreateRaiseEventWithCallback()
 	{
 		var wasCallbackInvoked = false;
@@ -62,7 +60,6 @@ public static class InterfaceMethodReturnWithEventsTests
 	}
 
 	[Test]
-	[RockCreate<IInterfaceMethodReturnWithEvents>]
 	public static void CreateRaiseEventWithMultipleCalls()
 	{
 		var expectations = new IInterfaceMethodReturnWithEventsCreateExpectations();
@@ -87,7 +84,6 @@ public static class InterfaceMethodReturnWithEventsTests
 	}
 
 	[Test]
-	[RockCreate<IInterfaceMethodReturnWithEvents>]
 	public static void CreateRaiseEventWithMultipleCallsWithCallback()
 	{
 		var callbackInvokedCount = 0;

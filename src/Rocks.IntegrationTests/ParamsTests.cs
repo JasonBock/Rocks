@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.ParamsTestTypes;
 
 public interface IHaveParams
 {
@@ -11,7 +11,6 @@ public interface IHaveParams
 public static class ParamsTests
 {
 	[Test]
-	[RockCreate<IHaveParams>]
 	public static void CreateMembersWithParamsArgumentsSpecified()
 	{
 		var returnValue = 3;
@@ -29,7 +28,6 @@ public static class ParamsTests
 	}
 
 	[Test]
-	[RockMake<IHaveParams>]
 	public static void MakeMembersWithParamsArgumentsSpecified()
 	{
 		var mock = new IHaveParamsMakeExpectations().Instance();
@@ -43,7 +41,6 @@ public static class ParamsTests
 	}
 
 	[Test]
-	[RockCreate<IHaveParams>]
 	public static void CreateMembersWithParamsArgumentsNotSpecified()
 	{
 		var returnValue = 3;
@@ -61,7 +58,6 @@ public static class ParamsTests
 	}
 
 	[Test]
-	[RockMake<IHaveParams>]
 	public static void MakeMembersWithParamsArgumentsNotSpecified()
 	{
 		var mock = new IHaveParamsMakeExpectations().Instance();

@@ -2,6 +2,11 @@
 	<PropertyGroup>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<AssemblyName>Rocks.IntegrationTests</AssemblyName>
+		<!-- Only include these for debugging purposes -->
+		<!--
+		<CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
+		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+		-->
 		<RootNamespace>Rocks.IntegrationTests</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>

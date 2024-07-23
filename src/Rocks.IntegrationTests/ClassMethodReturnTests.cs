@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using Rocks.Exceptions;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.ClassMethodReturnTestTypes;
 
 public class ClassMethodReturn
 {
@@ -13,7 +13,6 @@ public class ClassMethodReturn
 public static class ClassMethodReturnTests
 {
 	[Test]
-	[RockCreate<ClassMethodReturn>]
 	public static void CreateWithNoParameters()
 	{
 		var expectations = new ClassMethodReturnCreateExpectations();
@@ -28,7 +27,6 @@ public static class ClassMethodReturnTests
 	}
 
 	[Test]
-	[RockMake<ClassMethodReturn>]
 	public static void MakeWithNoParameters()
 	{
 		var mock = new ClassMethodReturnMakeExpectations().Instance();
@@ -38,7 +36,6 @@ public static class ClassMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<ClassMethodReturn>]
 	public static void CreateWithNoParametersWithReturn()
 	{
 		var expectations = new ClassMethodReturnCreateExpectations();
@@ -53,7 +50,6 @@ public static class ClassMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<ClassMethodReturn>]
 	public static void CreateWithNoParametersMultipleCalls()
 	{
 		var expectations = new ClassMethodReturnCreateExpectations();
@@ -67,7 +63,6 @@ public static class ClassMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<ClassMethodReturn>]
 	public static void CreateWithNoParametersMultipleCallsNotMet()
 	{
 		var expectations = new ClassMethodReturnCreateExpectations();
@@ -80,7 +75,6 @@ public static class ClassMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<ClassMethodReturn>]
 	public static void CreateWithNoParametersAndCallback()
 	{
 		var expectations = new ClassMethodReturnCreateExpectations();
@@ -95,7 +89,6 @@ public static class ClassMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<ClassMethodReturn>]
 	public static void CreateWithNoParametersNoExpectationSet()
 	{
 		var expectations = new ClassMethodReturnCreateExpectations();
@@ -106,7 +99,6 @@ public static class ClassMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<ClassMethodReturn>]
 	public static void CreateWithNoParametersExpectationsNotMet()
 	{
 		var expectations = new ClassMethodReturnCreateExpectations();
@@ -118,7 +110,6 @@ public static class ClassMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<ClassMethodReturn>]
 	public static void CreateWithOneParameter()
 	{
 		var expectations = new ClassMethodReturnCreateExpectations();
@@ -133,7 +124,6 @@ public static class ClassMethodReturnTests
 	}
 
 	[Test]
-	[RockMake<ClassMethodReturn>]
 	public static void MakeWithOneParameter()
 	{
 		var mock = new ClassMethodReturnMakeExpectations().Instance();
@@ -143,7 +133,6 @@ public static class ClassMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<ClassMethodReturn>]
 	public static void CreateWithOneParameterWithReturn()
 	{
 		var expectations = new ClassMethodReturnCreateExpectations();
@@ -158,7 +147,6 @@ public static class ClassMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<ClassMethodReturn>]
 	public static void CreateWithOneParameterWithCallback()
 	{
 		var expectations = new ClassMethodReturnCreateExpectations();
@@ -173,7 +161,6 @@ public static class ClassMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<ClassMethodReturn>]
 	public static void CreateWithOneParameterArgExpectationNotMet()
 	{
 		var expectations = new ClassMethodReturnCreateExpectations();
@@ -185,7 +172,6 @@ public static class ClassMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<ClassMethodReturn>]
 	public static void CreateWithMultipleParameters()
 	{
 		var expectations = new ClassMethodReturnCreateExpectations();
@@ -200,7 +186,6 @@ public static class ClassMethodReturnTests
 	}
 
 	[Test]
-	[RockMake<ClassMethodReturn>]
 	public static void MakeWithMultipleParameters()
 	{
 		var mock = new ClassMethodReturnMakeExpectations().Instance();
@@ -210,7 +195,6 @@ public static class ClassMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<ClassMethodReturn>]
 	public static void CreateWithMultipleParametersWithReturn()
 	{
 		var expectations = new ClassMethodReturnCreateExpectations();
@@ -225,7 +209,6 @@ public static class ClassMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<ClassMethodReturn>]
 	public static void CreateWithMultipleParametersWithCallback()
 	{
 		var aValue = 0;
@@ -251,7 +234,6 @@ public static class ClassMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<ClassMethodReturn>]
 	public static void CreateWithMultipleParametersArgExpectationNotMet()
 	{
 		var expectations = new ClassMethodReturnCreateExpectations();

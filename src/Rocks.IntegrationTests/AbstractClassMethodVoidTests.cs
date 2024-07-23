@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using Rocks.Exceptions;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.AbstractClassMethodVoidTestTypes;
 
 public abstract class AbstractMethodVoidTests
 {
@@ -13,7 +13,6 @@ public abstract class AbstractMethodVoidTests
 public static class AbstractClassMethodVoidTests
 {
 	[Test]
-	[RockCreate<AbstractMethodVoidTests>]
 	public static void CreateWithNoParameters()
 	{
 		var expectations = new AbstractMethodVoidTestsCreateExpectations();
@@ -26,7 +25,6 @@ public static class AbstractClassMethodVoidTests
 	}
 
 	[Test]
-	[RockMake<AbstractMethodVoidTests>]
 	public static void MakeWithNoParameters()
 	{
 		var mock = new AbstractMethodVoidTestsMakeExpectations().Instance();
@@ -35,7 +33,6 @@ public static class AbstractClassMethodVoidTests
 	}
 
 	[Test]
-	[RockCreate<AbstractMethodVoidTests>]
 	public static void CreateWithNoParametersMultipleCalls()
 	{
 		var expectations = new AbstractMethodVoidTestsCreateExpectations();
@@ -49,7 +46,6 @@ public static class AbstractClassMethodVoidTests
 	}
 
 	[Test]
-	[RockCreate<AbstractMethodVoidTests>]
 	public static void CreateWithNoParametersMultipleCallsNotMet()
 	{
 		var expectations = new AbstractMethodVoidTestsCreateExpectations();
@@ -62,7 +58,6 @@ public static class AbstractClassMethodVoidTests
 	}
 
 	[Test]
-	[RockCreate<AbstractMethodVoidTests>]
 	public static void CreateWithNoParametersAndCallback()
 	{
 		var wasCallbackInvoked = false;
@@ -78,7 +73,6 @@ public static class AbstractClassMethodVoidTests
 	}
 
 	[Test]
-	[RockCreate<AbstractMethodVoidTests>]
 	public static void CreateWithNoParametersNoExpectationSet()
 	{
 		var expectations = new AbstractMethodVoidTestsCreateExpectations();
@@ -89,7 +83,6 @@ public static class AbstractClassMethodVoidTests
 	}
 
 	[Test]
-	[RockCreate<AbstractMethodVoidTests>]
 	public static void CreateWithNoParametersExpectationsNotMet()
 	{
 		var expectations = new AbstractMethodVoidTestsCreateExpectations();
@@ -101,7 +94,6 @@ public static class AbstractClassMethodVoidTests
 	}
 
 	[Test]
-	[RockCreate<AbstractMethodVoidTests>]
 	public static void CreateWithOneParameter()
 	{
 		var expectations = new AbstractMethodVoidTestsCreateExpectations();
@@ -114,7 +106,6 @@ public static class AbstractClassMethodVoidTests
 	}
 
 	[Test]
-	[RockMake<AbstractMethodVoidTests>]
 	public static void MakeWithOneParameter()
 	{
 		var mock = new AbstractMethodVoidTestsMakeExpectations().Instance();
@@ -123,7 +114,6 @@ public static class AbstractClassMethodVoidTests
 	}
 
 	[Test]
-	[RockCreate<AbstractMethodVoidTests>]
 	public static void CreateWithOneParameterWithCallback()
 	{
 		var aValue = 0;
@@ -139,7 +129,6 @@ public static class AbstractClassMethodVoidTests
 	}
 
 	[Test]
-	[RockCreate<AbstractMethodVoidTests>]
 	public static void CreateWithOneParameterArgExpectationNotMet()
 	{
 		var expectations = new AbstractMethodVoidTestsCreateExpectations();
@@ -151,7 +140,6 @@ public static class AbstractClassMethodVoidTests
 	}
 
 	[Test]
-	[RockCreate<AbstractMethodVoidTests>]
 	public static void CreateWithMultipleParameters()
 	{
 		var expectations = new AbstractMethodVoidTestsCreateExpectations();
@@ -164,7 +152,6 @@ public static class AbstractClassMethodVoidTests
 	}
 
 	[Test]
-	[RockMake<AbstractMethodVoidTests>]
 	public static void MakeWithMultipleParameters()
 	{
 		var mock = new AbstractMethodVoidTestsMakeExpectations().Instance();
@@ -173,7 +160,6 @@ public static class AbstractClassMethodVoidTests
 	}
 
 	[Test]
-	[RockCreate<AbstractMethodVoidTests>]
 	public static void CreateWithMultipleParametersWithCallback()
 	{
 		var aValue = 0;
@@ -194,7 +180,6 @@ public static class AbstractClassMethodVoidTests
 	}
 
 	[Test]
-	[RockCreate<AbstractMethodVoidTests>]
 	public static void CreateWithMultipleParametersArgExpectationNotMet()
 	{
 		var expectations = new AbstractMethodVoidTestsCreateExpectations();

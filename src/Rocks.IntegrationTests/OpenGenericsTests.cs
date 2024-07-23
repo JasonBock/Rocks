@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.OpenGenericsTestTypes;
 
 public interface IService<T, TReturn>
 {
@@ -10,7 +10,6 @@ public interface IService<T, TReturn>
 public static class OpenGenericsTests
 {
 	[Test]
-	[RockCreate(typeof(IService<,>))]
 	public static void CreateWithIntAndString()
 	{
 		var intStringExpectations = new IServiceCreateExpectations<int, string>();
@@ -22,7 +21,6 @@ public static class OpenGenericsTests
 	}
 
 	[Test]
-	[RockCreate(typeof(IService<,>))]
 	public static void CreateWithStringAndInt()
 	{
 		var stringIntExpectations = new IServiceCreateExpectations<string, int>();
@@ -34,7 +32,6 @@ public static class OpenGenericsTests
 	}
 
 	[Test]
-	[RockMake(typeof(IService<,>))]
 	public static void MakeWithIntAndString()
 	{
 		var intStringMake = new IServiceMakeExpectations<int, string>().Instance();
@@ -42,7 +39,6 @@ public static class OpenGenericsTests
 	}
 
 	[Test]
-	[RockMake(typeof(IService<,>))]
 	public static void MakeWithStringAndInt()
 	{
 		var intStringMake = new IServiceMakeExpectations<string, int>().Instance();

@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using Rocks.Exceptions;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.InterfaceMethodReturnTestTypes;
 
 public interface IInterfaceMethodReturn
 {
@@ -13,7 +13,6 @@ public interface IInterfaceMethodReturn
 public static class InterfaceMethodReturnTests
 {
 	[Test]
-	[RockCreate<IInterfaceMethodReturn>]
 	public static void CreateWithNoParameters()
 	{
 		var expectations = new IInterfaceMethodReturnCreateExpectations();
@@ -28,7 +27,6 @@ public static class InterfaceMethodReturnTests
 	}
 
 	[Test]
-	[RockMake<IInterfaceMethodReturn>]
 	public static void MakeWithNoParameters()
 	{
 		var mock = new IInterfaceMethodReturnMakeExpectations().Instance();
@@ -38,7 +36,6 @@ public static class InterfaceMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<IInterfaceMethodReturn>]
 	public static void CreateWithNoParametersWithReturn()
 	{
 		var expectations = new IInterfaceMethodReturnCreateExpectations();
@@ -53,7 +50,6 @@ public static class InterfaceMethodReturnTests
 	}
 
 	[Test]
-	[RockMake<IInterfaceMethodReturn>]
 	public static void MakeWithNoParametersWithReturn()
 	{
 		var mock = new IInterfaceMethodReturnMakeExpectations().Instance();
@@ -63,7 +59,6 @@ public static class InterfaceMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<IInterfaceMethodReturn>]
 	public static void CreateWithNoParametersMultipleCalls()
 	{
 		var expectations = new IInterfaceMethodReturnCreateExpectations();
@@ -77,7 +72,6 @@ public static class InterfaceMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<IInterfaceMethodReturn>]
 	public static void CreateWithNoParametersMultipleCallsNotMet()
 	{
 		var expectations = new IInterfaceMethodReturnCreateExpectations();
@@ -90,7 +84,6 @@ public static class InterfaceMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<IInterfaceMethodReturn>]
 	public static void CreateWithNoParametersAndCallback()
 	{
 		var expectations = new IInterfaceMethodReturnCreateExpectations();
@@ -105,7 +98,6 @@ public static class InterfaceMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<IInterfaceMethodReturn>]
 	public static void CreateWithNoParametersNoExpectationSet()
 	{
 		var expectations = new IInterfaceMethodReturnCreateExpectations();
@@ -116,7 +108,6 @@ public static class InterfaceMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<IInterfaceMethodReturn>]
 	public static void CreateWithNoParametersExpectationsNotMet()
 	{
 		var expectations = new IInterfaceMethodReturnCreateExpectations();
@@ -128,7 +119,6 @@ public static class InterfaceMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<IInterfaceMethodReturn>]
 	public static void CreateWithOneParameter()
 	{
 		var expectations = new IInterfaceMethodReturnCreateExpectations();
@@ -143,7 +133,6 @@ public static class InterfaceMethodReturnTests
 	}
 
 	[Test]
-	[RockMake<IInterfaceMethodReturn>]
 	public static void MakeWithOneParameter()
 	{
 		var mock = new IInterfaceMethodReturnMakeExpectations().Instance();
@@ -153,7 +142,6 @@ public static class InterfaceMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<IInterfaceMethodReturn>]
 	public static void CreateWithOneParameterWithReturn()
 	{
 		var expectations = new IInterfaceMethodReturnCreateExpectations();
@@ -168,7 +156,6 @@ public static class InterfaceMethodReturnTests
 	}
 
 	[Test]
-	[RockMake<IInterfaceMethodReturn>]
 	public static void MakeWithOneParameterWithReturn()
 	{
 		var mock = new IInterfaceMethodReturnMakeExpectations().Instance();
@@ -178,7 +165,6 @@ public static class InterfaceMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<IInterfaceMethodReturn>]
 	public static void CreateWithOneParameterWithCallback()
 	{
 		var expectations = new IInterfaceMethodReturnCreateExpectations();
@@ -193,7 +179,6 @@ public static class InterfaceMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<IInterfaceMethodReturn>]
 	public static void CreateWithOneParameterArgExpectationNotMet()
 	{
 		var expectations = new IInterfaceMethodReturnCreateExpectations();
@@ -205,7 +190,6 @@ public static class InterfaceMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<IInterfaceMethodReturn>]
 	public static void CreateWithMultipleParameters()
 	{
 		var expectations = new IInterfaceMethodReturnCreateExpectations();
@@ -220,7 +204,6 @@ public static class InterfaceMethodReturnTests
 	}
 
 	[Test]
-	[RockMake<IInterfaceMethodReturn>]
 	public static void MakeWithMultipleParameters()
 	{
 		var mock = new IInterfaceMethodReturnMakeExpectations().Instance();
@@ -230,7 +213,6 @@ public static class InterfaceMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<IInterfaceMethodReturn>]
 	public static void CreateWithMultipleParametersWithReturn()
 	{
 		var expectations = new IInterfaceMethodReturnCreateExpectations();
@@ -245,7 +227,6 @@ public static class InterfaceMethodReturnTests
 	}
 
 	[Test]
-	[RockMake<IInterfaceMethodReturn>]
 	public static void MakeWithMultipleParametersWithReturn()
 	{
 		var mock = new IInterfaceMethodReturnMakeExpectations().Instance();
@@ -255,7 +236,6 @@ public static class InterfaceMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<IInterfaceMethodReturn>]
 	public static void CreateWithMultipleParametersWithCallback()
 	{
 		var aValue = 0;
@@ -281,7 +261,6 @@ public static class InterfaceMethodReturnTests
 	}
 
 	[Test]
-	[RockCreate<IInterfaceMethodReturn>]
 	public static void CreateWithMultipleParametersArgExpectationNotMet()
 	{
 		var expectations = new IInterfaceMethodReturnCreateExpectations();

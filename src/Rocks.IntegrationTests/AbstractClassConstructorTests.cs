@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.AbstractClassConstructorTestTypes;
 
 #pragma warning disable CA1012 // Abstract types should not have public constructors
 public abstract class AbstractClassConstructor
@@ -17,8 +17,6 @@ public abstract class AbstractClassConstructor
 	public string? StringData { get; }
 }
 
-[RockCreate<AbstractClassConstructor>]
-[RockMake<AbstractClassConstructor>]
 public static class AbstractClassConstructorTests
 {
 	[Test]

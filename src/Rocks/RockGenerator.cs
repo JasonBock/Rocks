@@ -84,12 +84,26 @@ internal sealed class RockGenerator
 
 							if (!mockType.ContainsDiagnostics())
 							{
-								var model = MockModel.Create(attributeClass.ApplicationSyntaxReference!.GetSyntax(token),
-								  mockType, context.SemanticModel, buildType, true);
-
-								if (model.Information is not null)
+								if (buildType.HasFlag(BuildType.Create))
 								{
-									models.Add(model.Information);
+									var model = MockModel.Create(attributeClass.ApplicationSyntaxReference!.GetSyntax(token),
+									  mockType, context.SemanticModel, BuildType.Create, true);
+
+									if (model.Information is not null)
+									{
+										models.Add(model.Information);
+									}
+								}
+
+								if (buildType.HasFlag(BuildType.Make))
+								{
+									var model = MockModel.Create(attributeClass.ApplicationSyntaxReference!.GetSyntax(token),
+									  mockType, context.SemanticModel, BuildType.Make, true);
+
+									if (model.Information is not null)
+									{
+										models.Add(model.Information);
+									}
 								}
 							}
 						}

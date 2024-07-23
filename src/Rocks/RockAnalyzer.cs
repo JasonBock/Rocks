@@ -33,12 +33,14 @@ public sealed class RockAnalyzer
 
 		context.RegisterCompilationStartAction(compilationContext =>
 		{
-			// TODO: This needs to include the non-generic versions
-			// as well as the upcoming new RockAttribute.
-			var createAttributeSymbol = compilationContext.Compilation.GetTypeByMetadataName(
+		   // TODO: This needs to include the non-generic versions
+		   // as well as the upcoming new RockAttribute.
+#pragma warning disable CS0618 // Type or member is obsolete
+		   var createAttributeSymbol = compilationContext.Compilation.GetTypeByMetadataName(
 				typeof(RockCreateAttribute<>).FullName)!;
-			var makeAttributeSymbol = compilationContext.Compilation.GetTypeByMetadataName(
+		   var makeAttributeSymbol = compilationContext.Compilation.GetTypeByMetadataName(
 				typeof(RockMakeAttribute<>).FullName)!;
+#pragma warning restore CS0618 // Type or member is obsolete
 
 			compilationContext.RegisterOperationAction(operationContext =>
 			{

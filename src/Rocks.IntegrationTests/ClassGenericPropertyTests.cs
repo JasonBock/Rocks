@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.ClassGenericPropertyTestTypes;
 
 public class ClassGenericProperty<T>
 {
@@ -17,11 +17,10 @@ public class ClassGenericPropertyGetAndInit<T>
 public static class ClassGenericPropertyTests
 {
 	[Test]
-	[RockCreate<ClassGenericProperty<int>>]
 	public static void CreateUsingGenericType()
 	{
 		var returnValue = new List<string>();
-		var expectations = new ClassGenericPropertyOfintCreateExpectations();
+		var expectations = new ClassGenericPropertyCreateExpectations<int>();
 		expectations.Properties.Getters.Values().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
@@ -33,11 +32,10 @@ public static class ClassGenericPropertyTests
 	}
 
 	[Test]
-	[RockCreate<ClassGenericPropertyGetAndInit<int>>]
 	public static void CreateUsingGenericTypeWithInit()
 	{
 		var returnValue = new List<string>();
-		var expectations = new ClassGenericPropertyGetAndInitOfintCreateExpectations();
+		var expectations = new ClassGenericPropertyGetAndInitCreateExpectations<int>();
 		expectations.Properties.Getters.Values().ReturnValue(returnValue);
 
 		var mock = expectations.Instance(null);
@@ -49,31 +47,28 @@ public static class ClassGenericPropertyTests
 	}
 
 	[Test]
-	[RockMake<ClassGenericProperty<int>>]
 	public static void MakeUsingGenericType()
 	{
-		var mock = new ClassGenericPropertyOfintMakeExpectations().Instance();
+		var mock = new ClassGenericPropertyMakeExpectations<int>().Instance();
 		var value = mock.Values;
 
 		Assert.That(value, Is.SameAs(default(List<string>)));
 	}
 
 	[Test]
-	[RockMake<ClassGenericPropertyGetAndInit<int>>]
 	public static void MakeUsingGenericTypeWithInit()
 	{
-		var mock = new ClassGenericPropertyGetAndInitOfintMakeExpectations().Instance(null);
+		var mock = new ClassGenericPropertyGetAndInitMakeExpectations<int>().Instance(null);
 		var value = mock.Values;
 
 		Assert.That(value, Is.SameAs(default(List<string>)));
 	}
 
 	[Test]
-	[RockCreate<ClassGenericProperty<int>>]
 	public static void CreateUsingGenericTypeParameter()
 	{
 		var returnValue = 3;
-		var expectations = new ClassGenericPropertyOfintCreateExpectations();
+		var expectations = new ClassGenericPropertyCreateExpectations<int>();
 		expectations.Properties.Getters.Data().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
@@ -85,11 +80,10 @@ public static class ClassGenericPropertyTests
 	}
 
 	[Test]
-	[RockCreate<ClassGenericPropertyGetAndInit<int>>]
 	public static void CreateUsingGenericTypeParameterWithInit()
 	{
 		var returnValue = 3;
-		var expectations = new ClassGenericPropertyGetAndInitOfintCreateExpectations();
+		var expectations = new ClassGenericPropertyGetAndInitCreateExpectations<int>();
 		expectations.Properties.Getters.Data().ReturnValue(returnValue);
 
 		var mock = expectations.Instance(null);
@@ -101,20 +95,18 @@ public static class ClassGenericPropertyTests
 	}
 
 	[Test]
-	[RockMake<ClassGenericProperty<int>>]
 	public static void MakeUsingGenericTypeParameter()
 	{
-		var mock = new ClassGenericPropertyOfintMakeExpectations().Instance();
+		var mock = new ClassGenericPropertyMakeExpectations<int>().Instance();
 		var value = mock.Data;
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}
 
 	[Test]
-	[RockMake<ClassGenericPropertyGetAndInit<int>>]
 	public static void MakeUsingGenericTypeParameterWithInit()
 	{
-		var mock = new ClassGenericPropertyGetAndInitOfintMakeExpectations().Instance(null);
+		var mock = new ClassGenericPropertyGetAndInitMakeExpectations<int>().Instance(null);
 		var value = mock.Data;
 
 		Assert.That(value, Is.EqualTo(default(int)));

@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.MultipleRockCallsTestTypes;
 
 public interface IMultipleRockCalls
 {
@@ -16,7 +16,6 @@ public interface IMultipleRockCalls
 public static class MultipleRockCallsTests
 {
 	[Test]
-	[RockCreate<IMultipleRockCalls>]
 	public static void CreateMocks()
 	{
 		var expectations1 = new IMultipleRockCallsCreateExpectations();
@@ -36,7 +35,6 @@ public static class MultipleRockCallsTests
 	}
 
 	[Test]
-	[RockMake<IMultipleRockCalls>]
 	public static void MakeMocks()
 	{
 		new IMultipleRockCallsMakeExpectations().Instance().Foo();

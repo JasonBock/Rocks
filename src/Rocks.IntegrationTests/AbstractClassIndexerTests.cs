@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.AbstractClassIndexerTestTypes;
 
 public abstract class AbstractClassIndexerGetterSetter
 {
@@ -35,7 +35,6 @@ public abstract class AbstractClassIndexerSetter
 public static class AbstractClassIndexerTests
 {
 	[Test]
-	[RockCreate<AbstractClassIndexerGetterSetter>]
 	public static void CreateWithOneParameterGetterAndSetter()
 	{
 		var expectations = new AbstractClassIndexerGetterSetterCreateExpectations();
@@ -52,7 +51,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockCreate<AbstractClassIndexerGetterInit>]
 	public static void CreateWithOneParameterGetterAndInit()
 	{
 		var expectations = new AbstractClassIndexerGetterInitCreateExpectations();
@@ -67,7 +65,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockMake<AbstractClassIndexerGetterSetter>]
 	public static void MakeWithOneParameterGetterAndSetter()
 	{
 		var mock = new AbstractClassIndexerGetterSetterMakeExpectations().Instance();
@@ -78,7 +75,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockCreate<AbstractClassIndexerGetter>]
 	public static void CreateWithOneParameterGetter()
 	{
 		var expectations = new AbstractClassIndexerGetterCreateExpectations();
@@ -93,7 +89,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockMake<AbstractClassIndexerGetter>]
 	public static void MakeWithOneParameterGetter()
 	{
 		var mock = new AbstractClassIndexerGetterMakeExpectations().Instance();
@@ -103,7 +98,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockCreate<AbstractClassIndexerGetter>]
 	public static void CreateWithOneParameterGetterRaiseEvent()
 	{
 		var expectations = new AbstractClassIndexerGetterCreateExpectations();
@@ -124,7 +118,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockCreate<AbstractClassIndexerGetter>]
 	public static void CreateWithOneParameterGetterCallback()
 	{
 		var wasCallbackInvoked = false;
@@ -148,7 +141,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockCreate<AbstractClassIndexerGetter>]
 	public static void CreateWithOneParameterGetterRaiseEventWithCallback()
 	{
 		var wasCallbackInvoked = false;
@@ -176,7 +168,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockCreate<AbstractClassIndexerGetter>]
 	public static void CreateWithOneParameterGetterMultipleCalls()
 	{
 		var expectations = new AbstractClassIndexerGetterCreateExpectations();
@@ -192,7 +183,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockCreate<AbstractClassIndexerSetter>]
 	public static void CreateWithOneParameterSetter()
 	{
 		var expectations = new AbstractClassIndexerSetterCreateExpectations();
@@ -205,7 +195,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockMake<AbstractClassIndexerSetter>]
 	public static void MakeWithOneParameterSetter()
 	{
 		var mock = new AbstractClassIndexerSetterMakeExpectations().Instance();
@@ -214,7 +203,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockCreate<AbstractClassIndexerSetter>]
 	public static void CreateWithOneParameterSetterRaiseEvent()
 	{
 		var expectations = new AbstractClassIndexerSetterCreateExpectations();
@@ -231,7 +219,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockCreate<AbstractClassIndexerSetter>]
 	public static void CreateWithOneParameterSetterCallback()
 	{
 		var wasCallbackInvoked = false;
@@ -247,7 +234,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockCreate<AbstractClassIndexerSetter>]
 	public static void CreateWithOneParameterSetterRaiseEventWithCallback()
 	{
 		var wasCallbackInvoked = false;
@@ -270,7 +256,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockCreate<AbstractClassIndexerSetter>]
 	public static void CreateWithOneParameterSetterMultipleCalls()
 	{
 		var expectations = new AbstractClassIndexerSetterCreateExpectations();
@@ -284,7 +269,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockCreate<AbstractClassIndexerGetterSetter>]
 	public static void CreateWithMultipleParametersGetterAndSetter()
 	{
 		var expectations = new AbstractClassIndexerGetterSetterCreateExpectations();
@@ -301,7 +285,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockMake<AbstractClassIndexerGetterSetter>]
 	public static void MakeWithMultipleParametersGetterAndSetter()
 	{
 		var mock = new AbstractClassIndexerGetterSetterMakeExpectations().Instance();
@@ -315,7 +298,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockCreate<AbstractClassIndexerGetter>]
 	public static void CreateWithMultipleParametersGetter()
 	{
 		var expectations = new AbstractClassIndexerGetterCreateExpectations();
@@ -330,7 +312,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockMake<AbstractClassIndexerGetter>]
 	public static void MakeWithMultipleParametersGetter()
 	{
 		var mock = new AbstractClassIndexerGetterMakeExpectations().Instance();
@@ -340,7 +321,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockCreate<AbstractClassIndexerGetter>]
 	public static void CreateWithMultipleParametersGetterRaiseEvent()
 	{
 		var expectations = new AbstractClassIndexerGetterCreateExpectations();
@@ -361,7 +341,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockCreate<AbstractClassIndexerGetter>]
 	public static void CreateWithMultipleParametersGetterCallback()
 	{
 		var wasCallbackInvoked = false;
@@ -385,7 +364,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockCreate<AbstractClassIndexerGetter>]
 	public static void CreateWithMultipleParametersGetterRaiseEventWithCallback()
 	{
 		var wasCallbackInvoked = false;
@@ -413,7 +391,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockCreate<AbstractClassIndexerGetter>]
 	public static void CreateWithMultipleParametersGetterMultipleCalls()
 	{
 		var expectations = new AbstractClassIndexerGetterCreateExpectations();
@@ -429,7 +406,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockCreate<AbstractClassIndexerSetter>]
 	public static void CreateWithMultipleParametersSetter()
 	{
 		var expectations = new AbstractClassIndexerSetterCreateExpectations();
@@ -442,7 +418,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockMake<AbstractClassIndexerSetter>()]
 	public static void MakeWithMultipleParametersSetter()
 	{
 		var mock = new AbstractClassIndexerSetterMakeExpectations().Instance();
@@ -451,7 +426,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockCreate<AbstractClassIndexerSetter>]
 	public static void CreateWithMultipleParametersSetterRaiseEvent()
 	{
 		var expectations = new AbstractClassIndexerSetterCreateExpectations();
@@ -468,7 +442,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockCreate<AbstractClassIndexerSetter>]
 	public static void CreateWithMultipleParametersSetterCallback()
 	{
 		var wasCallbackInvoked = false;
@@ -484,7 +457,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockCreate<AbstractClassIndexerSetter>]
 	public static void CreateWithMultipleParametersSetterRaiseEventWithCallback()
 	{
 		var wasCallbackInvoked = false;
@@ -507,7 +479,6 @@ public static class AbstractClassIndexerTests
 	}
 
 	[Test]
-	[RockCreate<AbstractClassIndexerSetter>]
 	public static void CreateWithMultipleParametersSetterMultipleCalls()
 	{
 		var expectations = new AbstractClassIndexerSetterCreateExpectations();

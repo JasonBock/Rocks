@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.ArgTestTypes;
 
 public interface IHaveArgument
 {
@@ -12,7 +12,6 @@ public interface IHaveArgument
 public static class ArgTests
 {
 	[Test]
-	[RockCreate<IHaveArgument>]
 	public static void DeclareArgumentFromIndexerWithNull()
 	{
 		var expectations = new IHaveArgumentCreateExpectations();
@@ -25,7 +24,6 @@ public static class ArgTests
 	}
 
 	[Test]
-	[RockCreate<IHaveArgument>]
 	public static void DeclareArgumentFromMethodWithNull()
 	{
 		var expectations = new IHaveArgumentCreateExpectations();
@@ -33,7 +31,6 @@ public static class ArgTests
 	}
 
 	[Test]
-	[RockCreate<IHaveArgument>]
 	public static void DeclareArgumentWithValue()
 	{
 		var expectations = new IHaveArgumentCreateExpectations();
@@ -46,7 +43,6 @@ public static class ArgTests
 	}
 
 	[Test]
-	[RockCreate<IHaveArgument>]
 	public static void DeclareArgumentWithIs()
 	{
 		var expectations = new IHaveArgumentCreateExpectations();
@@ -59,7 +55,6 @@ public static class ArgTests
 	}
 
 	[Test]
-	[RockCreate<IHaveArgument>]
 	public static void DeclareArgumentWithAny()
 	{
 		var expectations = new IHaveArgumentCreateExpectations();
@@ -72,7 +67,6 @@ public static class ArgTests
 	}
 
 	[Test]
-	[RockCreate<IHaveArgument>]
 	public static void DeclareArgumentWithValidate()
 	{
 		var expectations = new IHaveArgumentCreateExpectations();
@@ -85,7 +79,6 @@ public static class ArgTests
 	}
 
 	[Test]
-	[RockCreate<IHaveArgument>]
 	public static void DeclareArgumentWithDefault()
 	{
 		var expectations = new IHaveArgumentCreateExpectations();

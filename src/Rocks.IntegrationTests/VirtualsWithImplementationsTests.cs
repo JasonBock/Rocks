@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.VirtualsWithImplementationsTestTypes;
 
 public interface IIndexerPolygon
 {
@@ -51,7 +51,6 @@ public class PropertyPolygon
 public static class VirtualsWithImplementationsTests
 {
 	[Test]
-	[RockCreate<IIndexerPolygon>]
 	public static void CallVirtualIndexerOnInterfaceWithNoExpectation()
 	{
 		var expectations = new IIndexerPolygonCreateExpectations();
@@ -64,7 +63,6 @@ public static class VirtualsWithImplementationsTests
 	}
 
 	[Test]
-	[RockCreate<IMethodPolygon>]
 	public static void CallVirtualMethodOnInterfaceWithNoExpectation()
 	{
 		var expectations = new IMethodPolygonCreateExpectations();
@@ -78,7 +76,6 @@ public static class VirtualsWithImplementationsTests
 	}
 
 	[Test]
-	[RockCreate<IPropertyPolygon>]
 	public static void CallVirtualPropertyOnInterfaceWithNoExpectation()
 	{
 		var expectations = new IPropertyPolygonCreateExpectations();
@@ -92,7 +89,6 @@ public static class VirtualsWithImplementationsTests
 	}
 
 	[Test]
-	[RockCreate<IndexerPolygon>]
 	public static void CallVirtualIndexerOnClassWithNoExpectation()
 	{
 		var expectations = new IndexerPolygonCreateExpectations();
@@ -105,7 +101,6 @@ public static class VirtualsWithImplementationsTests
 	}
 
 	[Test]
-	[RockCreate<MethodPolygon>]
 	public static void CallVirtualMethodOnClassWithNoExpectation()
 	{
 		var expectations = new MethodPolygonCreateExpectations();
@@ -119,7 +114,6 @@ public static class VirtualsWithImplementationsTests
 	}
 
 	[Test]
-	[RockCreate<PropertyPolygon>]
 	public static void CallVirtualPropertyOnClassWithNoExpectation()
 	{
 		var expectations = new PropertyPolygonCreateExpectations();

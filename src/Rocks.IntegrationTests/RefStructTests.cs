@@ -1,17 +1,6 @@
 ﻿using NUnit.Framework;
-using Rocks;
-using Rocks.IntegrationTests;
 
-[assembly: RockCreate<IHaveInAndOutSpan>]
-[assembly: RockMake<IHaveInAndOutSpan>]
-[assembly: RockCreate<IReturnSpan>]
-[assembly: RockMake<IReturnSpan>]
-[assembly: RockCreate<IHaveSpan>]
-[assembly: RockMake<IHaveSpan>]
-[assembly: RockCreate<IHaveScoped>]
-[assembly: RockMake<IHaveScoped>]
-
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.RefStructTestTypes;
 
 public interface IHaveInAndOutSpan
 {

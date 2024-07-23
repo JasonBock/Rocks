@@ -2,7 +2,7 @@
 using Rocks.Exceptions;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.DoesNotReturnTestTypes;
 
 public class UsesDoesNotReturn
 {
@@ -16,7 +16,6 @@ public class UsesDoesNotReturn
 public static class DoesNotReturnTests
 {
 	[Test]
-	[RockCreate<UsesDoesNotReturn>]
 	public static void CreateWithVoidCallThatHasHandler()
 	{
 		var expectations = new UsesDoesNotReturnCreateExpectations();
@@ -30,7 +29,6 @@ public static class DoesNotReturnTests
 	}
 
 	[Test]
-	[RockCreate<UsesDoesNotReturn>]
 	public static void CreateWithVoidCallThatDoesNotHaveHandler()
 	{
 		var expectations = new UsesDoesNotReturnCreateExpectations();
@@ -44,7 +42,6 @@ public static class DoesNotReturnTests
 	}
 
 	[Test]
-	[RockCreate<UsesDoesNotReturn>]
 	public static void CreateWithVoidCallThatDoesNotHaveExpectation()
 	{
 		var expectations = new UsesDoesNotReturnCreateExpectations();
@@ -56,7 +53,6 @@ public static class DoesNotReturnTests
 	}
 
 	[Test]
-	[RockCreate<UsesDoesNotReturn>]
 	public static void CreateWithIntCallThatHasHandler()
 	{
 		var expectations = new UsesDoesNotReturnCreateExpectations();
@@ -70,7 +66,6 @@ public static class DoesNotReturnTests
 	}
 
 	[Test]
-	[RockCreate<UsesDoesNotReturn>]
 	public static void CreateWithIntCallThatDoesNotHaveHandler()
 	{
 		var expectations = new UsesDoesNotReturnCreateExpectations();
@@ -84,7 +79,6 @@ public static class DoesNotReturnTests
 	}
 
 	[Test]
-	[RockCreate<UsesDoesNotReturn>]
 	public static void CreateWithIntCallThatDoesNotHaveExpectation()
 	{
 		var expectations = new UsesDoesNotReturnCreateExpectations();
@@ -96,7 +90,6 @@ public static class DoesNotReturnTests
 	}
 
 	[Test]
-	[RockMake<UsesDoesNotReturn>]
 	public static void MakeWithVoidCall()
 	{
 		var mock = new UsesDoesNotReturnMakeExpectations().Instance();
@@ -104,7 +97,6 @@ public static class DoesNotReturnTests
 	}
 
 	[Test]
-	[RockMake<UsesDoesNotReturn>]
 	public static void MakeWithIntCall()
 	{
 		var mock = new UsesDoesNotReturnMakeExpectations().Instance();

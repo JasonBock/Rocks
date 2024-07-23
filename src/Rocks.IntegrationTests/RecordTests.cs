@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.RecordTestTypes;
 
 public record MyRecord
 {
@@ -10,7 +10,6 @@ public record MyRecord
 public static class RecordTests
 {
 	[Test]
-	[RockCreate<MyRecord>]
 	public static void Create()
 	{
 		var expectations = new MyRecordCreateExpectations();
@@ -23,7 +22,6 @@ public static class RecordTests
 	}
 
 	[Test]
-	[RockMake<MyRecord>]
 	public static void Make()
 	{
 		var mock = new MyRecordMakeExpectations().Instance();

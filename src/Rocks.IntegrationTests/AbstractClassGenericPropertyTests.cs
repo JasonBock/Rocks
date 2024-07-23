@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.AbstractClassGenericPropertyTestTypes;
 
 public abstract class AbstractClassGenericProperty<T>
 {
@@ -14,17 +14,13 @@ public abstract class AbstractClassGenericPropertyGetAndInit<T>
 	public abstract T Data { get; init; }
 }
 
-[RockCreate<AbstractClassGenericProperty<int>>]
-[RockCreate<AbstractClassGenericPropertyGetAndInit<int>>]
-[RockMake<AbstractClassGenericProperty<int>>]
-[RockMake<AbstractClassGenericPropertyGetAndInit<int>>]
 public static class AbstractClassGenericPropertyTests
 {
 	[Test]
 	public static void CreateUsingGenericType()
 	{
 		var returnValue = new List<string>();
-		var expectations = new AbstractClassGenericPropertyOfintCreateExpectations();
+		var expectations = new AbstractClassGenericPropertyCreateExpectations<int>();
 		expectations.Properties.Getters.Values().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
@@ -39,7 +35,7 @@ public static class AbstractClassGenericPropertyTests
 	public static void CreateUsingGenericTypeWithInit()
 	{
 		var returnValue = new List<string>();
-		var expectations = new AbstractClassGenericPropertyGetAndInitOfintCreateExpectations();
+		var expectations = new AbstractClassGenericPropertyGetAndInitCreateExpectations<int>();
 		expectations.Properties.Getters.Values().ReturnValue(returnValue);
 
 		var mock = expectations.Instance(null);
@@ -53,7 +49,7 @@ public static class AbstractClassGenericPropertyTests
 	[Test]
 	public static void MakeUsingGenericType()
 	{
-		var mock = new AbstractClassGenericPropertyOfintMakeExpectations().Instance();
+		var mock = new AbstractClassGenericPropertyMakeExpectations<int>().Instance();
 		var value = mock.Values;
 
 		Assert.That(value, Is.EqualTo(default(List<string>)));
@@ -62,7 +58,7 @@ public static class AbstractClassGenericPropertyTests
 	[Test]
 	public static void MakeUsingGenericTypeWithInit()
 	{
-		var mock = new AbstractClassGenericPropertyGetAndInitOfintMakeExpectations().Instance(null);
+		var mock = new AbstractClassGenericPropertyGetAndInitMakeExpectations<int>().Instance(null);
 		var value = mock.Values;
 
 		Assert.That(value, Is.EqualTo(default(List<string>)));
@@ -72,7 +68,7 @@ public static class AbstractClassGenericPropertyTests
 	public static void CreateUsingGenericTypeParameter()
 	{
 		var returnValue = 3;
-		var expectations = new AbstractClassGenericPropertyOfintCreateExpectations();
+		var expectations = new AbstractClassGenericPropertyCreateExpectations<int>();
 		expectations.Properties.Getters.Data().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
@@ -87,7 +83,7 @@ public static class AbstractClassGenericPropertyTests
 	public static void CreateUsingGenericTypeParameterWithInit()
 	{
 		var returnValue = 3;
-		var expectations = new AbstractClassGenericPropertyGetAndInitOfintCreateExpectations();
+		var expectations = new AbstractClassGenericPropertyGetAndInitCreateExpectations<int>();
 		expectations.Properties.Getters.Data().ReturnValue(returnValue);
 
 		var mock = expectations.Instance(null);
@@ -101,7 +97,7 @@ public static class AbstractClassGenericPropertyTests
 	[Test]
 	public static void MakeUsingGenericTypeParameter()
 	{
-		var mock = new AbstractClassGenericPropertyOfintMakeExpectations().Instance();
+		var mock = new AbstractClassGenericPropertyMakeExpectations<int>().Instance();
 		var value = mock.Data;
 
 		Assert.That(value, Is.EqualTo(default(int)));
@@ -110,7 +106,7 @@ public static class AbstractClassGenericPropertyTests
 	[Test]
 	public static void MakeUsingGenericTypeParameterWithInit()
 	{
-		var mock = new AbstractClassGenericPropertyGetAndInitOfintMakeExpectations().Instance(null);
+		var mock = new AbstractClassGenericPropertyGetAndInitMakeExpectations<int>().Instance(null);
 		var value = mock.Data;
 
 		Assert.That(value, Is.EqualTo(default(int)));

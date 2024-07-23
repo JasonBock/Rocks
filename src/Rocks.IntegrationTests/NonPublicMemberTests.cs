@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using Rocks.Exceptions;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.NonPublicMemberTestTypes;
 
 public abstract class HasProtectedMember
 {
@@ -15,7 +15,6 @@ public abstract class HasProtectedMember
 public static class NonPublicMemberTests
 {
 	[Test]
-	[RockCreate<HasProtectedMember>]
 	public static void ThrowExpectedException()
 	{
 		var protectedMemberExpectations = new HasProtectedMemberCreateExpectations();

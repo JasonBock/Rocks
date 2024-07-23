@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.RequiredInitPropertyTestTypes;
 
 public class Requireds
 {
@@ -27,7 +27,6 @@ public class Inits
 public static class RequiredInitPropertyTests
 {
 	[Test]
-	[RockCreate<Inits>]
 	public static void InitPropertiesWithCreate()
 	{
 		var expectations = new InitsCreateExpectations();
@@ -49,7 +48,6 @@ public static class RequiredInitPropertyTests
 	}
 
 	[Test]
-	[RockMake<Inits>]
 	public static void InitPropertiesWithMake()
 	{
 		var mock = new InitsMakeExpectations().Instance(
@@ -66,7 +64,6 @@ public static class RequiredInitPropertyTests
 	}
 
 	[Test]
-	[RockCreate<Inits>]
 	public static void InitPropertiesWithNullWithCreate()
 	{
 		var expectations = new InitsCreateExpectations();
@@ -87,7 +84,6 @@ public static class RequiredInitPropertyTests
 	}
 
 	[Test]
-	[RockMake<Inits>]
 	public static void InitPropertiesWithNullWithMake()
 	{
 		var mock = new InitsMakeExpectations().Instance(null);
@@ -103,7 +99,6 @@ public static class RequiredInitPropertyTests
 	}
 
 	[Test]
-	[RockCreate<Requireds>]
 	public static void RequiredPropertiesWithCreate()
 	{
 		var expectations = new RequiredsCreateExpectations();
@@ -125,7 +120,6 @@ public static class RequiredInitPropertyTests
 	}
 
 	[Test]
-	[RockMake<Requireds>]
 	public static void RequiredPropertiesWithMake()
 	{
 		var mock = new RequiredsMakeExpectations().Instance(
@@ -142,7 +136,6 @@ public static class RequiredInitPropertyTests
 	}
 
 	[Test]
-	[RockCreate<Requireds>]
 	public static void RequiredPropertiesWithNullWithCreate()
 	{
 		var expectations = new RequiredsCreateExpectations();
@@ -152,7 +145,6 @@ public static class RequiredInitPropertyTests
 	}
 
 	[Test]
-	[RockMake<Requireds>]
 	public static void RequiredPropertiesWithNullWithMake() => 
 		Assert.That(() => new RequiredsMakeExpectations().Instance(null!), Throws.TypeOf<ArgumentNullException>());
 }

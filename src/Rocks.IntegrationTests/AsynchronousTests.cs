@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using System.Runtime.CompilerServices;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.AsynchronousTestTypes;
 
 public class AsyncEnumeration
 {
@@ -26,7 +26,6 @@ public interface IAmAsynchronous
 public static class AsynchronousTests
 {
 	[Test]
-	[RockCreate<AsyncEnumeration>]
 	public static async Task CreateAsyncInteratorAsync()
 	{
 		static async IAsyncEnumerable<string> ReturnsAsyncIterator()
@@ -58,7 +57,6 @@ public static class AsynchronousTests
 	}
 
 	[Test]
-	[RockCreate<IAmAsynchronous>]
 	public static async Task CreateAsynchronousMethodsAsync()
 	{
 		const int returnValue = 3;
@@ -84,7 +82,6 @@ public static class AsynchronousTests
 	}
 
 	[Test]
-	[RockCreate<IAmAsynchronous>]
 	public static async Task CreateAsynchronousMethodsWithAsyncCallbackAsync()
 	{
 		var expectations = new IAmAsynchronousCreateExpectations();
@@ -105,7 +102,6 @@ public static class AsynchronousTests
 	}
 
 	[Test]
-	[RockMake<IAmAsynchronous>]
 	public static async Task MakeAsynchronousMethodsAsync()
 	{
 		var mock = new IAmAsynchronousMakeExpectations().Instance();

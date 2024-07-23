@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.EventTestTypes;
 
 #pragma warning disable CA1711 // Identifiers should not have incorrect suffix
 public class NotEventArgs { }
@@ -15,7 +15,6 @@ public interface IUseNotEventArgs
 public static class EventTests
 {
 	[Test]
-	[RockCreate<IUseNotEventArgs>]
 	public static void Create()
 	{
 		var eventArgs = new NotEventArgs();

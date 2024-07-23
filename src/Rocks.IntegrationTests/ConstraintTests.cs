@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.ConstraintTestTypes;
 
 public class BaseForConstraintCase { }
 
@@ -15,10 +15,9 @@ public abstract class BaseForConstraintCase<T>
 public static class ConstraintTests
 {
 	[Test]
-	[RockCreate<BaseForConstraintCase<string>>]
 	public static void Create()
 	{
-		var expectations = new BaseForConstraintCaseOfstringCreateExpectations();
+		var expectations = new BaseForConstraintCaseCreateExpectations<string>();
 		expectations.Methods.As<string>();
 
 		var mock = expectations.Instance();

@@ -450,7 +450,7 @@ public static class ObsoleteGeneratorTests
 			using Rocks;
 			using System;
 			
-			[assembly: RockCreate<MockTests.IAmObsolete>]
+			[assembly: Rock(typeof(MockTests.IAmObsolete), BuildType.Create)]
 
 			#nullable enable
 
@@ -468,7 +468,7 @@ public static class ObsoleteGeneratorTests
 			[],
 			[
 				new DiagnosticResult("CS0619", DiagnosticSeverity.Error)
-					.WithSpan(4, 23, 4, 44)
+					.WithSpan(4, 24, 4, 45)
 			],
 			generalDiagnosticOption: ReportDiagnostic.Error,
 			disabledDiagnostics: ["CS1591"]);
@@ -485,7 +485,7 @@ public static class ObsoleteGeneratorTests
 			using System.Collections.Generic;
 			using System.Linq;
 									
-			[assembly: RockCreate<MockTests.IAmAlsoObsolete>]
+			[assembly: Rock(typeof(MockTests.IAmAlsoObsolete), BuildType.Create)]
 
 			#nullable enable
 
@@ -523,7 +523,7 @@ public static class ObsoleteGeneratorTests
 			using System.Collections.Generic;
 			using System.Linq;
 			
-			[assembly: RockCreate<MockTests.IAmAlsoObsolete>]
+			[assembly: Rock(typeof(MockTests.IAmAlsoObsolete), BuildType.Create)]
 
 			#nullable enable
 
@@ -561,7 +561,7 @@ public static class ObsoleteGeneratorTests
 			using System.Collections.Generic;
 			using System.Linq;
 			
-			[assembly: RockCreate<MockTests.JobStorage>]
+			[assembly: Rock(typeof(MockTests.JobStorage), BuildType.Create)]
 
 			#nullable enable
 

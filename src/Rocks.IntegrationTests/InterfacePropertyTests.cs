@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.InterfacePropertyTestTypes;
 
 public interface IInterfaceProperty
 {
@@ -18,7 +18,6 @@ public interface IInterfaceProperty
 public static class InterfacePropertyTests
 {
 	[Test]
-	[RockCreate<IInterfaceProperty>]
 	public static void CreateGet()
 	{
 		var expectations = new IInterfacePropertyCreateExpectations();
@@ -33,7 +32,6 @@ public static class InterfacePropertyTests
 	}
 
 	[Test]
-	[RockMake<IInterfaceProperty>]
 	public static void MakeGet()
 	{
 		var mock = new IInterfacePropertyMakeExpectations().Instance();
@@ -43,7 +41,6 @@ public static class InterfacePropertyTests
 	}
 
 	[Test]
-	[RockCreate<IInterfaceProperty>]
 	public static void CreateGetWithRaiseEvent()
 	{
 		var expectations = new IInterfacePropertyCreateExpectations();
@@ -65,7 +62,6 @@ public static class InterfacePropertyTests
 	}
 
 	[Test]
-	[RockCreate<IInterfaceProperty>]
 	public static void CreateGetWithCallback()
 	{
 		var wasCallbackInvoked = false;
@@ -89,7 +85,6 @@ public static class InterfacePropertyTests
 	}
 
 	[Test]
-	[RockCreate<IInterfaceProperty>]
 	public static void CreateGetWithRaiseEventAndCallback()
 	{
 		var wasCallbackInvoked = false;
@@ -117,7 +112,6 @@ public static class InterfacePropertyTests
 	}
 
 	[Test]
-	[RockCreate<IInterfaceProperty>]
 	public static void CreateSet()
 	{
 		var expectations = new IInterfacePropertyCreateExpectations();
@@ -130,7 +124,6 @@ public static class InterfacePropertyTests
 	}
 
 	[Test]
-	[RockMake<IInterfaceProperty>]
 	public static void MakeSet()
 	{
 		var mock = new IInterfacePropertyMakeExpectations().Instance();
@@ -139,7 +132,6 @@ public static class InterfacePropertyTests
 	}
 
 	[Test]
-	[RockCreate<IInterfaceProperty>]
 	public static void CreateSetWithRaiseEvent()
 	{
 		var expectations = new IInterfacePropertyCreateExpectations();
@@ -157,7 +149,6 @@ public static class InterfacePropertyTests
 	}
 
 	[Test]
-	[RockCreate<IInterfaceProperty>]
 	public static void CreateSetWithCallback()
 	{
 		var wasCallbackInvoked = false;
@@ -174,7 +165,6 @@ public static class InterfacePropertyTests
 	}
 
 	[Test]
-	[RockCreate<IInterfaceProperty>]
 	public static void CreateSetWithRaiseEventAndCallback()
 	{
 		var wasCallbackInvoked = false;
@@ -198,7 +188,6 @@ public static class InterfacePropertyTests
 	}
 
 	[Test]
-	[RockCreate<IInterfaceProperty>]
 	public static void CreateGetAndInit()
 	{
 		var expectations = new IInterfacePropertyCreateExpectations();
@@ -213,7 +202,6 @@ public static class InterfacePropertyTests
 	}
 
 	[Test]
-	[RockCreate<IInterfaceProperty>]
 	public static void CreateGetAndSet()
 	{
 		var expectations = new IInterfacePropertyCreateExpectations();
@@ -230,7 +218,6 @@ public static class InterfacePropertyTests
 	}
 
 	[Test]
-	[RockMake<IInterfaceProperty>]
 	public static void MakeGetAndInit()
 	{
 		var mock = new IInterfacePropertyMakeExpectations().Instance();
@@ -240,7 +227,6 @@ public static class InterfacePropertyTests
 	}
 
 	[Test]
-	[RockMake<IInterfaceProperty>]
 	public static void MakeGetAndSet()
 	{
 		var mock = new IInterfacePropertyMakeExpectations().Instance();

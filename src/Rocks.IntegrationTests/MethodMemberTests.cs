@@ -1,18 +1,7 @@
 ﻿using NUnit.Framework;
-using Rocks;
-using Rocks.IntegrationTests;
 using System.Globalization;
 
-[assembly: RockCreate<IHaveLotsOfParameters>]
-[assembly: RockMake<IHaveLotsOfParameters>]
-[assembly: RockCreate<IHaveRefAndOut>]
-[assembly: RockMake<IHaveRefAndOut>]
-[assembly: RockCreate<IHaveRefReturn>]
-[assembly: RockMake<IHaveRefReturn>]
-[assembly: RockCreate<IHaveIn>]
-[assembly: RockMake<IHaveIn>]
-
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.MethodMemberTestTypes;
 
 public interface IHaveLotsOfParameters
 {
@@ -66,7 +55,7 @@ public static class MethodMemberTests
 
 		expectations.Verify();
 	}
-	
+
 	[Test]
 	public static void CreateMethodWithRefReturn()
 	{

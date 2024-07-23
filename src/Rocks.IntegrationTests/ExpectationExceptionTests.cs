@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using Rocks.Exceptions;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.ExpectationExceptionTestTypes;
 
 public interface ISetAfterMock
 {
@@ -13,7 +13,6 @@ public interface ISetAfterMock
 public static class ExpectationExceptionTests
 {
 	[Test]
-	[RockCreate<ISetAfterMock>]
 	public static void SetMethodExpectationAfterMockIsCreate()
 	{
 		var expectations = new ISetAfterMockCreateExpectations();
@@ -25,7 +24,6 @@ public static class ExpectationExceptionTests
 	}
 
 	[Test]
-	[RockCreate<ISetAfterMock>]
 	public static void SetPropertyGetterExpectationAfterMockIsCreate()
 	{
 		var expectations = new ISetAfterMockCreateExpectations();
@@ -37,7 +35,6 @@ public static class ExpectationExceptionTests
 	}
 
 	[Test]
-	[RockCreate<ISetAfterMock>]
 	public static void SetPropertySetterExpectationAfterMockIsCreate()
 	{
 		var expectations = new ISetAfterMockCreateExpectations();
@@ -49,7 +46,6 @@ public static class ExpectationExceptionTests
 	}
 
 	[Test]
-	[RockCreate<ISetAfterMock>]
 	public static void SetIndexerGetterExpectationAfterMockIsCreate()
 	{
 		var expectations = new ISetAfterMockCreateExpectations();
@@ -61,7 +57,6 @@ public static class ExpectationExceptionTests
 	}
 
 	[Test]
-	[RockCreate<ISetAfterMock>]
 	public static void SetIndexerSetterExpectationAfterMockIsCreate()
 	{
 		var expectations = new ISetAfterMockCreateExpectations();

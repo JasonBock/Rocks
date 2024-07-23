@@ -3,6 +3,7 @@
 /// <summary>
 /// Used to specify a type that should have a mock of type "make" built.
 /// </summary>
+[Obsolete("This attribute will be removed in 9.0.0. Please use RockAttribute instead.", false)]
 [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Method, AllowMultiple = true)]
 public sealed class RockMakeAttribute
 	: Attribute
@@ -24,6 +25,7 @@ public sealed class RockMakeAttribute
 /// Used to specify a type that should have a mock of type "make" built.
 /// </summary>
 /// <typeparam name="T">The type to mock.</typeparam>
+[Obsolete("This attribute will be removed in 9.0.0. Please use RockAttribute instead.", false)]
 [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Method, AllowMultiple = true)]
 public sealed class RockMakeAttribute<T>
 	: Attribute

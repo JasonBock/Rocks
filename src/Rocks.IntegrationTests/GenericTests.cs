@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.GenericTestTypes;
 
 public class ReferenceTypeOne { }
 public class ReferenceTypeTwo { }
@@ -26,7 +26,6 @@ public interface IGenericContainer
 public static class GenericTests
 {
 	[Test]
-	[RockCreate<GenericContainer>]
 	public static void CreateWithMultipleExpectationsOfDifferentTypesForReturnThatUsesGenericFromClass()
 	{
 		var referencedContainerOne = new ReferencedContainer<ReferenceTypeOne>();
@@ -46,7 +45,6 @@ public static class GenericTests
 	}
 
 	[Test]
-	[RockCreate<GenericContainer>]
 	public static void CreateWithMultipleExpectationsOfDifferentTypesForReturnFromClass()
 	{
 		var guidReturn = Guid.NewGuid();
@@ -65,7 +63,6 @@ public static class GenericTests
 	}
 
 	[Test]
-	[RockCreate<IGenericContainer>]
 	public static void CreateWithMultipleExpectationsOfDifferentTypesForReturnFromInterface()
 	{
 		var guidReturn = Guid.NewGuid();
@@ -85,7 +82,6 @@ public static class GenericTests
 	}
 
 	[Test]
-	[RockCreate<IGenericContainer>]
 	public static void CreateWithMultipleExpectationsOfDifferentTypesForParameterAndReturnFromInterface()
 	{
 		var guidReturn = Guid.NewGuid();

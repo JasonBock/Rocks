@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.OptionalArgumentsTestTypes;
 
 #nullable disable
 public class NeedNullableAnnotation
@@ -32,7 +32,6 @@ public struct OptionalDefault { }
 public static class OptionalArgumentsTests
 {
 	[Test]
-	[RockCreate<NeedNullableAnnotation>]
 	public static void CreateForcedNullableAnnotation()
 	{
 		var expectations = new NeedNullableAnnotationCreateExpectations();
@@ -47,7 +46,6 @@ public static class OptionalArgumentsTests
 	}
 
 	[Test]
-	[RockMake<NeedNullableAnnotation>]
 	public static void MakeForcedNullableAnnotation()
 	{
 		var mock = new NeedNullableAnnotationMakeExpectations().Instance(Arg.Is<object?>(null));
@@ -56,7 +54,6 @@ public static class OptionalArgumentsTests
 	}
 
 	[Test]
-	[RockCreate<IHaveOptionalStructDefaultArgument>]
 	public static void CreateMembersWithOptionalDefaultStructArgument()
 	{
 		var expectations = new IHaveOptionalStructDefaultArgumentCreateExpectations();
@@ -69,7 +66,6 @@ public static class OptionalArgumentsTests
 	}
 
 	[Test]
-	[RockCreate<IHaveOptionalArguments>]
 	public static void CreateMembersWithOptionalArgumentsSpecified()
 	{
 		var returnValue = 3;
@@ -87,7 +83,6 @@ public static class OptionalArgumentsTests
 	}
 
 	[Test]
-	[RockMake<IHaveOptionalArguments>]
 	public static void MakeMembersWithOptionalArguments()
 	{
 		var mock = new IHaveOptionalArgumentsMakeExpectations().Instance();
@@ -101,7 +96,6 @@ public static class OptionalArgumentsTests
 	}
 
 	[Test]
-	[RockCreate<IHaveOptionalArguments>]
 	public static void CreateMembersWithOptionalArgumentsNotSpecified()
 	{
 		var returnValue = 3;
@@ -119,7 +113,6 @@ public static class OptionalArgumentsTests
 	}
 
 	[Test]
-	[RockCreate<IHaveOptionalArguments>]
 	public static void CreateMembersWithOptionalArgumentsNotSpecifiedUsingOverload()
 	{
 		var returnValue = 3;

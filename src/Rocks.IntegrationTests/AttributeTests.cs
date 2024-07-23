@@ -4,7 +4,7 @@ using NUnit.Framework;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.AttributeTestTypes;
 
 public class NotNullIfNotCases
 {
@@ -21,7 +21,6 @@ public class ConventionDispatcher
 public static class AttributeTests
 {
 	[Test]
-	[RockCreate<NotNullIfNotCases>]
 	public static void CreateWithNotNullIfNotNull()
 	{
 		var node = new object();
@@ -39,7 +38,6 @@ public static class AttributeTests
 	}
 
 	[Test]
-	[RockCreate<ConventionDispatcher>]
 	public static void CreateWithConditional()
 	{
 		var expectations = new ConventionDispatcherCreateExpectations();

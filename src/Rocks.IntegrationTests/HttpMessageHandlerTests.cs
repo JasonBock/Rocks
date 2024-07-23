@@ -6,7 +6,6 @@ namespace Rocks.IntegrationTests;
 public static class HttpMessageHandlerTests
 {
 	[Test]
-	[RockCreate<HttpMessageHandler>]
 	public static async Task CreateAsync()
 	{
 		using var response = new HttpResponseMessage

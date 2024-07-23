@@ -1,14 +1,7 @@
 ﻿using NUnit.Framework;
-using Rocks;
 using Rocks.Exceptions;
-using Rocks.IntegrationTests;
 
-[assembly: RockCreate<ISurface>]
-[assembly: RockMake<ISurface>]
-[assembly: RockCreate<IHavePointers>]
-[assembly: RockMake<IHavePointers>]
-
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.PointerTestTypes;
 
 public interface ISurface
 {

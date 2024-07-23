@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.ClassGenericEventsTestTypes;
 
 public sealed class ClassEventArgs
 	: EventArgs
@@ -20,12 +20,11 @@ public class ClassGenericEvents<T>
 public static class ClassGenericEventsTests
 {
 	[Test]
-	[RockCreate<ClassGenericEvents<ClassEventArgs>>]
 	public static void CreateUsingGenericType()
 	{
 		var returnValue = new List<string>();
-		var expectations = new ClassGenericEventsOfClassEventArgsCreateExpectations();
-		expectations.Methods.Foo().RaiseMyEvent(new ClassEventArgs());
+		var expectations = new ClassGenericEventsCreateExpectations<ClassEventArgs>();
+		expectations.Methods.Foo().AddRaiseEvent(new("MyEvent", new ClassEventArgs()));
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();

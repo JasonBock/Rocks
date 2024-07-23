@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Rocks.IntegrationTests;
+namespace Rocks.IntegrationTests.ClassGenericIndexerTestTypes;
 
 public class ClassGenericIndexer<T>
 {
@@ -19,11 +19,10 @@ public class ClassGenericIndexerGetAndInit<T>
 public static class ClassGenericIndexerTests
 {
 	[Test]
-	[RockCreate<ClassGenericIndexer<int>>]
 	public static void CreateUsingGenericType()
 	{
 		var returnValue = new List<string>();
-		var expectations = new ClassGenericIndexerOfintCreateExpectations();
+		var expectations = new ClassGenericIndexerCreateExpectations<int>();
 		expectations.Indexers.Getters.This(4).ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
@@ -35,11 +34,10 @@ public static class ClassGenericIndexerTests
 	}
 
 	[Test]
-	[RockCreate<ClassGenericIndexerGetAndInit<int>>]
 	public static void CreateUsingGenericTypeWithInit()
 	{
 		var returnValue = new List<string>();
-		var expectations = new ClassGenericIndexerGetAndInitOfintCreateExpectations();
+		var expectations = new ClassGenericIndexerGetAndInitCreateExpectations<int>();
 		expectations.Indexers.Getters.This(4).ReturnValue(returnValue);
 
 		var mock = expectations.Instance(null);
@@ -51,31 +49,28 @@ public static class ClassGenericIndexerTests
 	}
 
 	[Test]
-	[RockMake<ClassGenericIndexer<int>>]
 	public static void MakeUsingGenericType()
 	{
-		var mock = new ClassGenericIndexerOfintMakeExpectations().Instance();
+		var mock = new ClassGenericIndexerMakeExpectations<int>().Instance();
 		var value = mock[4];
 
 		Assert.That(value, Is.EqualTo(default(List<string>)));
 	}
 
 	[Test]
-	[RockMake<ClassGenericIndexerGetAndInit<int>>]
 	public static void MakeUsingGenericTypeWithInit()
 	{
-		var mock = new ClassGenericIndexerGetAndInitOfintMakeExpectations().Instance(null);
+		var mock = new ClassGenericIndexerGetAndInitMakeExpectations<int>().Instance(null);
 		var value = mock[4];
 
 		Assert.That(value, Is.EqualTo(default(List<string>)));
 	}
 
 	[Test]
-	[RockCreate<ClassGenericIndexer<int>>]
 	public static void CreateUsingGenericTypeParameter()
 	{
 		var returnValue = 3;
-		var expectations = new ClassGenericIndexerOfintCreateExpectations();
+		var expectations = new ClassGenericIndexerCreateExpectations<int>();
 		expectations.Indexers.Getters.This(4, 5).ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
@@ -87,11 +82,10 @@ public static class ClassGenericIndexerTests
 	}
 
 	[Test]
-	[RockCreate<ClassGenericIndexerGetAndInit<int>>]
 	public static void CreateUsingGenericTypeParameterWithInit()
 	{
 		var returnValue = 3;
-		var expectations = new ClassGenericIndexerGetAndInitOfintCreateExpectations();
+		var expectations = new ClassGenericIndexerGetAndInitCreateExpectations<int>();
 		expectations.Indexers.Getters.This(4, 5).ReturnValue(returnValue);
 
 		var mock = expectations.Instance(null);
@@ -103,31 +97,28 @@ public static class ClassGenericIndexerTests
 	}
 
 	[Test]
-	[RockMake<ClassGenericIndexer<int>>]
 	public static void MakeUsingGenericTypeParameter()
 	{
-		var mock = new ClassGenericIndexerOfintMakeExpectations().Instance();
+		var mock = new ClassGenericIndexerMakeExpectations<int>().Instance();
 		var value = mock[4, 5];
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}
 
 	[Test]
-	[RockMake<ClassGenericIndexerGetAndInit<int>>]
 	public static void MakeUsingGenericTypeParameterWithInit()
 	{
-		var mock = new ClassGenericIndexerGetAndInitOfintMakeExpectations().Instance(null);
+		var mock = new ClassGenericIndexerGetAndInitMakeExpectations<int>().Instance(null);
 		var value = mock[4, 5];
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}
 
 	[Test]
-	[RockCreate<ClassGenericIndexer<int>>]
 	public static void CreateUsingGenericTypeParameterAsReturn()
 	{
 		var returnValue = 3;
-		var expectations = new ClassGenericIndexerOfintCreateExpectations();
+		var expectations = new ClassGenericIndexerCreateExpectations<int>();
 		expectations.Indexers.Getters.This("b").ReturnValue(returnValue);
 
 		var chunk = expectations.Instance();
@@ -139,11 +130,10 @@ public static class ClassGenericIndexerTests
 	}
 
 	[Test]
-	[RockCreate<ClassGenericIndexerGetAndInit<int>>]
 	public static void CreateUsingGenericTypeParameterAsReturnWithInit()
 	{
 		var returnValue = 3;
-		var expectations = new ClassGenericIndexerGetAndInitOfintCreateExpectations();
+		var expectations = new ClassGenericIndexerGetAndInitCreateExpectations<int>();
 		expectations.Indexers.Getters.This("b").ReturnValue(returnValue);
 
 		var mock = expectations.Instance(null);
@@ -155,20 +145,18 @@ public static class ClassGenericIndexerTests
 	}
 
 	[Test]
-	[RockMake<ClassGenericIndexer<int>>]
 	public static void MakeUsingGenericTypeParameterAsReturn()
 	{
-		var mock = new ClassGenericIndexerOfintMakeExpectations().Instance();
+		var mock = new ClassGenericIndexerMakeExpectations<int>().Instance();
 		var value = mock["b"];
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}
 
 	[Test]
-	[RockMake<ClassGenericIndexerGetAndInit<int>>]
 	public static void MakeUsingGenericTypeParameterAsReturnWithInit()
 	{
-		var mock = new ClassGenericIndexerGetAndInitOfintMakeExpectations().Instance(null);
+		var mock = new ClassGenericIndexerGetAndInitMakeExpectations<int>().Instance(null);
 		var value = mock["b"];
 
 		Assert.That(value, Is.EqualTo(default(int)));
