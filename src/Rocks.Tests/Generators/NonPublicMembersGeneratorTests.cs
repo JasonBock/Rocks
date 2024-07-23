@@ -27,7 +27,7 @@ public static class NonPublicMembersGeneratorTests
 			}
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[],
 			[]);
 	}
@@ -381,8 +381,8 @@ public static class NonPublicMembersGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "VisibilityIssues_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "VisibilityIssues_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -455,8 +455,8 @@ public static class NonPublicMembersGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "VisibilityIssues_Rock_Make.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "VisibilityIssues_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -513,7 +513,7 @@ public static class NonPublicMembersGeneratorTests
 			[assembly: RockCreate<InternalAbstractInvalidMember>]
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[],
 			[],
 			additionalReferences: [reference]);
@@ -546,7 +546,7 @@ public static class NonPublicMembersGeneratorTests
 			[assembly: RockCreate<InternalAbstractMember>]
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[],
 			[],
 			additionalReferences: sourceReferences);
@@ -912,8 +912,8 @@ public static class NonPublicMembersGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "VisibilityIssues_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "VisibilityIssues_Rock_Create.g.cs", generatedCode)],
 			[],
 			additionalReferences: sourceReferences);
 	}
@@ -997,8 +997,8 @@ public static class NonPublicMembersGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "VisibilityIssues_Rock_Make.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "VisibilityIssues_Rock_Make.g.cs", generatedCode)],
 			[],
 			additionalReferences: sourceReferences);
 	}
@@ -1455,8 +1455,8 @@ public static class NonPublicMembersGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "HasInternalVirtual_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "HasInternalVirtual_Rock_Create.g.cs", generatedCode)],
 			[],
 			additionalReferences: sourceReferences);
 	}
@@ -1569,8 +1569,8 @@ public static class NonPublicMembersGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "HasInternalVirtual_Rock_Make.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "HasInternalVirtual_Rock_Make.g.cs", generatedCode)],
 			[],
 			additionalReferences: sourceReferences);
 	}
@@ -1998,8 +1998,8 @@ public static class NonPublicMembersGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.Test_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.Test_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -2424,8 +2424,8 @@ public static class NonPublicMembersGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.Test_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.Test_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -2513,8 +2513,8 @@ public static class NonPublicMembersGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.Test_Rock_Make.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.Test_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -2602,8 +2602,8 @@ public static class NonPublicMembersGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.Test_Rock_Make.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.Test_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 }

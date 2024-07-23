@@ -159,8 +159,8 @@ public static class GenericsGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IServiceint, string_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IServiceint, string_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -404,8 +404,8 @@ public static class GenericsGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IGenericsAndEvent_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IGenericsAndEvent_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -564,8 +564,8 @@ public static class GenericsGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IServiceint, string_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IServiceint, string_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -861,8 +861,8 @@ public static class GenericsGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "Mobject_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "Mobject_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1198,8 +1198,8 @@ public static class GenericsGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "GenericContainer_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "GenericContainer_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1384,8 +1384,8 @@ public static class GenericsGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "Criterionobject_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "Criterionobject_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1630,8 +1630,8 @@ public static class GenericsGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "GeometryValueComparerobject_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "GeometryValueComparerobject_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1801,8 +1801,8 @@ public static class GenericsGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.IRequestClientobject_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.IRequestClientobject_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -2034,8 +2034,8 @@ public static class GenericsGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.IRequestobject_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.IRequestobject_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }

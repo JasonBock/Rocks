@@ -352,8 +352,8 @@ public static class RecordCreateGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.RecordTest_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.RecordTest_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }

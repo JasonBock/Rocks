@@ -315,8 +315,8 @@ public static class OptionalArgumentsTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IHaveOptionalArguments_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IHaveOptionalArguments_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }

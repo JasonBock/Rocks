@@ -80,8 +80,8 @@ public static class ClassConstructorMakeGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.BaseCtor_Rock_Make.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.BaseCtor_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 }

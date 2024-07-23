@@ -295,8 +295,8 @@ public static class InterfaceGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "ISealed_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "ISealed_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -461,8 +461,8 @@ public static class InterfaceGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IRequest_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IRequest_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -625,8 +625,8 @@ public static class InterfaceGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.ITarget_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.ITarget_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }

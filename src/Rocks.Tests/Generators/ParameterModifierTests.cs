@@ -163,8 +163,8 @@ public static class ParameterModifierTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IParameterModifier_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IParameterModifier_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -222,8 +222,8 @@ public static class ParameterModifierTests
 			
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IParameterModifier_Rock_Make.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IParameterModifier_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -392,8 +392,8 @@ public static class ParameterModifierTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IParameterModifier_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IParameterModifier_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -452,8 +452,8 @@ public static class ParameterModifierTests
 			
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IParameterModifier_Rock_Make.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IParameterModifier_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -621,8 +621,8 @@ public static class ParameterModifierTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IParameterModifier_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IParameterModifier_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -680,8 +680,8 @@ public static class ParameterModifierTests
 			
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IParameterModifier_Rock_Make.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IParameterModifier_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -844,8 +844,8 @@ public static class ParameterModifierTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IParameterModifier_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IParameterModifier_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -903,8 +903,8 @@ public static class ParameterModifierTests
 			
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IParameterModifier_Rock_Make.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IParameterModifier_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1265,8 +1265,8 @@ public static class ParameterModifierTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IParameterModifier_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IParameterModifier_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }

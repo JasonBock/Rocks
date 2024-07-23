@@ -122,7 +122,7 @@ public static class RockAnalyzerInaccessibleAbstractMembersTests
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var references = Shared.References.Value
-			.Concat([MetadataReference.CreateFromFile(typeof(RockAttributeGenerator).Assembly.Location)]);
+			.Concat([MetadataReference.CreateFromFile(typeof(RockGenerator).Assembly.Location)]);
 		return CSharpCompilation.Create("generator", [syntaxTree],
 			references, new CSharpCompilationOptions(
 				OutputKind.DynamicallyLinkedLibrary, generalDiagnosticOption: ReportDiagnostic.Error));

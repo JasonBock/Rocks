@@ -37,7 +37,7 @@ static void TestWithCode()
 		typeof(System.Linq.Expressions.LambdaExpression),
 	};
 
-	TestGenerator.Generate(new RockAttributeGenerator(),
+	TestGenerator.Generate(new RockGenerator(),
 		"""
 		using Rocks;
 		using System;
@@ -73,7 +73,7 @@ static void TestWithType()
 	};
 
 #pragma warning disable EF1001 // Internal EF Core API usage.
-	(var issues, var times) = TestGenerator.Generate(new RockAttributeGenerator(),
+	(var issues, var times) = TestGenerator.Generate(new RockGenerator(),
 		[typeof(CsvHelper.Configuration.DefaultClassMap<>)],
 		typesToLoadAssembliesFrom,
 		MappedTypes.GetMappedTypes(),
@@ -88,7 +88,7 @@ static void TestWithTypeNoEmit()
 {
 	for (var i = 0; i < 50; i++)
 	{
-		(var issues, var times) = TestGenerator.GenerateNoEmit(new RockAttributeGenerator(),
+		(var issues, var times) = TestGenerator.GenerateNoEmit(new RockGenerator(),
 			[typeof(AngleSharp.Svg.Dom.ISvgSvgElement)],
 			[],
 			[],
@@ -259,12 +259,12 @@ static void TestWithTypes()
 
 			Console.WriteLine($"Testing {targetMapping.type.Assembly.GetName().Name} - {BuildType.Create}");
 			(var createIssues, _) = TestGenerator.Generate(
-				new RockAttributeGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases, BuildType.Create);
+				new RockGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases, BuildType.Create);
 			issues.AddRange(createIssues);
 
 			Console.WriteLine($"Testing {targetMapping.type.Assembly.GetName().Name} - {BuildType.Make}");
 			(var makeIssues, _) = TestGenerator.Generate(
-				new RockAttributeGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases, BuildType.Make);
+				new RockGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases, BuildType.Make);
 			issues.AddRange(makeIssues);
 
 			totalDiscoveredTypeCount += discoveredTypes.Length;
@@ -327,7 +327,7 @@ static void TestTypesIndividually()
 			{
 				Console.WriteLine($"Generating for type {discoveredType.FullName}...");
 				(_, var generatorElapsedTime) = TestGenerator.Generate(
-					new RockAttributeGenerator(), [discoveredType], typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases, BuildType.Create);
+					new RockGenerator(), [discoveredType], typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases, BuildType.Create);
 				typeGenerationTimes.Add(new(discoveredType, generatorElapsedTime));
 			}
 		}

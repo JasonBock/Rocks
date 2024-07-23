@@ -285,8 +285,8 @@ public static class HiddenMembersGeneratorTests
 			#pragma warning restore CS8775
 			""";
 			
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.NewCopy_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.NewCopy_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -767,8 +767,8 @@ public static class HiddenMembersGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "SubClass_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "SubClass_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1345,8 +1345,8 @@ public static class HiddenMembersGeneratorTests
 			#pragma warning restore CS8775
 			""";
 			
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "ISub_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "ISub_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }

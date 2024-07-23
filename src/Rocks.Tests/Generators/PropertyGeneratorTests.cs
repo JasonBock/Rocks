@@ -230,8 +230,8 @@ public static class PropertyGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IMessagePublishTopologyConfigurator_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IMessagePublishTopologyConfigurator_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -660,8 +660,8 @@ public static class PropertyGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "PrivatePublicProperties_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "PrivatePublicProperties_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -972,8 +972,8 @@ public static class PropertyGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "PrivatePublicProperty_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "PrivatePublicProperty_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1559,8 +1559,8 @@ public static class PropertyGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MixedIndexers_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MixedIndexers_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -2107,8 +2107,8 @@ public static class PropertyGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MixedProperties_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MixedProperties_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -2199,8 +2199,8 @@ public static class PropertyGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MixedProperties_Rock_Make.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MixedProperties_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 }

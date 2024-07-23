@@ -295,8 +295,8 @@ public static class AsyncIteratorGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "AsyncEnumeration_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "AsyncEnumeration_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -376,8 +376,8 @@ public static class AsyncIteratorGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "AsyncEnumeration_Rock_Make.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "AsyncEnumeration_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 }

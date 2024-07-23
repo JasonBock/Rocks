@@ -209,8 +209,8 @@ public static class ExplicitImplementationGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.IHtmlMediaElement_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.IHtmlMediaElement_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -314,8 +314,8 @@ public static class ExplicitImplementationGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.IHtmlMediaElement_Rock_Make.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.IHtmlMediaElement_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -656,8 +656,8 @@ public static class ExplicitImplementationGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "ILeftRight_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "ILeftRight_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -858,8 +858,8 @@ public static class ExplicitImplementationGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IIterablestring_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IIterablestring_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1045,8 +1045,8 @@ public static class ExplicitImplementationGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "ISetupList_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "ISetupList_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1111,8 +1111,8 @@ public static class ExplicitImplementationGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "ISetupList_Rock_Make.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "ISetupList_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1192,8 +1192,8 @@ public static class ExplicitImplementationGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IIterablestring_Rock_Make.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IIterablestring_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 }

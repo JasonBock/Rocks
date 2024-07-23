@@ -238,8 +238,8 @@ public static class DefaultValuesGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.IRequestobject_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.IRequestobject_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -408,8 +408,8 @@ public static class DefaultValuesGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IGenericDefault_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IGenericDefault_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -468,8 +468,8 @@ public static class DefaultValuesGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IGenericDefault_Rock_Make.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IGenericDefault_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -635,8 +635,8 @@ public static class DefaultValuesGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IUseInfinity_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IUseInfinity_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -695,8 +695,8 @@ public static class DefaultValuesGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IUseInfinity_Rock_Make.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IUseInfinity_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 }

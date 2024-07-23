@@ -360,8 +360,8 @@ public static class CastingGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.IHaveOpenGenericsSystem.Guid_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.IHaveOpenGenericsSystem.Guid_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }

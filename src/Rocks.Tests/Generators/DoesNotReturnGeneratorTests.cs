@@ -321,8 +321,8 @@ public static class DoesNotReturnGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.ClassTest_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.ClassTest_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -411,8 +411,8 @@ public static class DoesNotReturnGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.ClassTest_Rock_Make.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.ClassTest_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -603,8 +603,8 @@ public static class DoesNotReturnGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.IInterfaceTest_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.IInterfaceTest_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -681,8 +681,8 @@ public static class DoesNotReturnGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.IInterfaceTest_Rock_Make.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.IInterfaceTest_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 }

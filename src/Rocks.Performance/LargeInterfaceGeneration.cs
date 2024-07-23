@@ -430,11 +430,11 @@ public class LargeInterfaceGeneration
 			.Select(_ => MetadataReference.CreateFromFile(_.Location))
 			.Concat(
 			[
-				MetadataReference.CreateFromFile(typeof(RockAttributeGenerator).Assembly.Location),
+				MetadataReference.CreateFromFile(typeof(RockGenerator).Assembly.Location),
 			]);
 		this.compilation = CSharpCompilation.Create("generator", [tree],
 			references, new(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
-		this.driver = CSharpGeneratorDriver.Create(new RockAttributeGenerator());
+		this.driver = CSharpGeneratorDriver.Create(new RockGenerator());
 	}
 
 	[Benchmark]

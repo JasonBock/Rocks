@@ -299,8 +299,8 @@ public static class IndexerGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "ISubIndex_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "ISubIndex_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -773,8 +773,8 @@ public static class IndexerGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "AbstractClassIndexerGetterSetter_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "AbstractClassIndexerGetterSetter_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1012,8 +1012,8 @@ public static class IndexerGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IHaveOptionalArguments_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IHaveOptionalArguments_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1367,8 +1367,8 @@ public static class IndexerGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IHaveIndexersWithInit_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IHaveIndexersWithInit_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1502,8 +1502,8 @@ public static class IndexerGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IHaveIndexersWithInit_Rock_Make.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IHaveIndexersWithInit_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1900,8 +1900,8 @@ public static class IndexerGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.Target_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.Target_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }

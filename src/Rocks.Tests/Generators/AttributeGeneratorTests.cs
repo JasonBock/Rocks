@@ -71,8 +71,8 @@ public static class AttributeGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "INotNull_Rock_Make.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "INotNull_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -232,8 +232,8 @@ public static class AttributeGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IItems_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IItems_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -502,8 +502,8 @@ public static class AttributeGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "ConventionDispatcher_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "ConventionDispatcher_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1106,8 +1106,8 @@ public static class AttributeGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "NotNullIfNotCases_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "NotNullIfNotCases_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1269,8 +1269,8 @@ public static class AttributeGeneratorTests
 			#pragma warning restore CS8775
 			""";
 		
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IUseTuples_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IUseTuples_Rock_Create.g.cs", generatedCode)],
 			[],
 			additionalReferences: Shared.References.Value.Concat([tupleReference as MetadataReference]));
 	}
@@ -1546,8 +1546,8 @@ public static class AttributeGeneratorTests
 		// The diagnostic is coming from the method definition in code,
 		// which we have to have to ensure the generator doesn't emit [Dynamic],
 		// so it's expected to get CS1970.
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "HaveDynamic_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "HaveDynamic_Rock_Create.g.cs", generatedCode)],
 			[DiagnosticResult.CompilerError("CS1970").WithSpan(9, 11, 9, 18)]);
 	}
 
@@ -1702,8 +1702,8 @@ public static class AttributeGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.IHaveGenericAttribute_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.IHaveGenericAttribute_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1882,8 +1882,8 @@ public static class AttributeGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.IHaveMultipleAttributes_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.IHaveMultipleAttributes_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }

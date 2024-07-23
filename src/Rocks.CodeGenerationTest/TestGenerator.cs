@@ -104,7 +104,7 @@ internal static class TestGenerator
 			.Concat(assemblies.Select(_ => MetadataReference.CreateFromFile(_.Location).WithAliases(aliases)))
 			.Concat(
 			[
-				MetadataReference.CreateFromFile(typeof(RockAttributeGenerator).Assembly.Location),
+				MetadataReference.CreateFromFile(typeof(RockGenerator).Assembly.Location),
 				MetadataReference.CreateFromFile(typeof(InvalidEnumArgumentException).Assembly.Location),
 			]);
 
@@ -157,7 +157,7 @@ internal static class TestGenerator
 			.Concat(assemblies.Select(_ => MetadataReference.CreateFromFile(_.Location).WithAliases(aliases)))
 			.Concat(
 			[
-				MetadataReference.CreateFromFile(typeof(RockAttributeGenerator).Assembly.Location),
+				MetadataReference.CreateFromFile(typeof(RockGenerator).Assembly.Location),
 				MetadataReference.CreateFromFile(typeof(InvalidEnumArgumentException).Assembly.Location),
 			]);
 
@@ -226,7 +226,7 @@ internal static class TestGenerator
 			.Concat(assemblies.Select(_ => MetadataReference.CreateFromFile(_.Location).WithAliases(aliases)))
 			.Concat(
 			[
-				MetadataReference.CreateFromFile(typeof(RockAttributeGenerator).Assembly.Location),
+				MetadataReference.CreateFromFile(typeof(RockGenerator).Assembly.Location),
 				MetadataReference.CreateFromFile(typeof(InvalidEnumArgumentException).Assembly.Location),
 			]);
 
@@ -271,7 +271,7 @@ internal static class TestGenerator
 			.Select(_ => MetadataReference.CreateFromFile(_.Location))
 			.Concat(
 			[
-				MetadataReference.CreateFromFile(typeof(RockAttributeGenerator).Assembly.Location),
+				MetadataReference.CreateFromFile(typeof(RockGenerator).Assembly.Location),
 				MetadataReference.CreateFromFile(typeof(InvalidEnumArgumentException).Assembly.Location),
 			]);
 

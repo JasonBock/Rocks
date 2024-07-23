@@ -297,8 +297,8 @@ public static class VirtualsWithImplementationsGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.VoidMethodWithParams_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.VoidMethodWithParams_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -589,8 +589,8 @@ public static class VirtualsWithImplementationsGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.ValueMethodWithParams_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.ValueMethodWithParams_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -748,8 +748,8 @@ public static class VirtualsWithImplementationsGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.IHaveImplementation_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.IHaveImplementation_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -909,8 +909,8 @@ public static class VirtualsWithImplementationsGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.IHaveImplementation_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.IHaveImplementation_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1184,8 +1184,8 @@ public static class VirtualsWithImplementationsGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.HaveImplementation_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.HaveImplementation_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1461,8 +1461,8 @@ public static class VirtualsWithImplementationsGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.HaveImplementation_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.HaveImplementation_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }

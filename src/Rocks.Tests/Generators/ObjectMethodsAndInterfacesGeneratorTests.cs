@@ -203,8 +203,8 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.StaticToString_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.StaticToString_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -275,8 +275,8 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.StaticToString_Rock_Make.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.StaticToString_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -531,8 +531,8 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.IMatchObjectobject_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.IMatchObjectobject_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -609,8 +609,8 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.IMatchObjectobject_Rock_Make.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.IMatchObjectobject_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -865,8 +865,8 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.IMatchObjectobject_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.IMatchObjectobject_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -943,8 +943,8 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.IMatchObjectobject_Rock_Make.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.IMatchObjectobject_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 }

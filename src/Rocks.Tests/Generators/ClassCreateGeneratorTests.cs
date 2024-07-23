@@ -276,8 +276,8 @@ public static class ClassCreateGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.ClassTest_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.ClassTest_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -356,8 +356,8 @@ public static class ClassCreateGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.ClassTest_Rock_Make.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.ClassTest_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -688,10 +688,10 @@ public static class ClassCreateGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[ 
-				(typeof(RockAttributeGenerator), "MockTests.ClassTest_Rock_Create.g.cs", generatedCreateCode),
-				(typeof(RockAttributeGenerator), "MockTests.ClassTest_Rock_Make.g.cs", generatedMakeCode),
+				(typeof(RockGenerator), "MockTests.ClassTest_Rock_Create.g.cs", generatedCreateCode),
+				(typeof(RockGenerator), "MockTests.ClassTest_Rock_Make.g.cs", generatedMakeCode),
 			],
 			[]);
 	}

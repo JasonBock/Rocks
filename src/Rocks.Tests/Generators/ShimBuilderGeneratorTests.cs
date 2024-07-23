@@ -346,8 +346,8 @@ public static class ShimBuilderGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IRuntimeKey_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IRuntimeKey_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -777,8 +777,8 @@ public static class ShimBuilderGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "IHaveDims_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "IHaveDims_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }

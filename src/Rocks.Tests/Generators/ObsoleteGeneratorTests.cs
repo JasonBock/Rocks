@@ -154,8 +154,8 @@ public static class ObsoleteGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.IContainer_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.IContainer_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -437,8 +437,8 @@ public static class ObsoleteGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.Container_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.Container_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -464,7 +464,7 @@ public static class ObsoleteGeneratorTests
 			}
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[],
 			[
 				new DiagnosticResult("CS0619", DiagnosticSeverity.Error)
@@ -505,7 +505,7 @@ public static class ObsoleteGeneratorTests
 			}
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[],
 			[],
 			generalDiagnosticOption: ReportDiagnostic.Error,
@@ -543,7 +543,7 @@ public static class ObsoleteGeneratorTests
 			}
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[],
 			[],
 			generalDiagnosticOption: ReportDiagnostic.Error,
@@ -581,7 +581,7 @@ public static class ObsoleteGeneratorTests
 			}
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[],
 			[
 				new DiagnosticResult("CS0619", DiagnosticSeverity.Error)
@@ -831,8 +831,8 @@ public static class ObsoleteGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.IPixelShader_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.IPixelShader_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1074,8 +1074,8 @@ public static class ObsoleteGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "MockTests.IPixelShader_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "MockTests.IPixelShader_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }

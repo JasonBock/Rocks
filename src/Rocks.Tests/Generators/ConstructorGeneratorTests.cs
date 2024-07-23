@@ -23,7 +23,7 @@ public static class ConstructorGeneratorTests
 			}
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[],
 			[]);
 	}
@@ -49,7 +49,7 @@ public static class ConstructorGeneratorTests
 			}
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[],
 			[]);
 	}
@@ -75,7 +75,7 @@ public static class ConstructorGeneratorTests
 			}
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[],
 			[]);
 	}
@@ -371,8 +371,8 @@ public static class ConstructorGeneratorTests
 			#pragma warning restore CS8775
 			""";
 
-		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			[(typeof(RockAttributeGenerator), "AnyOfstring, int_Rock_Create.g.cs", generatedCode)],
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[(typeof(RockGenerator), "AnyOfstring, int_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }
