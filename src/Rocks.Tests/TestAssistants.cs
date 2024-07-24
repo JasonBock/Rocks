@@ -44,7 +44,7 @@ internal static class TestAssistants
 	{
 		var test = new IncrementalGeneratorTest<TGenerator>(generalDiagnosticOption)
 		{
-			ReferenceAssemblies = ReferenceAssemblies.Net.Net80,
+			ReferenceAssemblies = ReferenceAssemblies.Net.Net90,
 			TestState =
 			{
 				Sources = { code },

@@ -54,7 +54,7 @@ public static class RefStructTests
 		Assert.Multiple(() =>
 		{
 			var buffer = new int[] { 3 };
-			Assert.That(mock.Foo(new Span<int>(buffer)) == default, Is.True);
+			Assert.That(mock.Foo(new Span<int>(buffer)).IsEmpty, Is.True);
 		});
 	}
 
@@ -89,8 +89,8 @@ public static class RefStructTests
 		var mock = new IHaveInAndOutSpanMakeExpectations().Instance();
 		Assert.Multiple(() =>
 		{
-			Assert.That(mock.Foo(default) == default, Is.True);
-			Assert.That(mock.Values == default, Is.True);
+			Assert.That(mock.Foo(default).IsEmpty, Is.True);
+			Assert.That(mock.Values.IsEmpty, Is.True);
 		});
 	}
 
@@ -125,8 +125,8 @@ public static class RefStructTests
 		var mock = new IReturnSpanMakeExpectations().Instance();
 		Assert.Multiple(() =>
 		{
-			Assert.That(mock.GetRandomData() == default, Is.True);
-			Assert.That(mock.Values == default, Is.True);
+			Assert.That(mock.GetRandomData().IsEmpty, Is.True);
+			Assert.That(mock.Values.IsEmpty, Is.True);
 		});
 	}
 

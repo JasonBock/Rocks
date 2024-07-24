@@ -54,12 +54,12 @@
     <PackageVersion Include="MathNet.Numerics" Version="5.0.0" />
     <PackageVersion Include="MediatR" Version="12.3.0" />
     <PackageVersion Include="MessagePack" Version="2.6.100-alpha" />
-    <PackageVersion Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0-beta1.23525.2" />
-    <PackageVersion Include="Microsoft.CodeAnalysis.Common" Version="4.10.0" />
-    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.10.0" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0-beta1.24318.1" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.Common" Version="4.11.0-2.final" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.11.0-2.final" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing" Version="1.1.2" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing" Version="1.1.2" />
-    <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="9.0.0-preview.24318.1" />
     <PackageVersion Include="Microsoft.Data.SqlClient" Version="5.1.2" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
@@ -74,7 +74,7 @@
     <PackageVersion Include="Microsoft.Quantum.Standard" Version="0.28.302812" />
     <PackageVersion Include="Microsoft.SemanticKernel" Version="1.7.1" />
     <PackageVersion Include="Microsoft.SemanticKernel.Abstractions" Version="1.7.1" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.11.0-release-24373-02" />
     <PackageVersion Include="Mono.Cecil" Version="0.11.5" />
     <PackageVersion Include="Moq" Version="4.18.4" />
     <PackageVersion Include="Mscc.GenerativeAI" Version="1.5.0" />
@@ -87,7 +87,7 @@
     <PackageVersion Include="NServiceBus" Version="8.1.1" />
     <PackageVersion Include="NSubstitute" Version="5.0.0" />
     <PackageVersion Include="NuGet.Common" Version="6.10.1" />
-    <PackageVersion Include="NuGet.Frameworks" Version="6.10.1" />
+    <PackageVersion Include="NuGet.Frameworks" Version="6.11.0-preview.2" />
     <PackageVersion Include="NUnit" Version="4.1.0" />
     <PackageVersion Include="NUnit.Analyzers" Version="4.2.0" />
     <PackageVersion Include="NUnit3TestAdapter" Version="4.5.0" />

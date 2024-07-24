@@ -4,7 +4,7 @@
 		<Authors>Jason Bock</Authors>
 		<Copyright>Copyright © 2024</Copyright>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<LangVersion>latest</LangVersion>
+		<LangVersion>preview</LangVersion>
 		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
 		<NoWarn>CA1861</NoWarn>
 		<!-- https://learn.microsoft.com/en-us/nuget/concepts/auditing-packages -->
@@ -12,8 +12,8 @@
 		<NuGetAuditMode>all</NuGetAuditMode>
 		<NuGetAuditLevel>critical</NuGetAuditLevel>
 		<Nullable>enable</Nullable>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net9.0</TargetFramework>
 		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-		<Version>8.3.0</Version>
+		<Version>9.0.0-alpha.1</Version>
 	</PropertyGroup>
 </Project>
