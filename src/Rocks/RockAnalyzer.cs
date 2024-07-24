@@ -33,21 +33,74 @@ public sealed class RockAnalyzer
 
 		context.RegisterCompilationStartAction(compilationContext =>
 		{
-		   // TODO: This needs to include the non-generic versions
-		   // as well as the upcoming new RockAttribute.
+			// TODO: This needs to include the non-generic versions
+			// as well as the upcoming new RockAttribute.
 #pragma warning disable CS0618 // Type or member is obsolete
-		   var createAttributeSymbol = compilationContext.Compilation.GetTypeByMetadataName(
+			var createAttributeSymbol = compilationContext.Compilation.GetTypeByMetadataName(
 				typeof(RockCreateAttribute<>).FullName)!;
-		   var makeAttributeSymbol = compilationContext.Compilation.GetTypeByMetadataName(
+			var makeAttributeSymbol = compilationContext.Compilation.GetTypeByMetadataName(
 				typeof(RockMakeAttribute<>).FullName)!;
 #pragma warning restore CS0618 // Type or member is obsolete
+
+			var rockAttributeSymbol = compilationContext.Compilation.GetTypeByMetadataName(
+				typeof(RockAttribute).FullName)!;
 
 			compilationContext.RegisterOperationAction(operationContext =>
 			{
 				RockAnalyzer.AnalyzeAttributes(operationContext,
 					createAttributeSymbol, makeAttributeSymbol);
 			}, OperationKind.Attribute);
+
+			compilationContext.RegisterOperationAction(operationContext =>
+			{
+				RockAnalyzer.AnalyzeAttribute(
+					operationContext, rockAttributeSymbol);
+			}, OperationKind.Attribute);
 		});
+	}
+
+	private static void AnalyzeAttribute(
+		OperationAnalysisContext context, INamedTypeSymbol rockAttributeSymbol)
+	{
+		if (context.Operation is IAttributeOperation { Operation: IObjectCreationOperation attribute })
+		{
+			var attributeType = attribute.Constructor?.ContainingType;
+
+			if (attributeType is not null &&
+				SymbolEqualityComparer.Default.Equals(attributeType, rockAttributeSymbol))
+			{
+				var mockTypeSymbol = (attribute.Arguments[0].Value as ITypeOfOperation)!.TypeOperand.OriginalDefinition;
+				var buildType = (BuildType)attribute.Arguments[1].Value!.ConstantValue.Value!;
+
+				if (buildType.HasFlag(BuildType.Create))
+				{
+					var model = MockModel.Create(context.Operation.Syntax,
+					  mockTypeSymbol, context.Operation.SemanticModel!, BuildType.Create, true);
+
+					if (model.Information is null)
+					{
+						foreach (var diagnostic in model.Diagnostics)
+						{
+							context.ReportDiagnostic(diagnostic);
+						}
+					}
+				}
+
+				if (buildType.HasFlag(BuildType.Make))
+				{
+					var model = MockModel.Create(context.Operation.Syntax,
+					  mockTypeSymbol, context.Operation.SemanticModel!, BuildType.Make, true);
+
+					if (model.Information is null)
+					{
+						foreach (var diagnostic in model.Diagnostics)
+						{
+							context.ReportDiagnostic(diagnostic);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	private static void AnalyzeAttributes(OperationAnalysisContext context,
@@ -94,17 +147,16 @@ public sealed class RockAnalyzer
 	/// </summary>
 	public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics =>
 		[
-		   CannotMockObsoleteTypeDescriptor.Create(),
-		   CannotMockSealedTypeDescriptor.Create(),
-		   CannotMockSpecialTypesDescriptor.Create(),
-		   DuplicateConstructorsDescriptor.Create(),
-		   InterfaceHasStaticAbstractMembersDescriptor.Create(),
-		   MemberUsesObsoleteTypeDescriptor.Create(),
-		   TypeHasInaccessibleAbstractMembersDescriptor.Create(),
-		   TypeHasMatchWithNonVirtualDescriptor.Create(),
-		   TypeHasNoAccessibleConstructorsDescriptor.Create(),
-		   TypeHasNoMockableMembersDescriptor.Create(),
+			CannotMockObsoleteTypeDescriptor.Create(),
+			CannotMockSealedTypeDescriptor.Create(),
+			CannotMockSpecialTypesDescriptor.Create(),
+			DuplicateConstructorsDescriptor.Create(),
+			InterfaceHasStaticAbstractMembersDescriptor.Create(),
+			MemberUsesObsoleteTypeDescriptor.Create(),
+			TypeHasInaccessibleAbstractMembersDescriptor.Create(),
+			TypeHasMatchWithNonVirtualDescriptor.Create(),
+			TypeHasNoAccessibleConstructorsDescriptor.Create(),
+			TypeHasNoMockableMembersDescriptor.Create(),
 			TypeIsClosedGenericDescriptor.Create(),
-			TypeErrorDescriptor.Create(),
 		];
 }

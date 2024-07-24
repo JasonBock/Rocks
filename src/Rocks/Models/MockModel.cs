@@ -16,13 +16,6 @@ internal sealed record MockModel
 		// Do all the work to see if this is a type to mock.
 		var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
 
-		if (typeToMock.HasErrors())
-		{
-			// This one will stop everything. There's no need to move on
-			// if the given type is in error.
-			diagnostics.Add(TypeErrorDiagnostic.Create(node, typeToMock));
-			return new(null, diagnostics.ToImmutable());
-		}
 		if (typeToMock.SpecialType == SpecialType.System_Delegate ||
 			typeToMock.SpecialType == SpecialType.System_MulticastDelegate ||
 			typeToMock.SpecialType == SpecialType.System_Enum ||

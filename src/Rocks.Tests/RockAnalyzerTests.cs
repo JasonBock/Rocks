@@ -14,6 +14,7 @@ public static class RockAnalyzerTests
 			"""
 			public sealed class Usage { }
 			""";
+
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, []);
 	}
 
@@ -31,29 +32,47 @@ public static class RockAnalyzerTests
 				void Serve();
 			}
 			""";
+
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, []);
 	}
 
 	[Test]
-	public static async Task AnalyzeWhenTypeIsErrorAsync()
+	public static async Task AnalyzeWhenTypeIsSealedAsync()
 	{
 		var code =
 			"""
-			using System;
 			using Rocks;
 
-			[assembly: RockCreate<IBase<,>>]
+			[assembly: RockCreate<SealedService>]
 
-			public interface IBase<T1, T2> 
-			{
-				void Foo(T1 a, T2 b);
-				void MockThis();
+			public sealed class SealedService
+			{ 
+				public void Serve() { }
 			}
 			""";
 
-		var diagnostic = new DiagnosticResult(TypeErrorDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(4, 12, 4, 32).WithArguments("IBase<T1, T2>");
-		var compilerDiagnostic = DiagnosticResult.CompilerError("CS7003").WithSpan(4, 23, 4, 31);
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, compilerDiagnostic]);
+		var diagnostic = new DiagnosticResult(CannotMockSealedTypeDescriptor.Id, DiagnosticSeverity.Error)
+			.WithSpan(3, 12, 3, 37);
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic]);
+	}
+
+	[Test]
+	public static async Task AnalyzeWhenTypeIsSealedUsingRockAttributeAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+
+			[assembly: Rock(typeof(SealedService), BuildType.Create)]
+
+			public sealed class SealedService
+			{ 
+				public void Serve() { }
+			}
+			""";
+
+		var diagnostic = new DiagnosticResult(CannotMockSealedTypeDescriptor.Id, DiagnosticSeverity.Error)
+			.WithSpan(3, 12, 3, 57);
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic]);
 	}
 }
