@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added a diagnostic to warn about mocking closed generic types (issue [#326](https://github.com/JasonBock/Rocks/issues/326))
 - Added collection expression support for `EquatableArray<>` (issue [#327](https://github.com/JasonBock/Rocks/issues/327))
+- Created a new attribute, `RockAttribute`, and obsoleted the existing `RockCreateAttribute` and `RockMakeAttribute` as a warning (issue [#323](https://github.com/JasonBock/Rocks/issues/323))
 
 ### Changed
 
