@@ -46,6 +46,8 @@ There's a lot of scenarios that can be encountered when you want to create a moc
 
 With Rocks 5.0.0 and above, all of the mocks are created using [C# 9.0's source generation feature](https://devblogs.microsoft.com/dotnet/introducing-c-source-generators/ "Introducing C# Source Generators - Microsoft"). This means that you must be targeting .NET 5.0 to use Rocks. With source generation, you have a lot of freedom to generate what you want, and this is exactly what Rocks takes advantage of. When you want to create a mock, a number of properties are generated that group the members you can set expectations on. You'll see in this document references in code like `.Methods`, `.Properties`, and `.Indexers`. For example, if the type you want to mock has methods that can have expectations set on them, you'll see `.Methods` show up. Similarly, mockable properties can be found from the `.Properties` property. You use these properties to set expectations on specific members. This should become clear as you read on and look at the examples.
 
+> Note: if you use Rocks and you get an error akin to having a `Microsoft.CodeAnalysis` version mismatch, you may need to update the version of the .NET SDK you have installed.
+
 ### Mocking Simple Methods
 
 Creating a mock in Rocks is pretty easy. Let's say you have an interface defined like this:
@@ -61,7 +63,7 @@ public interface IAmSimple
 Here's how you create the mock, define its expected interactions, use the mock, and verify the expectations:
 
 ```csharp
-[assembly: RockCreate<IAmSimple>]
+[assembly: Rock(typeof(IAmSimple), BuildType.Create)]
 
 var expectations = new IAmSimpleCreateExpectations();
 expectations.Methods.TargetAction();
@@ -74,14 +76,17 @@ var result = mock.TargetFunc();
 expectations.Verify();
 ```
 
-The mocking process starts by instantiating an `IAmSimpleCreateExpectations` object. This is done by adding the `RockCreateAttribute` in code. When this attribute is added, Rocks will interrogate the type provided in the generic parameter. It will then create a number of properties for each mockable member. In the example, you can call `.Methods.TargetAction()` and `.Methods.TargetFunc()` to state that you expect these members to be called. For `TargetFunc()`, you can also specify the return value via the `ReturnValue()` method.
+The mocking process starts by instantiating an `IAmSimpleCreateExpectations` object. This is done by adding `RockAttribute` in code. When this attribute is added, Rocks will interrogate the type provided in the generic parameter. It will then create a number of properties for each mockable member. In the example, you can call `.Methods.TargetAction()` and `.Methods.TargetFunc()` to state that you expect these members to be called. For `TargetFunc()`, you can also specify the return value via the `ReturnValue()` method.
 
-There are two attributes you can use: `RockCreateAttribute<>` and `RockMakeAttribute<>`. Makes will be covered later on in this document. These attributes can exist at the assembly, class, or method level. If you have multiple instances of these attributes defined in a project targeting the same type to mock, only one expectations class will be generated. The names of the generated expectation types follow these patterns:
+You can also specify `BuildType.Make` to create a "make" type. Makes will be covered later on in this document. `RockAttribute` can only exist at the assembly level. If you have multiple instances of these attributes defined in a project targeting the same type to mock, only one expectations class will be generated. The names of the generated expectation types follow these patterns:
 
-* `RockCreate<MyType>` generates `MyTypeCreateExpectations`
-* `RockMake<MyType>` generates `MyTypeMakeExpectations`
+* `Rock(typeof(MyType), BuildType.Create)` generates `MyTypeCreateExpectations`
+* `Rock(typeof(MyType), BuildType.Make)` generates `MyTypeMakeExpectations`
+* `Rock(typeof(MyType), BuildType.Create | BuildType.Make)` generates both `MyTypeCreateExpectations` and `MyTypeMakeExpectations`
 
 In other words, the naming pattern is `{Mock type name}{Mock kind}Expectations`. The expectation type is generated within the same namespace that the mock type resides within (if one exists).
+
+> Note: With version 8.2.0 and before, Rocks had `RockCreateAttribute` and `RockMakeAttribute` attributes, both generic and non-generic versions. With 8.3.0, they are marked as being obsolete, and they will be removed in 9.0.0.
 
 Once you set your expectations, you can create an instance of the mock from the generated `Instance()` method. If the target type has multiple constructors with different parameters, `Instace()` methods will generated for each constructor - constructors will be covered in detail in [this section](#passing-constructor-arguments-to-a-mock).
 
@@ -101,7 +106,7 @@ public interface IHaveParameterExpectations
 You can verify that `Target()` will be called with an exact value by passing in that value when you set up the expectation:
 
 ```csharp
-[assembly: RockCreate<IHaveParameterExpectations>]
+[assembly: Rock(typeof(IHaveParameterExpectations), BuildType.Create)]
 
 var expectations = new IHaveParameterExpectationsCreateExpectations();
 expectations.Methods.Target(44);
@@ -115,7 +120,7 @@ expectations.Verify();
 If you don't care what the value is, you use `Arg.Any<>()`:
 
 ```csharp
-[assembly: RockCreate<IHaveParameterExpectations>]
+[assembly: Rock(typeof(IHaveParameterExpectations), BuildType.Create)]
 
 var expectations = new IHaveParameterExpectationsCreateExpectations();
 expectations.Methods.Target(Arg.Any<int>());
@@ -129,7 +134,7 @@ expectations.Verify();
 If you want to specify logic to validate the given value, you use `Arg.Validate<>()`:
 
 ```csharp
-[assembly: RockCreate<IHaveParameterExpectations>]
+[assembly: Rock(typeof(IHaveParameterExpectations), BuildType.Create)]
 
 var expectations = new IHaveParameterExpectationsCreateExpectations();
 expectations.Methods.Target(Arg.Validate<int>(a => a > 20 && a < 50));
@@ -143,7 +148,7 @@ expectations.Verify();
 You can also specify multiple expectations:
 
 ```csharp
-[assembly: RockCreate<IHaveParameterExpectations>]
+[assembly: Rock(typeof(IHaveParameterExpectations), BuildType.Create)]
 
 var expectations = new IHaveParameterExpectationsCreateExpectations();
 expectations.Methods.Target(Arg.Validate<int>(a => a > 20 && a < 50));
@@ -161,7 +166,7 @@ expectations.Verify();
 You may want to verify that code under test calls a method a specific number of times. You can do that by specifying an expected call count via `ExpectedCallCount()`:
 
 ```csharp
-[assembly: RockCreate<IAmSimple>]
+[assembly: Rock(typeof(IAmSimple), BuildType.Create)]
 
 var expectations = new IAmSimpleCreateExpectations();
 expectations.Methods.TargetAction().ExpectedCallCount(2);
@@ -176,7 +181,7 @@ expectations.Verify();
 This also works with multiple expectations:
 
 ```csharp
-[assembly: RockCreate<IHaveParameterExpectations>]
+[assembly: Rock(typeof(IHaveParameterExpectations), BuildType.Create)]
 
 var expectations = new IHaveParameterExpectationsCreateExpectations();
 expectations.Methods.Target(44).ExpectedCallCount(2);
@@ -199,7 +204,7 @@ We haven't covered properties yet, but the same process is in place with them as
 You can provide a lambda via the `Callback()` method that will be called when a method is invoked so you can do things like capture method argument values:
 
 ```csharp
-[assembly: RockCreate<IHaveParameterExpectations>]
+[assembly: Rock(typeof(IHaveParameterExpectations), BuildType.Create)]
 
 var value = 0;
 
@@ -227,7 +232,7 @@ expectations.Methods.Target(Arg.Validate<int>(i => i > 10))
 If a method returns a value, you can use `ReturnValue()`:
 
 ```csharp
-[assembly: RockCreate<IAmSimple>]
+[assembly: Rock(typeof(IAmSimple), BuildType.Create)]
 
 var expectations = new IAmSimpleCreateExpectations();
 expectations.Methods.TargetFunc().ReturnValue(44);
@@ -254,7 +259,7 @@ public class MockedClass
 
 // ...
 
-[assembly: RockCreate<MockedClass>]
+[assembly: Rock(typeof(MockedClass), BuildType.Create)]
 
 var expectations = new MockedClassCreateExpectations();
 expectations.Methods.Target();
@@ -267,7 +272,7 @@ expectations.Verify();
 
 ### Mocking Generic Methods and Types
 
-If generics are in play, Rocks can handle that:
+If generics are in play, Rocks can handle that by specifying an open generic:
 
 ```csharp
 public interface IHaveGenerics<T>
@@ -277,23 +282,7 @@ public interface IHaveGenerics<T>
 
 // ...
 
-[assembly: RockCreate<IHaveGenerics<string>>]
-
-var expectations = new IHaveGenericsOfstringCreateExpectations();
-expectations.Methods.Target<int>("a", 44));
-
-var mock = expectations.Instance();
-mock.Target("a", 44);
-
-expectations.Verify();
-```
-
-Note that the generated expectations class name "flattens" the generic by inserting `Of` in the name before the generic parameters are specified.
-
-Starting with Rocks 8.1.0, generic types can be mocked as an open generic:
-
-```c#
-[assembly: RockCreate(typeof(IHaveGenerics<>))]
+[assembly: Rock(typeof(IHaveGenerics<>), BuildType.Create)]
 
 var expectations = new IHaveGenericsCreateExpectations<string>();
 expectations.Methods.Target<int>("a", 44));
@@ -304,7 +293,9 @@ mock.Target("a", 44);
 expectations.Verify();
 ```
 
-This allows for more flexibility, in that only one set of supporting types are generated for the target type. With closed generics, Rocks must generate all of the supporting types for each closed generic.
+This allows for more flexibility, in that only one set of supporting types are generated for the target type.
+
+> Note: With 8.3.0, if you declare a closed generic, Rocks will create a `ROCK14` diagnostic as a warning. In 9.0.0, this will become an error.
 
 ### Mocking Methods with `ref/out/in` Parameters or `ref readonly` Return Values
 
@@ -318,7 +309,8 @@ public interface IHaveRefs
 
 // ...
 
-[RockCreate<IHaveRefs>]
+[assembly: Rock(typeof(IHaveRefs), BuildType.Create)]
+
 public void MyTestMethod()
 {
   static void TargetCallback(ref int a) => a = 4;
@@ -354,7 +346,7 @@ public interface IHaveAProperty
 Here's how you set up the expectations:
 
 ```csharp
-[assembly: RockCreate<IHaveAProperty>]
+[assembly: Rock(typeof(IHaveAProperty), BuildType.Create)]
 
 var setupValue = Guid.NewGuid().ToString();
 
@@ -382,7 +374,7 @@ public class RequiredAndInit
   public required string RequiredData { get; set; }
 }
 
-[assembly: RockCreate<RequiredAndInit>]
+[assembly: Rock(typeof(RequiredAndInit), BuildType.Create)]
 
 var expectations = new RequiredAndInitCreateExpectations();
 expectations.Methods.Foo();
@@ -408,7 +400,7 @@ public interface IHaveIndexer
 
 // ...
 
-[assembly: RockCreate<IHaveIndexer>]
+[assembly: Rock(typeof(IHaveIndexer), BuildType.Create)]
 
 var expectations = new IHaveIndexerCreateExpectations();
 expectations.Indexers.Getters.This(3);
@@ -437,7 +429,7 @@ public interface IHaveAnEvent
 
 // ...
 
-[assembly: RockCreate<IHaveAnEvent>]
+[assembly: Rock(typeof(IHaveAnEvent), BuildType.Create)]
 
 var expectations = new IHaveAnEventCreateExpectations();
 expectations.Methods.Target(1).RaiseTargetEvent(EventArgs.Empty);
@@ -470,7 +462,7 @@ public interface IHaveOptionalArguments
 
 // ...
 
-[assembly: RockCreate<IHaveOptionalArguments>]
+[assembly: Rock(typeof(IHaveOptionalArguments), BuildType.Create)]
 
 var returnValue = 3;
 var expectations = new IHaveOptionalArgumentsCreateExpectations();
@@ -525,7 +517,7 @@ public class UsesAsync
   }
 }
 
-[assembly: RockCreate<IAmAsync>]
+[assembly: Rock(typeof(IAmAsync), BuildType.Create)]
 
 var expectations = new IAmAsyncCreateExpectations();
 expectations.Methods.GoAsync().ReturnValue(Task.FromResult(44));
@@ -546,7 +538,7 @@ public interface IHaveDynamic
   void Foo(dynamic d);
 }
 
-[assembly: RockCreate<IHaveDynamic>]
+[assembly: Rock(typeof(IHaveDynamic), BuildType.Create)]
 
 var expectations = new IHaveDynamicCreateExpectations();
 expectations.Methods.Foo(Arg.Is<dynamic>("b"));
@@ -573,7 +565,7 @@ You can mock it like this:
 ```csharp
 var value = 10;
 
-[assembly: RockCreate<IHavePointers>]
+[assembly: Rock(typeof(IHavePointers), BuildType.Create)]
 
 var expectations = new IHavePointersCreateExpectations();
 expectations.Methods.PointerParameter(new()).Callback(_ => *_ = 20);
@@ -588,7 +580,7 @@ Note that `value` would be equal to 20 after `PointerParameter()` is called.
 
 ### Using Makes
 
-There are times when your mock needs to return a value where you want to ensure that the return value is a specific instance. As you've seen with these Rocks examples, you define a `[RockCreate<>]` attribute instance, create a new expectations instance, set up expectations, and then call `Instance()`. If you need a mock with no expectations, you create a "make" by adding a `[RockMake<>]` attribute instance:
+There are times when your mock needs to return a value where you want to ensure that the return value is a specific instance. As you've seen with these Rocks examples, you define a `[Rock(..., BuildType.Create)]` attribute instance, create a new expectations instance, set up expectations, and then call `Instance()`. If you need a mock with no expectations, you create a "make" by changing the flag value in `RockAttribute`:
 
 ```csharp
 public interface IValue { }
@@ -615,8 +607,8 @@ public class UsesProducer
 
 // ...
 
-[assembly: RockCreate<IProduceValue>]
-[assembly: RockMake<IValue>]
+[assembly: Rock(typeof(IProduceValue), BuildType.Create)]
+[assembly: Rock(typeof(IValue), BuildType.Make)]
 
 var valueMock = new IValueMakeExpectations().Instance();
 

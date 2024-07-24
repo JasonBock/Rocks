@@ -24,7 +24,7 @@ public interface IAmSimple
 and you use Rocks to create a mock with expectations, along with verifying its usage:
 
 ```csharp
-[assembly: RockCreate<IAmSimple>]
+[assembly: Rock(typeof(IAmSimple), BuildType.Create)]
 
 var expectations = new IAmSimpleCreateExpectations();
 expectations.Methods.TargetAction();
