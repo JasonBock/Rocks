@@ -56,25 +56,6 @@ internal sealed record MockModel
 		var propertyMemberCount = (int)memberIdentifier - methodMemberCount;
 		var events = new MockableEventDiscovery(typeToMock, containingAssembly).Events;
 
-		if (constructors.Length > 1)
-		{
-			var uniqueConstructors = new List<IMethodSymbol>(constructors.Length);
-
-			foreach (var constructor in constructors)
-			{
-				if (uniqueConstructors.Any(_ => _.Match(constructor) == MethodMatch.Exact))
-				{
-					// We found a rare case where there are duplicate constructors.
-					diagnostics.Add(DuplicateConstructorsDiagnostic.Create(node, typeToMock));
-					break;
-				}
-				else
-				{
-					uniqueConstructors.Add(constructor);
-				}
-			}
-		}
-
 		foreach (var constructor in constructors)
 		{
 			var diagnostic = constructor.GetObsoleteDiagnostic(node, obsoleteAttribute);
@@ -119,11 +100,6 @@ internal sealed record MockModel
 			events.HasInaccessibleAbstractMembers || typeToMock.HasInaccessibleAstractMembersWithInvalidIdentifiers(containingAssembly))
 		{
 			diagnostics.Add(TypeHasInaccessibleAbstractMembersDiagnostic.Create(node, typeToMock));
-		}
-
-		if (methods.HasMatchWithNonVirtual)
-		{
-			diagnostics.Add(TypeHasMatchWithNonVirtualDiagnostic.Create(node, typeToMock));
 		}
 
 		if (methods.Results.Any(_ => _.Value.IsAbstract && _.Value.IsStatic) ||

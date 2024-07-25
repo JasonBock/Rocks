@@ -5,11 +5,10 @@ namespace Rocks.Discovery;
 internal sealed class MockableMethods
 {
    internal MockableMethods(ImmutableArray<MockableMethodResult> results,
-	   bool hasInaccessibleAbstractMembers, bool hasMatchWithNonVirtual) =>
-		   (this.Results, this.HasInaccessibleAbstractMembers, this.HasMatchWithNonVirtual) =
-			   (results, hasInaccessibleAbstractMembers, hasMatchWithNonVirtual);
+	   bool hasInaccessibleAbstractMembers) =>
+		   (this.Results, this.HasInaccessibleAbstractMembers) =
+			   (results, hasInaccessibleAbstractMembers);
 
    internal bool HasInaccessibleAbstractMembers { get; }
-   internal bool HasMatchWithNonVirtual { get; }
    internal ImmutableArray<MockableMethodResult> Results { get; }
 }

@@ -30,7 +30,7 @@ public static class TypeIsClosedGenericDiagnosticTests
 			Assert.That(descriptor.GetMessage(CultureInfo.InvariantCulture), Is.EqualTo("The type X is a closed generic"));
 			Assert.That(descriptor.Descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeIsClosedGenericDescriptor.Title));
 			Assert.That(descriptor.Id, Is.EqualTo(TypeIsClosedGenericDescriptor.Id));
-			Assert.That(descriptor.Severity, Is.EqualTo(DiagnosticSeverity.Warning));
+			Assert.That(descriptor.Severity, Is.EqualTo(DiagnosticSeverity.Error));
 		});
 	}
 }

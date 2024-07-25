@@ -10,7 +10,7 @@ internal static class TypeIsClosedGenericDescriptor
 	internal static DiagnosticDescriptor Create() =>
 		new(TypeIsClosedGenericDescriptor.Id, TypeIsClosedGenericDescriptor.Title,
 			TypeIsClosedGenericDescriptor.Message,
-			DiagnosticConstants.Usage, DiagnosticSeverity.Warning, true,
+			DiagnosticConstants.Usage, DiagnosticSeverity.Error, true,
 			helpLinkUri: HelpUrlBuilder.Build(
 				TypeIsClosedGenericDescriptor.Id, TypeIsClosedGenericDescriptor.Title));
 

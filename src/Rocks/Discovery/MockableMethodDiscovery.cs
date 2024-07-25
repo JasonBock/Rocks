@@ -35,7 +35,6 @@ internal sealed class MockableMethodDiscovery
 	{
 		var methods = ImmutableArray.CreateBuilder<MockableMethodResult>();
 		var inaccessibleAbstractMembers = false;
-		var hasMatchWithNonVirtual = false;
 
 		var hierarchy = mockType.GetInheritanceHierarchy();
 
@@ -87,15 +86,7 @@ internal sealed class MockableMethodDiscovery
 									methods.Remove(methodToRemove);
 								}
 
-								if (hierarchyNonMockableMethods.Any(_ => _.Match(hierarchyMethod) != MethodMatch.None) &&
-									!hierarchyMethod.IsStatic && hierarchyMethod.IsAbstract)
-								{
-									// This is a case where the mockable method matches a non-virtual method
-									// on the type and it's abstract. This effectively makes the entire type 
-									// not mockable.
-									hasMatchWithNonVirtual = true;
-								}
-								else if ((methodToRemove is null || !methodToRemove.Value.ContainingType.Equals(hierarchyMethod.ContainingType)) &&
+								if ((methodToRemove is null || !methodToRemove.Value.ContainingType.Equals(hierarchyMethod.ContainingType)) &&
 									!hierarchyMethod.IsSealed)
 								{
 									methods.Add(new(hierarchyMethod, mockType, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, 
@@ -133,7 +124,7 @@ internal sealed class MockableMethodDiscovery
 			}
 		}
 
-		return new(methods.ToImmutable(), inaccessibleAbstractMembers, hasMatchWithNonVirtual);
+		return new(methods.ToImmutable(), inaccessibleAbstractMembers);
 	}
 
 	private static MockableMethods GetMethodsForInterface(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol,
@@ -148,7 +139,6 @@ internal sealed class MockableMethodDiscovery
 
 		var methods = ImmutableArray.CreateBuilder<MockableMethodResult>();
 		var inaccessibleAbstractMembers = false;
-		var hasMatchWithNonVirtual = false;
 
 		foreach (var selfMethod in mockType.GetMembers().OfType<IMethodSymbol>()
 			.Where(IsMethodToExamine))
@@ -281,7 +271,7 @@ internal sealed class MockableMethodDiscovery
 			}
 		}
 
-		return new(methods.ToImmutable(), inaccessibleAbstractMembers, hasMatchWithNonVirtual);
+		return new(methods.ToImmutable(), inaccessibleAbstractMembers);
 	}
 
 	internal MockableMethods Methods { get; }
