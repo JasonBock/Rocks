@@ -14,6 +14,8 @@ namespace Rocks.CodeGenerationTest;
 
 internal static class TestGenerator
 {
+	private const LanguageVersion LanguageVersionOption = LanguageVersion.Preview;
+
 	/* 
 	These diagnostics relate to:
 
@@ -47,19 +49,17 @@ internal static class TestGenerator
 	};
 
 	internal static Type[] GetTargets(HashSet<Assembly> targetAssemblies, Type[] typesToIgnore,
-		 Type[] typesToLoadAssembliesFrom,
-		 Dictionary<Type, Dictionary<string, string>>? genericTypeMappings, string[] aliases)
+		 Type[] typesToLoadAssembliesFrom, string[] aliases)
 	{
 		var initialTypes = targetAssemblies.SelectMany(
 			_ => _.GetTypes().Where(
 				_ => _.IsPublic && !_.IsSubclassOf(typeof(Delegate)) && !_.IsValueType && !_.IsSealed && !typesToIgnore.Contains(_))).ToArray();
-		return TestGenerator.GetMockableTypes(initialTypes, true, typesToLoadAssembliesFrom, genericTypeMappings, aliases);
+		return TestGenerator.GetMockableTypes(initialTypes, true, typesToLoadAssembliesFrom, aliases);
 	}
 
-	private static Type[] GetMockableTypes(Type[] types, bool isCreate, Type[] typesToLoadAssembliesFrom,
-		Dictionary<Type, Dictionary<string, string>>? genericTypeMappings, string[] aliases)
+	private static Type[] GetMockableTypes(Type[] types, bool isCreate, Type[] typesToLoadAssembliesFrom, string[] aliases)
 	{
-		static string GetValidationCode(Type[] types, Dictionary<Type, Dictionary<string, string>>? genericTypeMappings, string[] aliases)
+		static string GetValidationCode(Type[] types, string[] aliases)
 		{
 			using var writer = new StringWriter();
 			using var indentWriter = new IndentedTextWriter(writer, "\t");
@@ -88,16 +88,16 @@ internal static class TestGenerator
 			for (var i = 0; i < types.Length; i++)
 			{
 				var type = types[i];
-				indentWriter.WriteLine($"\tinternal static void Target{i}({type.GetTypeDefinition(genericTypeMappings, aliases, true)} target) {{ }}");
+				indentWriter.WriteLine($"\tinternal static void Target{i}({type.GetTypeDefinition(aliases, true)} target) {{ }}");
 			}
 
 			writer.WriteLine("}");
 			return writer.ToString();
 		}
 
-		var code = GetValidationCode(types, genericTypeMappings, aliases);
+		var code = GetValidationCode(types, aliases);
 		var assemblies = types.Select(_ => _.Assembly).ToHashSet();
-		var syntaxTree = CSharpSyntaxTree.ParseText(code);
+		var syntaxTree = CSharpSyntaxTree.ParseText(code, options: new CSharpParseOptions(languageVersion: TestGenerator.LanguageVersionOption));
 		var references = AppDomain.CurrentDomain.GetAssemblies()
 			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
 			.Select(_ => MetadataReference.CreateFromFile(_.Location))
@@ -117,7 +117,7 @@ internal static class TestGenerator
 		}
 
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
-			 references, new(OutputKind.DynamicallyLinkedLibrary,
+			 references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary,
 				  allowUnsafe: true,
 				  generalDiagnosticOption: ReportDiagnostic.Error,
 				  specificDiagnosticOptions: TestGenerator.SpecificDiagnostics));
@@ -143,14 +143,15 @@ internal static class TestGenerator
 	}
 
 	internal static (ImmutableArray<Issue> issues, Times times) Generate(IIncrementalGenerator generator, Type[] targetTypes, Type[] typesToLoadAssembliesFrom,
-		 Dictionary<Type, Dictionary<string, string>>? genericTypeMappings, string[] aliases, BuildType buildType)
+		 string[] aliases, BuildType buildType)
 	{
 		var isCreate = buildType == BuildType.Create;
 		var issues = new List<Issue>();
 		var assemblies = targetTypes.Select(_ => _.Assembly).ToHashSet();
-		var code = TestGenerator.GetCode(targetTypes, isCreate, genericTypeMappings, aliases);
+		var code = TestGenerator.GetCode(targetTypes, isCreate, aliases);
 
-		var syntaxTree = CSharpSyntaxTree.ParseText(code);
+		var parseOptions = new CSharpParseOptions(languageVersion: TestGenerator.LanguageVersionOption);
+		var syntaxTree = CSharpSyntaxTree.ParseText(code, options: parseOptions);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
 			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
 			.Select(_ => MetadataReference.CreateFromFile(_.Location))
@@ -170,25 +171,26 @@ internal static class TestGenerator
 		}
 
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
-			 references, new(OutputKind.DynamicallyLinkedLibrary,
-				  allowUnsafe: true,
-				  generalDiagnosticOption: ReportDiagnostic.Error,
-				  specificDiagnosticOptions: TestGenerator.SpecificDiagnostics));
+			references, new CSharpCompilationOptions(
+				OutputKind.DynamicallyLinkedLibrary,
+				allowUnsafe: true, 
+				generalDiagnosticOption: ReportDiagnostic.Error,
+				specificDiagnosticOptions: TestGenerator.SpecificDiagnostics));
 
-		var driver = CSharpGeneratorDriver.Create(generator);
+		var driver = CSharpGeneratorDriver.Create(
+			generator).WithUpdatedParseOptions(parseOptions);
 		var generatorWatch = Stopwatch.StartNew();
-		driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out var diagnostics);
+		_ = driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out var diagnostics);
 		generatorWatch.Stop();
 
-		var driverHasDiagnostics = diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error || _.Severity == DiagnosticSeverity.Warning);
+		var driverHasDiagnostics = diagnostics.Any(_ => _.Severity is DiagnosticSeverity.Error or DiagnosticSeverity.Warning);
 
 		var emitWatch = new Stopwatch();
 
 		if (driverHasDiagnostics)
 		{
 			issues.AddRange(diagnostics
-				 .Where(_ => _.Severity == DiagnosticSeverity.Error ||
-					  _.Severity == DiagnosticSeverity.Warning)
+				 .Where(_ => _.Severity is DiagnosticSeverity.Error or DiagnosticSeverity.Warning)
 				 .Select(_ => new Issue(_.Id, _.Severity, _.ToString(), _.Location)));
 			var mockCode = compilation.SyntaxTrees.ToArray()[^1];
 		}
@@ -212,14 +214,14 @@ internal static class TestGenerator
 	}
 
 	internal static (ImmutableArray<Issue> issues, Times times) GenerateNoEmit(IIncrementalGenerator generator, Type[] targetTypes, Type[] typesToLoadAssembliesFrom,
-		 Dictionary<Type, Dictionary<string, string>>? genericTypeMappings, string[] aliases, BuildType buildType)
+		 string[] aliases, BuildType buildType)
 	{
 		var isCreate = buildType == BuildType.Create;
 		var issues = new List<Issue>();
 		var assemblies = targetTypes.Select(_ => _.Assembly).ToHashSet();
-		var code = GetCode(targetTypes, isCreate, genericTypeMappings, aliases);
+		var code = GetCode(targetTypes, isCreate, aliases);
 
-		var syntaxTree = CSharpSyntaxTree.ParseText(code);
+		var syntaxTree = CSharpSyntaxTree.ParseText(code, options: new CSharpParseOptions(languageVersion: TestGenerator.LanguageVersionOption));
 		var references = AppDomain.CurrentDomain.GetAssemblies()
 			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
 			.Select(_ => MetadataReference.CreateFromFile(_.Location))
@@ -246,16 +248,15 @@ internal static class TestGenerator
 
 		var driver = CSharpGeneratorDriver.Create(generator);
 		var generatorWatch = Stopwatch.StartNew();
-		driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out var diagnostics);
+		_ = driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out var diagnostics);
 		generatorWatch.Stop();
 
-		var driverHasDiagnostics = diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error || _.Severity == DiagnosticSeverity.Warning);
+		var driverHasDiagnostics = diagnostics.Any(_ => _.Severity is DiagnosticSeverity.Error or DiagnosticSeverity.Warning);
 
 		if (driverHasDiagnostics)
 		{
 			issues.AddRange(diagnostics
-				.Where(_ => _.Severity == DiagnosticSeverity.Error ||
-					_.Severity == DiagnosticSeverity.Warning)
+				.Where(_ => _.Severity is DiagnosticSeverity.Error or DiagnosticSeverity.Warning)
 				.Select(_ => new Issue(_.Id, _.Severity, _.ToString(), _.Location)));
 			var mockCode = compilation.SyntaxTrees.ToArray()[^1];
 		}
@@ -265,7 +266,7 @@ internal static class TestGenerator
 
 	internal static void Generate(IIncrementalGenerator generator, string code, Type[] typesToLoadAssembliesFrom)
 	{
-		var syntaxTree = CSharpSyntaxTree.ParseText(code);
+		var syntaxTree = CSharpSyntaxTree.ParseText(code, options: new CSharpParseOptions(languageVersion: TestGenerator.LanguageVersionOption));
 		var references = AppDomain.CurrentDomain.GetAssemblies()
 			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
 			.Select(_ => MetadataReference.CreateFromFile(_.Location))
@@ -290,10 +291,10 @@ internal static class TestGenerator
 			specificDiagnosticOptions: TestGenerator.SpecificDiagnostics));
 
 		var driver = CSharpGeneratorDriver.Create(generator);
-		driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out var diagnostics);
+		_ = driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out var diagnostics);
 
 		Console.WriteLine(
-			 $"Does generator compilation have any warning or error diagnostics? {diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error || _.Severity == DiagnosticSeverity.Warning)}");
+			 $"Does generator compilation have any warning or error diagnostics? {diagnostics.Any(_ => _.Severity is DiagnosticSeverity.Error or DiagnosticSeverity.Warning)}");
 
 		using var outputStream = new MemoryStream();
 		var result = outputCompilation.Emit(outputStream);
@@ -337,7 +338,7 @@ internal static class TestGenerator
 		}
 	}
 
-	static string GetCode(Type[] types, bool isCreate, Dictionary<Type, Dictionary<string, string>>? genericTypeMappings, string[] aliases)
+	internal static string GetCode(Type[] types, bool isCreate, string[] aliases)
 	{
 		using var writer = new StringWriter();
 		using var indentWriter = new IndentedTextWriter(writer, "\t");
@@ -367,12 +368,12 @@ internal static class TestGenerator
 
 			if (type.IsGenericTypeDefinition || type.ContainsGenericParameters)
 			{
-				indentWriter.WriteLine($"[assembly: Rock{(isCreate ? "Create" : "Make")}(typeof({type.GetTypeDefinition(genericTypeMappings, aliases, true)}))]");
-				//indentWriter.WriteLine($"[assembly: Rock{(isCreate ? "Create" : "Make")}<{type.GetTypeDefinition(genericTypeMappings, aliases, false)}>]");
+				indentWriter.WriteLine($"[assembly: Rock{(isCreate ? "Create" : "Make")}(typeof({type.GetTypeDefinition(aliases, true)}))]");
+				//indentWriter.WriteLine($"[assembly: Rock{(isCreate ? "Create" : "Make")}<{type.GetTypeDefinition(aliases, false)}>]");
 			}
 			else
 			{
-				indentWriter.WriteLine($"[assembly: Rock{(isCreate ? "Create" : "Make")}<{type.GetTypeDefinition(genericTypeMappings, aliases, false)}>]");
+				indentWriter.WriteLine($"[assembly: Rock{(isCreate ? "Create" : "Make")}<{type.GetTypeDefinition(aliases, false)}>]");
 			}
 		}
 

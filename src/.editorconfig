@@ -10,6 +10,7 @@ csharp_style_conditional_delegate_call = true:error
 csharp_style_expression_bodied_accessors = true:error
 csharp_style_expression_bodied_constructors = true:error
 csharp_style_expression_bodied_indexers = true:error
+csharp_style_expression_bodied_local_functions = true:error
 csharp_style_expression_bodied_methods = true:error
 csharp_style_expression_bodied_operators = true:error
 csharp_style_expression_bodied_properties = true:error
@@ -59,6 +60,10 @@ dotnet_diagnostic.CA2007.severity = none
 # TODO: Adding SymbolEqualityComparer.Default should fix this,
 # but...then it casts down to a ISymbol?, which leads to other problems.
 dotnet_diagnostic.RS1024.severity = none
+
+# IDE0055 - ignoring this because it's just flat-out annoying 
+# in VS 2022 Preview 5
+dotnet_diagnostic.IDE0055.severity = none
 
 # IDE0130 - don't need to match folder structure.
 dotnet_diagnostic.IDE0130.severity = none

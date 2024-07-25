@@ -1,12 +1,10 @@
 ﻿#define INCLUDE_PASSING
 //#define INCLUDE_FAILING
 
-using AnyOfTypes;
 using Microsoft.CodeAnalysis;
 using Rocks;
 using Rocks.CodeGenerationTest;
 using Rocks.CodeGenerationTest.Extensions;
-using Rocks.CodeGenerationTest.Mappings;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Reflection;
@@ -15,9 +13,9 @@ var stopwatch = Stopwatch.StartNew();
 
 //TestTypeValidity();
 //TestWithCode();
-//TestWithType();
+TestWithType();
 //TestWithTypeNoEmit();
-TestWithTypes();
+//TestWithTypes();
 //TestTypesIndividually();
 
 stopwatch.Stop();
@@ -28,7 +26,7 @@ Console.WriteLine($"Total time: {stopwatch.Elapsed}");
 static void TestTypeValidity() =>
 	Console.WriteLine(
 		typeof(SixLabors.ImageSharp.ImageFormatException)
-			.IsValidTarget([], null));
+			.IsValidTarget([]));
 
 static void TestWithCode()
 {
@@ -74,10 +72,9 @@ static void TestWithType()
 
 #pragma warning disable EF1001 // Internal EF Core API usage.
 	(var issues, var times) = TestGenerator.Generate(new RockGenerator(),
-		[typeof(CsvHelper.Configuration.DefaultClassMap<>)],
+		[typeof(System.IO.StreamWriter)],
 		typesToLoadAssembliesFrom,
-		MappedTypes.GetMappedTypes(),
-		[], BuildType.Make);
+		[], BuildType.Create);
 #pragma warning restore EF1001 // Internal EF Core API usage.
 
 	Console.WriteLine($"Generation Time: {times.GeneratorTime}, Emit Time: {times.EmitTime}");
@@ -90,9 +87,7 @@ static void TestWithTypeNoEmit()
 	{
 		(var issues, var times) = TestGenerator.GenerateNoEmit(new RockGenerator(),
 			[typeof(AngleSharp.Svg.Dom.ISvgSvgElement)],
-			[],
-			[],
-			[], BuildType.Create);
+			[], [], BuildType.Create);
 
 		Console.WriteLine($"Generation Time: {times.GeneratorTime}, Emit Time: {times.EmitTime}");
 		PrintIssues(issues);
@@ -241,7 +236,6 @@ static void TestWithTypes()
 	};
 
 	Console.WriteLine($"Getting mapped types...");
-	var genericTypeMappings = MappedTypes.GetMappedTypes();
 	var totalDiscoveredTypeCount = 0;
 	var issues = new List<Issue>();
 
@@ -254,17 +248,17 @@ static void TestWithTypes()
 			Console.WriteLine($"Getting target types for {targetMapping.type.Assembly.GetName().Name}");
 			var targetAssemblySet = new HashSet<Assembly> { targetMapping.type.Assembly };
 
-			var discoveredTypes = TestGenerator.GetTargets(targetAssemblySet, [], typesToLoadAssembliesFrom,
-				genericTypeMappings, targetMapping.aliases);
+			var discoveredTypes = TestGenerator.GetTargets(
+				targetAssemblySet, [], typesToLoadAssembliesFrom, targetMapping.aliases);
 
 			Console.WriteLine($"Testing {targetMapping.type.Assembly.GetName().Name} - {BuildType.Create}");
 			(var createIssues, _) = TestGenerator.Generate(
-				new RockGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases, BuildType.Create);
+				new RockGenerator(), discoveredTypes, typesToLoadAssembliesFrom, targetMapping.aliases, BuildType.Create);
 			issues.AddRange(createIssues);
 
 			Console.WriteLine($"Testing {targetMapping.type.Assembly.GetName().Name} - {BuildType.Make}");
 			(var makeIssues, _) = TestGenerator.Generate(
-				new RockGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases, BuildType.Make);
+				new RockGenerator(), discoveredTypes, typesToLoadAssembliesFrom, targetMapping.aliases, BuildType.Make);
 			issues.AddRange(makeIssues);
 
 			totalDiscoveredTypeCount += discoveredTypes.Length;
@@ -306,7 +300,6 @@ static void TestTypesIndividually()
 		typeof(Azure.Core.Amqp.AmqpAnnotatedMessage),
 	};
 
-	var genericTypeMappings = MappedTypes.GetMappedTypes();
 	var issues = new List<Issue>();
 
 	var visitedAssemblies = new HashSet<Assembly>();
@@ -320,14 +313,14 @@ static void TestTypesIndividually()
 			Console.WriteLine($"Getting target types for {targetMapping.type.Assembly.GetName().Name}");
 			var targetAssemblySet = new HashSet<Assembly> { targetMapping.type.Assembly };
 
-			var discoveredTypes = TestGenerator.GetTargets(targetAssemblySet, [], typesToLoadAssembliesFrom,
-				genericTypeMappings, targetMapping.aliases);
+			var discoveredTypes = TestGenerator.GetTargets(
+				targetAssemblySet, [], typesToLoadAssembliesFrom, targetMapping.aliases);
 
 			foreach (var discoveredType in discoveredTypes)
 			{
 				Console.WriteLine($"Generating for type {discoveredType.FullName}...");
 				(_, var generatorElapsedTime) = TestGenerator.Generate(
-					new RockGenerator(), [discoveredType], typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases, BuildType.Create);
+					new RockGenerator(), [discoveredType], typesToLoadAssembliesFrom, targetMapping.aliases, BuildType.Create);
 				typeGenerationTimes.Add(new(discoveredType, generatorElapsedTime));
 			}
 		}
