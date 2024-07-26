@@ -13,51 +13,6 @@ internal sealed class RockGenerator
 {
 	public void Initialize(IncrementalGeneratorInitializationContext context)
 	{
-		static IncrementalValuesProvider<MockModelInformation> GetInformation(
-			IncrementalGeneratorInitializationContext context, string attributeName, BuildType buildType, bool isGeneric) =>
-			context.SyntaxProvider
-				.ForAttributeWithMetadataName(attributeName, (_, _) => true,
-					(context, token) =>
-					{
-						var models = new List<MockModelInformation>(context.Attributes.Length);
-
-						for (var i = 0; i < context.Attributes.Length; i++)
-						{
-							// Need to grab the type attribute value.
-							// Note that I'm assuming there will be at least one generic parameter.
-							// If someone creates an attribute to mess with this...
-							// well, I guess I could an add a diagnostic that informs users
-							// that the attribute was invalid.
-							var attributeClass = context.Attributes[i];
-							var typeToMock = isGeneric ?
-								attributeClass.AttributeClass!.TypeArguments[0] :
-								(attributeClass.ConstructorArguments[0].Value as ITypeSymbol)!;
-
-							// We should only see an unbound generic type with the "typeof(...)" case,
-							// but using "typeof(IService)" won't give an unbound generic, so
-							// we'll check it in all cases.
-							if (typeToMock is INamedTypeSymbol namedType &&
-								namedType.IsUnboundGenericType)
-							{
-								typeToMock = typeToMock.OriginalDefinition;
-							}
-
-							if (!typeToMock.ContainsDiagnostics())
-							{
-								var model = MockModel.Create(attributeClass.ApplicationSyntaxReference!.GetSyntax(token),
-								  typeToMock, context.SemanticModel, buildType, true);
-
-								if (model.Information is not null)
-								{
-									models.Add(model.Information);
-								}
-							}
-						}
-
-						return models;
-					})
-				.SelectMany((names, _) => names);
-
 		static IncrementalValuesProvider<MockModelInformation> GetMockInformation(
 			IncrementalGeneratorInitializationContext context) =>
 			context.SyntaxProvider
@@ -112,22 +67,7 @@ internal sealed class RockGenerator
 					})
 				.SelectMany((names, _) => names);
 
-		var mockCreateFromGenericTypes = GetInformation(context, "Rocks.RockCreateAttribute`1", BuildType.Create, true);
-		var mockMakeFromGenericTypes = GetInformation(context, "Rocks.RockMakeAttribute`1", BuildType.Make, true);
-		var mockCreateFromNonGenericTypes = GetInformation(context, "Rocks.RockCreateAttribute", BuildType.Create, false);
-		var mockMakeFromNonGenericTypes = GetInformation(context, "Rocks.RockMakeAttribute", BuildType.Make, false);
-
 		var mockTypes = GetMockInformation(context);
-
-		// TODO: Is there some way I could combine all of these so I make one CreateOutput() call?
-		context.RegisterSourceOutput(mockCreateFromGenericTypes.Collect(),
-			(context, source) => RockGenerator.CreateOutput(source, context));
-		context.RegisterSourceOutput(mockMakeFromGenericTypes.Collect(),
-			(context, source) => RockGenerator.CreateOutput(source, context));
-		context.RegisterSourceOutput(mockCreateFromNonGenericTypes.Collect(),
-			(context, source) => RockGenerator.CreateOutput(source, context));
-		context.RegisterSourceOutput(mockMakeFromNonGenericTypes.Collect(),
-			(context, source) => RockGenerator.CreateOutput(source, context));
 
 		context.RegisterSourceOutput(mockTypes.Collect(),
 			(context, source) => RockGenerator.CreateOutput(source, context));
