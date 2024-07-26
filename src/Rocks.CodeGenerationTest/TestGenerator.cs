@@ -88,7 +88,7 @@ internal static class TestGenerator
 			for (var i = 0; i < types.Length; i++)
 			{
 				var type = types[i];
-				indentWriter.WriteLine($"\tinternal static void Target{i}({type.GetTypeDefinition(aliases, true)} target) {{ }}");
+				indentWriter.WriteLine($"\tinternal static void Target{i}({type.GetTypeDefinition(aliases)} target) {{ }}");
 			}
 
 			writer.WriteLine("}");
@@ -145,10 +145,9 @@ internal static class TestGenerator
 	internal static (ImmutableArray<Issue> issues, Times times) Generate(IIncrementalGenerator generator, Type[] targetTypes, Type[] typesToLoadAssembliesFrom,
 		 string[] aliases, BuildType buildType)
 	{
-		var isCreate = buildType == BuildType.Create;
 		var issues = new List<Issue>();
 		var assemblies = targetTypes.Select(_ => _.Assembly).ToHashSet();
-		var code = TestGenerator.GetCode(targetTypes, isCreate, aliases);
+		var code = TestGenerator.GetCode(targetTypes, buildType, aliases);
 
 		var parseOptions = new CSharpParseOptions(languageVersion: TestGenerator.LanguageVersionOption);
 		var syntaxTree = CSharpSyntaxTree.ParseText(code, options: parseOptions);
@@ -216,10 +215,9 @@ internal static class TestGenerator
 	internal static (ImmutableArray<Issue> issues, Times times) GenerateNoEmit(IIncrementalGenerator generator, Type[] targetTypes, Type[] typesToLoadAssembliesFrom,
 		 string[] aliases, BuildType buildType)
 	{
-		var isCreate = buildType == BuildType.Create;
 		var issues = new List<Issue>();
 		var assemblies = targetTypes.Select(_ => _.Assembly).ToHashSet();
-		var code = GetCode(targetTypes, isCreate, aliases);
+		var code = GetCode(targetTypes, buildType, aliases);
 
 		var syntaxTree = CSharpSyntaxTree.ParseText(code, options: new CSharpParseOptions(languageVersion: TestGenerator.LanguageVersionOption));
 		var references = AppDomain.CurrentDomain.GetAssemblies()
@@ -340,7 +338,7 @@ internal static class TestGenerator
 		}
 	}
 
-	internal static string GetCode(Type[] types, bool isCreate, string[] aliases)
+	internal static string GetCode(Type[] types, BuildType buildType, string[] aliases)
 	{
 		using var writer = new StringWriter();
 		using var indentWriter = new IndentedTextWriter(writer, "\t");
@@ -367,16 +365,19 @@ internal static class TestGenerator
 		for (var i = 0; i < types.Length; i++)
 		{
 			var type = types[i];
+			var buildTypes = new List<string>();
 
-			if (type.IsGenericTypeDefinition || type.ContainsGenericParameters)
+			if (buildType.HasFlag(BuildType.Create))
 			{
-				indentWriter.WriteLine($"[assembly: Rock{(isCreate ? "Create" : "Make")}(typeof({type.GetTypeDefinition(aliases, true)}))]");
-				//indentWriter.WriteLine($"[assembly: Rock{(isCreate ? "Create" : "Make")}<{type.GetTypeDefinition(aliases, false)}>]");
+				buildTypes.Add("BuildType.Create");
 			}
-			else
+
+			if (buildType.HasFlag(BuildType.Make))
 			{
-				indentWriter.WriteLine($"[assembly: Rock{(isCreate ? "Create" : "Make")}<{type.GetTypeDefinition(aliases, false)}>]");
+				buildTypes.Add("BuildType.Make");
 			}
+
+			indentWriter.WriteLine($"[assembly: Rock(typeof({type.GetTypeDefinition(aliases)}), {string.Join(" | ", buildTypes)})]");
 		}
 
 		return writer.ToString();

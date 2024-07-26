@@ -70,7 +70,7 @@ static void TestWithType()
 
 #pragma warning disable EF1001 // Internal EF Core API usage.
 	(var issues, var times) = TestGenerator.Generate(new RockGenerator(),
-		[typeof(System.IO.StreamWriter)],
+		[typeof(AngleSharp.Svg.Dom.ISvgSvgElement)],
 		typesToLoadAssembliesFrom,
 		[], BuildType.Create);
 #pragma warning restore EF1001 // Internal EF Core API usage.

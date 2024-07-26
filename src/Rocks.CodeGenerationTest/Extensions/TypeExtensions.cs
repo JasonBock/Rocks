@@ -9,29 +9,22 @@ namespace Rocks.CodeGenerationTest.Extensions;
 
 internal static class TypeExtensions
 {
-	internal static string GetTypeDefinition(this Type self, string[] aliases, bool isOpenGenericDefinition)
+	internal static string GetTypeDefinition(this Type self, string[] aliases)
 	{
 		if (self.IsGenericTypeDefinition)
 		{
-			if (isOpenGenericDefinition)
+			var selfGenericArguments = self.GetGenericArguments();
+			var genericArguments = new string[selfGenericArguments.Length];
+
+			for (var i = 0; i < selfGenericArguments.Length; i++)
 			{
-				return $"{(aliases.Length > 0 ? $"{aliases[0]}::" : string.Empty)}{self.FullName!.Split("`")[0]}<{new string(',', self.GetGenericArguments().Length - 1)}>";
+				var argument = selfGenericArguments[i];
+				var argumentAttributes = argument.GenericParameterAttributes & GenericParameterAttributes.SpecialConstraintMask;
+
+				genericArguments[i] = argumentAttributes.HasFlag(GenericParameterAttributes.NotNullableValueTypeConstraint) ? "int" : "object";
 			}
-			else
-			{
-				var selfGenericArguments = self.GetGenericArguments();
-				var genericArguments = new string[selfGenericArguments.Length];
 
-				for (var i = 0; i < selfGenericArguments.Length; i++)
-				{
-					var argument = selfGenericArguments[i];
-					var argumentAttributes = argument.GenericParameterAttributes & GenericParameterAttributes.SpecialConstraintMask;
-
-					genericArguments[i] = argumentAttributes.HasFlag(GenericParameterAttributes.NotNullableValueTypeConstraint) ? "int" : "object";
-				}
-
-				return $"{(aliases.Length > 0 ? $"{aliases[0]}::" : string.Empty)}{self.FullName!.Split("`")[0]}<{string.Join(", ", genericArguments)}>";
-			}
+			return $"{(aliases.Length > 0 ? $"{aliases[0]}::" : string.Empty)}{self.FullName!.Split("`")[0]}<{string.Join(", ", genericArguments)}>";
 		}
 		else
 		{
@@ -48,7 +41,7 @@ internal static class TypeExtensions
 					{{(aliases.Length > 0 ? $"extern alias {aliases[0]}" : string.Empty)}}
 					public class Foo 
 					{ 
-						public {{self.GetTypeDefinition(aliases, false)}} Data { get; } 
+						public {{self.GetTypeDefinition(aliases)}} Data { get; } 
 					}
 					""";
 			var syntaxTree = CSharpSyntaxTree.ParseText(code);
