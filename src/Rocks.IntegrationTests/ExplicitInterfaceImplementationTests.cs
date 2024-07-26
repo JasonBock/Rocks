@@ -57,7 +57,7 @@ public static class ExplicitInterfaceImplementationTests
 
 		var mock = expectations.Instance();
 		mock.GetIterator();
-		((IIterable)mock).GetIterator();
+		_ = ((IIterable)mock).GetIterator();
 
 		expectations.Verify();
 	}

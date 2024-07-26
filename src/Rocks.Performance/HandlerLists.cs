@@ -42,7 +42,7 @@ public class HandlerLists
 		{
 			var handler = new HandlerInt { input = i };
 			handlers ??= new();
-			handlers.AddLast(@handler);
+			_ = handlers.AddLast(@handler);
 		}
 
 		return count;

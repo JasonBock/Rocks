@@ -164,7 +164,7 @@ public static class MockProjectedDelegateBuilderTests
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
 		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
-			.OfType<MethodDeclarationSyntax>().Where(_ => _.Identifier.Text == "Foo").Single();
+			.OfType<MethodDeclarationSyntax>().Single(_ => _.Identifier.Text == "Foo");
 		var mockType = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single(_ => _.Identifier.Text == "IMock");
 		return (model.GetDeclaredSymbol(mockType)!, model.GetDeclaredSymbol(methodSyntax)!, compilation);
@@ -178,7 +178,7 @@ public static class MockProjectedDelegateBuilderTests
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
 		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
-			.OfType<MethodDeclarationSyntax>().Where(_ => _.Identifier.Text == "Foo").Single();
+			.OfType<MethodDeclarationSyntax>().Single(_ => _.Identifier.Text == "Foo");
 		return (model.GetDeclaredSymbol(methodSyntax)!, compilation);
 	}
 }

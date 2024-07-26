@@ -120,7 +120,7 @@ internal static class ITypeSymbolExtensionsGetNameTests
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
 		var propertySyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
-			.OfType<PropertyDeclarationSyntax>().Where(_ => _.Identifier.Text == "Data").Single();
+			.OfType<PropertyDeclarationSyntax>().Single(_ => _.Identifier.Text == "Data");
 		return model.GetDeclaredSymbol(propertySyntax)!;
 	}
 
@@ -132,7 +132,7 @@ internal static class ITypeSymbolExtensionsGetNameTests
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
 		var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
-			.OfType<TypeDeclarationSyntax>().Where(_ => _.Identifier.Text == "Target").Single();
+			.OfType<TypeDeclarationSyntax>().Single(_ => _.Identifier.Text == "Target");
 		return model.GetDeclaredSymbol(typeSyntax)!;
 	}
 

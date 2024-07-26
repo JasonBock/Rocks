@@ -3,7 +3,6 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
 using Rocks.Extensions;
-using System.Collections.Immutable;
 
 namespace Rocks.Tests.Extensions;
 
@@ -55,7 +54,7 @@ public static class IMethodSymbolExtensionsRequiresDefaultConstraintTests
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
 		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
-			.OfType<MethodDeclarationSyntax>().Where(_ => _.Identifier.Text == "Foo").Single();
+			.OfType<MethodDeclarationSyntax>().Single(_ => _.Identifier.Text == "Foo");
 		return model.GetDeclaredSymbol(methodSyntax)!;
 	}
 }

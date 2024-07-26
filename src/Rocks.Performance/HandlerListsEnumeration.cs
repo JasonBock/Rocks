@@ -95,7 +95,7 @@ public class HandlerListsEnumeration
 
 			for (var i = 0; i < size; i++)
 			{
-				handlers.AddLast(new HandlerInt { input = i });
+				_ = handlers.AddLast(new HandlerInt { input = i });
 			}
 
 			return handlers;

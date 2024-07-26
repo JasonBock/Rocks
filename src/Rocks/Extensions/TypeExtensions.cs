@@ -24,24 +24,22 @@ public static class TypeExtensions
 	/// </remarks>
 	public static string? GetMemberDescription(this Type self, uint identifier)
 	{
-		static string GetDescription(MemberInfo member, PropertyAccessor? propertyAccessor)
-		{
+		static string GetDescription(MemberInfo member, PropertyAccessor? propertyAccessor) =>
 			// Always get to a MethodInfo type. For a property/indexer,
 			// get the "get"/"set"/"init" method, and use that.
-			return member switch
+			member switch
 			{
 				MethodInfo methodMember => methodMember.ToString().Replace("\"", "\\\""),
 				PropertyInfo propertyMember => propertyAccessor! == PropertyAccessor.Get ?
-					propertyMember.GetMethod.ToString().Replace("\"", "\\\"") : propertyMember.SetMethod.ToString().Replace("\"", "\\\""),
+					 propertyMember.GetMethod.ToString().Replace("\"", "\\\"") : propertyMember.SetMethod.ToString().Replace("\"", "\\\""),
 				_ => "",
 			};
-		}
 
 		var bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
 		return (from member in self.GetMembers(bindingFlags)
-			from memberIdentifier in member.GetCustomAttributes<MemberIdentifierAttribute>()
-			where memberIdentifier is not null
-			where memberIdentifier.Value == identifier
-			select GetDescription(member, memberIdentifier.PropertyAccessor)).FirstOrDefault();
+				  from memberIdentifier in member.GetCustomAttributes<MemberIdentifierAttribute>()
+				  where memberIdentifier is not null
+				  where memberIdentifier.Value == identifier
+				  select GetDescription(member, memberIdentifier.PropertyAccessor)).FirstOrDefault();
 	}
 }

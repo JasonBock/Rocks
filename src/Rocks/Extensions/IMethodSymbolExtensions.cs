@@ -42,13 +42,11 @@ internal static class IMethodSymbolExtensions
 	/// <returns>A list of default constraints.</returns>
 	internal static EquatableArray<Constraints> GetDefaultConstraints(this IMethodSymbol self)
 	{
-		static bool IsAnnotated(ITypeSymbol type, ITypeParameterSymbol typeParameter)
-		{
-			return (type.Equals(typeParameter) && type.NullableAnnotation == NullableAnnotation.Annotated) ||
+		static bool IsAnnotated(ITypeSymbol type, ITypeParameterSymbol typeParameter) =>
+			(type.Equals(typeParameter) && type.NullableAnnotation == NullableAnnotation.Annotated) ||
 				type.IsOpenGeneric() && ((type as INamedTypeSymbol)?.TypeArguments.Any(_ => IsAnnotated(_, typeParameter)) ?? false);
-		}
 
-		if (self.TypeParameters.Length > 0)
+	  if (self.TypeParameters.Length > 0)
 		{
 			var constraints = new List<Constraints>();
 

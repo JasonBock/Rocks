@@ -15,14 +15,14 @@ public class AttributeGetDescription
 	public string GetDescriptionNoOptimizationAttempts(AttributeInformation information)
 	{
 		static string GetTypedConstantValue(TypedConstant value, Compilation compilation) =>
-		  value.Kind switch
-		  {
-			  TypedConstantKind.Primitive => GetValue(value.Value, compilation),
-			  TypedConstantKind.Type => $"typeof({((INamedTypeSymbol)value.Value!).GetFullyQualifiedName(compilation)})",
-			  TypedConstantKind.Array => $"new[] {{ {string.Join(", ", value.Values.Select(v => GetValue(v, compilation)))} }}",
-			  TypedConstantKind.Enum => $"({value.Type!.GetFullyQualifiedName(compilation)})({value.Value})",
-			  _ => value.Value?.ToString() ?? string.Empty
-		  };
+			value.Kind switch
+			{
+				TypedConstantKind.Primitive => GetValue(value.Value, compilation),
+				TypedConstantKind.Type => $"typeof({((INamedTypeSymbol)value.Value!).GetFullyQualifiedName(compilation)})",
+				TypedConstantKind.Array => $"new[] {{ {string.Join(", ", value.Values.Select(v => GetValue(v, compilation)))} }}",
+				TypedConstantKind.Enum => $"({value.Type!.GetFullyQualifiedName(compilation)})({value.Value})",
+				_ => value.Value?.ToString() ?? string.Empty
+			};
 
 #pragma warning disable CA1307 // Specify StringComparison for clarity
 		static string GetValue(object? value, Compilation compilation) =>
@@ -63,14 +63,14 @@ public class AttributeGetDescription
 	public string GetDescriptionOptimizationsConcat(AttributeInformation information)
 	{
 		static string GetTypedConstantValue(TypedConstant value, Compilation compilation) =>
-		  value.Kind switch
-		  {
-			  TypedConstantKind.Primitive => GetValue(value.Value, compilation),
-			  TypedConstantKind.Type => $"typeof({((INamedTypeSymbol)value.Value!).GetFullyQualifiedName(compilation)})",
-			  TypedConstantKind.Array => $"new[] {{ {string.Join(", ", value.Values.Select(v => GetValue(v, compilation)))} }}",
-			  TypedConstantKind.Enum => $"({value.Type!.GetFullyQualifiedName(compilation)})({value.Value})",
-			  _ => value.Value?.ToString() ?? string.Empty
-		  };
+			value.Kind switch
+			{
+				TypedConstantKind.Primitive => GetValue(value.Value, compilation),
+				TypedConstantKind.Type => $"typeof({((INamedTypeSymbol)value.Value!).GetFullyQualifiedName(compilation)})",
+				TypedConstantKind.Array => $"new[] {{ {string.Join(", ", value.Values.Select(v => GetValue(v, compilation)))} }}",
+				TypedConstantKind.Enum => $"({value.Type!.GetFullyQualifiedName(compilation)})({value.Value})",
+				_ => value.Value?.ToString() ?? string.Empty
+			};
 
 #pragma warning disable CA1307 // Specify StringComparison for clarity
 		static string GetValue(object? value, Compilation compilation) =>
@@ -107,14 +107,14 @@ public class AttributeGetDescription
 	public string GetDescriptionOptimizationsPreallocateList(AttributeInformation information)
 	{
 		static string GetTypedConstantValue(TypedConstant value, Compilation compilation) =>
-		  value.Kind switch
-		  {
-			  TypedConstantKind.Primitive => GetValue(value.Value, compilation),
-			  TypedConstantKind.Type => $"typeof({((INamedTypeSymbol)value.Value!).GetFullyQualifiedName(compilation)})",
-			  TypedConstantKind.Array => $"new[] {{ {string.Join(", ", value.Values.Select(v => GetValue(v, compilation)))} }}",
-			  TypedConstantKind.Enum => $"({value.Type!.GetFullyQualifiedName(compilation)})({value.Value})",
-			  _ => value.Value?.ToString() ?? string.Empty
-		  };
+			value.Kind switch
+			{
+				TypedConstantKind.Primitive => GetValue(value.Value, compilation),
+				TypedConstantKind.Type => $"typeof({((INamedTypeSymbol)value.Value!).GetFullyQualifiedName(compilation)})",
+				TypedConstantKind.Array => $"new[] {{ {string.Join(", ", value.Values.Select(v => GetValue(v, compilation)))} }}",
+				TypedConstantKind.Enum => $"({value.Type!.GetFullyQualifiedName(compilation)})({value.Value})",
+				_ => value.Value?.ToString() ?? string.Empty
+			};
 
 #pragma warning disable CA1307 // Specify StringComparison for clarity
 		static string GetValue(object? value, Compilation compilation) =>

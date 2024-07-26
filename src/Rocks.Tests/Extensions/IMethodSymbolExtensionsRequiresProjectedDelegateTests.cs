@@ -39,7 +39,7 @@ public static class IMethodSymbolExtensionsRequiresProjectedDelegateTests
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
 		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
-			.OfType<MethodDeclarationSyntax>().Where(_ => _.Identifier.Text == "Foo").Single();
+			.OfType<MethodDeclarationSyntax>().Single(_ => _.Identifier.Text == "Foo");
 		return model.GetDeclaredSymbol(methodSyntax)!;
 	}
 }

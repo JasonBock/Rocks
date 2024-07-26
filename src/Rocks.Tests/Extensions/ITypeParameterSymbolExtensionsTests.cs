@@ -46,7 +46,7 @@ public static class ITypeParameterSymbolExtensionsTests
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
 		var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
-			.OfType<TypeDeclarationSyntax>().Where(_ => _.Identifier.Text == "Target").Single();
+			.OfType<TypeDeclarationSyntax>().Single(_ => _.Identifier.Text == "Target");
 		return (model.GetDeclaredSymbol(typeSyntax)!.TypeParameters[0], compilation);
 	}
 }

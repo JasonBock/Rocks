@@ -27,7 +27,7 @@ public static class IPropertySymbolExtensionsIsUnsafeTests
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
 		var propertySyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
-			.Where(_ => _.IsKind(SyntaxKind.IndexerDeclaration) || _.IsKind(SyntaxKind.PropertyDeclaration)).Single();
+			.Single(_ => _.IsKind(SyntaxKind.IndexerDeclaration) || _.IsKind(SyntaxKind.PropertyDeclaration));
 		return (model.GetDeclaredSymbol(propertySyntax) as IPropertySymbol)!;
 	}
 }

@@ -1126,7 +1126,7 @@ public static class AttributeGeneratorTests
 			Shared.References.Value,
 			new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		using var tupleStream = new MemoryStream();
-		tupleCompilation.Emit(tupleStream);
+		_ = tupleCompilation.Emit(tupleStream);
 		tupleStream.Position = 0;
 		var tupleReference = MetadataReference.CreateFromStream(tupleStream);
 

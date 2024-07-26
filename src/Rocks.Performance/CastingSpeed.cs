@@ -14,7 +14,7 @@ public class CastingSpeed
 
 	[Benchmark]
 	public Argument<string> DirectCast() =>
-		((Argument<string>)this.argument);
+		(Argument<string>)this.argument;
 
 	[Benchmark]
 	public Argument<string> UnsafeAs() =>

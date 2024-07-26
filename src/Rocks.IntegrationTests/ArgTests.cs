@@ -70,7 +70,7 @@ public static class ArgTests
 	public static void DeclareArgumentWithValidate()
 	{
 		var expectations = new IHaveArgumentCreateExpectations();
-		expectations.Methods.Foo(Arg.Validate<int>(_ => _ > 20 && _ < 30));
+		expectations.Methods.Foo(Arg.Validate<int>(_ => _ is > 20 and < 30));
 
 		var mock = expectations.Instance();
 		mock.Foo(25);

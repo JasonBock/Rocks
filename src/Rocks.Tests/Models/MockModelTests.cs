@@ -8,13 +8,13 @@ namespace Rocks.Tests.Models;
 
 public static class MockModelTests
 {
-	[TestCase("using System; [Obsolete(\"Old\", error: true)]public class DoNotUse { } public class UsesObsolete { public UsesObsolete(DoNotUse use) { } public virtual void Foo() { } }", ".ctor")]
-	[TestCase("using System; [Obsolete(\"Old\", error: true)]public class DoNotUse { } public class UsesObsolete { public virtual void ObsoleteMethod(DoNotUse use) { } }", "ObsoleteMethod")]
-	[TestCase("using System; [Obsolete(\"Old\", error: true)]public class DoNotUse { } public class UsesObsolete { public virtual DoNotUse ObsoleteMethod() => default!; }", "ObsoleteMethod")]
-	[TestCase("using System; [Obsolete(\"Old\", error: true)]public class DoNotUse { } public class UsesObsolete { public virtual DoNotUse ObsoleteProperty { get; } }", "ObsoleteProperty")]
-	[TestCase("using System; [Obsolete(\"Old\", error: true)]public class DoNotUse { } public class UsesObsolete { public virtual DoNotUse ObsoleteProperty { get; } }", "ObsoleteProperty")]
-	[TestCase("using System; [Obsolete(\"Old\", error: true)]public class DoNotUse { } public class UsesObsolete { public virtual int this[DoNotUse value] { get; } }", "this")]
-	public static void CreateWhenMemberUsesObsoleteType(string code, string memberName)
+	[TestCase("using System; [Obsolete(\"Old\", error: true)]public class DoNotUse { } public class UsesObsolete { public UsesObsolete(DoNotUse use) { } public virtual void Foo() { } }")]
+	[TestCase("using System; [Obsolete(\"Old\", error: true)]public class DoNotUse { } public class UsesObsolete { public virtual void ObsoleteMethod(DoNotUse use) { } }")]
+	[TestCase("using System; [Obsolete(\"Old\", error: true)]public class DoNotUse { } public class UsesObsolete { public virtual DoNotUse ObsoleteMethod() => default!; }")]
+	[TestCase("using System; [Obsolete(\"Old\", error: true)]public class DoNotUse { } public class UsesObsolete { public virtual DoNotUse ObsoleteProperty { get; } }")]
+	[TestCase("using System; [Obsolete(\"Old\", error: true)]public class DoNotUse { } public class UsesObsolete { public virtual DoNotUse ObsoleteProperty { get; } }")]
+	[TestCase("using System; [Obsolete(\"Old\", error: true)]public class DoNotUse { } public class UsesObsolete { public virtual int this[DoNotUse value] { get; } }")]
+	public static void CreateWhenMemberUsesObsoleteType(string code)
 	{
 		var model = MockModelTests.GetModel(code, "UsesObsolete", BuildType.Create);
 		Assert.That(model.Information, Is.Null);
@@ -60,7 +60,7 @@ public static class MockModelTests
 			references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var compilationModel = compilation.GetSemanticModel(syntaxTree, true);
 		var parameterSymbol = compilationModel.GetDeclaredSymbol(
-			syntaxTree.GetRoot().DescendantNodes(_ => true).OfType<ParameterSyntax>().Single()) as IParameterSymbol;
+			syntaxTree.GetRoot().DescendantNodes(_ => true).OfType<ParameterSyntax>().Single());
 
 		var model = MockModel.Create(invocation, parameterSymbol!.Type, compilationModel, (BuildType)buildType, true);
 

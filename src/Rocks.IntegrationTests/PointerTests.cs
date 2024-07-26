@@ -16,7 +16,7 @@ public unsafe interface IHavePointers
 	int* PointerReturn();
 }
 
-public unsafe static class PointerTests
+public static unsafe class PointerTests
 {
 	[Test]
 	public static void CreateWithPointerTypeParameters()

@@ -440,7 +440,7 @@ public class LargeInterfaceGeneration
 	[Benchmark]
 	public Compilation RunGenerator()
 	{
-		this.driver.RunGeneratorsAndUpdateCompilation(this.compilation, out var outputCompilation, out var _);
+		_ = this.driver.RunGeneratorsAndUpdateCompilation(this.compilation, out var outputCompilation, out var _);
 		return outputCompilation;
 	}
 }
