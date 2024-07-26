@@ -23,7 +23,8 @@ internal static class MockMethodValueBuilder
 			var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
 			var defaultValue = _.HasExplicitDefaultValue && method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 				$" = {_.ExplicitDefaultValue}" : string.Empty;
-			var scoped = _.IsScoped ? "scoped " : string.Empty;
+			var scoped = _.IsParams ? string.Empty :
+				_.IsScoped ? "scoped " : string.Empty;
 			var direction = _.RefKind switch
 			{
 				RefKind.Ref => "ref ",

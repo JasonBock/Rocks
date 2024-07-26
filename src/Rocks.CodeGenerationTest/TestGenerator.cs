@@ -173,7 +173,7 @@ internal static class TestGenerator
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			references, new CSharpCompilationOptions(
 				OutputKind.DynamicallyLinkedLibrary,
-				allowUnsafe: true, 
+				allowUnsafe: true,
 				generalDiagnosticOption: ReportDiagnostic.Error,
 				specificDiagnosticOptions: TestGenerator.SpecificDiagnostics));
 
@@ -266,7 +266,8 @@ internal static class TestGenerator
 
 	internal static void Generate(IIncrementalGenerator generator, string code, Type[] typesToLoadAssembliesFrom)
 	{
-		var syntaxTree = CSharpSyntaxTree.ParseText(code, options: new CSharpParseOptions(languageVersion: TestGenerator.LanguageVersionOption));
+		var parseOptions = new CSharpParseOptions(languageVersion: TestGenerator.LanguageVersionOption);
+		var syntaxTree = CSharpSyntaxTree.ParseText(code, options: parseOptions);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
 			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
 			.Select(_ => MetadataReference.CreateFromFile(_.Location))
@@ -290,7 +291,8 @@ internal static class TestGenerator
 			generalDiagnosticOption: ReportDiagnostic.Error,
 			specificDiagnosticOptions: TestGenerator.SpecificDiagnostics));
 
-		var driver = CSharpGeneratorDriver.Create(generator);
+		var driver = CSharpGeneratorDriver.Create(generator)
+			.WithUpdatedParseOptions(parseOptions);
 		_ = driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out var diagnostics);
 
 		Console.WriteLine(

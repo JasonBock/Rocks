@@ -2,6 +2,9 @@
 
 namespace Rocks.IntegrationTests.ParamsTestTypes;
 
+// TODO: when this issue is worked on,
+// add a "params ReadOnlySpan<string>" -
+// https://github.com/JasonBock/Rocks/issues/170
 public interface IHaveParams
 {
 	void Foo(int a, params string[] b);

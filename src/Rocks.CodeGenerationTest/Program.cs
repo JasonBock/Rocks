@@ -13,9 +13,9 @@ var stopwatch = Stopwatch.StartNew();
 
 //TestTypeValidity();
 //TestWithCode();
-TestWithType();
+//TestWithType();
 //TestWithTypeNoEmit();
-//TestWithTypes();
+TestWithTypes();
 //TestTypesIndividually();
 
 stopwatch.Stop();
@@ -39,15 +39,13 @@ static void TestWithCode()
 		"""
 		using Rocks;
 		using System;
-		using System.Linq.Expressions;
 		
-		[assembly: RockCreate(typeof(ClassMap<>))]
-
-		#nullable enable
-
-		public abstract class ClassMap<TClass>
+		[assembly: Rock(typeof(ParamMethods), BuildType.Create | BuildType.Make)]
+		
+		public class ParamMethods
 		{
-			public virtual void Map<TMember>(Expression<Func<TClass, TMember?>> expression, bool useExistingMap = true) { }
+		  public virtual void Do(params string[] args) { }
+		  public virtual void DoSpan(params ReadOnlySpan<string> args) { }
 		}
 		""",
 		typesToLoadAssembliesFrom);

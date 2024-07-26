@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Closed generics are no longer valid types to mock (issue [#318](https://github.com/JasonBock/Rocks/issues/318))
 
+### Fixed
+
+- `scoped` is no longer added to a `params` argument (issue [#328](https://github.com/JasonBock/Rocks/issues/328))
+
 ## [8.3.0] - 2024-07-24
 
 ### Added
