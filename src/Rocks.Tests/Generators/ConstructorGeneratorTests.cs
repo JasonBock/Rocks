@@ -11,7 +11,7 @@ public static class ConstructorGeneratorTests
 			"""
 			using Rocks;
 
-			[assembly: RockCreate<Constructable>]
+			[assembly: Rock(typeof(Constructable), BuildType.Create | BuildType.Make)]
 
 			#nullable enable
 
@@ -36,7 +36,7 @@ public static class ConstructorGeneratorTests
 			using Rocks;
 			using System;
 
-			[assembly: RockCreate<Constructable>]
+			[assembly: Rock(typeof(Constructable), BuildType.Create | BuildType.Make)]
 
 			#nullable enable
 
