@@ -15,7 +15,7 @@ public static class RockAnalyzerNoAccessibleConstructorsTests
 			using System; 
 			using Rocks; 
 			
-			[assembly: RockCreate<Constructable>] 
+			[assembly: Rock(typeof(Constructable), BuildType.Create | BuildType.Make)] 
 			
 			public class Constructable
 			{
@@ -27,8 +27,8 @@ public static class RockAnalyzerNoAccessibleConstructorsTests
 			""";
 
 		var diagnostic = new DiagnosticResult(TypeHasNoAccessibleConstructorsDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(4, 12, 4, 37).WithArguments("Constructable");
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic]);
+			.WithSpan(4, 12, 4, 74).WithArguments("Constructable");
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}
 
 	[Test]
@@ -38,7 +38,7 @@ public static class RockAnalyzerNoAccessibleConstructorsTests
 			"""
 			using Rocks;
 
-			[assembly: RockCreate<NoConstructors>]
+			[assembly: Rock(typeof(NoConstructors), BuildType.Create | BuildType.Make)]
 
 			public class NoConstructors
 			{
@@ -47,7 +47,7 @@ public static class RockAnalyzerNoAccessibleConstructorsTests
 			""";
 
 		var diagnostic = new DiagnosticResult(TypeHasNoAccessibleConstructorsDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(3, 12, 3, 38);
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic]);
+			.WithSpan(3, 12, 3, 75);
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}
 }

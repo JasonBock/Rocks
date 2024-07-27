@@ -14,7 +14,7 @@ public static class RockAnalyzerNoMockableMembersTests
 			"""
 			using Rocks;
 
-			[assembly: RockCreate<NoMockables>]
+			[assembly: Rock(typeof(NoMockables), BuildType.Create | BuildType.Make)]
 
 			public class NoMockables
 			{
@@ -25,28 +25,8 @@ public static class RockAnalyzerNoMockableMembersTests
 			""";
 
 		var diagnostic = new DiagnosticResult(TypeHasNoMockableMembersDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(3, 12, 3, 35);
+			.WithSpan(3, 12, 3, 72);
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic]);
-	}
-
-	[Test]
-	public static async Task AnalyzeWhenClassNoMockableMembersAndBuildTypeIsMakeAsync()
-	{
-		var code =
-			"""
-			using Rocks;
-
-			[assembly: RockMake<NoMockables>]
-
-			public class NoMockables
-			{
-				public override sealed bool Equals(object? obj) => base.Equals(obj);
-				public override sealed int GetHashCode() => base.GetHashCode();
-				public override sealed string? ToString() => base.ToString();
-			}
-			""";
-
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, []);
 	}
 
 	[Test]
@@ -56,28 +36,13 @@ public static class RockAnalyzerNoMockableMembersTests
 			"""
 			using Rocks;
 
-			[assembly: RockCreate<NoMockables>]
+			[assembly: Rock(typeof(NoMockables), BuildType.Create | BuildType.Make)]
 
 			public interface NoMockables { }
 			""";
 
 		var diagnostic = new DiagnosticResult(TypeHasNoMockableMembersDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(3, 12, 3, 35);
+			.WithSpan(3, 12, 3, 72);
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic]);
-	}
-
-	[Test]
-	public static async Task AnalyzeWhenInterfaceNoMockableMembersAndBuildTypeIsMakeAsync()
-	{
-		var code =
-			"""
-			using Rocks;
-
-			[assembly: RockMake<NoMockables>]
-
-			public interface NoMockables { }
-			""";
-
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, []);
 	}
 }
