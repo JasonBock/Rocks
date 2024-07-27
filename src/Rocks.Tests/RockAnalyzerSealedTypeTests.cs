@@ -14,14 +14,14 @@ public static class RockAnalyzerSealedTypeTests
 			"""
 			using Rocks;
 
-			[assembly: RockCreate<Data>]
+			[assembly: Rock(typeof(Data), BuildType.Create | BuildType.Make)]
 
 			public sealed class Data { }
 			""";
 
 		var diagnostic = new DiagnosticResult(CannotMockSealedTypeDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(3, 12, 3, 28);
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic]);
+			.WithSpan(3, 12, 3, 65);
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}
 
 	[Test]
@@ -31,15 +31,14 @@ public static class RockAnalyzerSealedTypeTests
 			"""
 			using Rocks;
 
-			[assembly: RockCreate<Data>]
+			[assembly: Rock(typeof(Data), BuildType.Create | BuildType.Make)]
 
 			public enum Data { }
 			""";
 
 		var diagnostic = new DiagnosticResult(CannotMockSealedTypeDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(3, 12, 3, 28);
-		var compilerDiagnostic = DiagnosticResult.CompilerError("CS0452").WithSpan(3, 23, 3, 27);
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, compilerDiagnostic]);
+			.WithSpan(3, 12, 3, 65);
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}
 
 	[Test]
@@ -49,15 +48,14 @@ public static class RockAnalyzerSealedTypeTests
 			"""
 			using Rocks;
 
-			[assembly: RockCreate<StructType>]
+			[assembly: Rock(typeof(StructType), BuildType.Create | BuildType.Make)]
 
 			public struct StructType { }
 			""";
 
 		var diagnostic = new DiagnosticResult(CannotMockSealedTypeDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(3, 12, 3, 34);
-		var compilerDiagnostic = DiagnosticResult.CompilerError("CS0452").WithSpan(3, 23, 3, 33);
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, compilerDiagnostic]);
+			.WithSpan(3, 12, 3, 71);
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}
 
 	[Test]
@@ -67,13 +65,13 @@ public static class RockAnalyzerSealedTypeTests
 			"""
 			using Rocks;
 
-			[assembly: RockCreate<DelegateType>]
+			[assembly: Rock(typeof(DelegateType), BuildType.Create | BuildType.Make)]
 
 			public delegate void DelegateType();
 			""";
 
 		var diagnostic = new DiagnosticResult(CannotMockSealedTypeDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(3, 12, 3, 36);
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic]);
+			.WithSpan(3, 12, 3, 73);
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}
 }
