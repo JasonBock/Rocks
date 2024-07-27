@@ -11,13 +11,13 @@ namespace Rocks.Tests;
 public static class RockAnalyzerInaccessibleAbstractMembersTests
 {
 	[Test]
-	public static async Task AnalyzeWithInaccesibleTypesUsedOnConstraintsAsync()
+	public static async Task AnalyzeWithInaccessibleTypesUsedOnConstraintsAsync()
 	{
 		var code =
 			"""
 			using Rocks;
 			
-			[assembly: RockCreate<ArgumentMapper>]
+			[assembly: Rock(typeof(ArgumentMapper), BuildType.Create | BuildType.Make)]
 			
 			public abstract class ArgumentMapper
 			{
@@ -29,8 +29,8 @@ public static class RockAnalyzerInaccessibleAbstractMembersTests
 			""";
 
 		var diagnostic = new DiagnosticResult(TypeHasInaccessibleAbstractMembersDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(3, 12, 3, 38).WithArguments("ArgumentMapper");
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic]);
+			.WithSpan(3, 12, 3, 75).WithArguments("ArgumentMapper");
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}
 
 	[Test]
@@ -50,18 +50,19 @@ public static class RockAnalyzerInaccessibleAbstractMembersTests
 			"""
 			using Rocks;
 			
-			[assembly: RockCreate<InternalAbstractMember>]
+			[assembly: Rock(typeof(InternalAbstractMember), BuildType.Create | BuildType.Make)]
 			""";
 
 		var diagnostic = new DiagnosticResult(TypeHasInaccessibleAbstractMembersDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(3, 12, 3, 46).WithArguments("InternalAbstractMember");
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic],
+			.WithSpan(3, 12, 3, 83).WithArguments("InternalAbstractMember");
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic],
 			additionalReferences: [internalCompilation.ToMetadataReference()]);
 	}
 
 	[Test]
 	public static async Task AnalyzeWithInternalAbstractMemberInDifferentAssemblyWithUnreferenceableNameAsync()
 	{
+		// The IL generates this code:
 		/*
 		public abstract class InternalAbstractInvalidMember
 		{
@@ -109,12 +110,12 @@ public static class RockAnalyzerInaccessibleAbstractMembersTests
 			"""
 			using Rocks;
 
-			[assembly: RockCreate<InternalAbstractInvalidMember>]
+			[assembly: Rock(typeof(InternalAbstractInvalidMember), BuildType.Create | BuildType.Make)]
 			""";
 
 		var diagnostic = new DiagnosticResult(TypeHasInaccessibleAbstractMembersDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(3, 12, 3, 53).WithArguments("InternalAbstractInvalidMember");
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic],
+			.WithSpan(3, 12, 3, 90).WithArguments("InternalAbstractInvalidMember");
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic],
 			additionalReferences: [reference]);
 	}
 

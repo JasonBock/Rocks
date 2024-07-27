@@ -25,7 +25,7 @@ public static class RockAnalyzerTests
 			"""
 			using Rocks;
 
-			[assembly: RockCreate<IService>]
+			[assembly: Rock(typeof(IService), BuildType.Create | BuildType.Make)]
 
 			public interface IService
 			{ 
@@ -43,7 +43,7 @@ public static class RockAnalyzerTests
 			"""
 			using Rocks;
 
-			[assembly: RockCreate<SealedService>]
+			[assembly: Rock(typeof(SealedService), BuildType.Create | BuildType.Make)]
 
 			public sealed class SealedService
 			{ 
@@ -52,8 +52,8 @@ public static class RockAnalyzerTests
 			""";
 
 		var diagnostic = new DiagnosticResult(CannotMockSealedTypeDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(3, 12, 3, 37);
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic]);
+			.WithSpan(3, 12, 3, 74);
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}
 
 	[Test]

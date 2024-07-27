@@ -14,12 +14,12 @@ public static class RockAnalyzerSpecialTypeTests
 			"""
 			using Rocks;
 
-			[assembly: RockCreate<System.Enum>]
+			[assembly: Rock(typeof(System.Enum), BuildType.Create | BuildType.Make)]
 			""";
 
 		var diagnostic = new DiagnosticResult(CannotMockSpecialTypesDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(3, 12, 3, 35);
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic]);
+			.WithSpan(3, 12, 3, 72);
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}
 
 	[Test]
@@ -29,12 +29,12 @@ public static class RockAnalyzerSpecialTypeTests
 			"""
 			using Rocks;
 
-			[assembly: RockCreate<System.ValueType>]
+			[assembly: Rock(typeof(System.ValueType), BuildType.Create | BuildType.Make)]
 			""";
 
 		var diagnostic = new DiagnosticResult(CannotMockSpecialTypesDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(3, 12, 3, 40);
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic]);
+			.WithSpan(3, 12, 3, 77);
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}
 
 	[Test]
@@ -44,12 +44,12 @@ public static class RockAnalyzerSpecialTypeTests
 			"""
 			using Rocks;
 
-			[assembly: RockCreate<System.Delegate>]
+			[assembly: Rock(typeof(System.Delegate), BuildType.Create | BuildType.Make)]
 			""";
 
 		var diagnostic = new DiagnosticResult(CannotMockSpecialTypesDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(3, 12, 3, 39);
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic]);
+			.WithSpan(3, 12, 3, 76);
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}
 
 	[Test]
@@ -59,11 +59,11 @@ public static class RockAnalyzerSpecialTypeTests
 			"""
 			using Rocks;
 
-			[assembly: RockCreate<System.MulticastDelegate>]
+			[assembly: Rock(typeof(System.MulticastDelegate), BuildType.Create | BuildType.Make)]
 			""";
 
 		var diagnostic = new DiagnosticResult(CannotMockSpecialTypesDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(3, 12, 3, 48);
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic]);
+			.WithSpan(3, 12, 3, 85);
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}
 }

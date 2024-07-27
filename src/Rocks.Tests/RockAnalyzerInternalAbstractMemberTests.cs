@@ -15,7 +15,7 @@ public static class RockAnalyzerInternalAbstractMemberTests
 	[TestCase("public abstract class InternalTargets { public abstract void VisibleWork(); internal virtual void Work() { } }", false)]
 	[TestCase("public interface InternalTargets { void VisibleWork(); internal void Work() { } }", false)]
 	[TestCase("public abstract class InternalTargets { public abstract string VisibleWork { get; } internal virtual string Work { get; } }", false)]
-	public static async Task AnalyzeCreateAsync(string internalCode, bool hasDiagnostic)
+	public static async Task AnalyzeAsync(string internalCode, bool hasDiagnostic)
 	{
 		var internalCompilation = RockAnalyzerInternalAbstractMemberTests.GetInternalCompilation(internalCode);
 
@@ -23,14 +23,14 @@ public static class RockAnalyzerInternalAbstractMemberTests
 			$$"""
 			using Rocks;
 
-			[assembly: RockCreate<InternalTargets>]
+			[assembly: Rock(typeof(InternalTargets), BuildType.Create | BuildType.Make)]
 			""";
 
 		if (hasDiagnostic)
 		{
 			var diagnostic = new DiagnosticResult(TypeHasInaccessibleAbstractMembersDescriptor.Id, DiagnosticSeverity.Error)
-				.WithSpan(3, 12, 3, 39).WithArguments("InternalTargets");
-			await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic],
+				.WithSpan(3, 12, 3, 76).WithArguments("InternalTargets");
+			await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic],
 				additionalReferences: [internalCompilation.ToMetadataReference()]);
 		}
 		else
@@ -40,10 +40,10 @@ public static class RockAnalyzerInternalAbstractMemberTests
 		}
 	}
 
-	[TestCase("using System; public interface InternalTargets { event EventHandler VisibleWork; internal event EventHandler Work; }", true)]
-	[TestCase("using System; public abstract class InternalTargets { public abstract event EventHandler VisibleWork; internal virtual event EventHandler Work; }", true)]
-	[TestCase("using System; public abstract class InternalTargets { public abstract event EventHandler VisibleWork; internal abstract event EventHandler Work; }", true)]
-	public static async Task AnalyzeCreateMultipleDiagnosticAsync(string internalCode, bool hasDiagnostic)
+	[TestCase("using System; public interface InternalTargets { event EventHandler VisibleWork; internal event EventHandler Work; }")]
+	[TestCase("using System; public abstract class InternalTargets { public abstract event EventHandler VisibleWork; internal virtual event EventHandler Work; }")]
+	[TestCase("using System; public abstract class InternalTargets { public abstract event EventHandler VisibleWork; internal abstract event EventHandler Work; }")]
+	public static async Task AnalyzeCreateMultipleDiagnosticAsync(string internalCode)
 	{
 		var internalCompilation = RockAnalyzerInternalAbstractMemberTests.GetInternalCompilation(internalCode);
 
@@ -51,23 +51,15 @@ public static class RockAnalyzerInternalAbstractMemberTests
 			$$"""
 			using Rocks;
 
-			[assembly: RockCreate<InternalTargets>]
+			[assembly: Rock(typeof(InternalTargets), BuildType.Create | BuildType.Make)]
 			""";
 
-		if (hasDiagnostic)
-		{
-			var diagnostic = new DiagnosticResult(TypeHasInaccessibleAbstractMembersDescriptor.Id, DiagnosticSeverity.Error)
-				.WithSpan(3, 12, 3, 39).WithArguments("InternalTargets");
-			var noDiagnostic = new DiagnosticResult(TypeHasNoMockableMembersDescriptor.Id, DiagnosticSeverity.Error)
-				.WithSpan(3, 12, 3, 39).WithArguments("InternalTargets");
-			await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, noDiagnostic],
-				additionalReferences: [internalCompilation.ToMetadataReference()]);
-		}
-		else
-		{
-			await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [],
-				additionalReferences: [internalCompilation.ToMetadataReference()]);
-		}
+		var diagnostic = new DiagnosticResult(TypeHasInaccessibleAbstractMembersDescriptor.Id, DiagnosticSeverity.Error)
+			.WithSpan(3, 12, 3, 39).WithArguments("InternalTargets");
+		var noDiagnostic = new DiagnosticResult(TypeHasNoMockableMembersDescriptor.Id, DiagnosticSeverity.Error)
+			.WithSpan(3, 12, 3, 39).WithArguments("InternalTargets");
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, noDiagnostic],
+			additionalReferences: [internalCompilation.ToMetadataReference()]);
 	}
 
 	[TestCase("public abstract class InternalTargets { public abstract void VisibleWork(); internal abstract void Work(); }", true)]
@@ -88,14 +80,14 @@ public static class RockAnalyzerInternalAbstractMemberTests
 			$$"""
 			using Rocks;
 
-			[assembly: RockMake<InternalTargets>]
+			[assembly: Rock(typeof(InternalTargets), BuildType.Create | BuildType.Make)]
 			""";
 
 		if (hasDiagnostic)
 		{
 			var diagnostic = new DiagnosticResult(TypeHasInaccessibleAbstractMembersDescriptor.Id, DiagnosticSeverity.Error)
-				.WithSpan(3, 12, 3, 37).WithArguments("InternalTargets");
-			await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic],
+				.WithSpan(3, 12, 3, 76).WithArguments("InternalTargets");
+			await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic],
 				additionalReferences: [internalCompilation.ToMetadataReference()]);
 		}
 		else
@@ -122,17 +114,17 @@ public static class RockAnalyzerInternalAbstractMemberTests
 			"""
 			using Rocks;
 
-			[assembly: RockCreate<InternalTargets>]
+			[assembly: Rock(typeof(InternalTargets), BuildType.Create | BuildType.Make)]
 			""";
 
 		var diagnostic = new DiagnosticResult(TypeHasInaccessibleAbstractMembersDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(3, 12, 3, 39).WithArguments("InternalTargets");
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic],
+			.WithSpan(3, 12, 3, 76).WithArguments("InternalTargets");
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic],
 			additionalReferences: [internalCompilation.ToMetadataReference()]);
 	}
 
 	private static CSharpCompilation GetInternalCompilation(string code)
-   {
+	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var references = Shared.References.Value
 			.Concat([MetadataReference.CreateFromFile(typeof(RockGenerator).Assembly.Location)]);

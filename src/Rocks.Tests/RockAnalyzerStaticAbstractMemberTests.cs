@@ -14,7 +14,7 @@ public static class RockAnalyzerStaticAbstractMemberTests
 			"""
 			using Rocks;
 
-			[assembly: RockCreate<IHaveStaticAbstractMethod>]
+			[assembly: Rock(typeof(IHaveStaticAbstractMethod), BuildType.Create | BuildType.Make)]
 
 			public interface IHaveStaticAbstractMethod 
 			{ 
@@ -23,8 +23,7 @@ public static class RockAnalyzerStaticAbstractMemberTests
 			""";
 
 		var diagnostic = new DiagnosticResult(InterfaceHasStaticAbstractMembersDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(3, 12, 3, 49).WithArguments("IHaveStaticAbstractMethod");
-		var compilerDiagnostic = DiagnosticResult.CompilerError("CS8920").WithSpan(3, 23, 3, 48);
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, compilerDiagnostic]);
+			.WithSpan(3, 12, 3, 86).WithArguments("IHaveStaticAbstractMethod");
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}
 }
