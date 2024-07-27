@@ -18,7 +18,7 @@ public static class RockAnalyzerObsoleteTests
 			using System.Collections.Generic;
 			using System.Linq;
 			
-			[assembly: RockCreate<MockTests.IAmAlsoObsolete>]
+			[assembly: Rock(typeof(MockTests.IAmAlsoObsolete), BuildType.Create | BuildType.Make)]
 			
 			#nullable enable
 			
@@ -39,8 +39,8 @@ public static class RockAnalyzerObsoleteTests
 			""";
 
 		var diagnostic = new DiagnosticResult(MemberUsesObsoleteTypeDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(7, 12, 7, 49).WithArguments("Use");
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic]);
+			.WithSpan(7, 12, 7, 86).WithArguments("Use");
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}
 
 	[Test]
@@ -54,7 +54,7 @@ public static class RockAnalyzerObsoleteTests
 			using System.Collections.Generic;
 			using System.Linq;
 									
-			[assembly: RockCreate<MockTests.IAmAlsoObsolete>]
+			[assembly: Rock(typeof(MockTests.IAmAlsoObsolete), BuildType.Create | BuildType.Make)]
 			
 			#nullable enable
 			
@@ -75,8 +75,8 @@ public static class RockAnalyzerObsoleteTests
 			""";
 
 		var diagnostic = new DiagnosticResult(MemberUsesObsoleteTypeDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(7, 12, 7, 49).WithArguments("Use");
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic]);
+			.WithSpan(7, 12, 7, 86).WithArguments("Use");
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}
 
 	[Test]
@@ -90,7 +90,7 @@ public static class RockAnalyzerObsoleteTests
 			using System.Collections.Generic;
 			using System.Linq;
 			
-			[assembly: RockCreate<MockTests.JobStorage>]
+			[assembly: Rock(typeof(MockTests.JobStorage), BuildType.Create | BuildType.Make)]
 			
 			#nullable enable
 			
@@ -111,13 +111,13 @@ public static class RockAnalyzerObsoleteTests
 			""";
 
 		var diagnostic = new DiagnosticResult(MemberUsesObsoleteTypeDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(7, 12, 7, 44).WithArguments("GetComponents");
+			.WithSpan(7, 12, 7, 81).WithArguments("GetComponents");
 		var compiler1Diagnostic = DiagnosticResult.CompilerError("CS0619")
 			.WithSpan(21, 30, 21, 46).WithArguments("MockTests.IServerComponent", "Do not use this");
 		var compiler2Diagnostic = DiagnosticResult.CompilerError("CS0619")
 			.WithSpan(22, 21, 22, 37).WithArguments("MockTests.IServerComponent", "Do not use this");
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code,
-			[diagnostic, compiler1Diagnostic, compiler2Diagnostic]);
+			[diagnostic, diagnostic, compiler1Diagnostic, compiler2Diagnostic]);
 	}
 
 	[Test]
@@ -128,7 +128,7 @@ public static class RockAnalyzerObsoleteTests
 			using System; 
 			using Rocks; 
 			
-			[assembly: RockCreate<UsesObsolete>] 
+			[assembly: Rock(typeof(UsesObsolete), BuildType.Create | BuildType.Make)] 
 			
 			[Obsolete("Old", error: true)]
 			public class DoNotUse { } 
@@ -141,9 +141,9 @@ public static class RockAnalyzerObsoleteTests
 			""";
 
 		var diagnostic = new DiagnosticResult(MemberUsesObsoleteTypeDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(4, 12, 4, 36).WithArguments(".ctor");
+			.WithSpan(4, 12, 4, 73).WithArguments(".ctor");
 		var compilerDiagnostic = DiagnosticResult.CompilerError("CS0619").WithSpan(11, 22, 11, 30);
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, compilerDiagnostic]);
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic, compilerDiagnostic]);
 	}
 
 	[Test]
@@ -154,7 +154,7 @@ public static class RockAnalyzerObsoleteTests
 			using System; 
 			using Rocks; 
 			
-			[assembly: RockCreate<UsesObsolete>] 
+			[assembly: Rock(typeof(UsesObsolete), BuildType.Create | BuildType.Make)] 
 			
 			[Obsolete("Old", error: true)]
 			public class DoNotUse { } 
@@ -166,9 +166,9 @@ public static class RockAnalyzerObsoleteTests
 			""";
 
 		var diagnostic = new DiagnosticResult(MemberUsesObsoleteTypeDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(4, 12, 4, 36).WithArguments("ObsoleteMethod");
+			.WithSpan(4, 12, 4, 73).WithArguments("ObsoleteMethod");
 		var compilerDiagnostic = DiagnosticResult.CompilerError("CS0619").WithSpan(11, 37, 11, 45);
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, compilerDiagnostic]);
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic, compilerDiagnostic]);
 	}
 
 	[Test]
@@ -179,7 +179,7 @@ public static class RockAnalyzerObsoleteTests
 			using System; 
 			using Rocks; 
 			
-			[assembly: RockCreate<UsesObsolete>]
+			[assembly: Rock(typeof(UsesObsolete), BuildType.Create | BuildType.Make)]
 			
 			[Obsolete("Old", error: true)]
 			public class DoNotUse { } 
@@ -191,9 +191,9 @@ public static class RockAnalyzerObsoleteTests
 			""";
 
 		var diagnostic = new DiagnosticResult(MemberUsesObsoleteTypeDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(4, 12, 4, 36).WithArguments("ObsoleteMethod");
+			.WithSpan(4, 12, 4, 73).WithArguments("ObsoleteMethod");
 		var compilerDiagnostic = DiagnosticResult.CompilerError("CS0619").WithSpan(11, 17, 11, 25);
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, compilerDiagnostic]);
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic, compilerDiagnostic]);
 	}
 
 	[Test]
@@ -204,7 +204,7 @@ public static class RockAnalyzerObsoleteTests
 			using System; 
 			using Rocks; 
 			
-			[assembly: RockCreate<UsesObsolete>]
+			[assembly: Rock(typeof(UsesObsolete), BuildType.Create | BuildType.Make)]
 			
 			[Obsolete("Old", error: true)]
 			public class DoNotUse { } 
@@ -216,9 +216,9 @@ public static class RockAnalyzerObsoleteTests
 			""";
 
 		var diagnostic = new DiagnosticResult(MemberUsesObsoleteTypeDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(4, 12, 4, 36).WithArguments("ObsoleteProperty");
+			.WithSpan(4, 12, 4, 73).WithArguments("ObsoleteProperty");
 		var compilerDiagnostic = DiagnosticResult.CompilerError("CS0619").WithSpan(11, 17, 11, 25);
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, compilerDiagnostic]);
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic, compilerDiagnostic]);
 	}
 
 	[Test]
@@ -229,7 +229,7 @@ public static class RockAnalyzerObsoleteTests
 			using System;
 			using Rocks;
 			
-			[assembly: RockCreate<UsesObsolete>]
+			[assembly: Rock(typeof(UsesObsolete), BuildType.Create | BuildType.Make)]
 			
 			[Obsolete("Old", error: true)]
 			public class DoNotUse { }
@@ -241,9 +241,9 @@ public static class RockAnalyzerObsoleteTests
 			""";
 
 		var diagnostic = new DiagnosticResult(MemberUsesObsoleteTypeDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(4, 12, 4, 36).WithArguments("this[]");
+			.WithSpan(4, 12, 4, 73).WithArguments("this[]");
 		var compilerDiagnostic = DiagnosticResult.CompilerError("CS0619").WithSpan(11, 26, 11, 34);
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, compilerDiagnostic]);
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic, compilerDiagnostic]);
 	}
 
 	[Test]
@@ -254,16 +254,16 @@ public static class RockAnalyzerObsoleteTests
 			using System;
 			using Rocks;
 
-			[assembly: RockCreate<ObsoleteType>]
+			[assembly: Rock(typeof(ObsoleteType), BuildType.Create | BuildType.Make)]
 
 			[Obsolete("a", true)]
 			public class ObsoleteType { }
 			""";
 
 		var diagnostic = new DiagnosticResult(CannotMockObsoleteTypeDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(4, 12, 4, 36).WithArguments("ObsoleteType");
-		var compilerDiagnostic = DiagnosticResult.CompilerError("CS0619").WithSpan(4, 23, 4, 35);
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, compilerDiagnostic]);
+			.WithSpan(4, 12, 4, 73).WithArguments("ObsoleteType");
+		var compilerDiagnostic = DiagnosticResult.CompilerError("CS0619").WithSpan(4, 24, 4, 36);
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic, compilerDiagnostic]);
 	}
 
 	[Test]
@@ -274,7 +274,7 @@ public static class RockAnalyzerObsoleteTests
 			using System;
 			using Rocks;
 
-			[assembly: RockCreate<ObsoleteType>]
+			[assembly: Rock(typeof(ObsoleteType), BuildType.Create | BuildType.Make)]
 
 			[Obsolete("a", false)]
 			public class ObsoleteType { }
