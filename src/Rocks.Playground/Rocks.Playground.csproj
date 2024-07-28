@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<!-- Only include these for debugging purposes -->
+		
+		<!--<CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
+		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>-->
+		
+		<OutputType>Exe</OutputType>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp"/>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Rocks\Rocks.csproj" OutputItemType="Analyzer" />
+	</ItemGroup>
+</Project>

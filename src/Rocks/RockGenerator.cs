@@ -67,6 +67,8 @@ internal sealed class RockGenerator
 					})
 				.SelectMany((names, _) => names);
 
+		context.RegisterTypes();
+
 		var mockTypes = GetMockInformation(context);
 
 		context.RegisterSourceOutput(mockTypes.Collect(),

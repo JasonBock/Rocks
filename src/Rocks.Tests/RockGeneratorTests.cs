@@ -656,9 +656,10 @@ public static class RockGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
-			[
-				(typeof(RockGenerator), "MockTests.ITest_Rock_Make.g.cs", makeGeneratedCode)
-			],
+			TestAssistants.GetGeneratedSources(
+				[
+					("MockTests.ITest_Rock_Make.g.cs", makeGeneratedCode)
+				]),
 			[]);
 	}
 
