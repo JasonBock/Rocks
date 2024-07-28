@@ -252,8 +252,8 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.StaticToString_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.StaticToString_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.StaticToString_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.StaticToString_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -570,8 +570,8 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IMatchObjectT_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IMatchObjectT_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IMatchObjectT_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IMatchObjectT_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}

@@ -224,8 +224,8 @@ public static class EventGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IOpenGenericAndEvent_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IOpenGenericAndEvent_Rock_Make.g.cs", makeGeneratedCode)
+				("IOpenGenericAndEvent_Rock_Create.g.cs", createGeneratedCode),
+				("IOpenGenericAndEvent_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -582,8 +582,8 @@ public static class EventGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "AbstractClassMethodReturnWithEvents_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "AbstractClassMethodReturnWithEvents_Rock_Make.g.cs", makeGeneratedCode)
+				("AbstractClassMethodReturnWithEvents_Rock_Create.g.cs", createGeneratedCode),
+				("AbstractClassMethodReturnWithEvents_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -877,8 +877,8 @@ public static class EventGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IExplicitInterfaceImplementation_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IExplicitInterfaceImplementation_Rock_Make.g.cs", makeGeneratedCode)
+				("IExplicitInterfaceImplementation_Rock_Create.g.cs", createGeneratedCode),
+				("IExplicitInterfaceImplementation_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1104,8 +1104,8 @@ public static class EventGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IHaveEvents_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IHaveEvents_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IHaveEvents_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IHaveEvents_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1329,8 +1329,8 @@ public static class EventGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IHaveEvents_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IHaveEvents_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IHaveEvents_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IHaveEvents_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}

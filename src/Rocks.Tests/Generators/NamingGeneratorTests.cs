@@ -308,8 +308,8 @@ public static class NamingGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IHandle_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IHandle_Rock_Make.g.cs", makeGeneratedCode)
+				("IHandle_Rock_Create.g.cs", createGeneratedCode),
+				("IHandle_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -455,7 +455,7 @@ public static class NamingGeneratorTests
 
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
-			[(typeof(RockGenerator), "IHandle_Rock_Create.g.cs", generatedCode)],
+			[("IHandle_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -604,7 +604,7 @@ public static class NamingGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
-			[(typeof(RockGenerator), "Names.IHandle_Rock_Create.g.cs", generatedCode)],
+			[("Names.IHandle_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -665,7 +665,7 @@ public static class NamingGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
-			[(typeof(RockGenerator), "IHandle_Rock_Make.g.cs", generatedCode)],
+			[("IHandle_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -731,7 +731,7 @@ public static class NamingGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
-			[(typeof(RockGenerator), "Names.IHandle_Rock_Make.g.cs", generatedCode)],
+			[("Names.IHandle_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1010,8 +1010,8 @@ public static class NamingGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IHandle_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IHandle_Rock_Make.g.cs", makeGeneratedCode)
+				("IHandle_Rock_Create.g.cs", createGeneratedCode),
+				("IHandle_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1255,8 +1255,8 @@ public static class NamingGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "FirstIUseSameNames_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "FirstIUseSameNames_Rock_Make.g.cs", makeGeneratedCode)
+				("FirstIUseSameNames_Rock_Create.g.cs", createGeneratedCode),
+				("FirstIUseSameNames_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[],
 			additionalReferences: references);
@@ -1589,8 +1589,8 @@ public static class NamingGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "DbSetTEntity_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "DbSetTEntity_Rock_Make.g.cs", makeGeneratedCode),
+				("DbSetTEntity_Rock_Create.g.cs", createGeneratedCode),
+				("DbSetTEntity_Rock_Make.g.cs", makeGeneratedCode),
 			],
 			[]);
 	}
@@ -1932,8 +1932,8 @@ public static class NamingGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IHaveDelegate_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IHaveDelegate_Rock_Make.g.cs", makeGeneratedCode)
+				("IHaveDelegate_Rock_Create.g.cs", createGeneratedCode),
+				("IHaveDelegate_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -2146,8 +2146,8 @@ public static class NamingGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IUseKeyword_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IUseKeyword_Rock_Make.g.cs", makeGeneratedCode)
+				("IUseKeyword_Rock_Create.g.cs", createGeneratedCode),
+				("IUseKeyword_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -2471,8 +2471,8 @@ public static class NamingGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "HaveNamingConflicts_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "HaveNamingConflicts_Rock_Make.g.cs", makeGeneratedCode)
+				("HaveNamingConflicts_Rock_Create.g.cs", createGeneratedCode),
+				("HaveNamingConflicts_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -2697,8 +2697,8 @@ public static class NamingGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IHaveNamingConflicts_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IHaveNamingConflicts_Rock_Make.g.cs", makeGeneratedCode)
+				("IHaveNamingConflicts_Rock_Create.g.cs", createGeneratedCode),
+				("IHaveNamingConflicts_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -2913,8 +2913,8 @@ public static class NamingGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IHaveNamingConflicts_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IHaveNamingConflicts_Rock_Make.g.cs", makeGeneratedCode)
+				("IHaveNamingConflicts_Rock_Create.g.cs", createGeneratedCode),
+				("IHaveNamingConflicts_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -3260,8 +3260,8 @@ public static class NamingGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "HasRequiredProperty_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "HasRequiredProperty_Rock_Make.g.cs", makeGeneratedCode)
+				("HasRequiredProperty_Rock_Create.g.cs", createGeneratedCode),
+				("HasRequiredProperty_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -3481,8 +3481,8 @@ public static class NamingGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IUsesThing_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IUsesThing_Rock_Make.g.cs", makeGeneratedCode)
+				("IUsesThing_Rock_Create.g.cs", createGeneratedCode),
+				("IUsesThing_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -3679,8 +3679,8 @@ public static class NamingGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IUseMethodInformation_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IUseMethodInformation_Rock_Make.g.cs", makeGeneratedCode)
+				("IUseMethodInformation_Rock_Create.g.cs", createGeneratedCode),
+				("IUseMethodInformation_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -3877,8 +3877,8 @@ public static class NamingGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IOperation_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IOperation_Rock_Make.g.cs", makeGeneratedCode)
+				("IOperation_Rock_Create.g.cs", createGeneratedCode),
+				("IOperation_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -4104,8 +4104,8 @@ public static class NamingGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "Namespace2.IUseConstraint_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "Namespace2.IUseConstraint_Rock_Make.g.cs", makeGeneratedCode)
+				("Namespace2.IUseConstraint_Rock_Create.g.cs", createGeneratedCode),
+				("Namespace2.IUseConstraint_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}

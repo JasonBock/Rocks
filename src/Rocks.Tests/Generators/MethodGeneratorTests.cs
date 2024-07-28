@@ -191,8 +191,8 @@ public static class MethodGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IMember_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IMember_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IMember_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IMember_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -485,8 +485,8 @@ public static class MethodGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IMapper_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IMapper_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IMapper_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IMapper_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -710,8 +710,8 @@ public static class MethodGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IHaveOptionalArguments_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IHaveOptionalArguments_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IHaveOptionalArguments_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IHaveOptionalArguments_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -936,8 +936,8 @@ public static class MethodGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IProjection_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IProjection_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IProjection_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IProjection_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1230,8 +1230,8 @@ public static class MethodGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IHaveTooMuch_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IHaveTooMuch_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IHaveTooMuch_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IHaveTooMuch_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}

@@ -204,8 +204,8 @@ public static class ParameterModifierTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IParameterModifier_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IParameterModifier_Rock_Make.g.cs", makeGeneratedCode)
+				("IParameterModifier_Rock_Create.g.cs", createGeneratedCode),
+				("IParameterModifier_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -418,8 +418,8 @@ public static class ParameterModifierTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IParameterModifier_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IParameterModifier_Rock_Make.g.cs", makeGeneratedCode)
+				("IParameterModifier_Rock_Create.g.cs", createGeneratedCode),
+				("IParameterModifier_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -629,8 +629,8 @@ public static class ParameterModifierTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IParameterModifier_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IParameterModifier_Rock_Make.g.cs", makeGeneratedCode)
+				("IParameterModifier_Rock_Create.g.cs", createGeneratedCode),
+				("IParameterModifier_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -835,8 +835,8 @@ public static class ParameterModifierTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IParameterModifier_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IParameterModifier_Rock_Make.g.cs", makeGeneratedCode)
+				("IParameterModifier_Rock_Create.g.cs", createGeneratedCode),
+				("IParameterModifier_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1250,8 +1250,8 @@ public static class ParameterModifierTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IParameterModifier_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IParameterModifier_Rock_Make.g.cs", makeGeneratedCode)
+				("IParameterModifier_Rock_Create.g.cs", createGeneratedCode),
+				("IParameterModifier_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}

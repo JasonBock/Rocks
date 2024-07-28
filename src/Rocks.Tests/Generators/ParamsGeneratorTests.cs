@@ -433,8 +433,8 @@ public static class ParamsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "ParamMethods_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "ParamMethods_Rock_Make.g.cs", makeGeneratedCode),
+				("ParamMethods_Rock_Create.g.cs", createGeneratedCode),
+				("ParamMethods_Rock_Make.g.cs", makeGeneratedCode),
 			],
 			[]);
 	}

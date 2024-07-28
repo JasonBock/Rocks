@@ -415,8 +415,8 @@ public static class CastingGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IHaveOpenGenericsQ_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IHaveOpenGenericsQ_Rock_Make.g.cs", makeGeneratedCode),
+				("MockTests.IHaveOpenGenericsQ_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IHaveOpenGenericsQ_Rock_Make.g.cs", makeGeneratedCode),
 			],
 			[]);
 	}

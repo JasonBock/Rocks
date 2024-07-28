@@ -408,8 +408,8 @@ public static class ConstructorGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "AnyOfT1, T2_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "AnyOfT1, T2_Rock_Make.g.cs", makeGeneratedCode)
+				("AnyOfT1, T2_Rock_Create.g.cs", createGeneratedCode),
+				("AnyOfT1, T2_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}

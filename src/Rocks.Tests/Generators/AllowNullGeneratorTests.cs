@@ -271,8 +271,8 @@ public static class AllowNullGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IAllow_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IAllow_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IAllow_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IAllow_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -694,8 +694,8 @@ public static class AllowNullGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.Allow_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.Allow_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.Allow_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.Allow_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}

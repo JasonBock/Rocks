@@ -332,8 +332,8 @@ public static class ClassGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[ 
-				(typeof(RockGenerator), "MockTests.ClassTest_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.ClassTest_Rock_Make.g.cs", makeGeneratedCode),
+				("MockTests.ClassTest_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.ClassTest_Rock_Make.g.cs", makeGeneratedCode),
 			],
 			[]);
 	}

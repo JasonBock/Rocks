@@ -436,8 +436,8 @@ public static class NonPublicMembersGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "VisibilityIssues_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "VisibilityIssues_Rock_Make.g.cs", makeGeneratedCode)
+				("VisibilityIssues_Rock_Create.g.cs", createGeneratedCode),
+				("VisibilityIssues_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -950,8 +950,8 @@ public static class NonPublicMembersGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "VisibilityIssues_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "VisibilityIssues_Rock_Make.g.cs", makeGeneratedCode)
+				("VisibilityIssues_Rock_Create.g.cs", createGeneratedCode),
+				("VisibilityIssues_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[],
 			additionalReferences: sourceReferences);
@@ -1475,8 +1475,8 @@ public static class NonPublicMembersGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "HasInternalVirtual_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "HasInternalVirtual_Rock_Make.g.cs", makeGeneratedCode)
+				("HasInternalVirtual_Rock_Create.g.cs", createGeneratedCode),
+				("HasInternalVirtual_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[],
 			additionalReferences: sourceReferences);
@@ -1970,8 +1970,8 @@ public static class NonPublicMembersGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.Test_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.Test_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.Test_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.Test_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -2462,8 +2462,8 @@ public static class NonPublicMembersGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.Test_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.Test_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.Test_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.Test_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -2954,8 +2954,8 @@ public static class NonPublicMembersGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.Test_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.Test_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.Test_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.Test_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}

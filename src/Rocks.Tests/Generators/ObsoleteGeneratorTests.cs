@@ -198,8 +198,8 @@ public static class ObsoleteGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IContainer_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IContainer_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IContainer_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IContainer_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -539,8 +539,8 @@ public static class ObsoleteGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.Container_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.Container_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.Container_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.Container_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -990,8 +990,8 @@ public static class ObsoleteGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IPixelShader_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IPixelShader_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IPixelShader_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IPixelShader_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1290,8 +1290,8 @@ public static class ObsoleteGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IPixelShader_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IPixelShader_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IPixelShader_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IPixelShader_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}

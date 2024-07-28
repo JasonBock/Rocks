@@ -349,8 +349,8 @@ public static class IndexerGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "ISubIndex_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "ISubIndex_Rock_Make.g.cs", makeGeneratedCode)
+				("ISubIndex_Rock_Create.g.cs", createGeneratedCode),
+				("ISubIndex_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -884,8 +884,8 @@ public static class IndexerGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "AbstractClassIndexerGetterSetter_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "AbstractClassIndexerGetterSetter_Rock_Make.g.cs", makeGeneratedCode)
+				("AbstractClassIndexerGetterSetter_Rock_Create.g.cs", createGeneratedCode),
+				("AbstractClassIndexerGetterSetter_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1167,8 +1167,8 @@ public static class IndexerGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IHaveOptionalArguments_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IHaveOptionalArguments_Rock_Make.g.cs", makeGeneratedCode)
+				("IHaveOptionalArguments_Rock_Create.g.cs", createGeneratedCode),
+				("IHaveOptionalArguments_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1637,8 +1637,8 @@ public static class IndexerGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IHaveIndexersWithInit_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IHaveIndexersWithInit_Rock_Make.g.cs", makeGeneratedCode)
+				("IHaveIndexersWithInit_Rock_Create.g.cs", createGeneratedCode),
+				("IHaveIndexersWithInit_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -2124,8 +2124,8 @@ public static class IndexerGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.Target_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.Target_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.Target_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.Target_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}

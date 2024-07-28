@@ -357,8 +357,8 @@ public static class ConstraintsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "ClassMapTClass_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "ClassMapTClass_Rock_Make.g.cs", makeGeneratedCode)
+				("ClassMapTClass_Rock_Create.g.cs", createGeneratedCode),
+				("ClassMapTClass_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -705,8 +705,8 @@ public static class ConstraintsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "BaseStuff_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "BaseStuff_Rock_Make.g.cs", makeGeneratedCode)
+				("BaseStuff_Rock_Create.g.cs", createGeneratedCode),
+				("BaseStuff_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -932,8 +932,8 @@ public static class ConstraintsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "INeedDelegate_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "INeedDelegate_Rock_Make.g.cs", makeGeneratedCode)
+				("INeedDelegate_Rock_Create.g.cs", createGeneratedCode),
+				("INeedDelegate_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1483,8 +1483,8 @@ public static class ConstraintsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "ITypeConstraints_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "ITypeConstraints_Rock_Make.g.cs", makeGeneratedCode)
+				("ITypeConstraints_Rock_Create.g.cs", createGeneratedCode),
+				("ITypeConstraints_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -2168,8 +2168,8 @@ public static class ConstraintsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "TypeConstraints_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "TypeConstraints_Rock_Make.g.cs", makeGeneratedCode)
+				("TypeConstraints_Rock_Create.g.cs", createGeneratedCode),
+				("TypeConstraints_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -2387,8 +2387,8 @@ public static class ConstraintsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IUnmanagedValue_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IUnmanagedValue_Rock_Make.g.cs", makeGeneratedCode)
+				("IUnmanagedValue_Rock_Create.g.cs", createGeneratedCode),
+				("IUnmanagedValue_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -2737,8 +2737,8 @@ public static class ConstraintsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.ThingT_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.ThingT_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.ThingT_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.ThingT_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}

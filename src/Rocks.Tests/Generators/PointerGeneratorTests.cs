@@ -209,8 +209,8 @@ public static class PointerGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IPointerUsage_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IPointerUsage_Rock_Make.g.cs", makeGeneratedCode)
+				("IPointerUsage_Rock_Create.g.cs", createGeneratedCode),
+				("IPointerUsage_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -420,8 +420,8 @@ public static class PointerGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IPointerUsage_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IPointerUsage_Rock_Make.g.cs", makeGeneratedCode)
+				("IPointerUsage_Rock_Create.g.cs", createGeneratedCode),
+				("IPointerUsage_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -631,8 +631,8 @@ public static class PointerGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IPointerUsage_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IPointerUsage_Rock_Make.g.cs", makeGeneratedCode)
+				("IPointerUsage_Rock_Create.g.cs", createGeneratedCode),
+				("IPointerUsage_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -883,8 +883,8 @@ public static class PointerGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "ISurface_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "ISurface_Rock_Make.g.cs", makeGeneratedCode)
+				("ISurface_Rock_Create.g.cs", createGeneratedCode),
+				("ISurface_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1141,8 +1141,8 @@ public static class PointerGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IHavePointers_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1364,8 +1364,8 @@ public static class PointerGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IHavePointers_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1622,8 +1622,8 @@ public static class PointerGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IHavePointers_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1845,8 +1845,8 @@ public static class PointerGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IHavePointers_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -2178,8 +2178,8 @@ public static class PointerGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IHavePointers_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -2511,8 +2511,8 @@ public static class PointerGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IHavePointers_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -2834,8 +2834,8 @@ public static class PointerGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IHavePointers_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -3178,8 +3178,8 @@ public static class PointerGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IHavePointers_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -3502,8 +3502,8 @@ public static class PointerGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IHavePointers_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -3846,8 +3846,8 @@ public static class PointerGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IHavePointers_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}

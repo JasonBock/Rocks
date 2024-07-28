@@ -236,8 +236,8 @@ public static class RefStructGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IAmNonGeneric_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IAmNonGeneric_Rock_Make.g.cs", makeGeneratedCode)
+				("IAmNonGeneric_Rock_Create.g.cs", createGeneratedCode),
+				("IAmNonGeneric_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -626,8 +626,8 @@ public static class RefStructGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IDuplicates_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IDuplicates_Rock_Make.g.cs", makeGeneratedCode)
+				("IDuplicates_Rock_Create.g.cs", createGeneratedCode),
+				("IDuplicates_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1113,8 +1113,8 @@ public static class RefStructGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "ScopedParameter_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "ScopedParameter_Rock_Make.g.cs", makeGeneratedCode)       
+				("ScopedParameter_Rock_Create.g.cs", createGeneratedCode),
+				("ScopedParameter_Rock_Make.g.cs", makeGeneratedCode)       
 			],
 			[]);
 	}
@@ -1357,8 +1357,8 @@ public static class RefStructGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IUseSpanWithOpenGeneric_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IUseSpanWithOpenGeneric_Rock_Make.g.cs", makeGeneratedCode)
+				("IUseSpanWithOpenGeneric_Rock_Create.g.cs", createGeneratedCode),
+				("IUseSpanWithOpenGeneric_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1593,8 +1593,8 @@ public static class RefStructGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IHaveRefStruct_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IHaveRefStruct_Rock_Make.g.cs", makeGeneratedCode)
+				("IHaveRefStruct_Rock_Create.g.cs", createGeneratedCode),
+				("IHaveRefStruct_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1785,8 +1785,8 @@ public static class RefStructGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IHaveRefStruct_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IHaveRefStruct_Rock_Make.g.cs", makeGeneratedCode)
+				("IHaveRefStruct_Rock_Create.g.cs", createGeneratedCode),
+				("IHaveRefStruct_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -2076,8 +2076,8 @@ public static class RefStructGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IHaveRefStruct_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IHaveRefStruct_Rock_Make.g.cs", makeGeneratedCode)
+				("IHaveRefStruct_Rock_Create.g.cs", createGeneratedCode),
+				("IHaveRefStruct_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -2377,8 +2377,8 @@ public static class RefStructGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IHaveRefStruct_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IHaveRefStruct_Rock_Make.g.cs", makeGeneratedCode)
+				("IHaveRefStruct_Rock_Create.g.cs", createGeneratedCode),
+				("IHaveRefStruct_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -2679,8 +2679,8 @@ public static class RefStructGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IHaveRefStruct_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IHaveRefStruct_Rock_Make.g.cs", makeGeneratedCode)
+				("IHaveRefStruct_Rock_Create.g.cs", createGeneratedCode),
+				("IHaveRefStruct_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}

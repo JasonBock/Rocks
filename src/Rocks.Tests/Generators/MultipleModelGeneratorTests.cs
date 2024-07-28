@@ -212,8 +212,8 @@ public static class MultipleModelGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.ITarget_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.ITarget_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.ITarget_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.ITarget_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}

@@ -295,8 +295,8 @@ public static class GenericsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IGenericsAndEvent_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IGenericsAndEvent_Rock_Make.g.cs", makeGeneratedCode)
+				("IGenericsAndEvent_Rock_Create.g.cs", createGeneratedCode),
+				("IGenericsAndEvent_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -498,8 +498,8 @@ public static class GenericsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IServiceT, TReturn_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IServiceT, TReturn_Rock_Make.g.cs", makeGeneratedCode)
+				("IServiceT, TReturn_Rock_Create.g.cs", createGeneratedCode),
+				("IServiceT, TReturn_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -850,8 +850,8 @@ public static class GenericsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MA_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MA_Rock_Make.g.cs", makeGeneratedCode)         
+				("MA_Rock_Create.g.cs", createGeneratedCode),
+				("MA_Rock_Make.g.cs", makeGeneratedCode)         
 			],
 			[]);
 	}
@@ -1247,8 +1247,8 @@ public static class GenericsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "GenericContainer_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "GenericContainer_Rock_Make.g.cs", makeGeneratedCode)
+				("GenericContainer_Rock_Create.g.cs", createGeneratedCode),
+				("GenericContainer_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1536,8 +1536,8 @@ public static class GenericsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "CriterionT_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "CriterionT_Rock_Make.g.cs", makeGeneratedCode)
+				("CriterionT_Rock_Create.g.cs", createGeneratedCode),
+				("CriterionT_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1945,8 +1945,8 @@ public static class GenericsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "GeometryValueComparerTGeometry_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "GeometryValueComparerTGeometry_Rock_Make.g.cs", makeGeneratedCode)
+				("GeometryValueComparerTGeometry_Rock_Create.g.cs", createGeneratedCode),
+				("GeometryValueComparerTGeometry_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -2218,8 +2218,8 @@ public static class GenericsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IRequestClientTRequest_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IRequestClientTRequest_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IRequestClientTRequest_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IRequestClientTRequest_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -2495,8 +2495,8 @@ public static class GenericsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IRequestT_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IRequestT_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IRequestT_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IRequestT_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}

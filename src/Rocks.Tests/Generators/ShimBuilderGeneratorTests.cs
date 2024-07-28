@@ -400,8 +400,8 @@ public static class ShimBuilderGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IRuntimeKey_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IRuntimeKey_Rock_Make.g.cs", makeGeneratedCode)        
+				("IRuntimeKey_Rock_Create.g.cs", createGeneratedCode),
+				("IRuntimeKey_Rock_Make.g.cs", makeGeneratedCode)        
 			],
 			[]);
 	}
@@ -894,8 +894,8 @@ public static class ShimBuilderGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IHaveDims_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IHaveDims_Rock_Make.g.cs", makeGeneratedCode)       
+				("IHaveDims_Rock_Create.g.cs", createGeneratedCode),
+				("IHaveDims_Rock_Make.g.cs", makeGeneratedCode)       
 			],
 			[]);
 	}

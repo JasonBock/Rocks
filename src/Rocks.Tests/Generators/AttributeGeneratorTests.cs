@@ -242,8 +242,8 @@ public static class AttributeGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "INotNull_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "INotNull_Rock_Make.g.cs", makeGeneratedCode)
+				("INotNull_Rock_Create.g.cs", createGeneratedCode),
+				("INotNull_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -446,8 +446,8 @@ public static class AttributeGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IItems_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IItems_Rock_Make.g.cs", makeGeneratedCode)
+				("IItems_Rock_Create.g.cs", createGeneratedCode),
+				("IItems_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -770,8 +770,8 @@ public static class AttributeGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "ConventionDispatcher_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "ConventionDispatcher_Rock_Make.g.cs", makeGeneratedCode)
+				("ConventionDispatcher_Rock_Create.g.cs", createGeneratedCode),
+				("ConventionDispatcher_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1446,8 +1446,8 @@ public static class AttributeGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "NotNullIfNotCases_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "NotNullIfNotCases_Rock_Make.g.cs", makeGeneratedCode)
+				("NotNullIfNotCases_Rock_Create.g.cs", createGeneratedCode),
+				("NotNullIfNotCases_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1652,8 +1652,8 @@ public static class AttributeGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IUseTuples_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IUseTuples_Rock_Make.g.cs", makeGeneratedCode)
+				("IUseTuples_Rock_Create.g.cs", createGeneratedCode),
+				("IUseTuples_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[],
 			additionalReferences: Shared.References.Value.Concat([tupleReference as MetadataReference]));
@@ -1984,8 +1984,8 @@ public static class AttributeGeneratorTests
 		// so it's expected to get CS1970.
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "HaveDynamic_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "HaveDynamic_Rock_Make.g.cs", makeGeneratedCode)
+				("HaveDynamic_Rock_Create.g.cs", createGeneratedCode),
+				("HaveDynamic_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[DiagnosticResult.CompilerError("CS1970").WithSpan(9, 11, 9, 18)]);
 	}
@@ -2186,8 +2186,8 @@ public static class AttributeGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IHaveGenericAttribute_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IHaveGenericAttribute_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IHaveGenericAttribute_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IHaveGenericAttribute_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -2411,8 +2411,8 @@ public static class AttributeGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IHaveMultipleAttributes_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IHaveMultipleAttributes_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IHaveMultipleAttributes_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IHaveMultipleAttributes_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}

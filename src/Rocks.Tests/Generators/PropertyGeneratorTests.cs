@@ -276,8 +276,8 @@ public static class PropertyGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IMessagePublishTopologyConfigurator_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IMessagePublishTopologyConfigurator_Rock_Make.g.cs", makeGeneratedCode)
+				("IMessagePublishTopologyConfigurator_Rock_Create.g.cs", createGeneratedCode),
+				("IMessagePublishTopologyConfigurator_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -769,8 +769,8 @@ public static class PropertyGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "PrivatePublicProperties_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "PrivatePublicProperties_Rock_Make.g.cs", makeGeneratedCode)
+				("PrivatePublicProperties_Rock_Create.g.cs", createGeneratedCode),
+				("PrivatePublicProperties_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1136,8 +1136,8 @@ public static class PropertyGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "PrivatePublicProperty_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "PrivatePublicProperty_Rock_Make.g.cs", makeGeneratedCode)
+				("PrivatePublicProperty_Rock_Create.g.cs", createGeneratedCode),
+				("PrivatePublicProperty_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1792,8 +1792,8 @@ public static class PropertyGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MixedIndexers_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MixedIndexers_Rock_Make.g.cs", makeGeneratedCode)
+				("MixedIndexers_Rock_Create.g.cs", createGeneratedCode),
+				("MixedIndexers_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -2409,8 +2409,8 @@ public static class PropertyGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MixedProperties_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MixedProperties_Rock_Make.g.cs", makeGeneratedCode)
+				("MixedProperties_Rock_Create.g.cs", createGeneratedCode),
+				("MixedProperties_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}

@@ -353,8 +353,8 @@ public static class VirtualsWithImplementationsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.VoidMethodWithParams_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.VoidMethodWithParams_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.VoidMethodWithParams_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.VoidMethodWithParams_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -703,8 +703,8 @@ public static class VirtualsWithImplementationsGeneratorTests
 
  		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.ValueMethodWithParams_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.ValueMethodWithParams_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.ValueMethodWithParams_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.ValueMethodWithParams_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -907,8 +907,8 @@ public static class VirtualsWithImplementationsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IHaveImplementation_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IHaveImplementation_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IHaveImplementation_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IHaveImplementation_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1114,8 +1114,8 @@ public static class VirtualsWithImplementationsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IHaveImplementation_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IHaveImplementation_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IHaveImplementation_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IHaveImplementation_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1446,8 +1446,8 @@ public static class VirtualsWithImplementationsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.HaveImplementation_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.HaveImplementation_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.HaveImplementation_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.HaveImplementation_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1781,8 +1781,8 @@ public static class VirtualsWithImplementationsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.HaveImplementation_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.HaveImplementation_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.HaveImplementation_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.HaveImplementation_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}

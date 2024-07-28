@@ -415,8 +415,8 @@ public static class InheritanceGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.JsBinaryOperator_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.JsBinaryOperator_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.JsBinaryOperator_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.JsBinaryOperator_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}

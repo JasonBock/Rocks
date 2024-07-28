@@ -216,8 +216,8 @@ public static class RockGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IContainNullableReferences_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IContainNullableReferences_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IContainNullableReferences_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IContainNullableReferences_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -410,8 +410,8 @@ public static class RockGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.ITest_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.ITest_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.ITest_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.ITest_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -595,8 +595,8 @@ public static class RockGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "ITest_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "ITest_Rock_Make.g.cs", makeGeneratedCode)
+				("ITest_Rock_Create.g.cs", createGeneratedCode),
+				("ITest_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -656,10 +656,9 @@ public static class RockGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
-			TestAssistants.GetGeneratedSources(
-				[
-					("MockTests.ITest_Rock_Make.g.cs", makeGeneratedCode)
-				]),
+			[
+				("MockTests.ITest_Rock_Make.g.cs", makeGeneratedCode)
+			],
 			[]);
 	}
 
@@ -878,8 +877,8 @@ public static class RockGeneratorTests
 			.WithSpan(11, 3, 11, 3);
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.ITest_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.ITest_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.ITest_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.ITest_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[diagnostic]);
 	}
@@ -1083,8 +1082,8 @@ public static class RockGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.ITest_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.ITest_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.ITest_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.ITest_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}

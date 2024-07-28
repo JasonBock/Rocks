@@ -420,8 +420,8 @@ public static class RecordGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.RecordTest_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.RecordTest_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.RecordTest_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.RecordTest_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}

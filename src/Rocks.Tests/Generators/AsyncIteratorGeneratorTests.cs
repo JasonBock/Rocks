@@ -349,8 +349,8 @@ public static class AsyncIteratorGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "AsyncEnumeration_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "AsyncEnumeration_Rock_Make.g.cs", makeGeneratedCode)
+				("AsyncEnumeration_Rock_Create.g.cs", createGeneratedCode),
+				("AsyncEnumeration_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}

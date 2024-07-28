@@ -268,8 +268,8 @@ public static class ExplicitImplementationGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "MockTests.IHtmlMediaElement_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "MockTests.IHtmlMediaElement_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IHtmlMediaElement_Rock_Create.g.cs", createGeneratedCode),
+				("MockTests.IHtmlMediaElement_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -659,8 +659,8 @@ public static class ExplicitImplementationGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "ILeftRight_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "ILeftRight_Rock_Make.g.cs", makeGeneratedCode)
+				("ILeftRight_Rock_Create.g.cs", createGeneratedCode),
+				("ILeftRight_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -908,8 +908,8 @@ public static class ExplicitImplementationGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IIterableT_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IIterableT_Rock_Make.g.cs", makeGeneratedCode)
+				("IIterableT_Rock_Create.g.cs", createGeneratedCode),
+				("IIterableT_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1142,8 +1142,8 @@ public static class ExplicitImplementationGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "ISetupList_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "ISetupList_Rock_Make.g.cs", makeGeneratedCode)
+				("ISetupList_Rock_Create.g.cs", createGeneratedCode),
+				("ISetupList_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}

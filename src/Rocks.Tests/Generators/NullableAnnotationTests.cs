@@ -283,8 +283,8 @@ public static class NullableAnnotationTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IUseTaskDefaultT_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IUseTaskDefaultT_Rock_Make.g.cs", makeGeneratedCode)
+				("IUseTaskDefaultT_Rock_Create.g.cs", createGeneratedCode),
+				("IUseTaskDefaultT_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -569,8 +569,8 @@ public static class NullableAnnotationTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "NeedNullable_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "NeedNullable_Rock_Make.g.cs", makeGeneratedCode)
+				("NeedNullable_Rock_Create.g.cs", createGeneratedCode),
+				("NeedNullable_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -974,8 +974,8 @@ public static class NullableAnnotationTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "NeedNullable_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "NeedNullable_Rock_Make.g.cs", makeGeneratedCode)
+				("NeedNullable_Rock_Create.g.cs", createGeneratedCode),
+				("NeedNullable_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}

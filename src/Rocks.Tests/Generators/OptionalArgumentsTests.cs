@@ -361,8 +361,8 @@ public static class OptionalArgumentsTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IHaveOptionalArguments_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IHaveOptionalArguments_Rock_Make.g.cs", makeGeneratedCode)
+				("IHaveOptionalArguments_Rock_Create.g.cs", createGeneratedCode),
+				("IHaveOptionalArguments_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}

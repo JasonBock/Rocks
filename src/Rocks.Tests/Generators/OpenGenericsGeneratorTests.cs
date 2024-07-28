@@ -350,8 +350,8 @@ public static class OpenGenericsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IRequestTResponse, TResponse2, TResponse3_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IRequestTResponse, TResponse2, TResponse3_Rock_Make.g.cs", makeGeneratedCode)
+				("IRequestTResponse, TResponse2, TResponse3_Rock_Create.g.cs", createGeneratedCode),
+				("IRequestTResponse, TResponse2, TResponse3_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -636,8 +636,8 @@ public static class OpenGenericsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IConsumerContextT_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IConsumerContextT_Rock_Make.g.cs", makeGeneratedCode)
+				("IConsumerContextT_Rock_Create.g.cs", createGeneratedCode),
+				("IConsumerContextT_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -871,8 +871,8 @@ public static class OpenGenericsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IServiceT_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IServiceT_Rock_Make.g.cs", makeGeneratedCode)
+				("IServiceT_Rock_Create.g.cs", createGeneratedCode),
+				("IServiceT_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1074,8 +1074,8 @@ public static class OpenGenericsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IServiceT, TReturn_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IServiceT, TReturn_Rock_Make.g.cs", makeGeneratedCode)
+				("IServiceT, TReturn_Rock_Create.g.cs", createGeneratedCode),
+				("IServiceT, TReturn_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1470,8 +1470,8 @@ public static class OpenGenericsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IServiceT, TReturn_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IServiceT, TReturn_Rock_Make.g.cs", makeGeneratedCode)
+				("IServiceT, TReturn_Rock_Create.g.cs", createGeneratedCode),
+				("IServiceT, TReturn_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1679,8 +1679,8 @@ public static class OpenGenericsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IServiceT, TReturn_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IServiceT, TReturn_Rock_Make.g.cs", makeGeneratedCode)
+				("IServiceT, TReturn_Rock_Create.g.cs", createGeneratedCode),
+				("IServiceT, TReturn_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1898,8 +1898,8 @@ public static class OpenGenericsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IHasTypeConverterOptionsTClass, TMember_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IHasTypeConverterOptionsTClass, TMember_Rock_Make.g.cs", makeGeneratedCode)
+				("IHasTypeConverterOptionsTClass, TMember_Rock_Create.g.cs", createGeneratedCode),
+				("IHasTypeConverterOptionsTClass, TMember_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -2224,8 +2224,8 @@ public static class OpenGenericsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IExceptionConsumeContextT_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IExceptionConsumeContextT_Rock_Make.g.cs", makeGeneratedCode)
+				("IExceptionConsumeContextT_Rock_Create.g.cs", createGeneratedCode),
+				("IExceptionConsumeContextT_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -2493,8 +2493,8 @@ public static class OpenGenericsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IServiceT_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IServiceT_Rock_Make.g.cs", makeGeneratedCode)
+				("IServiceT_Rock_Create.g.cs", createGeneratedCode),
+				("IServiceT_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -2733,8 +2733,8 @@ public static class OpenGenericsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IPixelOperationsTPixel_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IPixelOperationsTPixel_Rock_Make.g.cs", makeGeneratedCode)
+				("IPixelOperationsTPixel_Rock_Create.g.cs", createGeneratedCode),
+				("IPixelOperationsTPixel_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -2952,8 +2952,8 @@ public static class OpenGenericsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "INotification_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "INotification_Rock_Make.g.cs", makeGeneratedCode)
+				("INotification_Rock_Create.g.cs", createGeneratedCode),
+				("INotification_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -3174,8 +3174,8 @@ public static class OpenGenericsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IReaderWriterTCollection, TConcreteCollection, TElement_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IReaderWriterTCollection, TConcreteCollection, TElement_Rock_Make.g.cs", makeGeneratedCode)
+				("IReaderWriterTCollection, TConcreteCollection, TElement_Rock_Create.g.cs", createGeneratedCode),
+				("IReaderWriterTCollection, TConcreteCollection, TElement_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -3377,8 +3377,8 @@ public static class OpenGenericsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "INotificationT_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "INotificationT_Rock_Make.g.cs", makeGeneratedCode)
+				("INotificationT_Rock_Create.g.cs", createGeneratedCode),
+				("INotificationT_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -3597,8 +3597,8 @@ public static class OpenGenericsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IWriter_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IWriter_Rock_Make.g.cs", makeGeneratedCode)
+				("IWriter_Rock_Create.g.cs", createGeneratedCode),
+				("IWriter_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}

@@ -361,8 +361,8 @@ public static class NullabilityGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "ConnectionBuilderTSourceType_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "ConnectionBuilderTSourceType_Rock_Make.g.cs", makeGeneratedCode)
+				("ConnectionBuilderTSourceType_Rock_Create.g.cs", createGeneratedCode),
+				("ConnectionBuilderTSourceType_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -743,8 +743,8 @@ public static class NullabilityGeneratorTests
 		// the nullability annotations.
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "SubTracer_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "SubTracer_Rock_Make.g.cs", makeGeneratedCode)
+				("SubTracer_Rock_Create.g.cs", createGeneratedCode),
+				("SubTracer_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[
 				new DiagnosticResult("CS8610", DiagnosticSeverity.Error)
@@ -1101,8 +1101,8 @@ public static class NullabilityGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IConventionSkipNavigation_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IConventionSkipNavigation_Rock_Make.g.cs", makeGeneratedCode)
+				("IConventionSkipNavigation_Rock_Create.g.cs", createGeneratedCode),
+				("IConventionSkipNavigation_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
@@ -1295,8 +1295,8 @@ public static class NullabilityGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				(typeof(RockGenerator), "IDestinationTDestination_Rock_Create.g.cs", createGeneratedCode),
-				(typeof(RockGenerator), "IDestinationTDestination_Rock_Make.g.cs", makeGeneratedCode)
+				("IDestinationTDestination_Rock_Create.g.cs", createGeneratedCode),
+				("IDestinationTDestination_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[]);
 	}
