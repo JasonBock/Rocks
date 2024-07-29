@@ -585,6 +585,8 @@ public static class RefStructGeneratorTests
 			{
 				internal static class Projections
 				{
+					internal delegate global::System.Span<int> Callback_37344587070653435397002258189909741093006287352(scoped global::System.Span<int> @data);
+					internal delegate void Callback_664761630147355534768648333290688762182179960624(scoped global::System.Span<int> @data);
 					internal delegate int Callback_427010440114488187383437798228008554619544656801(scoped ref int @data);
 				}
 				
@@ -603,13 +605,13 @@ public static class RefStructGeneratorTests
 				{ }
 				private global::Rocks.Handlers<global::ScopedParameterCreateExpectations.Handler2>? @handlers2;
 				internal sealed class Handler3
-					: global::Rocks.Handler<global::System.Func<global::System.Span<int>, global::System.Span<int>>, global::System.Func<global::System.Span<int>>>
+					: global::Rocks.Handler<global::ScopedParameterCreateExpectations.Projections.Callback_37344587070653435397002258189909741093006287352, global::System.Func<global::System.Span<int>>>
 				{
 					public global::Rocks.RefStructArgument<global::System.Span<int>> @data { get; set; }
 				}
 				private global::Rocks.Handlers<global::ScopedParameterCreateExpectations.Handler3>? @handlers3;
 				internal sealed class Handler4
-					: global::Rocks.Handler<global::System.Action<global::System.Span<int>>>
+					: global::Rocks.Handler<global::ScopedParameterCreateExpectations.Projections.Callback_664761630147355534768648333290688762182179960624>
 				{
 					public global::Rocks.RefStructArgument<global::System.Span<int>> @data { get; set; }
 				}
@@ -915,13 +917,13 @@ public static class RefStructGeneratorTests
 							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler3
-						: global::Rocks.Adornments<AdornmentsForHandler3, global::ScopedParameterCreateExpectations.Handler3, global::System.Func<global::System.Span<int>, global::System.Span<int>>, global::ScopedParameterCreateExpectations.Projections.ReturnValue_305616756374865012389506681414051734154688895315>, IAdornmentsForScopedParameter<AdornmentsForHandler3>
+						: global::Rocks.Adornments<AdornmentsForHandler3, global::ScopedParameterCreateExpectations.Handler3, global::ScopedParameterCreateExpectations.Projections.Callback_37344587070653435397002258189909741093006287352, global::System.Func<global::System.Span<int>>>, IAdornmentsForScopedParameter<AdornmentsForHandler3>
 					{
 						public AdornmentsForHandler3(global::ScopedParameterCreateExpectations.Handler3 handler)
 							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler4
-						: global::Rocks.Adornments<AdornmentsForHandler4, global::ScopedParameterCreateExpectations.Handler4, global::System.Action<global::System.Span<int>>>, IAdornmentsForScopedParameter<AdornmentsForHandler4>
+						: global::Rocks.Adornments<AdornmentsForHandler4, global::ScopedParameterCreateExpectations.Handler4, global::ScopedParameterCreateExpectations.Projections.Callback_664761630147355534768648333290688762182179960624>, IAdornmentsForScopedParameter<AdornmentsForHandler4>
 					{
 						public AdornmentsForHandler4(global::ScopedParameterCreateExpectations.Handler4 handler)
 							: base(handler) { }
@@ -1554,7 +1556,7 @@ public static class RefStructGeneratorTests
 					{ }
 					
 					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::IHaveRefStructCreateExpectations.Handler0, global::System.Func<global::System.Span<int>>, global::IHaveRefStructCreateExpectations.Projections.ReturnValue_305616756374865012389506681414051734154688895315>, IAdornmentsForIHaveRefStruct<AdornmentsForHandler0>
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IHaveRefStructCreateExpectations.Handler0, global::System.Func<global::System.Span<int>>, global::System.Func<global::System.Span<int>>>, IAdornmentsForIHaveRefStruct<AdornmentsForHandler0>
 					{
 						public AdornmentsForHandler0(global::IHaveRefStructCreateExpectations.Handler0 handler)
 							: base(handler) { }

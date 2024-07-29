@@ -80,7 +80,7 @@ internal static class MethodExpectationsMethodBuilder
 					method.ReturnsVoid ?
 						string.Empty :
 						method.ReturnType.IsRefLikeType ?
-							MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(method, method.MockType) :
+							$"global::System.Func<{method.ReturnType.BuildName(typeArgumentsNamingContext)}>" :
 							method.ReturnType.BuildName(typeArgumentsNamingContext);
 
 				adornmentsType = method.ReturnsVoid ?

@@ -69,12 +69,6 @@ internal static class MockProjectedDelegateBuilder
 			{
 				writer.WriteLine(MockProjectedDelegateBuilder.GetProjectedDelegate(method));
 			}
-
-			if (method.ReturnType.IsRefLikeType &&
-				generatedDelegates.Add(method.ProjectedReturnValueDelegateName!))
-			{
-				writer.WriteLine(MockProjectedDelegateBuilder.GetProjectedReturnValueDelegate(method));
-			}
 		}
 
 		static void BuildDelegates(IndentedTextWriter writer, IEnumerable<MethodModel> methods, HashSet<string> generatedDelegates)

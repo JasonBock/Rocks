@@ -12,8 +12,7 @@ internal sealed record ParameterModel
 		this.RefKind = parameter.RefKind;
 		this.RequiresNullableAnnotation = parameter.RequiresForcedNullableAnnotation();
 		this.IsParams = parameter.IsParams;
-		this.IsScoped = (parameter.Type.IsRefLikeType && parameter.ScopedKind == ScopedKind.ScopedValue) ||
-			(parameter.Type.IsValueType && parameter.RefKind == RefKind.Ref && parameter.ScopedKind == ScopedKind.ScopedRef);
+		this.IsScoped = parameter.IsScoped();
 
 		this.Type = new TypeReferenceModel(parameter.Type, compilation);
 
