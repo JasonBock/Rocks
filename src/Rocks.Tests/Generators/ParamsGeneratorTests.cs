@@ -38,35 +38,6 @@ public static class ParamsGeneratorTests
 			internal sealed class ParamMethodsCreateExpectations
 				: global::Rocks.Expectations
 			{
-				internal static class Projections
-				{
-					internal delegate void Callback_545703751734465667444531790083686152412533297126(params global::System.ReadOnlySpan<string> @args);
-					internal delegate bool ArgumentEvaluationForReadOnlySpanOfstring(global::System.ReadOnlySpan<string> @value);
-					
-					internal sealed class ArgumentForReadOnlySpanOfstring
-						: global::Rocks.Argument
-					{
-						private readonly global::ParamMethodsCreateExpectations.Projections.ArgumentEvaluationForReadOnlySpanOfstring? evaluation;
-						private readonly global::Rocks.ValidationState validation;
-						
-						internal ArgumentForReadOnlySpanOfstring() => this.validation = global::Rocks.ValidationState.None;
-						
-						internal ArgumentForReadOnlySpanOfstring(global::ParamMethodsCreateExpectations.Projections.ArgumentEvaluationForReadOnlySpanOfstring @evaluation)
-						{
-							this.evaluation = @evaluation;
-							this.validation = global::Rocks.ValidationState.Evaluation;
-						}
-						
-						public bool IsValid(global::System.ReadOnlySpan<string> @value) =>
-							this.validation switch
-							{
-								global::Rocks.ValidationState.None => true,
-								global::Rocks.ValidationState.Evaluation => this.evaluation!(@value),
-								_ => throw new global::System.NotSupportedException("Invalid validation state."),
-							};
-					}
-				}
-				
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Func<object?, bool>, bool>
 				{
@@ -88,9 +59,9 @@ public static class ParamsGeneratorTests
 				}
 				private global::Rocks.Handlers<global::ParamMethodsCreateExpectations.Handler3>? @handlers3;
 				internal sealed class Handler4
-					: global::Rocks.Handler<global::ParamMethodsCreateExpectations.Projections.Callback_545703751734465667444531790083686152412533297126>
+					: global::Rocks.Handler<global::System.Action<global::System.ReadOnlySpan<string>>>
 				{
-					public global::ParamMethodsCreateExpectations.Projections.ArgumentForReadOnlySpanOfstring @args { get; set; }
+					public global::Rocks.RefStructArgument<global::System.ReadOnlySpan<string>> @args { get; set; }
 				}
 				private global::Rocks.Handlers<global::ParamMethodsCreateExpectations.Handler4>? @handlers4;
 				
@@ -293,7 +264,7 @@ public static class ParamsGeneratorTests
 						return new(@handler);
 					}
 					
-					internal global::ParamMethodsCreateExpectations.Adornments.AdornmentsForHandler4 DoSpan(global::ParamMethodsCreateExpectations.Projections.ArgumentForReadOnlySpanOfstring @args)
+					internal global::ParamMethodsCreateExpectations.Adornments.AdornmentsForHandler4 DoSpan(global::Rocks.RefStructArgument<global::System.ReadOnlySpan<string>> @args)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@args);
@@ -363,7 +334,7 @@ public static class ParamsGeneratorTests
 							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler4
-						: global::Rocks.Adornments<AdornmentsForHandler4, global::ParamMethodsCreateExpectations.Handler4, global::ParamMethodsCreateExpectations.Projections.Callback_545703751734465667444531790083686152412533297126>, IAdornmentsForParamMethods<AdornmentsForHandler4>
+						: global::Rocks.Adornments<AdornmentsForHandler4, global::ParamMethodsCreateExpectations.Handler4, global::System.Action<global::System.ReadOnlySpan<string>>>, IAdornmentsForParamMethods<AdornmentsForHandler4>
 					{
 						public AdornmentsForHandler4(global::ParamMethodsCreateExpectations.Handler4 handler)
 							: base(handler) { }

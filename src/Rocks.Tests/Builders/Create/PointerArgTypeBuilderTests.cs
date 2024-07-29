@@ -150,19 +150,6 @@ public static class PointerArgTypeBuilderTests
 		}
 		""",
 		"global::Mock.IMockCreateExpectations.Projections.ArgumentEvaluationForintPointer")]
-	[TestCase(
-		"""
-		using System;
-
-		namespace Mock 
-		{ 
-			public interface IMock 
-			{ 
-				void Foo(Span<int> t);
-			} 
-		}
-		""",
-		"global::Mock.IMockCreateExpectations.Projections.ArgumentEvaluationForSpanOfint")]
 	public static void GetProjectedEvaluationDelegateFullyQualifiedName(string code, string expectedValue)
 	{
 		var (typeToMock, type, compilation, model) = PointerArgTypeBuilderTests.GetTypeSymbols(code);

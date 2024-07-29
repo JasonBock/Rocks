@@ -1,84 +1,11 @@
 ﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis;
-using NUnit.Framework;
-using Rocks.Builders.Create;
-using Rocks.Models;
 
 namespace Rocks.Tests.Builders.Create;
 
 public static class RefLikeArgTypeBuilderTests
 {
-	[Test]
-	public static void GetProjectedName()
-	{
-		var code =
-			"""
-			using System;
-
-			namespace Outer 
-			{ 
-				namespace Inner 
-				{ 
-					public class Target { } 
-				
-					public static class Test 
-					{ 
-						public static void Foo(Span<int> t) { } 
-					}
-				}
-			}
-			""";
-		var (type, compilation) = RefLikeArgTypeBuilderTests.GetTypeSymbolFromParameter(code);
-		var model = new TypeReferenceModel(type, compilation);
-		Assert.That(model.RefLikeArgProjectedName, Is.EqualTo("ArgumentForSpanOfint"));
-	}
-
-	[Test]
-	public static void GetProjectedFullyQualifiedName()
-	{
-		var code =
-			"""
-			using System;
-
-			namespace Mock 
-			{ 
-				public interface IMock { } 
-			} 
-		
-			namespace Outer 
-			{ 
-				namespace Inner 
-				{ 
-					public class Target { } 
-				
-					public static class Test 
-					{ 
-						public static void Foo(Span<int> t) { } 
-					} 
-				} 
-			}
-			""";
-		var (typeToMock, type, compilation, _) = RefLikeArgTypeBuilderTests.GetTypeSymbols(code);
-		var name = RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(
-			new TypeReferenceModel(type, compilation), new TypeReferenceModel(typeToMock, compilation));
-		Assert.That(name, Is.EqualTo("global::Mock.IMockCreateExpectations.Projections.ArgumentForSpanOfint"));
-	}
-
-	[Test]
-	public static void GetProjectedEvaluationDelegateName()
-	{
-		var code =
-			"""
-			public static class Test 
-			{ 
-				public static void Foo<TSource>(System.Span<TSource> t) { } 
-			}
-			""";
-		var (type, compilation) = RefLikeArgTypeBuilderTests.GetTypeSymbolFromParameter(code);
-		var model = new TypeReferenceModel(type, compilation);
-		Assert.That(model.RefLikeArgProjectedEvaluationDelegateName, Is.EqualTo("ArgumentEvaluationForSpan"));
-	}
 
 	private static (ITypeSymbol typeToMock, ITypeSymbol type, Compilation compilation, SemanticModel model) GetTypeSymbols(string source)
 	{
