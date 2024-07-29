@@ -39,39 +39,10 @@ public static class RefStructGeneratorTests
 			internal sealed class IAmNonGenericCreateExpectations
 				: global::Rocks.Expectations
 			{
-				internal static class Projections
-				{
-					internal delegate void Callback_390881332910342684244175735408940152175569582800(global::MyRefStruct @data);
-					internal delegate bool ArgumentEvaluationForMyRefStruct(global::MyRefStruct @value);
-					
-					internal sealed class ArgumentForMyRefStruct
-						: global::Rocks.Argument
-					{
-						private readonly global::IAmNonGenericCreateExpectations.Projections.ArgumentEvaluationForMyRefStruct? evaluation;
-						private readonly global::Rocks.ValidationState validation;
-						
-						internal ArgumentForMyRefStruct() => this.validation = global::Rocks.ValidationState.None;
-						
-						internal ArgumentForMyRefStruct(global::IAmNonGenericCreateExpectations.Projections.ArgumentEvaluationForMyRefStruct @evaluation)
-						{
-							this.evaluation = @evaluation;
-							this.validation = global::Rocks.ValidationState.Evaluation;
-						}
-						
-						public bool IsValid(global::MyRefStruct @value) =>
-							this.validation switch
-							{
-								global::Rocks.ValidationState.None => true,
-								global::Rocks.ValidationState.Evaluation => this.evaluation!(@value),
-								_ => throw new global::System.NotSupportedException("Invalid validation state."),
-							};
-					}
-				}
-				
 				internal sealed class Handler0
-					: global::Rocks.Handler<global::IAmNonGenericCreateExpectations.Projections.Callback_390881332910342684244175735408940152175569582800>
+					: global::Rocks.Handler<global::System.Action<global::MyRefStruct>>
 				{
-					public global::IAmNonGenericCreateExpectations.Projections.ArgumentForMyRefStruct @data { get; set; }
+					public global::Rocks.RefStructArgument<global::MyRefStruct> @data { get; set; }
 				}
 				private global::Rocks.Handlers<global::IAmNonGenericCreateExpectations.Handler0>? @handlers0;
 				
@@ -135,7 +106,7 @@ public static class RefStructGeneratorTests
 					internal MethodExpectations(global::IAmNonGenericCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::IAmNonGenericCreateExpectations.Adornments.AdornmentsForHandler0 Work(global::IAmNonGenericCreateExpectations.Projections.ArgumentForMyRefStruct @data)
+					internal global::IAmNonGenericCreateExpectations.Adornments.AdornmentsForHandler0 Work(global::Rocks.RefStructArgument<global::MyRefStruct> @data)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@data);
@@ -181,7 +152,7 @@ public static class RefStructGeneratorTests
 					{ }
 					
 					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::IAmNonGenericCreateExpectations.Handler0, global::IAmNonGenericCreateExpectations.Projections.Callback_390881332910342684244175735408940152175569582800>, IAdornmentsForIAmNonGeneric<AdornmentsForHandler0>
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IAmNonGenericCreateExpectations.Handler0, global::System.Action<global::MyRefStruct>>, IAdornmentsForIAmNonGeneric<AdornmentsForHandler0>
 					{
 						public AdornmentsForHandler0(global::IAmNonGenericCreateExpectations.Handler0 handler)
 							: base(handler) { }

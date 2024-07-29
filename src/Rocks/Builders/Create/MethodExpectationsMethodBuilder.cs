@@ -23,9 +23,7 @@ internal static class MethodExpectationsMethodBuilder
 				{
 					if (_.Type.IsEsoteric)
 					{
-						var argName = _.Type.IsPointer ?
-							PointerArgTypeBuilder.GetProjectedFullyQualifiedName(_.Type, method.MockType) :
-							RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(_.Type, method.MockType);
+						var argName = PointerArgTypeBuilder.GetProjectedFullyQualifiedName(_.Type, method.MockType);
 						return $"{argName} @{_.Name}";
 					}
 					else
@@ -43,7 +41,9 @@ internal static class MethodExpectationsMethodBuilder
 							{
 								return _.IsParams ?
 									$"params {typeName}{requiresNullable} @{_.Name}" :
-									$"global::Rocks.Argument<{typeName}{requiresNullable}> @{_.Name}";
+									_.Type.IsRefLikeType ?
+										$"global::Rocks.RefStructArgument<{typeName}{requiresNullable}> @{_.Name}" :
+										$"global::Rocks.Argument<{typeName}{requiresNullable}> @{_.Name}";
 							}
 						}
 
@@ -53,7 +53,9 @@ internal static class MethodExpectationsMethodBuilder
 							needsGenerationWithDefaults |= _.HasExplicitDefaultValue;
 						}
 
-						return $"global::Rocks.Argument<{typeName}{requiresNullable}> @{_.Name}";
+						return _.Type.IsRefLikeType ?
+							$"global::Rocks.RefStructArgument<{typeName}{requiresNullable}> @{_.Name}" :
+							$"global::Rocks.Argument<{typeName}{requiresNullable}> @{_.Name}";
 					}
 				}));
 

@@ -8,20 +8,6 @@ namespace Rocks.Tests;
 
 internal static class TestAssistants
 {
-	internal static IEnumerable<(Type, string, string)> GetGeneratedSources(
-		IEnumerable<(string, string)> generatedSources)
-	{
-		foreach (var (fileName, code) in generatedSources)
-		{
-			yield return (typeof(RockGenerator), fileName, code);
-		}
-
-		foreach (var (fileName, code) in IncrementalGeneratorInitializationContextExtensions.GetOutputCode())
-		{
-			yield return (typeof(RockGenerator), fileName, code);
-		}
-	}
-
 	internal static async Task RunAnalyzerAsync<TAnalyzer>(string code,
 		IEnumerable<DiagnosticResult> expectedDiagnostics,
 		OutputKind outputKind = OutputKind.DynamicallyLinkedLibrary,
@@ -74,14 +60,14 @@ internal static class TestAssistants
 			test.DisabledDiagnostics.AddRange(disabledDiagnostics);
 		}
 
-		foreach (var (generatedFileName, generatedCode) in generatedSources)
-		{
-			test.TestState.GeneratedSources.Add((typeof(RockGenerator), generatedFileName, generatedCode));
-		}
-
 		foreach (var (outputFileName, outputCode) in IncrementalGeneratorInitializationContextExtensions.GetOutputCode())
 		{
 			test.TestState.GeneratedSources.Add((typeof(RockGenerator), outputFileName, outputCode));
+		}
+
+		foreach (var (generatedFileName, generatedCode) in generatedSources)
+		{
+			test.TestState.GeneratedSources.Add((typeof(RockGenerator), generatedFileName, generatedCode));
 		}
 
 		test.TestState.AdditionalReferences.Add(typeof(TGenerator).Assembly);

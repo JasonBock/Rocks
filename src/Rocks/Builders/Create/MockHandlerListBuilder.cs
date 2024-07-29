@@ -9,8 +9,8 @@ internal static class MockHandlerListBuilder
 {
 	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName)
 	{
-		BuildMethodHandlerTypes(writer, mockType, expectationsFullyQualifiedName);
-		BuildPropertyHandlerTypes(writer, mockType, expectationsFullyQualifiedName);
+		MockHandlerListBuilder.BuildMethodHandlerTypes(writer, mockType, expectationsFullyQualifiedName);
+		MockHandlerListBuilder.BuildPropertyHandlerTypes(writer, mockType, expectationsFullyQualifiedName);
 	}
 
 	private static void BuildHandler(IndentedTextWriter writer, MethodModel method, uint memberIdentifier, string expectationsFullyQualifiedName)
@@ -42,7 +42,7 @@ internal static class MockHandlerListBuilder
 			}
 			else if (method.ReturnType.IsRefLikeType)
 			{
-				returnTypeName = MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(method, method.MockType);
+				returnTypeName = $"global::System.Func<{method.ReturnType.BuildName(typeArgumentsNamingContext)}>";
 			}
 			else
 			{
@@ -82,13 +82,13 @@ internal static class MockHandlerListBuilder
 
 				if (parameter.Type.IsEsoteric)
 				{
-					argumentTypeName = parameter.Type.IsPointer ?
-						$"public {PointerArgTypeBuilder.GetProjectedFullyQualifiedName(parameter.Type, method.MockType)}" :
-						$"public {RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(parameter.Type, method.MockType)}";
+					argumentTypeName = $"public {PointerArgTypeBuilder.GetProjectedFullyQualifiedName(parameter.Type, method.MockType)}";
 				}
 				else
 				{
-					argumentTypeName = $"public global::Rocks.Argument<{parameter.Type.BuildName(typeArgumentsNamingContext)}{requiresNullable}>";
+					argumentTypeName = parameter.Type.IsRefLikeType ?
+						$"public global::Rocks.RefStructArgument<{parameter.Type.BuildName(typeArgumentsNamingContext)}{requiresNullable}>" :
+						$"public global::Rocks.Argument<{parameter.Type.BuildName(typeArgumentsNamingContext)}{requiresNullable}>";
 				}
 
 				writer.WriteLine($"{argumentTypeName} @{name} {{ get; set; }}");

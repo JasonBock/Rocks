@@ -28,7 +28,7 @@ internal static class PropertyExpectationsPropertyBuilder
 			var handlerTypeName = $"{expectationsFullyQualifiedName}.Handler{memberIdentifier}";
 			var returnType =
 				property.Type.IsRefLikeType ?
-					MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
+					$"global::System.Func<{property.Type.FullyQualifiedName}>" :
 					property.Type.FullyQualifiedName;
 
 			adornmentsType = $"global::Rocks.Adornments<AdornmentsForHandler{memberIdentifier}, {handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
@@ -55,10 +55,10 @@ internal static class PropertyExpectationsPropertyBuilder
 		var propertyParameterType = property.SetMethod!.Parameters[0].Type;
 		var propertyParameterValue =
 			propertyParameterType.IsEsoteric ?
-				propertyParameterType.IsRefLikeType ?
-					RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(propertyParameterType, property.MockType) :
-					PointerArgTypeBuilder.GetProjectedFullyQualifiedName(propertyParameterType, property.MockType) :
-				$"global::Rocks.Argument<{propertyParameterType.FullyQualifiedName}>";
+				PointerArgTypeBuilder.GetProjectedFullyQualifiedName(propertyParameterType, property.MockType) :
+					propertyParameterType.IsRefLikeType ?
+						$"global::Rocks.RefStructArgument<{propertyParameterType.FullyQualifiedName}>" :
+						$"global::Rocks.Argument<{propertyParameterType.FullyQualifiedName}>";
 		var callbackDelegateTypeName = property.SetMethod!.RequiresProjectedDelegate ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, property.MockType) :
 			DelegateBuilder.Build(property.SetMethod!);

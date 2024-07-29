@@ -111,7 +111,8 @@ internal static class ITypeSymbolExtensions
 	internal static bool IsPointer(this ITypeSymbol self) =>
 		self.Kind == SymbolKind.PointerType || self.Kind == SymbolKind.FunctionPointerType;
 
-	internal static bool IsEsoteric(this ITypeSymbol self) => self.IsPointer() || self.IsRefLikeType;
+	// TODO: This can probably go away...
+	internal static bool IsEsoteric(this ITypeSymbol self) => self.IsPointer();
 
 	internal static bool ContainsDiagnostics(this ITypeSymbol self) =>
 		self.DeclaringSyntaxReferences.Any(syntax =>

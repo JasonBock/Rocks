@@ -28,7 +28,7 @@ internal static class MockProjectedArgTypeBuilder
 		{
 			foreach (var parameter in parameters)
 			{
-				if (parameter.Type.IsRefLikeType || parameter.Type.TypeKind == TypeKind.FunctionPointer ||
+				if (parameter.Type.TypeKind == TypeKind.FunctionPointer ||
 					parameter.Type.TypeKind == TypeKind.Pointer)
 				{
 					types.Add(parameter.Type);
@@ -50,7 +50,7 @@ internal static class MockProjectedArgTypeBuilder
 				GetEsotericTypes(property.Parameters, types);
 			}
 
-			if (property.Type.IsRefLikeType || property.Type.TypeKind == TypeKind.FunctionPointer ||
+			if (property.Type.TypeKind == TypeKind.FunctionPointer ||
 				property.Type.TypeKind == TypeKind.Pointer)
 			{
 				types.Add(property.Type);
@@ -60,6 +60,7 @@ internal static class MockProjectedArgTypeBuilder
 		return types;
 	}
 
+	// TODO: This can probably be removed...
 	private sealed class RefLikeTypeEqualityComparer
 		: EqualityComparer<TypeReferenceModel>
 	{
