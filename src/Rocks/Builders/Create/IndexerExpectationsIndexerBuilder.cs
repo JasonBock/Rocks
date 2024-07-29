@@ -44,7 +44,7 @@ internal static class IndexerExpectationsIndexerBuilder
 
 			var instanceParameters = string.Join(", ", propertyGetMethod.Parameters.Select(_ =>
 				{
-					if (_.Type.IsEsoteric)
+					if (_.Type.IsPointer)
 					{
 						var argName = PointerArgTypeBuilder.GetProjectedFullyQualifiedName(_.Type, _.MockType);
 						return $"{argName} @{_.Name}";
@@ -162,7 +162,7 @@ internal static class IndexerExpectationsIndexerBuilder
 			var lastParameter = propertySetMethod.Parameters[propertySetMethod.Parameters.Length - 1];
 			var lastParameterRequiresNullable = lastParameter.RequiresNullableAnnotation ? "?" : string.Empty;
 			var valueParameterArgument =
-				lastParameter.Type.IsEsoteric ?
+				lastParameter.Type.IsPointer ?
 					PointerArgTypeBuilder.GetProjectedFullyQualifiedName(lastParameter.Type, property.MockType) :
 					lastParameter.Type.IsRefLikeType ?
 						$"global::Rocks.RefStructArgument<{lastParameter.Type.FullyQualifiedName}{lastParameterRequiresNullable}>" :
@@ -182,7 +182,7 @@ internal static class IndexerExpectationsIndexerBuilder
 			var instanceParameters = string.Join(", ", valueParameter,
 				string.Join(", ", propertySetMethod.Parameters.Take(propertySetMethod.Parameters.Length - 1).Select(_ =>
 				{
-					if (_.Type.IsEsoteric)
+					if (_.Type.IsPointer)
 					{
 						var argName = PointerArgTypeBuilder.GetProjectedFullyQualifiedName(_.Type, _.MockType);
 						return $"{argName} @{_.Name}";

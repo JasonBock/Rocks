@@ -21,7 +21,7 @@ internal static class MethodExpectationsMethodBuilder
 			var instanceParameters = method.Parameters.Length == 0 ? string.Empty :
 				string.Join(", ", method.Parameters.Select(_ =>
 				{
-					if (_.Type.IsEsoteric)
+					if (_.Type.IsPointer)
 					{
 						var argName = PointerArgTypeBuilder.GetProjectedFullyQualifiedName(_.Type, method.MockType);
 						return $"{argName} @{_.Name}";

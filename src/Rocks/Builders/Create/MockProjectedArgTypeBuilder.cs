@@ -15,10 +15,6 @@ internal static class MockProjectedArgTypeBuilder
 			{
 				PointerArgTypeBuilder.Build(writer, esotericType, type);
 			}
-			else
-			{
-				RefLikeArgTypeBuilder.Build(writer, esotericType, type);
-			}
 		}
 	}
 

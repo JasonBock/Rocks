@@ -101,61 +101,6 @@ public static class MockProjectedDelegateBuilderTests
 		Assert.That(name, Is.EqualTo(expectedValue));
 	}
 
-	[Test]
-	public static void GetProjectedReturnValueDelegateName()
-	{
-		var code =
-			"""
-			namespace Outer 
-			{ 
-				namespace Inner 
-				{ 
-					public class Target<T> { } 
-				
-					public static class Test 
-					{ 
-						public static System.Span<int> Foo(Target<string> t) => default; 
-					} 
-				} 
-			}
-			""";
-		var (method, compilation) = MockProjectedDelegateBuilderTests.GetMethodSymbol(code);
-		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
-			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
-		Assert.That(model.ProjectedReturnValueDelegateName, Is.EqualTo("ReturnValue_305616756374865012389506681414051734154688895315"));
-	}
-
-	[Test]
-	public static void GetProjectedReturnValueDelegateFullyQualifiedName()
-	{
-		var code =
-			"""
-			namespace Mock 
-			{ 
-				public interface IMock { } 
-			} 
-		
-			namespace Outer 
-			{ 
-				namespace Inner 
-				{ 
-					public class Target { } 
-
-					public static class Test 
-					{ 
-						public static System.Span<int> Foo(Target t) => default; 
-					} 
-				} 
-			}
-			""";
-		var (typeToMock, method, compilation) = MockProjectedDelegateBuilderTests.GetSymbols(code);
-		var name = MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(
-			new MethodModel(method, new TypeReferenceModel(typeToMock, compilation), compilation,
-				RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1),
-			new TypeReferenceModel(typeToMock, compilation));
-		Assert.That(name, Is.EqualTo("global::Mock.IMockCreateExpectations.Projections.ReturnValue_305616756374865012389506681414051734154688895315"));
-	}
-
 	private static (ITypeSymbol typeToMock, IMethodSymbol method, Compilation compilation) GetSymbols(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);

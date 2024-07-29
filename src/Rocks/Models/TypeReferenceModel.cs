@@ -53,7 +53,6 @@ internal sealed record TypeReferenceModel
 		this.IsRecord = type.IsRecord;
 		this.IsReferenceType = type.IsReferenceType;
 		this.IsPointer = type.IsPointer();
-		this.IsEsoteric = type.IsEsoteric();
 		this.IsRefLikeType = type.IsRefLikeType;
 		this.IsTupleType = type.IsTupleType;
 
@@ -64,7 +63,7 @@ internal sealed record TypeReferenceModel
 			type;
 		this.IsBasedOnTypeParameter = typeParameterTarget?.IsOpenGeneric() ?? false;
 
-		if (this.IsEsoteric)
+		if (this.IsPointer)
 		{
 			// TODO: Need to remove properties here that I really don't need/use
 
@@ -77,13 +76,6 @@ internal sealed record TypeReferenceModel
 			{
 				this.PointerArgParameterType = ((IPointerTypeSymbol)type).PointedAtType.Name;
 			}
-
-			this.RefLikeArgProjectedEvaluationDelegateName =
-				$"ArgumentEvaluationFor{type.GetName(TypeNameOption.Flatten)}";
-			this.RefLikeArgProjectedName =
-				$"ArgumentFor{type.GetName(TypeNameOption.Flatten)}";
-			this.RefLikeArgConstructorProjectedName =
-				$"ArgumentFor{type.GetName(TypeNameOption.Flatten)}";
 		}
 	}
 
@@ -143,7 +135,6 @@ internal sealed record TypeReferenceModel
 	internal string FullyQualifiedName { get; }
 	internal string FullyQualifiedNameNoGenerics { get; }
 	internal bool IsBasedOnTypeParameter { get; }
-	internal bool IsEsoteric { get; }
 	internal bool IsGenericType { get; }
 	internal bool IsOpenGeneric { get; }
 	internal bool IsPointer { get; }
@@ -158,9 +149,6 @@ internal sealed record TypeReferenceModel
 	internal string? PointerArgParameterType { get; }
 	internal string? PointerArgProjectedEvaluationDelegateName { get; }
 	internal string? PointerArgProjectedName { get; }
-	internal string? RefLikeArgProjectedEvaluationDelegateName { get; }
-	internal string? RefLikeArgProjectedName { get; }
-	internal string? RefLikeArgConstructorProjectedName { get; }
 	internal EquatableArray<TypeReferenceModel> TypeArguments { get; }
 	internal EquatableArray<TypeReferenceModel> TypeParameters { get; }
 	internal TypeKind TypeKind { get; }

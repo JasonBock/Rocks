@@ -26,7 +26,6 @@ public static class TypeReferenceModelTests
 			Assert.That(model.FlattenedName, Is.EqualTo("Target"));
 			Assert.That(model.FullyQualifiedName, Is.EqualTo("global::TargetNamespace.Target"));
 			Assert.That(model.IsBasedOnTypeParameter, Is.False);
-			Assert.That(model.IsEsoteric, Is.False);
 			Assert.That(model.IsPointer, Is.False);
 			Assert.That(model.IsRecord, Is.False);
 			Assert.That(model.IsReferenceType, Is.True);
@@ -36,9 +35,6 @@ public static class TypeReferenceModelTests
 			Assert.That(model.NullableAnnotation, Is.EqualTo(NullableAnnotation.None));
 			Assert.That(model.PointerArgProjectedEvaluationDelegateName, Is.Null);
 			Assert.That(model.PointerArgProjectedName, Is.Null);
-			Assert.That(model.RefLikeArgProjectedEvaluationDelegateName, Is.Null);
-			Assert.That(model.RefLikeArgProjectedName, Is.Null);
-			Assert.That(model.RefLikeArgConstructorProjectedName, Is.Null);
 			Assert.That(model.TypeKind, Is.EqualTo(TypeKind.Class));
 		});
 	}
@@ -152,13 +148,9 @@ public static class TypeReferenceModelTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(model.IsEsoteric, Is.True);
 			Assert.That(model.IsPointer, Is.True);
 			Assert.That(model.PointerArgProjectedEvaluationDelegateName, Is.EqualTo("ArgumentEvaluationForintPointer"));
 			Assert.That(model.PointerArgProjectedName, Is.EqualTo("ArgumentForintPointer"));
-			Assert.That(model.RefLikeArgProjectedEvaluationDelegateName, Is.EqualTo("ArgumentEvaluationForintPointer"));
-			Assert.That(model.RefLikeArgProjectedName, Is.EqualTo("ArgumentForintPointer"));
-			Assert.That(model.RefLikeArgConstructorProjectedName, Is.EqualTo("ArgumentForintPointer"));
 		});
 	}
 

@@ -73,7 +73,7 @@ internal sealed record MethodModel
 			this.ProjectedCallbackDelegateName = $"Callback_{signatureHash}";
 		}
 
-		if (this.ReturnType.IsRefLikeType || this.ReturnType.TypeKind == TypeKind.FunctionPointer)
+		if (this.ReturnType.TypeKind == TypeKind.FunctionPointer)
 		{
 			this.ProjectedReturnValueDelegateName = $"ReturnValue_{this.ReturnType.FullyQualifiedName.GetHash()}";
 		}

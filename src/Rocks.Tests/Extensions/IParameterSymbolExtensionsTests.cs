@@ -9,6 +9,15 @@ namespace Rocks.Tests.Extensions;
 public static class IParameterSymbolExtensionsTests
 {
 	[TestCase("public class Test { public void Foo(string a) { } }", false)]
+	[TestCase("public class Test { public void Foo(scoped ref int a) { } }", true)]
+	[TestCase("using System; public class Test { public void Foo(scoped Span<int> a) { } }", true)]
+	public static void IsScoped(string code, bool expectedValue)
+	{
+		var symbol = IParameterSymbolExtensionsTests.GetParameterSymbol(code);
+		Assert.That(symbol.IsScoped(), Is.EqualTo(expectedValue));
+	}
+
+	[TestCase("public class Test { public void Foo(string a) { } }", false)]
 	[TestCase("public class Test { public void Foo(string a = \"c\") { } }", false)]
 	[TestCase("public class Test { public void Foo(string a = null) { } }", true)]
 	[TestCase("public class Test { public void Foo(string? a = null) { } }", false)]

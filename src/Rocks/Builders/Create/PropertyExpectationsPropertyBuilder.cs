@@ -54,7 +54,7 @@ internal static class PropertyExpectationsPropertyBuilder
 	{
 		var propertyParameterType = property.SetMethod!.Parameters[0].Type;
 		var propertyParameterValue =
-			propertyParameterType.IsEsoteric ?
+			propertyParameterType.IsPointer ?
 				PointerArgTypeBuilder.GetProjectedFullyQualifiedName(propertyParameterType, property.MockType) :
 					propertyParameterType.IsRefLikeType ?
 						$"global::Rocks.RefStructArgument<{propertyParameterType.FullyQualifiedName}>" :

@@ -80,7 +80,7 @@ internal static class MockHandlerListBuilder
 
 				string argumentTypeName;
 
-				if (parameter.Type.IsEsoteric)
+				if (parameter.Type.IsPointer)
 				{
 					argumentTypeName = $"public {PointerArgTypeBuilder.GetProjectedFullyQualifiedName(parameter.Type, method.MockType)}";
 				}

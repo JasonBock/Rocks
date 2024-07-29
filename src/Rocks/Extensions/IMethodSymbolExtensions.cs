@@ -29,8 +29,8 @@ internal static class IMethodSymbolExtensions
 
 	internal static bool RequiresProjectedDelegate(this IMethodSymbol self) =>
 		self.Parameters.Length > 16 ||
-		self.Parameters.Any(_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out || _.IsScoped() || _.Type.IsEsoteric()) ||
-			!self.ReturnsVoid && self.ReturnType.IsEsoteric();
+		self.Parameters.Any(_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out || _.IsScoped() || _.Type.IsPointer()) ||
+			!self.ReturnsVoid && self.ReturnType.IsPointer();
 
 	/// <summary>
 	/// This is needed because if a method has a generic parameter that is used 
