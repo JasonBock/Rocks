@@ -13,9 +13,9 @@ var stopwatch = Stopwatch.StartNew();
 
 //TestTypeValidity();
 //TestWithCode();
-//TestWithType();
+TestWithType();
 //TestWithTypeNoEmit();
-TestWithTypes();
+//TestWithTypes();
 //TestTypesIndividually();
 
 stopwatch.Stop();
@@ -70,7 +70,7 @@ static void TestWithType()
 
 #pragma warning disable EF1001 // Internal EF Core API usage.
 	(var issues, var times) = TestGenerator.Generate(new RockGenerator(),
-		[typeof(AngleSharp.Svg.Dom.ISvgSvgElement)],
+		[typeof(System.Reflection.Emit.FieldBuilder)],
 		typesToLoadAssembliesFrom,
 		[], BuildType.Create);
 #pragma warning restore EF1001 // Internal EF Core API usage.

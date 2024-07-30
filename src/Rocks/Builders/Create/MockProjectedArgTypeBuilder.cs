@@ -32,7 +32,7 @@ internal static class MockProjectedArgTypeBuilder
 			}
 		}
 
-		var types = new HashSet<TypeReferenceModel>(new RefLikeTypeEqualityComparer());
+		var types = new HashSet<TypeReferenceModel>();
 
 		foreach (var method in type.Methods)
 		{
@@ -54,32 +54,5 @@ internal static class MockProjectedArgTypeBuilder
 		}
 
 		return types;
-	}
-
-	// TODO: This can probably be removed...
-	private sealed class RefLikeTypeEqualityComparer
-		: EqualityComparer<TypeReferenceModel>
-	{
-		private static string GetName(TypeReferenceModel type)
-		{
-			string genericValues;
-
-			if (!type.IsGenericType)
-			{
-				genericValues = string.Empty;
-			}
-			else
-			{
-				genericValues = $"<{string.Join(", ", type.TypeArguments.Select(_ => _.TypeKind == TypeKind.TypeParameter ? string.Empty : _.FullyQualifiedName))}>";
-			}
-	
-			return $"{type.FullyQualifiedNameNoGenerics}{genericValues}";
-		}
-
-		public override bool Equals(TypeReferenceModel x, TypeReferenceModel y) =>
-			 RefLikeTypeEqualityComparer.GetName(x) == RefLikeTypeEqualityComparer.GetName(y);
-
-		public override int GetHashCode(TypeReferenceModel obj) =>
-			RefLikeTypeEqualityComparer.GetName(obj).GetHashCode();
 	}
 }

@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Closed generics are no longer valid types to mock (issue [#318](https://github.com/JasonBock/Rocks/issues/318))
 - The following attributes were removed: `RockCreateAttribute`, `RockCreateAttribute<>`, `RockMakeAttribute`, and `RockMakeAttribute<>` (issue [#324](https://github.com/JasonBock/Rocks/issues/324))
+- Improved handling of `ref struct` types (issue [#170](https://github.com/JasonBock/Rocks/issues/170))
 
 ### Fixed
 
