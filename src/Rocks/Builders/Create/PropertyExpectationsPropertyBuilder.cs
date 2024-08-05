@@ -27,7 +27,7 @@ internal static class PropertyExpectationsPropertyBuilder
 		{
 			var handlerTypeName = $"{expectationsFullyQualifiedName}.Handler{memberIdentifier}";
 			var returnType =
-				property.Type.IsRefLikeType ?
+				property.Type.IsRefLikeType | property.Type.AllowsRefLikeType ?
 					$"global::System.Func<{property.Type.FullyQualifiedName}>" :
 					property.Type.FullyQualifiedName;
 
@@ -56,7 +56,7 @@ internal static class PropertyExpectationsPropertyBuilder
 		var propertyParameterValue =
 			propertyParameterType.IsPointer ?
 				PointerArgTypeBuilder.GetProjectedFullyQualifiedName(propertyParameterType, property.MockType) :
-					propertyParameterType.IsRefLikeType ?
+					propertyParameterType.IsRefLikeType | propertyParameterType.AllowsRefLikeType ?
 						$"global::Rocks.RefStructArgument<{propertyParameterType.FullyQualifiedName}>" :
 						$"global::Rocks.Argument<{propertyParameterType.FullyQualifiedName}>";
 		var callbackDelegateTypeName = property.SetMethod!.RequiresProjectedDelegate ?

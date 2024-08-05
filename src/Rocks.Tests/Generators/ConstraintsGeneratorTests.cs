@@ -2,10 +2,60 @@
 
 namespace Rocks.Tests.Generators;
 
+
+public interface IAllowRefStructs<T>
+	where T : new(), allows ref struct
+{
+	void DoWork(T data);
+}
+
+public class Mock<T>
+	: IAllowRefStructs<T>
+	where T : new(), allows ref struct
+{
+	public void DoWork(T data) => throw new NotImplementedException();
+}
+
+
 public static class ConstraintsGeneratorTests
 {
 	[Test]
-	public static async Task CreateWithGeneratedDefaultConstraintAsync()
+	public static async Task GenerateWithAntiConstraintOnTypeParameterAsync()
+	{
+		var m = new Mock<Span<int>>();
+		m.DoWork([1, 2]);
+
+		var code =
+			"""
+			using Rocks;
+			using System.Collections.Generic;
+
+			#nullable enable
+
+			[assembly: Rock(typeof(IAllowRefStructs<>), BuildType.Create | BuildType.Make)]
+
+			public interface IAllowRefStructs<T>
+				where T : allows ref struct
+			{
+				void UseData(T data);
+				T ReturnData();
+			}
+			""";
+
+		var createGeneratedCode = "";
+
+		var makeGeneratedCode = "";
+
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[
+				("IAllowRefStructsT_Rock_Create.g.cs", createGeneratedCode),
+				("IAllowRefStructsT_Rock_Make.g.cs", makeGeneratedCode)
+			],
+			[]);
+	}
+
+	[Test]
+	public static async Task GenerateWithGeneratedDefaultConstraintAsync()
 	{
 		var code =
 			"""
@@ -18,8 +68,8 @@ public static class ConstraintsGeneratorTests
 
 			public abstract class ClassMap<TClass>
 			{
-			  public virtual void MapNullable<TMember>(
-			    IList<TMember?> member, bool useExistingMap = true) { }
+				public virtual void MapNullable<TMember>(
+					IList<TMember?> member, bool useExistingMap = true) { }
 			}
 			""";
 
@@ -364,7 +414,7 @@ public static class ConstraintsGeneratorTests
 	}
 
 	[Test]
-	public static async Task CreateWithDefaultConstraintAsync()
+	public static async Task GenerateWithDefaultConstraintAsync()
 	{
 		var code =
 			"""
@@ -712,7 +762,7 @@ public static class ConstraintsGeneratorTests
 	}
 
 	[Test]
-	public static async Task CreateWithDelegateCreationAndConstraintsAsync()
+	public static async Task GenerateWithDelegateCreationAndConstraintsAsync()
 	{
 		var code =
 			"""

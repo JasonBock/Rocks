@@ -27,6 +27,7 @@ internal static class ITypeParameterSymbolExtensions
 		// they should not be duplicated.
 		// Side note, I don't know how to find if the 'default'
 		// constraint exists.
+
 		if (self.HasUnmanagedTypeConstraint)
 		{
 			constraints.Add("unmanaged");
@@ -35,6 +36,7 @@ internal static class ITypeParameterSymbolExtensions
 		{
 			constraints.Add("notnull");
 		}
+
 		// Then class constraint (HasReferenceTypeConstraint) or struct (HasValueTypeConstraint)
 		else if (self.HasReferenceTypeConstraint)
 		{
@@ -54,6 +56,11 @@ internal static class ITypeParameterSymbolExtensions
 		if (self.HasConstructorConstraint)
 		{
 			constraints.Add("new()");
+		}
+
+		if (self.AllowsRefLikeType)
+		{
+			constraints.Add("allows ref struct");
 		}
 
 		return constraints.Count > 0 ? new Constraints(self.GetName(), constraints.ToImmutableArray()) : null;

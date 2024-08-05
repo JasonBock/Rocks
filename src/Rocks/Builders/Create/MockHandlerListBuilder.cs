@@ -40,7 +40,7 @@ internal static class MockHandlerListBuilder
 			{
 				returnTypeName = string.Empty;
 			}
-			else if (method.ReturnType.IsRefLikeType)
+			else if (method.ReturnType.IsRefLikeType | method.ReturnType.AllowsRefLikeType)
 			{
 				returnTypeName = $"global::System.Func<{method.ReturnType.BuildName(typeArgumentsNamingContext)}>";
 			}
@@ -86,7 +86,7 @@ internal static class MockHandlerListBuilder
 				}
 				else
 				{
-					argumentTypeName = parameter.Type.IsRefLikeType ?
+					argumentTypeName = parameter.Type.IsRefLikeType | parameter.Type.AllowsRefLikeType ?
 						$"public global::Rocks.RefStructArgument<{parameter.Type.BuildName(typeArgumentsNamingContext)}{requiresNullable}>" :
 						$"public global::Rocks.Argument<{parameter.Type.BuildName(typeArgumentsNamingContext)}{requiresNullable}>";
 				}

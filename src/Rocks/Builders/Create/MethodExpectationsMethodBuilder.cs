@@ -41,7 +41,7 @@ internal static class MethodExpectationsMethodBuilder
 							{
 								return _.IsParams ?
 									$"params {typeName}{requiresNullable} @{_.Name}" :
-									_.Type.IsRefLikeType ?
+									_.Type.IsRefLikeType | _.Type.AllowsRefLikeType ?
 										$"global::Rocks.RefStructArgument<{typeName}{requiresNullable}> @{_.Name}" :
 										$"global::Rocks.Argument<{typeName}{requiresNullable}> @{_.Name}";
 							}
@@ -53,7 +53,7 @@ internal static class MethodExpectationsMethodBuilder
 							needsGenerationWithDefaults |= _.HasExplicitDefaultValue;
 						}
 
-						return _.Type.IsRefLikeType ?
+						return _.Type.IsRefLikeType | _.Type.AllowsRefLikeType ?
 							$"global::Rocks.RefStructArgument<{typeName}{requiresNullable}> @{_.Name}" :
 							$"global::Rocks.Argument<{typeName}{requiresNullable}> @{_.Name}";
 					}
@@ -79,7 +79,7 @@ internal static class MethodExpectationsMethodBuilder
 				var returnType =
 					method.ReturnsVoid ?
 						string.Empty :
-						method.ReturnType.IsRefLikeType ?
+						method.ReturnType.IsRefLikeType | method.ReturnType.AllowsRefLikeType ?
 							$"global::System.Func<{method.ReturnType.BuildName(typeArgumentsNamingContext)}>" :
 							method.ReturnType.BuildName(typeArgumentsNamingContext);
 

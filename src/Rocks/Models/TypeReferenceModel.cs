@@ -23,6 +23,7 @@ internal sealed record TypeReferenceModel
 					null :
 				null;
 
+		this.AllowsRefLikeType = (type as ITypeParameterSymbol)?.AllowsRefLikeType ?? false;
 		this.Kind = type.Kind;
 		this.TypeKind = type.TypeKind;
 
@@ -129,6 +130,7 @@ internal sealed record TypeReferenceModel
 
 	public override string ToString() => this.FullyQualifiedName;
 
+	internal bool AllowsRefLikeType { get; }
 	internal string AttributesDescription { get; }
 	internal EquatableArray<Constraints> Constraints { get; }
 	internal string FlattenedName { get; }

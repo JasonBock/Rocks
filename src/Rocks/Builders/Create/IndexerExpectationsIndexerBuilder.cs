@@ -33,7 +33,7 @@ internal static class IndexerExpectationsIndexerBuilder
 			{
 				var handlerTypeName = $"{expectationsFullyQualifiedName}.Handler{memberIdentifier}";
 				var returnType =
-					property.Type.IsRefLikeType ?
+					property.Type.IsRefLikeType | property.Type.AllowsRefLikeType ?
 						$"global::System.Func<{property.Type.FullyQualifiedName}>" :
 						property.Type.FullyQualifiedName;
 
@@ -63,7 +63,7 @@ internal static class IndexerExpectationsIndexerBuilder
 							{
 								return _.IsParams ?
 									$"params {_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}" :
-										_.Type.IsRefLikeType ?
+										_.Type.IsRefLikeType | _.Type.AllowsRefLikeType ?
 											$"global::Rocks.RefStructArgument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}" :
 											$"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
 							}
@@ -75,7 +75,7 @@ internal static class IndexerExpectationsIndexerBuilder
 							needsGenerationWithDefaults |= _.HasExplicitDefaultValue;
 						}
 
-						return _.Type.IsRefLikeType ?
+						return _.Type.IsRefLikeType | _.Type.AllowsRefLikeType ?
 							$"global::Rocks.RefStructArgument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}" :
 							$"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
 					}
@@ -164,7 +164,7 @@ internal static class IndexerExpectationsIndexerBuilder
 			var valueParameterArgument =
 				lastParameter.Type.IsPointer ?
 					PointerArgTypeBuilder.GetProjectedFullyQualifiedName(lastParameter.Type, property.MockType) :
-					lastParameter.Type.IsRefLikeType ?
+					lastParameter.Type.IsRefLikeType | lastParameter.Type.AllowsRefLikeType ?
 						$"global::Rocks.RefStructArgument<{lastParameter.Type.FullyQualifiedName}{lastParameterRequiresNullable}>" :
 						$"global::Rocks.Argument<{lastParameter.Type.FullyQualifiedName}{lastParameterRequiresNullable}>";
 			var valueParameter = $"{valueParameterArgument} @{lastParameter.Name}";
@@ -201,7 +201,7 @@ internal static class IndexerExpectationsIndexerBuilder
 							{
 								return _.IsParams ?
 									$"params {_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}" :
-									_.Type.IsRefLikeType ?
+									_.Type.IsRefLikeType | _.Type.AllowsRefLikeType ?
 										$"global::Rocks.RefStructArgument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}" :
 										$"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
 							}
@@ -213,7 +213,7 @@ internal static class IndexerExpectationsIndexerBuilder
 							needsGenerationWithDefaults |= _.HasExplicitDefaultValue;
 						}
 
-						return _.Type.IsRefLikeType ?
+						return _.Type.IsRefLikeType | _.Type.AllowsRefLikeType ?
 							$"global::Rocks.RefStructArgument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}" :
 							$"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
 					}
