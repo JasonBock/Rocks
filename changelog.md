@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [9.0.0-alpha.1] - Not Yet Released
 
+### Added
+
+- Type parameters constrained with `allows ref struct` are now supported (issue [#331](https://github.com/JasonBock/Rocks/issues/331))
+
 ### Changed
 
 - Closed generics are no longer valid types to mock (issue [#318](https://github.com/JasonBock/Rocks/issues/318))
