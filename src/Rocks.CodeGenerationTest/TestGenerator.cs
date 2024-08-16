@@ -24,6 +24,7 @@ internal static class TestGenerator
 	* Runtime policy (CS1701, CS1702)
 	* UTF7 encoding (SYSLIB0001)
 	* Code access security (SYSLIB0003)
+	* EF "future" warnings (EF9100)
 
 	These are warnings, and they should not cause errors. A user can decide to treat them
 	as errors, but Rocks should still be able to create code that cause these warnings.
@@ -40,6 +41,7 @@ internal static class TestGenerator
 		{ "CS8610", ReportDiagnostic.Suppress },
 		{ "CS8613", ReportDiagnostic.Suppress },
 		{ "CS8765", ReportDiagnostic.Suppress },
+		{ "EF9100", ReportDiagnostic.Suppress },
 		{ "FluentMultiSplitter", ReportDiagnostic.Suppress },
 		{ "SYSLIB0001", ReportDiagnostic.Info },
 		{ "SYSLIB0003", ReportDiagnostic.Info },

@@ -14,17 +14,8 @@ internal static class TypeExtensions
 		if (self.IsGenericTypeDefinition)
 		{
 			var selfGenericArguments = self.GetGenericArguments();
-			var genericArguments = new string[selfGenericArguments.Length];
 
-			for (var i = 0; i < selfGenericArguments.Length; i++)
-			{
-				var argument = selfGenericArguments[i];
-				var argumentAttributes = argument.GenericParameterAttributes & GenericParameterAttributes.SpecialConstraintMask;
-
-				genericArguments[i] = argumentAttributes.HasFlag(GenericParameterAttributes.NotNullableValueTypeConstraint) ? "int" : "object";
-			}
-
-			return $"{(aliases.Length > 0 ? $"{aliases[0]}::" : string.Empty)}{self.FullName!.Split("`")[0]}<{string.Join(", ", genericArguments)}>";
+			return $"{(aliases.Length > 0 ? $"{aliases[0]}::" : string.Empty)}{self.FullName!.Split("`")[0]}<{new string(',', selfGenericArguments.Length - 1)}>";
 		}
 		else
 		{

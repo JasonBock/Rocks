@@ -2,6 +2,8 @@
 //#define INCLUDE_FAILING
 
 using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore.Query.Internal;
+using R3;
 using Rocks;
 using Rocks.CodeGenerationTest;
 using Rocks.CodeGenerationTest.Extensions;
@@ -12,10 +14,10 @@ using System.Reflection;
 var stopwatch = Stopwatch.StartNew();
 
 //TestTypeValidity();
-//TestWithCode();
+TestWithCode();
 //TestWithType();
 //TestWithTypeNoEmit();
-TestWithTypes();
+//TestWithTypes();
 //TestTypesIndividually();
 
 stopwatch.Stop();
@@ -37,15 +39,16 @@ static void TestWithCode()
 
 	TestGenerator.Generate(new RockGenerator(),
 		"""
+		#nullable enable
+
 		using Rocks;
 		using System;
-		
-		[assembly: Rock(typeof(ParamMethods), BuildType.Create | BuildType.Make)]
-		
-		public class ParamMethods
+				
+		[assembly: Rock(typeof(NewNameUsage), BuildType.Create)]
+
+		public class NewNameUsage
 		{
-		  public virtual void Do(params string[] args) { }
-		  public virtual void DoSpan(params ReadOnlySpan<string> args) { }
+			public virtual void Work(string @new) { }
 		}
 		""",
 		typesToLoadAssembliesFrom);
@@ -69,13 +72,15 @@ static void TestWithType()
 	};
 
 #pragma warning disable EF1001 // Internal EF Core API usage.
-	(var issues, var times) = TestGenerator.Generate(new RockGenerator(),
-		[typeof(System.Reflection.Emit.FieldBuilder)],
+#pragma warning disable EF9100 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+   (var issues, var times) = TestGenerator.Generate(new RockGenerator(),
+		[typeof(ExpressionTreeFuncletizer)],
 		typesToLoadAssembliesFrom,
 		[], BuildType.Create);
+#pragma warning restore EF9100 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 #pragma warning restore EF1001 // Internal EF Core API usage.
 
-	Console.WriteLine($"Generation Time: {times.GeneratorTime}, Emit Time: {times.EmitTime}");
+   Console.WriteLine($"Generation Time: {times.GeneratorTime}, Emit Time: {times.EmitTime}");
 	PrintIssues(issues);
 }
 
@@ -114,107 +119,107 @@ static void TestWithTypes()
 		// Until then, we'll just test the .NET types.
 
 		// NuGet references
-		//new (typeof(AngleSharp.BrowsingContext), []),
-		//new (typeof(Ardalis.GuardClauses.Guard), []),
-		//new (typeof(Aspire.Hosting.ContainerResourceBuilderExtensions), []),
-		//new (typeof(Aspose.Email.AlternateView), ["AsposeEmailAlias"]),
-		//new (typeof(Autofac.ContainerBuilder), []),
-		//new (typeof(AutoFixture.AutoPropertiesTarget), []),
-		//new (typeof(AutoMapper.AutoMapAttribute), []),
-		//new (typeof(Avalonia.AppBuilder), []),
-		//new (typeof(AWSSDK.Runtime.Internal.Util.ChecksumCRTWrapper), []),
-		//new (typeof(Azure.Core.AccessToken), []),
-		//new (typeof(Azure.Messaging.ServiceBus.CreateMessageBatchOptions), []),
-		//new (typeof(Azure.Storage.Blobs.BlobClient), []),
-		//new (typeof(Azure.Storage.Queues.QueueClient), []),
-		//new (typeof(BenchmarkDotNet.Analysers.AnalyserBase), []),
-		//new (typeof(Blazored.LocalStorage.ChangedEventArgs), []),
-		//new (typeof(Blazored.Video.BlazoredVideo), []),
-		//new (typeof(Bogus.Binder), []),
-		//new (typeof(Castle.DynamicProxy.ProxyGenerationOptions), []),
-		//new (typeof(ClangSharp.AbstractConditionalOperator), []),
-		//new (typeof(Confluent.Kafka.Acks), []),
-		//new (typeof(Coravel.CacheServiceRegistration), []),
-		//new (typeof(CoreWCF.ActionNotSupportedException), []),
-		//new (typeof(Csla.DataPortal<>), []),
-		//new (typeof(CsvHelper.ArrayHelper), []),
-		//new (typeof(Cursively.CsvAsyncInput), []),
-		//new (typeof(Dapper.DbString), []),
-		//new (typeof(DiffEngine.BuildServerDetector), []),
-		//new (typeof(DnsClient.DnsDatagramReader), ["DnsClientAlias"]),
-		//new (typeof(DSharpPlus.AnsiColor), []),
-		//new (typeof(Elastic.Clients.Elasticsearch.BlockingSubscribeExtensions), []),
-		//new (typeof(EntityFramework.Exceptions.Common.CannotInsertNullException), []),
-		//new (typeof(FluentAssertions.AggregateExceptionExtractor),  []),
-		//new (typeof(FluentValidation.ApplyConditionTo), []),
-		//new (typeof(Flurl.GeneratedExtensions), []),
-		//new (typeof(Google.Apis.ETagAction), []),
-		//new (typeof(GraphQL.AllowAnonymousAttribute), []),
-		//new (typeof(Grpc.Core.AuthContext), []),
-		//new (typeof(HandlebarsDotNet.Arguments), []),
-		//new (typeof(HarmonyLib.AccessTools), []),
-		//new (typeof(Humanizer.ByteSizeExtensions), []),
-		//new (typeof(ICSharpCode.SharpZipLib.SharpZipBaseException), []),
-		//new (typeof(IdentityModel.Base64Url), []),
-		//new (typeof(LanguageExt.FuncExtensions), []),
-		//new (typeof(LLVMSharp.AddrSpaceCastInst), []),
-		//new (typeof(MassTransit.AbstractUriException), []),
-		//new (typeof(MathNet.Numerics.AppSwitches), []),
-		//new (typeof(MediatR.ISender), []),
-		//new (typeof(MessagePack.FormatterNotRegisteredException), []),
-		//new (typeof(Microsoft.CodeAnalysis.SyntaxTree), []),
-		//new (typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource), []),
-		//new (typeof(Microsoft.Extensions.DependencyInjection.AsyncServiceScope), []),
-		//new (typeof(Microsoft.Extensions.Logging.LogDefineOptions), []),
-		//new (typeof(Microsoft.Extensions.ServiceDiscovery.ConfigurationServiceEndpointProviderOptions), []),
-		//new (typeof(Microsoft.FluentUI.AspNetCore.Components.AccordionChangeEventArgs), []),
-		//new (typeof(Microsoft.Identity.Client.AadAuthorityAudience), []),
-		//new (typeof(Microsoft.Kiota.Abstractions.ApiClientBuilder), []),
-		//new (typeof(Microsoft.OpenApi.Any.AnyType), []),
-		//new (typeof(Microsoft.Quantum.AmplitudeAmplification.AmpAmpByOracle), []),
-		//new (typeof(Mono.Cecil.FixedSysStringMarshalInfo), []),
-		//new (typeof(Mscc.GenerativeAI.BlockedError), []),
-		//new (typeof(NetFabric.EnumerableExtensions), []),
-		//new (typeof(nietras.SeparatedValues.SepReaderExtensions), []),
-		//new (typeof(Ninject.ActivationException), []),
-		//new (typeof(NodaTime.AmbiguousTimeException), []),
-		//new (typeof(NuGet.Common.ActivityCorrelationId), []),
-		//new (typeof(Orleans.Grain), []),
-		//new (typeof(Paramore.Brighter.Channel), []),
-		//new (typeof(Proto.ActorContextDecorator), []),
-		//new (typeof(Pulumi.Alias), []),
-		//new (typeof(Quartz.AdoProviderExtensions), []),
-		//new (typeof(R3.CancellationDisposable), []),
-		//new (typeof(RabbitMQ.Client.AmqpTcpEndpoint), []),
-		//new (typeof(RecordParser.Builders.Reader.FixedLengthReaderBuilder<>), []),
-		//new (typeof(Refit.AliasAsAttribute), []),
-		//new (typeof(Renci.SshNet.AuthenticationMethod), []),
-		//new (typeof(RestSharp.BodyParameter), []),
-		//new (typeof(Serilog.Core.IDestructuringPolicy), []),
-		//new (typeof(ServiceStack.ActionExecExtensions), []),
-		//new (typeof(Sigil.CatchBlock), []),
-		//new (typeof(Silk.NET.Core.Attributes.CountAttribute), []),
-		//new (typeof(SimpleInjector.ActivationException), []),
-		//new (typeof(SixLabors.ImageSharp.GraphicsOptions), []),
-		//new (typeof(SkiaSharp.GRBackend), []),
-		//new (typeof(StackExchange.Redis.Aggregate), []),
-		//new (typeof(Stateless.FiringMode), []),
-		//new (typeof(Stripe.Account), []),
-		//new (typeof(Sylvan.Data.Csv.AmbiguousColumnException), []),
-		//new (typeof(System.IO.Abstractions.DirectoryAclExtensions), []),
-		//new (typeof(System.Numerics.Tensors.TensorPrimitives), []),
-		//new (typeof(System.Reactive.ExperimentalAttribute), []),
-		//new (typeof(System.Reflection.Metadata.ArrayShape), []),
-		//new (typeof(System.Text.Json.JsonCommentHandling), []),
-		//new (typeof(TerraFX.Interop.DirectX.D3D12MA_Allocation), []),
-		//new (typeof(TerraFX.Interop.INativeGuid), []),
-		//new (typeof(Topshelf.Credentials), []),
-		//new (typeof(Twilio.Base.Page<>), []),
-		//new (typeof(VerifyTests.AsStringResult), []),
-		//new (typeof(Wasmtime.ActionResult), []),
-		//new (typeof(WireMock.IMapping), []),
-		//new (typeof(Wisp.IByteReader), []),
-		//new (typeof(ZLogger.AsyncStreamLineMessageWriter), []),
+		new (typeof(AngleSharp.BrowsingContext), []),
+		new (typeof(Ardalis.GuardClauses.Guard), []),
+		new (typeof(Aspire.Hosting.ContainerResourceBuilderExtensions), []),
+		new (typeof(Aspose.Email.AlternateView), ["AsposeEmailAlias"]),
+		new (typeof(Autofac.ContainerBuilder), []),
+		new (typeof(AutoFixture.AutoPropertiesTarget), []),
+		new (typeof(AutoMapper.AutoMapAttribute), []),
+		new (typeof(Avalonia.AppBuilder), []),
+		new (typeof(AWSSDK.Runtime.Internal.Util.ChecksumCRTWrapper), []),
+		new (typeof(Azure.Core.AccessToken), []),
+		new (typeof(Azure.Messaging.ServiceBus.CreateMessageBatchOptions), []),
+		new (typeof(Azure.Storage.Blobs.BlobClient), []),
+		new (typeof(Azure.Storage.Queues.QueueClient), []),
+		new (typeof(BenchmarkDotNet.Analysers.AnalyserBase), []),
+		new (typeof(Blazored.LocalStorage.ChangedEventArgs), []),
+		new (typeof(Blazored.Video.BlazoredVideo), []),
+		new (typeof(Bogus.Binder), []),
+		new (typeof(Castle.DynamicProxy.ProxyGenerationOptions), []),
+		new (typeof(ClangSharp.AbstractConditionalOperator), []),
+		new (typeof(Confluent.Kafka.Acks), []),
+		new (typeof(Coravel.CacheServiceRegistration), []),
+		new (typeof(CoreWCF.ActionNotSupportedException), []),
+		new (typeof(Csla.DataPortal<>), []),
+		new (typeof(CsvHelper.ArrayHelper), []),
+		new (typeof(Cursively.CsvAsyncInput), []),
+		new (typeof(Dapper.DbString), []),
+		new (typeof(DiffEngine.BuildServerDetector), []),
+		new (typeof(DnsClient.DnsDatagramReader), ["DnsClientAlias"]),
+		new (typeof(DSharpPlus.AnsiColor), []),
+		new (typeof(Elastic.Clients.Elasticsearch.BlockingSubscribeExtensions), []),
+		new (typeof(EntityFramework.Exceptions.Common.CannotInsertNullException), []),
+		new (typeof(FluentAssertions.AggregateExceptionExtractor),  []),
+		new (typeof(FluentValidation.ApplyConditionTo), []),
+		new (typeof(Flurl.GeneratedExtensions), []),
+		new (typeof(Google.Apis.ETagAction), []),
+		new (typeof(GraphQL.AllowAnonymousAttribute), []),
+		new (typeof(Grpc.Core.AuthContext), []),
+		new (typeof(HandlebarsDotNet.Arguments), []),
+		new (typeof(HarmonyLib.AccessTools), []),
+		new (typeof(Humanizer.ByteSizeExtensions), []),
+		new (typeof(ICSharpCode.SharpZipLib.SharpZipBaseException), []),
+		new (typeof(IdentityModel.Base64Url), []),
+		new (typeof(LanguageExt.FuncExtensions), []),
+		new (typeof(LLVMSharp.AddrSpaceCastInst), []),
+		new (typeof(MassTransit.AbstractUriException), []),
+		new (typeof(MathNet.Numerics.AppSwitches), []),
+		new (typeof(MediatR.ISender), []),
+		new (typeof(MessagePack.FormatterNotRegisteredException), []),
+		new (typeof(Microsoft.CodeAnalysis.SyntaxTree), []),
+		new (typeof(Microsoft.EntityFrameworkCore.Infrastructure.AccessorExtensions), []),
+		new (typeof(Microsoft.Extensions.DependencyInjection.AsyncServiceScope), []),
+		new (typeof(Microsoft.Extensions.Logging.LogDefineOptions), []),
+		new (typeof(Microsoft.Extensions.ServiceDiscovery.ConfigurationServiceEndpointProviderOptions), []),
+		new (typeof(Microsoft.FluentUI.AspNetCore.Components.AccordionChangeEventArgs), []),
+		new (typeof(Microsoft.Identity.Client.AadAuthorityAudience), []),
+		new (typeof(Microsoft.Kiota.Abstractions.ApiClientBuilder), []),
+		new (typeof(Microsoft.OpenApi.Any.AnyType), []),
+		new (typeof(Microsoft.Quantum.AmplitudeAmplification.AmpAmpByOracle), []),
+		new (typeof(Mono.Cecil.FixedSysStringMarshalInfo), []),
+		new (typeof(Mscc.GenerativeAI.BlockedError), []),
+		new (typeof(NetFabric.EnumerableExtensions), []),
+		new (typeof(nietras.SeparatedValues.SepReaderExtensions), []),
+		new (typeof(Ninject.ActivationException), []),
+		new (typeof(NodaTime.AmbiguousTimeException), []),
+		new (typeof(NuGet.Common.ActivityCorrelationId), []),
+		new (typeof(Orleans.Grain), []),
+		new (typeof(Paramore.Brighter.Channel), []),
+		new (typeof(Proto.ActorContextDecorator), []),
+		new (typeof(Pulumi.Alias), []),
+		new (typeof(Quartz.AdoProviderExtensions), []),
+		new (typeof(R3.CancellationDisposable), []),
+		new (typeof(RabbitMQ.Client.AmqpTcpEndpoint), []),
+		new (typeof(RecordParser.Builders.Reader.FixedLengthReaderBuilder<>), []),
+		new (typeof(Refit.AliasAsAttribute), []),
+		new (typeof(Renci.SshNet.AuthenticationMethod), []),
+		new (typeof(RestSharp.BodyParameter), []),
+		new (typeof(Serilog.Core.IDestructuringPolicy), []),
+		new (typeof(ServiceStack.ActionExecExtensions), []),
+		new (typeof(Sigil.CatchBlock), []),
+		new (typeof(Silk.NET.Core.Attributes.CountAttribute), []),
+		new (typeof(SimpleInjector.ActivationException), []),
+		new (typeof(SixLabors.ImageSharp.GraphicsOptions), []),
+		new (typeof(SkiaSharp.GRBackend), []),
+		new (typeof(StackExchange.Redis.Aggregate), []),
+		new (typeof(Stateless.FiringMode), []),
+		new (typeof(Stripe.Account), []),
+		new (typeof(Sylvan.Data.Csv.AmbiguousColumnException), []),
+		new (typeof(System.IO.Abstractions.DirectoryAclExtensions), []),
+		new (typeof(System.Numerics.Tensors.TensorPrimitives), []),
+		new (typeof(System.Reactive.ExperimentalAttribute), []),
+		new (typeof(System.Reflection.Metadata.ArrayShape), []),
+		new (typeof(System.Text.Json.JsonCommentHandling), []),
+		new (typeof(TerraFX.Interop.DirectX.D3D12MA_Allocation), []),
+		new (typeof(TerraFX.Interop.INativeGuid), []),
+		new (typeof(Topshelf.Credentials), []),
+		new (typeof(Twilio.Base.Page<>), []),
+		new (typeof(VerifyTests.AsStringResult), []),
+		new (typeof(Wasmtime.ActionResult), []),
+		new (typeof(WireMock.IMapping), []),
+		new (typeof(Wisp.IByteReader), []),
+		new (typeof(ZLogger.AsyncStreamLineMessageWriter), []),
 #endif
 #if INCLUDE_FAILING
 #endif
@@ -285,7 +290,7 @@ static void TestTypesIndividually()
 	var targetMappings = new TypeAliasesMapping[]
 	{
 		new (typeof(AngleSharp.BrowsingContext), []),
-		new (typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource), []),
+		new (typeof(Microsoft.EntityFrameworkCore.Infrastructure.AccessorExtensions), []),
 	};
 
 	var typesToLoadAssembliesFrom = new Type[]
