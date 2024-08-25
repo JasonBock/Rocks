@@ -642,7 +642,7 @@ public static class ConstraintsGeneratorTests
 						}
 						else
 						{
-							return base.Equals(obj: @obj!);
+							return base.Equals(@obj: @obj!);
 						}
 					}
 					
@@ -710,7 +710,7 @@ public static class ConstraintsGeneratorTests
 						}
 						else
 						{
-							base.MapNullable<TMember>(member: @member!, useExistingMap: @useExistingMap!);
+							base.MapNullable<TMember>(@member: @member!, @useExistingMap: @useExistingMap!);
 						}
 					}
 					
@@ -999,7 +999,7 @@ public static class ConstraintsGeneratorTests
 						}
 						else
 						{
-							return base.Equals(obj: @obj!);
+							return base.Equals(@obj: @obj!);
 						}
 					}
 					
@@ -1061,7 +1061,7 @@ public static class ConstraintsGeneratorTests
 						}
 						else
 						{
-							return base.GetService<T>(args: @args!);
+							return base.GetService<T>(@args: @args!);
 						}
 					}
 					
@@ -2176,7 +2176,7 @@ public static class ConstraintsGeneratorTests
 						}
 						else
 						{
-							return base.Equals(obj: @obj!);
+							return base.Equals(@obj: @obj!);
 						}
 					}
 					
@@ -2395,7 +2395,7 @@ public static class ConstraintsGeneratorTests
 						}
 						else
 						{
-							return base.HasNullableValue<TData>(data: @data!);
+							return base.HasNullableValue<TData>(@data: @data!);
 						}
 					}
 					
@@ -3035,7 +3035,7 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-								return base.Equals(obj: @obj!);
+								return base.Equals(@obj: @obj!);
 							}
 						}
 						

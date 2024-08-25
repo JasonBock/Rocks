@@ -400,7 +400,7 @@ public static class PropertyGeneratorTests
 						}
 						else
 						{
-							return base.Equals(obj: @obj!);
+							return base.Equals(@obj: @obj!);
 						}
 					}
 					
@@ -877,7 +877,7 @@ public static class PropertyGeneratorTests
 						}
 						else
 						{
-							return base.Equals(obj: @obj!);
+							return base.Equals(@obj: @obj!);
 						}
 					}
 					
@@ -1285,7 +1285,7 @@ public static class PropertyGeneratorTests
 						}
 						else
 						{
-							return base.Equals(obj: @obj!);
+							return base.Equals(@obj: @obj!);
 						}
 					}
 					
@@ -1345,7 +1345,7 @@ public static class PropertyGeneratorTests
 							}
 							else
 							{
-								return base[index: @index!];
+								return base[@index: @index!];
 							}
 						}
 					}
@@ -1372,7 +1372,7 @@ public static class PropertyGeneratorTests
 							}
 							else
 							{
-								return base[index: @index!];
+								return base[@index: @index!];
 							}
 						}
 						protected set
@@ -1394,7 +1394,7 @@ public static class PropertyGeneratorTests
 							}
 							else
 							{
-								base[index: @index!] = @value!;
+								base[@index: @index!] = @value!;
 							}
 						}
 					}
@@ -1420,7 +1420,7 @@ public static class PropertyGeneratorTests
 							}
 							else
 							{
-								base[index: @index!] = @value!;
+								base[@index: @index!] = @value!;
 							}
 						}
 					}
@@ -1447,7 +1447,7 @@ public static class PropertyGeneratorTests
 							}
 							else
 							{
-								return base[index: @index!];
+								return base[@index: @index!];
 							}
 						}
 						set
@@ -1469,7 +1469,7 @@ public static class PropertyGeneratorTests
 							}
 							else
 							{
-								base[index: @index!] = @value!;
+								base[@index: @index!] = @value!;
 							}
 						}
 					}
@@ -1932,7 +1932,7 @@ public static class PropertyGeneratorTests
 						}
 						else
 						{
-							return base.Equals(obj: @obj!);
+							return base.Equals(@obj: @obj!);
 						}
 					}
 					

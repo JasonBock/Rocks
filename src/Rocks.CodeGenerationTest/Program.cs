@@ -14,10 +14,10 @@ using System.Reflection;
 var stopwatch = Stopwatch.StartNew();
 
 //TestTypeValidity();
-TestWithCode();
+//TestWithCode();
 //TestWithType();
 //TestWithTypeNoEmit();
-//TestWithTypes();
+TestWithTypes();
 //TestTypesIndividually();
 
 stopwatch.Stop();

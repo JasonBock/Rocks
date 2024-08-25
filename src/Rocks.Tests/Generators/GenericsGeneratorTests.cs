@@ -612,7 +612,7 @@ public static class GenericsGeneratorTests
 						}
 						else
 						{
-							return base.Equals(obj: @obj!);
+							return base.Equals(@obj: @obj!);
 						}
 					}
 					
@@ -673,7 +673,7 @@ public static class GenericsGeneratorTests
 						}
 						else
 						{
-							return base.Bind<S>(f: @f!);
+							return base.Bind<S>(@f: @f!);
 						}
 					}
 					
@@ -969,7 +969,7 @@ public static class GenericsGeneratorTests
 						}
 						else
 						{
-							return base.Equals(obj: @obj!);
+							return base.Equals(@obj: @obj!);
 						}
 					}
 					
@@ -1384,7 +1384,7 @@ public static class GenericsGeneratorTests
 						}
 						else
 						{
-							return base.Equals(obj: @obj!);
+							return base.Equals(@obj: @obj!);
 						}
 					}
 					
@@ -1661,7 +1661,7 @@ public static class GenericsGeneratorTests
 						}
 						else
 						{
-							return base.Equals(obj: @obj!);
+							return base.Equals(@obj: @obj!);
 						}
 					}
 					
@@ -1719,7 +1719,7 @@ public static class GenericsGeneratorTests
 						}
 						else
 						{
-							return base.Snapshot(instance: @instance!);
+							return base.Snapshot(@instance: @instance!);
 						}
 					}
 					
@@ -1743,7 +1743,7 @@ public static class GenericsGeneratorTests
 						}
 						else
 						{
-							return base.Snapshot(instance: @instance!);
+							return base.Snapshot(@instance: @instance!);
 						}
 					}
 					

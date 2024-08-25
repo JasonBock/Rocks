@@ -330,7 +330,7 @@ public static class EventGeneratorTests
 						}
 						else
 						{
-							return base.Equals(obj: @obj!);
+							return base.Equals(@obj: @obj!);
 						}
 					}
 					

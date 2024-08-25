@@ -129,7 +129,7 @@ public static class InheritanceGeneratorTests
 							}
 							else
 							{
-								return base.Equals(obj: @obj!);
+								return base.Equals(@obj: @obj!);
 							}
 						}
 						
@@ -187,7 +187,7 @@ public static class InheritanceGeneratorTests
 							}
 							else
 							{
-								return base.Evaluate(scope: @scope!);
+								return base.Evaluate(@scope: @scope!);
 							}
 						}
 						

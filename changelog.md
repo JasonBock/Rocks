@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - `scoped` is no longer added to a `params` argument (issue [#328](https://github.com/JasonBock/Rocks/issues/328))
+- Parameters for base member invocations now make all names literal (issue [#334](https://github.com/JasonBock/Rocks/issues/334))
 
 ## [8.3.0] - 2024-07-24
 

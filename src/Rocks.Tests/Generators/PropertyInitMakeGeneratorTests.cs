@@ -710,7 +710,7 @@ public static class PropertyInitMakeGeneratorTests
 							}
 							else
 							{
-								return base.Equals(obj: @obj!);
+								return base.Equals(@obj: @obj!);
 							}
 						}
 						

@@ -551,7 +551,7 @@ public static class AttributeGeneratorTests
 						}
 						else
 						{
-							return base.Equals(obj: @obj!);
+							return base.Equals(@obj: @obj!);
 						}
 					}
 					
@@ -921,7 +921,7 @@ public static class AttributeGeneratorTests
 						}
 						else
 						{
-							return base.Equals(obj: @obj!);
+							return base.Equals(@obj: @obj!);
 						}
 					}
 					
@@ -980,7 +980,7 @@ public static class AttributeGeneratorTests
 						}
 						else
 						{
-							return base.VisitMethod(node: @node!);
+							return base.VisitMethod(@node: @node!);
 						}
 					}
 					
@@ -1004,7 +1004,7 @@ public static class AttributeGeneratorTests
 						}
 						else
 						{
-							return base.VisitParameter(node: @node!);
+							return base.VisitParameter(@node: @node!);
 						}
 					}
 					
@@ -1081,7 +1081,7 @@ public static class AttributeGeneratorTests
 							}
 							else
 							{
-								return base[node: @node!];
+								return base[@node: @node!];
 							}
 						}
 						set
@@ -1103,7 +1103,7 @@ public static class AttributeGeneratorTests
 							}
 							else
 							{
-								base[node: @node!] = @value!;
+								base[@node: @node!] = @value!;
 							}
 						}
 					}
@@ -1759,7 +1759,7 @@ public static class AttributeGeneratorTests
 						}
 						else
 						{
-							return base.Equals(obj: @obj!);
+							return base.Equals(@obj: @obj!);
 						}
 					}
 					

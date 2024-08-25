@@ -112,7 +112,7 @@ public static class ParamsGeneratorTests
 						}
 						else
 						{
-							return base.Equals(obj: @obj!);
+							return base.Equals(@obj: @obj!);
 						}
 					}
 					
@@ -175,7 +175,7 @@ public static class ParamsGeneratorTests
 						}
 						else
 						{
-							base.Do(args: @args!);
+							base.Do(@args: @args!);
 						}
 					}
 					
@@ -204,7 +204,7 @@ public static class ParamsGeneratorTests
 						}
 						else
 						{
-							base.DoSpan(args: @args!);
+							base.DoSpan(@args: @args!);
 						}
 					}
 					

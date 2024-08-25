@@ -118,7 +118,7 @@ public static class HiddenMembersGeneratorTests
 							}
 							else
 							{
-								return base.Equals(obj: @obj!);
+								return base.Equals(@obj: @obj!);
 							}
 						}
 						
@@ -481,7 +481,7 @@ public static class HiddenMembersGeneratorTests
 						}
 						else
 						{
-							return base.Equals(obj: @obj!);
+							return base.Equals(@obj: @obj!);
 						}
 					}
 					
@@ -607,7 +607,7 @@ public static class HiddenMembersGeneratorTests
 							}
 							else
 							{
-								return base[a: @a!, b: @b!];
+								return base[@a: @a!, @b: @b!];
 							}
 						}
 					}

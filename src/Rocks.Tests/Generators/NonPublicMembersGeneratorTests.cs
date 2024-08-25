@@ -137,7 +137,7 @@ public static class NonPublicMembersGeneratorTests
 						}
 						else
 						{
-							return base.Equals(obj: @obj!);
+							return base.Equals(@obj: @obj!);
 						}
 					}
 					
@@ -668,7 +668,7 @@ public static class NonPublicMembersGeneratorTests
 						}
 						else
 						{
-							return base.Equals(obj: @obj!);
+							return base.Equals(@obj: @obj!);
 						}
 					}
 					
@@ -1115,7 +1115,7 @@ public static class NonPublicMembersGeneratorTests
 						}
 						else
 						{
-							return base.Equals(obj: @obj!);
+							return base.Equals(@obj: @obj!);
 						}
 					}
 					
@@ -1197,7 +1197,7 @@ public static class NonPublicMembersGeneratorTests
 							}
 							else
 							{
-								return base[key: @key!];
+								return base[@key: @key!];
 							}
 						}
 					}
@@ -1600,7 +1600,7 @@ public static class NonPublicMembersGeneratorTests
 							}
 							else
 							{
-								return base.Equals(obj: @obj!);
+								return base.Equals(@obj: @obj!);
 							}
 						}
 						
@@ -2094,7 +2094,7 @@ public static class NonPublicMembersGeneratorTests
 							}
 							else
 							{
-								return base.Equals(obj: @obj!);
+								return base.Equals(@obj: @obj!);
 							}
 						}
 						
@@ -2586,7 +2586,7 @@ public static class NonPublicMembersGeneratorTests
 							}
 							else
 							{
-								return base.Equals(obj: @obj!);
+								return base.Equals(@obj: @obj!);
 							}
 						}
 						

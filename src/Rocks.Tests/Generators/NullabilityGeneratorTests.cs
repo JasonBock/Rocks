@@ -115,7 +115,7 @@ public static class NullabilityGeneratorTests
 						}
 						else
 						{
-							return base.Equals(obj: @obj!);
+							return base.Equals(@obj: @obj!);
 						}
 					}
 					
@@ -178,7 +178,7 @@ public static class NullabilityGeneratorTests
 						}
 						else
 						{
-							return base.Argument<TArgumentGraphType, TArgumentType>(name: @name!, description: @description!, defaultValue: @defaultValue!);
+							return base.Argument<TArgumentGraphType, TArgumentType>(@name: @name!, @description: @description!, @defaultValue: @defaultValue!);
 						}
 					}
 					
@@ -485,7 +485,7 @@ public static class NullabilityGeneratorTests
 						}
 						else
 						{
-							return base.Equals(obj: @obj!);
+							return base.Equals(@obj: @obj!);
 						}
 					}
 					
@@ -553,7 +553,7 @@ public static class NullabilityGeneratorTests
 						}
 						else
 						{
-							base.TraceEvent(eventCache: @eventCache!, source: @source!, eventType: @eventType!, id: @id!, format: @format!, args: @args!);
+							base.TraceEvent(@eventCache: @eventCache!, @source: @source!, @eventType: @eventType!, @id: @id!, @format: @format!, @args: @args!);
 						}
 					}
 					
