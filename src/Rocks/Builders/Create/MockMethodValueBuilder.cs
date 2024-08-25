@@ -154,7 +154,7 @@ internal static class MockMethodValueBuilder
 					_ => string.Empty
 				};
 
-				return $"{_.Name}: {direction}@{_.Name}!";
+				return $"@{_.Name}: {direction}@{_.Name}!";
 			}));
 			var target = method.ContainingType.TypeKind == TypeKind.Interface ?
 				$"this.shimFor{method.ContainingType.FlattenedName}" : "base";

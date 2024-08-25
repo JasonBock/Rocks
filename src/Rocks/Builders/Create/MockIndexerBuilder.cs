@@ -95,7 +95,7 @@ internal static class MockIndexerBuilder
 					_ => string.Empty
 				};
 
-				return $"{_.Name}: {direction}@{_.Name}!";
+				return $"@{_.Name}: {direction}@{_.Name}!";
 			}));
 			var refReturn = indexer.ReturnsByRef || indexer.ReturnsByRefReadOnly ? "ref " : string.Empty;
 			var target = indexer.ContainingType.TypeKind == TypeKind.Interface ?
@@ -212,7 +212,7 @@ internal static class MockIndexerBuilder
 					_ => string.Empty
 				};
 
-				return $"{_.Name}: {direction}@{_.Name}!";
+				return $"@{_.Name}: {direction}@{_.Name}!";
 			}));
 			var target = indexer.ContainingType.TypeKind == TypeKind.Interface ?
 				$"this.shimFor{indexer.ContainingType.FlattenedName}" : "base";
