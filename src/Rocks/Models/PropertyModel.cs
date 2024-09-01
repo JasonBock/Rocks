@@ -19,7 +19,9 @@ internal sealed record PropertyModel
 		this.IsAbstract = property.IsAbstract;
 		this.IsIndexer = property.IsIndexer;
 		this.IsUnsafe = property.IsUnsafe();
-		this.Parameters = property.Parameters.Select(_ => new ParameterModel(_, this.MockType, compilation)).ToImmutableArray();
+		this.Parameters = property.Parameters.Select(_ => new ParameterModel(
+			_, this.MockType, compilation, requiresExplicitInterfaceImplementation: requiresExplicitInterfaceImplementation))
+			.ToImmutableArray();
 
 		var allAttributes = property.GetAllAttributes();
 

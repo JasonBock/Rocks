@@ -39,7 +39,8 @@ internal sealed record MethodModel
 
 		this.Parameters = method.Parameters.Select(_ =>
 		{
-			return new ParameterModel(_, this.MockType, compilation);
+			return new ParameterModel(_, this.MockType, compilation,
+				requiresExplicitInterfaceImplementation: requiresExplicitInterfaceImplementation);
 		}).ToImmutableArray();
 
 		this.ReturnType = new TypeReferenceModel(method.ReturnType, compilation);

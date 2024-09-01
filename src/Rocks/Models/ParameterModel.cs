@@ -5,7 +5,8 @@ namespace Rocks.Models;
 
 internal sealed record ParameterModel
 {
-	internal ParameterModel(IParameterSymbol parameter, TypeReferenceModel mockType, Compilation compilation)
+	internal ParameterModel(IParameterSymbol parameter, TypeReferenceModel mockType, Compilation compilation,
+		RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation = RequiresExplicitInterfaceImplementation.No)
 	{
 		this.MockType = mockType;
 		this.Name = parameter.Name;
@@ -23,7 +24,10 @@ internal sealed record ParameterModel
 			this.ExplicitDefaultValue = parameter.ExplicitDefaultValue.GetDefaultValue(parameter.Type, compilation);
 		}
 
-		this.AttributesDescription = parameter.GetAttributes().GetDescription(compilation);
+		this.AttributesDescription = parameter.GetAttributes().GetDescription(
+			compilation,
+			requiresExplicitInterfaceImplementation: requiresExplicitInterfaceImplementation,
+			isParameterWithOptionalValue: this.HasExplicitDefaultValue);
 	}
 
 	internal string AttributesDescription { get; }

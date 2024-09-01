@@ -93,7 +93,9 @@ internal static class AttributeDataExtensions
 	}
 
 	internal static string GetDescription(this ImmutableArray<AttributeData> self, Compilation compilation,
-		AttributeTargets? target = null)
+		AttributeTargets? target = null,
+		RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation = RequiresExplicitInterfaceImplementation.No,
+		bool isParameterWithOptionalValue = false)
 	{
 		if (self.Length == 0)
 		{
@@ -131,6 +133,13 @@ internal static class AttributeDataExtensions
 		var attributeUsageAttribute = compilation.GetTypeByMetadataName(typeof(AttributeUsageAttribute).FullName);
 		var obsoleteAttribute = compilation.GetTypeByMetadataName(typeof(ObsoleteAttribute).FullName);
 
+		// If a member will be implemented explicitly, and the target type is a parameter,
+		// and the parameter is optional, we can't emit these 4 "caller" attributes.
+		var callerFilePathAttribute = compilation.GetTypeByMetadataName(typeof(CallerFilePathAttribute).FullName);
+		var callerLineNumberAttribute = compilation.GetTypeByMetadataName(typeof(CallerLineNumberAttribute).FullName);
+		var callerMemberNameAttribute = compilation.GetTypeByMetadataName(typeof(CallerMemberNameAttribute).FullName);
+		var callerArgumentExpressionAttribute = compilation.GetTypeByMetadataName(typeof(CallerArgumentExpressionAttribute).FullName);
+
 		const string enumeratorCancellationAttribute = "global::System.Runtime.CompilerServices.EnumeratorCancellationAttribute";
 		const string asyncIteratorStateMachineAttribute = "global::System.Runtime.CompilerServices.AsyncIteratorStateMachineAttribute";
 		const string nullableAttribute = "global::System.Runtime.CompilerServices.NullableAttribute";
@@ -152,6 +161,18 @@ internal static class AttributeDataExtensions
 				_.AttributeClass.GetFullyQualifiedName(compilation) != asyncIteratorStateMachineAttribute &&
 				_.AttributeClass.GetFullyQualifiedName(compilation) != nullableAttribute &&
 				_.AttributeClass.GetFullyQualifiedName(compilation) != nullableContextAttribute).ToImmutableArray();
+
+		// Do another pass where we eliminate "caller" attribute if necessary.
+		if (requiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes &&
+			isParameterWithOptionalValue)
+		{
+			attributes = attributes.Where(_ =>
+				_.AttributeClass is not null &&
+				!_.AttributeClass.Equals(callerFilePathAttribute, SymbolEqualityComparer.Default) &&
+				!_.AttributeClass.Equals(callerLineNumberAttribute, SymbolEqualityComparer.Default) &&
+				!_.AttributeClass.Equals(callerMemberNameAttribute, SymbolEqualityComparer.Default) &&
+				!_.AttributeClass.Equals(callerArgumentExpressionAttribute, SymbolEqualityComparer.Default)).ToImmutableArray();
+		}
 
 		if (attributes.Length == 0)
 		{
