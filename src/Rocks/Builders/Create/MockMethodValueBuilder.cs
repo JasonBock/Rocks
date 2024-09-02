@@ -191,7 +191,7 @@ internal static class MockMethodValueBuilder
 		var methodArguments = method.Parameters.Length == 0 ? string.Empty :
 			string.Join(", ", method.Parameters.Select(
 				_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out ? $"{(_.RefKind == RefKind.Ref ? "ref" : "out")} @{_.Name}!" : $"@{_.Name}!"));
-		var returnValueCall = method.ReturnType.IsRefLikeType | method.ReturnType.AllowsRefLikeType ?
+		var returnValueCall = method.ReturnType.IsRefLikeType || method.ReturnType.AllowsRefLikeType ?
 			".ReturnValue!()" : ".ReturnValue";
 
 		if (method.ReturnsByRef || method.ReturnsByRefReadOnly)

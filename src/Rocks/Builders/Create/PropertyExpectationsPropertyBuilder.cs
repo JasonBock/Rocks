@@ -27,7 +27,7 @@ internal static class PropertyExpectationsPropertyBuilder
 		{
 			var handlerTypeName = $"{expectationsFullyQualifiedName}.Handler{memberIdentifier}";
 			var returnType =
-				property.Type.IsRefLikeType | property.Type.AllowsRefLikeType ?
+				property.Type.IsRefLikeType || property.Type.AllowsRefLikeType ?
 					$"global::System.Func<{property.Type.FullyQualifiedName}>" :
 					property.Type.FullyQualifiedName;
 
