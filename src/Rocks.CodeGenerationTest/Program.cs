@@ -14,9 +14,9 @@ var stopwatch = Stopwatch.StartNew();
 
 //TestTypeValidity();
 //TestWithCode();
-//TestWithType();
+TestWithType();
 //TestWithTypeNoEmit();
-TestWithTypes();
+//TestWithTypes();
 //TestTypesIndividually();
 
 stopwatch.Stop();
@@ -43,11 +43,15 @@ static void TestWithCode()
 		using Rocks;
 		using System;
 				
-		[assembly: Rock(typeof(NewNameUsage), BuildType.Create)]
+		[assembly: Rock(typeof(MonadIO<>), BuildType.Create)]
 
-		public class NewNameUsage
+		public interface K<in F, A> { }
+
+		public class IO { }
+
+		public interface MonadIO<M> where M : MonadIO<M>
 		{
-			public virtual void Work(string @new) { }
+			static K<M, A> LiftIO<A>(K<IO, A> ma) => null!;
 		}
 		""",
 		typesToLoadAssembliesFrom);
@@ -73,7 +77,7 @@ static void TestWithType()
 #pragma warning disable EF1001 // Internal EF Core API usage.
 #pragma warning disable EF9100 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
    (var issues, var times) = TestGenerator.Generate(new RockGenerator(),
-		[typeof(R3.IBindableReactiveProperty<>)],
+		[typeof(LanguageExt.Traits.MonadIO<>)],
 		typesToLoadAssembliesFrom,
 		[], BuildType.Create);
 #pragma warning restore EF9100 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
@@ -217,7 +221,7 @@ static void TestWithTypes()
 		new (typeof(VerifyTests.AsStringResult), []),
 		new (typeof(Wasmtime.ActionResult), []),
 		new (typeof(WireMock.IMapping), []),
-		new (typeof(Wisp.IByteReader), []),
+		new (typeof(Wisp.CosArray), []),
 		new (typeof(ZLogger.AsyncStreamLineMessageWriter), []),
 #endif
 #if INCLUDE_FAILING
