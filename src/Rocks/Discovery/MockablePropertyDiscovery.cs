@@ -111,7 +111,7 @@ internal sealed class MockablePropertyDiscovery
 			}
 		}
 
-		return new(properties.ToImmutable(), inaccessibleAbstractMembers);
+		return new(properties.ToImmutable(), inaccessibleAbstractMembers, false);
 	}
 
 	private static MockableProperties GetPropertiesForInterface(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol,
@@ -124,30 +124,36 @@ internal sealed class MockablePropertyDiscovery
 
 		var properties = ImmutableArray.CreateBuilder<MockablePropertyResult>();
 		var inaccessibleAbstractMembers = false;
+		var hasStaticAbstractProperties = false;
 
-		foreach (var selfProperty in mockType.GetMembers().OfType<IPropertySymbol>()
-			.Where(IsPropertyToExamine))
+		foreach (var selfProperty in mockType.GetMembers().OfType<IPropertySymbol>())
 		{
-			if (!selfProperty.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
-			{
-				inaccessibleAbstractMembers = true;
-			}
-			else
-			{
-				var result = new MockablePropertyResult(selfProperty, mockType,
-					RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, memberIdentifier);
-				properties.Add(result);
+			// Report if this method is a static abstract method.
+			hasStaticAbstractProperties |= selfProperty.IsStatic && (selfProperty.IsVirtual || selfProperty.IsAbstract);
 
-				if (selfProperty.IsVirtual)
+			if (IsPropertyToExamine(selfProperty))
+			{
+				if (!selfProperty.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
 				{
-					shims.Add(mockType);
+					inaccessibleAbstractMembers = true;
 				}
-
-				memberIdentifier++;
-
-				if (result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.GetAndInit)
+				else
 				{
+					var result = new MockablePropertyResult(selfProperty, mockType,
+						RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, memberIdentifier);
+					properties.Add(result);
+
+					if (selfProperty.IsVirtual)
+					{
+						shims.Add(mockType);
+					}
+
 					memberIdentifier++;
+
+					if (result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.GetAndInit)
+					{
+						memberIdentifier++;
+					}
 				}
 			}
 		}
@@ -156,46 +162,51 @@ internal sealed class MockablePropertyDiscovery
 
 		foreach (var selfBaseInterface in mockType.AllInterfaces)
 		{
-			foreach (var selfBaseProperty in selfBaseInterface.GetMembers().OfType<IPropertySymbol>()
-				.Where(IsPropertyToExamine))
+			foreach (var selfBaseProperty in selfBaseInterface.GetMembers().OfType<IPropertySymbol>())
 			{
-				if (!selfBaseProperty.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
+				// Report if this method is a static abstract method.
+				hasStaticAbstractProperties |= selfBaseProperty.IsStatic && (selfBaseProperty.IsVirtual || selfBaseProperty.IsAbstract);
+
+				if (IsPropertyToExamine(selfBaseProperty))
 				{
-					inaccessibleAbstractMembers = true;
-				}
-				else
-				{
-					if (!properties.Any(_ =>
-						selfBaseProperty.IsIndexer && _.Value.IsIndexer &&
-							selfBaseProperty.GetMethod is not null && _.Value.GetMethod is not null && selfBaseProperty.GetMethod.Match(_.Value.GetMethod) == MethodMatch.Exact ||
-							selfBaseProperty.SetMethod is not null && _.Value.SetMethod is not null && selfBaseProperty.SetMethod.Match(_.Value.SetMethod) == MethodMatch.Exact ||
-						!selfBaseProperty.IsIndexer && !_.Value.IsIndexer &&
-							_.Value.Name == selfBaseProperty.Name &&
-							SymbolEqualityComparer.Default.Equals(_.Value.Type, selfBaseProperty.Type) &&
-							_.Value.GetAccessors() == selfBaseProperty.GetAccessors()))
+					if (!selfBaseProperty.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
 					{
-						var foundMatch = false;
-
-						foreach (var baseInterfacePropertyGroup in baseInterfacePropertyGroups)
+						inaccessibleAbstractMembers = true;
+					}
+					else
+					{
+						if (!properties.Any(_ =>
+							selfBaseProperty.IsIndexer && _.Value.IsIndexer &&
+								selfBaseProperty.GetMethod is not null && _.Value.GetMethod is not null && selfBaseProperty.GetMethod.Match(_.Value.GetMethod) == MethodMatch.Exact ||
+								selfBaseProperty.SetMethod is not null && _.Value.SetMethod is not null && selfBaseProperty.SetMethod.Match(_.Value.SetMethod) == MethodMatch.Exact ||
+							!selfBaseProperty.IsIndexer && !_.Value.IsIndexer &&
+								_.Value.Name == selfBaseProperty.Name &&
+								SymbolEqualityComparer.Default.Equals(_.Value.Type, selfBaseProperty.Type) &&
+								_.Value.GetAccessors() == selfBaseProperty.GetAccessors()))
 						{
-							if (baseInterfacePropertyGroup.Any(_ =>
-								selfBaseProperty.IsIndexer && _.IsIndexer &&
-									selfBaseProperty.GetMethod is not null && _.GetMethod is not null && selfBaseProperty.GetMethod.Match(_.GetMethod) == MethodMatch.Exact ||
-									selfBaseProperty.SetMethod is not null && _.SetMethod is not null && selfBaseProperty.SetMethod.Match(_.SetMethod) == MethodMatch.Exact ||
-								!selfBaseProperty.IsIndexer && !_.IsIndexer &&
-									_.Name == selfBaseProperty.Name &&
-									SymbolEqualityComparer.Default.Equals(_.Type, selfBaseProperty.Type) &&
-									_.GetAccessors() == selfBaseProperty.GetAccessors()))
+							var foundMatch = false;
+
+							foreach (var baseInterfacePropertyGroup in baseInterfacePropertyGroups)
 							{
-								baseInterfacePropertyGroup.Add(selfBaseProperty);
-								foundMatch = true;
-								break;
+								if (baseInterfacePropertyGroup.Any(_ =>
+									selfBaseProperty.IsIndexer && _.IsIndexer &&
+										selfBaseProperty.GetMethod is not null && _.GetMethod is not null && selfBaseProperty.GetMethod.Match(_.GetMethod) == MethodMatch.Exact ||
+										selfBaseProperty.SetMethod is not null && _.SetMethod is not null && selfBaseProperty.SetMethod.Match(_.SetMethod) == MethodMatch.Exact ||
+									!selfBaseProperty.IsIndexer && !_.IsIndexer &&
+										_.Name == selfBaseProperty.Name &&
+										SymbolEqualityComparer.Default.Equals(_.Type, selfBaseProperty.Type) &&
+										_.GetAccessors() == selfBaseProperty.GetAccessors()))
+								{
+									baseInterfacePropertyGroup.Add(selfBaseProperty);
+									foundMatch = true;
+									break;
+								}
 							}
-						}
 
-						if (!foundMatch)
-						{
-							baseInterfacePropertyGroups.Add([selfBaseProperty]);
+							if (!foundMatch)
+							{
+								baseInterfacePropertyGroups.Add([selfBaseProperty]);
+							}
 						}
 					}
 				}
@@ -257,7 +268,7 @@ internal sealed class MockablePropertyDiscovery
 			}
 		}
 
-		return new(properties.ToImmutable(), inaccessibleAbstractMembers);
+		return new MockableProperties(properties.ToImmutable(), inaccessibleAbstractMembers, hasStaticAbstractProperties);
 	}
 
 	internal MockableProperties Properties { get; }

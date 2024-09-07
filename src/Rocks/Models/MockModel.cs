@@ -102,8 +102,7 @@ internal sealed record MockModel
 			diagnostics.Add(TypeHasInaccessibleAbstractMembersDiagnostic.Create(node, typeToMock));
 		}
 
-		if (methods.Results.Any(_ => _.Value.IsAbstract && _.Value.IsStatic) ||
-			properties.Results.Any(_ => _.Value.IsAbstract && _.Value.IsStatic))
+		if (methods.HasStaticAbstractMembers || properties.HasStaticAbstractMembers)
 		{
 			diagnostics.Add(InterfaceHasStaticAbstractMembersDiagnostic.Create(node, typeToMock));
 		}

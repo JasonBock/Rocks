@@ -89,7 +89,7 @@ internal sealed class MockableMethodDiscovery
 								if ((methodToRemove is null || !methodToRemove.Value.ContainingType.Equals(hierarchyMethod.ContainingType)) &&
 									!hierarchyMethod.IsSealed)
 								{
-									methods.Add(new(hierarchyMethod, mockType, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, 
+									methods.Add(new(hierarchyMethod, mockType, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes,
 										objectMethods.Any(_ => hierarchyMethod.Name == _.Name && hierarchyMethod.Parameters.Length == 0) ?
 											RequiresHiding.Yes : RequiresHiding.No, memberIdentifier));
 
@@ -124,7 +124,7 @@ internal sealed class MockableMethodDiscovery
 			}
 		}
 
-		return new(methods.ToImmutable(), inaccessibleAbstractMembers);
+		return new MockableMethods(methods.ToImmutable(), inaccessibleAbstractMembers, false);
 	}
 
 	private static MockableMethods GetMethodsForInterface(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol,
@@ -139,43 +139,49 @@ internal sealed class MockableMethodDiscovery
 
 		var methods = ImmutableArray.CreateBuilder<MockableMethodResult>();
 		var inaccessibleAbstractMembers = false;
+		var hasStaticAbstractMethods = false;
 
-		foreach (var selfMethod in mockType.GetMembers().OfType<IMethodSymbol>()
-			.Where(IsMethodToExamine))
+		foreach (var selfMethod in mockType.GetMembers().OfType<IMethodSymbol>())
 		{
-			if (!selfMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol) &&
-				selfMethod.IsAbstract)
+			// Report if this method is a static abstract method.
+			hasStaticAbstractMethods |= selfMethod.IsStatic && (selfMethod.IsVirtual || selfMethod.IsAbstract);
+
+			if (IsMethodToExamine(selfMethod))
 			{
-				inaccessibleAbstractMembers = true;
-			}
-			else
-			{
-				// We need to explicitly implement matching methods from the object type,
-				// but if they exactly match from methods on the type itself,
-				// we don't even add it to the list.
-				if (!methods.Any(_ => _.Value.Match(selfMethod) == MethodMatch.Exact))
+				if (!selfMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol) &&
+					selfMethod.IsAbstract)
 				{
-					var selfMethodRequiresExplicit = objectMethods.Any(
-						_ => _.Match(selfMethod) switch
-						{
-							MethodMatch.DifferByReturnTypeOnly or MethodMatch.Exact => true,
-							_ => false
-						}) || methods.Any(
-						_ => _.Value.Match(selfMethod) switch
-						{
-							MethodMatch.DifferByReturnTypeOnly => true,
-							_ => false
-						}) ? RequiresExplicitInterfaceImplementation.Yes : RequiresExplicitInterfaceImplementation.No;
-					methods.Add(new(selfMethod, mockType, selfMethodRequiresExplicit, RequiresOverride.No,
-						objectMethods.Any(_ => selfMethod.Name == _.Name && selfMethod.Parameters.Length == 0) ?
-							RequiresHiding.Yes : RequiresHiding.No, memberIdentifier));
-
-					if (selfMethod.IsVirtual)
+					inaccessibleAbstractMembers = true;
+				}
+				else
+				{
+					// We need to explicitly implement matching methods from the object type,
+					// but if they exactly match from methods on the type itself,
+					// we don't even add it to the list.
+					if (!methods.Any(_ => _.Value.Match(selfMethod) == MethodMatch.Exact))
 					{
-						shims.Add(mockType);
-					}
+						var selfMethodRequiresExplicit = objectMethods.Any(
+							_ => _.Match(selfMethod) switch
+							{
+								MethodMatch.DifferByReturnTypeOnly or MethodMatch.Exact => true,
+								_ => false
+							}) || methods.Any(
+							_ => _.Value.Match(selfMethod) switch
+							{
+								MethodMatch.DifferByReturnTypeOnly => true,
+								_ => false
+							}) ? RequiresExplicitInterfaceImplementation.Yes : RequiresExplicitInterfaceImplementation.No;
+						methods.Add(new(selfMethod, mockType, selfMethodRequiresExplicit, RequiresOverride.No,
+							objectMethods.Any(_ => selfMethod.Name == _.Name && selfMethod.Parameters.Length == 0) ?
+								RequiresHiding.Yes : RequiresHiding.No, memberIdentifier));
 
-					memberIdentifier++;
+						if (selfMethod.IsVirtual)
+						{
+							shims.Add(mockType);
+						}
+
+						memberIdentifier++;
+					}
 				}
 			}
 		}
@@ -184,32 +190,37 @@ internal sealed class MockableMethodDiscovery
 
 		foreach (var selfBaseInterface in mockType.AllInterfaces)
 		{
-			foreach (var selfBaseMethod in selfBaseInterface.GetMembers().OfType<IMethodSymbol>()
-				.Where(IsMethodToExamine))
+			foreach (var selfBaseMethod in selfBaseInterface.GetMembers().OfType<IMethodSymbol>())
 			{
-				if (!selfBaseMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
+				// Report if this method is a static abstract method.
+				hasStaticAbstractMethods |= selfBaseMethod.IsStatic && (selfBaseMethod.IsVirtual || selfBaseMethod.IsAbstract);
+
+				if (IsMethodToExamine(selfBaseMethod))
 				{
-					inaccessibleAbstractMembers = true;
-				}
-				else
-				{
-					if (!methods.Any(_ => _.Value.Match(selfBaseMethod) == MethodMatch.Exact))
+					if (!selfBaseMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
 					{
-						var foundMatch = false;
-
-						foreach (var baseInterfaceMethodGroup in baseInterfaceMethodGroups)
+						inaccessibleAbstractMembers = true;
+					}
+					else
+					{
+						if (!methods.Any(_ => _.Value.Match(selfBaseMethod) == MethodMatch.Exact))
 						{
-							if (baseInterfaceMethodGroup.Any(_ => _.Match(selfBaseMethod) == MethodMatch.Exact))
+							var foundMatch = false;
+
+							foreach (var baseInterfaceMethodGroup in baseInterfaceMethodGroups)
 							{
-								baseInterfaceMethodGroup.Add(selfBaseMethod);
-								foundMatch = true;
-								break;
+								if (baseInterfaceMethodGroup.Any(_ => _.Match(selfBaseMethod) == MethodMatch.Exact))
+								{
+									baseInterfaceMethodGroup.Add(selfBaseMethod);
+									foundMatch = true;
+									break;
+								}
 							}
-						}
 
-						if (!foundMatch)
-						{
-							baseInterfaceMethodGroups.Add([selfBaseMethod]);
+							if (!foundMatch)
+							{
+								baseInterfaceMethodGroups.Add([selfBaseMethod]);
+							}
 						}
 					}
 				}
@@ -271,7 +282,7 @@ internal sealed class MockableMethodDiscovery
 			}
 		}
 
-		return new(methods.ToImmutable(), inaccessibleAbstractMembers);
+		return new MockableMethods(methods.ToImmutable(), inaccessibleAbstractMembers, hasStaticAbstractMethods);
 	}
 
 	internal MockableMethods Methods { get; }

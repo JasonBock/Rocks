@@ -4,9 +4,14 @@ namespace Rocks.Discovery;
 
 internal sealed class MockableProperties
 {
-   internal MockableProperties(ImmutableArray<MockablePropertyResult> results, bool hasInaccessibleAbstractMembers) =>
-	   (this.Results, this.HasInaccessibleAbstractMembers) = (results, hasInaccessibleAbstractMembers);
+	internal MockableProperties(
+		ImmutableArray<MockablePropertyResult> results,
+		bool hasInaccessibleAbstractMembers,
+		bool hasStaticAbstractMembers) =>
+		(this.Results, this.HasInaccessibleAbstractMembers, this.HasStaticAbstractMembers) =
+			(results, hasInaccessibleAbstractMembers, hasStaticAbstractMembers);
 
-   internal bool HasInaccessibleAbstractMembers { get; }
-   internal ImmutableArray<MockablePropertyResult> Results { get; }
+	internal bool HasInaccessibleAbstractMembers { get; }
+	internal bool HasStaticAbstractMembers { get; }
+	internal ImmutableArray<MockablePropertyResult> Results { get; }
 }
