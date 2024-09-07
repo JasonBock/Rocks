@@ -83,6 +83,7 @@
 [assembly: Rock(typeof(Rocks.IntegrationTests.InterfaceMethodVoidTestTypes.IInterfaceMethodVoid), BuildType.Create | BuildType.Make)]
 [assembly: Rock(typeof(Rocks.IntegrationTests.InterfaceMethodVoidWithEventsTestTypes.IInterfaceMethodVoidWithEvents), BuildType.Create | BuildType.Make)]
 [assembly: Rock(typeof(Rocks.IntegrationTests.InterfacePropertyTestTypes.IInterfaceProperty), BuildType.Create | BuildType.Make)]
+[assembly: Rock(typeof(Rocks.IntegrationTests.InterfaceStaticVirtualTestTypes.IHaveStaticVirtuals), BuildType.Create | BuildType.Make)]
 [assembly: Rock(typeof(Rocks.IntegrationTests.MethodMemberTestTypes.IHaveIn), BuildType.Create | BuildType.Make)]
 [assembly: Rock(typeof(Rocks.IntegrationTests.MethodMemberTestTypes.IHaveLotsOfParameters), BuildType.Create | BuildType.Make)]
 [assembly: Rock(typeof(Rocks.IntegrationTests.MethodMemberTestTypes.IHaveRefAndOut), BuildType.Create | BuildType.Make)]

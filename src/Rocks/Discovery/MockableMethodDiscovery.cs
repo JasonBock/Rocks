@@ -133,8 +133,7 @@ internal sealed class MockableMethodDiscovery
 		// We don't want to include non-virtual static methods.
 		// Later on in MockModel I make a check for static abstract methods.
 		static bool IsMethodToExamine(IMethodSymbol method) =>
-			!(method.IsStatic && !method.IsAbstract && !method.IsVirtual) &&
-			(method.IsAbstract || method.IsVirtual) &&
+			!method.IsStatic && (method.IsAbstract || method.IsVirtual) &&
 			method.MethodKind == MethodKind.Ordinary && method.CanBeReferencedByName;
 
 		var methods = ImmutableArray.CreateBuilder<MockableMethodResult>();
@@ -144,7 +143,7 @@ internal sealed class MockableMethodDiscovery
 		foreach (var selfMethod in mockType.GetMembers().OfType<IMethodSymbol>())
 		{
 			// Report if this method is a static abstract method.
-			hasStaticAbstractMethods |= selfMethod.IsStatic && (selfMethod.IsVirtual || selfMethod.IsAbstract);
+			hasStaticAbstractMethods |= selfMethod.IsStatic && selfMethod.IsAbstract;
 
 			if (IsMethodToExamine(selfMethod))
 			{
@@ -193,7 +192,7 @@ internal sealed class MockableMethodDiscovery
 			foreach (var selfBaseMethod in selfBaseInterface.GetMembers().OfType<IMethodSymbol>())
 			{
 				// Report if this method is a static abstract method.
-				hasStaticAbstractMethods |= selfBaseMethod.IsStatic && (selfBaseMethod.IsVirtual || selfBaseMethod.IsAbstract);
+				hasStaticAbstractMethods |= selfBaseMethod.IsStatic && selfBaseMethod.IsAbstract;
 
 				if (IsMethodToExamine(selfBaseMethod))
 				{

@@ -22,8 +22,12 @@ public static class RockAnalyzerStaticAbstractMemberTests
 			}
 			""";
 
-		var diagnostic = new DiagnosticResult(InterfaceHasStaticAbstractMembersDescriptor.Id, DiagnosticSeverity.Error)
+		var staticAbstractMembersDiagnostic = new DiagnosticResult(InterfaceHasStaticAbstractMembersDescriptor.Id, DiagnosticSeverity.Error)
 			.WithSpan(3, 12, 3, 86).WithArguments("IHaveStaticAbstractMethod");
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
+		var noMembersDiagnostic = new DiagnosticResult(TypeHasNoMockableMembersDescriptor.Id, DiagnosticSeverity.Error)
+			.WithSpan(3, 12, 3, 86).WithArguments("IHaveStaticAbstractMethod");
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(
+			code, 
+			[staticAbstractMembersDiagnostic, staticAbstractMembersDiagnostic, noMembersDiagnostic]);
 	}
 }

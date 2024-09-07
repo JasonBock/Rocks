@@ -10,9 +10,9 @@ internal sealed class MockablePropertyDiscovery
 		HashSet<ITypeSymbol> shims, ref uint memberIdentifier) =>
 			this.Properties =
 				mockType.TypeKind == TypeKind.Interface ?
-					GetPropertiesForInterface(mockType, containingAssemblyOfInvocationSymbol,
+					MockablePropertyDiscovery.GetPropertiesForInterface(mockType, containingAssemblyOfInvocationSymbol,
 						shims, ref memberIdentifier) :
-					GetPropertiesForClass(mockType, containingAssemblyOfInvocationSymbol,
+					MockablePropertyDiscovery.GetPropertiesForClass(mockType, containingAssemblyOfInvocationSymbol,
 						shims, ref memberIdentifier);
 
 	private static MockableProperties GetPropertiesForClass(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol,
@@ -118,8 +118,7 @@ internal sealed class MockablePropertyDiscovery
 		HashSet<ITypeSymbol> shims, ref uint memberIdentifier)
 	{
 		static bool IsPropertyToExamine(IPropertySymbol property) =>
-			!(property.IsStatic && !property.IsAbstract && !property.IsVirtual) &&
-			(property.IsAbstract || property.IsVirtual) &&
+			!property.IsStatic && (property.IsAbstract || property.IsVirtual) &&
 			(property.IsIndexer || property.CanBeReferencedByName);
 
 		var properties = ImmutableArray.CreateBuilder<MockablePropertyResult>();
@@ -129,7 +128,7 @@ internal sealed class MockablePropertyDiscovery
 		foreach (var selfProperty in mockType.GetMembers().OfType<IPropertySymbol>())
 		{
 			// Report if this method is a static abstract method.
-			hasStaticAbstractProperties |= selfProperty.IsStatic && (selfProperty.IsVirtual || selfProperty.IsAbstract);
+			hasStaticAbstractProperties |= selfProperty.IsStatic && selfProperty.IsAbstract;
 
 			if (IsPropertyToExamine(selfProperty))
 			{
@@ -165,7 +164,7 @@ internal sealed class MockablePropertyDiscovery
 			foreach (var selfBaseProperty in selfBaseInterface.GetMembers().OfType<IPropertySymbol>())
 			{
 				// Report if this method is a static abstract method.
-				hasStaticAbstractProperties |= selfBaseProperty.IsStatic && (selfBaseProperty.IsVirtual || selfBaseProperty.IsAbstract);
+				hasStaticAbstractProperties |= selfBaseProperty.IsStatic && selfBaseProperty.IsAbstract;
 
 				if (IsPropertyToExamine(selfBaseProperty))
 				{
