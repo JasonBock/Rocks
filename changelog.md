@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `scoped` is no longer added to a `params` argument (issue [#328](https://github.com/JasonBock/Rocks/issues/328))
 - Parameters for base member invocations now make all names literal (issue [#334](https://github.com/JasonBock/Rocks/issues/334))
 - "Caller" attributes are no longer emitted with parameters that have optional values and the method is explicitly implemented (issue [#332](https://github.com/JasonBock/Rocks/issues/332))
+- Static virtual members on interfaces will not be processed (issue [#337](https://github.com/JasonBock/Rocks/issues/3327))
 
 ## [8.3.0] - 2024-07-24
 
