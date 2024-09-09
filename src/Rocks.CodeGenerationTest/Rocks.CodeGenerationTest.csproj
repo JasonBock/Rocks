@@ -51,6 +51,7 @@
 		<PackageReference Include="IdentityModel" />
 		<PackageReference Include="LanguageExt.Core" />
 		<PackageReference Include="Lib.Harmony" />
+		<PackageReference Include="Lifti.Core" />
 		<PackageReference Include="LLVMSharp" />
 		<PackageReference Include="MassTransit" />
 		<PackageReference Include="MathNet.Numerics" />

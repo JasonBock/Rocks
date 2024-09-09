@@ -165,6 +165,7 @@ static void TestWithTypes()
 		new (typeof(ICSharpCode.SharpZipLib.SharpZipBaseException), []),
 		new (typeof(IdentityModel.Base64Url), []),
 		new (typeof(LanguageExt.FuncExtensions), []),
+		new (typeof(Lifti.ChildNodeMap), []),
 		new (typeof(LLVMSharp.AddrSpaceCastInst), []),
 		new (typeof(MassTransit.AbstractUriException), []),
 		new (typeof(MathNet.Numerics.AppSwitches), []),

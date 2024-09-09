@@ -49,6 +49,7 @@
     <PackageVersion Include="ILGPU" Version="1.4.0" />
     <PackageVersion Include="LanguageExt.Core" Version="5.0.0-beta-11" />
     <PackageVersion Include="Lib.Harmony" Version="2.3.3" />
+    <PackageVersion Include="Lifti.Core" Version="6.3.0" />
     <PackageVersion Include="LLVMSharp" Version="16.0.0" />
     <PackageVersion Include="MassTransit" Version="8.2.6-develop.1976" />
     <PackageVersion Include="MathNet.Numerics" Version="6.0.0-beta1" />
