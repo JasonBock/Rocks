@@ -122,9 +122,10 @@ internal sealed record MockModel
 		return new(
 			!isMockable ? null :
 				new MockModelInformation(
-					new TypeMockModel(node, typeToMock, compilation, model, 
-						constructors, methods, properties, events, 
-						shims, new TypeMockModelMemberCount(methodMemberCount, propertyMemberCount), shouldResolveShims, buildType), buildType),
+					new TypeMockModel(node, typeToMock, compilation, model,
+						constructors, methods, properties, events,
+						shims, new TypeMockModelMemberCount(methodMemberCount, propertyMemberCount), shouldResolveShims, buildType),
+					buildType),
 			diagnostics.ToImmutable());
 	}
 

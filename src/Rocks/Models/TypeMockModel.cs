@@ -45,6 +45,57 @@ internal sealed record TypeMockModel
 			.ToImmutableArray();
 
 		this.ExpectationsPropertyName = this.GetExpectationsPropertyName();
+		this.Projections = this.GetProjections();
+	}
+
+	private EquatableArray<ProjectedModelInformation> GetProjections()
+	{
+		var projections = new HashSet<ProjectedModelInformation>();
+
+		foreach (var method in this.Methods)
+		{
+			foreach (var parameter in method.Parameters)
+			{
+				if (parameter.Type.NeedsProjection)
+				{
+					projections.Add(new ProjectedModelInformation(parameter.Type));
+				}
+			}
+
+			if (method.ReturnType.NeedsProjection)
+			{
+				projections.Add(new ProjectedModelInformation(method.ReturnType));
+			}
+		}
+
+		foreach (var property in this.Properties)
+		{
+			if (property.Type.NeedsProjection)
+			{
+				projections.Add(new ProjectedModelInformation(property.Type));
+			}
+
+			foreach (var parameter in property.Parameters)
+			{
+				if (parameter.Type.NeedsProjection)
+				{
+					projections.Add(new ProjectedModelInformation(parameter.Type));
+				}
+			}
+		}
+
+		foreach (var constructor in this.Constructors)
+		{
+			foreach (var parameter in constructor.Parameters)
+			{
+				if (parameter.Type.NeedsProjection)
+				{
+					projections.Add(new ProjectedModelInformation(parameter.Type));
+				}
+			}
+		}
+
+		return [.. projections];
 	}
 
 	private string GetExpectationsPropertyName()
@@ -57,13 +108,14 @@ internal sealed record TypeMockModel
 		var expectationsPropertyName = ExpectationsName;
 		var index = 2;
 
-		while (memberNames.Contains(expectationsPropertyName)) 
+		while (memberNames.Contains(expectationsPropertyName))
 		{
 			expectationsPropertyName = $"{ExpectationsName}{index++}";
 		}
 
 		return expectationsPropertyName;
 	}
+
 
 	internal EquatableArray<string> Aliases { get; }
 	internal EquatableArray<ConstructorPropertyModel> ConstructorProperties { get; }
@@ -76,6 +128,7 @@ internal sealed record TypeMockModel
 	internal TypeMockModelMemberCount MemberCount { get; }
 	internal EquatableArray<MethodModel> Methods { get; }
 	internal EquatableArray<PropertyModel> Properties { get; }
+	internal EquatableArray<ProjectedModelInformation> Projections { get; }
 	internal EquatableArray<TypeMockModel> Shims { get; }
 	internal TypeReferenceModel Type { get; }
 }
