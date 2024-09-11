@@ -1139,10 +1139,13 @@ public static class PointerGeneratorTests
 			
 			""";
 
+		var projectionGeneratedCode = "";
+
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
 				("MockTests.IHavePointers_Rock_Create.g.cs", createGeneratedCode),
-				("MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode),
+				("intPointer_Projection.g.cs", projectionGeneratedCode),
 			],
 			[]);
 	}

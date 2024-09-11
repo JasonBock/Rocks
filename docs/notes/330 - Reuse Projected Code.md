@@ -43,9 +43,13 @@ namespace {{ProjectedTypeNamespace}}
 We can repurpose types to do what is already close to what we need, like `PointerArgTypeBuilder`, `MockProjectedAdornmentsTypesBuilder`, and `MockAdornmentsBuilder`. 
 
 Work
-* Create `ProjectedModelInformation`.
-* Use existing builders and repurpose them. Can also get rid of the hash code generation on the names, and then can probably remove the hash code generation altogether.
+* DONE - Update `TypeReferenceModel` to have a `NeedsProjection` property. This will be `true` for pointers and the three special types.
+* DONE - Create `ProjectedModelInformation`.
+* DONE - Return a `List<ProjectedModelInformation>` from `ForAttributeWithMetadataName()`. This will be a bit tricky, because we want to return the list of 
+* Generate the projections first **before** we reference them in the mock code. This will ensure that the files are created correctly.
+  * Use existing builders and repurpose them. Can also get rid of the hash code generation on the names, and then can probably remove the hash code generation altogether.
   * Move generated callbacks to the correct `HandlerN` class as a nested definition, and **always** call it `Callback`.
+* Update mock code to use the new projections as necessary.
 * Can probably remove hash code name generation
 * Can probably (finally!) clean up some of the name generation.
 

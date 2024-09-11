@@ -23,5 +23,6 @@ internal static class StringExtensions
 			.Replace(":", string.Empty)
 			.Replace("<", string.Empty)
 			.Replace(">", string.Empty)
-			.Replace("?", "_null_");
+			.Replace("?", "_null_")
+			.Replace("*", "Pointer");
 }

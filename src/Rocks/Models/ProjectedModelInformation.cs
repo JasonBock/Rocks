@@ -1,3 +1,3 @@
 namespace Rocks.Models;
 
-internal sealed record ProjectedModelInformation(TypeReferenceModel TypeReference);
+internal sealed record ProjectedModelInformation(TypeReferenceModel Type);

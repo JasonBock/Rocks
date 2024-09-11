@@ -77,8 +77,15 @@ internal sealed class RockGenerator
 
 	private static void CreateOutput(ImmutableArray<MockModelInformation> mocks, SourceProductionContext context)
 	{
+		var projections = new HashSet<ProjectedModelInformation>();
+
 		foreach (var mock in mocks.Distinct())
 		{
+			foreach (var projection in mock.Type.Projections)
+			{
+				projections.Add(projection);
+			}
+
 			if (mock.BuildType.HasFlag(BuildType.Create))
 			{
 				var builder = new RockCreateBuilder(mock.Type);
@@ -88,6 +95,15 @@ internal sealed class RockGenerator
 			if (mock.BuildType.HasFlag(BuildType.Make))
 			{
 				var builder = new RockMakeBuilder(mock.Type);
+				context.AddSource(builder.Name, builder.Text);
+			}
+		}
+
+		if (projections.Count > 0)
+		{
+			foreach (var projection in projections)
+			{
+				var builder = new RockProjectionBuilder(projection);
 				context.AddSource(builder.Name, builder.Text);
 			}
 		}
