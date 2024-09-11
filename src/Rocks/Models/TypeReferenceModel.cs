@@ -14,6 +14,10 @@ internal sealed record TypeReferenceModel
 		this.FlattenedName = type.GetName(TypeNameOption.Flatten);
 		this.Name = type.GetName(TypeNameOption.NoGenerics);
 		this.NullableAnnotation = type.NullableAnnotation;
+		this.NeedsProjection = type.IsPointer() ||
+			SymbolEqualityComparer.Default.Equals(type, compilation.GetTypeByMetadataName("System.ArgIterator")) ||
+			SymbolEqualityComparer.Default.Equals(type, compilation.GetTypeByMetadataName("System.RuntimeArgumentHandle")) ||
+			SymbolEqualityComparer.Default.Equals(type, compilation.GetTypeByMetadataName("System.TypedReference"));
 
 		this.AttributesDescription = type.GetAttributes().GetDescription(compilation, AttributeTargets.Class);
 		this.Namespace =
@@ -147,6 +151,7 @@ internal sealed record TypeReferenceModel
 	internal SymbolKind Kind { get; }
 	internal string Name { get; }
 	internal string? Namespace { get; }
+	internal bool NeedsProjection { get; }
 	internal NullableAnnotation NullableAnnotation { get; }
 	internal string? PointerArgParameterType { get; }
 	internal string? PointerArgProjectedEvaluationDelegateName { get; }

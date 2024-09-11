@@ -108,7 +108,11 @@ public static class TypeReferenceModelTests
 		(var type, var compilation) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
 		var model = new TypeReferenceModel(type, compilation);
 
-		Assert.That(model.IsBasedOnTypeParameter, Is.True);
+		Assert.Multiple(() =>
+		{
+			Assert.That(model.IsBasedOnTypeParameter, Is.True);
+			Assert.That(model.NeedsProjection, Is.False);
+		});
 	}
 
 	[Test]
@@ -128,7 +132,29 @@ public static class TypeReferenceModelTests
 		(var type, var compilation) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
 		var model = new TypeReferenceModel(type, compilation);
 
-		Assert.That(model.NullableAnnotation, Is.EqualTo(NullableAnnotation.Annotated));
+		Assert.Multiple(() =>
+		{
+			Assert.That(model.NullableAnnotation, Is.EqualTo(NullableAnnotation.Annotated));
+			Assert.That(model.NeedsProjection, Is.False);
+		});
+	}
+
+	[Test]
+	public static void CreateWithTypeThatDoesNotNeedProjection()
+	{
+		var code =
+			"""
+			namespace TargetNamespace; 
+			
+			public class Target
+			{
+				public unsafe void Go(string target) { }
+			}
+			""";
+		(var type, var compilation) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
+		var model = new TypeReferenceModel(type, compilation);
+
+		Assert.That(model.NeedsProjection, Is.False);
 	}
 
 	[Test]
@@ -148,10 +174,68 @@ public static class TypeReferenceModelTests
 
 		Assert.Multiple(() =>
 		{
+			Assert.That(model.NeedsProjection, Is.True);
 			Assert.That(model.IsPointer, Is.True);
 			Assert.That(model.PointerArgProjectedEvaluationDelegateName, Is.EqualTo("ArgumentEvaluationForintPointer"));
 			Assert.That(model.PointerArgProjectedName, Is.EqualTo("ArgumentForintPointer"));
 		});
+	}
+
+	public static void CreateWithArgIterator()
+	{
+		var code =
+			"""
+			using System;
+
+			namespace TargetNamespace; 
+			
+			public class Target
+			{
+				public void Go(ArgIterator target) { }
+			}
+			""";
+		(var type, var compilation) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
+		var model = new TypeReferenceModel(type, compilation);
+
+		Assert.That(model.NeedsProjection, Is.True);
+	}
+
+	public static void CreateWithRuntimeArgumentHandle()
+	{
+		var code =
+			"""
+			using System;
+
+			namespace TargetNamespace; 
+			
+			public class Target
+			{
+				public void Go(RuntimeArgumentHandle target) { }
+			}
+			""";
+		(var type, var compilation) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
+		var model = new TypeReferenceModel(type, compilation);
+
+		Assert.That(model.NeedsProjection, Is.True);
+	}
+
+	public static void CreateWithTypedReference()
+	{
+		var code =
+			"""
+			using System;
+
+			namespace TargetNamespace; 
+			
+			public class Target
+			{
+				public void Go(TypedReference target) { }
+			}
+			""";
+		(var type, var compilation) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
+		var model = new TypeReferenceModel(type, compilation);
+
+		Assert.That(model.NeedsProjection, Is.True);
 	}
 
 	[Test]
@@ -171,7 +255,11 @@ public static class TypeReferenceModelTests
 		(var type, var compilation) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
 		var model = new TypeReferenceModel(type, compilation);
 
-		Assert.That(model.IsRefLikeType, Is.True);
+		Assert.Multiple(() =>
+		{
+			Assert.That(model.NeedsProjection, Is.False);
+			Assert.That(model.IsRefLikeType, Is.True);
+		});
 	}
 
 	[Test]
