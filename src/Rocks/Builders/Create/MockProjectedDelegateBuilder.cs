@@ -50,7 +50,7 @@ internal static class MockProjectedDelegateBuilder
 		var typeArguments = method.IsGenericMethod ?
 			$"<{string.Join(", ", method.TypeArguments.Select(_ => _.BuildName(typeArgumentsNamingContext)))}>" : string.Empty;
 
-		return $"internal {isUnsafe}delegate {returnType} {method.ProjectedCallbackDelegateName}{typeArguments}({methodParameters}){methodConstraints};";
+		return $"internal {isUnsafe}delegate {returnType} CallbackForHandler{typeArguments}({methodParameters}){methodConstraints};";
 	}
 
 	internal static string GetProjectedReturnValueDelegate(MethodModel method)

@@ -28,29 +28,16 @@ internal sealed class RockProjectionBuilder
 			#pragma warning disable CS8714
 			#pragma warning disable CS8775
 
+			using System;
+			using System.ComponentModel;
+			
 			#nullable enable
 
+			namespace Rocks.Projections;
+			
 			""");
 
-		var mockNamespace = this.ProjectedType.Type.Namespace;
-
-		if (mockNamespace is not null)
-		{
-			indentWriter.WriteLines(
-				$$"""
-				namespace {{mockNamespace}}
-				{				
-				""");
-			indentWriter.Indent++;
-		}
-
-		indentWriter.WriteLine("// TODO - insert projected code here...");
-
-		if (mockNamespace is not null)
-		{
-			indentWriter.Indent--;
-			indentWriter.WriteLine("}");
-		}
+		ProjectionBuilder.Build(indentWriter, this.ProjectedType);
 
 		indentWriter.WriteLines(
 			"""
@@ -62,8 +49,7 @@ internal sealed class RockProjectionBuilder
 			""");
 
 		var text = SourceText.From(writer.ToString(), Encoding.UTF8);
-		var name = $"{this.ProjectedType.Type.FullyQualifiedName.GenerateFileName()}_Projection.g.cs";
-		return (name, text);
+		return ($"{this.ProjectedType.Type!.FullyQualifiedName.GenerateFileName()}_Projection.g.cs", text);
 	}
 
 	public string Name { get; private set; }

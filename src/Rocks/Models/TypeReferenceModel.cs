@@ -14,10 +14,7 @@ internal sealed record TypeReferenceModel
 		this.FlattenedName = type.GetName(TypeNameOption.Flatten);
 		this.Name = type.GetName(TypeNameOption.NoGenerics);
 		this.NullableAnnotation = type.NullableAnnotation;
-		this.NeedsProjection = type.IsPointer() ||
-			SymbolEqualityComparer.Default.Equals(type, compilation.GetTypeByMetadataName("System.ArgIterator")) ||
-			SymbolEqualityComparer.Default.Equals(type, compilation.GetTypeByMetadataName("System.RuntimeArgumentHandle")) ||
-			SymbolEqualityComparer.Default.Equals(type, compilation.GetTypeByMetadataName("System.TypedReference"));
+		this.NeedsProjection = type.NeedsProjection(compilation);
 
 		this.AttributesDescription = type.GetAttributes().GetDescription(compilation, AttributeTargets.Class);
 		this.Namespace =

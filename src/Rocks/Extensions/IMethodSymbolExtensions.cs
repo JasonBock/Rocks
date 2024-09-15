@@ -27,10 +27,10 @@ internal static class IMethodSymbolExtensions
 		self.GetAttributes().Any(
 			_ => _.AttributeClass?.GetFullyQualifiedName(compilation).EndsWith(IMethodSymbolExtensions.DoesNotReturnAttributeName) ?? false);
 
-	internal static bool RequiresProjectedDelegate(this IMethodSymbol self) =>
+	internal static bool RequiresProjectedDelegate(this IMethodSymbol self, Compilation compilation) =>
 		self.Parameters.Length > 16 ||
-		self.Parameters.Any(_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out || _.IsScoped() || _.Type.IsPointer()) ||
-			!self.ReturnsVoid && self.ReturnType.IsPointer();
+		self.Parameters.Any(_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out || _.IsScoped() || _.Type.NeedsProjection(compilation)) ||
+			!self.ReturnsVoid && self.ReturnType.NeedsProjection(compilation);
 
 	/// <summary>
 	/// This is needed because if a method has a generic parameter that is used 

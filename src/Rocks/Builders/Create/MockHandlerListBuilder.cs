@@ -15,42 +15,32 @@ internal static class MockHandlerListBuilder
 
 	private static void BuildHandler(IndentedTextWriter writer, MethodModel method, uint memberIdentifier, string expectationsFullyQualifiedName)
 	{
-		var callbackDelegateTypeName =
-			method.RequiresProjectedDelegate ?
-				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, method.MockType) :
-				DelegateBuilder.Build(method);
 		var typeArgumentsNamingContext = method.IsGenericMethod ?
 			new TypeArgumentsNamingContext(method) :
 			new TypeArgumentsNamingContext();
 		var typeArguments = method.IsGenericMethod ?
 			$"<{string.Join(", ", method.TypeArguments.Select(_ => _.BuildName(typeArgumentsNamingContext)))}>" : string.Empty;
+		var callbackDelegateTypeName =
+			method.NeedsProjection ?
+				$"Handler{memberIdentifier}.CallbackForHandler{typeArguments}" :
+				DelegateBuilder.Build(method);
 
 		string handlerBaseType;
 
-		if (method.ReturnType.TypeKind == TypeKind.FunctionPointer ||
-			method.ReturnType.TypeKind == TypeKind.Pointer)
+		if (method.ReturnsVoid || method.ReturnType.NeedsProjection)
 		{
-			handlerBaseType = $"{MockProjectedAdornmentsTypesBuilder.GetProjectedHandlerFullyQualifiedNameName(method.ReturnType, method.MockType)}<{callbackDelegateTypeName}>";
+			handlerBaseType = $"global::Rocks.Handler<{callbackDelegateTypeName}>";
 		}
 		else
 		{
-			string returnTypeName;
-
-			if (method.ReturnsVoid)
+			if (method.ReturnType.IsRefLikeType || method.ReturnType.AllowsRefLikeType)
 			{
-				returnTypeName = string.Empty;
-			}
-			else if (method.ReturnType.IsRefLikeType || method.ReturnType.AllowsRefLikeType)
-			{
-				returnTypeName = $"global::System.Func<{method.ReturnType.BuildName(typeArgumentsNamingContext)}>";
+				handlerBaseType = $"global::Rocks.Handler<{callbackDelegateTypeName}, global::System.Func<{method.ReturnType.BuildName(typeArgumentsNamingContext)}>";
 			}
 			else
 			{
-				returnTypeName = method.ReturnType.BuildName(typeArgumentsNamingContext);
+				handlerBaseType = $"global::Rocks.Handler<{callbackDelegateTypeName}, {method.ReturnType.BuildName(typeArgumentsNamingContext)}>";
 			}
-
-			returnTypeName = returnTypeName == string.Empty ? string.Empty : $", {returnTypeName}";
-			handlerBaseType = $"global::Rocks.Handler<{callbackDelegateTypeName}{returnTypeName}>";
 		}
 
 		writer.WriteLines(
@@ -66,10 +56,15 @@ internal static class MockHandlerListBuilder
 			writer.Indent--;
 		}
 
-		if (method.Parameters.Length > 0)
+		if (method.Parameters.Length > 0 || method.NeedsProjection)
 		{
 			writer.WriteLine("{");
 			writer.Indent++;
+
+			if (method.NeedsProjection)
+			{
+				writer.WriteLine(MockProjectedDelegateBuilder.GetProjectedDelegate(method));
+			}
 
 			var names = HandlerVariableNamingContext.Create();
 
@@ -82,7 +77,7 @@ internal static class MockHandlerListBuilder
 
 				if (parameter.Type.IsPointer)
 				{
-					argumentTypeName = $"public {PointerArgTypeBuilder.GetProjectedFullyQualifiedName(parameter.Type, method.MockType)}";
+					argumentTypeName = $"public global::Rocks.Projections.{new ProjectedModelInformation(parameter.Type).PointerNames}Argument<{parameter.Type.BuildName(typeArgumentsNamingContext)}>";
 				}
 				else
 				{
@@ -92,6 +87,11 @@ internal static class MockHandlerListBuilder
 				}
 
 				writer.WriteLine($"{argumentTypeName} @{name} {{ get; set; }}");
+			}
+
+			if (method.ReturnType.NeedsProjection)
+			{
+				writer.WriteLine($"public {method.ReturnType.FullyQualifiedName} ReturnValue {{ get; set; }}");
 			}
 
 			writer.Indent--;

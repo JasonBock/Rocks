@@ -42,16 +42,28 @@ namespace {{ProjectedTypeNamespace}}
 
 We can repurpose types to do what is already close to what we need, like `PointerArgTypeBuilder`, `MockProjectedAdornmentsTypesBuilder`, and `MockAdornmentsBuilder`. 
 
+Thought...if I see that I need to make an `int*`, actually generate a "generic" version of this. That way, I can reuse the generic unmanaged type for **any** "single" pointer type. Meaning, `char*` could also be used for that as well. Neat! (if this works)
+
+OK, after much rethinking, I think I have a way through.
+* `ProjectedModelInformation` has two properties: `uint PointerCount` and `Type? Type`. Have to break this up into an explicit constructor with just `(Type type)`. If `type` is a pointer, then we get the pointer count, and set `Type` to `null`. Else, we set `Type` to type, and leave `PointerCount` 0.
+* When we build the projections, if there is a pointer count, we create a generic pointer argument type using `T : unmanaged`. Else, we create one for both a function pointer and the three types as needed. All of these will go into `Rocks.Projections`, as they will be unique.
+* When I create handlers and mock implementations, I create `Callback` nested types and use the projected as needed.
+* If the projected type is a return value, I need to add to `ProjectedModelInformation` a `IsUsedInReturnValue`, because that doesn't need to generate a projected `Argument` type, but it does need to generate special `Handler` and `Adornments` types. The `Callback` should be generated in the projected `Handler`. Use `MockProjectedAdornmentsTypesBuilder.BuildTypes()` as a guide.
+
 Work
 * DONE - Update `TypeReferenceModel` to have a `NeedsProjection` property. This will be `true` for pointers and the three special types.
 * DONE - Create `ProjectedModelInformation`.
 * DONE - Return a `List<ProjectedModelInformation>` from `ForAttributeWithMetadataName()`. This will be a bit tricky, because we want to return the list of 
 * Generate the projections first **before** we reference them in the mock code. This will ensure that the files are created correctly.
-  * Use existing builders and repurpose them. Can also get rid of the hash code generation on the names, and then can probably remove the hash code generation altogether.
-  * Move generated callbacks to the correct `HandlerN` class as a nested definition, and **always** call it `Callback`.
+  * DONE - Use existing builders and repurpose them. Can also get rid of the hash code generation on the names, and then can probably remove the hash code generation altogether.
+  * DONE - Move generated callbacks to the correct `HandlerN` class as a nested definition, and **always** call it `CallbackForHandler` (can't call it `Callback` because there's a property called `Callback` )
+  * Update mock, expectation, and adornments, basically anywhere a projected type is used, to use the correct type with the right name.
 * Update mock code to use the new projections as necessary.
-* Can probably remove hash code name generation
-* Can probably (finally!) clean up some of the name generation.
+* Remove code
+  * Can probably remove hash code name generation
+  * Can probably (finally!) clean up some of the name generation.
+  * Can probably remove "pointer" name stuff from 
+  * Can probably delete most of `MockProjectedDelegateBuilder` and all of `MockProjectedTypesBuilder`
 
 TODOs:
 * (Handled in "Work" section above) - I'm not sure why I generate a `Handler...` or `Adornments...` with `TCallback` open. I should just set the base type like this: `global::Rocks.Handler<TheCallbackType>`. I can't think of a reason why we should keep the type open. That also means that we generate the `HandlerN` types, the base type name becomes simpler. (I can see why I did it this way because it's consistent with the way handler types are generated for the "normal" path, but I can change that.)
@@ -67,9 +79,9 @@ public class Handler<TCallback>
     where TCallback : Delegate { }
 
 public class Handler0
-    : Handler<Handler0.Callback>
+    : Handler<Handler0.CallbackForHandler>
 {
-    public delegate void Callback(int @value);
+    public delegate void CallbackForHandler(int @value);
     
     public Argument<int> @value { get; set; }
 }
