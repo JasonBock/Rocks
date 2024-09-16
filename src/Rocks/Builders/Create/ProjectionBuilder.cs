@@ -34,16 +34,9 @@ internal static class ProjectionBuilder
 				: Argument
 			{
 				private readonly {{typeName}}ArgumentEvaluation? evaluation;
-				private readonly {{fullyQualifiedName}} value;
 				private readonly ValidationState validation;
 
 				internal {{typeName}}Argument() => this.validation = ValidationState.None;
-
-				internal {{typeName}}Argument({{fullyQualifiedName}} @value)
-				{
-					this.value = @value;
-					this.validation = ValidationState.Value;
-				}
 
 				internal {{typeName}}Argument({{typeName}}ArgumentEvaluation @evaluation)
 				{
@@ -51,13 +44,10 @@ internal static class ProjectionBuilder
 					this.validation = ValidationState.Evaluation;
 				}
 
-				public static implicit operator {{typeName}}Argument({{fullyQualifiedName}} @value) => new(@value);
-
 				public bool IsValid({{fullyQualifiedName}} @value) =>
 					this.validation switch
 					{
 						ValidationState.None => true,
-						ValidationState.Value => @value == this.value,
 						ValidationState.Evaluation => this.evaluation!(@value),
 						ValidationState.DefaultValue => throw new NotSupportedException("Cannot validate an argument value in the ValidationState.DefaultValue state."),
 						_ => throw new InvalidEnumArgumentException($"Invalid value for validation: {this.validation}")

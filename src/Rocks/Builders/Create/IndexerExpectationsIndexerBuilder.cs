@@ -45,7 +45,7 @@ internal static class IndexerExpectationsIndexerBuilder
 				{
 					if (_.Type.IsPointer)
 					{
-						var argName = PointerArgTypeBuilder.GetProjectedFullyQualifiedName(_.Type, _.MockType);
+						var argName = $"global::Rocks.Projections.{_.Type.PointerNames!}Argument<{_.Type.PointedAt!.FullyQualifiedName}>";
 						return $"{argName} @{_.Name}";
 					}
 					else
@@ -62,9 +62,11 @@ internal static class IndexerExpectationsIndexerBuilder
 							{
 								return _.IsParams ?
 									$"params {_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}" :
-										_.Type.IsRefLikeType || _.Type.AllowsRefLikeType ?
-											$"global::Rocks.RefStructArgument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}" :
-											$"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
+										_.Type.NeedsProjection ?
+											$"global::Rocks.Projections.{_.Type.Name}Argument @{_.Name}" :
+											_.Type.IsRefLikeType || _.Type.AllowsRefLikeType ?
+												$"global::Rocks.RefStructArgument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}" :
+												$"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
 							}
 						}
 
@@ -74,9 +76,11 @@ internal static class IndexerExpectationsIndexerBuilder
 							needsGenerationWithDefaults |= _.HasExplicitDefaultValue;
 						}
 
-						return _.Type.IsRefLikeType || _.Type.AllowsRefLikeType ?
-							$"global::Rocks.RefStructArgument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}" :
-							$"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
+						return _.Type.NeedsProjection ?
+							$"global::Rocks.Projections.{_.Type.Name}Argument @{_.Name}" :
+								_.Type.IsRefLikeType || _.Type.AllowsRefLikeType ?
+								$"global::Rocks.RefStructArgument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}" :
+								$"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
 					}
 				}));
 
@@ -163,9 +167,11 @@ internal static class IndexerExpectationsIndexerBuilder
 			var valueParameterArgument =
 				lastParameter.Type.IsPointer ?
 					$"global::Rocks.Projections.{lastParameter.Type.PointerNames}Argument<{lastParameter.Type.PointedAt!.FullyQualifiedName}>" :
-					lastParameter.Type.IsRefLikeType || lastParameter.Type.AllowsRefLikeType ?
-						$"global::Rocks.RefStructArgument<{lastParameter.Type.FullyQualifiedName}{lastParameterRequiresNullable}>" :
-						$"global::Rocks.Argument<{lastParameter.Type.FullyQualifiedName}{lastParameterRequiresNullable}>";
+					lastParameter.Type.NeedsProjection ?
+						$"global::Rocks.Projections.{lastParameter.Type.Name}Argument" :
+						lastParameter.Type.IsRefLikeType || lastParameter.Type.AllowsRefLikeType ?
+							$"global::Rocks.RefStructArgument<{lastParameter.Type.FullyQualifiedName}{lastParameterRequiresNullable}>" :
+							$"global::Rocks.Argument<{lastParameter.Type.FullyQualifiedName}{lastParameterRequiresNullable}>";
 			var valueParameter = $"{valueParameterArgument} @{lastParameter.Name}";
 
 			var needsGenerationWithDefaults = false;
@@ -200,9 +206,11 @@ internal static class IndexerExpectationsIndexerBuilder
 							{
 								return _.IsParams ?
 									$"params {_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}" :
-									_.Type.IsRefLikeType || _.Type.AllowsRefLikeType ?
-										$"global::Rocks.RefStructArgument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}" :
-										$"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
+									_.Type.NeedsProjection ?
+										$"global::Rocks.Projections.{_.Type.Name}Argument @{_.Name}" :
+										_.Type.IsRefLikeType || _.Type.AllowsRefLikeType ?
+											$"global::Rocks.RefStructArgument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}" :
+											$"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
 							}
 						}
 
@@ -212,9 +220,11 @@ internal static class IndexerExpectationsIndexerBuilder
 							needsGenerationWithDefaults |= _.HasExplicitDefaultValue;
 						}
 
-						return _.Type.IsRefLikeType || _.Type.AllowsRefLikeType ?
-							$"global::Rocks.RefStructArgument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}" :
-							$"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
+						return _.Type.NeedsProjection ?
+							$"global::Rocks.Projections.{_.Type.Name}Argument @{_.Name}" :
+							_.Type.IsRefLikeType || _.Type.AllowsRefLikeType ?
+								$"global::Rocks.RefStructArgument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}" :
+								$"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
 					}
 				})));
 

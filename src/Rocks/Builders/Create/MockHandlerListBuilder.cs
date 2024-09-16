@@ -75,15 +75,17 @@ internal static class MockHandlerListBuilder
 
 				string argumentTypeName;
 
-				if (parameter.Type.TypeKind == TypeKind.Pointer)
+				if (parameter.Type.IsPointer)
 				{
 					argumentTypeName = $"public global::Rocks.Projections.{parameter.Type.PointerNames!}Argument<{parameter.Type.PointedAt!.BuildName(typeArgumentsNamingContext)}>";
 				}
 				else
 				{
-					argumentTypeName = parameter.Type.IsRefLikeType || parameter.Type.AllowsRefLikeType ?
-						$"public global::Rocks.RefStructArgument<{parameter.Type.BuildName(typeArgumentsNamingContext)}{requiresNullable}>" :
-						$"public global::Rocks.Argument<{parameter.Type.BuildName(typeArgumentsNamingContext)}{requiresNullable}>";
+					argumentTypeName = parameter.Type.NeedsProjection ?
+						$"public global::Rocks.Projections.{parameter.Type.Name}Argument" :
+							parameter.Type.IsRefLikeType || parameter.Type.AllowsRefLikeType ?
+							$"public global::Rocks.RefStructArgument<{parameter.Type.BuildName(typeArgumentsNamingContext)}{requiresNullable}>" :
+							$"public global::Rocks.Argument<{parameter.Type.BuildName(typeArgumentsNamingContext)}{requiresNullable}>";
 				}
 
 				writer.WriteLine($"{argumentTypeName} @{name} {{ get; set; }}");

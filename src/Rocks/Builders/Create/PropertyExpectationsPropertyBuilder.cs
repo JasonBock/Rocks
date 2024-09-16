@@ -54,9 +54,11 @@ internal static class PropertyExpectationsPropertyBuilder
 		var propertyParameterValue =
 			propertyParameterType.IsPointer ?
 				$"global::Rocks.Projections.{propertyParameterType.PointerNames}Argument<{propertyParameterType.PointedAt!.FullyQualifiedName}>" :
-				propertyParameterType.IsRefLikeType | propertyParameterType.AllowsRefLikeType ?
-					$"global::Rocks.RefStructArgument<{propertyParameterType.FullyQualifiedName}>" :
-					$"global::Rocks.Argument<{propertyParameterType.FullyQualifiedName}>";
+				propertyParameterType.NeedsProjection ?
+					$"global::Rocks.Projections.{propertyParameterType.Name}Argument" :
+					propertyParameterType.IsRefLikeType || propertyParameterType.AllowsRefLikeType ?
+						$"global::Rocks.RefStructArgument<{propertyParameterType.FullyQualifiedName}>" :
+						$"global::Rocks.Argument<{propertyParameterType.FullyQualifiedName}>";
 		var callbackDelegateTypeName = property.SetMethod!.NeedsProjection ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, type.Type, expectationsFullyQualifiedName, memberIdentifier) :
 			DelegateBuilder.Build(property.SetMethod!);

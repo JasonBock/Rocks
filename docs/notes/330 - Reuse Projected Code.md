@@ -58,12 +58,17 @@ Work
   * DONE - Use existing builders and repurpose them. Can also get rid of the hash code generation on the names, and then can probably remove the hash code generation altogether.
   * DONE - Move generated callbacks to the correct `HandlerN` class as a nested definition, and **always** call it `CallbackForHandler` (can't call it `Callback` because there's a property called `Callback` )
   * Update mock, expectation, and adornments, basically anywhere a projected type is used, to use the correct type with the right name.
-    * Expectations - need to use the projected argument name
-      * `MethodExpectationsMethodBuilder`
-      * `IndexerExpectationsIndexerBuilder`
-      * `PropertyExpectationsPropertyBuilder`
-    * Adornments - 
+    * DONE - Expectations - need to use the projected argument name
+      * DONE - `MethodExpectationsMethodBuilder`
+        * The method arguments are still using the old projected name
+      * DONE - `IndexerExpectationsIndexerBuilder`
+      * DONE - `PropertyExpectationsPropertyBuilder`
+    * DONE - Adornments
+      * DONE - Still using the old projected delegate name (need to change what's being put in the adornments pipeline)
 * Update mock code to use the new projections as necessary.
+* Tests
+  * Should do double/triple/quad pointer tests with parameter as well, just to be sure.
+  * Should do the "special" types as parameter and return, just to be sure.
 * Remove code
   * Can probably remove hash code name generation
   * Can probably (finally!) clean up some of the name generation.

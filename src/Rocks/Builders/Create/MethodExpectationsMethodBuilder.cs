@@ -41,9 +41,11 @@ internal static class MethodExpectationsMethodBuilder
 							{
 								return _.IsParams ?
 									$"params {typeName}{requiresNullable} @{_.Name}" :
-									_.Type.IsRefLikeType || _.Type.AllowsRefLikeType ?
-										$"global::Rocks.RefStructArgument<{typeName}{requiresNullable}> @{_.Name}" :
-										$"global::Rocks.Argument<{typeName}{requiresNullable}> @{_.Name}";
+									_.Type.NeedsProjection ?
+										$"global::Rocks.Projections.{_.Type.Name}Argument @{_.Name}" :
+										_.Type.IsRefLikeType || _.Type.AllowsRefLikeType ?
+											$"global::Rocks.RefStructArgument<{typeName}{requiresNullable}> @{_.Name}" :
+											$"global::Rocks.Argument<{typeName}{requiresNullable}> @{_.Name}";
 							}
 						}
 
@@ -53,9 +55,11 @@ internal static class MethodExpectationsMethodBuilder
 							needsGenerationWithDefaults |= _.HasExplicitDefaultValue;
 						}
 
-						return _.Type.IsRefLikeType || _.Type.AllowsRefLikeType ?
-							$"global::Rocks.RefStructArgument<{typeName}{requiresNullable}> @{_.Name}" :
-							$"global::Rocks.Argument<{typeName}{requiresNullable}> @{_.Name}";
+						return _.Type.NeedsProjection ?
+							$"global::Rocks.Projections.{_.Type.Name}Argument @{_.Name}" :
+							_.Type.IsRefLikeType || _.Type.AllowsRefLikeType ?
+								$"global::Rocks.RefStructArgument<{typeName}{requiresNullable}> @{_.Name}" :
+								$"global::Rocks.Argument<{typeName}{requiresNullable}> @{_.Name}";
 					}
 				}));
 
