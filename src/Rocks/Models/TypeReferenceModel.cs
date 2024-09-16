@@ -65,6 +65,14 @@ internal sealed record TypeReferenceModel
 			type;
 		this.IsBasedOnTypeParameter = typeParameterTarget?.IsOpenGeneric() ?? false;
 
+		if (type.TypeKind == TypeKind.Pointer)
+		{
+			var (pointedAtCount, pointedAt) = type.GetPointerInformation();
+			this.PointedAtCount = pointedAtCount;
+			this.PointedAt = new TypeReferenceModel(pointedAt, compilation);
+			this.PointerNames = string.Concat(Enumerable.Repeat("Pointer", (int)this.PointedAtCount));
+		}
+
 		if (this.IsPointer)
 		{
 			// TODO: Need to remove properties here that I really don't need/use
@@ -150,6 +158,9 @@ internal sealed record TypeReferenceModel
 	internal string? Namespace { get; }
 	internal bool NeedsProjection { get; }
 	internal NullableAnnotation NullableAnnotation { get; }
+	internal TypeReferenceModel? PointedAt { get; }
+	internal uint PointedAtCount { get; }
+	internal string? PointerNames { get; }
 	internal string? PointerArgParameterType { get; }
 	internal string? PointerArgProjectedEvaluationDelegateName { get; }
 	internal string? PointerArgProjectedName { get; }

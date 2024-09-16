@@ -28,7 +28,7 @@ internal sealed class RockCreateBuilder
 			indentWriter.Indent++;
 		}
 
-		var wereTypesProjected = MockBuilder.Build(indentWriter, this.MockType);
+		MockBuilder.Build(indentWriter, this.MockType);
 
 		if (mockNamespace is not null)
 		{

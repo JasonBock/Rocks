@@ -58,12 +58,18 @@ Work
   * DONE - Use existing builders and repurpose them. Can also get rid of the hash code generation on the names, and then can probably remove the hash code generation altogether.
   * DONE - Move generated callbacks to the correct `HandlerN` class as a nested definition, and **always** call it `CallbackForHandler` (can't call it `Callback` because there's a property called `Callback` )
   * Update mock, expectation, and adornments, basically anywhere a projected type is used, to use the correct type with the right name.
+    * Expectations - need to use the projected argument name
+      * `MethodExpectationsMethodBuilder`
+      * `IndexerExpectationsIndexerBuilder`
+      * `PropertyExpectationsPropertyBuilder`
+    * Adornments - 
 * Update mock code to use the new projections as necessary.
 * Remove code
   * Can probably remove hash code name generation
   * Can probably (finally!) clean up some of the name generation.
   * Can probably remove "pointer" name stuff from 
   * Can probably delete most of `MockProjectedDelegateBuilder` and all of `MockProjectedTypesBuilder`
+  * Not sure I need `ProjectedModelInformation`, I put a lot on `TypeReferenceModel` as it is, if I put `PointerNames` as a `string?` on it, that may do it.
 
 TODOs:
 * (Handled in "Work" section above) - I'm not sure why I generate a `Handler...` or `Adornments...` with `TCallback` open. I should just set the base type like this: `global::Rocks.Handler<TheCallbackType>`. I can't think of a reason why we should keep the type open. That also means that we generate the `HandlerN` types, the base type name becomes simpler. (I can see why I did it this way because it's consistent with the way handler types are generated for the "normal" path, but I can change that.)

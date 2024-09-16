@@ -7,9 +7,9 @@ namespace Rocks.Builders.Create;
 
 internal static class ProjectionBuilder
 {
-	internal static void Build(IndentedTextWriter writer, ProjectedModelInformation projectedModel)
+	internal static void Build(IndentedTextWriter writer, TypeReferenceModel projectedModel)
 	{
-		if (projectedModel.PointerCount > 0)
+		if (projectedModel.PointedAtCount > 0)
 		{
 			ProjectionBuilder.BuildPointerArgument(writer, projectedModel);
 		}
@@ -19,14 +19,12 @@ internal static class ProjectionBuilder
 		}
 	}
 
-	private static void BuildSpecialArgument(IndentedTextWriter writer, ProjectedModelInformation projectedModel)
+	private static void BuildSpecialArgument(IndentedTextWriter writer, TypeReferenceModel projectedModel)
 	{
-		var referenceType = projectedModel.Type!;
-
-		var needsUnsafe = referenceType.TypeKind == TypeKind.FunctionPointer ?
+		var needsUnsafe = projectedModel.TypeKind == TypeKind.FunctionPointer ?
 			$"unsafe " : string.Empty;
-		var typeName = referenceType.FlattenedName;
-		var fullyQualifiedName = referenceType.FullyQualifiedName;
+		var typeName = projectedModel.FlattenedName;
+		var fullyQualifiedName = projectedModel.FullyQualifiedName;
 
 		writer.WriteLines(
 			$$"""
@@ -68,10 +66,10 @@ internal static class ProjectionBuilder
 			""");
 	}
 
-	private static void BuildPointerArgument(IndentedTextWriter writer, ProjectedModelInformation projectedModel)
+	private static void BuildPointerArgument(IndentedTextWriter writer, TypeReferenceModel projectedModel)
 	{
 		var pointerNames = projectedModel.PointerNames!;
-		var pointerSplats = new string('*', (int)projectedModel.PointerCount);
+		var pointerSplats = new string('*', (int)projectedModel.PointedAtCount);
 
 		writer.WriteLines(
 			$$"""

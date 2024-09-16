@@ -4,8 +4,22 @@ using System.CodeDom.Compiler;
 
 namespace Rocks.Builders.Create;
 
+// TODO - delete (most) of this
 internal static class MockProjectedDelegateBuilder
 {
+	// DON'T DELETE THIS
+	internal static string GetProjectedCallbackDelegateFullyQualifiedName(MethodModel method, TypeReferenceModel typeToMock, string expectationsFullyQualifiedName, uint memberIdentifier)
+	{
+		var typeArgumentsNamingContext = method.IsGenericMethod ?
+			new TypeArgumentsNamingContext(method) :
+			new TypeArgumentsNamingContext();
+
+		var methodArguments = method.IsGenericMethod ?
+			$"<{string.Join(", ", method.TypeArguments.Select(_ => _.BuildName(typeArgumentsNamingContext)))}>" : string.Empty;
+
+		return $"{expectationsFullyQualifiedName}.Handler{memberIdentifier}.CallbackForHandler{methodArguments}";
+	}
+
 	internal static string GetProjectedCallbackDelegateFullyQualifiedName(MethodModel method, TypeReferenceModel typeToMock)
 	{
 		var delegateName = method.ProjectedCallbackDelegateName;

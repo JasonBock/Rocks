@@ -26,12 +26,12 @@ public static class IMethodSymbolExtensionsRequiresProjectedDelegateTests
 		""", true)]
 	public static void RequiresProjectedDelegate(string code, bool expectedValue)
 	{
-		var typeSymbol = IMethodSymbolExtensionsRequiresProjectedDelegateTests.GetMethodSymbol(code);
+		var (typeSymbol, compilation) = IMethodSymbolExtensionsRequiresProjectedDelegateTests.GetMethodSymbol(code);
 
-		Assert.That(typeSymbol.RequiresProjectedDelegate(), Is.EqualTo(expectedValue));
+		Assert.That(typeSymbol.RequiresProjectedDelegate(compilation), Is.EqualTo(expectedValue));
 	}
 
-	private static IMethodSymbol GetMethodSymbol(string source)
+	private static (IMethodSymbol, Compilation) GetMethodSymbol(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
@@ -40,6 +40,6 @@ public static class IMethodSymbolExtensionsRequiresProjectedDelegateTests
 
 		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single(_ => _.Identifier.Text == "Foo");
-		return model.GetDeclaredSymbol(methodSyntax)!;
+		return (model.GetDeclaredSymbol(methodSyntax)!, compilation);
 	}
 }

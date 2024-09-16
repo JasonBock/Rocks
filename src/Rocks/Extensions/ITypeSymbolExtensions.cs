@@ -15,9 +15,9 @@ internal static class ITypeSymbolExtensions
 		self.TypeKind == TypeKind.Error ||
 			(self is INamedTypeSymbol namedSelf && namedSelf.TypeArguments.Any(_ => _.HasErrors()));
 
-	internal static (int count, ITypeSymbol pointerType) GetPointerInformation(this ITypeSymbol self)
+	internal static (uint count, ITypeSymbol pointerType) GetPointerInformation(this ITypeSymbol self)
 	{
-		var count = 0;
+		var count = 0u;
 		var pointedAt = self;
 
 		while (pointedAt.TypeKind == TypeKind.Pointer)
@@ -30,7 +30,7 @@ internal static class ITypeSymbolExtensions
 	}
 
 	/*
-	Does the given type has at leat one member that:
+	Does the given type has at least one member that:
 	* Is a method or property (but not an indexer)
 	* Is not static
 	* Is abstract

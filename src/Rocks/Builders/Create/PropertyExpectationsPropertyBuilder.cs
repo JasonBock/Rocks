@@ -1,5 +1,4 @@
-﻿using Microsoft.CodeAnalysis;
-using Rocks.Extensions;
+﻿using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
 
@@ -11,21 +10,20 @@ internal static class PropertyExpectationsPropertyBuilder
 		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		var propertyGetMethod = property.GetMethod!;
-		var callbackDelegateTypeName = propertyGetMethod.RequiresProjectedDelegate ?
-			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
+		var callbackDelegateTypeName = propertyGetMethod.NeedsProjection ?
+			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.GetMethod!, type.Type, expectationsFullyQualifiedName, memberIdentifier) :
 			DelegateBuilder.Build(propertyGetMethod);
+
+		var handlerTypeName = $"{expectationsFullyQualifiedName}.Handler{memberIdentifier}";
 
 		string adornmentsType;
 
-		if (property.Type.TypeKind == TypeKind.FunctionPointer ||
-			property.Type.TypeKind == TypeKind.Pointer)
+		if (property.Type.IsPointer)
 		{
-			var projectedAdornmentTypeName = MockProjectedAdornmentsTypesBuilder.GetProjectedAdornmentsFullyQualifiedNameName(property.Type, property.MockType);
-			adornmentsType = $"{projectedAdornmentTypeName}<AdornmentsForHandler{memberIdentifier}, {callbackDelegateTypeName}>";
+			adornmentsType = $"global::Rocks.Adornments<AdornmentsForHandler{memberIdentifier}, {handlerTypeName}, {callbackDelegateTypeName}>";
 		}
 		else
 		{
-			var handlerTypeName = $"{expectationsFullyQualifiedName}.Handler{memberIdentifier}";
 			var returnType =
 				property.Type.IsRefLikeType || property.Type.AllowsRefLikeType ?
 					$"global::System.Func<{property.Type.FullyQualifiedName}>" :
@@ -34,7 +32,7 @@ internal static class PropertyExpectationsPropertyBuilder
 			adornmentsType = $"global::Rocks.Adornments<AdornmentsForHandler{memberIdentifier}, {handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
 		}
 
-		adornmentsFQNsPipeline(new(adornmentsType, string.Empty, string.Empty, memberIdentifier));
+		adornmentsFQNsPipeline(new(adornmentsType, string.Empty, string.Empty, property.GetMethod!, memberIdentifier));
 
 		writer.WriteLines(
 			$$"""
@@ -55,15 +53,15 @@ internal static class PropertyExpectationsPropertyBuilder
 		var propertyParameterType = property.SetMethod!.Parameters[0].Type;
 		var propertyParameterValue =
 			propertyParameterType.IsPointer ?
-				PointerArgTypeBuilder.GetProjectedFullyQualifiedName(propertyParameterType, property.MockType) :
-					propertyParameterType.IsRefLikeType | propertyParameterType.AllowsRefLikeType ?
-						$"global::Rocks.RefStructArgument<{propertyParameterType.FullyQualifiedName}>" :
-						$"global::Rocks.Argument<{propertyParameterType.FullyQualifiedName}>";
-		var callbackDelegateTypeName = property.SetMethod!.RequiresProjectedDelegate ?
-			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, property.MockType) :
+				$"global::Rocks.Projections.{propertyParameterType.PointerNames}Argument<{propertyParameterType.PointedAt!.FullyQualifiedName}>" :
+				propertyParameterType.IsRefLikeType | propertyParameterType.AllowsRefLikeType ?
+					$"global::Rocks.RefStructArgument<{propertyParameterType.FullyQualifiedName}>" :
+					$"global::Rocks.Argument<{propertyParameterType.FullyQualifiedName}>";
+		var callbackDelegateTypeName = property.SetMethod!.NeedsProjection ?
+			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, type.Type, expectationsFullyQualifiedName, memberIdentifier) :
 			DelegateBuilder.Build(property.SetMethod!);
 		var adornmentsType = $"global::Rocks.Adornments<AdornmentsForHandler{memberIdentifier}, {expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}>";
-		adornmentsFQNsPipeline(new(adornmentsType, string.Empty, string.Empty, memberIdentifier));
+		adornmentsFQNsPipeline(new(adornmentsType, string.Empty, string.Empty, property.SetMethod!, memberIdentifier));
 
 		writer.WriteLines(
 			$$"""

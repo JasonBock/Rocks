@@ -34,8 +34,21 @@ internal static class MockAdornmentsBuilder
 				{
 					public AdornmentsForHandler{{adornments.MemberIdentifier}}({{expectationsFQN}}.Handler{{adornments.MemberIdentifier}}{{adornments.TypeArguments}} handler)
 						: base(handler) { }
-				}
 				""");
+
+			if (adornments.Method.ReturnType.NeedsProjection)
+			{
+				writer.WriteLines(
+					$$"""
+						public AdornmentsForHandler{{adornments.MemberIdentifier}}{{adornments.TypeArguments}} ReturnValue({{adornments.Method.ReturnType.FullyQualifiedName}} returnValue)
+						{
+							this.handler.ReturnValue = returnValue;
+							return this;
+						}
+					""");
+			}
+
+			writer.WriteLine("}");
 		}
 
 		writer.Indent--;

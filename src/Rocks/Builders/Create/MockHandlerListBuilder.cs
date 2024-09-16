@@ -75,9 +75,9 @@ internal static class MockHandlerListBuilder
 
 				string argumentTypeName;
 
-				if (parameter.Type.IsPointer)
+				if (parameter.Type.TypeKind == TypeKind.Pointer)
 				{
-					argumentTypeName = $"public global::Rocks.Projections.{new ProjectedModelInformation(parameter.Type).PointerNames}Argument<{parameter.Type.BuildName(typeArgumentsNamingContext)}>";
+					argumentTypeName = $"public global::Rocks.Projections.{parameter.Type.PointerNames!}Argument<{parameter.Type.PointedAt!.BuildName(typeArgumentsNamingContext)}>";
 				}
 				else
 				{

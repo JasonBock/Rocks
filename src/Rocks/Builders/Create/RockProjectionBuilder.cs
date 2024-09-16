@@ -8,7 +8,7 @@ namespace Rocks.Builders.Create;
 
 internal sealed class RockProjectionBuilder
 {
-	internal RockProjectionBuilder(ProjectedModelInformation projection)
+	internal RockProjectionBuilder(TypeReferenceModel projection)
 	{
 		this.ProjectedType = projection;
 		(this.Name, this.Text) = this.Build();
@@ -49,10 +49,13 @@ internal sealed class RockProjectionBuilder
 			""");
 
 		var text = SourceText.From(writer.ToString(), Encoding.UTF8);
-		return ($"{this.ProjectedType.Type!.FullyQualifiedName.GenerateFileName()}_Projection.g.cs", text);
+		var name = this.ProjectedType.PointedAtCount > 0 ?
+			this.ProjectedType.PointerNames! :
+			this.ProjectedType.FullyQualifiedName.GenerateFileName();
+		return ($"{name}_Projection.g.cs", text);
 	}
 
 	public string Name { get; private set; }
 	public SourceText Text { get; private set; }
-	private ProjectedModelInformation ProjectedType { get; }
+	private TypeReferenceModel ProjectedType { get; }
 }

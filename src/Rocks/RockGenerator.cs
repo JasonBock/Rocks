@@ -77,7 +77,7 @@ internal sealed class RockGenerator
 
 	private static void CreateOutput(ImmutableArray<MockModelInformation> mocks, SourceProductionContext context)
 	{
-		var projections = new HashSet<ProjectedModelInformation>();
+		var projections = new HashSet<TypeReferenceModel>();
 
 		foreach (var mock in mocks.Distinct())
 		{

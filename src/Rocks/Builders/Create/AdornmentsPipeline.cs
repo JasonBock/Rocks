@@ -1,3 +1,5 @@
-﻿namespace Rocks.Builders.Create;
+﻿using Rocks.Models;
 
-internal sealed record AdornmentsPipeline(string FullyQualifiedName, string TypeArguments, string Constraints, uint MemberIdentifier);
+namespace Rocks.Builders.Create;
+
+internal sealed record AdornmentsPipeline(string FullyQualifiedName, string TypeArguments, string Constraints, MethodModel Method, uint MemberIdentifier);

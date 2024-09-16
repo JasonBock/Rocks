@@ -23,7 +23,7 @@ internal static class MethodExpectationsMethodBuilder
 				{
 					if (_.Type.IsPointer)
 					{
-						var argName = PointerArgTypeBuilder.GetProjectedFullyQualifiedName(_.Type, method.MockType);
+						var argName = $"global::Rocks.Projections.{_.Type.PointerNames!}Argument<{_.Type.PointedAt!.BuildName(typeArgumentsNamingContext)}>";
 						return $"{argName} @{_.Name}";
 					}
 					else
@@ -61,8 +61,8 @@ internal static class MethodExpectationsMethodBuilder
 
 			var typeArguments = method.IsGenericMethod ?
 				$"<{string.Join(", ", method.TypeArguments.Select(_ => _.BuildName(typeArgumentsNamingContext)))}>" : string.Empty;
-			var callbackDelegateTypeName = method.RequiresProjectedDelegate ?
-				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, method.MockType) :
+			var callbackDelegateTypeName = method.NeedsProjection ?
+				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, method.MockType, expectationsFullyQualifiedName, method.MemberIdentifier) :
 				DelegateBuilder.Build(method);
 
 			string adornmentsType;
@@ -92,7 +92,7 @@ internal static class MethodExpectationsMethodBuilder
 				$" {string.Join(" ", method.Constraints.Select(_ => _.ToString(typeArgumentsNamingContext, method)))}" : "";
 			var hiding = method.RequiresHiding == RequiresHiding.Yes ? "new " : string.Empty;
 
-			adornmentsFQNsPipeline(new(adornmentsType, typeArguments, constraints, method.MemberIdentifier));
+			adornmentsFQNsPipeline(new(adornmentsType, typeArguments, constraints, method, method.MemberIdentifier));
 
 			if (isGeneratedWithDefaults)
 			{

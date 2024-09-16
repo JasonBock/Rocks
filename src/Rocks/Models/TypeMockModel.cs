@@ -48,9 +48,9 @@ internal sealed record TypeMockModel
 		this.Projections = this.GetProjections();
 	}
 
-	private EquatableArray<ProjectedModelInformation> GetProjections()
+	private EquatableArray<TypeReferenceModel> GetProjections()
 	{
-		var projections = new HashSet<ProjectedModelInformation>();
+		var projections = new HashSet<TypeReferenceModel>();
 
 		foreach (var method in this.Methods)
 		{
@@ -58,13 +58,13 @@ internal sealed record TypeMockModel
 			{
 				if (parameter.Type.NeedsProjection)
 				{
-					projections.Add(new ProjectedModelInformation(parameter.Type));
+					projections.Add(parameter.Type);
 				}
 			}
 
 			if (method.ReturnType.NeedsProjection)
 			{
-				projections.Add(new ProjectedModelInformation(method.ReturnType));
+				projections.Add(method.ReturnType);
 			}
 		}
 
@@ -72,14 +72,14 @@ internal sealed record TypeMockModel
 		{
 			if (property.Type.NeedsProjection)
 			{
-				projections.Add(new ProjectedModelInformation(property.Type));
+				projections.Add(property.Type);
 			}
 
 			foreach (var parameter in property.Parameters)
 			{
 				if (parameter.Type.NeedsProjection)
 				{
-					projections.Add(new ProjectedModelInformation(parameter.Type));
+					projections.Add(parameter.Type);
 				}
 			}
 		}
@@ -90,7 +90,7 @@ internal sealed record TypeMockModel
 			{
 				if (parameter.Type.NeedsProjection)
 				{
-					projections.Add(new ProjectedModelInformation(parameter.Type));
+					projections.Add(parameter.Type);
 				}
 			}
 		}
@@ -128,7 +128,7 @@ internal sealed record TypeMockModel
 	internal TypeMockModelMemberCount MemberCount { get; }
 	internal EquatableArray<MethodModel> Methods { get; }
 	internal EquatableArray<PropertyModel> Properties { get; }
-	internal EquatableArray<ProjectedModelInformation> Projections { get; }
+	internal EquatableArray<TypeReferenceModel> Projections { get; }
 	internal EquatableArray<TypeMockModel> Shims { get; }
 	internal TypeReferenceModel Type { get; }
 }

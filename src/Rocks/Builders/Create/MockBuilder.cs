@@ -6,7 +6,7 @@ namespace Rocks.Builders.Create;
 
 internal static class MockBuilder
 {
-	internal static bool Build(IndentedTextWriter writer, TypeMockModel mockType)
+	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType)
 	{
 		var adornments = new HashSet<AdornmentsPipeline>();
 		var adornmentsPipeline = (AdornmentsPipeline adornmentsPipelineInformation) => { adornments.Add(adornmentsPipelineInformation); };
@@ -36,7 +36,8 @@ internal static class MockBuilder
 
 		writer.Indent++;
 
-		var wereTypesProjected = MockProjectedTypesBuilder.Build(writer, mockType);
+		// TODO: remove
+		//var wereTypesProjected = MockProjectedTypesBuilder.Build(writer, mockType);
 
 		MockHandlerListBuilder.Build(writer, mockType, expectationsFQN);
 		writer.WriteLine();
@@ -81,6 +82,7 @@ internal static class MockBuilder
 
 		MockEventExtensionsBuilder.Build(writer, mockType, expectationsFQN);
 
-		return wereTypesProjected;
+		// TODO: remove
+		//return wereTypesProjected;
 	}
 }

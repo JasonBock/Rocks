@@ -17,21 +17,20 @@ internal static class IndexerExpectationsIndexerBuilder
 			var namingContext = new VariablesNamingContext(propertyGetMethod);
 			var needsGenerationWithDefaults = false;
 
-			var callbackDelegateTypeName = propertyGetMethod.RequiresProjectedDelegate ?
-				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
+			var callbackDelegateTypeName = propertyGetMethod.NeedsProjection ?
+				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, property.MockType, expectationsFullyQualifiedName, memberIdentifier) :
 				DelegateBuilder.Build(propertyGetMethod);
+
+			var handlerTypeName = $"{expectationsFullyQualifiedName}.Handler{memberIdentifier}";
 
 			string adornmentsType;
 
-			if (property.Type.TypeKind == TypeKind.FunctionPointer ||
-				property.Type.TypeKind == TypeKind.Pointer)
+			if (property.Type.IsPointer)
 			{
-				var projectedAdornmentTypeName = MockProjectedAdornmentsTypesBuilder.GetProjectedAdornmentsFullyQualifiedNameName(property.Type, property.MockType);
-				adornmentsType = $"{projectedAdornmentTypeName}<AdornmentsForHandler{memberIdentifier}, {callbackDelegateTypeName}>";
+				adornmentsType = $"global::Rocks.Adornments<AdornmentsForHandler{memberIdentifier}, {handlerTypeName}, {callbackDelegateTypeName}>";
 			}
 			else
 			{
-				var handlerTypeName = $"{expectationsFullyQualifiedName}.Handler{memberIdentifier}";
 				var returnType =
 					property.Type.IsRefLikeType || property.Type.AllowsRefLikeType ?
 						$"global::System.Func<{property.Type.FullyQualifiedName}>" :
@@ -40,7 +39,7 @@ internal static class IndexerExpectationsIndexerBuilder
 				adornmentsType = $"global::Rocks.Adornments<AdornmentsForHandler{memberIdentifier}, {handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
 			}
 
-			adornmentsFQNsPipeline(new(adornmentsType, string.Empty, string.Empty, memberIdentifier));
+			adornmentsFQNsPipeline(new(adornmentsType, string.Empty, string.Empty, property.GetMethod!, memberIdentifier));
 
 			var instanceParameters = string.Join(", ", propertyGetMethod.Parameters.Select(_ =>
 				{
@@ -163,7 +162,7 @@ internal static class IndexerExpectationsIndexerBuilder
 			var lastParameterRequiresNullable = lastParameter.RequiresNullableAnnotation ? "?" : string.Empty;
 			var valueParameterArgument =
 				lastParameter.Type.IsPointer ?
-					PointerArgTypeBuilder.GetProjectedFullyQualifiedName(lastParameter.Type, property.MockType) :
+					$"global::Rocks.Projections.{lastParameter.Type.PointerNames}Argument<{lastParameter.Type.PointedAt!.FullyQualifiedName}>" :
 					lastParameter.Type.IsRefLikeType || lastParameter.Type.AllowsRefLikeType ?
 						$"global::Rocks.RefStructArgument<{lastParameter.Type.FullyQualifiedName}{lastParameterRequiresNullable}>" :
 						$"global::Rocks.Argument<{lastParameter.Type.FullyQualifiedName}{lastParameterRequiresNullable}>";
@@ -172,10 +171,10 @@ internal static class IndexerExpectationsIndexerBuilder
 			var needsGenerationWithDefaults = false;
 
 			var callbackDelegateTypeName = propertySetMethod.RequiresProjectedDelegate ?
-				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertySetMethod, property.MockType) :
+				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, property.MockType, expectationsFullyQualifiedName, memberIdentifier) :
 				DelegateBuilder.Build(propertySetMethod);
 			var adornmentsType = $"global::Rocks.Adornments<AdornmentsForHandler{memberIdentifier}, {expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}>";
-			adornmentsFQNsPipeline(new(adornmentsType, string.Empty, string.Empty, memberIdentifier));
+			adornmentsFQNsPipeline(new(adornmentsType, string.Empty, string.Empty, property.SetMethod!, memberIdentifier));
 
 			// We need to put the value parameter immediately after "self"
 			// and then skip the value parameter by taking only the non-value parameters.
@@ -184,7 +183,7 @@ internal static class IndexerExpectationsIndexerBuilder
 				{
 					if (_.Type.IsPointer)
 					{
-						var argName = PointerArgTypeBuilder.GetProjectedFullyQualifiedName(_.Type, _.MockType);
+						var argName = $"global::Rocks.Projections.{_.Type.PointerNames!}Argument<{_.Type.PointedAt!.FullyQualifiedName}>";
 						return $"{argName} @{_.Name}";
 					}
 					else
