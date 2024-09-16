@@ -67,15 +67,14 @@ internal static class MethodExpectationsMethodBuilder
 
 			string adornmentsType;
 
-			if (method.ReturnType.TypeKind == TypeKind.FunctionPointer ||
-				method.ReturnType.TypeKind == TypeKind.Pointer)
+			var handlerTypeName = $"{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}{typeArguments}";
+
+			if (method.ReturnType.IsPointer)
 			{
-				var projectedAdornmentTypeName = MockProjectedAdornmentsTypesBuilder.GetProjectedAdornmentsFullyQualifiedNameName(method.ReturnType, method.MockType);
-				adornmentsType = $"{projectedAdornmentTypeName}<AdornmentsForHandler{method.MemberIdentifier}{typeArguments}, {callbackDelegateTypeName}>";
+				adornmentsType = $"global::Rocks.Adornments<AdornmentsForHandler{method.MemberIdentifier}{typeArguments}, {handlerTypeName}, {callbackDelegateTypeName}>";
 			}
 			else
 			{
-				var handlerTypeName = $"{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}{typeArguments}";
 				var returnType =
 					method.ReturnsVoid ?
 						string.Empty :

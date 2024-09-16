@@ -13,10 +13,17 @@ internal static class MockBuilder
 
 		var expectationsFQN = mockType.ExpectationsFullyQualifiedName;
 
+		var isUnsafe = 
+			mockType.Methods.Any(
+				_ => _.ReturnType.IsPointer || _.Parameters.Any(_ => _.Type.IsPointer)) ||
+			mockType.Properties.Any(
+				_ => _.Type.IsPointer || _.Parameters.Any(_ => _.Type.IsPointer)) ?
+				"unsafe " : string.Empty;
+
 		writer.WriteLines(
 			$$"""
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-			internal sealed class {{mockType.ExpectationsName}}
+			internal {{isUnsafe}}sealed class {{mockType.ExpectationsName}}
 				: global::Rocks.Expectations
 			""");
 
