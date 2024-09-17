@@ -116,9 +116,6 @@ internal sealed record MethodModel
 		{
 			this.ReturnTypeTypeArguments = ImmutableArray<TypeReferenceModel>.Empty;
 		}
-
-		this.NeedsProjection = this.Parameters.Any(_ => _.Type.NeedsProjection) ||
-			(!this.ReturnsVoid && this.ReturnType.NeedsProjection);
 	}
 
 	internal string AttributesDescription { get; }
@@ -134,7 +131,6 @@ internal sealed record MethodModel
 	internal MethodKind MethodKind { get; }
 	internal TypeReferenceModel MockType { get; }
 	internal string Name { get; }
-	internal bool NeedsProjection { get; }
 	internal string? OverridingCodeValue { get; }
 	internal EquatableArray<ParameterModel> Parameters { get; }
 	internal string? ProjectedCallbackDelegateName { get; }

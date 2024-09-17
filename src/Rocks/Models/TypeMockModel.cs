@@ -56,13 +56,13 @@ internal sealed record TypeMockModel
 		{
 			foreach (var parameter in method.Parameters)
 			{
-				if (parameter.Type.NeedsProjection)
+				if (parameter.Type.RequiresProjectedArgument)
 				{
 					projections.Add(parameter.Type);
 				}
 			}
 
-			if (method.ReturnType.NeedsProjection)
+			if (method.ReturnType.RequiresProjectedArgument)
 			{
 				projections.Add(method.ReturnType);
 			}
@@ -70,14 +70,14 @@ internal sealed record TypeMockModel
 
 		foreach (var property in this.Properties)
 		{
-			if (property.Type.NeedsProjection)
+			if (property.Type.RequiresProjectedArgument)
 			{
 				projections.Add(property.Type);
 			}
 
 			foreach (var parameter in property.Parameters)
 			{
-				if (parameter.Type.NeedsProjection)
+				if (parameter.Type.RequiresProjectedArgument)
 				{
 					projections.Add(parameter.Type);
 				}
@@ -88,7 +88,7 @@ internal sealed record TypeMockModel
 		{
 			foreach (var parameter in constructor.Parameters)
 			{
-				if (parameter.Type.NeedsProjection)
+				if (parameter.Type.RequiresProjectedArgument)
 				{
 					projections.Add(parameter.Type);
 				}

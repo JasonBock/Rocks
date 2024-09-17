@@ -2,14 +2,53 @@
 using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
+using System.Data.Common;
+using System.Reflection.Metadata;
 
 namespace Rocks.Builders.Create;
 
 internal static class ProjectionBuilder
 {
+	internal static string BuildArgument(TypeReferenceModel type, TypeArgumentsNamingContext typeArgumentsNamingContext, bool requiresNullableAnnotation)
+   {
+		string argumentTypeName;
+
+		if (type.IsPointer)
+		{
+			if (type.PointedAt!.SpecialType == SpecialType.System_Void)
+			{
+				argumentTypeName = $"global::Rocks.Projections.{type.PointerNames!}VoidArgument";
+			}
+			else if(type.TypeKind == TypeKind.FunctionPointer)
+			{
+				argumentTypeName = $"global::Rocks.Projections.ArgumentFor{type.FlattenedName}";
+			}
+			else
+			{
+				argumentTypeName = $"global::Rocks.Projections.{type.PointerNames!}Argument<{type.PointedAt!.BuildName(typeArgumentsNamingContext)}>";
+			}
+		}
+		else
+		{
+			var nullableAnnotation = requiresNullableAnnotation ? "?" : string.Empty;
+
+			argumentTypeName = type.RequiresProjectedArgument ?
+				$"global::Rocks.Projections.{type.Name}Argument" :
+				type.IsRefLikeType || type.AllowsRefLikeType ?
+					$"global::Rocks.RefStructArgument<{type.BuildName(typeArgumentsNamingContext)}{nullableAnnotation}>" :
+					$"global::Rocks.Argument<{type.BuildName(typeArgumentsNamingContext)}{nullableAnnotation}>";
+		}
+
+		return argumentTypeName;
+	}
+
 	internal static void Build(IndentedTextWriter writer, TypeReferenceModel projectedModel)
 	{
-		if (projectedModel.PointedAtCount > 0)
+		if (projectedModel.TypeKind == TypeKind.FunctionPointer)
+		{
+			ProjectionBuilder.BuildFunctionPointerArgument(writer, projectedModel);
+		}
+		else if (projectedModel.PointedAtCount > 0)
 		{
 			if (projectedModel.PointedAt!.SpecialType == SpecialType.System_Void)
 			{
@@ -24,6 +63,51 @@ internal static class ProjectionBuilder
 		{
 			ProjectionBuilder.BuildSpecialArgument(writer, projectedModel);
 		}
+	}
+
+	private static void BuildFunctionPointerArgument(IndentedTextWriter writer, TypeReferenceModel projectedModel)
+	{
+		var flattenedName = projectedModel.FlattenedName;
+		var fullyQualifiedName = projectedModel.FullyQualifiedName;
+
+		writer.WriteLines(
+			$$"""
+			internal unsafe delegate bool ArgumentEvaluationFor{{flattenedName}}({{fullyQualifiedName}} @value);
+
+			internal sealed unsafe class ArgumentFor{{flattenedName}}
+				: Argument
+			{
+				private readonly ArgumentEvaluationFor{{flattenedName}}? evaluation;
+				private readonly {{fullyQualifiedName}} value;
+				private readonly ValidationState validation;
+
+				internal ArgumentFor{{flattenedName}}() => this.validation = ValidationState.None;
+
+				internal ArgumentFor{{flattenedName}}({{fullyQualifiedName}} @value)
+				{
+					this.value = @value;
+					this.validation = ValidationState.Value;
+				}
+
+				internal ArgumentFor{{flattenedName}}(ArgumentEvaluationFor{{flattenedName}} @evaluation)
+				{
+					this.evaluation = @evaluation;
+					this.validation = ValidationState.Evaluation;
+				}
+
+				public static implicit operator ArgumentFor{{flattenedName}}({{fullyQualifiedName}} @value) => new(@value);
+
+				public bool IsValid(T{{fullyQualifiedName}} @value) =>
+					this.validation switch
+					{
+						ValidationState.None => true,
+						ValidationState.Value => @value == this.value,
+						ValidationState.Evaluation => this.evaluation!(@value),
+						ValidationState.DefaultValue => throw new NotSupportedException("Cannot validate an argument value in the ValidationState.DefaultValue state."),
+						_ => throw new InvalidEnumArgumentException($"Invalid value for validation: {this.validation}")
+					};
+			}
+			""");
 	}
 
 	private static void BuildSpecialArgument(IndentedTextWriter writer, TypeReferenceModel projectedModel)

@@ -17,7 +17,7 @@ internal static class IndexerExpectationsIndexerBuilder
 			var namingContext = new VariablesNamingContext(propertyGetMethod);
 			var needsGenerationWithDefaults = false;
 
-			var callbackDelegateTypeName = propertyGetMethod.NeedsProjection ?
+			var callbackDelegateTypeName = propertyGetMethod.RequiresProjectedDelegate ?
 				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, property.MockType, expectationsFullyQualifiedName, memberIdentifier) :
 				DelegateBuilder.Build(propertyGetMethod);
 
@@ -43,12 +43,12 @@ internal static class IndexerExpectationsIndexerBuilder
 
 			var instanceParameters = string.Join(", ", propertyGetMethod.Parameters.Select(_ =>
 				{
+					var argumentTypeName = ProjectionBuilder.BuildArgument(
+						_.Type, new TypeArgumentsNamingContext(), _.RequiresNullableAnnotation);
+
 					if (_.Type.IsPointer)
 					{
-						var argName = _.Type.PointedAt!.SpecialType == SpecialType.System_Void ?
-							$"global::Rocks.Projections.{_.Type.PointerNames!}VoidArgument" :
-							$"global::Rocks.Projections.{_.Type.PointerNames!}Argument<{_.Type.PointedAt!.FullyQualifiedName}>";
-						return $"{argName} @{_.Name}";
+						return $"{argumentTypeName} @{_.Name}";
 					}
 					else
 					{
@@ -64,11 +64,7 @@ internal static class IndexerExpectationsIndexerBuilder
 							{
 								return _.IsParams ?
 									$"params {_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}" :
-										_.Type.NeedsProjection ?
-											$"global::Rocks.Projections.{_.Type.Name}Argument @{_.Name}" :
-											_.Type.IsRefLikeType || _.Type.AllowsRefLikeType ?
-												$"global::Rocks.RefStructArgument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}" :
-												$"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
+									$"{argumentTypeName} @{_.Name}";
 							}
 						}
 
@@ -78,11 +74,7 @@ internal static class IndexerExpectationsIndexerBuilder
 							needsGenerationWithDefaults |= _.HasExplicitDefaultValue;
 						}
 
-						return _.Type.NeedsProjection ?
-							$"global::Rocks.Projections.{_.Type.Name}Argument @{_.Name}" :
-								_.Type.IsRefLikeType || _.Type.AllowsRefLikeType ?
-								$"global::Rocks.RefStructArgument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}" :
-								$"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
+						return $"{argumentTypeName} @{_.Name}";
 					}
 				}));
 
@@ -165,17 +157,8 @@ internal static class IndexerExpectationsIndexerBuilder
 			var namingContext = new VariablesNamingContext(propertySetMethod);
 
 			var lastParameter = propertySetMethod.Parameters[propertySetMethod.Parameters.Length - 1];
-			var lastParameterRequiresNullable = lastParameter.RequiresNullableAnnotation ? "?" : string.Empty;
-			var valueParameterArgument =
-				lastParameter.Type.IsPointer ?
-					(lastParameter.Type.PointedAt!.SpecialType == SpecialType.System_Void ?
-						$"global::Rocks.Projections.{lastParameter.Type.PointerNames}VoidArgument" :
-						$"global::Rocks.Projections.{lastParameter.Type.PointerNames}Argument<{lastParameter.Type.PointedAt!.FullyQualifiedName}>") :
-					lastParameter.Type.NeedsProjection ?
-						$"global::Rocks.Projections.{lastParameter.Type.Name}Argument" :
-						lastParameter.Type.IsRefLikeType || lastParameter.Type.AllowsRefLikeType ?
-							$"global::Rocks.RefStructArgument<{lastParameter.Type.FullyQualifiedName}{lastParameterRequiresNullable}>" :
-							$"global::Rocks.Argument<{lastParameter.Type.FullyQualifiedName}{lastParameterRequiresNullable}>";
+			var valueParameterArgument = ProjectionBuilder.BuildArgument(
+				lastParameter.Type, new TypeArgumentsNamingContext(), lastParameter.RequiresNullableAnnotation);
 			var valueParameter = $"{valueParameterArgument} @{lastParameter.Name}";
 
 			var needsGenerationWithDefaults = false;
@@ -191,12 +174,12 @@ internal static class IndexerExpectationsIndexerBuilder
 			var instanceParameters = string.Join(", ", valueParameter,
 				string.Join(", ", propertySetMethod.Parameters.Take(propertySetMethod.Parameters.Length - 1).Select(_ =>
 				{
+					var argumentTypeName = ProjectionBuilder.BuildArgument(
+						_.Type, new TypeArgumentsNamingContext(), _.RequiresNullableAnnotation);
+
 					if (_.Type.IsPointer)
 					{
-						var argName = _.Type.PointedAt!.SpecialType == SpecialType.System_Void ?
-							$"global::Rocks.Projections.{_.Type.PointerNames!}VoidArgument" : 
-							$"global::Rocks.Projections.{_.Type.PointerNames!}Argument<{_.Type.PointedAt!.FullyQualifiedName}>";
-						return $"{argName} @{_.Name}";
+						return $"{argumentTypeName} @{_.Name}";
 					}
 					else
 					{
@@ -212,11 +195,7 @@ internal static class IndexerExpectationsIndexerBuilder
 							{
 								return _.IsParams ?
 									$"params {_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}" :
-									_.Type.NeedsProjection ?
-										$"global::Rocks.Projections.{_.Type.Name}Argument @{_.Name}" :
-										_.Type.IsRefLikeType || _.Type.AllowsRefLikeType ?
-											$"global::Rocks.RefStructArgument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}" :
-											$"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
+									$"{argumentTypeName} @{_.Name}";
 							}
 						}
 
@@ -226,11 +205,7 @@ internal static class IndexerExpectationsIndexerBuilder
 							needsGenerationWithDefaults |= _.HasExplicitDefaultValue;
 						}
 
-						return _.Type.NeedsProjection ?
-							$"global::Rocks.Projections.{_.Type.Name}Argument @{_.Name}" :
-							_.Type.IsRefLikeType || _.Type.AllowsRefLikeType ?
-								$"global::Rocks.RefStructArgument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}" :
-								$"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
+						return $"{argumentTypeName} @{_.Name}";
 					}
 				})));
 

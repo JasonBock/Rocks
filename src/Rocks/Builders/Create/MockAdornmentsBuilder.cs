@@ -36,7 +36,7 @@ internal static class MockAdornmentsBuilder
 						: base(handler) { }
 				""");
 
-			if (adornments.Method.ReturnType.NeedsProjection)
+			if (adornments.Method.ReturnType.RequiresProjectedArgument)
 			{
 				writer.WriteLines(
 					$$"""

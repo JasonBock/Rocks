@@ -5,7 +5,7 @@ namespace Rocks.Extensions;
 
 internal static class ITypeSymbolExtensions
 {
-	internal static bool NeedsProjection(this ITypeSymbol self, Compilation compilation) =>
+	internal static bool RequiresProjectedArgument(this ITypeSymbol self, Compilation compilation) =>
 		self.IsPointer() ||
 			SymbolEqualityComparer.Default.Equals(self, compilation.GetTypeByMetadataName("System.ArgIterator")) ||
 			SymbolEqualityComparer.Default.Equals(self, compilation.GetTypeByMetadataName("System.RuntimeArgumentHandle")) ||

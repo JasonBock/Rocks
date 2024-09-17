@@ -21,13 +21,13 @@ internal static class MockHandlerListBuilder
 		var typeArguments = method.IsGenericMethod ?
 			$"<{string.Join(", ", method.TypeArguments.Select(_ => _.BuildName(typeArgumentsNamingContext)))}>" : string.Empty;
 		var callbackDelegateTypeName =
-			method.NeedsProjection ?
+			method.RequiresProjectedDelegate ?
 				$"Handler{memberIdentifier}.CallbackForHandler{typeArguments}" :
 				DelegateBuilder.Build(method);
 
 		string handlerBaseType;
 
-		if (method.ReturnsVoid || method.ReturnType.NeedsProjection)
+		if (method.ReturnsVoid || method.ReturnType.RequiresProjectedArgument)
 		{
 			handlerBaseType = $"global::Rocks.Handler<{callbackDelegateTypeName}>";
 		}
@@ -56,12 +56,12 @@ internal static class MockHandlerListBuilder
 			writer.Indent--;
 		}
 
-		if (method.Parameters.Length > 0 || method.NeedsProjection)
+		if (method.Parameters.Length > 0 || method.RequiresProjectedDelegate)
 		{
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			if (method.NeedsProjection)
+			if (method.RequiresProjectedDelegate)
 			{
 				writer.WriteLine(MockProjectedDelegateBuilder.GetProjectedDelegate(method));
 			}
@@ -70,35 +70,14 @@ internal static class MockHandlerListBuilder
 
 			foreach (var parameter in method.Parameters)
 			{
-				var requiresNullable = parameter.RequiresNullableAnnotation ? "?" : string.Empty;
 				var name = names[parameter.Name];
 
-				string argumentTypeName;
+				var argumentTypeName = ProjectionBuilder.BuildArgument(parameter.Type, typeArgumentsNamingContext, parameter.RequiresNullableAnnotation);
 
-				if (parameter.Type.IsPointer)
-				{
-					if (parameter.Type.PointedAt!.SpecialType == SpecialType.System_Void)
-					{
-						argumentTypeName = $"public global::Rocks.Projections.{parameter.Type.PointerNames!}VoidArgument";
-					}
-					else
-					{
-						argumentTypeName = $"public global::Rocks.Projections.{parameter.Type.PointerNames!}Argument<{parameter.Type.PointedAt!.BuildName(typeArgumentsNamingContext)}>";
-					}
-				}
-				else
-				{
-					argumentTypeName = parameter.Type.NeedsProjection ?
-						$"public global::Rocks.Projections.{parameter.Type.Name}Argument" :
-							parameter.Type.IsRefLikeType || parameter.Type.AllowsRefLikeType ?
-							$"public global::Rocks.RefStructArgument<{parameter.Type.BuildName(typeArgumentsNamingContext)}{requiresNullable}>" :
-							$"public global::Rocks.Argument<{parameter.Type.BuildName(typeArgumentsNamingContext)}{requiresNullable}>";
-				}
-
-				writer.WriteLine($"{argumentTypeName} @{name} {{ get; set; }}");
+				writer.WriteLine($"public {argumentTypeName} @{name} {{ get; set; }}");
 			}
 
-			if (method.ReturnType.NeedsProjection)
+			if (method.ReturnType.RequiresProjectedArgument)
 			{
 				writer.WriteLine($"public {method.ReturnType.FullyQualifiedName} ReturnValue {{ get; set; }}");
 			}

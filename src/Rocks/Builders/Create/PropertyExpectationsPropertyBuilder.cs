@@ -11,7 +11,7 @@ internal static class PropertyExpectationsPropertyBuilder
 		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		var propertyGetMethod = property.GetMethod!;
-		var callbackDelegateTypeName = propertyGetMethod.NeedsProjection ?
+		var callbackDelegateTypeName = propertyGetMethod.RequiresProjectedDelegate ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.GetMethod!, type.Type, expectationsFullyQualifiedName, memberIdentifier) :
 			DelegateBuilder.Build(propertyGetMethod);
 
@@ -52,17 +52,10 @@ internal static class PropertyExpectationsPropertyBuilder
 		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		var propertyParameterType = property.SetMethod!.Parameters[0].Type;
-		var propertyParameterValue =
-			propertyParameterType.IsPointer ?
-				(propertyParameterType.PointedAt!.SpecialType == SpecialType.System_Void ?
-					$"global::Rocks.Projections.{propertyParameterType.PointerNames}VoidArgument" :
-					$"global::Rocks.Projections.{propertyParameterType.PointerNames}Argument<{propertyParameterType.PointedAt!.FullyQualifiedName}>") :
-				propertyParameterType.NeedsProjection ?
-					$"global::Rocks.Projections.{propertyParameterType.Name}Argument" :
-					propertyParameterType.IsRefLikeType || propertyParameterType.AllowsRefLikeType ?
-						$"global::Rocks.RefStructArgument<{propertyParameterType.FullyQualifiedName}>" :
-						$"global::Rocks.Argument<{propertyParameterType.FullyQualifiedName}>";
-		var callbackDelegateTypeName = property.SetMethod!.NeedsProjection ?
+		var propertyParameterValue = ProjectionBuilder.BuildArgument(
+			propertyParameterType, new TypeArgumentsNamingContext(), property.SetMethod!.Parameters[0].RequiresNullableAnnotation);
+
+		var callbackDelegateTypeName = property.SetMethod!.RequiresProjectedDelegate ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, type.Type, expectationsFullyQualifiedName, memberIdentifier) :
 			DelegateBuilder.Build(property.SetMethod!);
 		var adornmentsType = $"global::Rocks.Adornments<AdornmentsForHandler{memberIdentifier}, {expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}>";

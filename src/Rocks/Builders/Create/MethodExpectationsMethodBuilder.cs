@@ -22,12 +22,12 @@ internal static class MethodExpectationsMethodBuilder
 			var instanceParameters = method.Parameters.Length == 0 ? string.Empty :
 				string.Join(", ", method.Parameters.Select(_ =>
 				{
+					var argumentTypeName = ProjectionBuilder.BuildArgument(
+						_.Type, typeArgumentsNamingContext, _.RequiresNullableAnnotation);
+
 				   if (_.Type.IsPointer)
 				   {
-						var argName = _.Type.PointedAt!.SpecialType == SpecialType.System_Void ?
-							$"global::Rocks.Projections.{_.Type.PointerNames!}VoidArgument" :
-							$"global::Rocks.Projections.{_.Type.PointerNames!}Argument<{_.Type.PointedAt!.BuildName(typeArgumentsNamingContext)}>";
-						return $"{argName} @{_.Name}";
+						return $"{argumentTypeName} @{_.Name}";
 					}
 					else
 					{
@@ -44,11 +44,7 @@ internal static class MethodExpectationsMethodBuilder
 							{
 								return _.IsParams ?
 									$"params {typeName}{requiresNullable} @{_.Name}" :
-									_.Type.NeedsProjection ?
-										$"global::Rocks.Projections.{_.Type.Name}Argument @{_.Name}" :
-										_.Type.IsRefLikeType || _.Type.AllowsRefLikeType ?
-											$"global::Rocks.RefStructArgument<{typeName}{requiresNullable}> @{_.Name}" :
-											$"global::Rocks.Argument<{typeName}{requiresNullable}> @{_.Name}";
+									$"{argumentTypeName} @{_.Name}";
 							}
 						}
 
@@ -58,17 +54,13 @@ internal static class MethodExpectationsMethodBuilder
 							needsGenerationWithDefaults |= _.HasExplicitDefaultValue;
 						}
 
-						return _.Type.NeedsProjection ?
-							$"global::Rocks.Projections.{_.Type.Name}Argument @{_.Name}" :
-							_.Type.IsRefLikeType || _.Type.AllowsRefLikeType ?
-								$"global::Rocks.RefStructArgument<{typeName}{requiresNullable}> @{_.Name}" :
-								$"global::Rocks.Argument<{typeName}{requiresNullable}> @{_.Name}";
+						return $"{argumentTypeName} @{_.Name}";
 					}
 				}));
 
 			var typeArguments = method.IsGenericMethod ?
 				$"<{string.Join(", ", method.TypeArguments.Select(_ => _.BuildName(typeArgumentsNamingContext)))}>" : string.Empty;
-			var callbackDelegateTypeName = method.NeedsProjection ?
+			var callbackDelegateTypeName = method.RequiresProjectedDelegate ?
 				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, method.MockType, expectationsFullyQualifiedName, method.MemberIdentifier) :
 				DelegateBuilder.Build(method);
 
