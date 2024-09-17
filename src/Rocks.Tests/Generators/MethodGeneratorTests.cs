@@ -983,14 +983,10 @@ public static class MethodGeneratorTests
 				internal sealed class IHaveTooMuchCreateExpectations
 					: global::Rocks.Expectations
 				{
-					internal static class Projections
-					{
-						internal delegate int Callback_383140697323744298072430331353344056628280456971(int @i0, int @i1, int @i2, int @i3, int @i4, int @i5, int @i6, int @i7, int @i8, int @i9, int @i10, int @i11, int @i12, int @i13, int @i14, int @i15, int @i16, int @i17, int @i18, int @i19);
-					}
-					
 					internal sealed class Handler0
-						: global::Rocks.Handler<global::MockTests.IHaveTooMuchCreateExpectations.Projections.Callback_383140697323744298072430331353344056628280456971, int>
+						: global::Rocks.Handler<Handler0.CallbackForHandler, int>
 					{
+						internal delegate int CallbackForHandler(int @i0, int @i1, int @i2, int @i3, int @i4, int @i5, int @i6, int @i7, int @i8, int @i9, int @i10, int @i11, int @i12, int @i13, int @i14, int @i15, int @i16, int @i17, int @i18, int @i19);
 						public global::Rocks.Argument<int> @i0 { get; set; }
 						public global::Rocks.Argument<int> @i1 { get; set; }
 						public global::Rocks.Argument<int> @i2 { get; set; }
@@ -1170,7 +1166,7 @@ public static class MethodGeneratorTests
 						{ }
 						
 						public sealed class AdornmentsForHandler0
-							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IHaveTooMuchCreateExpectations.Handler0, global::MockTests.IHaveTooMuchCreateExpectations.Projections.Callback_383140697323744298072430331353344056628280456971, int>, IAdornmentsForIHaveTooMuch<AdornmentsForHandler0>
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IHaveTooMuchCreateExpectations.Handler0, global::MockTests.IHaveTooMuchCreateExpectations.Handler0.CallbackForHandler, int>, IAdornmentsForIHaveTooMuch<AdornmentsForHandler0>
 						{
 							public AdornmentsForHandler0(global::MockTests.IHaveTooMuchCreateExpectations.Handler0 handler)
 								: base(handler) { }

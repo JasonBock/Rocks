@@ -17,7 +17,7 @@ internal static class MockProjectedDelegateBuilder
 		var methodArguments = method.IsGenericMethod ?
 			$"<{string.Join(", ", method.TypeArguments.Select(_ => _.BuildName(typeArgumentsNamingContext)))}>" : string.Empty;
 
-		return $"{expectationsFullyQualifiedName}.Handler{memberIdentifier}.CallbackForHandler{methodArguments}";
+		return $"{expectationsFullyQualifiedName}.Handler{memberIdentifier}{methodArguments}.CallbackForHandler{methodArguments}";
 	}
 
 	internal static string GetProjectedCallbackDelegateFullyQualifiedName(MethodModel method, TypeReferenceModel typeToMock)

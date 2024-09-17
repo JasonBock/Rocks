@@ -71,30 +71,26 @@ Work
       * DONE - `PropertyExpectationsPropertyBuilder`
     * DONE - Adornments
       * DONE - Still using the old projected delegate name (need to change what's being put in the adornments pipeline)
-* Add "void pointer" gen-d code to
-  * Handler list
-  * Expectation builders
+* DONE - Add "void pointer" gen-d code to
+  * DONE - Handler list
+  * DONE - Expectation builders
     * `MethodExpectationsMethodBuilder`
     * `IndexerExpectationsIndexerBuilder`
     * `PropertyExpectationsPropertyBuilder`
-* Update mock code to use the new projections as necessary.
-* Tests
-  * Should split out the tests into separate classes
-    * `SinglePointer`
-    * `DoublePointer`
-    * `TriplePointer`
-    * `ArgIterator`
-    * `TypedReference`
-    * `RuntimeArgumentHandle`
-  * Should do double/triple/quad pointer tests with all of these conditions, just to be sure.
-    * Parameter - void and non-void
-    * Return - void and non-void
-    * Property - void and non-void
-    * Indexer - void and non-void
-      * Parameter - void and non-void
-      * Return - void and non-void
-  * Should do the "special" types as parameter and return, just to be sure.
-  * Should have multiple special types in one test, to ensure only one projection file is made for each.
+* DONE - Need to have a `NeedsProjectedDelegate` and change `NeedsProjection` to `RequiredProjectedArgument`. Reason is for `scoped` parameters.
+* DONE - Update mock code to use the new projections as necessary.
+* DONE - Tests
+  * DONE - Should split out the tests into separate classes
+    * DONE - `Pointer`
+    * DONE - `MultiplePointer`
+    * DONE - `ArgIterator`
+    * DONE - `TypedReference`
+    * DONE - `RuntimeArgumentHandle`
+  * DONE - Should do the "special" types as parameter and return, just to be sure.
+  * DONE - Should have multiple special types in one test, to ensure only one projection file is made for each.
+  * For generics
+    * The `Handler` definition is generic, so it needs to be included when `CallbackForHandler` is reference
+    * When the `@handlersN` field is created, the name isn't correct.
 * Remove code
   * Can probably remove hash code name generation
   * Can probably (finally!) clean up some of the name generation.

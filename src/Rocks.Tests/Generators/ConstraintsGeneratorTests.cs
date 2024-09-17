@@ -1283,15 +1283,11 @@ public static class ConstraintsGeneratorTests
 			internal sealed class INeedDelegateCreateExpectations
 				: global::Rocks.Expectations
 			{
-				internal static class Projections
-				{
-					internal delegate void Callback_592396125302095547400633258221535774913220381582<T>(ref int @a, global::Frame<T> @frame) where T : unmanaged, global::IDot<T>;
-				}
-				
 				internal sealed class Handler0<T>
-					: global::Rocks.Handler<global::INeedDelegateCreateExpectations.Projections.Callback_592396125302095547400633258221535774913220381582<T>>
+					: global::Rocks.Handler<Handler0<T>.CallbackForHandler<T>>
 					where T : unmanaged, global::IDot<T>
 				{
+					internal delegate void CallbackForHandler<T>(ref int @a, global::Frame<T> @frame) where T : unmanaged, global::IDot<T>;
 					public global::Rocks.Argument<int> @a { get; set; }
 					public global::Rocks.Argument<global::Frame<T>> @frame { get; set; }
 				}
@@ -1410,7 +1406,7 @@ public static class ConstraintsGeneratorTests
 					{ }
 					
 					public sealed class AdornmentsForHandler0<T>
-						: global::Rocks.Adornments<AdornmentsForHandler0<T>, global::INeedDelegateCreateExpectations.Handler0<T>, global::INeedDelegateCreateExpectations.Projections.Callback_592396125302095547400633258221535774913220381582<T>>, IAdornmentsForINeedDelegate<AdornmentsForHandler0<T>> where T : unmanaged, global::IDot<T>
+						: global::Rocks.Adornments<AdornmentsForHandler0<T>, global::INeedDelegateCreateExpectations.Handler0<T>, global::INeedDelegateCreateExpectations.Handler0<T>.CallbackForHandler<T>>, IAdornmentsForINeedDelegate<AdornmentsForHandler0<T>> where T : unmanaged, global::IDot<T>
 					{
 						public AdornmentsForHandler0(global::INeedDelegateCreateExpectations.Handler0<T> handler)
 							: base(handler) { }

@@ -243,14 +243,10 @@ public static class ParameterModifierTests
 			internal sealed class IParameterModifierCreateExpectations
 				: global::Rocks.Expectations
 			{
-				internal static class Projections
-				{
-					internal delegate void Callback_193235261019447779478409340058228437220444154875(out string @value);
-				}
-				
 				internal sealed class Handler0
-					: global::Rocks.Handler<global::IParameterModifierCreateExpectations.Projections.Callback_193235261019447779478409340058228437220444154875>
+					: global::Rocks.Handler<Handler0.CallbackForHandler>
 				{
+					internal delegate void CallbackForHandler(out string @value);
 					public global::Rocks.Argument<string> @value { get; set; }
 				}
 				private global::Rocks.Handlers<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
@@ -362,7 +358,7 @@ public static class ParameterModifierTests
 					{ }
 					
 					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Projections.Callback_193235261019447779478409340058228437220444154875>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
 					{
 						public AdornmentsForHandler0(global::IParameterModifierCreateExpectations.Handler0 handler)
 							: base(handler) { }
@@ -456,14 +452,10 @@ public static class ParameterModifierTests
 			internal sealed class IParameterModifierCreateExpectations
 				: global::Rocks.Expectations
 			{
-				internal static class Projections
-				{
-					internal delegate void Callback_117490457623372471697910661720505969856490442481(ref string @value);
-				}
-				
 				internal sealed class Handler0
-					: global::Rocks.Handler<global::IParameterModifierCreateExpectations.Projections.Callback_117490457623372471697910661720505969856490442481>
+					: global::Rocks.Handler<Handler0.CallbackForHandler>
 				{
+					internal delegate void CallbackForHandler(ref string @value);
 					public global::Rocks.Argument<string> @value { get; set; }
 				}
 				private global::Rocks.Handlers<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
@@ -574,7 +566,7 @@ public static class ParameterModifierTests
 					{ }
 					
 					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Projections.Callback_117490457623372471697910661720505969856490442481>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
 					{
 						public AdornmentsForHandler0(global::IParameterModifierCreateExpectations.Handler0 handler)
 							: base(handler) { }
@@ -876,36 +868,32 @@ public static class ParameterModifierTests
 			internal sealed class IParameterModifierCreateExpectations
 				: global::Rocks.Expectations
 			{
-				internal static class Projections
-				{
-					internal delegate void Callback_640457111802933967433135011802939136029252304196(ref int @a);
-					internal delegate void Callback_595359563624402850359397691594068887527805892984<T1, T2>(T1 @a, ref T2 @b);
-					internal delegate void Callback_360038979746784102455204459622175388488035293924(out int @a);
-					internal delegate void Callback_376795512182245354180779374814988822523603172187<T1, T2>(T1 @a, out T2 @b);
-				}
-				
 				internal sealed class Handler0
-					: global::Rocks.Handler<global::IParameterModifierCreateExpectations.Projections.Callback_640457111802933967433135011802939136029252304196>
+					: global::Rocks.Handler<Handler0.CallbackForHandler>
 				{
+					internal delegate void CallbackForHandler(ref int @a);
 					public global::Rocks.Argument<int> @a { get; set; }
 				}
 				private global::Rocks.Handlers<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
 				internal sealed class Handler1<T1, T2>
-					: global::Rocks.Handler<global::IParameterModifierCreateExpectations.Projections.Callback_595359563624402850359397691594068887527805892984<T1, T2>>
+					: global::Rocks.Handler<Handler1<T1, T2>.CallbackForHandler<T1, T2>>
 				{
+					internal delegate void CallbackForHandler<T1, T2>(T1 @a, ref T2 @b);
 					public global::Rocks.Argument<T1> @a { get; set; }
 					public global::Rocks.Argument<T2> @b { get; set; }
 				}
 				private global::Rocks.Handlers<global::Rocks.Handler>? @handlers1;
 				internal sealed class Handler2
-					: global::Rocks.Handler<global::IParameterModifierCreateExpectations.Projections.Callback_360038979746784102455204459622175388488035293924>
+					: global::Rocks.Handler<Handler2.CallbackForHandler>
 				{
+					internal delegate void CallbackForHandler(out int @a);
 					public global::Rocks.Argument<int> @a { get; set; }
 				}
 				private global::Rocks.Handlers<global::IParameterModifierCreateExpectations.Handler2>? @handlers2;
 				internal sealed class Handler3<T1, T2>
-					: global::Rocks.Handler<global::IParameterModifierCreateExpectations.Projections.Callback_376795512182245354180779374814988822523603172187<T1, T2>>
+					: global::Rocks.Handler<Handler3<T1, T2>.CallbackForHandler<T1, T2>>
 				{
+					internal delegate void CallbackForHandler<T1, T2>(T1 @a, out T2 @b);
 					public global::Rocks.Argument<T1> @a { get; set; }
 					public global::Rocks.Argument<T2> @b { get; set; }
 				}
@@ -1166,25 +1154,25 @@ public static class ParameterModifierTests
 					{ }
 					
 					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Projections.Callback_640457111802933967433135011802939136029252304196>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
 					{
 						public AdornmentsForHandler0(global::IParameterModifierCreateExpectations.Handler0 handler)
 							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler1<T1, T2>
-						: global::Rocks.Adornments<AdornmentsForHandler1<T1, T2>, global::IParameterModifierCreateExpectations.Handler1<T1, T2>, global::IParameterModifierCreateExpectations.Projections.Callback_595359563624402850359397691594068887527805892984<T1, T2>>, IAdornmentsForIParameterModifier<AdornmentsForHandler1<T1, T2>>
+						: global::Rocks.Adornments<AdornmentsForHandler1<T1, T2>, global::IParameterModifierCreateExpectations.Handler1<T1, T2>, global::IParameterModifierCreateExpectations.Handler1<T1, T2>.CallbackForHandler<T1, T2>>, IAdornmentsForIParameterModifier<AdornmentsForHandler1<T1, T2>>
 					{
 						public AdornmentsForHandler1(global::IParameterModifierCreateExpectations.Handler1<T1, T2> handler)
 							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler2
-						: global::Rocks.Adornments<AdornmentsForHandler2, global::IParameterModifierCreateExpectations.Handler2, global::IParameterModifierCreateExpectations.Projections.Callback_360038979746784102455204459622175388488035293924>, IAdornmentsForIParameterModifier<AdornmentsForHandler2>
+						: global::Rocks.Adornments<AdornmentsForHandler2, global::IParameterModifierCreateExpectations.Handler2, global::IParameterModifierCreateExpectations.Handler2.CallbackForHandler>, IAdornmentsForIParameterModifier<AdornmentsForHandler2>
 					{
 						public AdornmentsForHandler2(global::IParameterModifierCreateExpectations.Handler2 handler)
 							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler3<T1, T2>
-						: global::Rocks.Adornments<AdornmentsForHandler3<T1, T2>, global::IParameterModifierCreateExpectations.Handler3<T1, T2>, global::IParameterModifierCreateExpectations.Projections.Callback_376795512182245354180779374814988822523603172187<T1, T2>>, IAdornmentsForIParameterModifier<AdornmentsForHandler3<T1, T2>>
+						: global::Rocks.Adornments<AdornmentsForHandler3<T1, T2>, global::IParameterModifierCreateExpectations.Handler3<T1, T2>, global::IParameterModifierCreateExpectations.Handler3<T1, T2>.CallbackForHandler<T1, T2>>, IAdornmentsForIParameterModifier<AdornmentsForHandler3<T1, T2>>
 					{
 						public AdornmentsForHandler3(global::IParameterModifierCreateExpectations.Handler3<T1, T2> handler)
 							: base(handler) { }

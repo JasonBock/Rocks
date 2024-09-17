@@ -400,11 +400,6 @@ public static class OpenGenericsGeneratorTests
 				: global::Rocks.Expectations
 				where T : class
 			{
-				internal static class Projections
-				{
-					internal delegate bool Callback_2208149965646553682949667918893738772205946588<T1>([global::System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)]out T1? @payload) where T1 : class;
-				}
-				
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Action<string>>
 				{
@@ -412,9 +407,10 @@ public static class OpenGenericsGeneratorTests
 				}
 				private global::Rocks.Handlers<global::IConsumerContextCreateExpectations<T>.Handler0>? @handlers0;
 				internal sealed class Handler1<T1>
-					: global::Rocks.Handler<global::IConsumerContextCreateExpectations<T>.Projections.Callback_2208149965646553682949667918893738772205946588<T1>, bool>
+					: global::Rocks.Handler<Handler1<T1>.CallbackForHandler<T1>, bool>
 					where T1 : class
 				{
+					internal delegate bool CallbackForHandler<T1>([global::System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)]out T1? @payload) where T1 : class;
 					public global::Rocks.Argument<T1?> @payload { get; set; }
 				}
 				private global::Rocks.Handlers<global::Rocks.Handler>? @handlers1;
@@ -574,7 +570,7 @@ public static class OpenGenericsGeneratorTests
 							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler1<T1>
-						: global::Rocks.Adornments<AdornmentsForHandler1<T1>, global::IConsumerContextCreateExpectations<T>.Handler1<T1>, global::IConsumerContextCreateExpectations<T>.Projections.Callback_2208149965646553682949667918893738772205946588<T1>, bool>, IAdornmentsForIConsumerContext<AdornmentsForHandler1<T1>> where T1 : class
+						: global::Rocks.Adornments<AdornmentsForHandler1<T1>, global::IConsumerContextCreateExpectations<T>.Handler1<T1>, global::IConsumerContextCreateExpectations<T>.Handler1<T1>.CallbackForHandler<T1>, bool>, IAdornmentsForIConsumerContext<AdornmentsForHandler1<T1>> where T1 : class
 					{
 						public AdornmentsForHandler1(global::IConsumerContextCreateExpectations<T>.Handler1<T1> handler)
 							: base(handler) { }
@@ -2970,14 +2966,10 @@ public static class OpenGenericsGeneratorTests
 				where TCollection : global::System.Collections.Generic.IEnumerable<TElement?>
 				where TElement : struct
 			{
-				internal static class Projections
-				{
-					internal delegate global::System.Collections.Generic.IEnumerable<TElement?> Callback_301394992348083256002899599784820901538420162609(ref global::Manager @manager, object? @existingObject);
-				}
-				
 				internal sealed class Handler0
-					: global::Rocks.Handler<global::IReaderWriterCreateExpectations<TCollection, TConcreteCollection, TElement>.Projections.Callback_301394992348083256002899599784820901538420162609, global::System.Collections.Generic.IEnumerable<TElement?>>
+					: global::Rocks.Handler<Handler0.CallbackForHandler, global::System.Collections.Generic.IEnumerable<TElement?>>
 				{
+					internal delegate global::System.Collections.Generic.IEnumerable<TElement?> CallbackForHandler(ref global::Manager @manager, object? @existingObject);
 					public global::Rocks.Argument<global::Manager> @manager { get; set; }
 					public global::Rocks.Argument<object?> @existingObject { get; set; }
 				}
@@ -3087,7 +3079,7 @@ public static class OpenGenericsGeneratorTests
 					{ }
 					
 					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::IReaderWriterCreateExpectations<TCollection, TConcreteCollection, TElement>.Handler0, global::IReaderWriterCreateExpectations<TCollection, TConcreteCollection, TElement>.Projections.Callback_301394992348083256002899599784820901538420162609, global::System.Collections.Generic.IEnumerable<TElement?>>, IAdornmentsForIReaderWriter<AdornmentsForHandler0>
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IReaderWriterCreateExpectations<TCollection, TConcreteCollection, TElement>.Handler0, global::IReaderWriterCreateExpectations<TCollection, TConcreteCollection, TElement>.Handler0.CallbackForHandler, global::System.Collections.Generic.IEnumerable<TElement?>>, IAdornmentsForIReaderWriter<AdornmentsForHandler0>
 					{
 						public AdornmentsForHandler0(global::IReaderWriterCreateExpectations<TCollection, TConcreteCollection, TElement>.Handler0 handler)
 							: base(handler) { }

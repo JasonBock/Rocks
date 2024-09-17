@@ -22,7 +22,7 @@ internal static class MockHandlerListBuilder
 			$"<{string.Join(", ", method.TypeArguments.Select(_ => _.BuildName(typeArgumentsNamingContext)))}>" : string.Empty;
 		var callbackDelegateTypeName =
 			method.RequiresProjectedDelegate ?
-				$"Handler{memberIdentifier}.CallbackForHandler{typeArguments}" :
+				$"Handler{memberIdentifier}{typeArguments}.CallbackForHandler{typeArguments}" :
 				DelegateBuilder.Build(method);
 
 		string handlerBaseType;
