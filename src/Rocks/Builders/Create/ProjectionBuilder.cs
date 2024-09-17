@@ -2,8 +2,6 @@
 using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
-using System.Data.Common;
-using System.Reflection.Metadata;
 
 namespace Rocks.Builders.Create;
 
@@ -15,13 +13,13 @@ internal static class ProjectionBuilder
 
 		if (type.IsPointer)
 		{
-			if (type.PointedAt!.SpecialType == SpecialType.System_Void)
-			{
-				argumentTypeName = $"global::Rocks.Projections.{type.PointerNames!}VoidArgument";
-			}
-			else if(type.TypeKind == TypeKind.FunctionPointer)
+			if (type.TypeKind == TypeKind.FunctionPointer)
 			{
 				argumentTypeName = $"global::Rocks.Projections.ArgumentFor{type.FlattenedName}";
+			}
+			else if (type.PointedAt!.SpecialType == SpecialType.System_Void)
+			{
+				argumentTypeName = $"global::Rocks.Projections.{type.PointerNames!}VoidArgument";
 			}
 			else
 			{
@@ -97,7 +95,7 @@ internal static class ProjectionBuilder
 
 				public static implicit operator ArgumentFor{{flattenedName}}({{fullyQualifiedName}} @value) => new(@value);
 
-				public bool IsValid(T{{fullyQualifiedName}} @value) =>
+				public bool IsValid({{fullyQualifiedName}} @value) =>
 					this.validation switch
 					{
 						ValidationState.None => true,
