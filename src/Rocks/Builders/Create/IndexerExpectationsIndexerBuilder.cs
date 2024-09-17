@@ -168,7 +168,9 @@ internal static class IndexerExpectationsIndexerBuilder
 			var lastParameterRequiresNullable = lastParameter.RequiresNullableAnnotation ? "?" : string.Empty;
 			var valueParameterArgument =
 				lastParameter.Type.IsPointer ?
-					$"global::Rocks.Projections.{lastParameter.Type.PointerNames}Argument<{lastParameter.Type.PointedAt!.FullyQualifiedName}>" :
+					(lastParameter.Type.PointedAt!.SpecialType == SpecialType.System_Void ?
+						$"global::Rocks.Projections.{lastParameter.Type.PointerNames}VoidArgument" :
+						$"global::Rocks.Projections.{lastParameter.Type.PointerNames}Argument<{lastParameter.Type.PointedAt!.FullyQualifiedName}>") :
 					lastParameter.Type.NeedsProjection ?
 						$"global::Rocks.Projections.{lastParameter.Type.Name}Argument" :
 						lastParameter.Type.IsRefLikeType || lastParameter.Type.AllowsRefLikeType ?

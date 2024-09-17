@@ -587,79 +587,21 @@ public static class ProjectionPointerGeneratorTests
 			namespace MockTests
 			{
 				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-				internal sealed class IHavePointersCreateExpectations
+				internal unsafe sealed class IHavePointersCreateExpectations
 					: global::Rocks.Expectations
 				{
-					internal static class Projections
-					{
-						internal unsafe delegate int* Callback_286972840454368885027555790883633245835670430575();
-						internal unsafe delegate void Callback_675345066879799784342630291957923402524406707040(int* @value);
-						internal unsafe delegate bool ArgumentEvaluationForintPointer(int* @value);
-						
-						internal unsafe sealed class ArgumentForintPointer
-							: global::Rocks.Argument
-						{
-							private readonly global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentEvaluationForintPointer? evaluation;
-							private readonly int* value;
-							private readonly global::Rocks.ValidationState validation;
-							
-							internal ArgumentForintPointer() => this.validation = global::Rocks.ValidationState.None;
-							
-							internal ArgumentForintPointer(int* @value)
-							{
-								this.value = @value;
-								this.validation = global::Rocks.ValidationState.Value;
-							}
-							
-							internal ArgumentForintPointer(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentEvaluationForintPointer @evaluation)
-							{
-								this.evaluation = @evaluation;
-								this.validation = global::Rocks.ValidationState.Evaluation;
-							}
-							
-							public static implicit operator ArgumentForintPointer(int* @value) => new(@value);
-							
-							public bool IsValid(int* @value) =>
-								this.validation switch
-								{
-									global::Rocks.ValidationState.None => true,
-									global::Rocks.ValidationState.Value => @value == this.value,
-									global::Rocks.ValidationState.Evaluation => this.evaluation!(@value),
-									global::Rocks.ValidationState.DefaultValue => throw new global::System.NotSupportedException("Cannot validate an argument value in the ValidationState.DefaultValue state."),
-									_ => throw new global::System.ComponentModel.InvalidEnumArgumentException($"Invalid value for validation: {this.validation}")
-								};
-						}
-						internal unsafe class HandlerForintPointer<TCallback>
-							: global::Rocks.Handler<TCallback>
-							where TCallback : global::System.Delegate
-						{
-							public int* ReturnValue { get; set; }
-						}
-						
-						internal unsafe class AdornmentsForintPointer<TAdornments, TCallback>
-							: global::Rocks.Adornments<TAdornments, HandlerForintPointer<TCallback>, TCallback>
-							where TAdornments : AdornmentsForintPointer<TAdornments, TCallback>
-							where TCallback : global::System.Delegate
-						{
-							internal AdornmentsForintPointer(HandlerForintPointer<TCallback> handler)
-								: base(handler) { }
-							
-							internal AdornmentsForintPointer<TAdornments, TCallback> ReturnValue(int* returnValue)
-							{
-								this.handler.ReturnValue = returnValue;
-								return this;
-							}
-						}
-					}
-					
 					internal sealed class Handler0
-						: global::MockTests.IHavePointersCreateExpectations.Projections.HandlerForintPointer<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_286972840454368885027555790883633245835670430575>
-					{ }
+						: global::Rocks.Handler<Handler0.CallbackForHandler>
+					{
+						internal unsafe delegate int* CallbackForHandler();
+						public int* ReturnValue { get; set; }
+					}
 					private global::Rocks.Handlers<global::MockTests.IHavePointersCreateExpectations.Handler0>? @handlers0;
 					internal sealed class Handler1
-						: global::Rocks.Handler<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_675345066879799784342630291957923402524406707040>
+						: global::Rocks.Handler<Handler1.CallbackForHandler>
 					{
-						public global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @value { get; set; }
+						internal unsafe delegate void CallbackForHandler(int* @value);
+						public global::Rocks.Projections.PointerArgument<int> @value { get; set; }
 					}
 					private global::Rocks.Handlers<global::MockTests.IHavePointersCreateExpectations.Handler1>? @handlers1;
 					
@@ -758,7 +700,7 @@ public static class ProjectionPointerGeneratorTests
 							internal PropertySetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler1 Data(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @value)
+							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler1 Data(global::Rocks.Projections.PointerArgument<int> @value)
 							{
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -810,13 +752,18 @@ public static class ProjectionPointerGeneratorTests
 						{ }
 						
 						public sealed class AdornmentsForHandler0
-							: global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsForintPointer<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_286972840454368885027555790883633245835670430575>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
 						{
 							public AdornmentsForHandler0(global::MockTests.IHavePointersCreateExpectations.Handler0 handler)
 								: base(handler) { }
+							public AdornmentsForHandler0 ReturnValue(int* returnValue)
+							{
+								this.handler.ReturnValue = returnValue;
+								return this;
+							}
 						}
 						public sealed class AdornmentsForHandler1
-							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_675345066879799784342630291957923402524406707040>, IAdornmentsForIHavePointers<AdornmentsForHandler1>
+							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Handler1.CallbackForHandler>, IAdornmentsForIHavePointers<AdornmentsForHandler1>
 						{
 							public AdornmentsForHandler1(global::MockTests.IHavePointersCreateExpectations.Handler1 handler)
 								: base(handler) { }
@@ -875,10 +822,71 @@ public static class ProjectionPointerGeneratorTests
 			
 			""";
 
+		var projectionGeneratedCode =
+			"""
+			// <auto-generated/>
+			
+			#pragma warning disable CS8618
+			#pragma warning disable CS8633
+			#pragma warning disable CS8714
+			#pragma warning disable CS8775
+			
+			using System;
+			using System.ComponentModel;
+			
+			#nullable enable
+			
+			namespace Rocks.Projections;
+			
+			internal unsafe delegate bool PointerArgumentEvaluation<T>(T* @value) where T : unmanaged;
+			
+			internal sealed unsafe class PointerArgument<T>
+				: Argument
+				where T : unmanaged
+			{
+				private readonly PointerArgumentEvaluation<T>? evaluation;
+				private readonly T* value;
+				private readonly ValidationState validation;
+			
+				internal PointerArgument() => this.validation = ValidationState.None;
+			
+				internal PointerArgument(T* @value)
+				{
+					this.value = @value;
+					this.validation = ValidationState.Value;
+				}
+			
+				internal PointerArgument(PointerArgumentEvaluation<T> @evaluation)
+				{
+					this.evaluation = @evaluation;
+					this.validation = ValidationState.Evaluation;
+				}
+			
+				public static implicit operator PointerArgument<T>(T* @value) => new(@value);
+			
+				public bool IsValid(T* @value) =>
+					this.validation switch
+					{
+						ValidationState.None => true,
+						ValidationState.Value => @value == this.value,
+						ValidationState.Evaluation => this.evaluation!(@value),
+						ValidationState.DefaultValue => throw new NotSupportedException("Cannot validate an argument value in the ValidationState.DefaultValue state."),
+						_ => throw new InvalidEnumArgumentException($"Invalid value for validation: {this.validation}")
+					};
+			}
+			
+			#pragma warning restore CS8618
+			#pragma warning restore CS8633
+			#pragma warning restore CS8714
+			#pragma warning restore CS8775
+			
+			""";
+
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
 				("MockTests.IHavePointers_Rock_Create.g.cs", createGeneratedCode),
-				("MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode),
+				("Pointer_Projection.g.cs", projectionGeneratedCode)
 			],
 			[]);
 	}
@@ -920,60 +928,21 @@ public static class ProjectionPointerGeneratorTests
 			namespace MockTests
 			{
 				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-				internal sealed class IHavePointersCreateExpectations
+				internal unsafe sealed class IHavePointersCreateExpectations
 					: global::Rocks.Expectations
 				{
-					internal static class Projections
-					{
-						internal unsafe delegate string Callback_651512256251275256331491675489899036574746642609(int* @index);
-						internal unsafe delegate void Callback_212973048794667040959187979763248770796810688032(int* @index, string @value);
-						internal unsafe delegate bool ArgumentEvaluationForintPointer(int* @value);
-						
-						internal unsafe sealed class ArgumentForintPointer
-							: global::Rocks.Argument
-						{
-							private readonly global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentEvaluationForintPointer? evaluation;
-							private readonly int* value;
-							private readonly global::Rocks.ValidationState validation;
-							
-							internal ArgumentForintPointer() => this.validation = global::Rocks.ValidationState.None;
-							
-							internal ArgumentForintPointer(int* @value)
-							{
-								this.value = @value;
-								this.validation = global::Rocks.ValidationState.Value;
-							}
-							
-							internal ArgumentForintPointer(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentEvaluationForintPointer @evaluation)
-							{
-								this.evaluation = @evaluation;
-								this.validation = global::Rocks.ValidationState.Evaluation;
-							}
-							
-							public static implicit operator ArgumentForintPointer(int* @value) => new(@value);
-							
-							public bool IsValid(int* @value) =>
-								this.validation switch
-								{
-									global::Rocks.ValidationState.None => true,
-									global::Rocks.ValidationState.Value => @value == this.value,
-									global::Rocks.ValidationState.Evaluation => this.evaluation!(@value),
-									global::Rocks.ValidationState.DefaultValue => throw new global::System.NotSupportedException("Cannot validate an argument value in the ValidationState.DefaultValue state."),
-									_ => throw new global::System.ComponentModel.InvalidEnumArgumentException($"Invalid value for validation: {this.validation}")
-								};
-						}
-					}
-					
 					internal sealed class Handler0
-						: global::Rocks.Handler<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_651512256251275256331491675489899036574746642609, string>
+						: global::Rocks.Handler<Handler0.CallbackForHandler, string>
 					{
-						public global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @index { get; set; }
+						internal unsafe delegate string CallbackForHandler(int* @index);
+						public global::Rocks.Projections.PointerArgument<int> @index { get; set; }
 					}
 					private global::Rocks.Handlers<global::MockTests.IHavePointersCreateExpectations.Handler0>? @handlers0;
 					internal sealed class Handler1
-						: global::Rocks.Handler<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_212973048794667040959187979763248770796810688032>
+						: global::Rocks.Handler<Handler1.CallbackForHandler>
 					{
-						public global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @index { get; set; }
+						internal unsafe delegate void CallbackForHandler(int* @index, string @value);
+						public global::Rocks.Projections.PointerArgument<int> @index { get; set; }
 						public global::Rocks.Argument<string> @value { get; set; }
 					}
 					private global::Rocks.Handlers<global::MockTests.IHavePointersCreateExpectations.Handler1>? @handlers1;
@@ -1057,7 +1026,7 @@ public static class ProjectionPointerGeneratorTests
 							internal IndexerGetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler0 This(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @index)
+							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler0 This(global::Rocks.Projections.PointerArgument<int> @index)
 							{
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@index);
@@ -1079,7 +1048,7 @@ public static class ProjectionPointerGeneratorTests
 							internal IndexerSetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler1 This(global::Rocks.Argument<string> @value, global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @index)
+							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler1 This(global::Rocks.Argument<string> @value, global::Rocks.Projections.PointerArgument<int> @index)
 							{
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@index);
@@ -1133,13 +1102,13 @@ public static class ProjectionPointerGeneratorTests
 						{ }
 						
 						public sealed class AdornmentsForHandler0
-							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_651512256251275256331491675489899036574746642609, string>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Handler0.CallbackForHandler, string>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
 						{
 							public AdornmentsForHandler0(global::MockTests.IHavePointersCreateExpectations.Handler0 handler)
 								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler1
-							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_212973048794667040959187979763248770796810688032>, IAdornmentsForIHavePointers<AdornmentsForHandler1>
+							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Handler1.CallbackForHandler>, IAdornmentsForIHavePointers<AdornmentsForHandler1>
 						{
 							public AdornmentsForHandler1(global::MockTests.IHavePointersCreateExpectations.Handler1 handler)
 								: base(handler) { }
@@ -1198,10 +1167,71 @@ public static class ProjectionPointerGeneratorTests
 			
 			""";
 
+		var projectionGeneratedCode =
+			"""
+			// <auto-generated/>
+			
+			#pragma warning disable CS8618
+			#pragma warning disable CS8633
+			#pragma warning disable CS8714
+			#pragma warning disable CS8775
+			
+			using System;
+			using System.ComponentModel;
+			
+			#nullable enable
+			
+			namespace Rocks.Projections;
+			
+			internal unsafe delegate bool PointerArgumentEvaluation<T>(T* @value) where T : unmanaged;
+			
+			internal sealed unsafe class PointerArgument<T>
+				: Argument
+				where T : unmanaged
+			{
+				private readonly PointerArgumentEvaluation<T>? evaluation;
+				private readonly T* value;
+				private readonly ValidationState validation;
+			
+				internal PointerArgument() => this.validation = ValidationState.None;
+			
+				internal PointerArgument(T* @value)
+				{
+					this.value = @value;
+					this.validation = ValidationState.Value;
+				}
+			
+				internal PointerArgument(PointerArgumentEvaluation<T> @evaluation)
+				{
+					this.evaluation = @evaluation;
+					this.validation = ValidationState.Evaluation;
+				}
+			
+				public static implicit operator PointerArgument<T>(T* @value) => new(@value);
+			
+				public bool IsValid(T* @value) =>
+					this.validation switch
+					{
+						ValidationState.None => true,
+						ValidationState.Value => @value == this.value,
+						ValidationState.Evaluation => this.evaluation!(@value),
+						ValidationState.DefaultValue => throw new NotSupportedException("Cannot validate an argument value in the ValidationState.DefaultValue state."),
+						_ => throw new InvalidEnumArgumentException($"Invalid value for validation: {this.validation}")
+					};
+			}
+			
+			#pragma warning restore CS8618
+			#pragma warning restore CS8633
+			#pragma warning restore CS8714
+			#pragma warning restore CS8775
+			
+			""";
+
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
 				("MockTests.IHavePointers_Rock_Create.g.cs", createGeneratedCode),
-				("MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode),
+				("Pointer_Projection.g.cs", projectionGeneratedCode)
 			],
 			[]);
 	}
@@ -1243,82 +1273,23 @@ public static class ProjectionPointerGeneratorTests
 			namespace MockTests
 			{
 				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-				internal sealed class IHavePointersCreateExpectations
+				internal unsafe sealed class IHavePointersCreateExpectations
 					: global::Rocks.Expectations
 				{
-					internal static class Projections
-					{
-						internal unsafe delegate int* Callback_233526433170798729291170303027806441120958052344(string @index);
-						internal unsafe delegate void Callback_358052978580071937655814761903436805080473631030(string @index, int* @value);
-						internal unsafe delegate bool ArgumentEvaluationForintPointer(int* @value);
-						
-						internal unsafe sealed class ArgumentForintPointer
-							: global::Rocks.Argument
-						{
-							private readonly global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentEvaluationForintPointer? evaluation;
-							private readonly int* value;
-							private readonly global::Rocks.ValidationState validation;
-							
-							internal ArgumentForintPointer() => this.validation = global::Rocks.ValidationState.None;
-							
-							internal ArgumentForintPointer(int* @value)
-							{
-								this.value = @value;
-								this.validation = global::Rocks.ValidationState.Value;
-							}
-							
-							internal ArgumentForintPointer(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentEvaluationForintPointer @evaluation)
-							{
-								this.evaluation = @evaluation;
-								this.validation = global::Rocks.ValidationState.Evaluation;
-							}
-							
-							public static implicit operator ArgumentForintPointer(int* @value) => new(@value);
-							
-							public bool IsValid(int* @value) =>
-								this.validation switch
-								{
-									global::Rocks.ValidationState.None => true,
-									global::Rocks.ValidationState.Value => @value == this.value,
-									global::Rocks.ValidationState.Evaluation => this.evaluation!(@value),
-									global::Rocks.ValidationState.DefaultValue => throw new global::System.NotSupportedException("Cannot validate an argument value in the ValidationState.DefaultValue state."),
-									_ => throw new global::System.ComponentModel.InvalidEnumArgumentException($"Invalid value for validation: {this.validation}")
-								};
-						}
-						internal unsafe class HandlerForintPointer<TCallback>
-							: global::Rocks.Handler<TCallback>
-							where TCallback : global::System.Delegate
-						{
-							public int* ReturnValue { get; set; }
-						}
-						
-						internal unsafe class AdornmentsForintPointer<TAdornments, TCallback>
-							: global::Rocks.Adornments<TAdornments, HandlerForintPointer<TCallback>, TCallback>
-							where TAdornments : AdornmentsForintPointer<TAdornments, TCallback>
-							where TCallback : global::System.Delegate
-						{
-							internal AdornmentsForintPointer(HandlerForintPointer<TCallback> handler)
-								: base(handler) { }
-							
-							internal AdornmentsForintPointer<TAdornments, TCallback> ReturnValue(int* returnValue)
-							{
-								this.handler.ReturnValue = returnValue;
-								return this;
-							}
-						}
-					}
-					
 					internal sealed class Handler0
-						: global::MockTests.IHavePointersCreateExpectations.Projections.HandlerForintPointer<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_233526433170798729291170303027806441120958052344>
+						: global::Rocks.Handler<Handler0.CallbackForHandler>
 					{
+						internal unsafe delegate int* CallbackForHandler(string @index);
 						public global::Rocks.Argument<string> @index { get; set; }
+						public int* ReturnValue { get; set; }
 					}
 					private global::Rocks.Handlers<global::MockTests.IHavePointersCreateExpectations.Handler0>? @handlers0;
 					internal sealed class Handler1
-						: global::Rocks.Handler<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_358052978580071937655814761903436805080473631030>
+						: global::Rocks.Handler<Handler1.CallbackForHandler>
 					{
+						internal unsafe delegate void CallbackForHandler(string @index, int* @value);
 						public global::Rocks.Argument<string> @index { get; set; }
-						public global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @value { get; set; }
+						public global::Rocks.Projections.PointerArgument<int> @value { get; set; }
 					}
 					private global::Rocks.Handlers<global::MockTests.IHavePointersCreateExpectations.Handler1>? @handlers1;
 					
@@ -1423,7 +1394,7 @@ public static class ProjectionPointerGeneratorTests
 							internal IndexerSetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler1 This(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @value, global::Rocks.Argument<string> @index)
+							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler1 This(global::Rocks.Projections.PointerArgument<int> @value, global::Rocks.Argument<string> @index)
 							{
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@index);
@@ -1477,13 +1448,18 @@ public static class ProjectionPointerGeneratorTests
 						{ }
 						
 						public sealed class AdornmentsForHandler0
-							: global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsForintPointer<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_233526433170798729291170303027806441120958052344>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
 						{
 							public AdornmentsForHandler0(global::MockTests.IHavePointersCreateExpectations.Handler0 handler)
 								: base(handler) { }
+							public AdornmentsForHandler0 ReturnValue(int* returnValue)
+							{
+								this.handler.ReturnValue = returnValue;
+								return this;
+							}
 						}
 						public sealed class AdornmentsForHandler1
-							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_358052978580071937655814761903436805080473631030>, IAdornmentsForIHavePointers<AdornmentsForHandler1>
+							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Handler1.CallbackForHandler>, IAdornmentsForIHavePointers<AdornmentsForHandler1>
 						{
 							public AdornmentsForHandler1(global::MockTests.IHavePointersCreateExpectations.Handler1 handler)
 								: base(handler) { }
@@ -1542,10 +1518,71 @@ public static class ProjectionPointerGeneratorTests
 			
 			""";
 
+		var projectionGeneratedCode =
+			"""
+			// <auto-generated/>
+			
+			#pragma warning disable CS8618
+			#pragma warning disable CS8633
+			#pragma warning disable CS8714
+			#pragma warning disable CS8775
+			
+			using System;
+			using System.ComponentModel;
+			
+			#nullable enable
+			
+			namespace Rocks.Projections;
+			
+			internal unsafe delegate bool PointerArgumentEvaluation<T>(T* @value) where T : unmanaged;
+			
+			internal sealed unsafe class PointerArgument<T>
+				: Argument
+				where T : unmanaged
+			{
+				private readonly PointerArgumentEvaluation<T>? evaluation;
+				private readonly T* value;
+				private readonly ValidationState validation;
+			
+				internal PointerArgument() => this.validation = ValidationState.None;
+			
+				internal PointerArgument(T* @value)
+				{
+					this.value = @value;
+					this.validation = ValidationState.Value;
+				}
+			
+				internal PointerArgument(PointerArgumentEvaluation<T> @evaluation)
+				{
+					this.evaluation = @evaluation;
+					this.validation = ValidationState.Evaluation;
+				}
+			
+				public static implicit operator PointerArgument<T>(T* @value) => new(@value);
+			
+				public bool IsValid(T* @value) =>
+					this.validation switch
+					{
+						ValidationState.None => true,
+						ValidationState.Value => @value == this.value,
+						ValidationState.Evaluation => this.evaluation!(@value),
+						ValidationState.DefaultValue => throw new NotSupportedException("Cannot validate an argument value in the ValidationState.DefaultValue state."),
+						_ => throw new InvalidEnumArgumentException($"Invalid value for validation: {this.validation}")
+					};
+			}
+			
+			#pragma warning restore CS8618
+			#pragma warning restore CS8633
+			#pragma warning restore CS8714
+			#pragma warning restore CS8775
+			
+			""";
+
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
 				("MockTests.IHavePointers_Rock_Create.g.cs", createGeneratedCode),
-				("MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode)
+				("MockTests.IHavePointers_Rock_Make.g.cs", makeGeneratedCode),
+				("Pointer_Projection.g.cs", projectionGeneratedCode)
 			],
 			[]);
 	}
