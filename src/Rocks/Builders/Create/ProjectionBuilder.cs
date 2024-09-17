@@ -11,7 +11,14 @@ internal static class ProjectionBuilder
 	{
 		if (projectedModel.PointedAtCount > 0)
 		{
-			ProjectionBuilder.BuildPointerArgument(writer, projectedModel);
+			if (projectedModel.PointedAt!.SpecialType == SpecialType.System_Void)
+			{
+				ProjectionBuilder.BuildVoidPointerArgument(writer, projectedModel);
+			}
+			else
+			{
+				ProjectionBuilder.BuildPointerArgument(writer, projectedModel);
+			}
 		}
 		else
 		{
@@ -90,6 +97,51 @@ internal static class ProjectionBuilder
 				public static implicit operator {{pointerNames}}Argument<T>(T{{pointerSplats}} @value) => new(@value);
 
 				public bool IsValid(T{{pointerSplats}} @value) =>
+					this.validation switch
+					{
+						ValidationState.None => true,
+						ValidationState.Value => @value == this.value,
+						ValidationState.Evaluation => this.evaluation!(@value),
+						ValidationState.DefaultValue => throw new NotSupportedException("Cannot validate an argument value in the ValidationState.DefaultValue state."),
+						_ => throw new InvalidEnumArgumentException($"Invalid value for validation: {this.validation}")
+					};
+			}
+			""");
+	}
+
+	private static void BuildVoidPointerArgument(IndentedTextWriter writer, TypeReferenceModel projectedModel)
+	{
+		var pointerNames = projectedModel.PointerNames!;
+		var pointerSplats = new string('*', (int)projectedModel.PointedAtCount);
+
+		writer.WriteLines(
+			$$"""
+			internal unsafe delegate bool {{pointerNames}}VoidArgumentEvaluation(void{{pointerSplats}} @value);
+
+			internal sealed unsafe class {{pointerNames}}VoidArgument
+				: Argument
+			{
+				private readonly {{pointerNames}}VoidArgumentEvaluation? evaluation;
+				private readonly void{{pointerSplats}} value;
+				private readonly ValidationState validation;
+
+				internal {{pointerNames}}VoidArgument() => this.validation = ValidationState.None;
+
+				internal {{pointerNames}}VoidArgument(void{{pointerSplats}} @value)
+				{
+					this.value = @value;
+					this.validation = ValidationState.Value;
+				}
+
+				internal {{pointerNames}}VoidArgument({{pointerNames}}VoidArgumentEvaluation @evaluation)
+				{
+					this.evaluation = @evaluation;
+					this.validation = ValidationState.Evaluation;
+				}
+
+				public static implicit operator {{pointerNames}}VoidArgument(void{{pointerSplats}} @value) => new(@value);
+
+				public bool IsValid(void{{pointerSplats}} @value) =>
 					this.validation switch
 					{
 						ValidationState.None => true,

@@ -77,7 +77,14 @@ internal static class MockHandlerListBuilder
 
 				if (parameter.Type.IsPointer)
 				{
-					argumentTypeName = $"public global::Rocks.Projections.{parameter.Type.PointerNames!}Argument<{parameter.Type.PointedAt!.BuildName(typeArgumentsNamingContext)}>";
+					if (parameter.Type.PointedAt!.SpecialType == SpecialType.System_Void)
+					{
+						argumentTypeName = $"public global::Rocks.Projections.{parameter.Type.PointerNames!}VoidArgument";
+					}
+					else
+					{
+						argumentTypeName = $"public global::Rocks.Projections.{parameter.Type.PointerNames!}Argument<{parameter.Type.PointedAt!.BuildName(typeArgumentsNamingContext)}>";
+					}
 				}
 				else
 				{

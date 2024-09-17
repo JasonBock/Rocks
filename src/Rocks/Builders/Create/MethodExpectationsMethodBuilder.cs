@@ -2,6 +2,7 @@
 using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
+using System.Reflection.Metadata;
 
 namespace Rocks.Builders.Create;
 
@@ -21,9 +22,11 @@ internal static class MethodExpectationsMethodBuilder
 			var instanceParameters = method.Parameters.Length == 0 ? string.Empty :
 				string.Join(", ", method.Parameters.Select(_ =>
 				{
-					if (_.Type.IsPointer)
-					{
-						var argName = $"global::Rocks.Projections.{_.Type.PointerNames!}Argument<{_.Type.PointedAt!.BuildName(typeArgumentsNamingContext)}>";
+				   if (_.Type.IsPointer)
+				   {
+						var argName = _.Type.PointedAt!.SpecialType == SpecialType.System_Void ?
+							$"global::Rocks.Projections.{_.Type.PointerNames!}VoidArgument" :
+							$"global::Rocks.Projections.{_.Type.PointerNames!}Argument<{_.Type.PointedAt!.BuildName(typeArgumentsNamingContext)}>";
 						return $"{argName} @{_.Name}";
 					}
 					else

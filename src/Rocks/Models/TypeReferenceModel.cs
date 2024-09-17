@@ -27,6 +27,7 @@ internal sealed record TypeReferenceModel
 		this.AllowsRefLikeType = (type as ITypeParameterSymbol)?.AllowsRefLikeType ?? false;
 		this.Kind = type.Kind;
 		this.TypeKind = type.TypeKind;
+		this.SpecialType = type.SpecialType;
 
 		if (type is INamedTypeSymbol namedType)
 		{
@@ -164,6 +165,7 @@ internal sealed record TypeReferenceModel
 	internal string? PointerArgParameterType { get; }
 	internal string? PointerArgProjectedEvaluationDelegateName { get; }
 	internal string? PointerArgProjectedName { get; }
+	internal SpecialType SpecialType { get; }
 	internal EquatableArray<TypeReferenceModel> TypeArguments { get; }
 	internal EquatableArray<TypeReferenceModel> TypeParameters { get; }
 	internal TypeKind TypeKind { get; }

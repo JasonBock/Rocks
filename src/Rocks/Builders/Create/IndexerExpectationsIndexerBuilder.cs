@@ -45,7 +45,9 @@ internal static class IndexerExpectationsIndexerBuilder
 				{
 					if (_.Type.IsPointer)
 					{
-						var argName = $"global::Rocks.Projections.{_.Type.PointerNames!}Argument<{_.Type.PointedAt!.FullyQualifiedName}>";
+						var argName = _.Type.PointedAt!.SpecialType == SpecialType.System_Void ?
+							$"global::Rocks.Projections.{_.Type.PointerNames!}VoidArgument" :
+							$"global::Rocks.Projections.{_.Type.PointerNames!}Argument<{_.Type.PointedAt!.FullyQualifiedName}>";
 						return $"{argName} @{_.Name}";
 					}
 					else
@@ -189,7 +191,9 @@ internal static class IndexerExpectationsIndexerBuilder
 				{
 					if (_.Type.IsPointer)
 					{
-						var argName = $"global::Rocks.Projections.{_.Type.PointerNames!}Argument<{_.Type.PointedAt!.FullyQualifiedName}>";
+						var argName = _.Type.PointedAt!.SpecialType == SpecialType.System_Void ?
+							$"global::Rocks.Projections.{_.Type.PointerNames!}VoidArgument" : 
+							$"global::Rocks.Projections.{_.Type.PointerNames!}Argument<{_.Type.PointedAt!.FullyQualifiedName}>";
 						return $"{argName} @{_.Name}";
 					}
 					else

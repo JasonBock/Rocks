@@ -1,4 +1,5 @@
-﻿using Rocks.Extensions;
+﻿using Microsoft.CodeAnalysis;
+using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
 
@@ -53,7 +54,9 @@ internal static class PropertyExpectationsPropertyBuilder
 		var propertyParameterType = property.SetMethod!.Parameters[0].Type;
 		var propertyParameterValue =
 			propertyParameterType.IsPointer ?
-				$"global::Rocks.Projections.{propertyParameterType.PointerNames}Argument<{propertyParameterType.PointedAt!.FullyQualifiedName}>" :
+				(propertyParameterType.PointedAt!.SpecialType == SpecialType.System_Void ?
+					$"global::Rocks.Projections.{propertyParameterType.PointerNames}VoidArgument" :
+					$"global::Rocks.Projections.{propertyParameterType.PointerNames}Argument<{propertyParameterType.PointedAt!.FullyQualifiedName}>") :
 				propertyParameterType.NeedsProjection ?
 					$"global::Rocks.Projections.{propertyParameterType.Name}Argument" :
 					propertyParameterType.IsRefLikeType || propertyParameterType.AllowsRefLikeType ?
