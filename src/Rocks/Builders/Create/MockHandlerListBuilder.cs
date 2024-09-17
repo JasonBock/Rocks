@@ -35,7 +35,7 @@ internal static class MockHandlerListBuilder
 		{
 			if (method.ReturnType.IsRefLikeType || method.ReturnType.AllowsRefLikeType)
 			{
-				handlerBaseType = $"global::Rocks.Handler<{callbackDelegateTypeName}, global::System.Func<{method.ReturnType.BuildName(typeArgumentsNamingContext)}>";
+				handlerBaseType = $"global::Rocks.Handler<{callbackDelegateTypeName}, global::System.Func<{method.ReturnType.BuildName(typeArgumentsNamingContext)}>>";
 			}
 			else
 			{
