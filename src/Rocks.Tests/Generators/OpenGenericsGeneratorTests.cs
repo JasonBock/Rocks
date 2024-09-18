@@ -407,10 +407,10 @@ public static class OpenGenericsGeneratorTests
 				}
 				private global::Rocks.Handlers<global::IConsumerContextCreateExpectations<T>.Handler0>? @handlers0;
 				internal sealed class Handler1<T1>
-					: global::Rocks.Handler<Handler1<T1>.CallbackForHandler<T1>, bool>
+					: global::Rocks.Handler<Handler1<T1>.CallbackForHandler, bool>
 					where T1 : class
 				{
-					internal delegate bool CallbackForHandler<T1>([global::System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)]out T1? @payload) where T1 : class;
+					internal delegate bool CallbackForHandler([global::System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)]out T1? @payload);
 					public global::Rocks.Argument<T1?> @payload { get; set; }
 				}
 				private global::Rocks.Handlers<global::Rocks.Handler>? @handlers1;
@@ -570,7 +570,7 @@ public static class OpenGenericsGeneratorTests
 							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler1<T1>
-						: global::Rocks.Adornments<AdornmentsForHandler1<T1>, global::IConsumerContextCreateExpectations<T>.Handler1<T1>, global::IConsumerContextCreateExpectations<T>.Handler1<T1>.CallbackForHandler<T1>, bool>, IAdornmentsForIConsumerContext<AdornmentsForHandler1<T1>> where T1 : class
+						: global::Rocks.Adornments<AdornmentsForHandler1<T1>, global::IConsumerContextCreateExpectations<T>.Handler1<T1>, global::IConsumerContextCreateExpectations<T>.Handler1<T1>.CallbackForHandler, bool>, IAdornmentsForIConsumerContext<AdornmentsForHandler1<T1>> where T1 : class
 					{
 						public AdornmentsForHandler1(global::IConsumerContextCreateExpectations<T>.Handler1<T1> handler)
 							: base(handler) { }

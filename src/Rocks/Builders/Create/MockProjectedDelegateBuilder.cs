@@ -17,7 +17,7 @@ internal static class MockProjectedDelegateBuilder
 		var methodArguments = method.IsGenericMethod ?
 			$"<{string.Join(", ", method.TypeArguments.Select(_ => _.BuildName(typeArgumentsNamingContext)))}>" : string.Empty;
 
-		return $"{expectationsFullyQualifiedName}.Handler{memberIdentifier}{methodArguments}.CallbackForHandler{methodArguments}";
+		return $"{expectationsFullyQualifiedName}.Handler{memberIdentifier}{methodArguments}.CallbackForHandler";
 	}
 
 	internal static string GetProjectedCallbackDelegateFullyQualifiedName(MethodModel method, TypeReferenceModel typeToMock)
@@ -58,13 +58,8 @@ internal static class MockProjectedDelegateBuilder
 			return $"{_.AttributesDescription}{parameter}";
 		}));
 		var isUnsafe = method.IsUnsafe ? "unsafe " : string.Empty;
-		var constraints = method.Constraints;
-		var methodConstraints = constraints.Length > 0 ?
-			$" {string.Join(" ", constraints.Select(_ => _.ToString(typeArgumentsNamingContext, method)))}" : string.Empty;
-		var typeArguments = method.IsGenericMethod ?
-			$"<{string.Join(", ", method.TypeArguments.Select(_ => _.BuildName(typeArgumentsNamingContext)))}>" : string.Empty;
 
-		return $"internal {isUnsafe}delegate {returnType} CallbackForHandler{typeArguments}({methodParameters}){methodConstraints};";
+		return $"internal {isUnsafe}delegate {returnType} CallbackForHandler({methodParameters});";
 	}
 
 	internal static string GetProjectedReturnValueDelegate(MethodModel method)

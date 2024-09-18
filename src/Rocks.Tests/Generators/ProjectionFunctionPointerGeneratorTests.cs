@@ -231,6 +231,8 @@ public static class ProjectionFunctionPointerGeneratorTests
 			
 			namespace Rocks.Projections;
 			
+			#pragma warning disable CS8909
+			
 			internal unsafe delegate bool ArgumentEvaluationFordelegatePointerOfint__void(delegate*<int, void> @value);
 			
 			internal sealed unsafe class ArgumentFordelegatePointerOfint__void
@@ -267,6 +269,8 @@ public static class ProjectionFunctionPointerGeneratorTests
 					};
 			}
 			
+			#pragma warning restore CS8909
+
 			#pragma warning restore CS8618
 			#pragma warning restore CS8633
 			#pragma warning restore CS8714
@@ -496,6 +500,8 @@ public static class ProjectionFunctionPointerGeneratorTests
 			
 			namespace Rocks.Projections;
 			
+			#pragma warning disable CS8909
+			
 			internal unsafe delegate bool ArgumentEvaluationFordelegatePointerOfint__void(delegate*<int, void> @value);
 			
 			internal sealed unsafe class ArgumentFordelegatePointerOfint__void
@@ -532,6 +538,8 @@ public static class ProjectionFunctionPointerGeneratorTests
 					};
 			}
 			
+			#pragma warning restore CS8909
+
 			#pragma warning restore CS8618
 			#pragma warning restore CS8633
 			#pragma warning restore CS8714
@@ -836,6 +844,8 @@ public static class ProjectionFunctionPointerGeneratorTests
 			
 			namespace Rocks.Projections;
 			
+			#pragma warning disable CS8909
+			
 			internal unsafe delegate bool ArgumentEvaluationFordelegatePointerOfint__void(delegate*<int, void> @value);
 			
 			internal sealed unsafe class ArgumentFordelegatePointerOfint__void
@@ -872,6 +882,8 @@ public static class ProjectionFunctionPointerGeneratorTests
 					};
 			}
 			
+			#pragma warning restore CS8909
+
 			#pragma warning restore CS8618
 			#pragma warning restore CS8633
 			#pragma warning restore CS8714
@@ -1181,6 +1193,8 @@ public static class ProjectionFunctionPointerGeneratorTests
 			
 			namespace Rocks.Projections;
 			
+			#pragma warning disable CS8909
+			
 			internal unsafe delegate bool ArgumentEvaluationFordelegatePointerOfint__void(delegate*<int, void> @value);
 			
 			internal sealed unsafe class ArgumentFordelegatePointerOfint__void
@@ -1217,6 +1231,8 @@ public static class ProjectionFunctionPointerGeneratorTests
 					};
 			}
 			
+			#pragma warning restore CS8909
+
 			#pragma warning restore CS8618
 			#pragma warning restore CS8633
 			#pragma warning restore CS8714
@@ -1531,6 +1547,8 @@ public static class ProjectionFunctionPointerGeneratorTests
 			
 			namespace Rocks.Projections;
 			
+			#pragma warning disable CS8909
+			
 			internal unsafe delegate bool ArgumentEvaluationFordelegatePointerOfint__void(delegate*<int, void> @value);
 			
 			internal sealed unsafe class ArgumentFordelegatePointerOfint__void
@@ -1567,6 +1585,8 @@ public static class ProjectionFunctionPointerGeneratorTests
 					};
 			}
 			
+			#pragma warning restore CS8909
+
 			#pragma warning restore CS8618
 			#pragma warning restore CS8633
 			#pragma warning restore CS8714

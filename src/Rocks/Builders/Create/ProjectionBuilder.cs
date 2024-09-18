@@ -70,6 +70,8 @@ internal static class ProjectionBuilder
 
 		writer.WriteLines(
 			$$"""
+			#pragma warning disable CS8909
+
 			internal unsafe delegate bool ArgumentEvaluationFor{{flattenedName}}({{fullyQualifiedName}} @value);
 
 			internal sealed unsafe class ArgumentFor{{flattenedName}}
@@ -105,6 +107,8 @@ internal static class ProjectionBuilder
 						_ => throw new InvalidEnumArgumentException($"Invalid value for validation: {this.validation}")
 					};
 			}
+
+			#pragma warning restore CS8909
 			""");
 	}
 

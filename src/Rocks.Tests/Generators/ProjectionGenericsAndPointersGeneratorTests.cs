@@ -37,10 +37,10 @@ public static class ProjectionGenericsAndPointersGeneratorTests
 				: global::Rocks.Expectations
 			{
 				internal sealed class Handler0<T>
-					: global::Rocks.Handler<Handler0<T>.CallbackForHandler<T>>
+					: global::Rocks.Handler<Handler0<T>.CallbackForHandler>
 					where T : unmanaged
 				{
-					internal unsafe delegate void CallbackForHandler<T>(T* @allocator) where T : unmanaged;
+					internal unsafe delegate void CallbackForHandler(T* @allocator);
 					public global::Rocks.Projections.PointerArgument<T> @allocator { get; set; }
 				}
 				private global::Rocks.Handlers<global::Rocks.Handler>? @handlers0;
@@ -155,7 +155,7 @@ public static class ProjectionGenericsAndPointersGeneratorTests
 					{ }
 					
 					public sealed class AdornmentsForHandler0<T>
-						: global::Rocks.Adornments<AdornmentsForHandler0<T>, global::ISurfaceCreateExpectations.Handler0<T>, global::ISurfaceCreateExpectations.Handler0<T>.CallbackForHandler<T>>, IAdornmentsForISurface<AdornmentsForHandler0<T>> where T : unmanaged
+						: global::Rocks.Adornments<AdornmentsForHandler0<T>, global::ISurfaceCreateExpectations.Handler0<T>, global::ISurfaceCreateExpectations.Handler0<T>.CallbackForHandler>, IAdornmentsForISurface<AdornmentsForHandler0<T>> where T : unmanaged
 					{
 						public AdornmentsForHandler0(global::ISurfaceCreateExpectations.Handler0<T> handler)
 							: base(handler) { }
