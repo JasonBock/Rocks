@@ -101,10 +101,16 @@ internal sealed class RockGenerator
 
 		if (projections.Count > 0)
 		{
+			var projectionFileNames = new HashSet<string>();
+
 			foreach (var projection in projections)
 			{
 				var builder = new RockProjectionBuilder(projection);
-				context.AddSource(builder.Name, builder.Text);
+
+				if (projectionFileNames.Add(builder.Name))
+				{
+					context.AddSource(builder.Name, builder.Text);
+				}
 			}
 		}
 	}

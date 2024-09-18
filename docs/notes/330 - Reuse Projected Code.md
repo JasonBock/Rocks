@@ -88,15 +88,24 @@ Work
     * DONE - `RuntimeArgumentHandle`
   * DONE - Should do the "special" types as parameter and return, just to be sure.
   * DONE - Should have multiple special types in one test, to ensure only one projection file is made for each.
-  * For generics
-    * The `Handler` definition is generic, so it needs to be included when `CallbackForHandler` is reference
-    * When the `@handlersN` field is created, the name isn't correct.
+  * DONE - For generics
+    * DONE - The `Handler` definition is generic, so it needs to be included when `CallbackForHandler` is reference
+    * DONE - When the `@handlersN` field is created, the name isn't correct.
+  * In IntegrationTests: 
+    * DONE - "CSC : error CS8785: Generator 'RockGenerator' failed to generate source. It will not contribute to the output and compilation errors may occur as a result. Exception was of type 'ArgumentException' with message 'The hintName 'Pointer_Projection.g.cs' of the added source file must be unique within a generator.". I believe because an `int*` and `char*` will both be separate `TypeReferenceModel` objects, so then we generate two `Pointer_Projection.g.cs` files. I can reproduce in a unit test, just gotta fix it.
+    * CS8909 on function pointer comparison. I believe this is a warning, so I could put a `#pragma` around the comparison in the gen-d argument class. If I do this, I should add docs that explain that devs should take care if they compare function pointers as the results may not be what they expect.
+    * `Rocks.IntegrationTests.PointerTestTypes.ISurface_Rock_Create.g.cs(22,53,22,54): error CS0693: Type parameter 'T' has the same name as the type parameter from outer type 'ISurfaceCreateExpectations.Handler0<T>'` - I'm guessing I'm not doing type argument name resolution correctly here. The target type, `ISurface`, is in `PointerTests` class.
 * Remove code
   * Can probably remove hash code name generation
   * Can probably (finally!) clean up some of the name generation.
   * Can probably remove "pointer" name stuff from 
   * Can probably delete most of `MockProjectedDelegateBuilder` and all of `MockProjectedTypesBuilder`
   * Not sure I need `ProjectedModelInformation`, I put a lot on `TypeReferenceModel` as it is, if I put `PointerNames` as a `string?` on it, that may do it.
+* Update changelog
+* Update docs
+  * If I allow function pointer comparison, add a note on function pointer comparison to include a warning, referring to these links:
+    * https://github.com/dotnet/docs/issues/28782 (see "Comment 5")
+    * https://github.com/dotnet/roslyn/issues/48919
 
 TODOs:
 * (Handled in "Work" section above) - I'm not sure why I generate a `Handler...` or `Adornments...` with `TCallback` open. I should just set the base type like this: `global::Rocks.Handler<TheCallbackType>`. I can't think of a reason why we should keep the type open. That also means that we generate the `HandlerN` types, the base type name becomes simpler. (I can see why I did it this way because it's consistent with the way handler types are generated for the "normal" path, but I can change that.)
