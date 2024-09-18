@@ -44,8 +44,6 @@ public static class MethodModelTests
 			Assert.That(model.OverridingCodeValue, Is.EqualTo("public"));
 			Assert.That(model.Parameters, Has.Length.EqualTo(1));
 			Assert.That(model.Parameters[0].Name, Is.EqualTo("value"));
-			Assert.That(model.ProjectedCallbackDelegateName, Is.Null);
-			Assert.That(model.ProjectedReturnValueDelegateName, Is.Null);
 			Assert.That(model.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 			Assert.That(model.RequiresOverride, Is.EqualTo(RequiresOverride.No));
 			Assert.That(model.RequiresProjectedDelegate, Is.False);

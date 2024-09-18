@@ -52,33 +52,6 @@ internal sealed record MethodModel
 		this.ReturnTypeAttributesDescription = method.GetReturnTypeAttributes().GetDescription(compilation, AttributeTargets.ReturnValue);
 		this.RequiresProjectedDelegate = method.RequiresProjectedDelegate(compilation);
 
-		if (this.RequiresProjectedDelegate)
-		{
-			var signature = new List<string>([this.ReturnType.FullyQualifiedName]);
-
-			signature.AddRange(this.TypeArguments.Select(_ => _.FullyQualifiedName));
-			signature.AddRange(this.Parameters.Select(_ =>
-				{
-					var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
-					var direction = _.RefKind switch
-					{
-						RefKind.Ref => "ref ",
-						RefKind.Out => "out ",
-						RefKind.In => "in ",
-						RefKind.RefReadOnlyParameter => "ref readonly ",
-						_ => string.Empty
-					};
-					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}";
-				}));
-			var signatureHash = string.Join(", ", signature).GetHash();
-			this.ProjectedCallbackDelegateName = $"Callback_{signatureHash}";
-		}
-
-		if (this.ReturnType.TypeKind == TypeKind.FunctionPointer)
-		{
-			this.ProjectedReturnValueDelegateName = $"ReturnValue_{this.ReturnType.FullyQualifiedName.GetHash()}";
-		}
-
 		if (!this.ReturnsVoid)
 		{
 			var taskType = compilation.GetTypeByMetadataName(typeof(Task).FullName);
@@ -133,8 +106,6 @@ internal sealed record MethodModel
 	internal string Name { get; }
 	internal string? OverridingCodeValue { get; }
 	internal EquatableArray<ParameterModel> Parameters { get; }
-	internal string? ProjectedCallbackDelegateName { get; }
-	internal string? ProjectedReturnValueDelegateName { get; }
 	internal RequiresExplicitInterfaceImplementation RequiresExplicitInterfaceImplementation { get; }
 	internal RequiresHiding RequiresHiding { get; }
 	internal RequiresOverride RequiresOverride { get; }

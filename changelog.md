@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Closed generics are no longer valid types to mock (issue [#318](https://github.com/JasonBock/Rocks/issues/318))
 - The following attributes were removed: `RockCreateAttribute`, `RockCreateAttribute<>`, `RockMakeAttribute`, and `RockMakeAttribute<>` (issue [#324](https://github.com/JasonBock/Rocks/issues/324))
 - Improved handling of `ref struct` types (issue [#170](https://github.com/JasonBock/Rocks/issues/170))
+- Improved handling of pointer and special types (issue [#330](https://github.com/JasonBock/Rocks/issues/330))
 
 ### Fixed
 
@@ -23,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Parameters for base member invocations now make all names literal (issue [#334](https://github.com/JasonBock/Rocks/issues/334))
 - "Caller" attributes are no longer emitted with parameters that have optional values and the method is explicitly implemented (issue [#332](https://github.com/JasonBock/Rocks/issues/332))
 - Static virtual members on interfaces will not be processed (issue [#337](https://github.com/JasonBock/Rocks/issues/3327))
+- Special types (`ArgIterator`, `RuntimeArgumentHandle`, `TypedReference`) used as parameter or return types are now handled (issue [#329](https://github.com/JasonBock/Rocks/issues/329))
 
 ## [8.3.0] - 2024-07-24
 
