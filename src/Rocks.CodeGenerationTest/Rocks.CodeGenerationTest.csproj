@@ -118,6 +118,7 @@
 		<PackageReference Include="Wasmtime" />
 		<PackageReference Include="WireMock.Net" />
 		<PackageReference Include="Wisp" />
+		<PackageReference Include="ZiggyCreatures.FusionCache" />
 		<PackageReference Include="ZLogger" />
 	</ItemGroup>
 </Project>

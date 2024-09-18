@@ -223,6 +223,7 @@ static void TestWithTypes()
 		new (typeof(Wasmtime.ActionResult), []),
 		new (typeof(WireMock.IMapping), []),
 		new (typeof(Wisp.CosArray), []),
+		new (typeof(ZiggyCreatures.Caching.Fusion.FusionCache), []),
 		new (typeof(ZLogger.AsyncStreamLineMessageWriter), []),
 #endif
 #if INCLUDE_FAILING

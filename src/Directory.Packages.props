@@ -133,6 +133,7 @@
     <PackageVersion Include="Wasmtime" Version="22.0.0" />
     <PackageVersion Include="WireMock.Net" Version="1.6.1" />
     <PackageVersion Include="Wisp" Version="0.2.1-preview.0.51" />
+    <PackageVersion Include="ZiggyCreatures.FusionCache" Version="1.4.0" />
     <PackageVersion Include="ZLogger" Version="2.5.5" />
   </ItemGroup>
 </Project>
