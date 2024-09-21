@@ -72,7 +72,8 @@ internal static class MockIndexerBuilder
 		writer.WriteLine("}");
 
 		writer.WriteLine();
-		writer.WriteLine($$"""throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription({{memberIdentifier}})}");""");
+		ExpectationExceptionBuilder.Build(
+			writer, method, "No handlers match for", memberIdentifier);
 
 		writer.Indent--;
 		writer.WriteLine("}");
@@ -108,7 +109,8 @@ internal static class MockIndexerBuilder
 		else
 		{
 			writer.WriteLine();
-			writer.WriteLine($$"""throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription({{memberIdentifier}})})");""");
+			ExpectationExceptionBuilder.Build(
+				writer, method, "No handlers were found for", memberIdentifier);
 		}
 
 		writer.Indent--;
@@ -189,7 +191,8 @@ internal static class MockIndexerBuilder
 		writer.WriteLine("}");
 
 		writer.WriteLine();
-		writer.WriteLine($$"""throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription({{memberIdentifier}})}");""");
+		ExpectationExceptionBuilder.Build(
+			writer, method, "No handlers match for", memberIdentifier);
 
 		writer.Indent--;
 		writer.WriteLine("}");
@@ -224,7 +227,8 @@ internal static class MockIndexerBuilder
 		else
 		{
 			writer.WriteLine();
-			writer.WriteLine($$"""throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription({{memberIdentifier}})}");""");
+			ExpectationExceptionBuilder.Build(
+				writer, method, "No handlers were found for", memberIdentifier);
 		}
 
 		writer.Indent--;

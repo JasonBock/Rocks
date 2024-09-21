@@ -154,7 +154,8 @@ internal static class MockMethodVoidBuilder
 		}
 		else
 		{
-			writer.WriteLine($$"""throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription({{method.MemberIdentifier}})}");""");
+			ExpectationExceptionBuilder.Build(
+				writer, method, "No handlers were found for", method.MemberIdentifier);
 		}
 
 		writer.Indent--;
@@ -193,9 +194,12 @@ internal static class MockMethodVoidBuilder
 				}
 				else
 				{
-					throw new global::Rocks.Exceptions.ExpectationException($"The provided handler does not match for {this.GetType().GetMemberDescription({{method.MemberIdentifier}})}");
-				}
 				""");
+
+			ExpectationExceptionBuilder.Build(
+				writer, method, "The provided handler does not match for", method.MemberIdentifier);
+
+			writer.WriteLine("}");
 		}
 
 		if (shouldThrowDoesNotReturnException)
@@ -283,7 +287,8 @@ internal static class MockMethodVoidBuilder
 		writer.WriteLine($"if (!@{namingContext["foundMatch"]})");
 		writer.WriteLine("{");
 		writer.Indent++;
-		writer.WriteLine($$"""throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription({{method.MemberIdentifier}})}");"""); 
+		ExpectationExceptionBuilder.Build(
+			writer, method, "No handlers match for", method.MemberIdentifier);
 		writer.Indent--;
 		writer.WriteLine("}");
 

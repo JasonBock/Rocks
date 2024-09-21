@@ -125,7 +125,8 @@ internal static class MockMethodValueBuilder
 		if (method.Parameters.Length > 0 || method.IsGenericMethod)
 		{
 			writer.WriteLine();
-			writer.WriteLine($$"""throw new global::Rocks.Exceptions.ExpectationException($"No handlers match for {this.GetType().GetMemberDescription({{method.MemberIdentifier}})}");""");
+			ExpectationExceptionBuilder.Build(
+				writer, method, "No handlers match for", method.MemberIdentifier);
 		}
 
 		writer.Indent--;
@@ -175,7 +176,8 @@ internal static class MockMethodValueBuilder
 		else
 		{
 			writer.WriteLine();
-			writer.WriteLine($$"""throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription({{method.MemberIdentifier}})}");""");
+			ExpectationExceptionBuilder.Build(
+				writer, method, "No handlers were found for", method.MemberIdentifier);
 		}
 
 		writer.Indent--;
@@ -339,9 +341,12 @@ internal static class MockMethodValueBuilder
 				}
 				else
 				{
-					throw new global::Rocks.Exceptions.ExpectationException($"The provided handler does not match for {this.GetType().GetMemberDescription({{memberIdentifier}})}");
-				}
 				""");
+
+			ExpectationExceptionBuilder.Build(
+				writer, method, "The provided handler does not match for", memberIdentifier);
+
+			writer.WriteLine("}");
 		}
 	}
 }

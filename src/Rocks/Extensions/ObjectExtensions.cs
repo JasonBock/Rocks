@@ -1,7 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
 using System.Collections;
-using System.Collections.Frozen;
-using System.Collections.Immutable;
 
 namespace Rocks.Extensions;
 
@@ -10,6 +8,9 @@ namespace Rocks.Extensions;
 /// </summary>
 public static class ObjectExtensions
 {
+	// TODO: If I could project this code like I do for RefStructArgument,
+	// I might be able to do a FormatValue<T>(this T self) where T : allows ref struct.
+
 	/// <summary>
 	/// This gets a stringified version of a value
 	/// that will be put into the call site of an emitted method.

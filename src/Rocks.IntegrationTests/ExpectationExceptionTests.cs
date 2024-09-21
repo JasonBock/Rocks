@@ -6,12 +6,31 @@ namespace Rocks.IntegrationTests.ExpectationExceptionTestTypes;
 public interface ISetAfterMock
 {
 	void Work();
+	void WorkWithData(string data1, int data2, char[] data3);
 	string Data { get; set; }
 	int this[string Index] { get; set; }
 }
 
 public static class ExpectationExceptionTests
 {
+	[Test]
+	public static void GetExceptionMessage()
+	{
+		var expectations = new ISetAfterMockCreateExpectations();
+		expectations.Methods.WorkWithData("a", 2, new[] { 'c', 'd' });
+
+		var mock = expectations.Instance();
+		Assert.That(() => mock.WorkWithData("b", 3, ['e', 'f', 'g']), 
+			Throws.TypeOf<ExpectationException>()
+				.With.Message.EqualTo(
+					"""
+					No handlers match for Void WorkWithData(System.String, Int32, Char[])
+						data1: b
+						data2: 3
+						data3: System.Char[], Count = 3
+					"""));
+	}
+
 	[Test]
 	public static void SetMethodExpectationAfterMockIsCreate()
 	{
