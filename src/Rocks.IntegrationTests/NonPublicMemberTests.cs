@@ -21,8 +21,12 @@ public static class NonPublicMemberTests
 
 		var protectedMember = protectedMemberExpectations.Instance();
 
-		Assert.That(() => protectedMember.CallsDoSomething(), 
+		Assert.That(protectedMember.CallsDoSomething, 
 			Throws.TypeOf<ExpectationException>()
-				.With.Message.EqualTo("No handlers were found for Void DoSomething(Int32)"));
+				.With.Message.EqualTo(
+					"""
+					No handlers were found for Void DoSomething(Int32)
+						data: 3
+					"""));
 	}
 }
