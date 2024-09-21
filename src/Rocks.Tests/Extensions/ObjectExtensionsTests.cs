@@ -6,6 +6,11 @@ using Rocks.Extensions;
 
 namespace Rocks.Tests.Extensions;
 
+public enum ObjectExtensionValues
+{
+	None, Some, All
+}
+
 public static class ObjectExtensionsTests
 {
 	[TestCase("public class Test { public void Foo(string value = \"b\") { } }", "\"b\"")]
@@ -68,6 +73,26 @@ public static class ObjectExtensionsTests
 		var (parameter, compilation) = ObjectExtensionsTests.GetParameterSymbol(code);
 		Assert.That(parameter.ExplicitDefaultValue.GetDefaultValue(parameter.Type, compilation), Is.EqualTo(expectedResult));
 	}
+
+	[Test]
+	public static void FormatValue() =>
+		Assert.That(33.FormatValue(), Is.EqualTo("33"));
+
+	[Test]
+	public static void FormatEnumValue() =>
+		Assert.That(ObjectExtensionValues.Some.FormatValue(), Is.EqualTo("Rocks.Tests.Extensions.ObjectExtensionValues.Some"));
+
+	[Test]
+	public static void FormatEnumValueWhenValueIsIncorrect() =>
+		Assert.That(((ObjectExtensionValues)22).FormatValue(), Is.EqualTo("(Rocks.Tests.Extensions.ObjectExtensionValues)22"));
+
+	[Test]
+	public static void FormatNullValue() =>
+		Assert.That((null as string).FormatValue(), Is.EqualTo("null"));
+
+	[Test]
+	public static void FormatCollectionValue() =>
+		Assert.That((new int[] { 1, 2, 3 }).FormatValue(), Is.EqualTo("System.Int32[], Count = 3"));
 
 	private static (IParameterSymbol, Compilation) GetParameterSymbol(string source)
 	{

@@ -1,9 +1,45 @@
 ﻿using Microsoft.CodeAnalysis;
+using System.Collections;
+using System.Collections.Frozen;
+using System.Collections.Immutable;
 
 namespace Rocks.Extensions;
 
-internal static class ObjectExtensions
+/// <summary>
+/// Provides extensions for <see cref="object"/> values.
+/// </summary>
+public static class ObjectExtensions
 {
+	/// <summary>
+	/// This gets a stringified version of a value
+	/// that will be put into the call site of an emitted method.
+	/// </summary>
+	public static string FormatValue(this object? self)
+	{
+		if (self is Enum)
+		{
+			var selfType = self.GetType();
+			var selfName = Enum.GetName(selfType, self);
+			var selfValue = selfName is not null ?
+				$"{selfType.FullName}.{selfName}" :
+				$"({selfType.FullName}){self}";
+
+			return selfValue;
+		}
+		else if (self is ICollection c)
+		{
+			return $"{c}, Count = {c.Count}";
+		}
+		else if (self is null)
+		{
+			return "null";
+		}
+		else
+		{
+			return self.ToString();
+		}
+	}
+
 	/// <summary>
 	/// This should only be used to get a stringified version of a default value
 	/// that will be put into the call site of an emitted method.
@@ -20,18 +56,18 @@ internal static class ObjectExtensions
 			{
 				string s => $"\"{s}\"",
 				bool b => $"{(b ? "true" : "false")}",
-				byte b => b.GetByteDefaultValue(),
-				sbyte sb => sb.GetSignedByteDefaultValue(),
-				char c => c.GetCharDefaultValue(),
-				decimal d => d.GetDecimalDefaultValue(),
-				double d => d.GetDoubleDefaultValue(),
-				float f => f.GetFloatDefaultValue(),
-				int i => i.GetIntDefaultValue(),
-				uint ui => ui.GetUnsignedIntDefaultValue(),
-				long l => l.GetLongDefaultValue(),
-				ulong ul => ul.GetUnsignedLongDefaultValue(),
-				short s => s.GetShortDefaultValue(),
-				ushort us => us.GetUnsignedShortDefaultValue(),
+				byte b => b.GetByteValue(),
+				sbyte sb => sb.GetSignedByteValue(),
+				char c => c.GetCharValue(),
+				decimal d => d.GetDecimalValue(),
+				double d => d.GetDoubleValue(),
+				float f => f.GetFloatValue(),
+				int i => i.GetIntValue(),
+				uint ui => ui.GetUnsignedIntValue(),
+				long l => l.GetLongValue(),
+				ulong ul => ul.GetUnsignedLongValue(),
+				short s => s.GetShortValue(),
+				ushort us => us.GetUnsignedShortValue(),
 				null => selfType.IsValueType ? "default" :
 					selfType.TypeKind == TypeKind.TypeParameter ? "default!" : "null",
 				_ => self.ToString() ?? string.Empty
@@ -39,7 +75,7 @@ internal static class ObjectExtensions
 		}
 	}
 
-	private static string GetByteDefaultValue(this byte self) =>
+	private static string GetByteValue(this byte self) =>
 		self switch
 		{
 			byte.MaxValue => "byte.MaxValue",
@@ -47,7 +83,7 @@ internal static class ObjectExtensions
 			_ => self.ToString()
 		};
 
-	private static string GetSignedByteDefaultValue(this sbyte self) =>
+	private static string GetSignedByteValue(this sbyte self) =>
 		self switch
 		{
 			sbyte.MaxValue => "sbyte.MaxValue",
@@ -55,7 +91,7 @@ internal static class ObjectExtensions
 			_ => self.ToString()
 		};
 
-	private static string GetCharDefaultValue(this char self) =>
+	private static string GetCharValue(this char self) =>
 		self switch
 		{
 			char.MaxValue => "char.MaxValue",
@@ -63,7 +99,7 @@ internal static class ObjectExtensions
 			_ => $"'{self}'"
 		};
 
-	private static string GetDecimalDefaultValue(this decimal self) =>
+	private static string GetDecimalValue(this decimal self) =>
 		self switch
 		{
 			decimal.MaxValue => "decimal.MaxValue",
@@ -74,7 +110,7 @@ internal static class ObjectExtensions
 			_ => self.ToString()
 		};
 
-	private static string GetDoubleDefaultValue(this double self) =>
+	private static string GetDoubleValue(this double self) =>
 		self switch
 		{
 			double.Epsilon => "double.Epsilon",
@@ -86,7 +122,7 @@ internal static class ObjectExtensions
 			_ => self.ToString()
 		};
 
-	private static string GetFloatDefaultValue(this float self) =>
+	private static string GetFloatValue(this float self) =>
 		self switch
 		{
 			float.Epsilon => "float.Epsilon",
@@ -98,7 +134,7 @@ internal static class ObjectExtensions
 			_ => self.ToString()
 		};
 
-	private static string GetIntDefaultValue(this int self) =>
+	private static string GetIntValue(this int self) =>
 		self switch
 		{
 			int.MaxValue => "int.MaxValue",
@@ -106,7 +142,7 @@ internal static class ObjectExtensions
 			_ => self.ToString()
 		};
 
-	private static string GetUnsignedIntDefaultValue(this uint self) =>
+	private static string GetUnsignedIntValue(this uint self) =>
 		self switch
 		{
 			uint.MaxValue => "uint.MaxValue",
@@ -114,7 +150,7 @@ internal static class ObjectExtensions
 			_ => self.ToString()
 		};
 
-	private static string GetLongDefaultValue(this long self) =>
+	private static string GetLongValue(this long self) =>
 		self switch
 		{
 			long.MaxValue => "long.MaxValue",
@@ -122,7 +158,7 @@ internal static class ObjectExtensions
 			_ => self.ToString()
 		};
 
-	private static string GetUnsignedLongDefaultValue(this ulong self) =>
+	private static string GetUnsignedLongValue(this ulong self) =>
 		self switch
 		{
 			ulong.MaxValue => "ulong.MaxValue",
@@ -130,7 +166,7 @@ internal static class ObjectExtensions
 			_ => self.ToString()
 		};
 
-	private static string GetShortDefaultValue(this short self) =>
+	private static string GetShortValue(this short self) =>
 		self switch
 		{
 			short.MaxValue => "short.MaxValue",
@@ -138,7 +174,7 @@ internal static class ObjectExtensions
 			_ => self.ToString()
 		};
 
-	private static string GetUnsignedShortDefaultValue(this ushort self) =>
+	private static string GetUnsignedShortValue(this ushort self) =>
 		self switch
 		{
 			ushort.MaxValue => "ushort.MaxValue",
