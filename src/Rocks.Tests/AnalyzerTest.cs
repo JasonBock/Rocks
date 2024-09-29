@@ -13,6 +13,6 @@ internal sealed class AnalyzerTest<TAnalyzer>
    protected override ParseOptions CreateParseOptions()
 	{
 		var parseOptions = (CSharpParseOptions)base.CreateParseOptions();
-		return parseOptions.WithLanguageVersion(LanguageVersion.Latest);
+		return parseOptions.WithLanguageVersion(LanguageVersion.Preview);
 	}
 }
