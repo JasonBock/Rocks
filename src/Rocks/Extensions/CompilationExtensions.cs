@@ -17,7 +17,7 @@ internal static class CompilationExtensions
 
 		var existingType = self.GetTypeByMetadataName(expectationsFQN);
 
-		while (existingType is not null) 
+		while (existingType is not null && existingType.CanBeSeenByContainingAssembly(self.Assembly)) 
 		{
 			id = id is null ? 2 : id++;
 			expectationsFQN = type.Namespace is null ?
