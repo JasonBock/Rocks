@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+
 ## [9.0.0-alpha.1] - Not Yet Released
 
 ### Added
@@ -26,6 +28,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - "Caller" attributes are no longer emitted with parameters that have optional values and the method is explicitly implemented (issue [#332](https://github.com/JasonBock/Rocks/issues/332))
 - Static virtual members on interfaces will not be processed (issue [#337](https://github.com/JasonBock/Rocks/issues/3327))
 - Special types (`ArgIterator`, `RuntimeArgumentHandle`, `TypedReference`) used as parameter or return types are now handled (issue [#329](https://github.com/JasonBock/Rocks/issues/329))
+
+## [8.3.1] - 2024-09-30
+
+### Fixed
+
+- Addressed a rare naming issue with projects referencing Rocks and each other (issue [#340](https://github.com/JasonBock/Rocks/issues/340))
 
 ## [8.3.0] - 2024-07-24
 
