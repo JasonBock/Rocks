@@ -115,14 +115,9 @@ static void TestWithTypes()
 		new (typeof(System.Collections.Immutable.ImmutableArray), []),
 		new (typeof(System.Text.Json.JsonDocument), []),
 		new (typeof(System.Threading.Channels.BoundedChannelFullMode), []),
-
-		// TODO: These are all commented out because of this issue:
-		// https://github.com/dotnet/roslyn/issues/74574.
-		// Hopefully a fix will be coming in Preview 7.
-		// Until then, we'll just test the .NET types.
-
 		// NuGet references
 		new (typeof(AngleSharp.BrowsingContext), []),
+		new (typeof(Arch.Buffer.CommandBuffer), []),
 		new (typeof(Ardalis.GuardClauses.Guard), []),
 		new (typeof(Aspire.Hosting.ContainerResourceBuilderExtensions), []),
 		new (typeof(Aspose.Email.AlternateView), ["AsposeEmailAlias"]),
@@ -188,6 +183,7 @@ static void TestWithTypes()
 		new (typeof(Ninject.ActivationException), []),
 		new (typeof(NodaTime.AmbiguousTimeException), []),
 		new (typeof(NuGet.Common.ActivityCorrelationId), []),
+		new (typeof(Oqtane.Documentation.PrivateApi), []),
 		new (typeof(Orleans.Grain), []),
 		new (typeof(Paramore.Brighter.Channel), []),
 		new (typeof(Proto.ActorContextDecorator), []),

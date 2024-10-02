@@ -1,6 +1,7 @@
 <Project>
   <ItemGroup>
     <PackageVersion Include="AngleSharp" Version="1.2.0-beta.431" />
+    <PackageVersion Include="Arch" Version="1.2.8" />
     <PackageVersion Include="Ardalis.GuardClauses" Version="4.6.0" />
     <PackageVersion Include="Aspire.Hosting" Version="9.0.0-preview.3.24210.17" />
     <PackageVersion Include="Aspose.Email" Version="24.8.0" />
@@ -92,6 +93,8 @@
     <PackageVersion Include="NUnit" Version="4.2.2" />
     <PackageVersion Include="NUnit.Analyzers" Version="4.3.0" />
     <PackageVersion Include="NUnit3TestAdapter" Version="4.6.0" />
+    <PackageVersion Include="Oqtane.Framework" Version="5.2.3" />
+    <PackageVersion Include="Oqtane.Shared" Version="5.2.3" />
     <PackageVersion Include="Paramore.Brighter" Version="10.0.0-preview.3" />
     <PackageVersion Include="Polly" Version="8.2.0" />
     <PackageVersion Include="Proto.Actor" Version="1.7.0" />

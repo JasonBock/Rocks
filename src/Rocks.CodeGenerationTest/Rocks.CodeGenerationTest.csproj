@@ -9,6 +9,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="AngleSharp" />
+		<PackageReference Include="Arch" />
 		<PackageReference Include="Ardalis.GuardClauses" />
 		<PackageReference Include="Aspire.Hosting" />
 		<PackageReference Include="Aspose.Email" />
@@ -81,6 +82,7 @@
 		<PackageReference Include="Ninject" />
 		<PackageReference Include="NodaTime" />
 		<PackageReference Include="NuGet.Common" />
+		<PackageReference Include="Oqtane.Shared" />
 		<PackageReference Include="Paramore.Brighter" />
 		<PackageReference Include="Proto.Actor" />
 		<PackageReference Include="Pulumi" />
