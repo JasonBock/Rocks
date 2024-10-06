@@ -46,4 +46,6 @@ internal abstract class NamingContext
 			}
 		}
 	}
+
+	internal int NameCount => this.names.Count;
 }

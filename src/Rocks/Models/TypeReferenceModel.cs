@@ -102,7 +102,16 @@ internal sealed record TypeReferenceModel
 			}
 			else
 			{
-				return $"{current.FullyQualifiedNameNoGenerics}<{string.Join(", ", current.TypeArguments.Select(_ => TypeReferenceModel.BuildName(_, parentNamingContext)))}>{(current.NullableAnnotation == NullableAnnotation.Annotated ? "?" : string.Empty)}";
+				if (parentNamingContext.NameCount == 0)
+				{
+					return current.FullyQualifiedName;
+				}
+				else
+				{
+					// I don't like this either. I have the feeling there's a hidden bug with nested types and type parameter names
+					// that will pop up in the future.
+					return $"{current.FullyQualifiedNameNoGenerics}<{string.Join(", ", current.TypeArguments.Select(_ => TypeReferenceModel.BuildName(_, parentNamingContext)))}>{(current.NullableAnnotation == NullableAnnotation.Annotated ? "?" : string.Empty)}";
+				}
 			}
 		}
 
@@ -130,8 +139,8 @@ internal sealed record TypeReferenceModel
 		else
 		{
 			return current.IsTupleType ?
-				  $"({string.Join(", ", current.TypeArguments.Select(_ => TypeReferenceModel.BuildName(_, parentNamingContext)))})" :
-				  GetNameForGeneric(current, parentNamingContext);
+				$"({string.Join(", ", current.TypeArguments.Select(_ => TypeReferenceModel.BuildName(_, parentNamingContext)))})" :
+				GetNameForGeneric(current, parentNamingContext);
 		}
 	}
 

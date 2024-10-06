@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - "Caller" attributes are no longer emitted with parameters that have optional values and the method is explicitly implemented (issue [#332](https://github.com/JasonBock/Rocks/issues/332))
 - Static virtual members on interfaces will not be processed (issue [#337](https://github.com/JasonBock/Rocks/issues/3327))
 - Special types (`ArgIterator`, `RuntimeArgumentHandle`, `TypedReference`) used as parameter or return types are now handled (issue [#329](https://github.com/JasonBock/Rocks/issues/329))
+- Nested generic types are now handled correctly (issue [#333](https://github.com/JasonBock/Rocks/issues/333))
 
 ## [8.3.1] - 2024-09-30
 
