@@ -49,7 +49,9 @@ internal sealed class MockablePropertyDiscovery
 			foreach (var hierarchyProperty in hierarchyType.GetMembers().OfType<IPropertySymbol>()
 				.Where(_ => _.IsIndexer || _.CanBeReferencedByName))
 			{
-				if (hierarchyProperty.IsStatic && hierarchyProperty.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
+				var canBeSeen = hierarchyProperty.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol);
+
+				if (canBeSeen)
 				{
 					// This is the case where a class does something like this:
 					// `protected static new int Data { get; }`
@@ -66,44 +68,32 @@ internal sealed class MockablePropertyDiscovery
 						properties.Remove(propertyToRemove);
 					}
 				}
-				else if (!hierarchyProperty.IsStatic)
-				{
-					var canBeSeen = hierarchyProperty.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol);
 
+				if (!hierarchyProperty.IsStatic)
+				{
 					if (!canBeSeen && hierarchyProperty.IsAbstract)
 					{
 						inaccessibleAbstractMembers = true;
 					}
 					else if (canBeSeen)
 					{
-						if (hierarchyProperty.IsAbstract || hierarchyProperty.IsOverride || hierarchyProperty.IsVirtual)
+						if ((hierarchyProperty.IsAbstract || hierarchyProperty.IsOverride || hierarchyProperty.IsVirtual) && 
+							!hierarchyProperty.IsSealed)
 						{
-							var propertyToRemove = properties.SingleOrDefault(_ => _.Value.Name == hierarchyProperty.Name &&
-								!_.Value.ContainingType.Equals(hierarchyProperty.ContainingType) &&
-								AreParametersEqual(_.Value, hierarchyProperty));
+							var result = new MockablePropertyResult(
+								hierarchyProperty, mockType, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, memberIdentifier);
+							properties.Add(result);
 
-							if (propertyToRemove is not null)
+							if (hierarchyProperty.ContainingType.TypeKind == TypeKind.Interface && hierarchyProperty.IsVirtual)
 							{
-								properties.Remove(propertyToRemove);
+								shims.Add(hierarchyProperty.ContainingType);
 							}
 
-							if (!hierarchyProperty.IsSealed)
+							memberIdentifier++;
+
+							if (result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.GetAndInit)
 							{
-								var result = new MockablePropertyResult(
-									hierarchyProperty, mockType, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, memberIdentifier);
-								properties.Add(result);
-
-								if (hierarchyProperty.ContainingType.TypeKind == TypeKind.Interface && hierarchyProperty.IsVirtual)
-								{
-									shims.Add(hierarchyProperty.ContainingType);
-								}
-
 								memberIdentifier++;
-
-								if (result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.GetAndInit)
-								{
-									memberIdentifier++;
-								}
 							}
 						}
 					}
