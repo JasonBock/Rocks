@@ -51,7 +51,9 @@ internal sealed class MockableMethodDiscovery
 
 				foreach (var hierarchyMethod in hierarchyMethods)
 				{
-					if (hierarchyMethod.IsStatic && hierarchyMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
+					var canBeSeen = hierarchyMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol);
+
+					if (canBeSeen)
 					{
 						// This is the case where a class does something like this:
 						// `protected static new string ToString()`
@@ -67,27 +69,18 @@ internal sealed class MockableMethodDiscovery
 							methods.Remove(methodToRemove);
 						}
 					}
-					else if (!hierarchyMethod.IsStatic && (!mockType.IsRecord || hierarchyMethod.Name != nameof(Equals)))
+					
+					if (!hierarchyMethod.IsStatic && (!mockType.IsRecord || hierarchyMethod.Name != nameof(Equals)))
 					{
 						if (hierarchyMethod.IsAbstract || hierarchyMethod.IsOverride || hierarchyMethod.IsVirtual)
 						{
-							var canBeSeen = hierarchyMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol);
-
 							if (!canBeSeen && hierarchyMethod.IsAbstract)
 							{
 								inaccessibleAbstractMembers = true;
 							}
 							else if (canBeSeen)
 							{
-								var methodToRemove = methods.SingleOrDefault(_ => !(_.Value.Match(hierarchyMethod) == MethodMatch.None));
-
-								if (methodToRemove is not null)
-								{
-									methods.Remove(methodToRemove);
-								}
-
-								if ((methodToRemove is null || !methodToRemove.Value.ContainingType.Equals(hierarchyMethod.ContainingType)) &&
-									!hierarchyMethod.IsSealed)
+								if (!hierarchyMethod.IsSealed)
 								{
 									methods.Add(new(hierarchyMethod, mockType, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes,
 										objectMethods.Any(_ => hierarchyMethod.Name == _.Name && hierarchyMethod.Parameters.Length == 0) ?

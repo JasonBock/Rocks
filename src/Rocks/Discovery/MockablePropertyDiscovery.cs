@@ -27,7 +27,7 @@ internal sealed class MockablePropertyDiscovery
 					var property1Parameter = property1.Parameters[i];
 					var property2Parameter = property2.Parameters[i];
 
-					if (!property1Parameter.Type.Equals(property2Parameter.Type))
+					if (!SymbolEqualityComparer.Default.Equals(property1Parameter.Type, property2Parameter.Type))
 					{
 						return false;
 					}
