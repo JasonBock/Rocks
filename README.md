@@ -8,7 +8,7 @@ Reference the `Rocks` [NuGet package](https://www.nuget.org/packages/Rocks) - th
 
 ### Prerequisites
 
-The Rocks package targets .NET Standard 2.0 for host flexibility. Note that Rocks looks for, and generates, code that targets .NET 8.
+The Rocks package targets .NET Standard 2.0 for host flexibility. That said, Rocks (as of `9.0.0`) will generate code that requires .NET 9.
 
 ## Usage
 
