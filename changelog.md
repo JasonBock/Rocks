@@ -5,7 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [9.0.0-alpha.1] - Not Yet Released
+## [9.0.0] - Not Yet Released
+
+### Added
+
+- `[RockPartial]` allows the user to define the name of the expectations type (issue [#342](https://github.com/JasonBock/Rocks/issues/342))
+
+## [9.0.0-alpha.1] - 2024-10-22
 
 ### Added
 
