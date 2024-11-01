@@ -59,7 +59,7 @@ public sealed class RockAnalyzer
 				if (buildType.HasFlag(BuildType.Create))
 				{
 					var model = MockModel.Create(context.Operation.Syntax,
-					  mockTypeSymbol, context.Operation.SemanticModel!, BuildType.Create, true);
+					  mockTypeSymbol, null, context.Operation.SemanticModel!, BuildType.Create, true);
 
 					if (model.Information is null)
 					{
@@ -73,7 +73,7 @@ public sealed class RockAnalyzer
 				if (buildType.HasFlag(BuildType.Make))
 				{
 					var model = MockModel.Create(context.Operation.Syntax,
-					  mockTypeSymbol, context.Operation.SemanticModel!, BuildType.Make, true);
+					  mockTypeSymbol, null, context.Operation.SemanticModel!, BuildType.Make, true);
 
 					if (model.Information is null)
 					{

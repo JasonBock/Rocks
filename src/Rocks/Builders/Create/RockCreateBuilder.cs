@@ -19,7 +19,7 @@ internal sealed class RockCreateBuilder
 		using var writer = new StringWriter();
 		using var indentWriter = new IndentedTextWriter(writer, "\t");
 
-		var mockNamespace = this.MockType.Type.Namespace;
+		var mockNamespace = this.MockType.ExpectationsNamespace;
 
 		if (mockNamespace is not null)
 		{
@@ -62,7 +62,7 @@ internal sealed class RockCreateBuilder
 		var text = SourceText.From(
 			string.Join(Environment.NewLine, content),
 			Encoding.UTF8);
-		var name = $"{this.MockType.Type.FullyQualifiedName.GenerateFileName()}_Rock_Create.g.cs";
+		var name = $"{this.MockType.Type.FullyQualifiedName.GenerateFileName()}{(this.MockType.IsPartial ? "_Partial" : "")}_Rock_Create.g.cs";
 		return (name, text);
 	}
 

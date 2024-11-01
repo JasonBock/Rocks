@@ -133,7 +133,7 @@ internal static class TestGenerator
 			var methodSymbol = model.GetDeclaredSymbol(methodNode)!;
 			var typeSymbol = methodSymbol.Parameters[0].Type.OriginalDefinition;
 
-			if (MockModel.Create(methodNode, typeSymbol, model, isCreate ? BuildType.Create : BuildType.Make, true).Information is not null)
+			if (MockModel.Create(methodNode, typeSymbol, null, model, isCreate ? BuildType.Create : BuildType.Make, true).Information is not null)
 			{
 				var methodIndex = methodSymbol.Name.Replace("Target", string.Empty, StringComparison.InvariantCulture);
 				var typeIndex = int.Parse(methodIndex, CultureInfo.InvariantCulture);

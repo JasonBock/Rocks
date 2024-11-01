@@ -8,7 +8,7 @@ namespace Rocks.Models;
 
 internal sealed record MockModel
 {
-	internal static MockModel Create(SyntaxNode node, ITypeSymbol typeToMock,
+	internal static MockModel Create(SyntaxNode node, ITypeSymbol typeToMock, ITypeSymbol? expectationsInformationSource,
 		SemanticModel model, BuildType buildType, bool shouldResolveShims)
 	{
 		var compilation = model.Compilation;
@@ -122,7 +122,7 @@ internal sealed record MockModel
 		return new(
 			!isMockable ? null :
 				new MockModelInformation(
-					new TypeMockModel(node, typeToMock, compilation, model,
+					new TypeMockModel(node, typeToMock, expectationsInformationSource, compilation, model,
 						constructors, methods, properties, events,
 						shims, new TypeMockModelMemberCount(methodMemberCount, propertyMemberCount), shouldResolveShims, buildType),
 					buildType),

@@ -17,7 +17,7 @@ internal sealed record MethodModel
 
 		if (requiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 		{
-			this.OverridingCodeValue = method.GetOverridingCodeValue(compilation.Assembly);
+			this.OverridingCodeValue = method.GetAccessibilityValue(compilation.Assembly);
 		}
 
 		this.IsMarkedWithDoesNotReturn = method.IsMarkedWithDoesNotReturn(compilation);

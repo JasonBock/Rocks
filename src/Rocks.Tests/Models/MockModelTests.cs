@@ -62,7 +62,7 @@ public static class MockModelTests
 		var parameterSymbol = compilationModel.GetDeclaredSymbol(
 			syntaxTree.GetRoot().DescendantNodes(_ => true).OfType<ParameterSyntax>().Single());
 
-		var model = MockModel.Create(invocation, parameterSymbol!.Type, compilationModel, (BuildType)buildType, true);
+		var model = MockModel.Create(invocation, parameterSymbol!.Type, null, compilationModel, (BuildType)buildType, true);
 
 		Assert.That(model.Information is null, Is.EqualTo(isMockNull));
 	}
@@ -99,7 +99,7 @@ public static class MockModelTests
 		const string targetTypeName = "EnumType";
 		var code = $"public enum {targetTypeName} {{ }}";
 		var (invocation, type, semanticModel) = MockModelTests.GetType(code, targetTypeName);
-		var model = MockModel.Create(invocation, type.BaseType!, semanticModel, BuildType.Create, true);
+		var model = MockModel.Create(invocation, type.BaseType!, null, semanticModel, BuildType.Create, true);
 
 		Assert.That(model.Information, Is.Null);
 	}
@@ -110,7 +110,7 @@ public static class MockModelTests
 		const string targetTypeName = "ValueTypeType";
 		var code = $"public struct {targetTypeName} {{ }}";
 		var (invocation, type, semanticModel) = MockModelTests.GetType(code, targetTypeName);
-		var model = MockModel.Create(invocation, type.BaseType!, semanticModel, BuildType.Create, true);
+		var model = MockModel.Create(invocation, type.BaseType!, null, semanticModel, BuildType.Create, true);
 
 		Assert.That(model.Information, Is.Null);
 	}
@@ -211,7 +211,7 @@ public static class MockModelTests
 			type = type.BaseType;
 		}
 
-		var model = MockModel.Create(invocation, type!, semanticModel, BuildType.Create, true);
+		var model = MockModel.Create(invocation, type!, null, semanticModel, BuildType.Create, true);
 
 		Assert.That(model.Information, Is.Null);
 	}
@@ -228,7 +228,7 @@ public static class MockModelTests
 			type = type.BaseType;
 		}
 
-		var model = MockModel.Create(invocation, type!, semanticModel, BuildType.Create, true);
+		var model = MockModel.Create(invocation, type!, null, semanticModel, BuildType.Create, true);
 
 		Assert.That(model.Information, Is.Null);
 	}
@@ -593,6 +593,6 @@ public static class MockModelTests
 		BuildType buildType, ReportDiagnostic generalDiagnosticOption = ReportDiagnostic.Error)
 	{
 		var (invocation, typeSymbol, model) = MockModelTests.GetType(source, targetTypeName, generalDiagnosticOption);
-		return MockModel.Create(invocation, typeSymbol!, model, buildType, true);
+		return MockModel.Create(invocation, typeSymbol!, null, model, buildType, true);
 	}
 }

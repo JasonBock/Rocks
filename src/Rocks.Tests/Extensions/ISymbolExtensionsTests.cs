@@ -39,7 +39,7 @@ public static class ISymbolExtensionsTests
 			compilationAssembly = selfCompilation.Assembly;
 		}
 
-		Assert.That(symbol.GetOverridingCodeValue(compilationAssembly), Is.EqualTo(codeValue));
+		Assert.That(symbol.GetAccessibilityValue(compilationAssembly), Is.EqualTo(codeValue));
 	}
 
 }

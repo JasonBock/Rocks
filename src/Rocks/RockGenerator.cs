@@ -42,7 +42,7 @@ internal sealed class RockGenerator
 								if (buildType.HasFlag(BuildType.Create))
 								{
 									var model = MockModel.Create(attributeClass.ApplicationSyntaxReference!.GetSyntax(token),
-									  mockType, context.SemanticModel, BuildType.Create, true);
+									  mockType, null, context.SemanticModel, BuildType.Create, true);
 
 									if (model.Information is not null)
 									{
@@ -53,7 +53,63 @@ internal sealed class RockGenerator
 								if (buildType.HasFlag(BuildType.Make))
 								{
 									var model = MockModel.Create(attributeClass.ApplicationSyntaxReference!.GetSyntax(token),
-									  mockType, context.SemanticModel, BuildType.Make, true);
+									  mockType, null, context.SemanticModel, BuildType.Make, true);
+
+									if (model.Information is not null)
+									{
+										models.Add(model.Information);
+									}
+								}
+							}
+						}
+
+						return models;
+					})
+				.SelectMany((names, _) => names);
+
+		static IncrementalValuesProvider<MockModelInformation> GetPartialMockInformation(
+			IncrementalGeneratorInitializationContext context) =>
+			context.SyntaxProvider
+				.ForAttributeWithMetadataName("Rocks.RockPartialAttribute", (_, _) => true,
+					(context, token) =>
+					{
+						var models = new List<MockModelInformation>(context.Attributes.Length);
+
+						for (var i = 0; i < context.Attributes.Length; i++)
+						{
+							// Need to grab the type attribute values.
+							var attributeClass = context.Attributes[i];
+							var mockType = (attributeClass.ConstructorArguments[0].Value as ITypeSymbol)!;
+							var buildType = (BuildType)attributeClass.ConstructorArguments[1].Value!;
+
+							var expectationsInformationSource = (ITypeSymbol)context.TargetSymbol;
+
+							// We should only see an unbound generic type with the "typeof(...)" case,
+							// but using "typeof(IService)" won't give an unbound generic, so
+							// we'll check it in all cases.
+							if (mockType is INamedTypeSymbol namedType &&
+								namedType.IsUnboundGenericType)
+							{
+								mockType = mockType.OriginalDefinition;
+							}
+
+							if (!mockType.ContainsDiagnostics())
+							{
+								if (buildType.HasFlag(BuildType.Create))
+								{
+									var model = MockModel.Create(attributeClass.ApplicationSyntaxReference!.GetSyntax(token),
+									  mockType, expectationsInformationSource, context.SemanticModel, BuildType.Create, true);
+
+									if (model.Information is not null)
+									{
+										models.Add(model.Information);
+									}
+								}
+
+								if (buildType.HasFlag(BuildType.Make))
+								{
+									var model = MockModel.Create(attributeClass.ApplicationSyntaxReference!.GetSyntax(token),
+									  mockType, expectationsInformationSource, context.SemanticModel, BuildType.Make, true);
 
 									if (model.Information is not null)
 									{
@@ -70,8 +126,11 @@ internal sealed class RockGenerator
 		context.RegisterTypes();
 
 		var mockTypes = GetMockInformation(context);
+		var partialMockTypes = GetPartialMockInformation(context);
 
 		context.RegisterSourceOutput(mockTypes.Collect(),
+			(context, source) => RockGenerator.CreateOutput(source, context));
+		context.RegisterSourceOutput(partialMockTypes.Collect(),
 			(context, source) => RockGenerator.CreateOutput(source, context));
 	}
 

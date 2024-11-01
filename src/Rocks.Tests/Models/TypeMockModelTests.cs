@@ -21,7 +21,7 @@ public static class TypeMockModelTests
 			}
 
 			""");
-		var mockModel = MockModel.Create(node, type, model, BuildType.Create, false);
+		var mockModel = MockModel.Create(node, type, null, model, BuildType.Create, false);
 		var typeModel = mockModel.Information!.Type;
 
 		Assert.Multiple(() =>
@@ -45,7 +45,7 @@ public static class TypeMockModelTests
 			}
 
 			""");
-		var mockModel = MockModel.Create(node, type, model, BuildType.Create, false);
+		var mockModel = MockModel.Create(node, type, null, model, BuildType.Create, false);
 		var typeModel = mockModel.Information!.Type;
 
 		Assert.Multiple(() =>
@@ -75,7 +75,7 @@ public static class TypeMockModelTests
 			}
 
 			""");
-		var mockModel = MockModel.Create(node, type, model, BuildType.Create, false);
+		var mockModel = MockModel.Create(node, type, null, model, BuildType.Create, false);
 		var typeModel = mockModel.Information!.Type;
 
 		Assert.Multiple(() =>

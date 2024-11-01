@@ -8,7 +8,7 @@ public sealed class RockAttribute
   : Attribute
 {
 	/// <summary>
-	/// Creates new <see cref="RockAttribute"/> instance.
+	/// Creates a new <see cref="RockAttribute"/> instance.
 	/// </summary>
 	/// <param name="mockType">The type to mock.</param>
 	/// <param name="buildType">The type of mock to build.</param>

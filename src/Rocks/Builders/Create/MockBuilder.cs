@@ -1,4 +1,5 @@
-﻿using Rocks.Extensions;
+﻿using Microsoft.CodeAnalysis;
+using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
 
@@ -20,10 +21,13 @@ internal static class MockBuilder
 				_ => _.Type.IsPointer || _.Parameters.Any(_ => _.Type.IsPointer)) ?
 				"unsafe " : string.Empty;
 
+		var typeKind = mockType.ExpectationsTypeKind == TypeKind.Class ?
+			"sealed class" : "struct";
+
 		writer.WriteLines(
 			$$"""
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-			internal {{isUnsafe}}sealed class {{mockType.ExpectationsName}}
+			{{mockType.Accessibility}} {{isUnsafe}}{{typeKind}} {{mockType.ExpectationsName}}
 				: global::Rocks.Expectations
 			""");
 
@@ -42,9 +46,6 @@ internal static class MockBuilder
 		writer.WriteLine("{");
 
 		writer.Indent++;
-
-		// TODO: remove
-		//var wereTypesProjected = MockProjectedTypesBuilder.Build(writer, mockType);
 
 		MockHandlerListBuilder.Build(writer, mockType, expectationsFQN);
 		writer.WriteLine();
@@ -88,8 +89,5 @@ internal static class MockBuilder
 		writer.WriteLine("}");
 
 		MockEventExtensionsBuilder.Build(writer, mockType, expectationsFQN);
-
-		// TODO: remove
-		//return wereTypesProjected;
 	}
 }

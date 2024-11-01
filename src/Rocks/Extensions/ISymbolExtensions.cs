@@ -5,7 +5,7 @@ namespace Rocks.Extensions;
 
 internal static class ISymbolExtensions
 {
-	internal static string GetOverridingCodeValue(this ISymbol self, IAssemblySymbol compilationAssembly) =>
+	internal static string GetAccessibilityValue(this ISymbol self, IAssemblySymbol compilationAssembly) =>
 		self.DeclaredAccessibility switch
 		{
 			Accessibility.Public => "public",

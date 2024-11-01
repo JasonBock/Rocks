@@ -33,7 +33,7 @@ internal sealed record PropertyModel
 
 		if (this.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 		{
-			this.OverridingCodeValue = property.GetOverridingCodeValue(compilation.Assembly);
+			this.OverridingCodeValue = property.GetAccessibilityValue(compilation.Assembly);
 		}
 
 		if (this.Accessors == PropertyAccessor.Get || this.Accessors == PropertyAccessor.GetAndSet || this.Accessors == PropertyAccessor.GetAndInit)

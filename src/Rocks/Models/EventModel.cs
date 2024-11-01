@@ -19,7 +19,7 @@ internal sealed record EventModel
 
 	  if (this.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 	  {
-		 this.OverridingCodeValue = @event.GetOverridingCodeValue(compilation.Assembly);
+		 this.OverridingCodeValue = @event.GetAccessibilityValue(compilation.Assembly);
 	  }
 
 	  var argsType = "global::System.EventArgs";

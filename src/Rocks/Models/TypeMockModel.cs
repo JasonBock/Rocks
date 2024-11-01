@@ -8,13 +8,31 @@ namespace Rocks.Models;
 internal sealed record TypeMockModel
 {
 	internal TypeMockModel(
-		SyntaxNode node, ITypeSymbol type, Compilation compilation, SemanticModel model,
+		SyntaxNode node, ITypeSymbol type, ITypeSymbol? expectationsInformationSource, Compilation compilation, SemanticModel model,
 		ImmutableArray<IMethodSymbol> constructors, MockableMethods methods,
 		MockableProperties properties, MockableEvents events,
 		HashSet<ITypeSymbol> shims, TypeMockModelMemberCount memberCount, bool shouldResolveShims, BuildType buildType)
 	{
 		this.Type = new TypeReferenceModel(type, compilation);
-		(this.ExpectationsName, this.ExpectationsNameNoGenerics, this.ExpectationsFullyQualifiedName) = compilation.GetExpectationsName(this.Type, buildType);
+
+		if (expectationsInformationSource is not null)
+		{
+			var expectationsInformationSourceType = new TypeReferenceModel(expectationsInformationSource, compilation);
+			(this.ExpectationsName, this.ExpectationsNameNoGenerics, this.ExpectationsFullyQualifiedName, this.ExpectationsNamespace) = 
+				compilation.GetExpectationsName(expectationsInformationSourceType, buildType, true);
+			this.IsPartial = true;
+			this.Accessibility = expectationsInformationSource.GetAccessibilityValue(compilation.Assembly);
+			this.ExpectationsTypeKind = expectationsInformationSourceType.TypeKind;
+		}
+		else
+		{
+			(this.ExpectationsName, this.ExpectationsNameNoGenerics, this.ExpectationsFullyQualifiedName, this.ExpectationsNamespace) = 
+				compilation.GetExpectationsName(this.Type, buildType, false);
+			this.IsPartial = false;
+			this.Accessibility = "internal";
+			this.ExpectationsTypeKind = TypeKind.Class;
+		}
+
 		this.MemberCount = memberCount;
 
 		// TODO: Remember to sort all array so "equatable" will work,
@@ -35,7 +53,7 @@ internal sealed record TypeMockModel
 				_.RequiresExplicitInterfaceImplementation, _.RequiresOverride)).ToImmutableArray();
 		this.Shims = shouldResolveShims ?
 			shims.Select(_ =>
-				MockModel.Create(node, _, model, BuildType.Create, false).Information!.Type).ToImmutableArray() :
+				MockModel.Create(node, _, null, model, BuildType.Create, false).Information!.Type).ToImmutableArray() :
 			[];
 
 		this.ConstructorProperties = type.GetMembers().OfType<IPropertySymbol>()
@@ -116,15 +134,18 @@ internal sealed record TypeMockModel
 		return expectationsPropertyName;
 	}
 
-
-	internal EquatableArray<string> Aliases { get; }
+	internal string Accessibility { get; }
+   internal EquatableArray<string> Aliases { get; }
 	internal EquatableArray<ConstructorPropertyModel> ConstructorProperties { get; }
 	internal EquatableArray<ConstructorModel> Constructors { get; }
 	internal string ExpectationsFullyQualifiedName { get; }
 	internal string ExpectationsName { get; }
 	internal string ExpectationsNameNoGenerics { get; }
+	internal string? ExpectationsNamespace { get; }
 	internal string ExpectationsPropertyName { get; }
+	public TypeKind ExpectationsTypeKind { get; }
 	internal EquatableArray<EventModel> Events { get; }
+	internal bool IsPartial { get; }
 	internal TypeMockModelMemberCount MemberCount { get; }
 	internal EquatableArray<MethodModel> Methods { get; }
 	internal EquatableArray<PropertyModel> Properties { get; }
