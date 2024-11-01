@@ -22,7 +22,8 @@ internal sealed record TypeMockModel
 				compilation.GetExpectationsName(expectationsInformationSourceType, buildType, true);
 			this.IsPartial = true;
 			this.Accessibility = expectationsInformationSource.GetAccessibilityValue(compilation.Assembly);
-			this.ExpectationsTypeKind = expectationsInformationSourceType.TypeKind;
+			this.ExpectationsIsSealed = expectationsInformationSourceType.TypeKind == TypeKind.Class ?
+				expectationsInformationSource.IsSealed : false;
 		}
 		else
 		{
@@ -30,7 +31,7 @@ internal sealed record TypeMockModel
 				compilation.GetExpectationsName(this.Type, buildType, false);
 			this.IsPartial = false;
 			this.Accessibility = "internal";
-			this.ExpectationsTypeKind = TypeKind.Class;
+			this.ExpectationsIsSealed = true;
 		}
 
 		this.MemberCount = memberCount;
@@ -139,11 +140,11 @@ internal sealed record TypeMockModel
 	internal EquatableArray<ConstructorPropertyModel> ConstructorProperties { get; }
 	internal EquatableArray<ConstructorModel> Constructors { get; }
 	internal string ExpectationsFullyQualifiedName { get; }
+	internal bool ExpectationsIsSealed { get; }
 	internal string ExpectationsName { get; }
 	internal string ExpectationsNameNoGenerics { get; }
 	internal string? ExpectationsNamespace { get; }
 	internal string ExpectationsPropertyName { get; }
-	public TypeKind ExpectationsTypeKind { get; }
 	internal EquatableArray<EventModel> Events { get; }
 	internal bool IsPartial { get; }
 	internal TypeMockModelMemberCount MemberCount { get; }

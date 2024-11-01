@@ -20,14 +20,14 @@ internal static class MockBuilder
 			mockType.Properties.Any(
 				_ => _.Type.IsPointer || _.Parameters.Any(_ => _.Type.IsPointer)) ?
 				"unsafe " : string.Empty;
-
-		var typeKind = mockType.ExpectationsTypeKind == TypeKind.Class ?
-			"sealed class" : "struct";
+			
+		var isPartial = mockType.IsPartial ? "partial " : string.Empty;
+		var isSealed = mockType.ExpectationsIsSealed ? "sealed " : string.Empty;
 
 		writer.WriteLines(
 			$$"""
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-			{{mockType.Accessibility}} {{isUnsafe}}{{typeKind}} {{mockType.ExpectationsName}}
+			{{mockType.Accessibility}} {{isUnsafe}}{{isSealed}}{{isPartial}}class {{mockType.ExpectationsName}}
 				: global::Rocks.Expectations
 			""");
 

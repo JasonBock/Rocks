@@ -44,7 +44,7 @@ internal sealed class RockMakeBuilder
 			indentWriter.WriteLine();
 		}
 
-		var mockNamespace = this.MockType.Type.Namespace;
+		var mockNamespace = this.MockType.ExpectationsNamespace;
 
 		if (mockNamespace is not null)
 		{
@@ -71,7 +71,7 @@ internal sealed class RockMakeBuilder
 			""");
 
 		var text = SourceText.From(writer.ToString(), Encoding.UTF8);
-		var name = $"{this.MockType.Type.FullyQualifiedName.GenerateFileName()}_Rock_Make.g.cs";
+		var name = $"{this.MockType.Type.FullyQualifiedName.GenerateFileName()}{(this.MockType.IsPartial ? "_Partial" : "")}_Rock_Make.g.cs";
 		return (name, text);
 	}
 

@@ -8,13 +8,13 @@ internal static class MockExpectationBuilder
 {
 	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType)
 	{
-		var typeArguments = mockType.Type.IsOpenGeneric ?
-			$"<{string.Join(", ", mockType.Type.TypeArguments.Select(_ => _.FullyQualifiedName))}>" : string.Empty;
+		var isSealed = mockType.ExpectationsIsSealed ? "sealed " : string.Empty;
+		var isPartial = mockType.IsPartial ? "partial " : string.Empty;
 
 		writer.WriteLines(
 			$"""
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-			internal sealed class {mockType.ExpectationsName}
+			{mockType.Accessibility} {isSealed}{isPartial}class {mockType.ExpectationsName}
 			""");
 
 		if (mockType.Type.Constraints.Length > 0)
