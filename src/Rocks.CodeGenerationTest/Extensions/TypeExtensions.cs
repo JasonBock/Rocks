@@ -9,17 +9,34 @@ namespace Rocks.CodeGenerationTest.Extensions;
 
 internal static class TypeExtensions
 {
-	internal static string GetTypeDefinition(this Type self, string[] aliases)
+	internal static string GetTypeDefinition(this Type self, string[] aliases, bool includeGenericParameterTypeNames)
 	{
 		if (self.IsGenericTypeDefinition)
 		{
 			var selfGenericArguments = self.GetGenericArguments();
 
-			return $"{(aliases.Length > 0 ? $"{aliases[0]}::" : string.Empty)}{self.FullName!.Split("`")[0]}<{new string(',', selfGenericArguments.Length - 1)}>";
+			var genericContent = includeGenericParameterTypeNames ?
+				self.GetTypeDefinitionParameters() :
+				$"<{new string(',', selfGenericArguments.Length - 1)}>";
+
+			return $"{(aliases.Length > 0 ? $"{aliases[0]}::" : string.Empty)}{self.FullName!.Split("`")[0]}{genericContent}";
 		}
 		else
 		{
 			return self.FullName!;
+		}
+	}
+
+	internal static string GetTypeDefinitionParameters(this Type self)
+	{
+		if (self.IsGenericTypeDefinition)
+		{
+			var selfGenericArguments = self.GetGenericArguments();
+			return $"<{string.Join(", ", selfGenericArguments.Select(_ => _.Name))}>";
+		}
+		else
+		{
+			return string.Empty;
 		}
 	}
 
@@ -29,12 +46,12 @@ internal static class TypeExtensions
 		{
 			var code =
 				$$"""
-					{{(aliases.Length > 0 ? $"extern alias {aliases[0]}" : string.Empty)}}
-					public class Foo 
-					{ 
-						public {{self.GetTypeDefinition(aliases)}} Data { get; } 
-					}
-					""";
+				{{(aliases.Length > 0 ? $"extern alias {aliases[0]}" : string.Empty)}}
+				public class Foo 
+				{ 
+					public {{self.GetTypeDefinition(aliases, false)}} Data { get; } 
+				}
+				""";
 			var syntaxTree = CSharpSyntaxTree.ParseText(code);
 			var references = AppDomain.CurrentDomain.GetAssemblies()
 				.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))

@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
+using TerraFX.Interop.Windows;
 
 namespace Rocks.CodeGenerationTest;
 
@@ -90,7 +91,7 @@ internal static class TestGenerator
 			for (var i = 0; i < types.Length; i++)
 			{
 				var type = types[i];
-				indentWriter.WriteLine($"\tinternal static void Target{i}({type.GetTypeDefinition(aliases)} target) {{ }}");
+				indentWriter.WriteLine($"\tinternal static void Target{i}({type.GetTypeDefinition(aliases, false)} target) {{ }}");
 			}
 
 			writer.WriteLine("}");
@@ -379,7 +380,43 @@ internal static class TestGenerator
 				buildTypes.Add("BuildType.Make");
 			}
 
-			indentWriter.WriteLine($"[assembly: Rock(typeof({type.GetTypeDefinition(aliases)}), {string.Join(" | ", buildTypes)})]");
+			indentWriter.WriteLine($"[assembly: Rock(typeof({type.GetTypeDefinition(aliases, false)}), {string.Join(" | ", buildTypes)})]");
+		}
+
+		indentWriter.WriteLine();
+
+		for (var i = 0; i < types.Length; i++)
+		{
+			var type = types[i];
+			var buildTypes = new List<string>();
+
+			if (buildType.HasFlag(BuildType.Create))
+			{
+				buildTypes.Add("BuildType.Create");
+			}
+
+			if (buildType.HasFlag(BuildType.Make))
+			{
+				buildTypes.Add("BuildType.Make");
+			}
+
+			if (type.Namespace is not null)
+			{
+				indentWriter.WriteLine($"namespace {type.Namespace}");
+				indentWriter.WriteLine("{");
+				indentWriter.Indent++;
+			}
+
+			indentWriter.WriteLine($"[RockPartial(typeof({type.GetTypeDefinition(aliases, false)}), {string.Join(" | ", buildTypes)})]");
+			indentWriter.WriteLine($"public sealed partial class {type.Name.Split("`")[0]}PartialTarget{type.GetTypeDefinitionParameters()};");
+
+			if (type.Namespace is not null)
+			{
+				indentWriter.Indent--;
+				indentWriter.WriteLine("}");
+			}
+
+			indentWriter.WriteLine();
 		}
 
 		return writer.ToString();

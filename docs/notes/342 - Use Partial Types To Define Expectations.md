@@ -10,5 +10,9 @@ How do I know which type the attribute is on? It `TargetSymbol` on the given `Ge
 * DONE - Add tests for `[RockPartial]`
 * DONE - Update changelog and put in `9.0.0 - Not Yet Released`
 * DONE - Add generics tests for partial
-* `RockAnalyzer` needs to be handled differently if `[RockPartial]` is used
+* DONE - `RockAnalyzer` needs to be handled differently if `[RockPartial]` is used
 * Update code gen test project to also generate the partial approach
+
+IObservable`1PartialTarget
+
+Can't produce files twice. Pointer files in code gen are getting done twice. Need to only generate once. Should be able to reproduce in a unit test.
