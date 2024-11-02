@@ -8,6 +8,7 @@
 		<ProjectReference Include="..\Rocks\Rocks.csproj" />
 	</ItemGroup>
 	<ItemGroup>
+		<PackageReference Include="Alba" />
 		<PackageReference Include="AngleSharp" />
 		<PackageReference Include="Arch" />
 		<PackageReference Include="Ardalis.GuardClauses" />
@@ -114,6 +115,7 @@
 		<PackageReference Include="System.Threading.Channels" />
 		<PackageReference Include="TerraFX.Interop.D3D12MemoryAllocator" />
 		<PackageReference Include="TerraFX.Interop.Windows" />
+		<PackageReference Include="Testcontainers" />
 		<PackageReference Include="Topshelf" />
 		<PackageReference Include="Twilio" />
 		<PackageReference Include="Verify" />

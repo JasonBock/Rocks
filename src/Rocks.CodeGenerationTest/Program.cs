@@ -1,6 +1,7 @@
 ﻿#define INCLUDE_PASSING
 //#define INCLUDE_FAILING
 
+using DotNet.Testcontainers.Containers;
 using Microsoft.CodeAnalysis;
 using R3;
 using Rocks;
@@ -116,6 +117,7 @@ static void TestWithTypes()
 		new (typeof(System.Text.Json.JsonDocument), []),
 		new (typeof(System.Threading.Channels.BoundedChannelFullMode), []),
 		// NuGet references
+		new (typeof(Alba.AlbaHost), []),
 		new (typeof(AngleSharp.BrowsingContext), []),
 		new (typeof(Arch.Buffer.CommandBuffer), []),
 		new (typeof(Ardalis.GuardClauses.Guard), []),
@@ -213,6 +215,7 @@ static void TestWithTypes()
 		new (typeof(System.Text.Json.JsonCommentHandling), []),
 		new (typeof(TerraFX.Interop.DirectX.D3D12MA_Allocation), []),
 		new (typeof(TerraFX.Interop.INativeGuid), []),
+		new (typeof(TestcontainersHealthStatus), []),
 		new (typeof(Topshelf.Credentials), []),
 		new (typeof(Twilio.Base.Page<>), []),
 		new (typeof(VerifyTests.AsStringResult), []),

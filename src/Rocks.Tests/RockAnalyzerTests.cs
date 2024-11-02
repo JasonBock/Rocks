@@ -37,7 +37,26 @@ public static class RockAnalyzerTests
 	}
 
 	[Test]
-	public static async Task AnalyzeWhenTypeIsSealedAsync()
+	public static async Task AnalyzePartialWhenMockIsCreatedAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+
+			public interface IService
+			{ 
+				void Serve();
+			}
+
+			[RockPartial(typeof(IService), BuildType.Create)]
+			public sealed partial class IServerTarget;
+			""";
+
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, []);
+	}
+
+	[Test]
+	public static async Task AnalyzeWhenDiagnosticIsCreatedAsync()
 	{
 		var code =
 			"""
@@ -57,22 +76,23 @@ public static class RockAnalyzerTests
 	}
 
 	[Test]
-	public static async Task AnalyzeWhenTypeIsSealedUsingRockAttributeAsync()
+	public static async Task AnalyzePartialWhenDiagnosticIsCreatedAsync()
 	{
 		var code =
 			"""
 			using Rocks;
 
-			[assembly: Rock(typeof(SealedService), BuildType.Create)]
-
 			public sealed class SealedService
 			{ 
 				public void Serve() { }
 			}
+
+			[RockPartial(typeof(SealedService), BuildType.Create)]			
+			public sealed partial class SealedServiceTarget;
 			""";
 
 		var diagnostic = new DiagnosticResult(CannotMockSealedTypeDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(3, 12, 3, 57);
+			.WithSpan(8, 2, 8, 54);
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic]);
 	}
 }

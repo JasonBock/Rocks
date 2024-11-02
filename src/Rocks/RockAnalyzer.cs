@@ -34,15 +34,21 @@ public sealed class RockAnalyzer
 		{
 			var rockAttributeSymbol = compilationContext.Compilation.GetTypeByMetadataName(
 				typeof(RockAttribute).FullName)!;
+			var rockPartialAttributeSymbol = compilationContext.Compilation.GetTypeByMetadataName(
+				typeof(RockPartialAttribute).FullName)!;
 
 			compilationContext.RegisterOperationAction(operationContext =>
 			{
 				RockAnalyzer.AnalyzeAttribute(
 					operationContext, rockAttributeSymbol);
+				RockAnalyzer.AnalyzeAttribute(
+					operationContext, rockPartialAttributeSymbol);
 			}, OperationKind.Attribute);
 		});
 	}
 
+	// Both [Rock] and [RockPartial] take the same number of constructor arguments,
+	// so this works.
 	private static void AnalyzeAttribute(
 		OperationAnalysisContext context, INamedTypeSymbol rockAttributeSymbol)
 	{
