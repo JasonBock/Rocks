@@ -12,15 +12,17 @@ internal static class MockEventExtensionsBuilder
 		// is an open generic. A closed generic is fine.
 		if (mockType.Events.Length > 0 && !mockType.Type.IsOpenGeneric)
 		{
+			var adornmentsPrefixName = mockType.AdornmentsFlattenedName;
+
 			writer.WriteLines(
 				$$"""
 				
-				internal static class {{mockType.Type.FlattenedName}}AdornmentsEventExtensions
+				internal static class {{adornmentsPrefixName}}AdornmentsEventExtensions
 				{
 				""");
 			writer.Indent++;
 
-			var adornmentsIntermediateInterface = $"{expectationsFQN}.Adornments.IAdornmentsFor{mockType.Type.FlattenedName}<TAdornments>";
+			var adornmentsIntermediateInterface = $"{expectationsFQN}.Adornments.IAdornmentsFor{adornmentsPrefixName}<TAdornments>";
 
 			foreach (var (name, argsType) in mockType.Events.Select(_ => (_.Name, _.ArgsType)).Distinct())
 			{

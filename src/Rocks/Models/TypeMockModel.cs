@@ -24,6 +24,7 @@ internal sealed record TypeMockModel
 			this.Accessibility = expectationsInformationSource.GetAccessibilityValue(compilation.Assembly);
 			this.ExpectationsIsSealed = expectationsInformationSourceType.TypeKind == TypeKind.Class ?
 				expectationsInformationSource.IsSealed : false;
+			this.AdornmentsFlattenedName = expectationsInformationSourceType.FlattenedName;
 		}
 		else
 		{
@@ -32,6 +33,7 @@ internal sealed record TypeMockModel
 			this.IsPartial = false;
 			this.Accessibility = "internal";
 			this.ExpectationsIsSealed = true;
+			this.AdornmentsFlattenedName = this.Type.FlattenedName;
 		}
 
 		this.MemberCount = memberCount;
@@ -136,7 +138,8 @@ internal sealed record TypeMockModel
 	}
 
 	internal string Accessibility { get; }
-   internal EquatableArray<string> Aliases { get; }
+	internal string AdornmentsFlattenedName { get; }
+	internal EquatableArray<string> Aliases { get; }
 	internal EquatableArray<ConstructorPropertyModel> ConstructorProperties { get; }
 	internal EquatableArray<ConstructorModel> Constructors { get; }
 	internal string ExpectationsFullyQualifiedName { get; }

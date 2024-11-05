@@ -14,12 +14,14 @@ internal static class MockAdornmentsBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
+		var adornmentsFlattenedName = mockType.AdornmentsFlattenedName;
+
 		// Create the intermediate interface.
 		writer.WriteLines(
-			$$"""
-			public interface IAdornmentsFor{{mockType.Type.FlattenedName}}<TAdornments>
+			 $$"""
+			public interface IAdornmentsFor{{adornmentsFlattenedName}}<TAdornments>
 				: global::Rocks.IAdornments<TAdornments>
-				where TAdornments : IAdornmentsFor{{mockType.Type.FlattenedName}}<TAdornments>
+				where TAdornments : IAdornmentsFor{{adornmentsFlattenedName}}<TAdornments>
 			{ }
 			""");
 		writer.WriteLine();
@@ -30,7 +32,7 @@ internal static class MockAdornmentsBuilder
 			writer.WriteLines(
 				$$"""
 				public sealed class AdornmentsForHandler{{adornments.MemberIdentifier}}{{adornments.TypeArguments}}
-					: {{adornments.FullyQualifiedName}}, IAdornmentsFor{{mockType.Type.FlattenedName}}<AdornmentsForHandler{{adornments.MemberIdentifier}}{{adornments.TypeArguments}}>{{adornments.Constraints}}
+					: {{adornments.FullyQualifiedName}}, IAdornmentsFor{{adornmentsFlattenedName}}<AdornmentsForHandler{{adornments.MemberIdentifier}}{{adornments.TypeArguments}}>{{adornments.Constraints}}
 				{
 					public AdornmentsForHandler{{adornments.MemberIdentifier}}({{expectationsFQN}}.Handler{{adornments.MemberIdentifier}}{{adornments.TypeArguments}} handler)
 						: base(handler) { }
