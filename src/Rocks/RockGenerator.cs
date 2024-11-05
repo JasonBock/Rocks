@@ -128,11 +128,6 @@ internal sealed class RockGenerator
 		var mockTypes = GetMockInformation(context);
 		var partialMockTypes = GetPartialMockInformation(context);
 
-		//context.RegisterSourceOutput(mockTypes.Collect(),
-		//	(context, source) => RockGenerator.CreateOutput(source, context));
-		//context.RegisterSourceOutput(partialMockTypes.Collect(),
-		//	(context, source) => RockGenerator.CreateOutput(source, context));
-
 		var mockTypesCollected = mockTypes.Collect();
 		var partialMockTypesCollected = partialMockTypes.Collect();
 
@@ -167,47 +162,6 @@ internal sealed class RockGenerator
 		}
 
 		foreach (var mock in mocks.rightMocks.Distinct())
-		{
-			foreach (var projection in mock.Type.Projections)
-			{
-				projections.Add(projection);
-			}
-
-			if (mock.BuildType.HasFlag(BuildType.Create))
-			{
-				var builder = new RockCreateBuilder(mock.Type);
-				context.AddSource(builder.Name, builder.Text);
-			}
-
-			if (mock.BuildType.HasFlag(BuildType.Make))
-			{
-				var builder = new RockMakeBuilder(mock.Type);
-				context.AddSource(builder.Name, builder.Text);
-			}
-		}
-
-		if (projections.Count > 0)
-		{
-			var projectionFileNames = new HashSet<string>();
-
-			foreach (var projection in projections)
-			{
-				var builder = new RockProjectionBuilder(projection);
-
-				if (projectionFileNames.Add(builder.Name))
-				{
-					context.AddSource(builder.Name, builder.Text);
-				}
-			}
-		}
-
-	}
-
-	private static void CreateOutput(ImmutableArray<MockModelInformation> mocks, SourceProductionContext context)
-	{
-		var projections = new HashSet<TypeReferenceModel>();
-
-		foreach (var mock in mocks.Distinct())
 		{
 			foreach (var projection in mock.Type.Projections)
 			{
