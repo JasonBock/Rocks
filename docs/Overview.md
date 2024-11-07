@@ -26,17 +26,17 @@
 
 New to Rocks? In this page, we'll cover the essentials of what Rocks can do so you can get up to speed on the API with little effort. We'll go through creating mocks and how you handle methods, properties and events.  We'll demonstrate how you can test asynchronous code, and use `dynamic` and "special" types. We'll show what "makes" are and where they're useful.
 
-If something is unclear after reading the documentation, you can always browse the tests in source to see specific examples of a case that may not be covered in detail here. If you are still unable to determine how something works, feel free to drop a message in the [Discord channel](https://discord.gg/ZXMhkKsMRb), or add an issue [here](https://github.com/JasonBock/Rocks/issues).
+If something is unclear after reading the documentation, you can always browse the tests in source to see specific examples of a case that may not be covered in detail here. If you are still unable to determine how something works, feel free to drop a message in the [Discord server](https://discord.gg/ZXMhkKsMRb), or add an issue [here](https://github.com/JasonBock/Rocks/issues).
 
 ## Background and History
 
 There are great mocking libraries out there, like [Moq](https://github.com/moq/moq "Moq mocking framework on GitHub") and [NSubstitute](http://nsubstitute.github.io/ "NSubstitute: A friendly substitute for .NET mocking libraries"), so why did I decide to create YAML (yet another mocking library) in 2015? There are essentially two reasons.
 
-The first reason relates to how code generation was done with mocking libraries. Most (if not all) used an approach that ends up using `System.Reflection.Emit` to create a mock type on the fly, which requires knowledge of IL, or a library like [`Castle.DynamicProxy`](https://github.com/castleproject/Core) to facilitate the mock generation with IL. This is not a trivial endeavour. Furthermore, the generated code can't be stepped into during a debugging process. I wanted to write a mocking library with the new Compiler APIs (Roslyn) to see if I could make the code generation process for the mock much easier and allow a developer to step into that code if necessary.
+The first reason relates to how code generation is typically done with mocking libraries. Most (if not all) used an approach that ends up using `System.Reflection.Emit` to create a mock type on the fly, which requires knowledge of IL, or a library like [`Castle.DynamicProxy`](https://github.com/castleproject/Core) to facilitate the mock generation with IL. This is not a trivial endeavour. Furthermore, the generated code can't be stepped into during a debugging process. I wanted to write a mocking library with the new Compiler APIs (Roslyn) to see if I could make the code generation process for the mock much easier and allow a developer to step into that code if necessary.
 
 The other reason was being able to pre-generate the mocks for a given assembly, rather than dynamically generate them in a test. This is what the [Microsoft Fakes Library](https://docs.microsoft.com/en-us/visualstudio/test/code-generation-compilation-and-naming-conventions-in-microsoft-fakes?view=vs-2019 "Microsoft Fakes: Generate & compile code; naming conventions - Visual Studio (Windows) | Microsoft Docs") can do, but I wanted to be able to do it where I could easily modify a project file and automatically generate those mocks.
 
-This is what Rocks can do. Mocks are created by generating C# code on the fly and compiling it with the Compiler APIs. This makes it trivial to step into the mock code. Before the 5.0.0 version, this code generation step took place at runtime, but with source generators in C# 9, this generation happens as soon as you state that you want to create a mock of a particular type. Moreover, since the mock is generated C# code, **any** language feature in C# can be supported, such as optional parameters and pointer values. So, feel free to test Rocks out, and see what you think. Even if you don't use it as your primary mocking library, you may see just how easy it to generate code on the fly with the new Compiler APIs. Enjoy!
+This is what Rocks can do. Mocks are created by generating C# code on the fly and compiling it with the Compiler APIs via a source generator. This makes it trivial to step into the mock code. Since the mock is generated C# code, **any** language feature in C# can be supported, such as optional parameters and pointer values. So, feel free to test Rocks out, and see what you think. Even if you don't use it as your primary mocking library, you may see just how easy it to generate code on the fly with the new Compiler APIs. Enjoy!
 
 ## Creating Mocks
 
@@ -44,7 +44,9 @@ There's a lot of scenarios that can be encountered when you want to create a moc
 
 ### API Generation
 
-With Rocks 5.0.0 and above, all of the mocks are created using [C# 9.0's source generation feature](https://devblogs.microsoft.com/dotnet/introducing-c-source-generators/ "Introducing C# Source Generators - Microsoft"). This means that you must be targeting .NET 5.0 to use Rocks. With source generation, you have a lot of freedom to generate what you want, and this is exactly what Rocks takes advantage of. When you want to create a mock, a number of properties are generated that group the members you can set expectations on. You'll see in this document references in code like `.Methods`, `.Properties`, and `.Indexers`. For example, if the type you want to mock has methods that can have expectations set on them, you'll see `.Methods` show up. Similarly, mockable properties can be found from the `.Properties` property. You use these properties to set expectations on specific members. This should become clear as you read on and look at the examples.
+When you want to create a mock, a number of properties are generated that group the members you can set expectations on. You'll see in this document references in code like `.Methods`, `.Properties`, and `.Indexers`. For example, if the type you want to mock has methods that can have expectations set on them, you'll see `.Methods` show up. Similarly, mockable properties can be found from the `.Properties` property. You use these properties to set expectations on specific members. This should become clear as you read on and look at the examples.
+
+Keep in mind that Rocks should let you override or implement any member on the type you are targeting if it can (e.g. the given type is not `sealed`). That is one of the core design goals of Rocks. As of `9.0.0`, the only known feature that Rocks does not support is static abstract members in interfaces, but there is an [issue](https://github.com/JasonBock/Rocks/issues/311) to track work to make this happen.
 
 > Note: if you use Rocks and you get an error akin to having a `Microsoft.CodeAnalysis` version mismatch, you may need to update the version of the .NET SDK you have installed.
 
@@ -60,7 +62,7 @@ public interface IAmSimple
 }
 ```
 
-Here's how you create the mock, define its expected interactions, use the mock, and verify the expectations:
+There's two ways you can create a mock for this type. The first one uses `RockAttribute`. You define expected interactions, use the mock, and verify the expectations:
 
 ```csharp
 [assembly: Rock(typeof(IAmSimple), BuildType.Create)]
@@ -76,9 +78,9 @@ var result = mock.TargetFunc();
 expectations.Verify();
 ```
 
-The mocking process starts by instantiating an `IAmSimpleCreateExpectations` object. This is done by adding `RockAttribute` in code. When this attribute is added, Rocks will interrogate the type provided in the generic parameter. It will then create a number of properties for each mockable member. In the example, you can call `.Methods.TargetAction()` and `.Methods.TargetFunc()` to state that you expect these members to be called. For `TargetFunc()`, you can also specify the return value via the `ReturnValue()` method.
+The mocking process starts by instantiating an `IAmSimpleCreateExpectations` object. When `RockAttribute` is added, Rocks will interrogate the type provided in the first constructor parameter. It will then create a number of properties for each mockable member. In the example, you can call `.Methods.TargetAction()` and `.Methods.TargetFunc()` to state that you expect these members to be called. For `TargetFunc()`, you can also specify the return value via the `ReturnValue()` method. You can also specify `BuildType.Make` to create a "make" type. Makes will be covered later on in this document. 
 
-You can also specify `BuildType.Make` to create a "make" type. Makes will be covered later on in this document. `RockAttribute` can only exist at the assembly level. If you have multiple instances of these attributes defined in a project targeting the same type to mock, only one expectations class will be generated. The names of the generated expectation types follow these patterns:
+`RockAttribute` can only exist at the assembly level. If you have multiple instances of these attributes defined in a project targeting the same type to mock, only one expectations class will be generated. The names of the generated expectation types follow these patterns:
 
 * `Rock(typeof(MyType), BuildType.Create)` generates `MyTypeCreateExpectations`
 * `Rock(typeof(MyType), BuildType.Make)` generates `MyTypeMakeExpectations`
@@ -86,7 +88,24 @@ You can also specify `BuildType.Make` to create a "make" type. Makes will be cov
 
 In other words, the naming pattern is `{Mock type name}{Mock kind}Expectations`. The expectation type is generated within the same namespace that the mock type resides within (if one exists).
 
-> Note: With version 8.2.0 and before, Rocks had `RockCreateAttribute` and `RockMakeAttribute` attributes, both generic and non-generic versions. With 8.3.0, they are marked as being obsolete, and they will be removed in 9.0.0.
+There's another way to generate the mocking infrastructure, and that's through partial types:
+
+```c#
+[RockPartial(typeof(IAmSimple), BuildType.Create)]
+public sealed partial class SimpleExpectations;
+
+var expectations = new SimpleExpectations();
+expectations.Methods.TargetAction();
+expectations.Methods.TargetFunc().ReturnValue(44);
+
+var mock = expectations.Instance();
+mock.TargetAction();
+var result = mock.TargetFunc();
+// result is equal to 44
+expectations.Verify();
+```
+
+With `RockPartialAttribute`, you can define the name of the expectations type, its' visibility, etc. The choice to use `RockAttribute` or `RockPartialAttribute` is up to you. Both approaches will generate the same code, just with different names.
 
 Once you set your expectations, you can create an instance of the mock from the generated `Instance()` method. If the target type has multiple constructors with different parameters, `Instace()` methods will generated for each constructor - constructors will be covered in detail in [this section](#passing-constructor-arguments-to-a-mock).
 
@@ -295,7 +314,7 @@ expectations.Verify();
 
 This allows for more flexibility, in that only one set of supporting types are generated for the target type.
 
-> Note: With 8.3.0, if you declare a closed generic, Rocks will create a `ROCK14` diagnostic as a warning. In 9.0.0, this will become an error.
+> Note: With 8.3.0, if you declare a closed generic, Rocks will create a `ROCK14` diagnostic as a warning. In 9.0.0, this becomes an error.
 
 ### Mocking Methods with `ref/out/in` Parameters or `ref readonly` Return Values
 
@@ -584,7 +603,7 @@ Note that `value` would be equal to 20 after `PointerParameter()` is called.
 
 ### Using Makes
 
-There are times when your mock needs to return a value where you want to ensure that the return value is a specific instance. As you've seen with these Rocks examples, you define a `[Rock(..., BuildType.Create)]` attribute instance, create a new expectations instance, set up expectations, and then call `Instance()`. If you need a mock with no expectations, you create a "make" by changing the flag value in `RockAttribute`:
+There are times when your mock needs to return a value where you want to ensure that the return value is a specific instance. As you've seen with these Rocks examples, you define a `[Rock(..., BuildType.Create)]` or `[RockPartial(..., BuildType.Create)]` attribute instance, create a new expectations instance, set up expectations, and then call `Instance()`. If you need a mock with no expectations, you create a "make" by changing the flag value to `BuildType.Make`:
 
 ```csharp
 public interface IValue { }
