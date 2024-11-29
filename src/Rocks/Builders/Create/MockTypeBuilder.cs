@@ -7,7 +7,7 @@ namespace Rocks.Builders.Create;
 
 internal static class MockTypeBuilder
 {
-	internal static void Build(IndentedTextWriter writer, TypeMockModel type, string expectationsFullyQualifiedName)
+	internal static void Build(IndentedTextWriter writer, TypeMockModel type, MockTypeVisibility visibility, string expectationsFullyQualifiedName)
 	{
 		var kind = type.Type.IsRecord ? "record" : "class";
 
@@ -16,7 +16,13 @@ internal static class MockTypeBuilder
 			writer.WriteLine(type.Type.AttributesDescription);
 		}
 
-		writer.WriteLine($"private sealed {kind} Mock");
+		var mockVisibility = visibility == MockTypeVisibility.Private ?
+			"private" :
+			visibility == MockTypeVisibility.Internal ?
+				"internal" :
+				"public";
+
+		writer.WriteLine($"{mockVisibility} sealed {kind} Mock");
 		writer.Indent++;
 
 		var canRaiseEvents = type.Events.Length > 0;

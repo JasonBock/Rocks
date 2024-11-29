@@ -6,7 +6,7 @@ namespace Rocks.Builders.Make;
 
 internal static class MockExpectationBuilder
 {
-	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType)
+	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType, MockTypeVisibility visibility)
 	{
 		var isSealed = mockType.ExpectationsIsSealed ? "sealed " : string.Empty;
 		var isPartial = mockType.IsPartial ? "partial " : string.Empty;
@@ -34,7 +34,7 @@ internal static class MockExpectationBuilder
 
 		MockConstructorExpectationsBuilder.Build(writer, mockType, mockType.ExpectationsFullyQualifiedName);
 		writer.WriteLine();
-		MockMakeBuilder.Build(writer, mockType);
+		MockMakeBuilder.Build(writer, mockType, visibility);
 
 		writer.Indent--;
 		writer.WriteLine("}");

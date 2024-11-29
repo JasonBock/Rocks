@@ -8,9 +8,10 @@ namespace Rocks.Builders.Make;
 
 internal sealed class RockMakeBuilder
 {
-	internal RockMakeBuilder(TypeMockModel mockType)
+	internal RockMakeBuilder(TypeMockModel mockType, MockTypeVisibility visibility)
 	{
-		this.MockType = mockType;
+		(this.MockType, this.Visibility) = 
+			(mockType, visibility);
 		(this.Name, this.Text) = this.Build();
 	}
 
@@ -53,7 +54,7 @@ internal sealed class RockMakeBuilder
 			indentWriter.Indent++;
 		}
 
-		MockExpectationBuilder.Build(indentWriter, this.MockType);
+		MockExpectationBuilder.Build(indentWriter, this.MockType, this.Visibility);
 
 		if (mockNamespace is not null)
 		{
@@ -78,4 +79,5 @@ internal sealed class RockMakeBuilder
 	public string Name { get; private set; }
 	public SourceText Text { get; private set; }
 	private TypeMockModel MockType { get; }
+	private MockTypeVisibility Visibility { get; }
 }

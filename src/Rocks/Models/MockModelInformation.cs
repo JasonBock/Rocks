@@ -1,3 +1,3 @@
 ﻿namespace Rocks.Models;
 
-internal sealed record MockModelInformation(TypeMockModel Type, BuildType BuildType);
+internal sealed record MockModelInformation(TypeMockModel Type, BuildType BuildType, MockTypeVisibility Visibility);

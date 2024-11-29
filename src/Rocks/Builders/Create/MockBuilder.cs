@@ -7,7 +7,7 @@ namespace Rocks.Builders.Create;
 
 internal static class MockBuilder
 {
-	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType)
+	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType, MockTypeVisibility visibility)
 	{
 		var adornments = new HashSet<AdornmentsPipeline>();
 		var adornmentsPipeline = (AdornmentsPipeline adornmentsPipelineInformation) => { adornments.Add(adornmentsPipelineInformation); };
@@ -53,7 +53,7 @@ internal static class MockBuilder
 		MockExpectationsVerifyBuilder.Build(writer, mockType);
 		writer.WriteLine();
 
-		MockTypeBuilder.Build(writer, mockType, expectationsFQN);
+		MockTypeBuilder.Build(writer, mockType, visibility, expectationsFQN);
 
 		var expectationMappings = new List<ExpectationMapping>(mockType.MemberCount.TotalCount);
 
