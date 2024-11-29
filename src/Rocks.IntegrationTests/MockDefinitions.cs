@@ -88,6 +88,7 @@
 [assembly: Rock(typeof(Rocks.IntegrationTests.MethodMemberTestTypes.IHaveLotsOfParameters), BuildType.Create | BuildType.Make)]
 [assembly: Rock(typeof(Rocks.IntegrationTests.MethodMemberTestTypes.IHaveRefAndOut), BuildType.Create | BuildType.Make)]
 [assembly: Rock(typeof(Rocks.IntegrationTests.MethodMemberTestTypes.IHaveRefReturn), BuildType.Create | BuildType.Make)]
+[assembly: Rock(typeof(Rocks.IntegrationTests.MockVisibilityTestTypes.IProcessor<>), BuildType.Create | BuildType.Make, MockTypeVisibility.Public)]
 [assembly: Rock(typeof(Rocks.IntegrationTests.MultipleRockCallsTestTypes.IMultipleRockCalls), BuildType.Create | BuildType.Make)]
 [assembly: Rock(typeof(Rocks.IntegrationTests.NonPublicMemberTestTypes.HasProtectedMember), BuildType.Create | BuildType.Make)]
 [assembly: Rock(typeof(Rocks.IntegrationTests.OpenGenericsTestTypes.IService<,>), BuildType.Create | BuildType.Make)]

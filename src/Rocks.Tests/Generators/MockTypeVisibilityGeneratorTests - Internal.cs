@@ -2,7 +2,7 @@
 
 namespace Rocks.Tests.Generators;
 
-internal static class MockTypeVisibilityGeneratorTests
+internal static partial class MockTypeVisibilityGeneratorTests
 {
 	[Test]
 	public static async Task GenerateWhenVisibilityIsInternalAsync()
