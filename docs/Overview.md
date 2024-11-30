@@ -19,7 +19,7 @@
     - [`dynamic` Types](#dynamic-types)
     - ["Special" Types](#special-types)
   - [Using Makes](#using-makes)
-  - [Managing Multiple Mocks](#managing-multiple-mocks)
+  - [Manually Creating Intermediary Types](#manually-creating-intermediary-types)
 - [Conclusion](#conclusion)
   
 # Introduction
@@ -568,7 +568,7 @@ mock.Foo("b");
 expectations.Verify();
 ```
 
-## "Special" Types
+### "Special" Types
 
 Rocks can mock members with certain kinds of types, such as pointer types and ref structs like `Span<T>`. So if you have an interface like this:
 
@@ -601,7 +601,7 @@ Note that `value` would be equal to 20 after `PointerParameter()` is called.
 > * https://github.com/dotnet/docs/issues/28782 (see "Comment 5")
 > * https://github.com/dotnet/roslyn/issues/48919
 
-### Using Makes
+## Using Makes
 
 There are times when your mock needs to return a value where you want to ensure that the return value is a specific instance. As you've seen with these Rocks examples, you define a `[Rock(..., BuildType.Create)]` or `[RockPartial(..., BuildType.Create)]` attribute instance, create a new expectations instance, set up expectations, and then call `Instance()`. If you need a mock with no expectations, you create a "make" by changing the flag value to `BuildType.Make`:
 
@@ -646,6 +646,65 @@ var producedValue = uses.GetValue();
 ```
 
 Note that makes do no have any expectations set up on them so they can't be verified. If you call a method on a make that returns a value, it'll return the default value of the return type - the same thing applies for getters on properties and indexers.
+
+## Manually Creating Intermediary Types
+
+There are occasions where either you'll run into a case where Rocks doesn't provide a feature another mocking library provides, or Rocks doesn't seem like it can handle a given type. In these cases, before you submit an issue on the Rocks repository, you may want to consider creating your own type to address these scenarios.
+
+For example, let's say you had a number of interfaces that you wanted to mock at the same time:
+
+```c#
+public interface IA { }
+
+public interface IB { }
+
+public interface IC { }
+```
+
+Moq [has a feature](https://github.com/devlooped/moq/wiki/Quickstart#advanced-features) that lets you specify all of these through the `As()` method. Rocks does not have that same feature, but all you need to do is simply create your own intermediate type:
+
+```c#
+[assembly: Rock(typeof(IAllOfThem), BuildType.Create)]
+
+public interface IAllOfThem
+  : IA, IB, IC 
+{ }
+
+var expectations = new IAllOfThemCreateExpectations();
+// ...
+```
+
+Another example revolves around the [Curiously Repeating Generic Parameter](https://blog.stephencleary.com/2022/09/modern-csharp-techniques-1-curiously-recurring-generic-pattern.html). Long story short, trying to mock a type that uses CRGP can't be done in Rocks, but you can define your own intermediary type to make it work:
+
+```c#
+public interface IProcessor<TProcessor>
+  where TProcessor : IProcessor<TProcessor>
+{
+  void Process();
+}
+
+public interface IStuffProcessor
+  : IProcessor<IStuffProcessor>
+{ }
+
+[RockPartial(typeof(IStuffProcessor), BuildType.Create)]
+public sealed partial class StuffExpectations;
+
+internal static class Stuff
+{
+  [Test]
+  public static void Create()
+  {
+    var expectations = new StuffExpectations();
+    expectations.Methods.Process();
+
+    var mock = expectations.Instance();
+    mock.Process();
+
+    expectations.Verify();
+  }
+}
+```
 
 # Conclusion
 
