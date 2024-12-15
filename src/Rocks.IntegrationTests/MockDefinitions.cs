@@ -111,4 +111,6 @@
 [assembly: Rock(typeof(Rocks.IntegrationTests.VirtualsWithImplementationsTestTypes.IndexerPolygon), BuildType.Create | BuildType.Make)]
 [assembly: Rock(typeof(Rocks.IntegrationTests.VirtualsWithImplementationsTestTypes.MethodPolygon), BuildType.Create | BuildType.Make)]
 [assembly: Rock(typeof(Rocks.IntegrationTests.VirtualsWithImplementationsTestTypes.PropertyPolygon), BuildType.Create | BuildType.Make)]
+[assembly: Rock(typeof(Rocks.IntegrationTests.Referenced.IDoInternalStuff), BuildType.Create | BuildType.Make)]
+[assembly: Rock(typeof(Rocks.IntegrationTests.Referenced.IDoPublicStuff), BuildType.Create | BuildType.Make)]
 [assembly: Rock(typeof(System.Net.Http.HttpMessageHandler), BuildType.Create)]

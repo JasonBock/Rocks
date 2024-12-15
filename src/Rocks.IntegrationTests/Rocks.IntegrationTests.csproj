@@ -10,6 +10,7 @@
 		<RootNamespace>Rocks.IntegrationTests</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
+		<ProjectReference Include="..\Rocks.IntegrationTests.Referenced\Rocks.IntegrationTests.Referenced.csproj" />
 		<ProjectReference Include="..\Rocks\Rocks.csproj" OutputItemType="Analyzer" />
 	</ItemGroup>
 	<ItemGroup>

@@ -18,3 +18,22 @@ _.AttributeClass.ContainingAssembly.Name == internalsVisibleToAttribute.Assembly
 ```
 
 **FAILS**
+
+Note that in a unit test:
+
+```
+?self.GetAttributes()[0].AttributeClass.ContainingAssembly.Name
+"System.Private.CoreLib"
+?internalsVisibleToAttribute.Assembly.GetName().Name
+"System.Private.CoreLib"
+```
+
+They end up being the same so the test will pass.
+
+TODO:
+* DONE - Create "make" integration tests
+* DONE - Update version to 9.0.1
+* DONE - Update changelog
+* Publish to NuGet
+* Close issue
+* Party

@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Performance", "Rocks.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Playground", "Rocks.Playground\Rocks.Playground.csproj", "{EB3A9B4E-9B03-4711-908C-1D93BF90D4BB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.IntegrationTests.Referenced", "Rocks.IntegrationTests.Referenced\Rocks.IntegrationTests.Referenced.csproj", "{5792698D-A92D-44FF-9ACB-4ACF738FA15B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{EB3A9B4E-9B03-4711-908C-1D93BF90D4BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB3A9B4E-9B03-4711-908C-1D93BF90D4BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB3A9B4E-9B03-4711-908C-1D93BF90D4BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5792698D-A92D-44FF-9ACB-4ACF738FA15B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5792698D-A92D-44FF-9ACB-4ACF738FA15B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5792698D-A92D-44FF-9ACB-4ACF738FA15B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5792698D-A92D-44FF-9ACB-4ACF738FA15B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
