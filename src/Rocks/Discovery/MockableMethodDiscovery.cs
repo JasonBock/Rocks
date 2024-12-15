@@ -142,7 +142,6 @@ internal sealed class MockableMethodDiscovery
 
 			if (IsMethodToExamine(selfMethod))
 			{
-				//System.Diagnostics.Debugger.Launch();
 				if (!selfMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol, compilation) &&
 					selfMethod.IsAbstract)
 				{
