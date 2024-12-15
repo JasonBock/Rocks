@@ -7,16 +7,16 @@ namespace Rocks.Discovery;
 internal sealed class MockablePropertyDiscovery
 {
 	internal MockablePropertyDiscovery(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol,
-		HashSet<ITypeSymbol> shims, ref uint memberIdentifier) =>
+		HashSet<ITypeSymbol> shims, ref uint memberIdentifier, Compilation compilation) =>
 			this.Properties =
 				mockType.TypeKind == TypeKind.Interface ?
 					MockablePropertyDiscovery.GetPropertiesForInterface(mockType, containingAssemblyOfInvocationSymbol,
-						shims, ref memberIdentifier) :
+						shims, ref memberIdentifier, compilation) :
 					MockablePropertyDiscovery.GetPropertiesForClass(mockType, containingAssemblyOfInvocationSymbol,
-						shims, ref memberIdentifier);
+						shims, ref memberIdentifier, compilation);
 
 	private static MockableProperties GetPropertiesForClass(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol,
-		HashSet<ITypeSymbol> shims, ref uint memberIdentifier)
+		HashSet<ITypeSymbol> shims, ref uint memberIdentifier, Compilation compilation)
 	{
 		static bool AreParametersEqual(IPropertySymbol property1, IPropertySymbol property2)
 		{
@@ -49,7 +49,7 @@ internal sealed class MockablePropertyDiscovery
 			foreach (var hierarchyProperty in hierarchyType.GetMembers().OfType<IPropertySymbol>()
 				.Where(_ => _.IsIndexer || _.CanBeReferencedByName))
 			{
-				var canBeSeen = hierarchyProperty.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol);
+				var canBeSeen = hierarchyProperty.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol, compilation);
 
 				if (canBeSeen)
 				{
@@ -105,7 +105,7 @@ internal sealed class MockablePropertyDiscovery
 	}
 
 	private static MockableProperties GetPropertiesForInterface(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol,
-		HashSet<ITypeSymbol> shims, ref uint memberIdentifier)
+		HashSet<ITypeSymbol> shims, ref uint memberIdentifier, Compilation compilation)
 	{
 		static bool IsPropertyToExamine(IPropertySymbol property) =>
 			!property.IsStatic && (property.IsAbstract || property.IsVirtual) &&
@@ -122,7 +122,7 @@ internal sealed class MockablePropertyDiscovery
 
 			if (IsPropertyToExamine(selfProperty))
 			{
-				if (!selfProperty.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
+				if (!selfProperty.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol, compilation))
 				{
 					inaccessibleAbstractMembers = true;
 				}
@@ -158,7 +158,7 @@ internal sealed class MockablePropertyDiscovery
 
 				if (IsPropertyToExamine(selfBaseProperty))
 				{
-					if (!selfBaseProperty.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
+					if (!selfBaseProperty.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol, compilation))
 					{
 						inaccessibleAbstractMembers = true;
 					}

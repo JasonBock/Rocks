@@ -37,17 +37,19 @@ internal static class ITypeSymbolExtensions
 	* Cannot be referenced by name
 	* Cannot be seen by containing assembly of mock invocation
 	*/
-	internal static bool HasInaccessibleAstractMembersWithInvalidIdentifiers(this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol)
+	internal static bool HasInaccessibleAstractMembersWithInvalidIdentifiers(this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol,
+		Compilation compilation)
 	{
-		static bool HasInaccessibleMembers(ITypeSymbol type, IAssemblySymbol containingAssemblyOfInvocationSymbol) =>
+		static bool HasInaccessibleMembers(ITypeSymbol type, IAssemblySymbol containingAssemblyOfInvocationSymbol,
+			Compilation compilation) =>
 			type.GetMembers().Any(_ => (_.Kind == SymbolKind.Method || (_.Kind == SymbolKind.Property && !(_ as IPropertySymbol)!.IsIndexer)) &&
 				!_.IsStatic && _.IsAbstract && !_.CanBeReferencedByName &&
-				!_.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol));
+				!_.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol, compilation));
 
 		return self.TypeKind == TypeKind.Interface ?
-			HasInaccessibleMembers(self, containingAssemblyOfInvocationSymbol) ||
-				self.AllInterfaces.Any(_ => HasInaccessibleMembers(_, containingAssemblyOfInvocationSymbol)) :
-			self.GetInheritanceHierarchy().Any(_ => HasInaccessibleMembers(_, containingAssemblyOfInvocationSymbol));
+			HasInaccessibleMembers(self, containingAssemblyOfInvocationSymbol, compilation) ||
+				self.AllInterfaces.Any(_ => HasInaccessibleMembers(_, containingAssemblyOfInvocationSymbol, compilation)) :
+			self.GetInheritanceHierarchy().Any(_ => HasInaccessibleMembers(_, containingAssemblyOfInvocationSymbol, compilation));
 	}
 
 	internal static bool IsObsolete(this ITypeSymbol self, INamedTypeSymbol obsoleteAttribute) =>
@@ -61,11 +63,13 @@ internal static class ITypeSymbolExtensions
 				_ => !_.Equals(self, SymbolEqualityComparer.Default) && _.ConstraintTypes.Any(
 					_ => !_.Equals(self, SymbolEqualityComparer.Default) && _.IsObsolete(obsoleteAttribute)))));
 
-	internal static bool CanBeSeenByContainingAssembly(this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol)
+	internal static bool CanBeSeenByContainingAssembly(this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol,
+		Compilation compilation)
 	{
-		static bool AreTypeParametersVisible(ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol) =>
+		static bool AreTypeParametersVisible(ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol,
+			Compilation compilation) =>
 			self is not INamedTypeSymbol namedSelf ||
-				namedSelf.TypeArguments.All(_ => _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol));
+				namedSelf.TypeArguments.All(_ => _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol, compilation));
 
 		if (self.TypeKind == TypeKind.TypeParameter ||
 			self.TypeKind == TypeKind.Dynamic)
@@ -75,29 +79,29 @@ internal static class ITypeSymbolExtensions
 		else if (self is IFunctionPointerTypeSymbol functionPointerSymbol)
 		{
 			var signature = functionPointerSymbol.Signature;
-			return signature.Parameters.All(_ => _.Type.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)) &&
-				(signature.ReturnsVoid || signature.ReturnType.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol));
+			return signature.Parameters.All(_ => _.Type.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol, compilation)) &&
+				(signature.ReturnsVoid || signature.ReturnType.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol, compilation));
 		}
 		else if (self is IPointerTypeSymbol pointerSymbol)
 		{
-			return pointerSymbol.PointedAtType.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol);
+			return pointerSymbol.PointedAtType.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol, compilation);
 		}
 		else if (self is IArrayTypeSymbol arraySymbol)
 		{
-			return arraySymbol.ElementType.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol);
+			return arraySymbol.ElementType.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol, compilation);
 		}
 		else
 		{
 			if (self.DeclaredAccessibility == Accessibility.Public)
 			{
-				return AreTypeParametersVisible(self, containingAssemblyOfInvocationSymbol);
+				return AreTypeParametersVisible(self, containingAssemblyOfInvocationSymbol, compilation);
 			}
 			else if (self.DeclaredAccessibility == Accessibility.Internal ||
 				self.DeclaredAccessibility == Accessibility.ProtectedOrInternal)
 			{
 				return (self.ContainingAssembly.Equals(containingAssemblyOfInvocationSymbol, SymbolEqualityComparer.Default) ||
-					self.ContainingAssembly.ExposesInternalsTo(containingAssemblyOfInvocationSymbol)) &&
-					AreTypeParametersVisible(self, containingAssemblyOfInvocationSymbol);
+					self.ContainingAssembly.ExposesInternalsTo(containingAssemblyOfInvocationSymbol, compilation)) &&
+					AreTypeParametersVisible(self, containingAssemblyOfInvocationSymbol, compilation);
 			}
 			else
 			{

@@ -6,13 +6,15 @@ namespace Rocks.Discovery;
 
 internal sealed class MockableEventDiscovery
 {
-	internal MockableEventDiscovery(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol) =>
+	internal MockableEventDiscovery(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol,
+		Compilation compilation) =>
 		this.Events =
 			mockType.TypeKind == TypeKind.Interface ?
-				GetEventsForInterface(mockType, containingAssemblyOfInvocationSymbol) :
-				GetEventsForClass(mockType, containingAssemblyOfInvocationSymbol);
+				GetEventsForInterface(mockType, containingAssemblyOfInvocationSymbol, compilation) :
+				GetEventsForClass(mockType, containingAssemblyOfInvocationSymbol, compilation);
 
-	private static MockableEvents GetEventsForClass(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol)
+	private static MockableEvents GetEventsForClass(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol,
+		Compilation compilation)
 	{
 		var events = ImmutableArray.CreateBuilder<MockableEventResult>();
 		var inaccessibleAbstractMembers = false;
@@ -21,7 +23,7 @@ internal sealed class MockableEventDiscovery
 			.Where(_ => !_.IsStatic && _.CanBeReferencedByName &&
 				(_.IsAbstract || _.IsVirtual)))
 		{
-			var canBeSeen = selfEvent.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol);
+			var canBeSeen = selfEvent.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol, compilation);
 
 			if (!canBeSeen && selfEvent.IsAbstract)
 			{
@@ -36,7 +38,8 @@ internal sealed class MockableEventDiscovery
 		return new(events.ToImmutable(), inaccessibleAbstractMembers);
 	}
 
-	private static MockableEvents GetEventsForInterface(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol)
+	private static MockableEvents GetEventsForInterface(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol,
+		Compilation compilation)
 	{
 		static bool IsEventToExamine(IEventSymbol @event) =>
 			!@event.IsStatic && 
@@ -49,7 +52,7 @@ internal sealed class MockableEventDiscovery
 		foreach (var selfEvent in mockType.GetMembers().OfType<IEventSymbol>()
 			.Where(IsEventToExamine))
 		{
-			if (!selfEvent.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
+			if (!selfEvent.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol, compilation))
 			{
 				inaccessibleAbstractMembers = true;
 			}
@@ -66,7 +69,7 @@ internal sealed class MockableEventDiscovery
 			foreach (var selfBaseEvent in selfBaseInterface.GetMembers().OfType<IEventSymbol>()
 				.Where(IsEventToExamine))
 			{
-				if (!selfBaseEvent.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
+				if (!selfBaseEvent.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol, compilation))
 				{
 					inaccessibleAbstractMembers = true;
 				}

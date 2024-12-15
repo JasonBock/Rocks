@@ -48,13 +48,13 @@ internal sealed record MockModel
 		var shims = new HashSet<ITypeSymbol>(SymbolEqualityComparer.Default);
 		var containingAssembly = compilation.Assembly;
 
-		var constructors = new MockableConstructorDiscovery(typeToMock, containingAssembly, obsoleteAttribute).Constructors;
+		var constructors = new MockableConstructorDiscovery(typeToMock, containingAssembly, obsoleteAttribute, compilation).Constructors;
 		var methods = new MockableMethodDiscovery(typeToMock, compilation.Assembly, shims, compilation, ref memberIdentifier).Methods;
 		var methodMemberCount = methods.Results.Length;
 
-		var properties = new MockablePropertyDiscovery(typeToMock, containingAssembly, shims, ref memberIdentifier).Properties;
+		var properties = new MockablePropertyDiscovery(typeToMock, containingAssembly, shims, ref memberIdentifier, compilation).Properties;
 		var propertyMemberCount = (int)memberIdentifier - methodMemberCount;
-		var events = new MockableEventDiscovery(typeToMock, containingAssembly).Events;
+		var events = new MockableEventDiscovery(typeToMock, containingAssembly, compilation).Events;
 
 		foreach (var constructor in constructors)
 		{
@@ -97,7 +97,7 @@ internal sealed record MockModel
 		}
 
 		if (methods.HasInaccessibleAbstractMembers || properties.HasInaccessibleAbstractMembers ||
-			events.HasInaccessibleAbstractMembers || typeToMock.HasInaccessibleAstractMembersWithInvalidIdentifiers(containingAssembly))
+			events.HasInaccessibleAbstractMembers || typeToMock.HasInaccessibleAstractMembersWithInvalidIdentifiers(containingAssembly, compilation))
 		{
 			diagnostics.Add(TypeHasInaccessibleAbstractMembersDiagnostic.Create(node, typeToMock));
 		}

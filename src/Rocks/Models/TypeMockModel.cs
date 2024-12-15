@@ -61,7 +61,7 @@ internal sealed record TypeMockModel
 
 		this.ConstructorProperties = type.GetMembers().OfType<IPropertySymbol>()
 			.Where(_ => (_.IsRequired || _.GetAccessors() == PropertyAccessor.Init || _.GetAccessors() == PropertyAccessor.GetAndInit) &&
-				_.CanBeSeenByContainingAssembly(compilation.Assembly))
+				_.CanBeSeenByContainingAssembly(compilation.Assembly, compilation))
 			.Select(_ => new ConstructorPropertyModel(_, this.Type, compilation))
 			.ToImmutableArray();
 

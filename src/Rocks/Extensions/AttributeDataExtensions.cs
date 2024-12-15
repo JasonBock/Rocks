@@ -149,7 +149,7 @@ internal static class AttributeDataExtensions
 			_ => _.AttributeClass is not null &&
 				(!target.HasValue || !target.Value.HasFlag(AttributeTargets.Class) ||
 					_.AttributeClass.Equals(obsoleteAttribute, SymbolEqualityComparer.Default)) &&
-				_.AttributeClass.CanBeSeenByContainingAssembly(compilation.Assembly) &&
+				_.AttributeClass.CanBeSeenByContainingAssembly(compilation.Assembly, compilation) &&
 				!_.AttributeClass.Equals(compilerGeneratedAttribute, SymbolEqualityComparer.Default) &&
 				!_.AttributeClass.Equals(iteratorStateMachineAttribute, SymbolEqualityComparer.Default) &&
 				!_.AttributeClass.Equals(asyncStateMachineAttribute, SymbolEqualityComparer.Default) &&

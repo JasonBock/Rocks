@@ -16,7 +16,7 @@ internal static class TestAssistants
 	{
 		var test = new AnalyzerTest<TAnalyzer>()
 		{
-			ReferenceAssemblies = ReferenceAssemblies.Net.Net90,
+			ReferenceAssemblies = TestAssistants.GetNet90(),
 			TestState =
 			{
 				Sources = { code },
@@ -46,7 +46,6 @@ internal static class TestAssistants
 	{
 		var test = new IncrementalGeneratorTest<TGenerator>(generalDiagnosticOption)
 		{
-			//ReferenceAssemblies = ReferenceAssemblies.Net.Net90,
 			ReferenceAssemblies = TestAssistants.GetNet90(),
 			TestState =
 			{
@@ -95,7 +94,7 @@ internal static class TestAssistants
 			 "net9.0",
 			 new PackageIdentity(
 				  "Microsoft.NETCore.App.Ref",
-				  "9.0.0-rc.1.24431.7"),
+				  "9.0.0"),
 			 Path.Combine("ref", "net9.0"));
 	}
 }

@@ -18,9 +18,9 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 				public void Foo() { }
 			}
 			""";
-		var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
+		var (symbol, compilation) = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
-		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly), Is.True);
+		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 	}
 
 	[Test]
@@ -33,9 +33,9 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 				protected void Foo() { }
 			}
 			""";
-		var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
+		var (symbol, compilation) = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
-		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly), Is.True);
+		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 	}
 
 	[Test]
@@ -48,11 +48,11 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 				protected internal void Foo() { }
 			}
 			""";
-		var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
+		var (symbol, compilation) = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly), Is.True);
+			Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 		});
 	}
 
@@ -66,11 +66,11 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 				internal void Foo() { }
 			}
 			""";
-		var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
+		var (symbol, compilation) = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly), Is.True);
+			Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 		});
 	}
 
@@ -89,7 +89,7 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 				internal void Foo() { }
 			}
 			""";
-		var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
+		var (symbol, _) = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
 		var containingSyntaxTree = CSharpSyntaxTree.ParseText("public class Containing { }");
 		var containingCompilation = CSharpCompilation.Create(ContainingAssembly, [containingSyntaxTree],
@@ -97,7 +97,7 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(symbol.CanBeSeenByContainingAssembly(containingCompilation.Assembly), Is.True);
+			Assert.That(symbol.CanBeSeenByContainingAssembly(containingCompilation.Assembly, containingCompilation), Is.True);
 		});
 	}
 
@@ -112,7 +112,7 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 				internal void Foo() { }
 			}
 			""";
-		var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
+		var (symbol, _) = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
 		var containingSyntaxTree = CSharpSyntaxTree.ParseText("public class Containing { }");
 		var containingCompilation = CSharpCompilation.Create(ContainingAssembly, [containingSyntaxTree],
@@ -120,7 +120,7 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(symbol.CanBeSeenByContainingAssembly(containingCompilation.Assembly), Is.False);
+			Assert.That(symbol.CanBeSeenByContainingAssembly(containingCompilation.Assembly, containingCompilation), Is.False);
 		});
 	}
 
@@ -135,11 +135,11 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 				private protected void Foo() { }
 			}
 			""";
-		var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
+		var (symbol, compilation) = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly), Is.True);
+			Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 		});
 	}
 
@@ -158,7 +158,7 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 				private protected void Foo() { }
 			}
 			""";
-		var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
+		var (symbol, _) = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
 		var containingSyntaxTree = CSharpSyntaxTree.ParseText("public class Containing { }");
 		var containingCompilation = CSharpCompilation.Create(ContainingAssembly, [containingSyntaxTree],
@@ -166,7 +166,7 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(symbol.CanBeSeenByContainingAssembly(containingCompilation.Assembly), Is.True);
+			Assert.That(symbol.CanBeSeenByContainingAssembly(containingCompilation.Assembly, containingCompilation), Is.True);
 		});
 	}
 
@@ -181,7 +181,7 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 				private protected void Foo() { }
 			}
 			""";
-		var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
+		var (symbol, _) = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
 		var containingSyntaxTree = CSharpSyntaxTree.ParseText("public class Containing { }");
 		var containingCompilation = CSharpCompilation.Create(ContainingAssembly, [containingSyntaxTree],
@@ -189,11 +189,11 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(symbol.CanBeSeenByContainingAssembly(containingCompilation.Assembly), Is.False);
+			Assert.That(symbol.CanBeSeenByContainingAssembly(containingCompilation.Assembly, containingCompilation), Is.False);
 		});
 	}
 
-	private static ISymbol GetSymbol(string source)
+	private static (ISymbol, Compilation) GetSymbol(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
@@ -202,6 +202,6 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 
 		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single();
-		return model.GetDeclaredSymbol(methodSyntax)!;
+		return (model.GetDeclaredSymbol(methodSyntax)!, compilation);
 	}
 }

@@ -13,7 +13,7 @@ internal sealed record ConstructorPropertyModel
 		this.IsRequired = value.IsRequired;
 		this.IsIndexer = value.IsIndexer;
 		this.Accessors = value.GetAccessors();
-		this.CanBeSeenByContainingAssembly = value.CanBeSeenByContainingAssembly(compilation.Assembly);
+		this.CanBeSeenByContainingAssembly = value.CanBeSeenByContainingAssembly(compilation.Assembly, compilation);
 		this.Parameters = value.Parameters.Select(_ => new ParameterModel(_, mockType, compilation)).ToImmutableArray();
 		this.NullableAnnotation = value.NullableAnnotation;
 		this.IsReferenceType = value.Type.IsReferenceType;

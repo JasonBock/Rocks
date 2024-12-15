@@ -5,14 +5,14 @@ namespace Rocks.Extensions;
 
 internal static class IAssemblySymbolExtensions
 {
-	internal static bool ExposesInternalsTo(this IAssemblySymbol self, IAssemblySymbol other)
+	internal static bool ExposesInternalsTo(this IAssemblySymbol self, IAssemblySymbol other,
+		Compilation compilation)
 	{
-		var internalsVisibleToAttribute = typeof(InternalsVisibleToAttribute);
+		var internalsVisibleToAttribute = compilation.GetTypeByMetadataName(typeof(InternalsVisibleToAttribute).FullName);
 
 		return self.GetAttributes().Any(
-			_ => _.AttributeClass is not null && _.AttributeClass.Name == internalsVisibleToAttribute.Name &&
-				_.AttributeClass.ContainingNamespace.ToDisplayString() == internalsVisibleToAttribute.Namespace &&
-				_.AttributeClass.ContainingAssembly.Name == internalsVisibleToAttribute.Assembly.GetName().Name &&
+			_ => _.AttributeClass is not null && 
+			 	SymbolEqualityComparer.Default.Equals(_.AttributeClass, internalsVisibleToAttribute) &&
 				(string)_.ConstructorArguments[0].Value! == other.Name);
 	}
 }

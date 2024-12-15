@@ -17,7 +17,8 @@ internal static class ISymbolExtensions
 			_ => throw new InvalidEnumArgumentException(nameof(self.DeclaredAccessibility), (int)self.DeclaredAccessibility, typeof(Accessibility))
 		};
 
-	internal static bool CanBeSeenByContainingAssembly(this ISymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol)
+	internal static bool CanBeSeenByContainingAssembly(this ISymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol,
+		Compilation compilation)
 	{
 		/*
 		protected internal -> ProtectedOrInternal
@@ -33,7 +34,7 @@ internal static class ISymbolExtensions
 			self.DeclaredAccessibility == Accessibility.ProtectedAndInternal)
 		{
 			return self.ContainingAssembly.Equals(containingAssemblyOfInvocationSymbol, SymbolEqualityComparer.Default) ||
-				self.ContainingAssembly.ExposesInternalsTo(containingAssemblyOfInvocationSymbol);
+				self.ContainingAssembly.ExposesInternalsTo(containingAssemblyOfInvocationSymbol, compilation);
 		}
 		else
 		{

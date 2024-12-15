@@ -24,7 +24,7 @@ public static class MockableEventDiscoveryTests
 			""";
 
 		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
-		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly).Events;
+		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
 		Assert.Multiple(() =>
 		{
@@ -54,7 +54,7 @@ public static class MockableEventDiscoveryTests
 			""";
 
 		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
-		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly).Events;
+		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
 		Assert.Multiple(() =>
 		{
@@ -86,7 +86,7 @@ public static class MockableEventDiscoveryTests
 			""";
 
 		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
-		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly).Events;
+		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
 		Assert.Multiple(() =>
 		{
@@ -116,7 +116,7 @@ public static class MockableEventDiscoveryTests
 			""";
 
 		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
-		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly).Events;
+		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
 		Assert.Multiple(() =>
 		{
@@ -147,7 +147,7 @@ public static class MockableEventDiscoveryTests
 			""";
 
 		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
-		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly).Events;
+		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
 		Assert.Multiple(() =>
 		{
@@ -183,7 +183,7 @@ public static class MockableEventDiscoveryTests
 			""";
 
 		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
-		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly).Events;
+		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
 		Assert.Multiple(() =>
 		{
@@ -228,7 +228,7 @@ public static class MockableEventDiscoveryTests
 			""";
 
 		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
-		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly).Events;
+		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
 		Assert.Multiple(() =>
 		{

@@ -40,14 +40,14 @@ internal sealed record PropertyModel
 		{
 			this.GetMethod = new MethodModel(property.GetMethod!, mockType, compilation,
 				requiresExplicitInterfaceImplementation, requiresOverride, RequiresHiding.No, memberIdentifier);
-			this.GetCanBeSeenByContainingAssembly = property.GetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly);
+			this.GetCanBeSeenByContainingAssembly = property.GetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly, compilation);
 		}
 
 		if (this.Accessors == PropertyAccessor.Set || this.Accessors == PropertyAccessor.GetAndSet)
 		{
 			this.SetMethod = new MethodModel(property.SetMethod!, mockType, compilation,
 				requiresExplicitInterfaceImplementation, requiresOverride, RequiresHiding.No, memberIdentifier + 1);
-			this.SetCanBeSeenByContainingAssembly = property.SetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly);
+			this.SetCanBeSeenByContainingAssembly = property.SetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly, compilation);
 		}
 
 		if (this.Accessors == PropertyAccessor.Init || this.Accessors == PropertyAccessor.GetAndInit)
@@ -55,7 +55,7 @@ internal sealed record PropertyModel
 			this.SetMethod ??= new MethodModel(property.SetMethod!, mockType, compilation,
 				requiresExplicitInterfaceImplementation, requiresOverride, RequiresHiding.No, memberIdentifier + 1);
 
-			this.InitCanBeSeenByContainingAssembly = property.SetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly);
+			this.InitCanBeSeenByContainingAssembly = property.SetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly, compilation);
 		}
 
 		if (this.SetMethod is not null)

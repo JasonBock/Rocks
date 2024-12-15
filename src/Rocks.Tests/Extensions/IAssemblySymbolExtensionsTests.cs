@@ -75,6 +75,6 @@ public static class IAssemblySymbolExtensionsTests
 		var targetCompilation = CSharpCompilation.Create("TargetAssembly", [targetSyntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
-		Assert.That(sourceCompilation.Assembly.ExposesInternalsTo(targetCompilation.Assembly), Is.EqualTo(expectedResult));
+		Assert.That(sourceCompilation.Assembly.ExposesInternalsTo(targetCompilation.Assembly, sourceCompilation), Is.EqualTo(expectedResult));
 	}
 }

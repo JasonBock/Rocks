@@ -18,9 +18,9 @@ public static class IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests
 				public string Data { get; }
 			}
 			""";
-		var symbol = IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol<PropertyDeclarationSyntax>(code);
+		var (symbol, compilation) = IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol<PropertyDeclarationSyntax>(code);
 
-		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly), Is.True);
+		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 	}
 
 	[Test]
@@ -33,9 +33,9 @@ public static class IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests
 				private string Data { get; }
 			}
 			""";
-		var symbol = IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol<PropertyDeclarationSyntax>(code);
+		var (symbol, compilation) = IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol<PropertyDeclarationSyntax>(code);
 
-		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly), Is.False);
+		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.False);
 	}
 
 	[Test]
@@ -50,9 +50,9 @@ public static class IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests
 				public Section Data { get; }
 			}
 			""";
-		var symbol = IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol<PropertyDeclarationSyntax>(code);
+		var (symbol, compilation) = IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol<PropertyDeclarationSyntax>(code);
 
-		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly), Is.True);
+		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 	}
 
 	[Test]
@@ -67,9 +67,9 @@ public static class IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests
 				protected class Section { }
 			}
 			""";
-		var symbol = IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol<PropertyDeclarationSyntax>(code);
+		var (symbol, compilation) = IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol<PropertyDeclarationSyntax>(code);
 
-		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly), Is.False);
+		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.False);
 	}
 
 	[Test]
@@ -84,9 +84,9 @@ public static class IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests
 				public string this[Section section] { get; }
 			}
 			""";
-		var symbol = IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol<IndexerDeclarationSyntax>(code);
+		var (symbol, compilation) = IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol<IndexerDeclarationSyntax>(code);
 
-		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly), Is.True);
+		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 	}
 
 	[Test]
@@ -101,12 +101,12 @@ public static class IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests
 				protected class Section { }
 			}
 			""";
-		var symbol = IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol<IndexerDeclarationSyntax>(code);
+		var (symbol, compilation) = IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol<IndexerDeclarationSyntax>(code);
 
-		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly), Is.False);
+		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.False);
 	}
 
-	private static IPropertySymbol GetSymbol<TSyntax>(string source)
+	private static (IPropertySymbol, Compilation) GetSymbol<TSyntax>(string source)
 		where TSyntax : SyntaxNode
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
@@ -116,6 +116,6 @@ public static class IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests
 
 		var propertySyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<TSyntax>().Single();
-		return (IPropertySymbol)model.GetDeclaredSymbol(propertySyntax)!;
+		return ((IPropertySymbol)model.GetDeclaredSymbol(propertySyntax)!, compilation);
 	}
 }

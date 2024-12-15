@@ -12,10 +12,11 @@ internal static class IPropertySymbolExtensions
 				self.Type.IsObsolete(obsoleteAttribute) ? 
 				MemberUsesObsoleteTypeDiagnostic.Create(node, self) : null;
 
-   internal static bool CanBeSeenByContainingAssembly(this IPropertySymbol self, IAssemblySymbol assembly) =>
-		((ISymbol)self).CanBeSeenByContainingAssembly(assembly) &&
-			self.Type.CanBeSeenByContainingAssembly(assembly) &&
-			self.Parameters.All(_ => _.Type.CanBeSeenByContainingAssembly(assembly));
+   internal static bool CanBeSeenByContainingAssembly(this IPropertySymbol self, IAssemblySymbol assembly,
+		Compilation compilation) =>
+		((ISymbol)self).CanBeSeenByContainingAssembly(assembly, compilation) &&
+			self.Type.CanBeSeenByContainingAssembly(assembly, compilation) &&
+			self.Parameters.All(_ => _.Type.CanBeSeenByContainingAssembly(assembly, compilation));
 
 	internal static ImmutableArray<AttributeData> GetAllAttributes(this IPropertySymbol self)
 	{

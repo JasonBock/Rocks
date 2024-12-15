@@ -34,7 +34,7 @@ internal static class CompilationExtensions
 
 			int? id = null;
 
-			while (existingType is not null && existingType.CanBeSeenByContainingAssembly(self.Assembly))
+			while (existingType is not null && existingType.CanBeSeenByContainingAssembly(self.Assembly, self))
 			{
 				id = id is null ? 2 : id++;
 				expectationsFQN = type.Namespace is null ?

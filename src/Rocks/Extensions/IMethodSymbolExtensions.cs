@@ -17,11 +17,12 @@ internal static class IMethodSymbolExtensions
 				!self.ReturnsVoid && self.ReturnType.IsObsolete(obsoleteAttribute) ? 
 				MemberUsesObsoleteTypeDiagnostic.Create(node, self) : null;
 
-   internal static bool CanBeSeenByContainingAssembly(this IMethodSymbol self, IAssemblySymbol assembly) =>
-		((ISymbol)self).CanBeSeenByContainingAssembly(assembly) &&
-			self.Parameters.All(_ => _.Type.CanBeSeenByContainingAssembly(assembly)) &&
-			self.TypeParameters.All(_ => _.CanBeSeenByContainingAssembly(assembly)) &&
-			(self.ReturnsVoid || self.ReturnType.CanBeSeenByContainingAssembly(assembly));
+   internal static bool CanBeSeenByContainingAssembly(this IMethodSymbol self, IAssemblySymbol assembly,
+		Compilation compilation) =>
+		((ISymbol)self).CanBeSeenByContainingAssembly(assembly, compilation) &&
+			self.Parameters.All(_ => _.Type.CanBeSeenByContainingAssembly(assembly, compilation)) &&
+			self.TypeParameters.All(_ => _.CanBeSeenByContainingAssembly(assembly, compilation)) &&
+			(self.ReturnsVoid || self.ReturnType.CanBeSeenByContainingAssembly(assembly, compilation));
 
 	internal static bool IsMarkedWithDoesNotReturn(this IMethodSymbol self, Compilation compilation) =>
 		self.GetAttributes().Any(

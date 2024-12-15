@@ -22,16 +22,17 @@ internal sealed class MockableMethodDiscovery
 		var objectSymbol = compilation.GetTypeByMetadataName(typeof(object).FullName)!;
 		var objectMethods = objectSymbol.GetMembers().OfType<IMethodSymbol>()
 			.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeReferencedByName &&
-				_.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)).ToImmutableArray();
+				_.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol, compilation)).ToImmutableArray();
 
 		this.Methods =
 			mockType.TypeKind == TypeKind.Interface ?
-				GetMethodsForInterface(mockType, containingAssemblyOfInvocationSymbol, shims, objectMethods, ref memberIdentifier) :
-				GetMethodsForClass(mockType, containingAssemblyOfInvocationSymbol, shims, objectMethods, ref memberIdentifier);
+				GetMethodsForInterface(mockType, containingAssemblyOfInvocationSymbol, shims, objectMethods, ref memberIdentifier, compilation) :
+				GetMethodsForClass(mockType, containingAssemblyOfInvocationSymbol, shims, objectMethods, ref memberIdentifier, compilation);
 	}
 
 	private static MockableMethods GetMethodsForClass(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol,
-		HashSet<ITypeSymbol> shims, ImmutableArray<IMethodSymbol> objectMethods, ref uint memberIdentifier)
+		HashSet<ITypeSymbol> shims, ImmutableArray<IMethodSymbol> objectMethods, ref uint memberIdentifier,
+		Compilation compilation)
 	{
 		var methods = ImmutableArray.CreateBuilder<MockableMethodResult>();
 		var inaccessibleAbstractMembers = false;
@@ -51,7 +52,7 @@ internal sealed class MockableMethodDiscovery
 
 				foreach (var hierarchyMethod in hierarchyMethods)
 				{
-					var canBeSeen = hierarchyMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol);
+					var canBeSeen = hierarchyMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol, compilation);
 
 					if (canBeSeen)
 					{
@@ -121,7 +122,8 @@ internal sealed class MockableMethodDiscovery
 	}
 
 	private static MockableMethods GetMethodsForInterface(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol,
-		HashSet<ITypeSymbol> shims, ImmutableArray<IMethodSymbol> objectMethods, ref uint memberIdentifier)
+		HashSet<ITypeSymbol> shims, ImmutableArray<IMethodSymbol> objectMethods, ref uint memberIdentifier,
+		Compilation compilation)
 	{
 		// We don't want to include non-virtual static methods.
 		// Later on in MockModel I make a check for static abstract methods.
@@ -140,7 +142,8 @@ internal sealed class MockableMethodDiscovery
 
 			if (IsMethodToExamine(selfMethod))
 			{
-				if (!selfMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol) &&
+				//System.Diagnostics.Debugger.Launch();
+				if (!selfMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol, compilation) &&
 					selfMethod.IsAbstract)
 				{
 					inaccessibleAbstractMembers = true;
@@ -189,7 +192,7 @@ internal sealed class MockableMethodDiscovery
 
 				if (IsMethodToExamine(selfBaseMethod))
 				{
-					if (!selfBaseMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
+					if (!selfBaseMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol, compilation))
 					{
 						inaccessibleAbstractMembers = true;
 					}

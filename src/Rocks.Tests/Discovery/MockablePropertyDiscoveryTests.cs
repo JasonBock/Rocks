@@ -25,7 +25,7 @@ public static class MockablePropertyDiscoveryTests
 		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier).Properties;
+		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier, compilation).Properties;
 
 		Assert.Multiple(() =>
 		{
@@ -55,7 +55,7 @@ public static class MockablePropertyDiscoveryTests
 		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier).Properties;
+		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier, compilation).Properties;
 
 		Assert.Multiple(() =>
 		{
@@ -89,7 +89,7 @@ public static class MockablePropertyDiscoveryTests
 		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier).Properties;
+		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier, compilation).Properties;
 
 		Assert.Multiple(() =>
 		{
@@ -142,7 +142,7 @@ public static class MockablePropertyDiscoveryTests
 		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier).Properties;
+		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier, compilation).Properties;
 
 		Assert.Multiple(() =>
 		{
@@ -185,7 +185,7 @@ public static class MockablePropertyDiscoveryTests
 		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier).Properties;
+		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier, compilation).Properties;
 
 		Assert.Multiple(() =>
 		{

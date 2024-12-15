@@ -20,9 +20,9 @@ public static class IEventSymbolCanBeSeenByContainingAssemblyExtensionsTests
 				public event EventHandler CustomEvent;
 			}
 			""";
-		var symbol = IEventSymbolCanBeSeenByContainingAssemblyExtensionsTests.GetSymbol(code);
+		var (symbol, compilation) = IEventSymbolCanBeSeenByContainingAssemblyExtensionsTests.GetSymbol(code);
 
-		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly), Is.True);
+		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 	}
 
 	[Test]
@@ -37,12 +37,12 @@ public static class IEventSymbolCanBeSeenByContainingAssemblyExtensionsTests
 				private event EventHandler CustomEvent;
 			}
 			""";
-		var symbol = IEventSymbolCanBeSeenByContainingAssemblyExtensionsTests.GetSymbol(code);
+		var (symbol, compilation) = IEventSymbolCanBeSeenByContainingAssemblyExtensionsTests.GetSymbol(code);
 
-		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly), Is.False);
+		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.False);
 	}
 
-	private static IEventSymbol GetSymbol(string source)
+	private static (IEventSymbol, Compilation) GetSymbol(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
@@ -53,6 +53,6 @@ public static class IEventSymbolCanBeSeenByContainingAssemblyExtensionsTests
 			.OfType<TypeDeclarationSyntax>().Single();
 		var typeSymbol = (ITypeSymbol)model.GetDeclaredSymbol(typeSyntax)!;
 
-		return typeSymbol.GetMembers().OfType<IEventSymbol>().Single();
+		return (typeSymbol.GetMembers().OfType<IEventSymbol>().Single(), compilation);
 	}
 }

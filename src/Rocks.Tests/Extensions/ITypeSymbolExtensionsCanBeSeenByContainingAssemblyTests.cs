@@ -20,9 +20,9 @@ public static class ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests
 				public void Foo(Section section) { }
 			}
 			""";
-		var symbol = ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
+		var (symbol, compilation) = ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
-		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly), Is.True);
+		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 	}
 
 	[Test]
@@ -37,9 +37,9 @@ public static class ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests
 				protected class Section { }
 			}
 			""";
-		var symbol = ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
+		var (symbol, compilation) = ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
-		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly), Is.False);
+		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.False);
 	}
 
 	[Test]
@@ -56,9 +56,9 @@ public static class ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests
 				public void Foo(List<Section> sections) { }
 			}
 			""";
-		var symbol = ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
+		var (symbol, compilation) = ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
-		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly), Is.True);
+		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 	}
 
 	[Test]
@@ -75,12 +75,12 @@ public static class ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests
 				protected class Section { }
 			}
 			""";
-		var symbol = ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
+		var (symbol, compilation) = ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
-		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly), Is.False);
+		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.False);
 	}
 
-	private static ITypeSymbol GetSymbol(string source)
+	private static (ITypeSymbol, Compilation) GetSymbol(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
@@ -89,6 +89,6 @@ public static class ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests
 
 		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single();
-		return model.GetDeclaredSymbol(methodSyntax)!.Parameters[0].Type;
+		return (model.GetDeclaredSymbol(methodSyntax)!.Parameters[0].Type, compilation);
 	}
 }
