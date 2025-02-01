@@ -150,7 +150,6 @@ static void TestWithTypes()
 		new (typeof(DSharpPlus.AnsiColor), []),
 		new (typeof(Elastic.Clients.Elasticsearch.BlockingSubscribeExtensions), []),
 		new (typeof(EntityFramework.Exceptions.Common.CannotInsertNullException), []),
-		new (typeof(FluentAssertions.AggregateExceptionExtractor),  []),
 		new (typeof(FluentValidation.ApplyConditionTo), []),
 		new (typeof(Flurl.GeneratedExtensions), []),
 		new (typeof(Google.Apis.ETagAction), []),

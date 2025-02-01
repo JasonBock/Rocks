@@ -42,7 +42,6 @@
 		<PackageReference Include="DSharpPlus" />
 		<PackageReference Include="Elastic.Clients.Elasticsearch" />
 		<PackageReference Include="EntityFrameworkCore.Exceptions.Common" />
-		<PackageReference Include="FluentAssertions" />
 		<PackageReference Include="FluentValidation" />
 		<PackageReference Include="Flurl" />
 		<PackageReference Include="Google.Apis" />
