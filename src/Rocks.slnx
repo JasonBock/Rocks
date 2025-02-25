@@ -1,0 +1,20 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="../changelog.md" />
+    <File Path="../LICENSE" />
+    <File Path="../README.md" />
+    <File Path=".editorconfig" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+  </Folder>
+  <Project Path="Rocks.CodeGenerationTest/Rocks.CodeGenerationTest.csproj" />
+  <Project Path="Rocks.IntegrationTests.Referenced/Rocks.IntegrationTests.Referenced.csproj" />
+  <Project Path="Rocks.IntegrationTests/Rocks.IntegrationTests.csproj" />
+  <Project Path="Rocks.Performance/Rocks.Performance.csproj" />
+  <Project Path="Rocks.Playground/Rocks.Playground.csproj" />
+  <Project Path="Rocks.Tests/Rocks.Tests.csproj" />
+  <Project Path="Rocks/Rocks.csproj" />
+  <Properties Name="Performance">
+    <Property Name="HasPerformanceSessions" Value="true" />
+  </Properties>
+</Solution>
