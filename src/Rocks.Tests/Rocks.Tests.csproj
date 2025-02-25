@@ -2,7 +2,11 @@
 	<PropertyGroup>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<AssemblyName>Rocks.Tests</AssemblyName>
-		<NoWarn>CA2007,CA1861</NoWarn>
+		<!--
+		Turning this diagnostic off based on this advice:
+		https://github.com/dotnet/roslyn-analyzers/issues/7436
+		-->
+		<NoWarn>CA2007,CA1861,RS1039</NoWarn>
 		<RootNamespace>Rocks.Tests</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
