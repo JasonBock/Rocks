@@ -26,10 +26,12 @@ internal static class MockProjectedDelegateBuilder
 		var returnType = method.ReturnType.BuildName(typeArgumentsNamingContext);
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 		{
+			var defaultValue = _.HasExplicitDefaultValue && method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
+				$" = {_.ExplicitDefaultValue}" : string.Empty;
 			var scoped = _.IsParams ? string.Empty :
 				_.IsScoped ? "scoped " : string.Empty;
 			var direction = _.RefKind == RefKind.Ref ? "ref " : _.RefKind == RefKind.Out ? "out " : string.Empty;
-			var parameter = $"{scoped}{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.BuildName(typeArgumentsNamingContext)} @{_.Name}";
+			var parameter = $"{scoped}{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.BuildName(typeArgumentsNamingContext)} @{_.Name}{defaultValue}";
 			return $"{_.AttributesDescription}{parameter}";
 		}));
 		var isUnsafe = method.IsUnsafe ? "unsafe " : string.Empty;

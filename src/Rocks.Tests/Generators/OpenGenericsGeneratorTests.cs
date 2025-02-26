@@ -3106,7 +3106,7 @@ public static class OpenGenericsGeneratorTests
 				internal sealed class Handler0
 					: global::Rocks.Handler<Handler0.CallbackForHandler, global::System.Collections.Generic.IEnumerable<TElement?>>
 				{
-					internal delegate global::System.Collections.Generic.IEnumerable<TElement?> CallbackForHandler(ref global::Manager @manager, object? @existingObject);
+					internal delegate global::System.Collections.Generic.IEnumerable<TElement?> CallbackForHandler(ref global::Manager @manager, object? @existingObject = null);
 					public global::Rocks.Argument<global::Manager> @manager { get; set; }
 					public global::Rocks.Argument<object?> @existingObject { get; set; }
 				}

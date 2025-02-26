@@ -78,7 +78,7 @@ static void TestWithType()
 #pragma warning disable EF1001 // Internal EF Core API usage.
 #pragma warning disable EF9100 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
    (var issues, var times) = TestGenerator.Generate(new RockGenerator(),
-		[typeof(Microsoft.FluentUI.AspNetCore.Components.IDialogService)],
+		[typeof(DynamicData.ISourceUpdater<,>)],
 		typesToLoadAssembliesFrom,
 		[], BuildType.Create);
 #pragma warning restore EF9100 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
