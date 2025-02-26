@@ -29,6 +29,7 @@ internal static class ShimBuilder
 		ShimMethodBuilder.Build(writer, shimType);
 		ShimPropertyBuilder.Build(writer, shimType);
 		ShimIndexerBuilder.Build(writer, shimType);
+		ShimEventBuilder.Build(writer, shimType);
 
 		writer.Indent--;
 		writer.WriteLine("}");
