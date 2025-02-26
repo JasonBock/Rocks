@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [9.1.0] - Not Yet Released
+
+### Fixed
+
+- Events in interfaces that contain members with default implementations are now handled correctly in shim types (issue [#349](https://github.com/JasonBock/Rocks/issues/349))
+
 ## [9.0.1] - 2024-12-15
 
 ### Fixed
