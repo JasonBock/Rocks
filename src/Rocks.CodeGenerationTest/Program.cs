@@ -149,6 +149,7 @@ static void TestWithTypes()
 		new (typeof(DnsClient.DnsDatagramReader), ["DnsClientAlias"]),
 		new (typeof(DSharpPlus.AnsiColor), []),
 		new (typeof(DynamicData.ChangeReason), []),
+		new (typeof(EfficientDynamoDb.Batch), []),
 		new (typeof(Elastic.Clients.Elasticsearch.BlockingSubscribeExtensions), []),
 		new (typeof(EntityFramework.Exceptions.Common.CannotInsertNullException), []),
 		new (typeof(FluentValidation.ApplyConditionTo), []),

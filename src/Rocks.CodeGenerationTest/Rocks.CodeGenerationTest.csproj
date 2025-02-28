@@ -41,6 +41,7 @@
 		<PackageReference Include="DnsClient" />
 		<PackageReference Include="DSharpPlus" />
 		<PackageReference Include="DynamicData" />
+		<PackageReference Include="EfficientDynamoDb" />
 		<PackageReference Include="Elastic.Clients.Elasticsearch" />
 		<PackageReference Include="EntityFrameworkCore.Exceptions.Common" />
 		<PackageReference Include="FluentValidation" />
