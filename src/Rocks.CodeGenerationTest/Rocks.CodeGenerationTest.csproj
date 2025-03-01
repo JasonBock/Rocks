@@ -50,6 +50,7 @@
 		<PackageReference Include="GraphQL" />
 		<PackageReference Include="Grpc.Core.Api" />
 		<PackageReference Include="Handlebars.Net" />
+		<PackageReference Include="HtmlSanitizer" />
 		<PackageReference Include="Humanizer" />
 		<PackageReference Include="IdentityModel" />
 		<PackageReference Include="LanguageExt.Core" />
@@ -84,8 +85,11 @@
 		<PackageReference Include="Ninject" />
 		<PackageReference Include="NodaTime" />
 		<PackageReference Include="NuGet.Common" />
+		<PackageReference Include="Octokit" />
+		<PackageReference Include="OpenTelemetry" />
 		<PackageReference Include="Oqtane.Shared" />
 		<PackageReference Include="Paramore.Brighter" />
+		<PackageReference Include="prometheus-net" />
 		<PackageReference Include="Proto.Actor" />
 		<PackageReference Include="Pulumi" />
 		<PackageReference Include="Quartz" />
