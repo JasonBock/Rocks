@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Handlers for methods with `ref` or `out` parameters and parameters with default values are now generated correctly (issue [#350](https://github.com/JasonBock/Rocks/issues/350))
 - Events in interfaces that contain members with default implementations are now handled correctly in shim types (issue [#349](https://github.com/JasonBock/Rocks/issues/349))
+- Members using generic types with different type parameters are now generated correctly (issue [#351](https://github.com/JasonBock/Rocks/issues/351))
 
 ## [9.0.1] - 2024-12-15
 
