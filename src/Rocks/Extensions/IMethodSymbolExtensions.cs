@@ -10,14 +10,14 @@ internal static class IMethodSymbolExtensions
 	private const string DoesNotReturnAttributeName =
 		"System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute";
 
-   internal static Diagnostic? GetObsoleteDiagnostic(
-	   this IMethodSymbol self, SyntaxNode node, INamedTypeSymbol obsoleteAttribute) =>
+	internal static Diagnostic? GetObsoleteDiagnostic(
+		this IMethodSymbol self, SyntaxNode node, INamedTypeSymbol obsoleteAttribute) =>
 			self.Parameters.Any(_ => _.Type.IsObsolete(obsoleteAttribute)) ||
 				self.TypeParameters.Any(_ => _.IsObsolete(obsoleteAttribute)) ||
-				!self.ReturnsVoid && self.ReturnType.IsObsolete(obsoleteAttribute) ? 
+				!self.ReturnsVoid && self.ReturnType.IsObsolete(obsoleteAttribute) ?
 				MemberUsesObsoleteTypeDiagnostic.Create(node, self) : null;
 
-   internal static bool CanBeSeenByContainingAssembly(this IMethodSymbol self, IAssemblySymbol assembly,
+	internal static bool CanBeSeenByContainingAssembly(this IMethodSymbol self, IAssemblySymbol assembly,
 		Compilation compilation) =>
 		((ISymbol)self).CanBeSeenByContainingAssembly(assembly, compilation) &&
 			self.Parameters.All(_ => _.Type.CanBeSeenByContainingAssembly(assembly, compilation)) &&
@@ -47,7 +47,7 @@ internal static class IMethodSymbolExtensions
 			(type.Equals(typeParameter) && type.NullableAnnotation == NullableAnnotation.Annotated) ||
 				type.IsOpenGeneric() && ((type as INamedTypeSymbol)?.TypeArguments.Any(_ => IsAnnotated(_, typeParameter)) ?? false);
 
-	  if (self.TypeParameters.Length > 0)
+		if (self.TypeParameters.Length > 0)
 		{
 			var constraints = new List<Constraints>();
 
@@ -168,11 +168,13 @@ internal static class IMethodSymbolExtensions
 						for (var i = 0; i < namedLeft.TypeParameters.Length; i++)
 						{
 							if (!(namedLeft.TypeArguments[i].TypeKind == TypeKind.TypeParameter &&
-								namedRight.TypeArguments[i].TypeKind == TypeKind.TypeParameter))
+								namedRight.TypeArguments[i].TypeKind == TypeKind.TypeParameter) ||
+								(namedLeft.TypeArguments[i].OriginalDefinition.ContainingSymbol.Kind == SymbolKind.NamedType &&
+								namedRight.TypeArguments[i].OriginalDefinition.ContainingSymbol.Kind == SymbolKind.NamedType))
 							{
 								// At this point, we know that the type arguments have been provided with types
-								// i.e. they're "closed". Therefore, we can continue, because comparing names like
-								// "T" and "U" is meaningless.
+								// i.e. they're "closed", or they're type parameters that both originated from the type itself,
+								// and not from the method. Therefore, we can continue.
 								if (!DoTypesMatch(namedLeft.TypeArguments[i], namedRight.TypeArguments[i]))
 								{
 									return false;
@@ -182,6 +184,25 @@ internal static class IMethodSymbolExtensions
 					}
 
 					return true;
+				}
+			}
+			else if (left is ITypeParameterSymbol leftTypeParameter && right is ITypeParameterSymbol rightTypeParameter)
+			{
+				if (leftTypeParameter.OriginalDefinition.ContainingSymbol is INamedTypeSymbol leftContainingType &&
+					rightTypeParameter.OriginalDefinition.ContainingSymbol is INamedTypeSymbol rightContainingType)
+				{
+					return leftContainingType.TypeParameters.IndexOf(leftTypeParameter) ==
+						rightContainingType.TypeParameters.IndexOf(rightTypeParameter);
+				}
+				else if (leftTypeParameter.OriginalDefinition.ContainingSymbol is IMethodSymbol leftContainingMethod &&
+					rightTypeParameter.OriginalDefinition.ContainingSymbol is IMethodSymbol rightContainingMethod)
+				{
+					return leftContainingMethod.TypeParameters.IndexOf(leftTypeParameter) ==
+						rightContainingMethod.TypeParameters.IndexOf(rightTypeParameter);
+				}
+				else
+				{
+					return SymbolEqualityComparer.Default.Equals(left, right);
 				}
 			}
 			else
@@ -238,10 +259,9 @@ internal static class IMethodSymbolExtensions
 					var selfParameterType = selfParameter.Type;
 					var otherParameterType = otherParameter.Type;
 
-					if ((selfParameterType.TypeKind == TypeKind.TypeParameter && otherParameterType.TypeKind == TypeKind.TypeParameter) ||
-						DoTypesMatch(selfParameterType, otherParameterType))
+					if (DoTypesMatch(selfParameterType, otherParameterType))
 					{
-						// These are type parameters so we don't need to compare them, or the types match, move on.
+						// The types match, move on.
 						continue;
 					}
 					else
