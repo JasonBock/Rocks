@@ -96,6 +96,7 @@
 [assembly: Rock(typeof(Rocks.IntegrationTests.OptionalArgumentsTestTypes.IHaveOptionalStructDefaultArgument), BuildType.Create | BuildType.Make)]
 [assembly: Rock(typeof(Rocks.IntegrationTests.ParamsTestTypes.IHaveParams), BuildType.Create | BuildType.Make)]
 [assembly: Rock(typeof(Rocks.IntegrationTests.PointerTestTypes.IHavePointers), BuildType.Create | BuildType.Make)]
+[assembly: Rock(typeof(Rocks.IntegrationTests.GenericTestTypes.ISourceUpdater<,>), BuildType.Create | BuildType.Make)]
 [assembly: Rock(typeof(Rocks.IntegrationTests.PointerTestTypes.ISurface), BuildType.Create | BuildType.Make)]
 [assembly: Rock(typeof(Rocks.IntegrationTests.RecordTestTypes.MyRecord), BuildType.Create | BuildType.Make)]
 [assembly: Rock(typeof(Rocks.IntegrationTests.RefStructTestTypes.IHaveInAndOutSpan), BuildType.Create | BuildType.Make)]

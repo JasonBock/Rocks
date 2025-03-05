@@ -23,8 +23,38 @@ public interface IGenericContainer
 	TReturn Run<TInput, TReturn>(TInput input) where TReturn : new();
 }
 
+public interface ICacheUpdater<TObject, TKey>
+  where TObject : notnull
+  where TKey : notnull
+{
+	void Refresh(IEnumerable<TKey> keys);
+}
+
+public interface ISourceUpdater<TObject, TKey>
+  : ICacheUpdater<TObject, TKey>
+  where TObject : notnull
+  where TKey : notnull
+{
+	void AddOrUpdate(TObject item);
+	void Refresh(IEnumerable<TObject> items);
+}
+
 public static class GenericTests
 {
+	[Test]
+	public static void CreateWithOverloadUsingDifferentTypeParameter()
+	{
+		var expectations = new ISourceUpdaterCreateExpectations<string, Guid>();
+		expectations.Methods.Refresh(Arg.Any<IEnumerable<string>>());
+		expectations.Methods.Refresh(Arg.Any<IEnumerable<Guid>>());
+
+		var mock = expectations.Instance();
+		mock.Refresh(["a"]);
+		mock.Refresh([Guid.NewGuid()]);
+
+		expectations.Verify();
+	}
+
 	[Test]
 	public static void CreateWithMultipleExpectationsOfDifferentTypesForReturnThatUsesGenericFromClass()
 	{
