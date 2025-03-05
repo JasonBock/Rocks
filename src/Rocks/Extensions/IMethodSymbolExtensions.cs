@@ -197,8 +197,8 @@ internal static class IMethodSymbolExtensions
 				else if (leftTypeParameter.OriginalDefinition.ContainingSymbol is IMethodSymbol leftContainingMethod &&
 					rightTypeParameter.OriginalDefinition.ContainingSymbol is IMethodSymbol rightContainingMethod)
 				{
-					return leftContainingMethod.TypeParameters.IndexOf(leftTypeParameter) ==
-						rightContainingMethod.TypeParameters.IndexOf(rightTypeParameter);
+					return leftContainingMethod.TypeParameters.IndexOf(leftContainingMethod.TypeParameters.Single(_ => _.Name == leftTypeParameter.Name)) ==
+						rightContainingMethod.TypeParameters.IndexOf(rightContainingMethod.TypeParameters.Single(_ => _.Name == rightTypeParameter.Name));
 				}
 				else
 				{

@@ -9,88 +9,71 @@
 
 //using Rocks.Extensions;
 
-//namespace Elastic.Clients.Elasticsearch.Serialization
+//namespace System.Reactive.Concurrency
 //{
 //	[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-//	public sealed partial class DefaultSourceSerializerPartialTarget
+//	public sealed partial class HistoricalSchedulerPartialTarget
 //		: global::Rocks.Expectations
 //	{
 //		internal sealed class Handler0
 //			: global::Rocks.Handler<global::System.Func<string?>, string?>
 //		{ }
-//		private global::Rocks.Handlers<global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler0>? @handlers0;
+//		private global::Rocks.Handlers<global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler0>? @handlers0;
 //		internal sealed class Handler1
 //			: global::Rocks.Handler<global::System.Func<object?, bool>, bool>
 //		{
 //			public global::Rocks.Argument<object?> @obj { get; set; }
 //		}
-//		private global::Rocks.Handlers<global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler1>? @handlers1;
+//		private global::Rocks.Handlers<global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler1>? @handlers1;
 //		internal sealed class Handler2
 //			: global::Rocks.Handler<global::System.Func<int>, int>
 //		{ }
-//		private global::Rocks.Handlers<global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler2>? @handlers2;
-//		internal sealed class Handler7<T>
-//			: global::Rocks.Handler<global::System.Action<T, global::System.IO.Stream, global::Elastic.Transport.SerializationFormatting>>
+//		private global::Rocks.Handlers<global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler2>? @handlers2;
+//		internal sealed class Handler6<TState>
+//			: global::Rocks.Handler<global::System.Func<TState, global::System.DateTimeOffset, global::System.Func<global::System.Reactive.Concurrency.IScheduler, TState, global::System.IDisposable>, global::System.IDisposable>, global::System.IDisposable>
 //		{
-//			public global::Rocks.Argument<T> @data { get; set; }
-//			public global::Rocks.Argument<global::System.IO.Stream> @stream { get; set; }
-//			public global::Rocks.Argument<global::Elastic.Transport.SerializationFormatting> @formatting { get; set; }
+//			public global::Rocks.Argument<TState> @state { get; set; }
+//			public global::Rocks.Argument<global::System.DateTimeOffset> @dueTime { get; set; }
+//			public global::Rocks.Argument<global::System.Func<global::System.Reactive.Concurrency.IScheduler, TState, global::System.IDisposable>> @action { get; set; }
 //		}
-//		private global::Rocks.Handlers<global::Rocks.Handler>? @handlers7;
-//		internal sealed class Handler8<T>
-//			: global::Rocks.Handler<global::System.Func<T, global::System.IO.Stream, global::Elastic.Transport.SerializationFormatting, global::System.Threading.CancellationToken, global::System.Threading.Tasks.Task>, global::System.Threading.Tasks.Task>
+//		private global::Rocks.Handlers<global::Rocks.Handler>? @handlers6;
+//		internal sealed class Handler8
+//			: global::Rocks.Handler<global::System.Func<global::System.Type, object?>, object?>
 //		{
-//			public global::Rocks.Argument<T> @data { get; set; }
-//			public global::Rocks.Argument<global::System.IO.Stream> @stream { get; set; }
-//			public global::Rocks.Argument<global::Elastic.Transport.SerializationFormatting> @formatting { get; set; }
-//			public global::Rocks.Argument<global::System.Threading.CancellationToken> @cancellationToken { get; set; }
+//			public global::Rocks.Argument<global::System.Type> @serviceType { get; set; }
 //		}
-//		private global::Rocks.Handlers<global::Rocks.Handler>? @handlers8;
-//		internal sealed class Handler9<T>
-//			: global::Rocks.Handler<global::System.Func<global::System.IO.Stream, T>, T>
+//		private global::Rocks.Handlers<global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler8>? @handlers8;
+//		internal sealed class Handler9
+//			: global::Rocks.Handler<global::System.Func<global::System.DateTimeOffset, global::System.TimeSpan, global::System.DateTimeOffset>, global::System.DateTimeOffset>
 //		{
-//			public global::Rocks.Argument<global::System.IO.Stream> @stream { get; set; }
+//			public global::Rocks.Argument<global::System.DateTimeOffset> @absolute { get; set; }
+//			public global::Rocks.Argument<global::System.TimeSpan> @relative { get; set; }
 //		}
-//		private global::Rocks.Handlers<global::Rocks.Handler>? @handlers9;
+//		private global::Rocks.Handlers<global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler9>? @handlers9;
 //		internal sealed class Handler10
-//			: global::Rocks.Handler<global::System.Func<global::System.Type, global::System.IO.Stream, object?>, object?>
+//			: global::Rocks.Handler<global::System.Func<global::System.DateTimeOffset, global::System.DateTimeOffset>, global::System.DateTimeOffset>
 //		{
-//			public global::Rocks.Argument<global::System.Type> @type { get; set; }
-//			public global::Rocks.Argument<global::System.IO.Stream> @stream { get; set; }
+//			public global::Rocks.Argument<global::System.DateTimeOffset> @absolute { get; set; }
 //		}
-//		private global::Rocks.Handlers<global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler10>? @handlers10;
-//		internal sealed class Handler11<T>
-//			: global::Rocks.Handler<global::System.Func<global::System.IO.Stream, global::System.Threading.CancellationToken, global::System.Threading.Tasks.ValueTask<T>>, global::System.Threading.Tasks.ValueTask<T>>
+//		private global::Rocks.Handlers<global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler10>? @handlers10;
+//		internal sealed class Handler11
+//			: global::Rocks.Handler<global::System.Func<global::System.TimeSpan, global::System.TimeSpan>, global::System.TimeSpan>
 //		{
-//			public global::Rocks.Argument<global::System.IO.Stream> @stream { get; set; }
-//			public global::Rocks.Argument<global::System.Threading.CancellationToken> @cancellationToken { get; set; }
+//			public global::Rocks.Argument<global::System.TimeSpan> @timeSpan { get; set; }
 //		}
-//		private global::Rocks.Handlers<global::Rocks.Handler>? @handlers11;
+//		private global::Rocks.Handlers<global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler11>? @handlers11;
 //		internal sealed class Handler12
-//			: global::Rocks.Handler<global::System.Func<global::System.Type, global::System.IO.Stream, global::System.Threading.CancellationToken, global::System.Threading.Tasks.ValueTask<object?>>, global::System.Threading.Tasks.ValueTask<object?>>
+//			: global::Rocks.Handler<global::System.Func<global::System.Reactive.Concurrency.IScheduledItem<global::System.DateTimeOffset>?>, global::System.Reactive.Concurrency.IScheduledItem<global::System.DateTimeOffset>?>
+//		{ }
+//		private global::Rocks.Handlers<global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler12>? @handlers12;
+//		internal sealed class Handler13<TState>
+//			: global::Rocks.Handler<global::System.Func<TState, global::System.DateTimeOffset, global::System.Func<global::System.Reactive.Concurrency.IScheduler, TState, global::System.IDisposable>, global::System.IDisposable>, global::System.IDisposable>
 //		{
-//			public global::Rocks.Argument<global::System.Type> @type { get; set; }
-//			public global::Rocks.Argument<global::System.IO.Stream> @stream { get; set; }
-//			public global::Rocks.Argument<global::System.Threading.CancellationToken> @cancellationToken { get; set; }
-//		}
-//		private global::Rocks.Handlers<global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler12>? @handlers12;
-//		internal sealed class Handler13<T>
-//			: global::Rocks.Handler<global::System.Action<T, global::System.IO.Stream, global::Elastic.Transport.SerializationFormatting>>
-//		{
-//			public global::Rocks.Argument<T> @data { get; set; }
-//			public global::Rocks.Argument<global::System.IO.Stream> @writableStream { get; set; }
-//			public global::Rocks.Argument<global::Elastic.Transport.SerializationFormatting> @formatting { get; set; }
+//			public global::Rocks.Argument<TState> @state { get; set; }
+//			public global::Rocks.Argument<global::System.DateTimeOffset> @dueTime { get; set; }
+//			public global::Rocks.Argument<global::System.Func<global::System.Reactive.Concurrency.IScheduler, TState, global::System.IDisposable>> @action { get; set; }
 //		}
 //		private global::Rocks.Handlers<global::Rocks.Handler>? @handlers13;
-//		internal sealed class Handler14<T>
-//			: global::Rocks.Handler<global::System.Func<T, global::System.IO.Stream, global::Elastic.Transport.SerializationFormatting, global::System.Threading.CancellationToken, global::System.Threading.Tasks.Task>, global::System.Threading.Tasks.Task>
-//		{
-//			public global::Rocks.Argument<T> @data { get; set; }
-//			public global::Rocks.Argument<global::System.IO.Stream> @stream { get; set; }
-//			public global::Rocks.Argument<global::Elastic.Transport.SerializationFormatting> @formatting { get; set; }
-//			public global::Rocks.Argument<global::System.Threading.CancellationToken> @cancellationToken { get; set; }
-//		}
-//		private global::Rocks.Handlers<global::Rocks.Handler>? @handlers14;
 
 //		public override void Verify()
 //		{
@@ -101,14 +84,13 @@
 //				if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 //				if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
 //				if (this.handlers2 is not null) { failures.AddRange(this.Verify(this.handlers2, 2)); }
-//				if (this.handlers7 is not null) { failures.AddRange(this.Verify(this.handlers7, 7)); }
+//				if (this.handlers6 is not null) { failures.AddRange(this.Verify(this.handlers6, 6)); }
 //				if (this.handlers8 is not null) { failures.AddRange(this.Verify(this.handlers8, 8)); }
 //				if (this.handlers9 is not null) { failures.AddRange(this.Verify(this.handlers9, 9)); }
 //				if (this.handlers10 is not null) { failures.AddRange(this.Verify(this.handlers10, 10)); }
 //				if (this.handlers11 is not null) { failures.AddRange(this.Verify(this.handlers11, 11)); }
 //				if (this.handlers12 is not null) { failures.AddRange(this.Verify(this.handlers12, 12)); }
 //				if (this.handlers13 is not null) { failures.AddRange(this.Verify(this.handlers13, 13)); }
-//				if (this.handlers14 is not null) { failures.AddRange(this.Verify(this.handlers14, 14)); }
 
 //				if (failures.Count > 0)
 //				{
@@ -118,10 +100,19 @@
 //		}
 
 //		private sealed class Mock
-//			: global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializer
+//			: global::System.Reactive.Concurrency.HistoricalScheduler
 //		{
-//			public Mock(global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget @expectations, global::Elastic.Clients.Elasticsearch.IElasticsearchClientSettings @settings, global::System.Action<global::System.Text.Json.JsonSerializerOptions>? @configureOptions)
-//				: base(@settings, @configureOptions)
+//			public Mock(global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget @expectations)
+//			{
+//				this.Expectations = @expectations;
+//			}
+//			public Mock(global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget @expectations, global::System.DateTimeOffset @initialClock)
+//				: base(@initialClock)
+//			{
+//				this.Expectations = @expectations;
+//			}
+//			public Mock(global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget @expectations, global::System.DateTimeOffset @initialClock, global::System.Collections.Generic.IComparer<global::System.DateTimeOffset> @comparer)
+//				: base(@initialClock, @comparer)
 //			{
 //				this.Expectations = @expectations;
 //			}
@@ -188,138 +179,115 @@
 //				}
 //			}
 
-//			[global::Rocks.MemberIdentifier(7)]
-//			public override void Serialize<T>(T @data, global::System.IO.Stream @stream, global::Elastic.Transport.SerializationFormatting @formatting = (global::Elastic.Transport.SerializationFormatting)(0))
+//			[global::Rocks.MemberIdentifier(6)]
+//			public override global::System.IDisposable ScheduleAbsolute<TState>(TState @state, global::System.DateTimeOffset @dueTime, global::System.Func<global::System.Reactive.Concurrency.IScheduler, TState, global::System.IDisposable> @action)
 //			{
-//				if (this.Expectations.handlers7 is not null)
+//				if (this.Expectations.handlers6 is not null)
 //				{
-//					var @foundMatch = false;
-
-//					foreach (var @genericHandler in this.Expectations.handlers7)
+//					foreach (var @genericHandler in this.Expectations.handlers6)
 //					{
-//						if (@genericHandler is global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler7<T> @handler)
+//						if (@genericHandler is global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler6<TState> @handler)
 //						{
-//							if (@handler.@data.IsValid(@data!) &&
-//								@handler.@stream.IsValid(@stream!) &&
-//								@handler.@formatting.IsValid(@formatting!))
+//							if (@handler.@state.IsValid(@state!) &&
+//								@handler.@dueTime.IsValid(@dueTime!) &&
+//								@handler.@action.IsValid(@action!))
 //							{
-//								@foundMatch = true;
 //								@handler.CallCount++;
-//								@handler.Callback?.Invoke(@data!, @stream!, @formatting!);
-//								break;
+//								var @result = @handler.Callback is not null ?
+//									@handler.Callback(@state!, @dueTime!, @action!) : @handler.ReturnValue;
+//								return @result!;
 //							}
 //						}
 //					}
 
-//					if (!@foundMatch)
-//					{
-//						throw new global::Rocks.Exceptions.ExpectationException(
-//							$"""
-//							No handlers match for {this.GetType().GetMemberDescription(7)}
-//								data: {@data.FormatValue()}
-//								stream: {@stream.FormatValue()}
-//								formatting: {@formatting.FormatValue()}
-//							""");
-//					}
-//				}
-//				else
-//				{
 //					throw new global::Rocks.Exceptions.ExpectationException(
 //						$"""
-//						No handlers were found for {this.GetType().GetMemberDescription(7)}
-//							data: {@data.FormatValue()}
-//							stream: {@stream.FormatValue()}
-//							formatting: {@formatting.FormatValue()}
+//						No handlers match for {this.GetType().GetMemberDescription(6)}
+//							state: {@state.FormatValue()}
+//							dueTime: {@dueTime.FormatValue()}
+//							action: {@action.FormatValue()}
 //						""");
 //				}
+
+//				throw new global::Rocks.Exceptions.ExpectationException(
+//					$"""
+//					No handlers were found for {this.GetType().GetMemberDescription(6)}
+//						state: {@state.FormatValue()}
+//						dueTime: {@dueTime.FormatValue()}
+//						action: {@action.FormatValue()}
+//					""");
 //			}
 
 //			[global::Rocks.MemberIdentifier(8)]
-//			public override global::System.Threading.Tasks.Task SerializeAsync<T>(T @data, global::System.IO.Stream @stream, global::Elastic.Transport.SerializationFormatting @formatting = (global::Elastic.Transport.SerializationFormatting)(0), global::System.Threading.CancellationToken @cancellationToken = default)
+//			protected override object? GetService(global::System.Type @serviceType)
 //			{
 //				if (this.Expectations.handlers8 is not null)
 //				{
-//					foreach (var @genericHandler in this.Expectations.handlers8)
+//					foreach (var @handler in this.Expectations.handlers8)
 //					{
-//						if (@genericHandler is global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler8<T> @handler)
+//						if (@handler.@serviceType.IsValid(@serviceType!))
 //						{
-//							if (@handler.@data.IsValid(@data!) &&
-//								@handler.@stream.IsValid(@stream!) &&
-//								@handler.@formatting.IsValid(@formatting!) &&
-//								@handler.@cancellationToken.IsValid(@cancellationToken!))
-//							{
-//								@handler.CallCount++;
-//								var @result = @handler.Callback is not null ?
-//									@handler.Callback(@data!, @stream!, @formatting!, @cancellationToken!) : @handler.ReturnValue;
-//								return @result!;
-//							}
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@serviceType!) : @handler.ReturnValue;
+//							return @result!;
 //						}
 //					}
 
 //					throw new global::Rocks.Exceptions.ExpectationException(
 //						$"""
 //						No handlers match for {this.GetType().GetMemberDescription(8)}
-//							data: {@data.FormatValue()}
-//							stream: {@stream.FormatValue()}
-//							formatting: {@formatting.FormatValue()}
-//							cancellationToken: {@cancellationToken.FormatValue()}
+//							serviceType: {@serviceType.FormatValue()}
 //						""");
 //				}
-
-//				throw new global::Rocks.Exceptions.ExpectationException(
-//					$"""
-//					No handlers were found for {this.GetType().GetMemberDescription(8)}
-//						data: {@data.FormatValue()}
-//						stream: {@stream.FormatValue()}
-//						formatting: {@formatting.FormatValue()}
-//						cancellationToken: {@cancellationToken.FormatValue()}
-//					""");
+//				else
+//				{
+//					return base.GetService(@serviceType: @serviceType!);
+//				}
 //			}
 
 //			[global::Rocks.MemberIdentifier(9)]
-//			public override T Deserialize<T>(global::System.IO.Stream @stream)
+//			protected override global::System.DateTimeOffset Add(global::System.DateTimeOffset @absolute, global::System.TimeSpan @relative)
 //			{
 //				if (this.Expectations.handlers9 is not null)
 //				{
-//					foreach (var @genericHandler in this.Expectations.handlers9)
+//					foreach (var @handler in this.Expectations.handlers9)
 //					{
-//						if (@genericHandler is global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler9<T> @handler)
+//						if (@handler.@absolute.IsValid(@absolute!) &&
+//							@handler.@relative.IsValid(@relative!))
 //						{
-//							if (@handler.@stream.IsValid(@stream!))
-//							{
-//								@handler.CallCount++;
-//								var @result = @handler.Callback is not null ?
-//									@handler.Callback(@stream!) : @handler.ReturnValue;
-//								return @result!;
-//							}
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@absolute!, @relative!) : @handler.ReturnValue;
+//							return @result!;
 //						}
 //					}
 
 //					throw new global::Rocks.Exceptions.ExpectationException(
 //						$"""
 //						No handlers match for {this.GetType().GetMemberDescription(9)}
-//							stream: {@stream.FormatValue()}
+//							absolute: {@absolute.FormatValue()}
+//							relative: {@relative.FormatValue()}
 //						""");
 //				}
 //				else
 //				{
-//					return base.Deserialize<T>(@stream: @stream!);
+//					return base.Add(@absolute: @absolute!, @relative: @relative!);
 //				}
 //			}
 
 //			[global::Rocks.MemberIdentifier(10)]
-//			public override object? Deserialize(global::System.Type @type, global::System.IO.Stream @stream)
+//			protected override global::System.DateTimeOffset ToDateTimeOffset(global::System.DateTimeOffset @absolute)
 //			{
 //				if (this.Expectations.handlers10 is not null)
 //				{
 //					foreach (var @handler in this.Expectations.handlers10)
 //					{
-//						if (@handler.@type.IsValid(@type!) &&
-//							@handler.@stream.IsValid(@stream!))
+//						if (@handler.@absolute.IsValid(@absolute!))
 //						{
 //							@handler.CallCount++;
 //							var @result = @handler.Callback is not null ?
-//								@handler.Callback(@type!, @stream!) : @handler.ReturnValue;
+//								@handler.Callback(@absolute!) : @handler.ReturnValue;
 //							return @result!;
 //						}
 //					}
@@ -327,138 +295,76 @@
 //					throw new global::Rocks.Exceptions.ExpectationException(
 //						$"""
 //						No handlers match for {this.GetType().GetMemberDescription(10)}
-//							type: {@type.FormatValue()}
-//							stream: {@stream.FormatValue()}
+//							absolute: {@absolute.FormatValue()}
 //						""");
 //				}
 //				else
 //				{
-//					return base.Deserialize(@type: @type!, @stream: @stream!);
+//					return base.ToDateTimeOffset(@absolute: @absolute!);
 //				}
 //			}
 
 //			[global::Rocks.MemberIdentifier(11)]
-//			public override global::System.Threading.Tasks.ValueTask<T> DeserializeAsync<T>(global::System.IO.Stream @stream, global::System.Threading.CancellationToken @cancellationToken = default)
+//			protected override global::System.TimeSpan ToRelative(global::System.TimeSpan @timeSpan)
 //			{
 //				if (this.Expectations.handlers11 is not null)
 //				{
-//					foreach (var @genericHandler in this.Expectations.handlers11)
+//					foreach (var @handler in this.Expectations.handlers11)
 //					{
-//						if (@genericHandler is global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler11<T> @handler)
-//						{
-//							if (@handler.@stream.IsValid(@stream!) &&
-//								@handler.@cancellationToken.IsValid(@cancellationToken!))
-//							{
-//								@handler.CallCount++;
-//								var @result = @handler.Callback is not null ?
-//									@handler.Callback(@stream!, @cancellationToken!) : @handler.ReturnValue;
-//								return @result!;
-//							}
-//						}
-//					}
-
-//					throw new global::Rocks.Exceptions.ExpectationException(
-//						$"""
-//						No handlers match for {this.GetType().GetMemberDescription(11)}
-//							stream: {@stream.FormatValue()}
-//							cancellationToken: {@cancellationToken.FormatValue()}
-//						""");
-//				}
-//				else
-//				{
-//					return base.DeserializeAsync<T>(@stream: @stream!, @cancellationToken: @cancellationToken!);
-//				}
-//			}
-
-//			[global::Rocks.MemberIdentifier(12)]
-//			public override global::System.Threading.Tasks.ValueTask<object?> DeserializeAsync(global::System.Type @type, global::System.IO.Stream @stream, global::System.Threading.CancellationToken @cancellationToken = default)
-//			{
-//				if (this.Expectations.handlers12 is not null)
-//				{
-//					foreach (var @handler in this.Expectations.handlers12)
-//					{
-//						if (@handler.@type.IsValid(@type!) &&
-//							@handler.@stream.IsValid(@stream!) &&
-//							@handler.@cancellationToken.IsValid(@cancellationToken!))
+//						if (@handler.@timeSpan.IsValid(@timeSpan!))
 //						{
 //							@handler.CallCount++;
 //							var @result = @handler.Callback is not null ?
-//								@handler.Callback(@type!, @stream!, @cancellationToken!) : @handler.ReturnValue;
+//								@handler.Callback(@timeSpan!) : @handler.ReturnValue;
 //							return @result!;
 //						}
 //					}
 
 //					throw new global::Rocks.Exceptions.ExpectationException(
 //						$"""
-//						No handlers match for {this.GetType().GetMemberDescription(12)}
-//							type: {@type.FormatValue()}
-//							stream: {@stream.FormatValue()}
-//							cancellationToken: {@cancellationToken.FormatValue()}
+//						No handlers match for {this.GetType().GetMemberDescription(11)}
+//							timeSpan: {@timeSpan.FormatValue()}
 //						""");
 //				}
 //				else
 //				{
-//					return base.DeserializeAsync(@type: @type!, @stream: @stream!, @cancellationToken: @cancellationToken!);
+//					return base.ToRelative(@timeSpan: @timeSpan!);
+//				}
+//			}
+
+//			[global::Rocks.MemberIdentifier(12)]
+//			protected override global::System.Reactive.Concurrency.IScheduledItem<global::System.DateTimeOffset>? GetNext()
+//			{
+//				if (this.Expectations.handlers12 is not null)
+//				{
+//					var @handler = this.Expectations.handlers12.First;
+//					@handler.CallCount++;
+//					var @result = @handler.Callback is not null ?
+//						@handler.Callback() : @handler.ReturnValue;
+//					return @result!;
+//				}
+//				else
+//				{
+//					return base.GetNext();
 //				}
 //			}
 
 //			[global::Rocks.MemberIdentifier(13)]
-//			public override void Serialize<T>(T @data, global::System.IO.Stream @writableStream, global::Elastic.Transport.SerializationFormatting @formatting = (global::Elastic.Transport.SerializationFormatting)(0))
+//			public override global::System.IDisposable ScheduleAbsolute<TState>(TState @state, global::System.DateTimeOffset @dueTime, global::System.Func<global::System.Reactive.Concurrency.IScheduler, TState, global::System.IDisposable> @action)
 //			{
 //				if (this.Expectations.handlers13 is not null)
 //				{
-//					var @foundMatch = false;
-
 //					foreach (var @genericHandler in this.Expectations.handlers13)
 //					{
-//						if (@genericHandler is global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler13<T> @handler)
+//						if (@genericHandler is global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler13<TState> @handler)
 //						{
-//							if (@handler.@data.IsValid(@data!) &&
-//								@handler.@writableStream.IsValid(@writableStream!) &&
-//								@handler.@formatting.IsValid(@formatting!))
-//							{
-//								@foundMatch = true;
-//								@handler.CallCount++;
-//								@handler.Callback?.Invoke(@data!, @writableStream!, @formatting!);
-//								break;
-//							}
-//						}
-//					}
-
-//					if (!@foundMatch)
-//					{
-//						throw new global::Rocks.Exceptions.ExpectationException(
-//							$"""
-//							No handlers match for {this.GetType().GetMemberDescription(13)}
-//								data: {@data.FormatValue()}
-//								writableStream: {@writableStream.FormatValue()}
-//								formatting: {@formatting.FormatValue()}
-//							""");
-//					}
-//				}
-//				else
-//				{
-//					base.Serialize<T>(@data: @data!, @writableStream: @writableStream!, @formatting: @formatting!);
-//				}
-//			}
-
-//			[global::Rocks.MemberIdentifier(14)]
-//			public override global::System.Threading.Tasks.Task SerializeAsync<T>(T @data, global::System.IO.Stream @stream, global::Elastic.Transport.SerializationFormatting @formatting = (global::Elastic.Transport.SerializationFormatting)(0), global::System.Threading.CancellationToken @cancellationToken = default)
-//			{
-//				if (this.Expectations.handlers14 is not null)
-//				{
-//					foreach (var @genericHandler in this.Expectations.handlers14)
-//					{
-//						if (@genericHandler is global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler14<T> @handler)
-//						{
-//							if (@handler.@data.IsValid(@data!) &&
-//								@handler.@stream.IsValid(@stream!) &&
-//								@handler.@formatting.IsValid(@formatting!) &&
-//								@handler.@cancellationToken.IsValid(@cancellationToken!))
+//							if (@handler.@state.IsValid(@state!) &&
+//								@handler.@dueTime.IsValid(@dueTime!) &&
+//								@handler.@action.IsValid(@action!))
 //							{
 //								@handler.CallCount++;
 //								var @result = @handler.Callback is not null ?
-//									@handler.Callback(@data!, @stream!, @formatting!, @cancellationToken!) : @handler.ReturnValue;
+//									@handler.Callback(@state!, @dueTime!, @action!) : @handler.ReturnValue;
 //								return @result!;
 //							}
 //						}
@@ -466,42 +372,41 @@
 
 //					throw new global::Rocks.Exceptions.ExpectationException(
 //						$"""
-//						No handlers match for {this.GetType().GetMemberDescription(14)}
-//							data: {@data.FormatValue()}
-//							stream: {@stream.FormatValue()}
-//							formatting: {@formatting.FormatValue()}
-//							cancellationToken: {@cancellationToken.FormatValue()}
+//						No handlers match for {this.GetType().GetMemberDescription(13)}
+//							state: {@state.FormatValue()}
+//							dueTime: {@dueTime.FormatValue()}
+//							action: {@action.FormatValue()}
 //						""");
 //				}
 //				else
 //				{
-//					return base.SerializeAsync<T>(@data: @data!, @stream: @stream!, @formatting: @formatting!, @cancellationToken: @cancellationToken!);
+//					return base.ScheduleAbsolute<TState>(@state: @state!, @dueTime: @dueTime!, @action: @action!);
 //				}
 //			}
 
-//			private global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget Expectations { get; }
+//			private global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget Expectations { get; }
 //		}
 
 //		internal sealed class MethodExpectations
 //		{
-//			internal MethodExpectations(global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget expectations) =>
+//			internal MethodExpectations(global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget expectations) =>
 //				this.Expectations = expectations;
 
-//			internal new global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Adornments.AdornmentsForHandler0 ToString()
+//			internal new global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Adornments.AdornmentsForHandler0 ToString()
 //			{
 //				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-//				var handler = new global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler0();
+//				var handler = new global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler0();
 //				if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
 //				else { this.Expectations.handlers0.Add(handler); }
 //				return new(handler);
 //			}
 
-//			internal global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Adornments.AdornmentsForHandler1 Equals(global::Rocks.Argument<object?> @obj)
+//			internal global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Adornments.AdornmentsForHandler1 Equals(global::Rocks.Argument<object?> @obj)
 //			{
 //				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 //				global::System.ArgumentNullException.ThrowIfNull(@obj);
 
-//				var @handler = new global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler1
+//				var @handler = new global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler1
 //				{
 //					@obj = @obj,
 //				};
@@ -511,67 +416,59 @@
 //				return new(@handler);
 //			}
 
-//			internal new global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Adornments.AdornmentsForHandler2 GetHashCode()
+//			internal new global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Adornments.AdornmentsForHandler2 GetHashCode()
 //			{
 //				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-//				var handler = new global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler2();
+//				var handler = new global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler2();
 //				if (this.Expectations.handlers2 is null) { this.Expectations.handlers2 = new(handler); }
 //				else { this.Expectations.handlers2.Add(handler); }
 //				return new(handler);
 //			}
 
-//			internal global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Adornments.AdornmentsForHandler7<T> Serialize<T>(global::Rocks.Argument<T> @data, global::Rocks.Argument<global::System.IO.Stream> @stream, global::Rocks.Argument<global::Elastic.Transport.SerializationFormatting> @formatting)
+//			internal global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Adornments.AdornmentsForHandler6<TState> ScheduleAbsolute<TState>(global::Rocks.Argument<TState> @state, global::Rocks.Argument<global::System.DateTimeOffset> @dueTime, global::Rocks.Argument<global::System.Func<global::System.Reactive.Concurrency.IScheduler, TState, global::System.IDisposable>> @action)
 //			{
 //				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-//				global::System.ArgumentNullException.ThrowIfNull(@data);
-//				global::System.ArgumentNullException.ThrowIfNull(@stream);
-//				global::System.ArgumentNullException.ThrowIfNull(@formatting);
+//				global::System.ArgumentNullException.ThrowIfNull(@state);
+//				global::System.ArgumentNullException.ThrowIfNull(@dueTime);
+//				global::System.ArgumentNullException.ThrowIfNull(@action);
 
-//				var @handler = new global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler7<T>
+//				var @handler = new global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler6<TState>
 //				{
-//					@data = @data,
-//					@stream = @stream,
-//					@formatting = @formatting.Transform((global::Elastic.Transport.SerializationFormatting)(0)),
+//					@state = @state,
+//					@dueTime = @dueTime,
+//					@action = @action,
 //				};
 
-//				if (this.Expectations.handlers7 is null) { this.Expectations.handlers7 = new(@handler); }
-//				else { this.Expectations.handlers7.Add(@handler); }
+//				if (this.Expectations.handlers6 is null) { this.Expectations.handlers6 = new(@handler); }
+//				else { this.Expectations.handlers6.Add(@handler); }
 //				return new(@handler);
 //			}
-//			internal global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Adornments.AdornmentsForHandler7<T> Serialize<T>(global::Rocks.Argument<T> @data, global::Rocks.Argument<global::System.IO.Stream> @stream, global::Elastic.Transport.SerializationFormatting @formatting = (global::Elastic.Transport.SerializationFormatting)(0)) =>
-//				this.Serialize<T>(@data, @stream, global::Rocks.Arg.Is(@formatting));
 
-//			internal global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Adornments.AdornmentsForHandler8<T> SerializeAsync<T>(global::Rocks.Argument<T> @data, global::Rocks.Argument<global::System.IO.Stream> @stream, global::Rocks.Argument<global::Elastic.Transport.SerializationFormatting> @formatting, global::Rocks.Argument<global::System.Threading.CancellationToken> @cancellationToken)
+//			internal global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Adornments.AdornmentsForHandler8 GetService(global::Rocks.Argument<global::System.Type> @serviceType)
 //			{
 //				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-//				global::System.ArgumentNullException.ThrowIfNull(@data);
-//				global::System.ArgumentNullException.ThrowIfNull(@stream);
-//				global::System.ArgumentNullException.ThrowIfNull(@formatting);
-//				global::System.ArgumentNullException.ThrowIfNull(@cancellationToken);
+//				global::System.ArgumentNullException.ThrowIfNull(@serviceType);
 
-//				var @handler = new global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler8<T>
+//				var @handler = new global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler8
 //				{
-//					@data = @data,
-//					@stream = @stream,
-//					@formatting = @formatting.Transform((global::Elastic.Transport.SerializationFormatting)(0)),
-//					@cancellationToken = @cancellationToken.Transform(default),
+//					@serviceType = @serviceType,
 //				};
 
 //				if (this.Expectations.handlers8 is null) { this.Expectations.handlers8 = new(@handler); }
 //				else { this.Expectations.handlers8.Add(@handler); }
 //				return new(@handler);
 //			}
-//			internal global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Adornments.AdornmentsForHandler8<T> SerializeAsync<T>(global::Rocks.Argument<T> @data, global::Rocks.Argument<global::System.IO.Stream> @stream, global::Elastic.Transport.SerializationFormatting @formatting = (global::Elastic.Transport.SerializationFormatting)(0), global::System.Threading.CancellationToken @cancellationToken = default) =>
-//				this.SerializeAsync<T>(@data, @stream, global::Rocks.Arg.Is(@formatting), global::Rocks.Arg.Is(@cancellationToken));
 
-//			internal global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Adornments.AdornmentsForHandler9<T> Deserialize<T>(global::Rocks.Argument<global::System.IO.Stream> @stream)
+//			internal global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Adornments.AdornmentsForHandler9 Add(global::Rocks.Argument<global::System.DateTimeOffset> @absolute, global::Rocks.Argument<global::System.TimeSpan> @relative)
 //			{
 //				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-//				global::System.ArgumentNullException.ThrowIfNull(@stream);
+//				global::System.ArgumentNullException.ThrowIfNull(@absolute);
+//				global::System.ArgumentNullException.ThrowIfNull(@relative);
 
-//				var @handler = new global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler9<T>
+//				var @handler = new global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler9
 //				{
-//					@stream = @stream,
+//					@absolute = @absolute,
+//					@relative = @relative,
 //				};
 
 //				if (this.Expectations.handlers9 is null) { this.Expectations.handlers9 = new(@handler); }
@@ -579,16 +476,14 @@
 //				return new(@handler);
 //			}
 
-//			internal global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Adornments.AdornmentsForHandler10 Deserialize(global::Rocks.Argument<global::System.Type> @type, global::Rocks.Argument<global::System.IO.Stream> @stream)
+//			internal global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Adornments.AdornmentsForHandler10 ToDateTimeOffset(global::Rocks.Argument<global::System.DateTimeOffset> @absolute)
 //			{
 //				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-//				global::System.ArgumentNullException.ThrowIfNull(@type);
-//				global::System.ArgumentNullException.ThrowIfNull(@stream);
+//				global::System.ArgumentNullException.ThrowIfNull(@absolute);
 
-//				var @handler = new global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler10
+//				var @handler = new global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler10
 //				{
-//					@type = @type,
-//					@stream = @stream,
+//					@absolute = @absolute,
 //				};
 
 //				if (this.Expectations.handlers10 is null) { this.Expectations.handlers10 = new(@handler); }
@@ -596,104 +491,91 @@
 //				return new(@handler);
 //			}
 
-//			internal global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Adornments.AdornmentsForHandler11<T> DeserializeAsync<T>(global::Rocks.Argument<global::System.IO.Stream> @stream, global::Rocks.Argument<global::System.Threading.CancellationToken> @cancellationToken)
+//			internal global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Adornments.AdornmentsForHandler11 ToRelative(global::Rocks.Argument<global::System.TimeSpan> @timeSpan)
 //			{
 //				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-//				global::System.ArgumentNullException.ThrowIfNull(@stream);
-//				global::System.ArgumentNullException.ThrowIfNull(@cancellationToken);
+//				global::System.ArgumentNullException.ThrowIfNull(@timeSpan);
 
-//				var @handler = new global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler11<T>
+//				var @handler = new global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler11
 //				{
-//					@stream = @stream,
-//					@cancellationToken = @cancellationToken.Transform(default),
+//					@timeSpan = @timeSpan,
 //				};
 
 //				if (this.Expectations.handlers11 is null) { this.Expectations.handlers11 = new(@handler); }
 //				else { this.Expectations.handlers11.Add(@handler); }
 //				return new(@handler);
 //			}
-//			internal global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Adornments.AdornmentsForHandler11<T> DeserializeAsync<T>(global::Rocks.Argument<global::System.IO.Stream> @stream, global::System.Threading.CancellationToken @cancellationToken = default) =>
-//				this.DeserializeAsync<T>(@stream, global::Rocks.Arg.Is(@cancellationToken));
 
-//			internal global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Adornments.AdornmentsForHandler12 DeserializeAsync(global::Rocks.Argument<global::System.Type> @type, global::Rocks.Argument<global::System.IO.Stream> @stream, global::Rocks.Argument<global::System.Threading.CancellationToken> @cancellationToken)
+//			internal global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Adornments.AdornmentsForHandler12 GetNext()
 //			{
 //				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-//				global::System.ArgumentNullException.ThrowIfNull(@type);
-//				global::System.ArgumentNullException.ThrowIfNull(@stream);
-//				global::System.ArgumentNullException.ThrowIfNull(@cancellationToken);
-
-//				var @handler = new global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler12
-//				{
-//					@type = @type,
-//					@stream = @stream,
-//					@cancellationToken = @cancellationToken.Transform(default),
-//				};
-
-//				if (this.Expectations.handlers12 is null) { this.Expectations.handlers12 = new(@handler); }
-//				else { this.Expectations.handlers12.Add(@handler); }
-//				return new(@handler);
+//				var handler = new global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler12();
+//				if (this.Expectations.handlers12 is null) { this.Expectations.handlers12 = new(handler); }
+//				else { this.Expectations.handlers12.Add(handler); }
+//				return new(handler);
 //			}
-//			internal global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Adornments.AdornmentsForHandler12 DeserializeAsync(global::Rocks.Argument<global::System.Type> @type, global::Rocks.Argument<global::System.IO.Stream> @stream, global::System.Threading.CancellationToken @cancellationToken = default) =>
-//				this.DeserializeAsync(@type, @stream, global::Rocks.Arg.Is(@cancellationToken));
 
-//			internal global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Adornments.AdornmentsForHandler13<T> Serialize<T>(global::Rocks.Argument<T> @data, global::Rocks.Argument<global::System.IO.Stream> @writableStream, global::Rocks.Argument<global::Elastic.Transport.SerializationFormatting> @formatting)
+//			internal global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Adornments.AdornmentsForHandler13<TState> ScheduleAbsolute<TState>(global::Rocks.Argument<TState> @state, global::Rocks.Argument<global::System.DateTimeOffset> @dueTime, global::Rocks.Argument<global::System.Func<global::System.Reactive.Concurrency.IScheduler, TState, global::System.IDisposable>> @action)
 //			{
 //				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-//				global::System.ArgumentNullException.ThrowIfNull(@data);
-//				global::System.ArgumentNullException.ThrowIfNull(@writableStream);
-//				global::System.ArgumentNullException.ThrowIfNull(@formatting);
+//				global::System.ArgumentNullException.ThrowIfNull(@state);
+//				global::System.ArgumentNullException.ThrowIfNull(@dueTime);
+//				global::System.ArgumentNullException.ThrowIfNull(@action);
 
-//				var @handler = new global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler13<T>
+//				var @handler = new global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler13<TState>
 //				{
-//					@data = @data,
-//					@writableStream = @writableStream,
-//					@formatting = @formatting.Transform((global::Elastic.Transport.SerializationFormatting)(0)),
+//					@state = @state,
+//					@dueTime = @dueTime,
+//					@action = @action,
 //				};
 
 //				if (this.Expectations.handlers13 is null) { this.Expectations.handlers13 = new(@handler); }
 //				else { this.Expectations.handlers13.Add(@handler); }
 //				return new(@handler);
 //			}
-//			internal global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Adornments.AdornmentsForHandler13<T> Serialize<T>(global::Rocks.Argument<T> @data, global::Rocks.Argument<global::System.IO.Stream> @writableStream, global::Elastic.Transport.SerializationFormatting @formatting = (global::Elastic.Transport.SerializationFormatting)(0)) =>
-//				this.Serialize<T>(@data, @writableStream, global::Rocks.Arg.Is(@formatting));
 
-//			internal global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Adornments.AdornmentsForHandler14<T> SerializeAsync<T>(global::Rocks.Argument<T> @data, global::Rocks.Argument<global::System.IO.Stream> @stream, global::Rocks.Argument<global::Elastic.Transport.SerializationFormatting> @formatting, global::Rocks.Argument<global::System.Threading.CancellationToken> @cancellationToken)
-//			{
-//				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-//				global::System.ArgumentNullException.ThrowIfNull(@data);
-//				global::System.ArgumentNullException.ThrowIfNull(@stream);
-//				global::System.ArgumentNullException.ThrowIfNull(@formatting);
-//				global::System.ArgumentNullException.ThrowIfNull(@cancellationToken);
-
-//				var @handler = new global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler14<T>
-//				{
-//					@data = @data,
-//					@stream = @stream,
-//					@formatting = @formatting.Transform((global::Elastic.Transport.SerializationFormatting)(0)),
-//					@cancellationToken = @cancellationToken.Transform(default),
-//				};
-
-//				if (this.Expectations.handlers14 is null) { this.Expectations.handlers14 = new(@handler); }
-//				else { this.Expectations.handlers14.Add(@handler); }
-//				return new(@handler);
-//			}
-//			internal global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Adornments.AdornmentsForHandler14<T> SerializeAsync<T>(global::Rocks.Argument<T> @data, global::Rocks.Argument<global::System.IO.Stream> @stream, global::Elastic.Transport.SerializationFormatting @formatting = (global::Elastic.Transport.SerializationFormatting)(0), global::System.Threading.CancellationToken @cancellationToken = default) =>
-//				this.SerializeAsync<T>(@data, @stream, global::Rocks.Arg.Is(@formatting), global::Rocks.Arg.Is(@cancellationToken));
-
-//			private global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget Expectations { get; }
+//			private global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget Expectations { get; }
 //		}
 
-//		internal global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.MethodExpectations Methods { get; }
+//		internal global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.MethodExpectations Methods { get; }
 
-//		internal DefaultSourceSerializerPartialTarget() =>
+//		internal HistoricalSchedulerPartialTarget() =>
 //			(this.Methods) = (new(this));
 
-//		internal global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializer Instance(global::Elastic.Clients.Elasticsearch.IElasticsearchClientSettings @settings, global::System.Action<global::System.Text.Json.JsonSerializerOptions>? @configureOptions)
+//		internal global::System.Reactive.Concurrency.HistoricalScheduler Instance()
 //		{
 //			if (!this.WasInstanceInvoked)
 //			{
 //				this.WasInstanceInvoked = true;
-//				var @mock = new Mock(this, @settings, @configureOptions);
+//				var @mock = new Mock(this);
+//				this.MockType = @mock.GetType();
+//				return @mock;
+//			}
+//			else
+//			{
+//				throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+//			}
+//		}
+//		internal global::System.Reactive.Concurrency.HistoricalScheduler Instance(global::System.DateTimeOffset @initialClock)
+//		{
+//			if (!this.WasInstanceInvoked)
+//			{
+//				this.WasInstanceInvoked = true;
+//				var @mock = new Mock(this, @initialClock);
+//				this.MockType = @mock.GetType();
+//				return @mock;
+//			}
+//			else
+//			{
+//				throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+//			}
+//		}
+//		internal global::System.Reactive.Concurrency.HistoricalScheduler Instance(global::System.DateTimeOffset @initialClock, global::System.Collections.Generic.IComparer<global::System.DateTimeOffset> @comparer)
+//		{
+//			if (!this.WasInstanceInvoked)
+//			{
+//				this.WasInstanceInvoked = true;
+//				var @mock = new Mock(this, @initialClock, @comparer);
 //				this.MockType = @mock.GetType();
 //				return @mock;
 //			}
@@ -705,75 +587,69 @@
 
 //		internal static class Adornments
 //		{
-//			public interface IAdornmentsForDefaultSourceSerializerPartialTarget<TAdornments>
+//			public interface IAdornmentsForHistoricalSchedulerPartialTarget<TAdornments>
 //				: global::Rocks.IAdornments<TAdornments>
-//				where TAdornments : IAdornmentsForDefaultSourceSerializerPartialTarget<TAdornments>
+//				where TAdornments : IAdornmentsForHistoricalSchedulerPartialTarget<TAdornments>
 //			{ }
 
 //			public sealed class AdornmentsForHandler0
-//				: global::Rocks.Adornments<AdornmentsForHandler0, global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler0, global::System.Func<string?>, string?>, IAdornmentsForDefaultSourceSerializerPartialTarget<AdornmentsForHandler0>
+//				: global::Rocks.Adornments<AdornmentsForHandler0, global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler0, global::System.Func<string?>, string?>, IAdornmentsForHistoricalSchedulerPartialTarget<AdornmentsForHandler0>
 //			{
-//				public AdornmentsForHandler0(global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler0 handler)
+//				public AdornmentsForHandler0(global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler0 handler)
 //					: base(handler) { }
 //			}
 //			public sealed class AdornmentsForHandler1
-//				: global::Rocks.Adornments<AdornmentsForHandler1, global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler1, global::System.Func<object?, bool>, bool>, IAdornmentsForDefaultSourceSerializerPartialTarget<AdornmentsForHandler1>
+//				: global::Rocks.Adornments<AdornmentsForHandler1, global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler1, global::System.Func<object?, bool>, bool>, IAdornmentsForHistoricalSchedulerPartialTarget<AdornmentsForHandler1>
 //			{
-//				public AdornmentsForHandler1(global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler1 handler)
+//				public AdornmentsForHandler1(global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler1 handler)
 //					: base(handler) { }
 //			}
 //			public sealed class AdornmentsForHandler2
-//				: global::Rocks.Adornments<AdornmentsForHandler2, global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler2, global::System.Func<int>, int>, IAdornmentsForDefaultSourceSerializerPartialTarget<AdornmentsForHandler2>
+//				: global::Rocks.Adornments<AdornmentsForHandler2, global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler2, global::System.Func<int>, int>, IAdornmentsForHistoricalSchedulerPartialTarget<AdornmentsForHandler2>
 //			{
-//				public AdornmentsForHandler2(global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler2 handler)
+//				public AdornmentsForHandler2(global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler2 handler)
 //					: base(handler) { }
 //			}
-//			public sealed class AdornmentsForHandler7<T>
-//				: global::Rocks.Adornments<AdornmentsForHandler7<T>, global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler7<T>, global::System.Action<T, global::System.IO.Stream, global::Elastic.Transport.SerializationFormatting>>, IAdornmentsForDefaultSourceSerializerPartialTarget<AdornmentsForHandler7<T>>
+//			public sealed class AdornmentsForHandler6<TState>
+//				: global::Rocks.Adornments<AdornmentsForHandler6<TState>, global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler6<TState>, global::System.Func<TState, global::System.DateTimeOffset, global::System.Func<global::System.Reactive.Concurrency.IScheduler, TState, global::System.IDisposable>, global::System.IDisposable>, global::System.IDisposable>, IAdornmentsForHistoricalSchedulerPartialTarget<AdornmentsForHandler6<TState>>
 //			{
-//				public AdornmentsForHandler7(global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler7<T> handler)
+//				public AdornmentsForHandler6(global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler6<TState> handler)
 //					: base(handler) { }
 //			}
-//			public sealed class AdornmentsForHandler8<T>
-//				: global::Rocks.Adornments<AdornmentsForHandler8<T>, global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler8<T>, global::System.Func<T, global::System.IO.Stream, global::Elastic.Transport.SerializationFormatting, global::System.Threading.CancellationToken, global::System.Threading.Tasks.Task>, global::System.Threading.Tasks.Task>, IAdornmentsForDefaultSourceSerializerPartialTarget<AdornmentsForHandler8<T>>
+//			public sealed class AdornmentsForHandler8
+//				: global::Rocks.Adornments<AdornmentsForHandler8, global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler8, global::System.Func<global::System.Type, object?>, object?>, IAdornmentsForHistoricalSchedulerPartialTarget<AdornmentsForHandler8>
 //			{
-//				public AdornmentsForHandler8(global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler8<T> handler)
+//				public AdornmentsForHandler8(global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler8 handler)
 //					: base(handler) { }
 //			}
-//			public sealed class AdornmentsForHandler9<T>
-//				: global::Rocks.Adornments<AdornmentsForHandler9<T>, global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler9<T>, global::System.Func<global::System.IO.Stream, T>, T>, IAdornmentsForDefaultSourceSerializerPartialTarget<AdornmentsForHandler9<T>>
+//			public sealed class AdornmentsForHandler9
+//				: global::Rocks.Adornments<AdornmentsForHandler9, global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler9, global::System.Func<global::System.DateTimeOffset, global::System.TimeSpan, global::System.DateTimeOffset>, global::System.DateTimeOffset>, IAdornmentsForHistoricalSchedulerPartialTarget<AdornmentsForHandler9>
 //			{
-//				public AdornmentsForHandler9(global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler9<T> handler)
+//				public AdornmentsForHandler9(global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler9 handler)
 //					: base(handler) { }
 //			}
 //			public sealed class AdornmentsForHandler10
-//				: global::Rocks.Adornments<AdornmentsForHandler10, global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler10, global::System.Func<global::System.Type, global::System.IO.Stream, object?>, object?>, IAdornmentsForDefaultSourceSerializerPartialTarget<AdornmentsForHandler10>
+//				: global::Rocks.Adornments<AdornmentsForHandler10, global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler10, global::System.Func<global::System.DateTimeOffset, global::System.DateTimeOffset>, global::System.DateTimeOffset>, IAdornmentsForHistoricalSchedulerPartialTarget<AdornmentsForHandler10>
 //			{
-//				public AdornmentsForHandler10(global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler10 handler)
+//				public AdornmentsForHandler10(global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler10 handler)
 //					: base(handler) { }
 //			}
-//			public sealed class AdornmentsForHandler11<T>
-//				: global::Rocks.Adornments<AdornmentsForHandler11<T>, global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler11<T>, global::System.Func<global::System.IO.Stream, global::System.Threading.CancellationToken, global::System.Threading.Tasks.ValueTask<T>>, global::System.Threading.Tasks.ValueTask<T>>, IAdornmentsForDefaultSourceSerializerPartialTarget<AdornmentsForHandler11<T>>
+//			public sealed class AdornmentsForHandler11
+//				: global::Rocks.Adornments<AdornmentsForHandler11, global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler11, global::System.Func<global::System.TimeSpan, global::System.TimeSpan>, global::System.TimeSpan>, IAdornmentsForHistoricalSchedulerPartialTarget<AdornmentsForHandler11>
 //			{
-//				public AdornmentsForHandler11(global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler11<T> handler)
+//				public AdornmentsForHandler11(global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler11 handler)
 //					: base(handler) { }
 //			}
 //			public sealed class AdornmentsForHandler12
-//				: global::Rocks.Adornments<AdornmentsForHandler12, global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler12, global::System.Func<global::System.Type, global::System.IO.Stream, global::System.Threading.CancellationToken, global::System.Threading.Tasks.ValueTask<object?>>, global::System.Threading.Tasks.ValueTask<object?>>, IAdornmentsForDefaultSourceSerializerPartialTarget<AdornmentsForHandler12>
+//				: global::Rocks.Adornments<AdornmentsForHandler12, global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler12, global::System.Func<global::System.Reactive.Concurrency.IScheduledItem<global::System.DateTimeOffset>?>, global::System.Reactive.Concurrency.IScheduledItem<global::System.DateTimeOffset>?>, IAdornmentsForHistoricalSchedulerPartialTarget<AdornmentsForHandler12>
 //			{
-//				public AdornmentsForHandler12(global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler12 handler)
+//				public AdornmentsForHandler12(global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler12 handler)
 //					: base(handler) { }
 //			}
-//			public sealed class AdornmentsForHandler13<T>
-//				: global::Rocks.Adornments<AdornmentsForHandler13<T>, global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler13<T>, global::System.Action<T, global::System.IO.Stream, global::Elastic.Transport.SerializationFormatting>>, IAdornmentsForDefaultSourceSerializerPartialTarget<AdornmentsForHandler13<T>>
+//			public sealed class AdornmentsForHandler13<TState>
+//				: global::Rocks.Adornments<AdornmentsForHandler13<TState>, global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler13<TState>, global::System.Func<TState, global::System.DateTimeOffset, global::System.Func<global::System.Reactive.Concurrency.IScheduler, TState, global::System.IDisposable>, global::System.IDisposable>, global::System.IDisposable>, IAdornmentsForHistoricalSchedulerPartialTarget<AdornmentsForHandler13<TState>>
 //			{
-//				public AdornmentsForHandler13(global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler13<T> handler)
-//					: base(handler) { }
-//			}
-//			public sealed class AdornmentsForHandler14<T>
-//				: global::Rocks.Adornments<AdornmentsForHandler14<T>, global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler14<T>, global::System.Func<T, global::System.IO.Stream, global::Elastic.Transport.SerializationFormatting, global::System.Threading.CancellationToken, global::System.Threading.Tasks.Task>, global::System.Threading.Tasks.Task>, IAdornmentsForDefaultSourceSerializerPartialTarget<AdornmentsForHandler14<T>>
-//			{
-//				public AdornmentsForHandler14(global::Elastic.Clients.Elasticsearch.Serialization.DefaultSourceSerializerPartialTarget.Handler14<T> handler)
+//				public AdornmentsForHandler13(global::System.Reactive.Concurrency.HistoricalSchedulerPartialTarget.Handler13<TState> handler)
 //					: base(handler) { }
 //			}
 //		}
