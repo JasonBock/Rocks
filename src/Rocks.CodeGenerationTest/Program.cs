@@ -78,7 +78,7 @@ static void TestWithType()
 #pragma warning disable EF1001 // Internal EF Core API usage.
 #pragma warning disable EF9100 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
    (var issues, var times) = TestGenerator.Generate(new RockGenerator(),
-		[typeof(System.Reactive.Concurrency.HistoricalScheduler)],
+		[typeof(AsmResolver.ByteArrayEqualityComparer)],
 		typesToLoadAssembliesFrom,
 		[], BuildType.Create);
 #pragma warning restore EF9100 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
@@ -121,6 +121,7 @@ static void TestWithTypes()
 		new (typeof(AngleSharp.BrowsingContext), []),
 		new (typeof(Arch.Buffer.CommandBuffer), []),
 		new (typeof(Ardalis.GuardClauses.Guard), []),
+		new (typeof(AsmResolver.ByteArrayEqualityComparer), []),
 		new (typeof(Aspire.Hosting.ContainerResourceBuilderExtensions), []),
 		new (typeof(Aspose.Email.AlternateView), ["AsposeEmailAlias"]),
 		new (typeof(Autofac.ContainerBuilder), []),
