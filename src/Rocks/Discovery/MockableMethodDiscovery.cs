@@ -26,8 +26,10 @@ internal sealed class MockableMethodDiscovery
 
 		this.Methods =
 			mockType.TypeKind == TypeKind.Interface ?
-				GetMethodsForInterface(mockType, containingAssemblyOfInvocationSymbol, shims, objectMethods, ref memberIdentifier, compilation) :
-				GetMethodsForClass(mockType, containingAssemblyOfInvocationSymbol, shims, objectMethods, ref memberIdentifier, compilation);
+				MockableMethodDiscovery.GetMethodsForInterface(
+					mockType, containingAssemblyOfInvocationSymbol, shims, objectMethods, ref memberIdentifier, compilation) :
+				MockableMethodDiscovery.GetMethodsForClass(
+					mockType, containingAssemblyOfInvocationSymbol, shims, objectMethods, ref memberIdentifier, compilation);
 	}
 
 	private static MockableMethods GetMethodsForClass(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol,
@@ -62,7 +64,7 @@ internal sealed class MockableMethodDiscovery
 						// so we have to remove the one that we currently have in the list.
 						// If it "shows up" again in a class lower in hierarchy,
 						// we'll just add it again.
-						var methodToRemove = methods.SingleOrDefault(_ => !(_.Value.Match(hierarchyMethod) == MethodMatch.None) &&
+						var methodToRemove = methods.SingleOrDefault(_ => !(_.Value.Match(hierarchyMethod, compilation) == MethodMatch.None) &&
 							!_.Value.ContainingType.Equals(hierarchyMethod.ContainingType));
 
 						if (methodToRemove is not null)
@@ -100,7 +102,7 @@ internal sealed class MockableMethodDiscovery
 						{
 							// This is an instance method that could be hiding a virtual method in a base class.
 							// If it is, then we need to remove that base method from the list.
-							var methodToRemove = methods.SingleOrDefault(_ => !(_.Value.Match(hierarchyMethod) == MethodMatch.None) &&
+							var methodToRemove = methods.SingleOrDefault(_ => !(_.Value.Match(hierarchyMethod, compilation) == MethodMatch.None) &&
 								!_.Value.ContainingType.Equals(hierarchyMethod.ContainingType));
 
 							if (methodToRemove is not null)
@@ -114,7 +116,7 @@ internal sealed class MockableMethodDiscovery
 				// One more sweep. If any of the candidates match a non-mockable method, 
 				// we have to remove it.
 				methods.RemoveAll(_ => hierarchyNonMockableMethods.Any(
-					hierarchyNonMockable => !(_.Value.Match(hierarchyNonMockable) == MethodMatch.None)));
+					hierarchyNonMockable => !(_.Value.Match(hierarchyNonMockable, compilation) == MethodMatch.None)));
 			}
 		}
 
@@ -152,15 +154,15 @@ internal sealed class MockableMethodDiscovery
 					// We need to explicitly implement matching methods from the object type,
 					// but if they exactly match from methods on the type itself,
 					// we don't even add it to the list.
-					if (!methods.Any(_ => _.Value.Match(selfMethod) == MethodMatch.Exact))
+					if (!methods.Any(_ => _.Value.Match(selfMethod, compilation) == MethodMatch.Exact))
 					{
 						var selfMethodRequiresExplicit = objectMethods.Any(
-							_ => _.Match(selfMethod) switch
+							_ => _.Match(selfMethod, compilation) switch
 							{
 								MethodMatch.DifferByReturnTypeOnly or MethodMatch.Exact => true,
 								_ => false
 							}) || methods.Any(
-							_ => _.Value.Match(selfMethod) switch
+							_ => _.Value.Match(selfMethod, compilation) switch
 							{
 								MethodMatch.DifferByReturnTypeOnly => true,
 								_ => false
@@ -197,13 +199,13 @@ internal sealed class MockableMethodDiscovery
 					}
 					else
 					{
-						if (!methods.Any(_ => _.Value.Match(selfBaseMethod) == MethodMatch.Exact))
+						if (!methods.Any(_ => _.Value.Match(selfBaseMethod, compilation) == MethodMatch.Exact))
 						{
 							var foundMatch = false;
 
 							foreach (var baseInterfaceMethodGroup in baseInterfaceMethodGroups)
 							{
-								if (baseInterfaceMethodGroup.Any(_ => _.Match(selfBaseMethod) == MethodMatch.Exact))
+								if (baseInterfaceMethodGroup.Any(_ => _.Match(selfBaseMethod, compilation) == MethodMatch.Exact))
 								{
 									baseInterfaceMethodGroup.Add(selfBaseMethod);
 									foundMatch = true;
@@ -233,8 +235,12 @@ internal sealed class MockableMethodDiscovery
 					// or any of the virtual methods from object,
 					// then we must require explicit implementation.
 					var requiresExplicitImplementation = methods.Any(
-						_ => _.Value.Match(baseInterfaceMethodGroup[0]) == MethodMatch.DifferByReturnTypeOnly) ||
-						objectMethods.Any(_ => _.Match(baseInterfaceMethodGroup[0]) switch
+						_ =>
+						{
+							var match = _.Value.Match(baseInterfaceMethodGroup[0], compilation);
+							return match == MethodMatch.DifferByReturnTypeOnly;
+						}) ||
+						objectMethods.Any(_ => _.Match(baseInterfaceMethodGroup[0], compilation) switch
 						{
 							MethodMatch.DifferByReturnTypeOnly or MethodMatch.Exact => true,
 							_ => false

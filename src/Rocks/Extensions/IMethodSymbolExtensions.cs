@@ -137,80 +137,8 @@ internal static class IMethodSymbolExtensions
 		return namespaces.ToImmutable();
 	}
 
-	internal static MethodMatch Match(this IMethodSymbol self, IMethodSymbol other)
+	internal static MethodMatch Match(this IMethodSymbol self, IMethodSymbol other, Compilation compilation)
 	{
-		static bool DoTypesMatch(ITypeSymbol left, ITypeSymbol right)
-		{
-			if (left is INamedTypeSymbol namedLeft && right is INamedTypeSymbol namedRight)
-			{
-				var leftType = namedLeft.WithNullableAnnotation(NullableAnnotation.NotAnnotated);
-				var rightType = namedRight.WithNullableAnnotation(NullableAnnotation.NotAnnotated);
-
-				var symbolFormatterNoGenerics = SymbolDisplayFormat.FullyQualifiedFormat
-					.WithGenericsOptions(SymbolDisplayGenericsOptions.None)
-					.AddMiscellaneousOptions(SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);
-
-				if (leftType.ToDisplayString(symbolFormatterNoGenerics) !=
-					rightType.ToDisplayString(symbolFormatterNoGenerics))
-				{
-					return false;
-				}
-				else
-				{
-					// Now we know the type name sans generics are the same. Now we check each type parameter
-					// if the type is generic. And we need to be recursive about it.
-					if (namedLeft.TypeParameters.Length != namedRight.TypeParameters.Length)
-					{
-						return false;
-					}
-					else
-					{
-						for (var i = 0; i < namedLeft.TypeParameters.Length; i++)
-						{
-							if (!(namedLeft.TypeArguments[i].TypeKind == TypeKind.TypeParameter &&
-								namedRight.TypeArguments[i].TypeKind == TypeKind.TypeParameter) ||
-								(namedLeft.TypeArguments[i].OriginalDefinition.ContainingSymbol.Kind == SymbolKind.NamedType &&
-								namedRight.TypeArguments[i].OriginalDefinition.ContainingSymbol.Kind == SymbolKind.NamedType))
-							{
-								// At this point, we know that the type arguments have been provided with types
-								// i.e. they're "closed", or they're type parameters that both originated from the type itself,
-								// and not from the method. Therefore, we can continue.
-								if (!DoTypesMatch(namedLeft.TypeArguments[i], namedRight.TypeArguments[i]))
-								{
-									return false;
-								}
-							}
-						}
-					}
-
-					return true;
-				}
-			}
-			else if (left is ITypeParameterSymbol leftTypeParameter && right is ITypeParameterSymbol rightTypeParameter)
-			{
-				if (leftTypeParameter.OriginalDefinition.ContainingSymbol is INamedTypeSymbol leftContainingType &&
-					rightTypeParameter.OriginalDefinition.ContainingSymbol is INamedTypeSymbol rightContainingType)
-				{
-					return leftContainingType.TypeParameters.IndexOf(leftTypeParameter) ==
-						rightContainingType.TypeParameters.IndexOf(rightTypeParameter);
-				}
-				else if (leftTypeParameter.OriginalDefinition.ContainingSymbol is IMethodSymbol leftContainingMethod &&
-					rightTypeParameter.OriginalDefinition.ContainingSymbol is IMethodSymbol rightContainingMethod)
-				{
-					return leftContainingMethod.TypeParameters.IndexOf(leftContainingMethod.TypeParameters.Single(_ => _.Name == leftTypeParameter.Name)) ==
-						rightContainingMethod.TypeParameters.IndexOf(rightContainingMethod.TypeParameters.Single(_ => _.Name == rightTypeParameter.Name));
-				}
-				else
-				{
-					return SymbolEqualityComparer.Default.Equals(left, right);
-				}
-			}
-			else
-			{
-				return SymbolEqualityComparer.Default.Equals(left, right);
-			}
-		}
-
 		if (self.Name != other.Name)
 		{
 			return MethodMatch.None;
@@ -238,7 +166,7 @@ internal static class IMethodSymbolExtensions
 				if (selfParameter.Type is IArrayTypeSymbol selfArray && otherParameter.Type is IArrayTypeSymbol otherArray)
 				{
 					if (selfArray.Rank != otherArray.Rank ||
-						!DoTypesMatch(selfArray.ElementType, otherArray.ElementType))
+						!selfArray.ElementType.IsMatch(otherArray.ElementType, compilation))
 					{
 						return MethodMatch.None;
 					}
@@ -259,7 +187,7 @@ internal static class IMethodSymbolExtensions
 					var selfParameterType = selfParameter.Type;
 					var otherParameterType = otherParameter.Type;
 
-					if (DoTypesMatch(selfParameterType, otherParameterType))
+					if (selfParameterType.IsMatch(otherParameterType, compilation))
 					{
 						// The types match, move on.
 						continue;
@@ -271,7 +199,7 @@ internal static class IMethodSymbolExtensions
 				}
 			}
 
-			return DoTypesMatch(self.ReturnType, other.ReturnType) ?
+			return self.ReturnType.IsMatch(other.ReturnType, compilation) ?
 				MethodMatch.Exact : MethodMatch.DifferByReturnTypeOnly;
 		}
 	}

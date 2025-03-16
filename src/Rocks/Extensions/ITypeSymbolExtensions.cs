@@ -5,6 +5,84 @@ namespace Rocks.Extensions;
 
 internal static class ITypeSymbolExtensions
 {
+	internal static bool IsMatch(this ITypeSymbol self, ITypeSymbol other, Compilation compilation)
+	{
+		if (self is INamedTypeSymbol namedLeft && other is INamedTypeSymbol namedRight)
+		{
+			var leftType = namedLeft.WithNullableAnnotation(NullableAnnotation.NotAnnotated);
+			var rightType = namedRight.WithNullableAnnotation(NullableAnnotation.NotAnnotated);
+
+			var symbolFormatterNoGenerics = SymbolDisplayFormat.FullyQualifiedFormat
+				.WithGenericsOptions(SymbolDisplayGenericsOptions.None)
+				.AddMiscellaneousOptions(SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);
+
+			if (leftType.ToDisplayString(symbolFormatterNoGenerics) !=
+				rightType.ToDisplayString(symbolFormatterNoGenerics))
+			{
+				return false;
+			}
+			else
+			{
+				// Now we know the type name sans generics are the same. Now we check each type parameter
+				// if the type is generic. And we need to be recursive about it.
+				if (namedLeft.TypeParameters.Length != namedRight.TypeParameters.Length)
+				{
+					return false;
+				}
+				else
+				{
+					for (var i = 0; i < namedLeft.TypeParameters.Length; i++)
+					{
+						if (!(namedLeft.TypeArguments[i].TypeKind == TypeKind.TypeParameter &&
+							namedRight.TypeArguments[i].TypeKind == TypeKind.TypeParameter) ||
+							(namedLeft.TypeArguments[i].OriginalDefinition.ContainingSymbol.Kind == SymbolKind.NamedType &&
+							namedRight.TypeArguments[i].OriginalDefinition.ContainingSymbol.Kind == SymbolKind.NamedType))
+						{
+							// At this point, we know that the type arguments have been provided with types
+							// i.e. they're "closed", or they're type parameters that both originated from the type itself,
+							// and not from the method. Therefore, we can continue.
+							if (!IsMatch(namedLeft.TypeArguments[i], namedRight.TypeArguments[i], compilation))
+							{
+								return false;
+							}
+						}
+					}
+				}
+
+				return true;
+			}
+		}
+		else if (self is ITypeParameterSymbol leftTypeParameter && other is ITypeParameterSymbol rightTypeParameter)
+		{
+			// We also need to be cognizant about constraints on type parameters, and making sure
+			// they match or not, and we can use stringified versions of them,
+			// because GetConstraints() returns FQNs, and type constraints
+			// are ordered.
+			if (leftTypeParameter.OriginalDefinition.ContainingSymbol is INamedTypeSymbol leftContainingType &&
+				rightTypeParameter.OriginalDefinition.ContainingSymbol is INamedTypeSymbol rightContainingType)
+			{
+				return (leftContainingType.TypeParameters.IndexOf(leftTypeParameter) ==
+					rightContainingType.TypeParameters.IndexOf(rightTypeParameter)) &&
+					leftTypeParameter.GetConstraints(compilation) == rightTypeParameter.GetConstraints(compilation);
+			}
+			else if (leftTypeParameter.OriginalDefinition.ContainingSymbol is IMethodSymbol leftContainingMethod &&
+				rightTypeParameter.OriginalDefinition.ContainingSymbol is IMethodSymbol rightContainingMethod)
+			{
+				return (leftContainingMethod.TypeParameters.IndexOf(leftContainingMethod.TypeParameters.Single(_ => _.Name == leftTypeParameter.Name)) ==
+					rightContainingMethod.TypeParameters.IndexOf(rightContainingMethod.TypeParameters.Single(_ => _.Name == rightTypeParameter.Name))) &&
+					leftTypeParameter.GetConstraints(compilation) == rightTypeParameter.GetConstraints(compilation);
+			}
+			else
+			{
+				return SymbolEqualityComparer.Default.Equals(self, other);
+			}
+		}
+		else
+		{
+			return SymbolEqualityComparer.Default.Equals(self, other);
+		}
+	}
+
 	internal static bool RequiresProjectedArgument(this ITypeSymbol self, Compilation compilation) =>
 		self.IsPointer() ||
 			SymbolEqualityComparer.Default.Equals(self, compilation.GetTypeByMetadataName("System.ArgIterator")) ||

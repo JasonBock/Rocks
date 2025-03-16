@@ -422,6 +422,6 @@ public static class IMethodSymbolExtensionsMatchTests
 		var methodOneSymbol = model.GetDeclaredSymbol(methodOneSyntax)!;
 		var methodTwoSymbol = model.GetDeclaredSymbol(methodTwoSyntax)!;
 
-		return methodOneSymbol.Match(methodTwoSymbol);
+		return methodOneSymbol.Match(methodTwoSymbol, compilation);
 	}
 }

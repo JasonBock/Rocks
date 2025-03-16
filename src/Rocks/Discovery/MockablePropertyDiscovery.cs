@@ -165,26 +165,30 @@ internal sealed class MockablePropertyDiscovery
 					else
 					{
 						if (!properties.Any(_ =>
-							selfBaseProperty.IsIndexer && _.Value.IsIndexer &&
-								selfBaseProperty.GetMethod is not null && _.Value.GetMethod is not null && selfBaseProperty.GetMethod.Match(_.Value.GetMethod) == MethodMatch.Exact ||
-								selfBaseProperty.SetMethod is not null && _.Value.SetMethod is not null && selfBaseProperty.SetMethod.Match(_.Value.SetMethod) == MethodMatch.Exact ||
-							!selfBaseProperty.IsIndexer && !_.Value.IsIndexer &&
+							(selfBaseProperty.IsIndexer && _.Value.IsIndexer &&
+								selfBaseProperty.GetMethod is not null && _.Value.GetMethod is not null && 
+								selfBaseProperty.GetMethod.Match(_.Value.GetMethod, compilation) == MethodMatch.Exact) ||
+							(selfBaseProperty.SetMethod is not null && _.Value.SetMethod is not null && 
+								selfBaseProperty.SetMethod.Match(_.Value.SetMethod, compilation) == MethodMatch.Exact) ||
+							(!selfBaseProperty.IsIndexer && !_.Value.IsIndexer &&
 								_.Value.Name == selfBaseProperty.Name &&
 								SymbolEqualityComparer.Default.Equals(_.Value.Type, selfBaseProperty.Type) &&
-								_.Value.GetAccessors() == selfBaseProperty.GetAccessors()))
+								_.Value.GetAccessors() == selfBaseProperty.GetAccessors())))
 						{
 							var foundMatch = false;
 
 							foreach (var baseInterfacePropertyGroup in baseInterfacePropertyGroups)
 							{
 								if (baseInterfacePropertyGroup.Any(_ =>
-									selfBaseProperty.IsIndexer && _.IsIndexer &&
-										selfBaseProperty.GetMethod is not null && _.GetMethod is not null && selfBaseProperty.GetMethod.Match(_.GetMethod) == MethodMatch.Exact ||
-										selfBaseProperty.SetMethod is not null && _.SetMethod is not null && selfBaseProperty.SetMethod.Match(_.SetMethod) == MethodMatch.Exact ||
-									!selfBaseProperty.IsIndexer && !_.IsIndexer &&
+									(selfBaseProperty.IsIndexer && _.IsIndexer &&
+										selfBaseProperty.GetMethod is not null && _.GetMethod is not null && 
+										selfBaseProperty.GetMethod.Match(_.GetMethod, compilation) == MethodMatch.Exact) ||
+									(selfBaseProperty.SetMethod is not null && 
+										_.SetMethod is not null && selfBaseProperty.SetMethod.Match(_.SetMethod, compilation) == MethodMatch.Exact) ||
+									(!selfBaseProperty.IsIndexer && !_.IsIndexer &&
 										_.Name == selfBaseProperty.Name &&
 										SymbolEqualityComparer.Default.Equals(_.Type, selfBaseProperty.Type) &&
-										_.GetAccessors() == selfBaseProperty.GetAccessors()))
+										_.GetAccessors() == selfBaseProperty.GetAccessors())))
 								{
 									baseInterfacePropertyGroup.Add(selfBaseProperty);
 									foundMatch = true;
