@@ -21,7 +21,19 @@ internal enum MethodMatch
 }
 ```
 
-Then when we are trying to determine if a method should be implemented explicitly (which should only be with interfaces), we can take into consideration the `DifferByConstraintsOnly`. Or we could "merge" the `DifferBy...` values together. May be better to keep them separated.
+Or...
+
+```c#
+internal enum MethodMatch
+{
+   Exact,
+   DifferByReturnTypeOrConstraintsOnly,
+   None,
+}
+```
+
+
+Then when we are trying to determine if a method should be implemented explicitly (which should only be with interfaces), we can take into consideration the `Differ...`. Or we could "merge" the `DifferBy...` values together. May be better to keep them separated.
 
 TODO:
 * Should I also do this with an equivalent "class" configuration?
