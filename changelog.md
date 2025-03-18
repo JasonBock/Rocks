@@ -5,13 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [9.0.2] - Not Yet Released
+## [9.0.2] - 2025-03-17
 
 ### Fixed
 
 - Handlers for methods with `ref` or `out` parameters and parameters with default values are now generated correctly (issue [#350](https://github.com/JasonBock/Rocks/issues/350))
 - Events in interfaces that contain members with default implementations are now handled correctly in shim types (issue [#349](https://github.com/JasonBock/Rocks/issues/349))
 - Members using generic types with different type parameters are now generated correctly (issue [#351](https://github.com/JasonBock/Rocks/issues/351))
+- Hiding members that are different only by type parameter constraints will now work (issue [#352](https://github.com/JasonBock/Rocks/issues/352))
 
 ## [9.0.1] - 2024-12-15
 

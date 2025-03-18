@@ -37,4 +37,4 @@ Then when we are trying to determine if a method should be implemented explicitl
 
 TODO:
 * Should I also do this with an equivalent "class" configuration?
-* Because I changed ordering of type constraints, some unit tests might fail because constraint generation is out-of-order.
+* Make a new issue to parallelize Rocks.CodeGenerationTests
