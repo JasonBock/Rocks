@@ -5,7 +5,7 @@ namespace Rocks.Extensions;
 
 internal static class ITypeSymbolExtensions
 {
-	internal static bool IsMatch(this ITypeSymbol self, ITypeSymbol other, Compilation compilation)
+	internal static TypeMatch GetMatch(this ITypeSymbol self, ITypeSymbol other, Compilation compilation)
 	{
 		if (self is INamedTypeSymbol namedLeft && other is INamedTypeSymbol namedRight)
 		{
@@ -19,7 +19,7 @@ internal static class ITypeSymbolExtensions
 			if (leftType.ToDisplayString(symbolFormatterNoGenerics) !=
 				rightType.ToDisplayString(symbolFormatterNoGenerics))
 			{
-				return false;
+				return TypeMatch.None;
 			}
 			else
 			{
@@ -27,10 +27,12 @@ internal static class ITypeSymbolExtensions
 				// if the type is generic. And we need to be recursive about it.
 				if (namedLeft.TypeParameters.Length != namedRight.TypeParameters.Length)
 				{
-					return false;
+					return TypeMatch.None;
 				}
 				else
 				{
+					var hasDiffByConstraint = false;
+
 					for (var i = 0; i < namedLeft.TypeParameters.Length; i++)
 					{
 						if (!(namedLeft.TypeArguments[i].TypeKind == TypeKind.TypeParameter &&
@@ -41,15 +43,19 @@ internal static class ITypeSymbolExtensions
 							// At this point, we know that the type arguments have been provided with types
 							// i.e. they're "closed", or they're type parameters that both originated from the type itself,
 							// and not from the method. Therefore, we can continue.
-							if (!IsMatch(namedLeft.TypeArguments[i], namedRight.TypeArguments[i], compilation))
+							var typeArgumentMatch = namedLeft.TypeArguments[i].GetMatch(namedRight.TypeArguments[i], compilation);
+
+							if (typeArgumentMatch == TypeMatch.None)
 							{
-								return false;
+								return TypeMatch.None;
 							}
+
+							hasDiffByConstraint |= typeArgumentMatch == TypeMatch.DifferByConstraintsOnly;
 						}
 					}
-				}
 
-				return true;
+					return hasDiffByConstraint ? TypeMatch.DifferByConstraintsOnly : TypeMatch.Exact;
+				}
 			}
 		}
 		else if (self is ITypeParameterSymbol leftTypeParameter && other is ITypeParameterSymbol rightTypeParameter)
@@ -61,25 +67,34 @@ internal static class ITypeSymbolExtensions
 			if (leftTypeParameter.OriginalDefinition.ContainingSymbol is INamedTypeSymbol leftContainingType &&
 				rightTypeParameter.OriginalDefinition.ContainingSymbol is INamedTypeSymbol rightContainingType)
 			{
-				return (leftContainingType.TypeParameters.IndexOf(leftTypeParameter) ==
-					rightContainingType.TypeParameters.IndexOf(rightTypeParameter)) &&
-					leftTypeParameter.GetConstraints(compilation) == rightTypeParameter.GetConstraints(compilation);
+				return
+					leftContainingType.TypeParameters.IndexOf(leftTypeParameter) == rightContainingType.TypeParameters.IndexOf(rightTypeParameter) ?
+						leftTypeParameter.GetConstraints(compilation) == rightTypeParameter.GetConstraints(compilation) ?
+							TypeMatch.Exact :
+							TypeMatch.DifferByConstraintsOnly :
+					TypeMatch.None;
 			}
 			else if (leftTypeParameter.OriginalDefinition.ContainingSymbol is IMethodSymbol leftContainingMethod &&
 				rightTypeParameter.OriginalDefinition.ContainingSymbol is IMethodSymbol rightContainingMethod)
 			{
-				return (leftContainingMethod.TypeParameters.IndexOf(leftContainingMethod.TypeParameters.Single(_ => _.Name == leftTypeParameter.Name)) ==
-					rightContainingMethod.TypeParameters.IndexOf(rightContainingMethod.TypeParameters.Single(_ => _.Name == rightTypeParameter.Name))) &&
-					leftTypeParameter.GetConstraints(compilation) == rightTypeParameter.GetConstraints(compilation);
+				return
+					leftContainingMethod.TypeParameters.IndexOf(leftContainingMethod.TypeParameters.Single(_ => _.Name == leftTypeParameter.Name)) ==
+						rightContainingMethod.TypeParameters.IndexOf(rightContainingMethod.TypeParameters.Single(_ => _.Name == rightTypeParameter.Name)) ?
+						leftTypeParameter.GetConstraints(compilation) == rightTypeParameter.GetConstraints(compilation) ?
+							TypeMatch.Exact :
+							TypeMatch.DifferByConstraintsOnly :
+					TypeMatch.None;
 			}
 			else
 			{
-				return SymbolEqualityComparer.Default.Equals(self, other);
+				return SymbolEqualityComparer.Default.Equals(self, other) ?
+					TypeMatch.Exact : TypeMatch.None;
 			}
 		}
 		else
 		{
-			return SymbolEqualityComparer.Default.Equals(self, other);
+			return SymbolEqualityComparer.Default.Equals(self, other) ?
+				TypeMatch.Exact : TypeMatch.None;
 		}
 	}
 

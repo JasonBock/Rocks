@@ -159,12 +159,12 @@ internal sealed class MockableMethodDiscovery
 						var selfMethodRequiresExplicit = objectMethods.Any(
 							_ => _.Match(selfMethod, compilation) switch
 							{
-								MethodMatch.DifferByReturnTypeOnly or MethodMatch.Exact => true,
+								MethodMatch.DifferByReturnTypeOrConstraintOnly or MethodMatch.Exact => true,
 								_ => false
 							}) || methods.Any(
 							_ => _.Value.Match(selfMethod, compilation) switch
 							{
-								MethodMatch.DifferByReturnTypeOnly => true,
+								MethodMatch.DifferByReturnTypeOrConstraintOnly => true,
 								_ => false
 							}) ? RequiresExplicitInterfaceImplementation.Yes : RequiresExplicitInterfaceImplementation.No;
 						methods.Add(new(selfMethod, mockType, selfMethodRequiresExplicit, RequiresOverride.No,
@@ -238,11 +238,11 @@ internal sealed class MockableMethodDiscovery
 						_ =>
 						{
 							var match = _.Value.Match(baseInterfaceMethodGroup[0], compilation);
-							return match == MethodMatch.DifferByReturnTypeOnly;
+							return match == MethodMatch.DifferByReturnTypeOrConstraintOnly;
 						}) ||
 						objectMethods.Any(_ => _.Match(baseInterfaceMethodGroup[0], compilation) switch
 						{
-							MethodMatch.DifferByReturnTypeOnly or MethodMatch.Exact => true,
+							MethodMatch.DifferByReturnTypeOrConstraintOnly or MethodMatch.Exact => true,
 							_ => false
 						}) ?
 						RequiresExplicitInterfaceImplementation.Yes :

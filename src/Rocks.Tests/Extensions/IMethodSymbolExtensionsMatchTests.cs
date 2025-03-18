@@ -316,7 +316,7 @@ public static class IMethodSymbolExtensionsMatchTests
 			""";
 
 		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
-			Is.EqualTo(MethodMatch.DifferByReturnTypeOnly));
+			Is.EqualTo(MethodMatch.DifferByReturnTypeOrConstraintOnly));
 	}
 
 	[Test]

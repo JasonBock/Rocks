@@ -158,6 +158,8 @@ internal static class IMethodSymbolExtensions
 				return MethodMatch.None;
 			}
 
+			var hasDiffByConstraint = false;
+
 			for (var i = 0; i < selfParameters.Length; i++)
 			{
 				var selfParameter = selfParameters[i];
@@ -166,7 +168,7 @@ internal static class IMethodSymbolExtensions
 				if (selfParameter.Type is IArrayTypeSymbol selfArray && otherParameter.Type is IArrayTypeSymbol otherArray)
 				{
 					if (selfArray.Rank != otherArray.Rank ||
-						!selfArray.ElementType.IsMatch(otherArray.ElementType, compilation))
+						selfArray.ElementType.GetMatch(otherArray.ElementType, compilation) == TypeMatch.None)
 					{
 						return MethodMatch.None;
 					}
@@ -187,20 +189,24 @@ internal static class IMethodSymbolExtensions
 					var selfParameterType = selfParameter.Type;
 					var otherParameterType = otherParameter.Type;
 
-					if (selfParameterType.IsMatch(otherParameterType, compilation))
+					var parameterTypeMatch = selfParameterType.GetMatch(otherParameterType, compilation);
+
+					if (parameterTypeMatch is TypeMatch.None)
 					{
-						// The types match, move on.
-						continue;
+						return MethodMatch.None;
 					}
 					else
 					{
-						return MethodMatch.None;
+						hasDiffByConstraint |= parameterTypeMatch == TypeMatch.DifferByConstraintsOnly;
 					}
 				}
 			}
 
-			return self.ReturnType.IsMatch(other.ReturnType, compilation) ?
-				MethodMatch.Exact : MethodMatch.DifferByReturnTypeOnly;
+			return self.ReturnType.GetMatch(other.ReturnType, compilation) == TypeMatch.Exact ?
+				hasDiffByConstraint ?
+					MethodMatch.DifferByReturnTypeOrConstraintOnly :
+					MethodMatch.Exact :
+				MethodMatch.DifferByReturnTypeOrConstraintOnly;
 		}
 	}
 }

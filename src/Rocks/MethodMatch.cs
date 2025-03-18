@@ -3,6 +3,6 @@
 internal enum MethodMatch
 {
    Exact,
-   DifferByReturnTypeOnly,
+   DifferByReturnTypeOrConstraintOnly,
    None,
 }
