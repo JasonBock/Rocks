@@ -8,7 +8,7 @@
 
 ![Rocks logo](https://raw.github.com/JasonBock/Rocks/main/src/Images/Banner-Small.png)
 
-A mocking library based on the Compiler APIs (Roslyn + Mocks)
+A mocking library based on the Compiler APIs (Roslyn + Mocks).
 
 ## Getting Started
 
