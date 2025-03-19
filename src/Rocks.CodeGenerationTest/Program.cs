@@ -73,18 +73,18 @@ static void TestWithType()
 		typeof(System.Reflection.ConstructorInfo),
 		typeof(System.Xml.Linq.SaveOptions),
 		typeof(Azure.Core.Amqp.AmqpAnnotatedMessage),
-	};
+	}.ToImmutableArray();
 
 #pragma warning disable EF1001 // Internal EF Core API usage.
 #pragma warning disable EF9100 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
-   (var issues, var times) = TestGenerator.Generate(new RockGenerator(),
+	(var issues, var times) = TestGenerator.Generate(new RockGenerator(),
 		[typeof(AsmResolver.ByteArrayEqualityComparer)],
 		typesToLoadAssembliesFrom,
 		[], BuildType.Create);
 #pragma warning restore EF9100 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 #pragma warning restore EF1001 // Internal EF Core API usage.
 
-   Console.WriteLine($"Generation Time: {times.GeneratorTime}, Emit Time: {times.EmitTime}");
+	Console.WriteLine($"Generation Time: {times.GeneratorTime}, Emit Time: {times.EmitTime}");
 	PrintIssues(issues);
 }
 
@@ -251,38 +251,76 @@ static void TestWithTypes()
 		typeof(System.Reflection.ConstructorInfo),
 		typeof(System.Xml.Linq.SaveOptions),
 		typeof(Azure.Core.Amqp.AmqpAnnotatedMessage),
-	};
+	}.ToImmutableArray();
 
 	Console.WriteLine($"Getting mapped types...");
 	var totalDiscoveredTypeCount = 0;
 	var issues = new List<Issue>();
-
 	var visitedAssemblies = new HashSet<Assembly>();
+
+	var generatorTasks = new List<Task<GeneratorResults>>();
+	// 4 seems to be a reasonable number. Going higher
+	// doesn't seem to help. I may have some contention in the underlying code
+	// that I don't realize. Also, if I go to 20 on my 20-core machine,
+	// I get an error that doesn't happen when the count is lower.
+	var maximumGeneratorTasksCount = 4;
+
+	Console.WriteLine($"Generator task count: {maximumGeneratorTasksCount}");
+
+	static GeneratorResults Generate(
+		TypeAliasesMapping typeAliasesMapping, ImmutableArray<Type> typesToLoadAssembliesFrom)
+	{
+		var targetAssemblySet = new HashSet<Assembly> { typeAliasesMapping.type.Assembly };
+
+		var discoveredTypes = TestGenerator.GetTargets(
+			targetAssemblySet, [], typesToLoadAssembliesFrom, typeAliasesMapping.aliases);
+
+		(var createIssues, _) = TestGenerator.Generate(
+			new RockGenerator(), discoveredTypes, typesToLoadAssembliesFrom, typeAliasesMapping.aliases, BuildType.Create);
+		(var makeIssues, _) = TestGenerator.Generate(
+			new RockGenerator(), discoveredTypes, typesToLoadAssembliesFrom, typeAliasesMapping.aliases, BuildType.Make);
+
+		return new(typeAliasesMapping.type.Assembly.GetName().Name, discoveredTypes.Length, createIssues, makeIssues);
+	}
 
 	foreach (var targetMapping in targetMappings)
 	{
-		if (visitedAssemblies.Add(targetMapping.type.Assembly))
+		if (visitedAssemblies.Add(targetMapping.type.Assembly) &&
+			generatorTasks.Count < maximumGeneratorTasksCount)
 		{
-			Console.WriteLine($"Getting target types for {targetMapping.type.Assembly.GetName().Name}");
-			var targetAssemblySet = new HashSet<Assembly> { targetMapping.type.Assembly };
-
-			var discoveredTypes = TestGenerator.GetTargets(
-				targetAssemblySet, [], typesToLoadAssembliesFrom, targetMapping.aliases);
-
-			Console.WriteLine($"Testing {targetMapping.type.Assembly.GetName().Name} - {BuildType.Create}");
-			(var createIssues, _) = TestGenerator.Generate(
-				new RockGenerator(), discoveredTypes, typesToLoadAssembliesFrom, targetMapping.aliases, BuildType.Create);
-			issues.AddRange(createIssues);
-
-			Console.WriteLine($"Testing {targetMapping.type.Assembly.GetName().Name} - {BuildType.Make}");
-			(var makeIssues, _) = TestGenerator.Generate(
-				new RockGenerator(), discoveredTypes, typesToLoadAssembliesFrom, targetMapping.aliases, BuildType.Make);
-			issues.AddRange(makeIssues);
-
-			totalDiscoveredTypeCount += discoveredTypes.Length;
-			Console.WriteLine($"Type count found for {targetMapping.type.Assembly.GetName().Name} - {discoveredTypes.Length}");
-			Console.WriteLine();
+			Console.WriteLine($"Started {targetMapping.type.Assembly.GetName().Name}");
+			generatorTasks.Add(Task.Run(() => Generate(targetMapping, typesToLoadAssembliesFrom)));
 		}
+
+		if (generatorTasks.Count >= maximumGeneratorTasksCount)
+		{
+			var finishedTaskIndex = Task.WaitAny([.. generatorTasks]);
+			var finishedTask = generatorTasks[finishedTaskIndex].Result;
+
+			Console.WriteLine($"Finished {finishedTask.AssemblyName}");
+			totalDiscoveredTypeCount += finishedTask.DiscoveredTypesCount;
+			issues.AddRange(finishedTask.CreateIssues);
+			issues.AddRange(finishedTask.MakeIssues);
+
+			generatorTasks.RemoveAt(finishedTaskIndex);
+		}
+	}
+
+	Console.WriteLine();
+	Console.WriteLine("Waiting for remaining tasks to finish...");
+	Console.WriteLine();
+
+	while (generatorTasks.Count > 0)
+	{
+		var finishedTaskIndex = Task.WaitAny([.. generatorTasks]);
+		var finishedTask = generatorTasks[finishedTaskIndex].Result;
+
+		Console.WriteLine($"Finished {finishedTask.AssemblyName}");
+		totalDiscoveredTypeCount += finishedTask.DiscoveredTypesCount;
+		issues.AddRange(finishedTask.CreateIssues);
+		issues.AddRange(finishedTask.MakeIssues);
+
+		generatorTasks.RemoveAt(finishedTaskIndex);
 	}
 
 	Console.WriteLine(
@@ -316,7 +354,7 @@ static void TestTypesIndividually()
 		typeof(System.Reflection.ConstructorInfo),
 		typeof(System.Xml.Linq.SaveOptions),
 		typeof(Azure.Core.Amqp.AmqpAnnotatedMessage),
-	};
+	}.ToImmutableArray();
 
 	var issues = new List<Issue>();
 

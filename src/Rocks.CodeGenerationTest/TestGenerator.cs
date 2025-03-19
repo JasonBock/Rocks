@@ -9,7 +9,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
-using TerraFX.Interop.Windows;
 
 namespace Rocks.CodeGenerationTest;
 
@@ -51,18 +50,24 @@ internal static class TestGenerator
 		{ "SYSLIB0051", ReportDiagnostic.Info },
 	};
 
-	internal static Type[] GetTargets(HashSet<Assembly> targetAssemblies, Type[] typesToIgnore,
-		 Type[] typesToLoadAssembliesFrom, string[] aliases)
+	internal static ImmutableArray<Type> GetTargets(HashSet<Assembly> targetAssemblies, ImmutableArray<Type> typesToIgnore,
+		 ImmutableArray<Type> typesToLoadAssembliesFrom, string[] aliases)
 	{
-		var initialTypes = targetAssemblies.SelectMany(
-			_ => _.GetTypes().Where(
-				_ => _.IsPublic && !_.IsSubclassOf(typeof(Delegate)) && !_.IsValueType && !_.IsSealed && !typesToIgnore.Contains(_))).ToArray();
+		var initialTypes = targetAssemblies.SelectMany(_ => 
+			_.GetTypes().Where(
+				_ => _.IsPublic && 
+				!_.IsSubclassOf(typeof(Delegate)) 
+				&& !_.IsValueType 
+				&& !_.IsSealed 
+				&& !typesToIgnore.Contains(_)))
+			.ToImmutableArray();
 		return TestGenerator.GetMockableTypes(initialTypes, true, typesToLoadAssembliesFrom, aliases);
 	}
 
-	private static Type[] GetMockableTypes(Type[] types, bool isCreate, Type[] typesToLoadAssembliesFrom, string[] aliases)
+	private static ImmutableArray<Type> GetMockableTypes(
+		ImmutableArray<Type> types, bool isCreate, ImmutableArray<Type> typesToLoadAssembliesFrom, string[] aliases)
 	{
-		static string GetValidationCode(Type[] types, string[] aliases)
+		static string GetValidationCode(ImmutableArray<Type> types, string[] aliases)
 		{
 			using var writer = new StringWriter();
 			using var indentWriter = new IndentedTextWriter(writer, "\t");
@@ -145,7 +150,8 @@ internal static class TestGenerator
 		return [.. validTypes];
 	}
 
-	internal static (ImmutableArray<Issue> issues, Times times) Generate(IIncrementalGenerator generator, Type[] targetTypes, Type[] typesToLoadAssembliesFrom,
+	internal static (ImmutableArray<Issue> issues, Times times) Generate(
+		IIncrementalGenerator generator, ImmutableArray<Type> targetTypes, ImmutableArray<Type> typesToLoadAssembliesFrom,
 		 string[] aliases, BuildType buildType)
 	{
 		var issues = new List<Issue>();
@@ -215,7 +221,8 @@ internal static class TestGenerator
 		return ([.. issues], new(generatorWatch.Elapsed, emitWatch.Elapsed));
 	}
 
-	internal static (ImmutableArray<Issue> issues, Times times) GenerateNoEmit(IIncrementalGenerator generator, Type[] targetTypes, Type[] typesToLoadAssembliesFrom,
+	internal static (ImmutableArray<Issue> issues, Times times) GenerateNoEmit(
+		IIncrementalGenerator generator, ImmutableArray<Type> targetTypes, ImmutableArray<Type> typesToLoadAssembliesFrom,
 		 string[] aliases, BuildType buildType)
 	{
 		var issues = new List<Issue>();
@@ -341,7 +348,7 @@ internal static class TestGenerator
 		}
 	}
 
-	internal static string GetCode(Type[] types, BuildType buildType, string[] aliases)
+	internal static string GetCode(ImmutableArray<Type> types, BuildType buildType, string[] aliases)
 	{
 		using var writer = new StringWriter();
 		using var indentWriter = new IndentedTextWriter(writer, "\t");
