@@ -1,41 +1,30 @@
 ﻿using BenchmarkDotNet.Attributes;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 
-namespace Rocks.Performance;
+namespace Rocks.Performance.Baselines;
 
 /*
 https://github.com/moq/moq/issues/1350
 I was curious to see how fast Rocks would
-generate a mock from an interface with a lot of members.
+generate a mock from an interface with a lot of members:
+* 1 method
+* 381 properties 
 
 Grabbed the interface from:
 https://gist.github.com/rauhs/4cbe672e26dd6727e84f7b96c68dcf1f
 
-The results:
-
-|       Method |     Mean |    Error |   StdDev |      Gen0 |      Gen1 |     Gen2 | Allocated |
-|------------- |---------:|---------:|---------:|----------:|----------:|---------:|----------:|
-| RunGenerator | 14.89 ms | 0.291 ms | 0.399 ms | 1750.0000 | 1218.7500 | 218.7500 |   9.62 MB |
-
-This means it takes Rocks 15 ms to generate the mock code for the interface.
-The memory allocation is admittedly not good. Something to look at
-in the future.
+Seemed like a good test to include in the baselines.
 */
 
 [MemoryDiagnoser]
 public class LargeInterfaceGeneration
+	: BaselineTest
 {
-	private readonly CSharpCompilation compilation;
-	private readonly CSharpGeneratorDriver driver;
-
 	public LargeInterfaceGeneration()
-	{
-		var code =
+		: base(
 			"""
 			using Rocks;
 			
-			[assembly: RockCreate<IHaveLotsOfMembers>]
+			[assembly: Rock(typeof(IHaveLotsOfMembers), BuildType.Create)]
 
 			public interface IHaveLotsOfMembers
 			{
@@ -423,24 +412,6 @@ public class LargeInterfaceGeneration
 				int SomeProp381 { get; }
 				int SomeMethod();
 			}
-			""";
-		var tree = CSharpSyntaxTree.ParseText(code);
-		var references = AppDomain.CurrentDomain.GetAssemblies()
-			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-			.Select(_ => MetadataReference.CreateFromFile(_.Location))
-			.Concat(
-			[
-				MetadataReference.CreateFromFile(typeof(RockGenerator).Assembly.Location),
-			]);
-		this.compilation = CSharpCompilation.Create("generator", [tree],
-			references, new(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
-		this.driver = CSharpGeneratorDriver.Create(new RockGenerator());
-	}
-
-	[Benchmark]
-	public Compilation RunGenerator()
-	{
-		_ = this.driver.RunGeneratorsAndUpdateCompilation(this.compilation, out var outputCompilation, out var _);
-		return outputCompilation;
-	}
+			""")
+	{ }
 }

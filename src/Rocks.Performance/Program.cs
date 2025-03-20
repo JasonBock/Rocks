@@ -1,6 +1,3 @@
-﻿using BenchmarkDotNet.Running;
-using Rocks.Performance;
+﻿using Rocks.Performance.Baselines;
 
-#pragma warning disable CA1852 // Seal internal types
-BenchmarkRunner.Run<AttributeGetDescription>();
-#pragma warning restore CA1852 // Seal internal types
+BaselineRunner.Run();
