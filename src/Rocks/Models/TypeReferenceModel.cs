@@ -25,7 +25,6 @@ internal sealed record TypeReferenceModel
 				null;
 
 		this.AllowsRefLikeType = (type as ITypeParameterSymbol)?.AllowsRefLikeType ?? false;
-		this.Kind = type.Kind;
 		this.TypeKind = type.TypeKind;
 		this.SpecialType = type.SpecialType;
 
@@ -72,21 +71,6 @@ internal sealed record TypeReferenceModel
 			this.PointedAtCount = pointedAtCount;
 			this.PointedAt = new TypeReferenceModel(pointedAt, compilation);
 			this.PointerNames = string.Concat(Enumerable.Repeat("Pointer", (int)this.PointedAtCount));
-		}
-
-		if (this.IsPointer)
-		{
-			// TODO: Need to remove properties here that I really don't need/use
-
-			this.PointerArgProjectedEvaluationDelegateName =
-				$"ArgumentEvaluationFor{type.GetName(TypeNameOption.Flatten)}";
-			this.PointerArgProjectedName =
-				$"ArgumentFor{type.GetName(TypeNameOption.Flatten)}";
-
-			if (this.IsBasedOnTypeParameter && this.IsPointer)
-			{
-				this.PointerArgParameterType = ((IPointerTypeSymbol)type).PointedAtType.Name;
-			}
 		}
 	}
 
@@ -163,7 +147,6 @@ internal sealed record TypeReferenceModel
 	internal bool IsReferenceType { get; }
 	internal bool IsRefLikeType { get; }
 	internal bool IsTupleType { get; }
-	internal SymbolKind Kind { get; }
 	internal string Name { get; }
 	internal string? Namespace { get; }
 	internal bool RequiresProjectedArgument { get; }
@@ -171,9 +154,6 @@ internal sealed record TypeReferenceModel
 	internal TypeReferenceModel? PointedAt { get; }
 	internal uint PointedAtCount { get; }
 	internal string? PointerNames { get; }
-	internal string? PointerArgParameterType { get; }
-	internal string? PointerArgProjectedEvaluationDelegateName { get; }
-	internal string? PointerArgProjectedName { get; }
 	internal SpecialType SpecialType { get; }
 	internal EquatableArray<TypeReferenceModel> TypeArguments { get; }
 	internal EquatableArray<TypeReferenceModel> TypeParameters { get; }

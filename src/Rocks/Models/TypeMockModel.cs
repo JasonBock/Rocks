@@ -22,8 +22,7 @@ internal sealed record TypeMockModel
 				compilation.GetExpectationsName(expectationsInformationSourceType, buildType, true);
 			this.IsPartial = true;
 			this.Accessibility = expectationsInformationSource.GetAccessibilityValue(compilation.Assembly);
-			this.ExpectationsIsSealed = expectationsInformationSourceType.TypeKind == TypeKind.Class ?
-				expectationsInformationSource.IsSealed : false;
+			this.ExpectationsIsSealed = expectationsInformationSourceType.TypeKind == TypeKind.Class && expectationsInformationSource.IsSealed;
 			this.AdornmentsFlattenedName = expectationsInformationSourceType.FlattenedName;
 		}
 		else
@@ -43,7 +42,7 @@ internal sealed record TypeMockModel
 		// Those have to stay in the order they exist in the definition.
 		this.Aliases = compilation.GetAliases();
 		this.Constructors = constructors.Select(_ =>
-			new ConstructorModel(_, this.Type, compilation)).ToImmutableArray();
+			new ConstructorModel(_, compilation)).ToImmutableArray();
 		this.Methods = methods.Results.Select(_ =>
 			new MethodModel(_.Value, this.Type, compilation, _.RequiresExplicitInterfaceImplementation,
 				_.RequiresOverride, _.RequiresHiding, _.MemberIdentifier)).ToImmutableArray();
@@ -52,18 +51,17 @@ internal sealed record TypeMockModel
 				_.RequiresExplicitInterfaceImplementation, _.RequiresOverride,
 				_.Accessors, _.MemberIdentifier)).ToImmutableArray();
 		this.Events = events.Results.Select(_ =>
-			new EventModel(_.Value, this.Type, compilation,
+			new EventModel(_.Value, compilation,
 				_.RequiresExplicitInterfaceImplementation, _.RequiresOverride)).ToImmutableArray();
 		this.Shims = shouldResolveShims ?
 			shims.Select(_ =>
 				MockModel.Create(node, _, null, model, BuildType.Create, false).Information!.Type).ToImmutableArray() :
 			[];
 
-		this.ConstructorProperties = type.GetMembers().OfType<IPropertySymbol>()
+		this.ConstructorProperties = [..type.GetMembers().OfType<IPropertySymbol>()
 			.Where(_ => (_.IsRequired || _.GetAccessors() == PropertyAccessor.Init || _.GetAccessors() == PropertyAccessor.GetAndInit) &&
 				_.CanBeSeenByContainingAssembly(compilation.Assembly, compilation))
-			.Select(_ => new ConstructorPropertyModel(_, this.Type, compilation))
-			.ToImmutableArray();
+			.Select(_ => new ConstructorPropertyModel(_, compilation))];
 
 		this.ExpectationsPropertyName = this.GetExpectationsPropertyName();
 		this.Projections = this.GetProjections();

@@ -19,9 +19,8 @@ internal sealed record PropertyModel
 		this.IsAbstract = property.IsAbstract;
 		this.IsIndexer = property.IsIndexer;
 		this.IsUnsafe = property.IsUnsafe();
-		this.Parameters = property.Parameters.Select(_ => new ParameterModel(
-			_, this.MockType, compilation, requiresExplicitInterfaceImplementation: requiresExplicitInterfaceImplementation))
-			.ToImmutableArray();
+		this.Parameters = [..property.Parameters.Select(
+			_ => new ParameterModel(_, compilation, requiresExplicitInterfaceImplementation: requiresExplicitInterfaceImplementation))];
 
 		var allAttributes = property.GetAllAttributes();
 
@@ -57,18 +56,10 @@ internal sealed record PropertyModel
 
 			this.InitCanBeSeenByContainingAssembly = property.SetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly, compilation);
 		}
-
-		if (this.SetMethod is not null)
-		{
-			var allowNullAttributeType = compilation.GetTypeByMetadataName("System.Diagnostics.CodeAnalysis.AllowNullAttribute");
-			this.AllowNull = allAttributes.Any(
-				_ => _.AttributeClass?.Equals(allowNullAttributeType, SymbolEqualityComparer.Default) ?? false);
-		}
 	}
 
 	internal PropertyAccessor Accessors { get; }
 	internal string AllAttributesDescription { get; }
-	internal bool AllowNull { get; }
 	internal string AttributesDescription { get; }
 	internal TypeReferenceModel ContainingType { get; }
 	internal bool GetCanBeSeenByContainingAssembly { get; }

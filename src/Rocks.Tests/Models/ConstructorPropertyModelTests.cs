@@ -19,8 +19,8 @@ public static class ConstructorPropertyModelTests
 			}
 			""";
 
-		(var type, var property, var compilation) = ConstructorPropertyModelTests.GetSymbolsCompilation(code);
-		var model = new ConstructorPropertyModel(property, new TypeReferenceModel(type, compilation), compilation);
+		(var property, var compilation) = ConstructorPropertyModelTests.GetSymbolsCompilation(code);
+		var model = new ConstructorPropertyModel(property, compilation);
 
 		Assert.Multiple(() =>
 		{
@@ -47,8 +47,8 @@ public static class ConstructorPropertyModelTests
 			}
 			""";
 
-		(var type, var property, var compilation) = ConstructorPropertyModelTests.GetSymbolsCompilation(code);
-		var model = new ConstructorPropertyModel(property, new TypeReferenceModel(type, compilation), compilation);
+		(var property, var compilation) = ConstructorPropertyModelTests.GetSymbolsCompilation(code);
+		var model = new ConstructorPropertyModel(property, compilation);
 
 		Assert.That(model.IsRequired, Is.True);
 	}
@@ -64,8 +64,8 @@ public static class ConstructorPropertyModelTests
 			}
 			""";
 
-		(var type, var property, var compilation) = ConstructorPropertyModelTests.GetSymbolsCompilationWithIndexer(code);
-		var model = new ConstructorPropertyModel(property, new TypeReferenceModel(type, compilation), compilation);
+		(var property, var compilation) = ConstructorPropertyModelTests.GetSymbolsCompilationWithIndexer(code);
+		var model = new ConstructorPropertyModel(property, compilation);
 
 		Assert.Multiple(() =>
 		{
@@ -86,8 +86,8 @@ public static class ConstructorPropertyModelTests
 			}
 			""";
 
-		(var type, var property, var compilation) = ConstructorPropertyModelTests.GetSymbolsCompilation(code);
-		var model = new ConstructorPropertyModel(property, new TypeReferenceModel(type, compilation), compilation);
+		(var property, var compilation) = ConstructorPropertyModelTests.GetSymbolsCompilation(code);
+		var model = new ConstructorPropertyModel(property, compilation);
 
 		Assert.That(model.NullableAnnotation, Is.EqualTo(NullableAnnotation.Annotated));
 	}
@@ -103,13 +103,13 @@ public static class ConstructorPropertyModelTests
 			}
 			""";
 
-		(var type, var property, var compilation) = ConstructorPropertyModelTests.GetSymbolsCompilation(code);
-		var model = new ConstructorPropertyModel(property, new TypeReferenceModel(type, compilation), compilation);
+		(var property, var compilation) = ConstructorPropertyModelTests.GetSymbolsCompilation(code);
+		var model = new ConstructorPropertyModel(property, compilation);
 
 		Assert.That(model.IsReferenceType, Is.False);
 	}
 
-	private static (ITypeSymbol, IPropertySymbol, Compilation) GetSymbolsCompilation(string code)
+	private static (IPropertySymbol, Compilation) GetSymbolsCompilation(string code)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
@@ -120,10 +120,10 @@ public static class ConstructorPropertyModelTests
 			.OfType<TypeDeclarationSyntax>().Single();
 		var propertySyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<PropertyDeclarationSyntax>().Single();
-		return (model.GetDeclaredSymbol(typeSyntax)!, model.GetDeclaredSymbol(propertySyntax)!, compilation);
+		return (model.GetDeclaredSymbol(propertySyntax)!, compilation);
 	}
 
-	private static (ITypeSymbol, IPropertySymbol, Compilation) GetSymbolsCompilationWithIndexer(string code)
+	private static (IPropertySymbol, Compilation) GetSymbolsCompilationWithIndexer(string code)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
@@ -134,6 +134,6 @@ public static class ConstructorPropertyModelTests
 			.OfType<TypeDeclarationSyntax>().Single();
 		var propertySyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<IndexerDeclarationSyntax>().Single();
-		return (model.GetDeclaredSymbol(typeSyntax)!, model.GetDeclaredSymbol(propertySyntax)!, compilation);
+		return (model.GetDeclaredSymbol(propertySyntax)!, compilation);
 	}
 }

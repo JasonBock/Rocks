@@ -6,7 +6,7 @@ namespace Rocks.Models;
 
 internal sealed record ConstructorPropertyModel
 {
-	internal ConstructorPropertyModel(IPropertySymbol value, TypeReferenceModel mockType, Compilation compilation)
+	internal ConstructorPropertyModel(IPropertySymbol value, Compilation compilation)
 	{
 		this.Type = new TypeReferenceModel(value.Type, compilation);
 		this.Name = value.Name;
@@ -14,7 +14,7 @@ internal sealed record ConstructorPropertyModel
 		this.IsIndexer = value.IsIndexer;
 		this.Accessors = value.GetAccessors();
 		this.CanBeSeenByContainingAssembly = value.CanBeSeenByContainingAssembly(compilation.Assembly, compilation);
-		this.Parameters = value.Parameters.Select(_ => new ParameterModel(_, mockType, compilation)).ToImmutableArray();
+		this.Parameters = value.Parameters.Select(_ => new ParameterModel(_, compilation)).ToImmutableArray();
 		this.NullableAnnotation = value.NullableAnnotation;
 		this.IsReferenceType = value.Type.IsReferenceType;
 	}

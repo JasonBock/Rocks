@@ -19,9 +19,8 @@ public static class EventModelTests
 			}
 			""";
 
-		(var @event, var type, var compilation) = EventModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new EventModel(@event, mockType, compilation,
+		(var @event, var compilation) = EventModelTests.GetSymbolsCompilation(code);
+		var model = new EventModel(@event, compilation,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No);
 
 		Assert.Multiple(() =>
@@ -29,7 +28,6 @@ public static class EventModelTests
 			Assert.That(model.ArgsType, Is.EqualTo("global::System.EventArgs"));
 			Assert.That(model.AttributesDescription, Is.Empty);
 			Assert.That(model.ContainingType.FullyQualifiedName, Is.EqualTo("global::Target"));
-			Assert.That(model.MockType, Is.SameAs(mockType));
 			Assert.That(model.Name, Is.EqualTo("Test"));
 			Assert.That(model.OverridingCodeValue, Is.EqualTo("public"));
 			Assert.That(model.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
@@ -49,9 +47,8 @@ public static class EventModelTests
 			}
 			""";
 
-		(var @event, var type, var compilation) = EventModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new EventModel(@event, mockType, compilation,
+		(var @event, var compilation) = EventModelTests.GetSymbolsCompilation(code);
+		var model = new EventModel(@event, compilation,
 			 RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No);
 
 		Assert.Multiple(() =>
@@ -75,9 +72,8 @@ public static class EventModelTests
 			}
 			""";
 
-		(var @event, var type, var compilation) = EventModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new EventModel(@event, mockType, compilation,
+		(var @event, var compilation) = EventModelTests.GetSymbolsCompilation(code);
+		var model = new EventModel(@event, compilation,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No);
 
 		Assert.That(model.AttributesDescription, Is.EqualTo("[global::System.CLSCompliantAttribute(true)]"));
@@ -99,16 +95,15 @@ public static class EventModelTests
 			}			
 			""";
 
-		(var @event, var type, var compilation) = EventModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new EventModel(@event, mockType, compilation,
+		(var @event, var compilation) = EventModelTests.GetSymbolsCompilation(code);
+		var model = new EventModel(@event, compilation,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No);
 
 		Assert.That(model.ArgsType, Is.EqualTo("global::CustomArgs"));
 	}
 
 
-	private static (IEventSymbol, ITypeSymbol, Compilation) GetSymbolsCompilation(string code)
+	private static (IEventSymbol, Compilation) GetSymbolsCompilation(string code)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
@@ -118,6 +113,6 @@ public static class EventModelTests
 		var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single(_ => _.Identifier.Text == "Target");
 		var type = model.GetDeclaredSymbol(typeSyntax)!;
-		return (type.GetMembers().OfType<IEventSymbol>().Single(), type, compilation);
+		return (type.GetMembers().OfType<IEventSymbol>().Single(), compilation);
 	}
 }

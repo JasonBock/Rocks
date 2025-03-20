@@ -30,11 +30,8 @@ public static class TypeReferenceModelTests
 			Assert.That(model.IsRecord, Is.False);
 			Assert.That(model.IsReferenceType, Is.True);
 			Assert.That(model.IsRefLikeType, Is.False);
-			Assert.That(model.Kind, Is.EqualTo(SymbolKind.NamedType));
 			Assert.That(model.Namespace, Is.EqualTo("TargetNamespace"));
 			Assert.That(model.NullableAnnotation, Is.EqualTo(NullableAnnotation.None));
-			Assert.That(model.PointerArgProjectedEvaluationDelegateName, Is.Null);
-			Assert.That(model.PointerArgProjectedName, Is.Null);
 			Assert.That(model.TypeKind, Is.EqualTo(TypeKind.Class));
 		});
 	}
@@ -176,8 +173,6 @@ public static class TypeReferenceModelTests
 		{
 			Assert.That(model.RequiresProjectedArgument, Is.True);
 			Assert.That(model.IsPointer, Is.True);
-			Assert.That(model.PointerArgProjectedEvaluationDelegateName, Is.EqualTo("ArgumentEvaluationForintPointer"));
-			Assert.That(model.PointerArgProjectedName, Is.EqualTo("ArgumentForintPointer"));
 		});
 	}
 

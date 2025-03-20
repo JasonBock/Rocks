@@ -5,10 +5,9 @@ namespace Rocks.Models;
 
 internal sealed record ParameterModel
 {
-	internal ParameterModel(IParameterSymbol parameter, TypeReferenceModel mockType, Compilation compilation,
+	internal ParameterModel(IParameterSymbol parameter, Compilation compilation,
 		RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation = RequiresExplicitInterfaceImplementation.No)
 	{
-		this.MockType = mockType;
 		this.Name = parameter.Name;
 		this.RefKind = parameter.RefKind;
 		this.RequiresNullableAnnotation = parameter.RequiresForcedNullableAnnotation();
@@ -35,7 +34,6 @@ internal sealed record ParameterModel
 	internal bool HasExplicitDefaultValue { get; }
 	internal bool IsParams { get; }
 	internal bool IsScoped { get; }
-	internal TypeReferenceModel MockType { get; }
 	internal string Name { get; }
 	internal RefKind RefKind { get; }
 	internal bool RequiresNullableAnnotation { get; }

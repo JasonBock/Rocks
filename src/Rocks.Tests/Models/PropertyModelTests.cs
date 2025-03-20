@@ -29,7 +29,6 @@ public static class PropertyModelTests
 		{
 			Assert.That(model.Accessors, Is.EqualTo(PropertyAccessor.GetAndSet));
 			Assert.That(model.AllAttributesDescription, Is.Empty);
-			Assert.That(model.AllowNull, Is.False);
 			Assert.That(model.AttributesDescription, Is.Empty);
 			Assert.That(model.ContainingType.FullyQualifiedName, Is.EqualTo("global::Target"));
 			Assert.That(model.GetCanBeSeenByContainingAssembly, Is.True);
@@ -306,7 +305,6 @@ public static class PropertyModelTests
 		{
 			Assert.That(model.AttributesDescription, Is.EqualTo("[global::System.CLSCompliantAttribute(true), global::System.Diagnostics.CodeAnalysis.AllowNullAttribute]"));
 			Assert.That(model.AllAttributesDescription, Is.EqualTo("[global::System.CLSCompliantAttribute(true), global::System.Diagnostics.CodeAnalysis.AllowNullAttribute]"));
-			Assert.That(model.AllowNull, Is.True);
 		});
 	}
 

@@ -21,11 +21,10 @@ public static class ConstructorModelTests
 
 		(var type, var constructor, var compilation) = ConstructorModelTests.GetSymbolsCompilation(code);
 		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new ConstructorModel(constructor, mockType, compilation);
+		var model = new ConstructorModel(constructor, compilation);
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(model.MockType, Is.SameAs(mockType));
 			Assert.That(model.Parameters, Has.Length.EqualTo(1));
 			Assert.That(model.Parameters[0].Name, Is.EqualTo("value"));
 		});

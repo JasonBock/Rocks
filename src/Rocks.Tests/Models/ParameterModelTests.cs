@@ -19,9 +19,8 @@ public static class ParameterModelTests
 			}
 			""";
 
-		(var type, var parameter, var compilation) = ParameterModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new ParameterModel(parameter, mockType, compilation);
+		(var parameter, var compilation) = ParameterModelTests.GetSymbolsCompilation(code);
+		var model = new ParameterModel(parameter, compilation);
 
 		Assert.Multiple(() =>
 		{
@@ -29,7 +28,6 @@ public static class ParameterModelTests
 			Assert.That(model.ExplicitDefaultValue, Is.Null);
 			Assert.That(model.HasExplicitDefaultValue, Is.False);
 			Assert.That(model.IsParams, Is.False);
-			Assert.That(model.MockType, Is.SameAs(mockType));
 			Assert.That(model.Name, Is.EqualTo("value"));
 			Assert.That(model.RefKind, Is.EqualTo(RefKind.None));
 			Assert.That(model.RequiresNullableAnnotation, Is.False);
@@ -50,9 +48,8 @@ public static class ParameterModelTests
 			}
 			""";
 
-		(var type, var parameter, var compilation) = ParameterModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new ParameterModel(parameter, mockType, compilation);
+		(var parameter, var compilation) = ParameterModelTests.GetSymbolsCompilation(code);
+		var model = new ParameterModel(parameter, compilation);
 
 		Assert.That(model.AttributesDescription, Is.EqualTo("[global::System.Runtime.InteropServices.InAttribute]"));
 	}
@@ -70,9 +67,8 @@ public static class ParameterModelTests
 			}
 			""";
 
-		(var type, var parameter, var compilation) = ParameterModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new ParameterModel(parameter, mockType, compilation);
+		(var parameter, var compilation) = ParameterModelTests.GetSymbolsCompilation(code);
+		var model = new ParameterModel(parameter, compilation);
 
 		Assert.Multiple(() =>
 		{
@@ -94,9 +90,8 @@ public static class ParameterModelTests
 			}
 			""";
 
-		(var type, var parameter, var compilation) = ParameterModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new ParameterModel(parameter, mockType, compilation);
+		(var parameter, var compilation) = ParameterModelTests.GetSymbolsCompilation(code);
+		var model = new ParameterModel(parameter, compilation);
 
 		Assert.That(model.IsParams, Is.True);
 	}
@@ -114,14 +109,13 @@ public static class ParameterModelTests
 			}
 			""";
 
-		(var type, var parameter, var compilation) = ParameterModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new ParameterModel(parameter, mockType, compilation);
+		(var parameter, var compilation) = ParameterModelTests.GetSymbolsCompilation(code);
+		var model = new ParameterModel(parameter, compilation);
 
 		Assert.That(model.RequiresNullableAnnotation, Is.True);
 	}
 
-	private static (ITypeSymbol, IParameterSymbol, Compilation) GetSymbolsCompilation(string code)
+	private static (IParameterSymbol, Compilation) GetSymbolsCompilation(string code)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
@@ -132,6 +126,6 @@ public static class ParameterModelTests
 			.OfType<TypeDeclarationSyntax>().Single();
 		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single();
-		return (model.GetDeclaredSymbol(typeSyntax)!, model.GetDeclaredSymbol(methodSyntax)!.Parameters[0], compilation);
+		return (model.GetDeclaredSymbol(methodSyntax)!.Parameters[0], compilation);
 	}
 }
