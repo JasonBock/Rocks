@@ -893,11 +893,11 @@ public static class HiddenMembersGeneratorTests
 										
 										if (!@foundMatch)
 										{
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers match for {this.GetType().GetMemberDescription(9)}
-								value: {@value.FormatValue()}
-							""");
+											throw new global::Rocks.Exceptions.ExpectationException(
+												$"""
+												No handlers match for {this.GetType().GetMemberDescription(9)}
+													value: {@value.FormatValue()}
+												""");
 										}
 										
 										break;
@@ -1417,11 +1417,11 @@ public static class HiddenMembersGeneratorTests
 										
 										if (!@foundMatch)
 										{
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers match for {this.GetType().GetMemberDescription(3)}
-								value: {@value.FormatValue()}
-							""");
+											throw new global::Rocks.Exceptions.ExpectationException(
+												$"""
+												No handlers match for {this.GetType().GetMemberDescription(3)}
+													value: {@value.FormatValue()}
+												""");
 										}
 										
 										break;
@@ -1474,11 +1474,11 @@ public static class HiddenMembersGeneratorTests
 										
 										if (!@foundMatch)
 										{
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers match for {this.GetType().GetMemberDescription(6)}
-								value: {@value.FormatValue()}
-							""");
+											throw new global::Rocks.Exceptions.ExpectationException(
+												$"""
+												No handlers match for {this.GetType().GetMemberDescription(6)}
+													value: {@value.FormatValue()}
+												""");
 										}
 										
 										break;

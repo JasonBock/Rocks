@@ -1432,11 +1432,11 @@ public static class AttributeGeneratorTests
 										
 										if (!@foundMatch)
 										{
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers match for {this.GetType().GetMemberDescription(6)}
-								value: {@value.FormatValue()}
-							""");
+											throw new global::Rocks.Exceptions.ExpectationException(
+												$"""
+												No handlers match for {this.GetType().GetMemberDescription(6)}
+													value: {@value.FormatValue()}
+												""");
 										}
 										
 										break;

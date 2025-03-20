@@ -18,7 +18,7 @@ internal static class MockAdornmentsBuilder
 
 		// Create the intermediate interface.
 		writer.WriteLines(
-			 $$"""
+			$$"""
 			public interface IAdornmentsFor{{adornmentsFlattenedName}}<TAdornments>
 				: global::Rocks.IAdornments<TAdornments>
 				where TAdornments : IAdornmentsFor{{adornmentsFlattenedName}}<TAdornments>

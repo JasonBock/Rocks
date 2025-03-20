@@ -213,11 +213,11 @@ public static class NonPublicMembersGeneratorTests
 										
 										if (!@foundMatch)
 										{
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers match for {this.GetType().GetMemberDescription(4)}
-								value: {@value.FormatValue()}
-							""");
+											throw new global::Rocks.Exceptions.ExpectationException(
+												$"""
+												No handlers match for {this.GetType().GetMemberDescription(4)}
+													value: {@value.FormatValue()}
+												""");
 										}
 										
 										break;
@@ -735,11 +735,11 @@ public static class NonPublicMembersGeneratorTests
 										
 										if (!@foundMatch)
 										{
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers match for {this.GetType().GetMemberDescription(4)}
-								value: {@value.FormatValue()}
-							""");
+											throw new global::Rocks.Exceptions.ExpectationException(
+												$"""
+												No handlers match for {this.GetType().GetMemberDescription(4)}
+													value: {@value.FormatValue()}
+												""");
 										}
 										
 										break;
@@ -1719,11 +1719,11 @@ public static class NonPublicMembersGeneratorTests
 											
 											if (!@foundMatch)
 											{
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {this.GetType().GetMemberDescription(5)}
-									value: {@value.FormatValue()}
-								""");
+												throw new global::Rocks.Exceptions.ExpectationException(
+													$"""
+													No handlers match for {this.GetType().GetMemberDescription(5)}
+														value: {@value.FormatValue()}
+													""");
 											}
 											
 											@handler.RaiseEvents(this);
@@ -2225,11 +2225,11 @@ public static class NonPublicMembersGeneratorTests
 											
 											if (!@foundMatch)
 											{
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {this.GetType().GetMemberDescription(5)}
-									value: {@value.FormatValue()}
-								""");
+												throw new global::Rocks.Exceptions.ExpectationException(
+													$"""
+													No handlers match for {this.GetType().GetMemberDescription(5)}
+														value: {@value.FormatValue()}
+													""");
 											}
 											
 											@handler.RaiseEvents(this);
@@ -2736,11 +2736,11 @@ public static class NonPublicMembersGeneratorTests
 											
 											if (!@foundMatch)
 											{
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {this.GetType().GetMemberDescription(5)}
-									value: {@value.FormatValue()}
-								""");
+												throw new global::Rocks.Exceptions.ExpectationException(
+													$"""
+													No handlers match for {this.GetType().GetMemberDescription(5)}
+														value: {@value.FormatValue()}
+													""");
 											}
 											
 											@handler.RaiseEvents(this);

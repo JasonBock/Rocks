@@ -124,8 +124,10 @@ internal static class MockPropertyBuilder
 							{
 			""");
 
+		writer.Indent += 5;
 		ExpectationExceptionBuilder.Build(
 			writer, property.SetMethod!, "No handlers match for", memberIdentifier);
+		writer.Indent -= 5;
 
 		writer.WriteLines(
 			"""

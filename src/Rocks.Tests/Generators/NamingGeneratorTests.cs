@@ -1352,11 +1352,11 @@ public static class NamingGeneratorTests
 										
 										if (!@foundMatch)
 										{
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers match for {this.GetType().GetMemberDescription(2)}
-								value: {@value.FormatValue()}
-							""");
+											throw new global::Rocks.Exceptions.ExpectationException(
+												$"""
+												No handlers match for {this.GetType().GetMemberDescription(2)}
+													value: {@value.FormatValue()}
+												""");
 										}
 										
 										break;

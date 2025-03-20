@@ -201,11 +201,11 @@ public static class InterfaceGeneratorTests
 										
 										if (!@foundMatch)
 										{
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers match for {this.GetType().GetMemberDescription(2)}
-								value: {@value.FormatValue()}
-							""");
+											throw new global::Rocks.Exceptions.ExpectationException(
+												$"""
+												No handlers match for {this.GetType().GetMemberDescription(2)}
+													value: {@value.FormatValue()}
+												""");
 										}
 										
 										break;
@@ -534,11 +534,11 @@ public static class InterfaceGeneratorTests
 										
 										if (!@foundMatch)
 										{
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers match for {this.GetType().GetMemberDescription(2)}
-								value: {@value.FormatValue()}
-							""");
+											throw new global::Rocks.Exceptions.ExpectationException(
+												$"""
+												No handlers match for {this.GetType().GetMemberDescription(2)}
+													value: {@value.FormatValue()}
+												""");
 										}
 										
 										@handler.RaiseEvents(this);

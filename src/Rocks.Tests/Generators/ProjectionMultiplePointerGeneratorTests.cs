@@ -651,11 +651,11 @@ public static class ProjectionMultiplePointerGeneratorTests
 											
 											if (!@foundMatch)
 											{
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {this.GetType().GetMemberDescription(1)}
-									value: <Not formattable>
-								""");
+												throw new global::Rocks.Exceptions.ExpectationException(
+													$"""
+													No handlers match for {this.GetType().GetMemberDescription(1)}
+														value: <Not formattable>
+													""");
 											}
 											
 											break;
