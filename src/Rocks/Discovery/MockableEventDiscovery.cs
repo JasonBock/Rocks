@@ -35,7 +35,7 @@ internal sealed class MockableEventDiscovery
 			}
 		}
 
-		return new(events.ToImmutable(), inaccessibleAbstractMembers);
+		return new([.. events], inaccessibleAbstractMembers);
 	}
 
 	private static MockableEvents GetEventsForInterface(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol,
@@ -115,7 +115,7 @@ internal sealed class MockableEventDiscovery
 			}
 		}
 
-		return new(events.ToImmutable(), inaccessibleAbstractMembers);
+		return new([.. events], inaccessibleAbstractMembers);
 	}
 
 	internal MockableEvents Events { get; }

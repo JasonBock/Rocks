@@ -123,7 +123,7 @@ internal static class IMethodSymbolExtensions
 			}
 		}
 
-		var namespaces = ImmutableHashSet.CreateBuilder<INamespaceSymbol>();
+		var namespaces = new HashSet<INamespaceSymbol>();
 
 		if (!self.ReturnsVoid)
 		{
@@ -134,7 +134,7 @@ internal static class IMethodSymbolExtensions
 		namespaces.AddRange(self.GetAttributes().SelectMany(_ => _.GetNamespaces()));
 		namespaces.AddRange(self.Parameters.SelectMany(_ => GetParameterNamespaces(_)));
 
-		return namespaces.ToImmutable();
+		return [.. namespaces];
 	}
 
 	internal static MethodMatch Match(this IMethodSymbol self, IMethodSymbol other, Compilation compilation)

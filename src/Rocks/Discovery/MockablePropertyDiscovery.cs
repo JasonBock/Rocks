@@ -101,7 +101,7 @@ internal sealed class MockablePropertyDiscovery
 			}
 		}
 
-		return new(properties.ToImmutable(), inaccessibleAbstractMembers, false);
+		return new([.. properties], inaccessibleAbstractMembers, false);
 	}
 
 	private static MockableProperties GetPropertiesForInterface(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol,
@@ -261,7 +261,7 @@ internal sealed class MockablePropertyDiscovery
 			}
 		}
 
-		return new MockableProperties(properties.ToImmutable(), inaccessibleAbstractMembers, hasStaticAbstractProperties);
+		return new MockableProperties([.. properties], inaccessibleAbstractMembers, hasStaticAbstractProperties);
 	}
 
 	internal MockableProperties Properties { get; }

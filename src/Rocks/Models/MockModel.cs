@@ -126,7 +126,7 @@ internal sealed record MockModel
 						constructors, methods, properties, events,
 						shims, new TypeMockModelMemberCount(methodMemberCount, propertyMemberCount), shouldResolveShims, buildType),
 					buildType),
-			diagnostics.ToImmutable());
+			[.. diagnostics]);
 	}
 
 	private MockModel(MockModelInformation? information, EquatableArray<Diagnostic> diagnostics) =>

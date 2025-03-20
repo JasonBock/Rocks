@@ -14,7 +14,7 @@ internal sealed class VariablesNamingContext
 	{ }
 
 	internal VariablesNamingContext(ImmutableArray<ParameterModel> parameters)
-		: base(parameters.Select(_ => _.Name).ToImmutableHashSet()) { }
+		: base([.. parameters.Select(_ => _.Name)]) { }
 
 	internal VariablesNamingContext(ImmutableHashSet<string> names)
 		: base(names) { }
@@ -24,6 +24,8 @@ internal sealed class VariablesNamingContext
 // so the factory method produces one for everyone.
 internal static class HandlerVariableNamingContext
 {
-	internal static VariablesNamingContext Create() =>
-		new(new[] { "CallCount", "ExpectedCallCount", "Callback", "ReturnValue" }.ToImmutableHashSet());
+   internal static readonly string[] sourceArray = ["CallCount", "ExpectedCallCount", "Callback", "ReturnValue"];
+
+   internal static VariablesNamingContext Create() =>
+		new([.. sourceArray]);
 }

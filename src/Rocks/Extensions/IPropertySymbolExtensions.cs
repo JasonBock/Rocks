@@ -47,7 +47,7 @@ internal static class IPropertySymbolExtensions
 			}
 		}
 
-		var namespaces = ImmutableHashSet.CreateBuilder<INamespaceSymbol>();
+		var namespaces = new HashSet<INamespaceSymbol>();
 
 		namespaces.AddRange(self.GetAllAttributes().SelectMany(_ => _.GetNamespaces()));
 		namespaces.AddRange(self.Type.GetNamespaces());
@@ -57,7 +57,7 @@ internal static class IPropertySymbolExtensions
 			namespaces.AddRange(self.Parameters.SelectMany(_ => GetParameterNamespaces(_)));
 		}
 
-		return namespaces.ToImmutable();
+		return [.. namespaces];
 	}
 
 	internal static bool IsUnsafe(this IPropertySymbol self) =>

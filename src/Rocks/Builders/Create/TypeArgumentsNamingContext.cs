@@ -1,5 +1,4 @@
 ﻿using Rocks.Models;
-using System.Collections.Immutable;
 
 namespace Rocks.Builders.Create;
 
@@ -10,11 +9,11 @@ internal sealed class TypeArgumentsNamingContext
 		: base() { }
 
 	internal TypeArgumentsNamingContext(TypeReferenceModel type)
-		: base(type.TypeArguments.Select(_ => _.FullyQualifiedName).ToImmutableHashSet())
+		: base([.. type.TypeArguments.Select(_ => _.FullyQualifiedName)])
 	{ }
 
 	internal TypeArgumentsNamingContext(MethodModel method)
-		: base(method.MockType.TypeArguments.Intersect(method.TypeArguments, new TypeReferenceModelEqualityComparer()).Select(_ => _.FullyQualifiedName).ToImmutableHashSet())
+		: base([.. method.MockType.TypeArguments.Intersect(method.TypeArguments, new TypeReferenceModelEqualityComparer()).Select(_ => _.FullyQualifiedName)])
 	{ }
 
 	private sealed class TypeReferenceModelEqualityComparer

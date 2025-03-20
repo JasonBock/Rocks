@@ -345,16 +345,17 @@ internal static class ITypeSymbolExtensions
 
 	internal static ImmutableHashSet<INamespaceSymbol> GetNamespaces(this ITypeSymbol self)
 	{
-		var namespaces = ImmutableHashSet.CreateBuilder<INamespaceSymbol>();
-
-		namespaces.Add(self.ContainingNamespace);
+		var namespaces = new HashSet<INamespaceSymbol>
+		{
+		   self.ContainingNamespace
+		};
 
 		if (self is INamedTypeSymbol namedSelf)
 		{
 			namespaces.AddRange(namedSelf.TypeArguments.SelectMany(_ => _.GetNamespaces()));
 		}
 
-		return namespaces.ToImmutable();
+		return [.. namespaces];
 	}
 
 	internal static ImmutableArray<ITypeSymbol> GetInheritanceHierarchy(this ITypeSymbol self)
@@ -369,6 +370,6 @@ internal static class ITypeSymbolExtensions
 			targetClassSymbol = targetClassSymbol.BaseType;
 		}
 
-		return hierarchy.ToImmutable();
+		return [.. hierarchy];
 	}
 }

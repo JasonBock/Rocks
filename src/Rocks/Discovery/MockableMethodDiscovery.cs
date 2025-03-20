@@ -36,7 +36,7 @@ internal sealed class MockableMethodDiscovery
 		HashSet<ITypeSymbol> shims, ImmutableArray<IMethodSymbol> objectMethods, ref uint memberIdentifier,
 		Compilation compilation)
 	{
-		var methods = ImmutableArray.CreateBuilder<MockableMethodResult>();
+		var methods = new List<MockableMethodResult>();
 		var inaccessibleAbstractMembers = false;
 
 		var hierarchy = mockType.GetInheritanceHierarchy();
@@ -120,7 +120,7 @@ internal sealed class MockableMethodDiscovery
 			}
 		}
 
-		return new MockableMethods(methods.ToImmutable(), inaccessibleAbstractMembers, false);
+		return new MockableMethods([.. methods], inaccessibleAbstractMembers, false);
 	}
 
 	private static MockableMethods GetMethodsForInterface(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol,
@@ -282,7 +282,7 @@ internal sealed class MockableMethodDiscovery
 			}
 		}
 
-		return new MockableMethods(methods.ToImmutable(), inaccessibleAbstractMembers, hasStaticAbstractMethods);
+		return new MockableMethods([.. methods], inaccessibleAbstractMembers, hasStaticAbstractMethods);
 	}
 
 	internal MockableMethods Methods { get; }
