@@ -41,6 +41,7 @@
 		<PackageReference Include="DiffEngine" />
 		<PackageReference Include="DnsClient" />
 		<PackageReference Include="DSharpPlus" />
+		<PackageReference Include="Duende.IdentityModel" />
 		<PackageReference Include="DynamicData" />
 		<PackageReference Include="EfficientDynamoDb" />
 		<PackageReference Include="Elastic.Clients.Elasticsearch" />
@@ -53,7 +54,6 @@
 		<PackageReference Include="Handlebars.Net" />
 		<PackageReference Include="HtmlSanitizer" />
 		<PackageReference Include="Humanizer" />
-		<PackageReference Include="IdentityModel" />
 		<PackageReference Include="LanguageExt.Core" />
 		<PackageReference Include="Lib.Harmony" />
 		<PackageReference Include="Lifti.Core" />
