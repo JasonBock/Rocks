@@ -32,8 +32,8 @@ internal sealed record MethodModel
 		this.MethodKind = method.MethodKind;
 		this.Constraints = method.GetConstraints(compilation);
 		this.DefaultConstraints = method.GetDefaultConstraints();
-		this.TypeArguments = method.TypeArguments.Select(_ => new TypeReferenceModel(_, compilation)).ToImmutableArray();
-		this.TypeParameters = method.TypeParameters.Select(_ => new TypeReferenceModel(_, compilation)).ToImmutableArray();
+		this.TypeArguments = [.. method.TypeArguments.Select(_ => new TypeReferenceModel(_, compilation))];
+		this.TypeParameters = [.. method.TypeParameters.Select(_ => new TypeReferenceModel(_, compilation))];
 
 		this.Name = method.Name;
 
@@ -78,14 +78,8 @@ internal sealed record MethodModel
 			}
 		}
 
-		if (method.ReturnType is INamedTypeSymbol returnType)
-		{
-			this.ReturnTypeTypeArguments = returnType.TypeArguments.Select(_ => new TypeReferenceModel(_, compilation)).ToImmutableArray();
-		}
-		else
-		{
-			this.ReturnTypeTypeArguments = ImmutableArray<TypeReferenceModel>.Empty;
-		}
+		this.ReturnTypeTypeArguments = method.ReturnType is INamedTypeSymbol returnType ?
+			[.. returnType.TypeArguments.Select(_ => new TypeReferenceModel(_, compilation))] : [];
 	}
 
 	internal string AttributesDescription { get; }

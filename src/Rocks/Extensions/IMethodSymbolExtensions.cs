@@ -72,7 +72,7 @@ internal static class IMethodSymbolExtensions
 				}
 			}
 
-			return constraints.ToImmutableArray();
+			return [.. constraints];
 		}
 		else
 		{
@@ -105,7 +105,7 @@ internal static class IMethodSymbolExtensions
 			}
 		}
 
-		return constraints.ToImmutableArray();
+		return [.. constraints];
 	}
 
 	internal static ImmutableHashSet<INamespaceSymbol> GetNamespaces(this IMethodSymbol self)

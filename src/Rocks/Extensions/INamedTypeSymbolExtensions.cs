@@ -20,7 +20,7 @@ internal static class INamedTypeSymbolExtensions
 				{
 					var constraint = typeParameter.GetConstraints(compilation);
 
-					if(constraint is not null)
+					if (constraint is not null)
 					{
 						constraints.Add(constraint);
 					}
@@ -28,10 +28,10 @@ internal static class INamedTypeSymbolExtensions
 			}
 		}
 
-		return constraints.ToImmutableArray();
+		return [.. constraints];
 	}
 
-	internal static bool HasOpenGenerics(this INamedTypeSymbol self) => 
+	internal static bool HasOpenGenerics(this INamedTypeSymbol self) =>
 		self.TypeArguments.Any(_ => _.TypeKind == TypeKind.TypeParameter ||
 			_ is INamedTypeSymbol argumentTypeSymbol && argumentTypeSymbol.HasOpenGenerics());
 }

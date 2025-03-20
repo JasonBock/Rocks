@@ -73,7 +73,7 @@ internal static class ITypeParameterSymbolExtensions
 			constraints.Add("allows ref struct");
 		}
 
-		return constraints.Count > 0 ? new Constraints(self.GetName(), constraints.ToImmutableArray()) : null;
+		return constraints.Count > 0 ? new Constraints(self.GetName(), [.. constraints]) : null;
 	}
 
 	private static bool IsNotNullRequired(this ITypeParameterSymbol self)

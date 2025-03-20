@@ -36,8 +36,8 @@ internal sealed record TypeReferenceModel
 
 			if (this.IsGenericType && !(this.TypeKind == TypeKind.TypeParameter))
 			{
-				this.TypeArguments = namedType.TypeArguments.Select(_ => new TypeReferenceModel(_, compilation)).ToImmutableArray();
-				this.TypeParameters = namedType.TypeParameters.Select(_ => new TypeReferenceModel(_, compilation)).ToImmutableArray();
+				this.TypeArguments = [.. namedType.TypeArguments.Select(_ => new TypeReferenceModel(_, compilation))];
+				this.TypeParameters = [.. namedType.TypeParameters.Select(_ => new TypeReferenceModel(_, compilation))];
 			}
 			else
 			{
@@ -58,7 +58,7 @@ internal sealed record TypeReferenceModel
 		this.IsRefLikeType = type.IsRefLikeType;
 		this.IsTupleType = type.IsTupleType;
 
-		var typeParameterTarget = type.IsPointer() ?
+		var typeParameterTarget = this.IsPointer ?
 			type.Kind == SymbolKind.PointerType ?
 				((IPointerTypeSymbol)type).PointedAtType :
 				((IFunctionPointerTypeSymbol)type).BaseType :

@@ -166,12 +166,12 @@ internal static class AttributeDataExtensions
 		if (requiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes &&
 			isParameterWithOptionalValue)
 		{
-			attributes = attributes.Where(_ =>
+			attributes = [.. attributes.Where(_ =>
 				_.AttributeClass is not null &&
 				!_.AttributeClass.Equals(callerFilePathAttribute, SymbolEqualityComparer.Default) &&
 				!_.AttributeClass.Equals(callerLineNumberAttribute, SymbolEqualityComparer.Default) &&
 				!_.AttributeClass.Equals(callerMemberNameAttribute, SymbolEqualityComparer.Default) &&
-				!_.AttributeClass.Equals(callerArgumentExpressionAttribute, SymbolEqualityComparer.Default)).ToImmutableArray();
+				!_.AttributeClass.Equals(callerArgumentExpressionAttribute, SymbolEqualityComparer.Default))];
 		}
 
 		if (attributes.Length == 0)

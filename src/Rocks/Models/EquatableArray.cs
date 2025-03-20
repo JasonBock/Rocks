@@ -23,8 +23,7 @@ internal static class EquatableArray
 		where T : IEquatable<T> => new(array);
 
 	public static EquatableArray<T> Create<T>(ReadOnlySpan<T> values)
-		where T : IEquatable<T> =>
-		new EquatableArray<T>(values.ToImmutableArray());
+		where T : IEquatable<T> => new(values.ToImmutableArray());
 }
 
 /// <summary>

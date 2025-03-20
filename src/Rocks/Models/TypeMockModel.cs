@@ -18,7 +18,7 @@ internal sealed record TypeMockModel
 		if (expectationsInformationSource is not null)
 		{
 			var expectationsInformationSourceType = new TypeReferenceModel(expectationsInformationSource, compilation);
-			(this.ExpectationsName, this.ExpectationsNameNoGenerics, this.ExpectationsFullyQualifiedName, this.ExpectationsNamespace) = 
+			(this.ExpectationsName, this.ExpectationsNameNoGenerics, this.ExpectationsFullyQualifiedName, this.ExpectationsNamespace) =
 				compilation.GetExpectationsName(expectationsInformationSourceType, buildType, true);
 			this.IsPartial = true;
 			this.Accessibility = expectationsInformationSource.GetAccessibilityValue(compilation.Assembly);
@@ -27,7 +27,7 @@ internal sealed record TypeMockModel
 		}
 		else
 		{
-			(this.ExpectationsName, this.ExpectationsNameNoGenerics, this.ExpectationsFullyQualifiedName, this.ExpectationsNamespace) = 
+			(this.ExpectationsName, this.ExpectationsNameNoGenerics, this.ExpectationsFullyQualifiedName, this.ExpectationsNamespace) =
 				compilation.GetExpectationsName(this.Type, buildType, false);
 			this.IsPartial = false;
 			this.Accessibility = "internal";
@@ -41,21 +41,19 @@ internal sealed record TypeMockModel
 		// EXCEPT FOR parameter order (including generic parameters).
 		// Those have to stay in the order they exist in the definition.
 		this.Aliases = compilation.GetAliases();
-		this.Constructors = constructors.Select(_ =>
-			new ConstructorModel(_, compilation)).ToImmutableArray();
-		this.Methods = methods.Results.Select(_ =>
+		this.Constructors = [.. constructors.Select(_ => new ConstructorModel(_, compilation))];
+		this.Methods = [.. methods.Results.Select(_ =>
 			new MethodModel(_.Value, this.Type, compilation, _.RequiresExplicitInterfaceImplementation,
-				_.RequiresOverride, _.RequiresHiding, _.MemberIdentifier)).ToImmutableArray();
-		this.Properties = properties.Results.Select(_ =>
+				_.RequiresOverride, _.RequiresHiding, _.MemberIdentifier))];
+		this.Properties = [.. properties.Results.Select(_ =>
 			new PropertyModel(_.Value, this.Type, compilation,
 				_.RequiresExplicitInterfaceImplementation, _.RequiresOverride,
-				_.Accessors, _.MemberIdentifier)).ToImmutableArray();
-		this.Events = events.Results.Select(_ =>
+				_.Accessors, _.MemberIdentifier))];
+		this.Events = [.. events.Results.Select(_ =>
 			new EventModel(_.Value, compilation,
-				_.RequiresExplicitInterfaceImplementation, _.RequiresOverride)).ToImmutableArray();
+				_.RequiresExplicitInterfaceImplementation, _.RequiresOverride))];
 		this.Shims = shouldResolveShims ?
-			shims.Select(_ =>
-				MockModel.Create(node, _, null, model, BuildType.Create, false).Information!.Type).ToImmutableArray() :
+			[.. shims.Select(_ => MockModel.Create(node, _, null, model, BuildType.Create, false).Information!.Type)] :
 			[];
 
 		this.ConstructorProperties = [..type.GetMembers().OfType<IPropertySymbol>()
