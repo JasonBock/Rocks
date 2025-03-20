@@ -1,6 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Extensions;
-using System.Collections.Immutable;
 
 namespace Rocks.Discovery;
 
@@ -39,7 +38,7 @@ internal sealed class MockablePropertyDiscovery
 			return false;
 		}
 
-		var properties = ImmutableArray.CreateBuilder<MockablePropertyResult>();
+		var properties = new List<MockablePropertyResult>();
 		var inaccessibleAbstractMembers = false;
 
 		var hierarchy = mockType.GetInheritanceHierarchy();
@@ -111,7 +110,7 @@ internal sealed class MockablePropertyDiscovery
 			!property.IsStatic && (property.IsAbstract || property.IsVirtual) &&
 			(property.IsIndexer || property.CanBeReferencedByName);
 
-		var properties = ImmutableArray.CreateBuilder<MockablePropertyResult>();
+		var properties = new List<MockablePropertyResult>();
 		var inaccessibleAbstractMembers = false;
 		var hasStaticAbstractProperties = false;
 

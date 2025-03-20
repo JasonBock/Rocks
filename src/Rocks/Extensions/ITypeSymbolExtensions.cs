@@ -360,7 +360,7 @@ internal static class ITypeSymbolExtensions
 
 	internal static ImmutableArray<ITypeSymbol> GetInheritanceHierarchy(this ITypeSymbol self)
 	{
-		var hierarchy = ImmutableArray.CreateBuilder<ITypeSymbol>();
+		var hierarchy = new List<ITypeSymbol>();
 
 		var targetClassSymbol = self;
 

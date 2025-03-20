@@ -133,7 +133,7 @@ internal sealed class MockableMethodDiscovery
 			!method.IsStatic && (method.IsAbstract || method.IsVirtual) &&
 			method.MethodKind == MethodKind.Ordinary && method.CanBeReferencedByName;
 
-		var methods = ImmutableArray.CreateBuilder<MockableMethodResult>();
+		var methods = new List<MockableMethodResult>();
 		var inaccessibleAbstractMembers = false;
 		var hasStaticAbstractMethods = false;
 

@@ -1,6 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Extensions;
-using System.Collections.Immutable;
 
 namespace Rocks.Discovery;
 
@@ -16,7 +15,7 @@ internal sealed class MockableEventDiscovery
 	private static MockableEvents GetEventsForClass(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol,
 		Compilation compilation)
 	{
-		var events = ImmutableArray.CreateBuilder<MockableEventResult>();
+		var events = new List<MockableEventResult>();
 		var inaccessibleAbstractMembers = false;
 
 		foreach (var selfEvent in mockType.GetMembers().OfType<IEventSymbol>()
@@ -46,7 +45,7 @@ internal sealed class MockableEventDiscovery
 			(@event.IsAbstract || @event.IsVirtual) &&
 			@event.CanBeReferencedByName;
 
-		var events = ImmutableArray.CreateBuilder<MockableEventResult>();
+		var events = new List<MockableEventResult>();
 		var inaccessibleAbstractMembers = false;
 
 		foreach (var selfEvent in mockType.GetMembers().OfType<IEventSymbol>()

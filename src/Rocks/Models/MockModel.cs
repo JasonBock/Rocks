@@ -2,7 +2,6 @@
 using Rocks.Diagnostics;
 using Rocks.Discovery;
 using Rocks.Extensions;
-using System.Collections.Immutable;
 
 namespace Rocks.Models;
 
@@ -14,7 +13,7 @@ internal sealed record MockModel
 		var compilation = model.Compilation;
 
 		// Do all the work to see if this is a type to mock.
-		var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
+		var diagnostics = new List<Diagnostic>();
 
 		if (typeToMock.SpecialType == SpecialType.System_Delegate ||
 			typeToMock.SpecialType == SpecialType.System_MulticastDelegate ||
