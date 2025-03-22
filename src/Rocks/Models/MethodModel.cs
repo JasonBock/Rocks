@@ -5,18 +5,21 @@ namespace Rocks.Models;
 
 internal sealed record MethodModel
 {
-	internal MethodModel(IMethodSymbol method, TypeReferenceModel mockType, Compilation compilation,
+	internal MethodModel(IMethodSymbol method, ITypeReferenceModel mockType, ModelContext modelContext,
 		RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation,
 		RequiresOverride requiresOverride, RequiresHiding requiresHiding, uint memberIdentifier)
 	{
+		var compilation = modelContext.SemanticModel.Compilation;
+
 		(this.MockType, this.RequiresExplicitInterfaceImplementation, this.RequiresOverride, this.MemberIdentifier) =
 			(mockType, requiresExplicitInterfaceImplementation, requiresOverride, memberIdentifier);
 
-		this.ContainingType = new TypeReferenceModel(method.ContainingType, compilation);
+		this.ContainingType = modelContext.CreateTypeReference(method.ContainingType);
 
 		if (requiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 		{
-			this.OverridingCodeValue = method.GetAccessibilityValue(compilation.Assembly);
+			this.OverridingCodeValue = method.GetAccessibilityValue(
+				modelContext.SemanticModel.Compilation.Assembly);
 		}
 
 		this.IsMarkedWithDoesNotReturn = method.IsMarkedWithDoesNotReturn(compilation);
@@ -31,15 +34,15 @@ internal sealed record MethodModel
 		this.MethodKind = method.MethodKind;
 		this.Constraints = method.GetConstraints(compilation);
 		this.DefaultConstraints = method.GetDefaultConstraints();
-		this.TypeArguments = [.. method.TypeArguments.Select(_ => new TypeReferenceModel(_, compilation))];
-		this.TypeParameters = [.. method.TypeParameters.Select(_ => new TypeReferenceModel(_, compilation))];
+		this.TypeArguments = [.. method.TypeArguments.Select(_ => modelContext.CreateTypeReference(_))];
+		this.TypeParameters = [.. method.TypeParameters.Select(_ => modelContext.CreateTypeReference(_))];
 
 		this.Name = method.Name;
 
 		this.Parameters = [..method.Parameters.Select(
-			_ => new ParameterModel(_, compilation, requiresExplicitInterfaceImplementation: requiresExplicitInterfaceImplementation))];
+			_ => new ParameterModel(_, modelContext, requiresExplicitInterfaceImplementation: requiresExplicitInterfaceImplementation))];
 
-		this.ReturnType = new TypeReferenceModel(method.ReturnType, compilation);
+		this.ReturnType = modelContext.CreateTypeReference(method.ReturnType);
 		this.ReturnsVoid = method.ReturnsVoid;
 		this.ReturnsByRef = method.ReturnsByRef;
 		this.ReturnsByRefReadOnly = method.ReturnsByRefReadonly;
@@ -78,12 +81,12 @@ internal sealed record MethodModel
 		}
 
 		this.ReturnTypeTypeArguments = method.ReturnType is INamedTypeSymbol returnType ?
-			[.. returnType.TypeArguments.Select(_ => new TypeReferenceModel(_, compilation))] : [];
+			[.. returnType.TypeArguments.Select(_ => modelContext.CreateTypeReference(_))] : [];
 	}
 
 	internal string AttributesDescription { get; }
 	internal EquatableArray<Constraints> Constraints { get; }
-	internal TypeReferenceModel ContainingType { get; }
+	internal ITypeReferenceModel ContainingType { get; }
 	internal EquatableArray<Constraints> DefaultConstraints { get; }
 	internal bool IsAbstract { get; }
 	internal bool IsGenericMethod { get; }
@@ -92,7 +95,7 @@ internal sealed record MethodModel
 	internal bool IsVirtual { get; }
 	internal uint MemberIdentifier { get; }
 	internal MethodKind MethodKind { get; }
-	internal TypeReferenceModel MockType { get; }
+	internal ITypeReferenceModel MockType { get; }
 	internal string Name { get; }
 	internal string? OverridingCodeValue { get; }
 	internal EquatableArray<ParameterModel> Parameters { get; }
@@ -100,7 +103,7 @@ internal sealed record MethodModel
 	internal RequiresHiding RequiresHiding { get; }
 	internal RequiresOverride RequiresOverride { get; }
 	internal bool RequiresProjectedDelegate { get; }
-	internal TypeReferenceModel ReturnType { get; }
+	internal ITypeReferenceModel ReturnType { get; }
 	internal string ReturnTypeAttributesDescription { get; }
 	internal bool ReturnTypeIsTaskOfTType { get; }
 	internal bool ReturnTypeIsTaskOfTTypeAndIsNullForgiving { get; }
@@ -108,11 +111,11 @@ internal sealed record MethodModel
 	internal bool ReturnTypeIsValueTaskOfTType { get; }
 	internal bool ReturnTypeIsValueTaskOfTTypeAndIsNullForgiving { get; }
 	internal bool ReturnTypeIsValueTaskType { get; }
-	internal EquatableArray<TypeReferenceModel> ReturnTypeTypeArguments { get; }
+	internal EquatableArray<ITypeReferenceModel> ReturnTypeTypeArguments { get; }
 	internal bool ReturnsVoid { get; }
 	internal bool ReturnsByRef { get; }
 	internal bool ReturnsByRefReadOnly { get; }
 	internal bool ShouldThrowDoesNotReturnException { get; }
-	internal EquatableArray<TypeReferenceModel> TypeArguments { get; }
-	internal EquatableArray<TypeReferenceModel> TypeParameters { get; }
+	internal EquatableArray<ITypeReferenceModel> TypeArguments { get; }
+	internal EquatableArray<ITypeReferenceModel> TypeParameters { get; }
 }

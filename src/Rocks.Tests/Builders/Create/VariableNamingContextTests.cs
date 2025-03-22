@@ -51,8 +51,8 @@ public static class VariableNamingContextTests
 	[Test]
 	public static void AddWhenThereAreNoParameters()
 	{
-		(var method, var compilation) = VariableNamingContextTests.GetMethod("public class Method { public void Foo() { } }");
-		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
+		(var method, var modelContext) = VariableNamingContextTests.GetMethod("public class Method { public void Foo() { } }");
+		var model = new MethodModel(method, modelContext.CreateTypeReference(method.ContainingType), modelContext,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
 		var namingContext = new VariablesNamingContext(model);
@@ -63,8 +63,8 @@ public static class VariableNamingContextTests
 	[Test]
 	public static void AddWhenThereIsNoMatchInParametersOrVariables()
 	{
-		(var method, var compilation) = VariableNamingContextTests.GetMethod("public class Method { public void Foo(int a) { } }");
-		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
+		(var method, var modelContext) = VariableNamingContextTests.GetMethod("public class Method { public void Foo(int a) { } }");
+		var model = new MethodModel(method, modelContext.CreateTypeReference(method.ContainingType), modelContext,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
 		var namingContext = new VariablesNamingContext(model);
@@ -75,8 +75,8 @@ public static class VariableNamingContextTests
 	[Test]
 	public static void AddWhenThereIsMatchInParameters()
 	{
-		(var method, var compilation) = VariableNamingContextTests.GetMethod("public class Method { public void Foo(int a) { } }");
-		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
+		(var method, var modelContext) = VariableNamingContextTests.GetMethod("public class Method { public void Foo(int a) { } }");
+		var model = new MethodModel(method, modelContext.CreateTypeReference(method.ContainingType), modelContext,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
 		var namingContext = new VariablesNamingContext(model);
@@ -87,8 +87,8 @@ public static class VariableNamingContextTests
 	[Test]
 	public static void AddWhenVariableCurrentlyExists()
 	{
-		(var method, var compilation) = VariableNamingContextTests.GetMethod("public class Method { public void Foo(int a) { } }");
-		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
+		(var method, var modelContext) = VariableNamingContextTests.GetMethod("public class Method { public void Foo(int a) { } }");
+		var model = new MethodModel(method, modelContext.CreateTypeReference(method.ContainingType), modelContext,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
 		var namingContext = new VariablesNamingContext(model);
@@ -100,8 +100,8 @@ public static class VariableNamingContextTests
 	[Test]
 	public static void AddWhenThereAreMultipleMatchesInParameters()
 	{
-		(var method, var compilation) = VariableNamingContextTests.GetMethod("public class Method { public void Foo(int a, int a1) { } }");
-		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
+		(var method, var modelContext) = VariableNamingContextTests.GetMethod("public class Method { public void Foo(int a, int a1) { } }");
+		var model = new MethodModel(method, modelContext.CreateTypeReference(method.ContainingType), modelContext,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
 		var namingContext = new VariablesNamingContext(model);
@@ -112,8 +112,8 @@ public static class VariableNamingContextTests
 	[Test]
 	public static void AddWhenThereAreMultipleMatchesInParametersAndVariables()
 	{
-		(var method, var compilation) = VariableNamingContextTests.GetMethod("public class Method { public void Foo(int a, int a1) { } }");
-		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
+		(var method, var modelContext) = VariableNamingContextTests.GetMethod("public class Method { public void Foo(int a, int a1) { } }");
+		var model = new MethodModel(method, modelContext.CreateTypeReference(method.ContainingType), modelContext,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
 		var namingContext = new VariablesNamingContext(model);
@@ -123,7 +123,7 @@ public static class VariableNamingContextTests
 		Assert.That(variable, Is.EqualTo("a4"));
 	}
 
-	private static (IMethodSymbol, Compilation) GetMethod(string source)
+	private static (IMethodSymbol, ModelContext) GetMethod(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
@@ -131,6 +131,6 @@ public static class VariableNamingContextTests
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
 		return (model.GetDeclaredSymbol(syntaxTree.GetRoot().DescendantNodes(_ => true)
-			.OfType<MethodDeclarationSyntax>().Single())!, compilation);
+			.OfType<MethodDeclarationSyntax>().Single())!, new(model));
 	}
 }

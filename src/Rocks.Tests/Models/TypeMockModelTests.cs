@@ -59,7 +59,7 @@ public static class TypeMockModelTests
 	[Test]
 	public static void VerifyMemberCountWithMethodPropertyMix()
 	{
-		(var node, var type, var model) = TypeMockModelTests.GetInformation(
+		(var node, var type, var modelContext) = TypeMockModelTests.GetInformation(
 			"""
 			using System;
 			
@@ -75,7 +75,7 @@ public static class TypeMockModelTests
 			}
 
 			""");
-		var mockModel = MockModel.Create(node, type, null, model, BuildType.Create, false);
+		var mockModel = MockModel.Create(node, type, null, modelContext, BuildType.Create, false);
 		var typeModel = mockModel.Information!.Type;
 
 		Assert.Multiple(() =>
@@ -86,7 +86,7 @@ public static class TypeMockModelTests
 		});
 	}
 
-	private static (SyntaxNode, ITypeSymbol, SemanticModel) GetInformation(string code)
+	private static (SyntaxNode, ITypeSymbol, ModelContext) GetInformation(string code)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
@@ -95,6 +95,6 @@ public static class TypeMockModelTests
 
 		var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single();
-		return (typeSyntax, model.GetDeclaredSymbol(typeSyntax)!, model);
+		return (typeSyntax, model.GetDeclaredSymbol(typeSyntax)!, new(model));
 	}
 }

@@ -5,7 +5,7 @@ namespace Rocks.Models;
 
 internal sealed record ParameterModel
 {
-	internal ParameterModel(IParameterSymbol parameter, Compilation compilation,
+	internal ParameterModel(IParameterSymbol parameter, ModelContext modelContext,
 		RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation = RequiresExplicitInterfaceImplementation.No)
 	{
 		this.Name = parameter.Name;
@@ -14,17 +14,18 @@ internal sealed record ParameterModel
 		this.IsParams = parameter.IsParams;
 		this.IsScoped = parameter.IsScoped();
 
-		this.Type = new TypeReferenceModel(parameter.Type, compilation);
+		this.Type = modelContext.CreateTypeReference(parameter.Type);
 
 		this.HasExplicitDefaultValue = parameter.HasExplicitDefaultValue;
 
 		if (this.HasExplicitDefaultValue)
 		{
-			this.ExplicitDefaultValue = parameter.ExplicitDefaultValue.GetDefaultValue(parameter.Type, compilation);
+			this.ExplicitDefaultValue = parameter.ExplicitDefaultValue.GetDefaultValue(
+				parameter.Type, modelContext.SemanticModel.Compilation);
 		}
 
 		this.AttributesDescription = parameter.GetAttributes().GetDescription(
-			compilation,
+			modelContext.SemanticModel.Compilation,
 			requiresExplicitInterfaceImplementation: requiresExplicitInterfaceImplementation,
 			isParameterWithOptionalValue: this.HasExplicitDefaultValue);
 	}
@@ -37,5 +38,5 @@ internal sealed record ParameterModel
 	internal string Name { get; }
 	internal RefKind RefKind { get; }
 	internal bool RequiresNullableAnnotation { get; }
-	internal TypeReferenceModel Type { get; }
+	internal ITypeReferenceModel Type { get; }
 }

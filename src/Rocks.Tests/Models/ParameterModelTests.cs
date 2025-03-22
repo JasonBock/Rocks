@@ -19,8 +19,8 @@ public static class ParameterModelTests
 			}
 			""";
 
-		(var parameter, var compilation) = ParameterModelTests.GetSymbolsCompilation(code);
-		var model = new ParameterModel(parameter, compilation);
+		(var parameter, var modelContext) = ParameterModelTests.GetSymbolsCompilation(code);
+		var model = new ParameterModel(parameter, modelContext);
 
 		Assert.Multiple(() =>
 		{
@@ -48,8 +48,8 @@ public static class ParameterModelTests
 			}
 			""";
 
-		(var parameter, var compilation) = ParameterModelTests.GetSymbolsCompilation(code);
-		var model = new ParameterModel(parameter, compilation);
+		(var parameter, var modelContext) = ParameterModelTests.GetSymbolsCompilation(code);
+		var model = new ParameterModel(parameter, modelContext);
 
 		Assert.That(model.AttributesDescription, Is.EqualTo("[global::System.Runtime.InteropServices.InAttribute]"));
 	}
@@ -67,8 +67,8 @@ public static class ParameterModelTests
 			}
 			""";
 
-		(var parameter, var compilation) = ParameterModelTests.GetSymbolsCompilation(code);
-		var model = new ParameterModel(parameter, compilation);
+		(var parameter, var modelContext) = ParameterModelTests.GetSymbolsCompilation(code);
+		var model = new ParameterModel(parameter, modelContext);
 
 		Assert.Multiple(() =>
 		{
@@ -90,8 +90,8 @@ public static class ParameterModelTests
 			}
 			""";
 
-		(var parameter, var compilation) = ParameterModelTests.GetSymbolsCompilation(code);
-		var model = new ParameterModel(parameter, compilation);
+		(var parameter, var modelContext) = ParameterModelTests.GetSymbolsCompilation(code);
+		var model = new ParameterModel(parameter, modelContext);
 
 		Assert.That(model.IsParams, Is.True);
 	}
@@ -109,13 +109,13 @@ public static class ParameterModelTests
 			}
 			""";
 
-		(var parameter, var compilation) = ParameterModelTests.GetSymbolsCompilation(code);
-		var model = new ParameterModel(parameter, compilation);
+		(var parameter, var modelContext) = ParameterModelTests.GetSymbolsCompilation(code);
+		var model = new ParameterModel(parameter, modelContext);
 
 		Assert.That(model.RequiresNullableAnnotation, Is.True);
 	}
 
-	private static (IParameterSymbol, Compilation) GetSymbolsCompilation(string code)
+	private static (IParameterSymbol, ModelContext) GetSymbolsCompilation(string code)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
@@ -126,6 +126,6 @@ public static class ParameterModelTests
 			.OfType<TypeDeclarationSyntax>().Single();
 		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single();
-		return (model.GetDeclaredSymbol(methodSyntax)!.Parameters[0], compilation);
+		return (model.GetDeclaredSymbol(methodSyntax)!.Parameters[0], new(model));
 	}
 }

@@ -18,10 +18,10 @@ public static class PropertyModelTests
 				public string Value { get; set; }
 			}
 			""";
-		(var property, var type, var compilation) = PropertyModelTests.GetSymbolsCompilation(code);
+		(var property, var type, var modelContext) = PropertyModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new PropertyModel(property, mockType, compilation,
+		var model = new PropertyModel(property, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
 			 PropertyAccessor.GetAndSet, memberIdentifier);
 
@@ -63,10 +63,10 @@ public static class PropertyModelTests
 				public string Value { get; }
 			}
 			""";
-		(var property, var type, var compilation) = PropertyModelTests.GetSymbolsCompilation(code);
+		(var property, var type, var modelContext) = PropertyModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new PropertyModel(property, mockType, compilation,
+		var model = new PropertyModel(property, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
 			 PropertyAccessor.Get, memberIdentifier);
 
@@ -90,10 +90,10 @@ public static class PropertyModelTests
 				public string Value { init; }
 			}
 			""";
-		(var property, var type, var compilation) = PropertyModelTests.GetSymbolsCompilation(code);
+		(var property, var type, var modelContext) = PropertyModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new PropertyModel(property, mockType, compilation,
+		var model = new PropertyModel(property, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
 			 PropertyAccessor.Init, memberIdentifier);
 
@@ -117,10 +117,10 @@ public static class PropertyModelTests
 				public string Value { set; }
 			}
 			""";
-		(var property, var type, var compilation) = PropertyModelTests.GetSymbolsCompilation(code);
+		(var property, var type, var modelContext) = PropertyModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new PropertyModel(property, mockType, compilation,
+		var model = new PropertyModel(property, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
 			 PropertyAccessor.Set, memberIdentifier);
 
@@ -144,10 +144,10 @@ public static class PropertyModelTests
 				public virtual string Value { get; }
 			}
 			""";
-		(var property, var type, var compilation) = PropertyModelTests.GetSymbolsCompilation(code);
+		(var property, var type, var modelContext) = PropertyModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new PropertyModel(property, mockType, compilation,
+		var model = new PropertyModel(property, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
 			 PropertyAccessor.Get, memberIdentifier);
 
@@ -164,10 +164,10 @@ public static class PropertyModelTests
 				public abstract string Value { get; }
 			}
 			""";
-		(var property, var type, var compilation) = PropertyModelTests.GetSymbolsCompilation(code);
+		(var property, var type, var modelContext) = PropertyModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new PropertyModel(property, mockType, compilation,
+		var model = new PropertyModel(property, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
 			 PropertyAccessor.Get, memberIdentifier);
 
@@ -184,10 +184,10 @@ public static class PropertyModelTests
 				public abstract string this[string data] { get; }
 			}
 			""";
-		(var indexer, var type, var compilation) = PropertyModelTests.GetSymbolsForIndexerCompilation(code);
+		(var indexer, var type, var modelContext) = PropertyModelTests.GetSymbolsForIndexerCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new PropertyModel(indexer, mockType, compilation,
+		var model = new PropertyModel(indexer, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
 			 PropertyAccessor.Get, memberIdentifier);
 
@@ -209,10 +209,10 @@ public static class PropertyModelTests
 				public unsafe int* Value { get; }
 			}
 			""";
-		(var property, var type, var compilation) = PropertyModelTests.GetSymbolsCompilation(code);
+		(var property, var type, var modelContext) = PropertyModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new PropertyModel(property, mockType, compilation,
+		var model = new PropertyModel(property, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
 			 PropertyAccessor.Get, memberIdentifier);
 
@@ -229,10 +229,10 @@ public static class PropertyModelTests
 				public ref int Value { get; }
 			}
 			""";
-		(var property, var type, var compilation) = PropertyModelTests.GetSymbolsCompilation(code);
+		(var property, var type, var modelContext) = PropertyModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new PropertyModel(property, mockType, compilation,
+		var model = new PropertyModel(property, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
 			 PropertyAccessor.Get, memberIdentifier);
 
@@ -249,10 +249,10 @@ public static class PropertyModelTests
 				public ref readonly int Value { get; }
 			}
 			""";
-		(var property, var type, var compilation) = PropertyModelTests.GetSymbolsCompilation(code);
+		(var property, var type, var modelContext) = PropertyModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new PropertyModel(property, mockType, compilation,
+		var model = new PropertyModel(property, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
 			 PropertyAccessor.Get, memberIdentifier);
 
@@ -269,10 +269,10 @@ public static class PropertyModelTests
 				public int Value { get; }
 			}
 			""";
-		(var property, var type, var compilation) = PropertyModelTests.GetSymbolsCompilation(code);
+		(var property, var type, var modelContext) = PropertyModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new PropertyModel(property, mockType, compilation,
+		var model = new PropertyModel(property, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No,
 			 PropertyAccessor.Get, memberIdentifier);
 
@@ -294,10 +294,10 @@ public static class PropertyModelTests
 				public string Value { get; set; }
 			}
 			""";
-		(var property, var type, var compilation) = PropertyModelTests.GetSymbolsCompilation(code);
+		(var property, var type, var modelContext) = PropertyModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new PropertyModel(property, mockType, compilation,
+		var model = new PropertyModel(property, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
 			 PropertyAccessor.GetAndSet, memberIdentifier);
 
@@ -308,7 +308,7 @@ public static class PropertyModelTests
 		});
 	}
 
-	private static (IPropertySymbol, ITypeSymbol, Compilation) GetSymbolsCompilation(string code)
+	private static (IPropertySymbol, ITypeSymbol, ModelContext) GetSymbolsCompilation(string code)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
@@ -319,10 +319,10 @@ public static class PropertyModelTests
 			.OfType<TypeDeclarationSyntax>().Single();
 		var propertySyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<PropertyDeclarationSyntax>().Single();
-		return (model.GetDeclaredSymbol(propertySyntax)!, model.GetDeclaredSymbol(typeSyntax)!, compilation);
+		return (model.GetDeclaredSymbol(propertySyntax)!, model.GetDeclaredSymbol(typeSyntax)!, new(model));
 	}
 
-	private static (IPropertySymbol, ITypeSymbol, Compilation) GetSymbolsForIndexerCompilation(string code)
+	private static (IPropertySymbol, ITypeSymbol, ModelContext) GetSymbolsForIndexerCompilation(string code)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
@@ -333,6 +333,6 @@ public static class PropertyModelTests
 			.OfType<TypeDeclarationSyntax>().Single();
 		var indexerSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<IndexerDeclarationSyntax>().Single();
-		return (model.GetDeclaredSymbol(indexerSyntax)!, model.GetDeclaredSymbol(typeSyntax)!, compilation);
+		return (model.GetDeclaredSymbol(indexerSyntax)!, model.GetDeclaredSymbol(typeSyntax)!, new(model));
 	}
 }

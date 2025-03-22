@@ -5,21 +5,23 @@ namespace Rocks.Models;
 
 internal sealed record PropertyModel
 {
-	internal PropertyModel(IPropertySymbol property, TypeReferenceModel mockType, Compilation compilation,
+	internal PropertyModel(IPropertySymbol property, ITypeReferenceModel mockType, ModelContext modelContext,
 		RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation, RequiresOverride requiresOverride,
 		PropertyAccessor accessors, uint memberIdentifier)
 	{
-		(this.Type, this.MockType, this.RequiresExplicitInterfaceImplementation, this.RequiresOverride, this.Accessors, this.MemberIdentifier) =
-			(new TypeReferenceModel(property.Type, compilation), mockType, requiresExplicitInterfaceImplementation, requiresOverride, accessors, memberIdentifier);
+		var compilation = modelContext.SemanticModel.Compilation;
 
-		this.ContainingType = new TypeReferenceModel(property.ContainingType, compilation);
+		(this.Type, this.MockType, this.RequiresExplicitInterfaceImplementation, this.RequiresOverride, this.Accessors, this.MemberIdentifier) =
+			(modelContext.CreateTypeReference(property.Type), mockType, requiresExplicitInterfaceImplementation, requiresOverride, accessors, memberIdentifier);
+
+		this.ContainingType = modelContext.CreateTypeReference(property.ContainingType);
 		this.Name = property.Name;
 		this.IsVirtual = property.IsVirtual;
 		this.IsAbstract = property.IsAbstract;
 		this.IsIndexer = property.IsIndexer;
 		this.IsUnsafe = property.IsUnsafe();
 		this.Parameters = [..property.Parameters.Select(
-			_ => new ParameterModel(_, compilation, requiresExplicitInterfaceImplementation: requiresExplicitInterfaceImplementation))];
+			_ => new ParameterModel(_, modelContext, requiresExplicitInterfaceImplementation: requiresExplicitInterfaceImplementation))];
 
 		var allAttributes = property.GetAllAttributes();
 
@@ -36,21 +38,21 @@ internal sealed record PropertyModel
 
 		if (this.Accessors == PropertyAccessor.Get || this.Accessors == PropertyAccessor.GetAndSet || this.Accessors == PropertyAccessor.GetAndInit)
 		{
-			this.GetMethod = new MethodModel(property.GetMethod!, mockType, compilation,
+			this.GetMethod = new MethodModel(property.GetMethod!, mockType, modelContext,
 				requiresExplicitInterfaceImplementation, requiresOverride, RequiresHiding.No, memberIdentifier);
 			this.GetCanBeSeenByContainingAssembly = property.GetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly, compilation);
 		}
 
 		if (this.Accessors == PropertyAccessor.Set || this.Accessors == PropertyAccessor.GetAndSet)
 		{
-			this.SetMethod = new MethodModel(property.SetMethod!, mockType, compilation,
+			this.SetMethod = new MethodModel(property.SetMethod!, mockType, modelContext,
 				requiresExplicitInterfaceImplementation, requiresOverride, RequiresHiding.No, memberIdentifier + 1);
 			this.SetCanBeSeenByContainingAssembly = property.SetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly, compilation);
 		}
 
 		if (this.Accessors == PropertyAccessor.Init || this.Accessors == PropertyAccessor.GetAndInit)
 		{
-			this.SetMethod ??= new MethodModel(property.SetMethod!, mockType, compilation,
+			this.SetMethod ??= new MethodModel(property.SetMethod!, mockType, modelContext,
 				requiresExplicitInterfaceImplementation, requiresOverride, RequiresHiding.No, memberIdentifier + 1);
 
 			this.InitCanBeSeenByContainingAssembly = property.SetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly, compilation);
@@ -60,7 +62,7 @@ internal sealed record PropertyModel
 	internal PropertyAccessor Accessors { get; }
 	internal string AllAttributesDescription { get; }
 	internal string AttributesDescription { get; }
-	internal TypeReferenceModel ContainingType { get; }
+	internal ITypeReferenceModel ContainingType { get; }
 	internal bool GetCanBeSeenByContainingAssembly { get; }
 	internal MethodModel? GetMethod { get; }
 	internal bool InitCanBeSeenByContainingAssembly { get; }
@@ -69,7 +71,7 @@ internal sealed record PropertyModel
 	internal bool IsUnsafe { get; }
 	internal bool IsVirtual { get; }
 	internal uint MemberIdentifier { get; }
-	internal TypeReferenceModel MockType { get; }
+	internal ITypeReferenceModel MockType { get; }
 	internal string Name { get; }
 	internal string? OverridingCodeValue { get; }
 	internal EquatableArray<ParameterModel> Parameters { get; }
@@ -79,5 +81,5 @@ internal sealed record PropertyModel
 	internal bool ReturnsByRefReadOnly { get; }
 	internal bool SetCanBeSeenByContainingAssembly { get; }
 	internal MethodModel? SetMethod { get; }
-	internal TypeReferenceModel Type { get; }
+	internal ITypeReferenceModel Type { get; }
 }

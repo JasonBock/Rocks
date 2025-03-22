@@ -8,7 +8,7 @@ namespace Rocks.Builders.Create;
 
 internal sealed class RockProjectionBuilder
 {
-	internal RockProjectionBuilder(TypeReferenceModel projection)
+	internal RockProjectionBuilder(ITypeReferenceModel projection)
 	{
 		this.ProjectedType = projection;
 		(this.Name, this.Text) = this.Build();
@@ -57,5 +57,5 @@ internal sealed class RockProjectionBuilder
 
 	public string Name { get; private set; }
 	public SourceText Text { get; private set; }
-	private TypeReferenceModel ProjectedType { get; }
+	private ITypeReferenceModel ProjectedType { get; }
 }

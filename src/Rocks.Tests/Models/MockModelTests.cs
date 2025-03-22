@@ -54,7 +54,7 @@ public static class MockModelTests
 			])
 			.Cast<MetadataReference>()
 			.ToList();
-		references.Add(internalModel.Compilation.ToMetadataReference());
+		references.Add(internalModel.SemanticModel.Compilation.ToMetadataReference());
 
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
@@ -62,7 +62,7 @@ public static class MockModelTests
 		var parameterSymbol = compilationModel.GetDeclaredSymbol(
 			syntaxTree.GetRoot().DescendantNodes(_ => true).OfType<ParameterSyntax>().Single());
 
-		var model = MockModel.Create(invocation, parameterSymbol!.Type, null, compilationModel, (BuildType)buildType, true);
+		var model = MockModel.Create(invocation, parameterSymbol!.Type, null, new(compilationModel), (BuildType)buildType, true);
 
 		Assert.That(model.Information is null, Is.EqualTo(isMockNull));
 	}
@@ -563,7 +563,7 @@ public static class MockModelTests
 		});
 	}
 
-	private static (InvocationExpressionSyntax, ITypeSymbol, SemanticModel) GetType(string source, string targetTypeName,
+	private static (InvocationExpressionSyntax, ITypeSymbol, ModelContext) GetType(string source, string targetTypeName,
 		ReportDiagnostic generalDiagnosticOption = ReportDiagnostic.Error)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
@@ -586,13 +586,14 @@ public static class MockModelTests
 
 		var invocation = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("public static void Foo() { }"));
 
-		return (invocation, (model.GetDeclaredSymbol(typeSyntax)! as ITypeSymbol)!, model);
+		return (invocation, (model.GetDeclaredSymbol(typeSyntax)! as ITypeSymbol)!, new(model));
 	}
 
 	private static MockModel GetModel(string source, string targetTypeName,
 		BuildType buildType, ReportDiagnostic generalDiagnosticOption = ReportDiagnostic.Error)
 	{
-		var (invocation, typeSymbol, model) = MockModelTests.GetType(source, targetTypeName, generalDiagnosticOption);
-		return MockModel.Create(invocation, typeSymbol!, null, model, buildType, true);
+		var (invocation, typeSymbol, modelContext) = 
+			MockModelTests.GetType(source, targetTypeName, generalDiagnosticOption);
+		return MockModel.Create(invocation, typeSymbol!, null, modelContext, buildType, true);
 	}
 }

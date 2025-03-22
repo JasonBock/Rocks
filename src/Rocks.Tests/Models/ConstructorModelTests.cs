@@ -19,9 +19,9 @@ public static class ConstructorModelTests
 			}
 			""";
 
-		(var type, var constructor, var compilation) = ConstructorModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new ConstructorModel(constructor, compilation);
+		(var type, var constructor, var modelContext) = ConstructorModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
+		var model = new ConstructorModel(constructor, modelContext);
 
 		Assert.Multiple(() =>
 		{
@@ -30,7 +30,7 @@ public static class ConstructorModelTests
 		});
 	}
 
-	private static (ITypeSymbol, IMethodSymbol, Compilation) GetSymbolsCompilation(string code)
+	private static (ITypeSymbol, IMethodSymbol, ModelContext) GetSymbolsCompilation(string code)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
@@ -41,6 +41,6 @@ public static class ConstructorModelTests
 			.OfType<TypeDeclarationSyntax>().Single();
 		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<ConstructorDeclarationSyntax>().Single();
-		return (model.GetDeclaredSymbol(typeSyntax)!, model.GetDeclaredSymbol(methodSyntax)!, compilation);
+		return (model.GetDeclaredSymbol(typeSyntax)!, model.GetDeclaredSymbol(methodSyntax)!, new(model));
 	}
 }

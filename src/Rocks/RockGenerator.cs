@@ -20,6 +20,7 @@ internal sealed class RockGenerator
 					(context, token) =>
 					{
 						var models = new List<MockModelInformation>(context.Attributes.Length);
+						var modelContext = new ModelContext(context.SemanticModel);
 
 						for (var i = 0; i < context.Attributes.Length; i++)
 						{
@@ -42,7 +43,7 @@ internal sealed class RockGenerator
 								if (buildType.HasFlag(BuildType.Create))
 								{
 									var model = MockModel.Create(attributeClass.ApplicationSyntaxReference!.GetSyntax(token),
-									  mockType, null, context.SemanticModel, BuildType.Create, true);
+									  mockType, null, modelContext, BuildType.Create, true);
 
 									if (model.Information is not null)
 									{
@@ -53,7 +54,7 @@ internal sealed class RockGenerator
 								if (buildType.HasFlag(BuildType.Make))
 								{
 									var model = MockModel.Create(attributeClass.ApplicationSyntaxReference!.GetSyntax(token),
-									  mockType, null, context.SemanticModel, BuildType.Make, true);
+									  mockType, null, modelContext, BuildType.Make, true);
 
 									if (model.Information is not null)
 									{
@@ -74,6 +75,7 @@ internal sealed class RockGenerator
 					(context, token) =>
 					{
 						var models = new List<MockModelInformation>(context.Attributes.Length);
+						var modelContext = new ModelContext(context.SemanticModel);
 
 						for (var i = 0; i < context.Attributes.Length; i++)
 						{
@@ -98,7 +100,7 @@ internal sealed class RockGenerator
 								if (buildType.HasFlag(BuildType.Create))
 								{
 									var model = MockModel.Create(attributeClass.ApplicationSyntaxReference!.GetSyntax(token),
-									  mockType, expectationsInformationSource, context.SemanticModel, BuildType.Create, true);
+									  mockType, expectationsInformationSource, modelContext, BuildType.Create, true);
 
 									if (model.Information is not null)
 									{
@@ -109,7 +111,7 @@ internal sealed class RockGenerator
 								if (buildType.HasFlag(BuildType.Make))
 								{
 									var model = MockModel.Create(attributeClass.ApplicationSyntaxReference!.GetSyntax(token),
-									  mockType, expectationsInformationSource, context.SemanticModel, BuildType.Make, true);
+									  mockType, expectationsInformationSource, modelContext, BuildType.Make, true);
 
 									if (model.Information is not null)
 									{
@@ -139,7 +141,7 @@ internal sealed class RockGenerator
 
 	private static void CreateCombinedOutput((ImmutableArray<MockModelInformation> leftMocks, ImmutableArray<MockModelInformation> rightMocks) mocks, SourceProductionContext context)
 	{
-		var projections = new HashSet<TypeReferenceModel>();
+		var projections = new HashSet<ITypeReferenceModel>();
 
 		foreach (var mock in mocks.leftMocks.Distinct())
 		{

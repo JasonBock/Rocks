@@ -19,8 +19,8 @@ public static class EventModelTests
 			}
 			""";
 
-		(var @event, var compilation) = EventModelTests.GetSymbolsCompilation(code);
-		var model = new EventModel(@event, compilation,
+		(var @event, var modelContext) = EventModelTests.GetSymbolsCompilation(code);
+		var model = new EventModel(@event, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No);
 
 		Assert.Multiple(() =>
@@ -47,8 +47,8 @@ public static class EventModelTests
 			}
 			""";
 
-		(var @event, var compilation) = EventModelTests.GetSymbolsCompilation(code);
-		var model = new EventModel(@event, compilation,
+		(var @event, var modelContext) = EventModelTests.GetSymbolsCompilation(code);
+		var model = new EventModel(@event, modelContext,
 			 RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No);
 
 		Assert.Multiple(() =>
@@ -72,8 +72,8 @@ public static class EventModelTests
 			}
 			""";
 
-		(var @event, var compilation) = EventModelTests.GetSymbolsCompilation(code);
-		var model = new EventModel(@event, compilation,
+		(var @event, var modelContext) = EventModelTests.GetSymbolsCompilation(code);
+		var model = new EventModel(@event, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No);
 
 		Assert.That(model.AttributesDescription, Is.EqualTo("[global::System.CLSCompliantAttribute(true)]"));
@@ -95,15 +95,14 @@ public static class EventModelTests
 			}			
 			""";
 
-		(var @event, var compilation) = EventModelTests.GetSymbolsCompilation(code);
-		var model = new EventModel(@event, compilation,
+		(var @event, var modelContext) = EventModelTests.GetSymbolsCompilation(code);
+		var model = new EventModel(@event, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No);
 
 		Assert.That(model.ArgsType, Is.EqualTo("global::CustomArgs"));
 	}
 
-
-	private static (IEventSymbol, Compilation) GetSymbolsCompilation(string code)
+	private static (IEventSymbol, ModelContext) GetSymbolsCompilation(string code)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
@@ -113,6 +112,6 @@ public static class EventModelTests
 		var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single(_ => _.Identifier.Text == "Target");
 		var type = model.GetDeclaredSymbol(typeSyntax)!;
-		return (type.GetMembers().OfType<IEventSymbol>().Single(), compilation);
+		return (type.GetMembers().OfType<IEventSymbol>().Single(), new(model));
 	}
 }

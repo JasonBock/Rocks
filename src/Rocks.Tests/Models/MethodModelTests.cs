@@ -21,9 +21,9 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var compilation) = MethodModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new MethodModel(method, mockType, compilation,
+		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
+		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
 		Assert.Multiple(() =>
@@ -79,9 +79,9 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var compilation) = MethodModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new MethodModel(method, mockType, compilation,
+		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
+		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
 		Assert.That(model.AttributesDescription, Is.EqualTo("[global::System.CLSCompliantAttribute(true)]"));
@@ -103,9 +103,9 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var compilation) = MethodModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new MethodModel(method, mockType, compilation,
+		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
+		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
 		Assert.That(model.ReturnTypeAttributesDescription, Is.EqualTo("[return: global::System.CLSCompliantAttribute(true)]"));
@@ -126,9 +126,9 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var compilation) = MethodModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new MethodModel(method, mockType, compilation,
+		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
+		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
 		Assert.Multiple(() =>
@@ -151,9 +151,9 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var compilation) = MethodModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new MethodModel(method, mockType, compilation,
+		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
+		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
 		Assert.That(model.OverridingCodeValue, Is.Null);
@@ -172,9 +172,9 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var compilation) = MethodModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new MethodModel(method, mockType, compilation,
+		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
+		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
 		Assert.Multiple(() =>
@@ -200,9 +200,9 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var compilation) = MethodModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new MethodModel(method, mockType, compilation,
+		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
+		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
 		Assert.That(model.IsAbstract, Is.True);
@@ -221,9 +221,9 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var compilation) = MethodModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new MethodModel(method, mockType, compilation,
+		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
+		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
 		Assert.That(model.ReturnsVoid, Is.True);
@@ -244,9 +244,9 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var compilation) = MethodModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new MethodModel(method, mockType, compilation,
+		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
+		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
 		Assert.That(model.ReturnsByRef, Is.True);
@@ -267,9 +267,9 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var compilation) = MethodModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new MethodModel(method, mockType, compilation,
+		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
+		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
 		Assert.That(model.ReturnsByRefReadOnly, Is.True);
@@ -290,9 +290,9 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var compilation) = MethodModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new MethodModel(method, mockType, compilation,
+		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
+		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
 		Assert.That(model.ReturnTypeIsTaskType, Is.True);
@@ -313,9 +313,9 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var compilation) = MethodModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new MethodModel(method, mockType, compilation,
+		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
+		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
 		Assert.That(model.ReturnTypeIsTaskOfTType, Is.True);
@@ -336,9 +336,9 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var compilation) = MethodModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new MethodModel(method, mockType, compilation,
+		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
+		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
 		Assert.That(model.ReturnTypeIsTaskOfTTypeAndIsNullForgiving, Is.True);
@@ -359,9 +359,9 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var compilation) = MethodModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new MethodModel(method, mockType, compilation,
+		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
+		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
 		Assert.That(model.ReturnTypeIsValueTaskType, Is.True);
@@ -382,9 +382,9 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var compilation) = MethodModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new MethodModel(method, mockType, compilation,
+		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
+		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
 		Assert.That(model.ReturnTypeIsValueTaskOfTType, Is.True);
@@ -405,9 +405,9 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var compilation) = MethodModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new MethodModel(method, mockType, compilation,
+		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
+		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
 		Assert.That(model.ReturnTypeIsValueTaskOfTTypeAndIsNullForgiving, Is.True);
@@ -426,9 +426,9 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var compilation) = MethodModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new MethodModel(method, mockType, compilation,
+		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
+		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
 		Assert.That(model.IsVirtual, Is.True);
@@ -451,9 +451,9 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var compilation) = MethodModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new MethodModel(method, mockType, compilation,
+		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
+		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
 		Assert.Multiple(() =>
@@ -476,15 +476,15 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var compilation) = MethodModelTests.GetSymbolsCompilation(code);
-		var mockType = new TypeReferenceModel(type, compilation);
-		var model = new MethodModel(method, mockType, compilation,
+		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
+		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
 		Assert.That(model.IsUnsafe, Is.True);
 	}
 
-	private static (IMethodSymbol, ITypeSymbol, Compilation) GetSymbolsCompilation(string code)
+	private static (IMethodSymbol, ITypeSymbol, ModelContext) GetSymbolsCompilation(string code)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
@@ -495,6 +495,6 @@ public static class MethodModelTests
 			.OfType<TypeDeclarationSyntax>().Single();
 		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single();
-		return (model.GetDeclaredSymbol(methodSyntax)!, model.GetDeclaredSymbol(typeSyntax)!, compilation);
+		return (model.GetDeclaredSymbol(methodSyntax)!, model.GetDeclaredSymbol(typeSyntax)!, new(model));
 	}
 }

@@ -7,7 +7,7 @@ namespace Rocks.Extensions;
 internal static class CompilationExtensions
 {
 	internal static (string name, string nameNoGenerics, string nameFQN, string? nameNamespace) GetExpectationsName(
-		this Compilation self, TypeReferenceModel type, BuildType buildType, bool isPartial)
+		this Compilation self, ITypeReferenceModel type, BuildType buildType, bool isPartial)
 	{
 		var typeArgumentsTickCount = type.IsOpenGeneric ? $"`{type.TypeArguments.Length}" : string.Empty;
 		var typeArguments = type.IsOpenGeneric ?

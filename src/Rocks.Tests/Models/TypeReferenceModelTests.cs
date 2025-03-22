@@ -17,8 +17,8 @@ public static class TypeReferenceModelTests
 			
 			public class Target { }
 			""";
-		(var type, var compilation) = TypeReferenceModelTests.GetSymbolAndCompilation(code);
-		var model = new TypeReferenceModel(type, compilation);
+		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolAndCompilation(code);
+		var model = modelContext.CreateTypeReference(type);
 
 		Assert.Multiple(() =>
 		{
@@ -48,8 +48,8 @@ public static class TypeReferenceModelTests
 			[Serializable]
 			public class Target { }
 			""";
-		(var type, var compilation) = TypeReferenceModelTests.GetSymbolAndCompilation(code);
-		var model = new TypeReferenceModel(type, compilation);
+		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolAndCompilation(code);
+		var model = modelContext.CreateTypeReference(type);
 
 		Assert.That(model.AttributesDescription, Is.Empty);
 	}
@@ -66,8 +66,8 @@ public static class TypeReferenceModelTests
 			[Obsolete("old")]
 			public class Target { }
 			""";
-		(var type, var compilation) = TypeReferenceModelTests.GetSymbolAndCompilation(code);
-		var model = new TypeReferenceModel(type, compilation);
+		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolAndCompilation(code);
+		var model = modelContext.CreateTypeReference(type);
 
 		Assert.That(model.AttributesDescription, Is.EqualTo("""[type: global::System.ObsoleteAttribute("old")]"""));
 	}
@@ -81,8 +81,8 @@ public static class TypeReferenceModelTests
 			
 			public class Target<T> { }
 			""";
-		(var type, var compilation) = TypeReferenceModelTests.GetSymbolAndCompilation(code);
-		var model = new TypeReferenceModel(type, compilation);
+		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolAndCompilation(code);
+		var model = modelContext.CreateTypeReference(type);
 
 		Assert.Multiple(() =>
 		{
@@ -102,8 +102,8 @@ public static class TypeReferenceModelTests
 				public void Go<T>(T target) { }
 			}
 			""";
-		(var type, var compilation) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
-		var model = new TypeReferenceModel(type, compilation);
+		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
+		var model = modelContext.CreateTypeReference(type);
 
 		Assert.Multiple(() =>
 		{
@@ -126,8 +126,8 @@ public static class TypeReferenceModelTests
 				public void Go(Target? target) { }
 			}
 			""";
-		(var type, var compilation) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
-		var model = new TypeReferenceModel(type, compilation);
+		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
+		var model = modelContext.CreateTypeReference(type);
 
 		Assert.Multiple(() =>
 		{
@@ -148,8 +148,8 @@ public static class TypeReferenceModelTests
 				public unsafe void Go(string target) { }
 			}
 			""";
-		(var type, var compilation) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
-		var model = new TypeReferenceModel(type, compilation);
+		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
+		var model = modelContext.CreateTypeReference(type);
 
 		Assert.That(model.RequiresProjectedArgument, Is.False);
 	}
@@ -166,8 +166,8 @@ public static class TypeReferenceModelTests
 				public unsafe void Go(int* target) { }
 			}
 			""";
-		(var type, var compilation) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
-		var model = new TypeReferenceModel(type, compilation);
+		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
+		var model = modelContext.CreateTypeReference(type);
 
 		Assert.Multiple(() =>
 		{
@@ -189,8 +189,8 @@ public static class TypeReferenceModelTests
 				public void Go(ArgIterator target) { }
 			}
 			""";
-		(var type, var compilation) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
-		var model = new TypeReferenceModel(type, compilation);
+		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
+		var model = modelContext.CreateTypeReference(type);
 
 		Assert.That(model.RequiresProjectedArgument, Is.True);
 	}
@@ -208,8 +208,8 @@ public static class TypeReferenceModelTests
 				public void Go(RuntimeArgumentHandle target) { }
 			}
 			""";
-		(var type, var compilation) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
-		var model = new TypeReferenceModel(type, compilation);
+		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
+		var model = modelContext.CreateTypeReference(type);
 
 		Assert.That(model.RequiresProjectedArgument, Is.True);
 	}
@@ -227,8 +227,8 @@ public static class TypeReferenceModelTests
 				public void Go(TypedReference target) { }
 			}
 			""";
-		(var type, var compilation) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
-		var model = new TypeReferenceModel(type, compilation);
+		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
+		var model = modelContext.CreateTypeReference(type);
 
 		Assert.That(model.RequiresProjectedArgument, Is.True);
 	}
@@ -247,8 +247,8 @@ public static class TypeReferenceModelTests
 				public void Go(Span<int> target) { }
 			}
 			""";
-		(var type, var compilation) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
-		var model = new TypeReferenceModel(type, compilation);
+		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
+		var model = modelContext.CreateTypeReference(type);
 
 		Assert.Multiple(() =>
 		{
@@ -264,13 +264,13 @@ public static class TypeReferenceModelTests
 			"""
 			public record Target;
 			""";
-		(var type, var compilation) = TypeReferenceModelTests.GetSymbolAndCompilation(code);
-		var model = new TypeReferenceModel(type, compilation);
+		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolAndCompilation(code);
+		var model = modelContext.CreateTypeReference(type);
 
 		Assert.That(model.IsRecord, Is.True);
 	}
 
-	private static (ITypeSymbol, Compilation) GetSymbolAndCompilation(string code)
+	private static (ITypeSymbol, ModelContext) GetSymbolAndCompilation(string code)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
@@ -279,10 +279,10 @@ public static class TypeReferenceModelTests
 
 		var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single();
-		return (model.GetDeclaredSymbol(typeSyntax)!, compilation);
+		return (model.GetDeclaredSymbol(typeSyntax)!, new(model));
 	}
 
-	private static (ITypeSymbol, Compilation) GetSymbolReferenceAndCompilation(string code)
+	private static (ITypeSymbol, ModelContext) GetSymbolReferenceAndCompilation(string code)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
@@ -291,6 +291,6 @@ public static class TypeReferenceModelTests
 
 		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single();
-		return (model.GetDeclaredSymbol(methodSyntax)!.Parameters[0].Type, compilation);
+		return (model.GetDeclaredSymbol(methodSyntax)!.Parameters[0].Type, new(model));
 	}
 }

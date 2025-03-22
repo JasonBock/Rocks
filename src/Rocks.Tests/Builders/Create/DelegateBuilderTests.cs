@@ -17,13 +17,13 @@ public static class DelegateBuilderTests
 	[TestCase("public class Test { public int Foo(string a = null) { } }", "global::System.Func<string?, int>")]
 	public static void Build(string code, string expectedValue)
 	{
-		(var method, var compilation) = DelegateBuilderTests.GetMethod(code);
-		var methodModel = new MethodModel(method, new(method.ContainingType, compilation), 
-			compilation, RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 0u);
+		(var method, var modelContext) = DelegateBuilderTests.GetMethod(code);
+		var methodModel = new MethodModel(method, modelContext.CreateTypeReference(method.ContainingType), 
+			modelContext, RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 0u);
 		Assert.That(DelegateBuilder.Build(methodModel), Is.EqualTo(expectedValue));
 	}
 
-	private static (IMethodSymbol, Compilation) GetMethod(string source)
+	private static (IMethodSymbol, ModelContext) GetMethod(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
@@ -31,6 +31,6 @@ public static class DelegateBuilderTests
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
 		return (model.GetDeclaredSymbol(syntaxTree.GetRoot().DescendantNodes(_ => true)
-			.OfType<MethodDeclarationSyntax>().Single())!, compilation);
+			.OfType<MethodDeclarationSyntax>().Single())!, new(model));
 	}
 }

@@ -8,7 +8,7 @@ internal sealed class TypeArgumentsNamingContext
 	internal TypeArgumentsNamingContext()
 		: base() { }
 
-	internal TypeArgumentsNamingContext(TypeReferenceModel type)
+	internal TypeArgumentsNamingContext(ITypeReferenceModel type)
 		: base([.. type.TypeArguments.Select(_ => _.FullyQualifiedName)])
 	{ }
 
@@ -17,11 +17,11 @@ internal sealed class TypeArgumentsNamingContext
 	{ }
 
 	private sealed class TypeReferenceModelEqualityComparer
-		: EqualityComparer<TypeReferenceModel>
+		: EqualityComparer<ITypeReferenceModel>
 	{
-		public override bool Equals(TypeReferenceModel x, TypeReferenceModel y) =>
+		public override bool Equals(ITypeReferenceModel x, ITypeReferenceModel y) =>
 			x.FullyQualifiedName == y.FullyQualifiedName;
 
-		public override int GetHashCode(TypeReferenceModel obj) => obj.FullyQualifiedName.GetHashCode();
+		public override int GetHashCode(ITypeReferenceModel obj) => obj.FullyQualifiedName.GetHashCode();
 	}
 }

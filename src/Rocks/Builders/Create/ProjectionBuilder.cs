@@ -7,7 +7,8 @@ namespace Rocks.Builders.Create;
 
 internal static class ProjectionBuilder
 {
-	internal static string BuildArgument(TypeReferenceModel type, TypeArgumentsNamingContext typeArgumentsNamingContext, bool requiresNullableAnnotation)
+	internal static string BuildArgument(
+		ITypeReferenceModel type, TypeArgumentsNamingContext typeArgumentsNamingContext, bool requiresNullableAnnotation)
    {
 		string argumentTypeName;
 
@@ -40,7 +41,7 @@ internal static class ProjectionBuilder
 		return argumentTypeName;
 	}
 
-	internal static void Build(IndentedTextWriter writer, TypeReferenceModel projectedModel)
+	internal static void Build(IndentedTextWriter writer, ITypeReferenceModel projectedModel)
 	{
 		if (projectedModel.TypeKind == TypeKind.FunctionPointer)
 		{
@@ -63,7 +64,7 @@ internal static class ProjectionBuilder
 		}
 	}
 
-	private static void BuildFunctionPointerArgument(IndentedTextWriter writer, TypeReferenceModel projectedModel)
+	private static void BuildFunctionPointerArgument(IndentedTextWriter writer, ITypeReferenceModel projectedModel)
 	{
 		var flattenedName = projectedModel.FlattenedName;
 		var fullyQualifiedName = projectedModel.FullyQualifiedName;
@@ -112,7 +113,7 @@ internal static class ProjectionBuilder
 			""");
 	}
 
-	private static void BuildSpecialArgument(IndentedTextWriter writer, TypeReferenceModel projectedModel)
+	private static void BuildSpecialArgument(IndentedTextWriter writer, ITypeReferenceModel projectedModel)
 	{
 		var needsUnsafe = projectedModel.TypeKind == TypeKind.FunctionPointer ?
 			$"unsafe " : string.Empty;
@@ -149,7 +150,7 @@ internal static class ProjectionBuilder
 			""");
 	}
 
-	private static void BuildPointerArgument(IndentedTextWriter writer, TypeReferenceModel projectedModel)
+	private static void BuildPointerArgument(IndentedTextWriter writer, ITypeReferenceModel projectedModel)
 	{
 		var pointerNames = projectedModel.PointerNames!;
 		var pointerSplats = new string('*', (int)projectedModel.PointedAtCount);
@@ -195,7 +196,7 @@ internal static class ProjectionBuilder
 			""");
 	}
 
-	private static void BuildVoidPointerArgument(IndentedTextWriter writer, TypeReferenceModel projectedModel)
+	private static void BuildVoidPointerArgument(IndentedTextWriter writer, ITypeReferenceModel projectedModel)
 	{
 		var pointerNames = projectedModel.PointerNames!;
 		var pointerSplats = new string('*', (int)projectedModel.PointedAtCount);

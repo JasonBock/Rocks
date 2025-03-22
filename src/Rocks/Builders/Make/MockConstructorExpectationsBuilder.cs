@@ -125,7 +125,7 @@ internal static class MockConstructorExpectationsBuilder
 		}
 	}
 
-	private static void Build(IndentedTextWriter writer, TypeReferenceModel type, ImmutableArray<ParameterModel> parameters,
+	private static void Build(IndentedTextWriter writer, ITypeReferenceModel type, ImmutableArray<ParameterModel> parameters,
 		bool requiredInitObjectInitialization, bool hasRequiredProperties, string expectationsFullyQualifiedName)
 	{
 		var namingContext = new VariablesNamingContext(parameters);

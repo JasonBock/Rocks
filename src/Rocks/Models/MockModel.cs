@@ -8,9 +8,9 @@ namespace Rocks.Models;
 internal sealed record MockModel
 {
 	internal static MockModel Create(SyntaxNode node, ITypeSymbol typeToMock, ITypeSymbol? expectationsInformationSource,
-		SemanticModel model, BuildType buildType, bool shouldResolveShims)
+		ModelContext modelContext, BuildType buildType, bool shouldResolveShims)
 	{
-		var compilation = model.Compilation;
+		var compilation = modelContext.SemanticModel.Compilation;
 
 		// Do all the work to see if this is a type to mock.
 		var diagnostics = new List<Diagnostic>();
@@ -35,7 +35,7 @@ internal sealed record MockModel
 
 		var attributes = typeToMock.GetAttributes();
 
-		var obsoleteAttribute = model.Compilation.GetTypeByMetadataName(typeof(ObsoleteAttribute).FullName)!;
+		var obsoleteAttribute = compilation.GetTypeByMetadataName(typeof(ObsoleteAttribute).FullName)!;
 
 		if (attributes.Any(_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
 			_.ConstructorArguments.Any(_ => _.Value is bool error && error)))
@@ -121,7 +121,7 @@ internal sealed record MockModel
 		return new(
 			!isMockable ? null :
 				new MockModelInformation(
-					new TypeMockModel(node, typeToMock, expectationsInformationSource, compilation, model,
+					new TypeMockModel(node, typeToMock, expectationsInformationSource, modelContext,
 						constructors, methods, properties, events,
 						shims, new TypeMockModelMemberCount(methodMemberCount, propertyMemberCount), shouldResolveShims, buildType),
 					buildType),

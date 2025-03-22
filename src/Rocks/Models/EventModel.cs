@@ -5,21 +5,21 @@ namespace Rocks.Models;
 
 internal sealed record EventModel
 {
-	internal EventModel(IEventSymbol @event, Compilation compilation,
+	internal EventModel(IEventSymbol @event, ModelContext modelContext,
 		RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation, RequiresOverride requiresOverride)
 	{
 		(this.RequiresExplicitInterfaceImplementation, this.RequiresOverride) =
 			 (requiresExplicitInterfaceImplementation, requiresOverride);
 
 		this.Name = @event.Name;
-		this.Type = new TypeReferenceModel(@event.Type, compilation);
-		this.ContainingType = new TypeReferenceModel(@event.ContainingType, compilation);
+		this.Type = modelContext.CreateTypeReference(@event.Type);
+		this.ContainingType = modelContext.CreateTypeReference(@event.ContainingType);
 
-		this.AttributesDescription = @event.GetAttributes().GetDescription(compilation);
+		this.AttributesDescription = @event.GetAttributes().GetDescription(modelContext.SemanticModel.Compilation);
 
 		if (this.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 		{
-			this.OverridingCodeValue = @event.GetAccessibilityValue(compilation.Assembly);
+			this.OverridingCodeValue = @event.GetAccessibilityValue(modelContext.SemanticModel.Compilation.Assembly);
 		}
 
 		var argsType = "global::System.EventArgs";
@@ -27,7 +27,7 @@ internal sealed record EventModel
 		if (@event.Type is INamedTypeSymbol eventNamedType &&
 			eventNamedType.DelegateInvokeMethod?.Parameters is { Length: 2 })
 		{
-			argsType = eventNamedType.DelegateInvokeMethod.Parameters[1].Type.GetFullyQualifiedName(compilation);
+			argsType = eventNamedType.DelegateInvokeMethod.Parameters[1].Type.GetFullyQualifiedName(modelContext.SemanticModel.Compilation);
 		}
 
 		this.ArgsType = argsType;
@@ -35,10 +35,10 @@ internal sealed record EventModel
 
 	internal string ArgsType { get; }
 	internal string AttributesDescription { get; }
-	internal TypeReferenceModel ContainingType { get; }
+	internal ITypeReferenceModel ContainingType { get; }
 	internal string Name { get; }
 	internal string? OverridingCodeValue { get; }
 	internal RequiresExplicitInterfaceImplementation RequiresExplicitInterfaceImplementation { get; }
 	internal RequiresOverride RequiresOverride { get; }
-	internal TypeReferenceModel Type { get; }
+	internal ITypeReferenceModel Type { get; }
 }
