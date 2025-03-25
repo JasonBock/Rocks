@@ -1,8 +1,13 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using Microsoft;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Testing;
 using NuGet.Frameworks;
 using Rocks.Extensions;
+using Rocks.Tests.Extensions;
+using System.Collections.Immutable;
+using System.Diagnostics;
 
 namespace Rocks.Tests;
 
@@ -32,6 +37,63 @@ internal static class TestAssistants
 		}
 
 		test.TestState.ExpectedDiagnostics.AddRange(expectedDiagnostics);
+		await test.RunAsync();
+	}
+
+	internal static async Task RunSuppressorAsync<TDiagnosticSuppressor, TDiagnosticAnalyzer>(string code,
+		IEnumerable<DiagnosticResult> expectedDiagnostics,
+		OutputKind outputKind = OutputKind.DynamicallyLinkedLibrary,
+		IEnumerable<MetadataReference>? additionalReferences = null)
+		where TDiagnosticSuppressor : DiagnosticSuppressor, new()
+		where TDiagnosticAnalyzer : DiagnosticAnalyzer, new()
+	{
+		var test = new DiagnosticSuppressorVerifier<TDiagnosticSuppressor, TDiagnosticAnalyzer>()
+		{
+			ReferenceAssemblies = TestAssistants.GetNet90(),
+			TestState =
+			{
+				Sources = { code },
+				OutputKind = outputKind
+			},
+		};
+
+		test.ExpectedDiagnostics.AddRange(expectedDiagnostics);
+
+		test.TestState.AdditionalReferences.Add(typeof(TDiagnosticSuppressor).Assembly);
+
+		var analyzer = new TDiagnosticAnalyzer();
+		var diagnosticOptions = analyzer.SupportedDiagnostics
+			.ToImmutableDictionary(
+				static descriptor => descriptor.Id,
+				static descriptor => descriptor.DefaultSeverity.ToReportDiagnostic());
+
+		test.SolutionTransforms.Add((solution, projectId) =>
+		{
+			if (additionalReferences is not null)
+			{
+				solution = solution.AddMetadataReferences(projectId, additionalReferences);
+			}
+
+			var project = solution.GetProject(projectId)!;
+
+			var compilationOptions = (CSharpCompilationOptions)project.CompilationOptions!;
+
+			compilationOptions = compilationOptions
+				.WithGeneralDiagnosticOption(ReportDiagnostic.Warn)
+				.WithSpecificDiagnosticOptions(diagnosticOptions)
+				.WithNullableContextOptions(NullableContextOptions.Enable);
+
+			return solution.WithProjectCompilationOptions(projectId, compilationOptions);
+		});
+
+		test.DiagnosticVerifier = (diagnostic, result, verifier) =>
+		{
+			var expected = result.IsSuppressed.GetValueOrDefault();
+
+			verifier.Equal(expected, diagnostic.IsSuppressed, 
+				$"{nameof(Diagnostic)} {result} is expected to{(expected ? " be" : " not be")} suppressed.");
+		};
+
 		await test.RunAsync();
 	}
 
@@ -94,7 +156,7 @@ internal static class TestAssistants
 			 "net9.0",
 			 new PackageIdentity(
 				  "Microsoft.NETCore.App.Ref",
-				  "9.0.0"),
+				  "9.0.3"),
 			 Path.Combine("ref", "net9.0"));
 	}
 }

@@ -23,6 +23,11 @@
 		<PackageReference Include="Microsoft.CodeAnalysis.Common">
 			<NoWarn>NU1608</NoWarn>
 		</PackageReference>
+		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<Reference Include="$(PkgMicrosoft_CodeAnalysis_NetAnalyzers)\analyzers\dotnet\cs\Microsoft.CodeAnalysis.NetAnalyzers.dll" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" />
 		<PackageReference Include="Mono.Cecil" />
 		<PackageReference Include="NuGet.Frameworks" />
