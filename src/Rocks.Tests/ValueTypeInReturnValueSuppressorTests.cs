@@ -11,6 +11,7 @@ public static class ValueTypeInReturnValueSuppressorTests
 		DiagnosticResult.CompilerWarning("CA2012").WithSeverity(DiagnosticSeverity.Info);
 
 	[Test]
+	[Ignore("Currently having an issue with the testing library - https://github.com/dotnet/roslyn-sdk/issues/1175")]
 	public static async Task SuppressWhenValueTaskIsPassedToReturnValueAsync()
 	{
 		var code =

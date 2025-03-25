@@ -10,17 +10,23 @@ public static class ISuppressValueTypeInReturnValueUser
 	public static void Use()
 	{
 		var expectations = new ISuppressValueTypeInReturnValueCreateExpectations();
-		expectations.Methods.Work()
+
+		expectations.Methods.WorkReturningVoid();
+		expectations.Methods.WorkReturningString()
+			.ReturnValue("done");
+		expectations.Methods.WorkReturningValueTask()
 			.ReturnValue(new ValueTask());
-		expectations.Methods.WorkWithResult()
+		expectations.Methods.WorkReturningValueTaskOfString()
 			.ReturnValue(ValueTask.FromResult("done"));
-		expectations.Methods.WorkWithResult()
+		expectations.Methods.WorkReturningValueTaskOfString()
 			.ReturnValue(new ValueTask<string>("done"));
 	}
 }
 
 public interface ISuppressValueTypeInReturnValue
 {
-	ValueTask Work();
-	ValueTask<string> WorkWithResult();
+	void WorkReturningVoid();
+	string WorkReturningString();
+	ValueTask WorkReturningValueTask();
+	ValueTask<string> WorkReturningValueTaskOfString();
 }

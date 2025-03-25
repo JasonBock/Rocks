@@ -4,7 +4,7 @@ namespace Rocks.Extensions;
 
 internal static class SyntaxNodeExtensions
 {
-	internal static T FindParent<T>(this SyntaxNode self)
+	internal static T? FindParent<T>(this SyntaxNode self)
 		where T : SyntaxNode
 	{
 		var parent = self.Parent;

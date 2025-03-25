@@ -4,7 +4,6 @@ using Microsoft.CodeAnalysis.Diagnostics;
 using Rocks.Descriptors;
 using Rocks.Extensions;
 using System.Collections.Immutable;
-using System.Data;
 
 namespace Rocks;
 
@@ -17,14 +16,14 @@ namespace Rocks;
 public sealed class ValueTaskInReturnValueSuppressor
 	: DiagnosticSuppressor
 {
-	private static readonly SuppressionDescriptor descriptor = 
+	private static readonly SuppressionDescriptor descriptor =
 		ValueTypeInReturnValueDescriptor.Create();
 
 	/// <summary>
 	/// Gets an <see cref="ImmutableArray{SuppressionDescriptor}"/> instance
 	/// containing all suppressed diagnostic IDs.
 	/// </summary>
-	public override ImmutableArray<SuppressionDescriptor> SupportedSuppressions => 
+	public override ImmutableArray<SuppressionDescriptor> SupportedSuppressions =>
 		[ValueTaskInReturnValueSuppressor.descriptor];
 
 	/// <summary>
@@ -37,39 +36,47 @@ public sealed class ValueTaskInReturnValueSuppressor
 			_ => _.Id == ValueTypeInReturnValueDescriptor.SuppressedId))
 		{
 			var location = diagnostic.Location;
-			var syntaxTree = location.SourceTree!;
-			var root = syntaxTree.GetRoot(context.CancellationToken);
-			var textSpan = location.SourceSpan;
-			var node = root.FindNode(textSpan);
 
-			if (node is ArgumentSyntax argument)
+			if (location != Location.None && location.IsInSource)
 			{
-				var invocationExpressionNode = node.FindParent<InvocationExpressionSyntax>();
+				var syntaxTree = location.SourceTree;
 
-				// TODO: Can I get the name of the invocation node to check for "ReturnValue"
-
-				var semanticModel = context.GetSemanticModel(syntaxTree);
-				var invocationMethod = (semanticModel.GetSymbolInfo(invocationExpressionNode).Symbol as IMethodSymbol)!;
-
-				/*
-?(invocationMethod.Parameters[0].Type as INamedTypeSymbol).ConstructedFrom
-{System.Threading.Tasks.ValueTask<TResult>}
-				*/
-
-				// TODO: Maybe the argument type check should be for both
-				// ValueTask and ValueTask<TResult>.
-
-				if (SymbolEqualityComparer.Default.Equals(
-					invocationMethod.ContainingType.ConstructedFrom,
-					context.Compilation.GetTypeByMetadataName("Rocks.Adornments`4")) &&
-					invocationMethod.Name == "ReturnValue" &&
-					SymbolEqualityComparer.Default.Equals(
-						(invocationMethod.Parameters[0].Type as INamedTypeSymbol)!.ConstructedFrom,
-						context.Compilation.GetTypeByMetadataName("System.Threading.Tasks.ValueTask`1")))
+				if (syntaxTree is not null)
 				{
-					var suppression = Suppression.Create(
-						ValueTaskInReturnValueSuppressor.descriptor, diagnostic);
-					context.ReportSuppression(suppression);
+					var root = syntaxTree.GetRoot(context.CancellationToken);
+					var textSpan = location.SourceSpan;
+					var node = root.FindNode(textSpan);
+
+					if (node is ArgumentSyntax argument)
+					{
+						var invocationExpressionNode = node.FindParent<InvocationExpressionSyntax>();
+
+						// TODO: Can I get the name of the invocation node to check for "ReturnValue"
+
+						if (invocationExpressionNode is not null)
+						{
+							var semanticModel = context.GetSemanticModel(syntaxTree);
+							var invocationMethod = semanticModel.GetSymbolInfo(
+								invocationExpressionNode, context.CancellationToken).Symbol as IMethodSymbol;
+
+							// TODO: Maybe the argument type check should be for both
+							// ValueTask and ValueTask<TResult>.
+
+							if (invocationMethod is not null &&
+								invocationMethod.Name == "ReturnValue" &&
+								SymbolEqualityComparer.Default.Equals(
+									invocationMethod.ContainingType.ConstructedFrom,
+									context.Compilation.GetTypeByMetadataName("Rocks.Adornments`4")) &&
+								SymbolEqualityComparer.Default.Equals(
+									(invocationMethod.Parameters[0].Type as INamedTypeSymbol)!.ConstructedFrom,
+									context.Compilation.GetTypeByMetadataName("System.Threading.Tasks.ValueTask`1")))
+							{
+								var suppression = Suppression.Create(
+									ValueTaskInReturnValueSuppressor.descriptor, diagnostic);
+								context.ReportSuppression(suppression);
+							}
+						}
+					}
 				}
 			}
 		}
