@@ -1,7 +1,7 @@
 ﻿using Microsoft.CodeAnalysis.Testing;
 using Microsoft.CodeAnalysis;
-using NUnit.Framework;
 using Microsoft.NetCore.Analyzers.Tasks;
+using NUnit.Framework;
 
 namespace Rocks.Tests;
 

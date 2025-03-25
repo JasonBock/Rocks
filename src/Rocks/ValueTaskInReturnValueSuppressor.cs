@@ -2,7 +2,9 @@
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Rocks.Descriptors;
+using Rocks.Extensions;
 using System.Collections.Immutable;
+using System.Data;
 
 namespace Rocks;
 
@@ -15,12 +17,15 @@ namespace Rocks;
 public sealed class ValueTaskInReturnValueSuppressor
 	: DiagnosticSuppressor
 {
+	private static readonly SuppressionDescriptor descriptor = 
+		ValueTypeInReturnValueDescriptor.Create();
+
 	/// <summary>
 	/// Gets an <see cref="ImmutableArray{SuppressionDescriptor}"/> instance
 	/// containing all suppressed diagnostic IDs.
 	/// </summary>
-	public override ImmutableArray<SuppressionDescriptor> SupportedSuppressions =>
-		[ValueTypeInReturnValueDescriptor.Create()];
+	public override ImmutableArray<SuppressionDescriptor> SupportedSuppressions => 
+		[ValueTaskInReturnValueSuppressor.descriptor];
 
 	/// <summary>
 	/// Reports targeted CA2012 suppressions
@@ -39,7 +44,33 @@ public sealed class ValueTaskInReturnValueSuppressor
 
 			if (node is ArgumentSyntax argument)
 			{
+				var invocationExpressionNode = node.FindParent<InvocationExpressionSyntax>();
 
+				// TODO: Can I get the name of the invocation node to check for "ReturnValue"
+
+				var semanticModel = context.GetSemanticModel(syntaxTree);
+				var invocationMethod = (semanticModel.GetSymbolInfo(invocationExpressionNode).Symbol as IMethodSymbol)!;
+
+				/*
+?(invocationMethod.Parameters[0].Type as INamedTypeSymbol).ConstructedFrom
+{System.Threading.Tasks.ValueTask<TResult>}
+				*/
+
+				// TODO: Maybe the argument type check should be for both
+				// ValueTask and ValueTask<TResult>.
+
+				if (SymbolEqualityComparer.Default.Equals(
+					invocationMethod.ContainingType.ConstructedFrom,
+					context.Compilation.GetTypeByMetadataName("Rocks.Adornments`4")) &&
+					invocationMethod.Name == "ReturnValue" &&
+					SymbolEqualityComparer.Default.Equals(
+						(invocationMethod.Parameters[0].Type as INamedTypeSymbol)!.ConstructedFrom,
+						context.Compilation.GetTypeByMetadataName("System.Threading.Tasks.ValueTask`1")))
+				{
+					var suppression = Suppression.Create(
+						ValueTaskInReturnValueSuppressor.descriptor, diagnostic);
+					context.ReportSuppression(suppression);
+				}
 			}
 		}
 	}
