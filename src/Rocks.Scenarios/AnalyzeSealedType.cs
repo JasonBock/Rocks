@@ -1,7 +1,7 @@
 ﻿using Rocks;
 using Rocks.Scenarios;
 
-//[assembly: Rock(typeof(AnalyzeSealedType), BuildType.Create)]
+[assembly: Rock(typeof(AnalyzeSealedType), BuildType.Create)]
 
 namespace Rocks.Scenarios;
 

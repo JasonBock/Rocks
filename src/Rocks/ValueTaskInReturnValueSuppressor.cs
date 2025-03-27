@@ -17,7 +17,7 @@ public sealed class ValueTaskInReturnValueSuppressor
 	: DiagnosticSuppressor
 {
 	private static readonly SuppressionDescriptor descriptor =
-		ValueTypeInReturnValueDescriptor.Create();
+		ValueTestInReturnValueDescriptor.Create();
 
 	/// <summary>
 	/// Gets an <see cref="ImmutableArray{SuppressionDescriptor}"/> instance
@@ -33,7 +33,7 @@ public sealed class ValueTaskInReturnValueSuppressor
 	public override void ReportSuppressions(SuppressionAnalysisContext context)
 	{
 		foreach (var diagnostic in context.ReportedDiagnostics.Where(
-			_ => _.Id == ValueTypeInReturnValueDescriptor.SuppressedId))
+			_ => _.Id == ValueTestInReturnValueDescriptor.SuppressedId))
 		{
 			var location = diagnostic.Location;
 
@@ -51,29 +51,32 @@ public sealed class ValueTaskInReturnValueSuppressor
 					{
 						var invocationExpressionNode = node.FindParent<InvocationExpressionSyntax>();
 
-						// TODO: Can I get the name of the invocation node to check for "ReturnValue"
-
 						if (invocationExpressionNode is not null)
 						{
 							var semanticModel = context.GetSemanticModel(syntaxTree);
 							var invocationMethod = semanticModel.GetSymbolInfo(
 								invocationExpressionNode, context.CancellationToken).Symbol as IMethodSymbol;
 
-							// TODO: Maybe the argument type check should be for both
-							// ValueTask and ValueTask<TResult>.
-
 							if (invocationMethod is not null &&
 								invocationMethod.Name == "ReturnValue" &&
 								SymbolEqualityComparer.Default.Equals(
 									invocationMethod.ContainingType.ConstructedFrom,
-									context.Compilation.GetTypeByMetadataName("Rocks.Adornments`4")) &&
-								SymbolEqualityComparer.Default.Equals(
-									(invocationMethod.Parameters[0].Type as INamedTypeSymbol)!.ConstructedFrom,
-									context.Compilation.GetTypeByMetadataName("System.Threading.Tasks.ValueTask`1")))
+									context.Compilation.GetTypeByMetadataName("Rocks.Adornments`4")))
 							{
-								var suppression = Suppression.Create(
-									ValueTaskInReturnValueSuppressor.descriptor, diagnostic);
-								context.ReportSuppression(suppression);
+								var constructedParameterType = (invocationMethod.Parameters[0].Type as INamedTypeSymbol)?.ConstructedFrom;
+
+								if (constructedParameterType is not null &&
+									(SymbolEqualityComparer.Default.Equals(
+										constructedParameterType,
+										context.Compilation.GetTypeByMetadataName("System.Threading.Tasks.ValueTask")) ||
+									SymbolEqualityComparer.Default.Equals(
+										constructedParameterType,
+										context.Compilation.GetTypeByMetadataName("System.Threading.Tasks.ValueTask`1"))))
+								{
+									var suppression = Suppression.Create(
+										ValueTaskInReturnValueSuppressor.descriptor, diagnostic);
+									context.ReportSuppression(suppression);
+								}
 							}
 						}
 					}

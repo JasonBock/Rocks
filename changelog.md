@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Made a number of minor internal refactorings that made compile-time code generation consume slightly less memory (issue [#358](https://github.com/JasonBock/Rocks/issues/358))
+- Added a suppressor for `CA2012` when a `ValueTask` is passed to `ReturnValue` (issue [#354](https://github.com/JasonBock/Rocks/issues/354))
 
 ## [9.0.2] - 2025-03-17
 
