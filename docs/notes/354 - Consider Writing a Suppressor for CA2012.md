@@ -49,3 +49,4 @@ TODOs:
 * Make the expectations check that if `ValueTask` or `ValueTask<>` is passed to `ReturnValue` and `ExpectedCallCount` is greater than 1, **maybe** throw an exception. Need to think about this.
 * Complain to .NET team (lol) about CA2012 and why it flags for `ValueTask.FromResult("done")` but not `new ValueTask<string>("done")`
 * Write a refactoring to create the `[Rock]` attribute
+* Capture the issue about running CodeGenerationTests with too many tasks
