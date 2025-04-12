@@ -7,6 +7,46 @@ namespace Rocks.Tests.Generators;
 public static class InternalGeneratorTests
 {
 	[Test]
+	public static async Task GenerateWhenInterfaceHasInternalMembersWithDIMAsync()
+	{
+		var source =
+			"""
+			using System;
+
+			internal abstract class BuilderNode 
+			{ 
+				protected BuilderNode() { }
+			}
+
+			public interface ITransactGetItemRequestBuilder
+			{
+				internal BuilderNode GetNode() => throw new NotImplementedException();
+				internal Type GetEntityType() => throw new NotImplementedException();
+			}
+			""";
+		var sourceReferences = Shared.References.Value
+			.Cast<MetadataReference>()
+			.ToList();
+		var sourceSyntaxTree = CSharpSyntaxTree.ParseText(source);
+		var sourceCompilation = CSharpCompilation.Create("Source", [sourceSyntaxTree],
+			sourceReferences,
+			new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+		var sourceReference = sourceCompilation.ToMetadataReference()!;
+		sourceReferences.Add(sourceReference);
+
+		var code =
+			"""
+			using Rocks;
+			
+			[assembly: Rock(typeof(ITransactGetItemRequestBuilder), BuildType.Create | BuildType.Make)]
+			""";
+
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[], [],
+			additionalReferences: sourceReferences);
+	}
+
+	[Test]
 	public static async Task GenerateWhenTypeParameterIsPublicAsync()
 	{
 		var source =

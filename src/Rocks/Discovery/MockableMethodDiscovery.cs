@@ -145,7 +145,7 @@ internal sealed class MockableMethodDiscovery
 			if (IsMethodToExamine(selfMethod))
 			{
 				if (!selfMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol, compilation) &&
-					selfMethod.IsAbstract)
+					(selfMethod.IsAbstract || selfMethod.IsVirtual))
 				{
 					inaccessibleAbstractMembers = true;
 				}

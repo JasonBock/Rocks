@@ -8,8 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [9.1.0] - Not Yet Released
 
 ### Changed
+
 - Made a number of minor internal refactorings that made compile-time code generation consume slightly less memory (issue [#358](https://github.com/JasonBock/Rocks/issues/358))
 - Added a suppressor for `CA2012` when a `ValueTask` is passed to `ReturnValue` (issue [#354](https://github.com/JasonBock/Rocks/issues/354))
+
+### Fixed
+
+- Interfaces with non-public members that have a default implementation are no longer considered for mocking (issue [#364](https://github.com/JasonBock/Rocks/issues/364))
 
 ## [9.0.2] - 2025-03-17
 

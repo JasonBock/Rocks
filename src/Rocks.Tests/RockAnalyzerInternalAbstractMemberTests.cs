@@ -13,7 +13,7 @@ public static class RockAnalyzerInternalAbstractMemberTests
 	[TestCase("public abstract class InternalTargets { public abstract string VisibleWork { get; } internal abstract string Work { get; } }", true)]
 	[TestCase("public interface InternalTargets { string VisibleWork { get; } internal string Work { get; } }", true)]
 	[TestCase("public abstract class InternalTargets { public abstract void VisibleWork(); internal virtual void Work() { } }", false)]
-	[TestCase("public interface InternalTargets { void VisibleWork(); internal void Work() { } }", false)]
+	[TestCase("public interface InternalTargets { void VisibleWork(); internal void Work() { } }", true)]
 	[TestCase("public abstract class InternalTargets { public abstract string VisibleWork { get; } internal virtual string Work { get; } }", false)]
 	public static async Task AnalyzeCreateAsync(string internalCode, bool hasDiagnostic)
 	{
@@ -77,7 +77,7 @@ public static class RockAnalyzerInternalAbstractMemberTests
 	[TestCase("using System; public abstract class InternalTargets { public abstract event EventHandler VisibleWork; internal abstract event EventHandler Work; }", true)]
 	[TestCase("using System; public interface InternalTargets { event EventHandler VisibleWork; internal event EventHandler Work; }", true)]
 	[TestCase("public abstract class InternalTargets { public abstract void VisibleWork(); internal virtual void Work() { } }", false)]
-	[TestCase("public interface InternalTargets { void VisibleWork(); internal void Work() { } }", false)]
+	[TestCase("public interface InternalTargets { void VisibleWork(); internal void Work() { } }", true)]
 	[TestCase("public abstract class InternalTargets { public abstract string VisibleWork { get; } internal virtual string Work { get; } }", false)]
 	[TestCase("using System; public abstract class InternalTargets { public abstract event EventHandler VisibleWork; internal virtual event EventHandler Work; }", true)]
 	public static async Task AnalyzeMakeAsync(string internalCode, bool hasDiagnostic)
