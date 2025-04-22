@@ -1,7 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.CSharp;
-using Rocks.Extensions;
+using Rocks.Analysis.Extensions;
 using System.Collections.Immutable;
 using BenchmarkDotNet.Attributes;
 

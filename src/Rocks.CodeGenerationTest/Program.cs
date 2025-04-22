@@ -4,7 +4,7 @@
 using DotNet.Testcontainers.Containers;
 using Microsoft.CodeAnalysis;
 using R3;
-using Rocks;
+using Rocks.Analysis;
 using Rocks.CodeGenerationTest;
 using Rocks.CodeGenerationTest.Extensions;
 using System.Collections.Immutable;
@@ -41,7 +41,7 @@ static void TestWithCode()
 		"""
 		#nullable enable
 
-		using Rocks;
+		using Rocks.Runtime;
 		using System;
 				
 		[assembly: Rock(typeof(MonadIO<>), BuildType.Create)]
@@ -80,7 +80,7 @@ static void TestWithType()
 	(var issues, var times) = TestGenerator.Generate(new RockGenerator(),
 		[typeof(EfficientDynamoDb.Operations.TransactGetItems.ITransactGetItemRequestBuilder)],
 		typesToLoadAssembliesFrom,
-		[], BuildType.Create);
+		[], Rocks.Analysis.BuildType.Create);
 #pragma warning restore EF9100 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 #pragma warning restore EF1001 // Internal EF Core API usage.
 
@@ -94,7 +94,7 @@ static void TestWithTypeNoEmit()
 	{
 		(var issues, var times) = TestGenerator.GenerateNoEmit(new RockGenerator(),
 			[typeof(AngleSharp.Svg.Dom.ISvgSvgElement)],
-			[], [], BuildType.Create);
+			[], [], Rocks.Analysis.BuildType.Create);
 
 		Console.WriteLine($"Generation Time: {times.GeneratorTime}, Emit Time: {times.EmitTime}");
 		PrintIssues(issues);
@@ -276,9 +276,9 @@ static void TestWithTypes()
 			targetAssemblySet, [], typesToLoadAssembliesFrom, typeAliasesMapping.aliases);
 
 		(var createIssues, _) = TestGenerator.Generate(
-			new RockGenerator(), discoveredTypes, typesToLoadAssembliesFrom, typeAliasesMapping.aliases, BuildType.Create);
+			new RockGenerator(), discoveredTypes, typesToLoadAssembliesFrom, typeAliasesMapping.aliases, Rocks.Analysis.BuildType.Create);
 		(var makeIssues, _) = TestGenerator.Generate(
-			new RockGenerator(), discoveredTypes, typesToLoadAssembliesFrom, typeAliasesMapping.aliases, BuildType.Make);
+			new RockGenerator(), discoveredTypes, typesToLoadAssembliesFrom, typeAliasesMapping.aliases, Rocks.Analysis.BuildType.Make);
 
 		return new(typeAliasesMapping.type.Assembly.GetName().Name, discoveredTypes.Length, createIssues, makeIssues);
 	}
@@ -376,7 +376,7 @@ static void TestTypesIndividually()
 			{
 				Console.WriteLine($"Generating for type {discoveredType.FullName}...");
 				(_, var generatorElapsedTime) = TestGenerator.Generate(
-					new RockGenerator(), [discoveredType], typesToLoadAssembliesFrom, targetMapping.aliases, BuildType.Create);
+					new RockGenerator(), [discoveredType], typesToLoadAssembliesFrom, targetMapping.aliases, Rocks.Analysis.BuildType.Create);
 				typeGenerationTimes.Add(new(discoveredType, generatorElapsedTime));
 			}
 		}

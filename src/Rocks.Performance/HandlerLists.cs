@@ -1,4 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
+using Rocks.Runtime;
 
 namespace Rocks.Performance;
 

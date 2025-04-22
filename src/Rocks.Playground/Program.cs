@@ -1,9 +1,9 @@
 ﻿using Rocks.Playground;
+using Rocks.Runtime;
 
-//[assembly: Rock(typeof(IUseData), BuildType.Create | BuildType.Make)]
+[assembly: Rock(typeof(IUseData), BuildType.Create | BuildType.Make)]
 
-//var expectations = new IUseDataCreateExpectations();
-var expectations = new IUseDataRefStructCreateExpectations();
+var expectations = new IUseDataCreateExpectations();
 expectations.Methods.Use(new()).ReturnValue(() => new Data { Value = 3 });
 
 var mock = expectations.Instance();

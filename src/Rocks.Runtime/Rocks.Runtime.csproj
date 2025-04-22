@@ -1,0 +1,7 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<AssemblyName>Rocks.Runtime</AssemblyName>
+		<NoWarn>$(NoWarn),CA1032</NoWarn>
+		<RootNamespace>Rocks.Runtime</RootNamespace>
+	</PropertyGroup>
+</Project>

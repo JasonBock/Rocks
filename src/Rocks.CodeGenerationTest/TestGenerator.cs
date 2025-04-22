@@ -1,8 +1,10 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Rocks.Analysis;
+using Rocks.Analysis.Models;
 using Rocks.CodeGenerationTest.Extensions;
-using Rocks.Models;
+using Rocks.Runtime;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
 using System.ComponentModel;
@@ -86,7 +88,7 @@ internal static class TestGenerator
 
 			indentWriter.Write(
 				 $$"""
-				    using Rocks;
+				    using Rocks.Runtime;
 				    using System;
 
 				    [assembly: CLSCompliant(false)]
@@ -116,6 +118,7 @@ internal static class TestGenerator
 			[
 				MetadataReference.CreateFromFile(typeof(RockGenerator).Assembly.Location),
 				MetadataReference.CreateFromFile(typeof(InvalidEnumArgumentException).Assembly.Location),
+				MetadataReference.CreateFromFile(typeof(RockAttribute).Assembly.Location),
 			]);
 
 		foreach (var typeToLoadAssembliesFrom in typesToLoadAssembliesFrom)
@@ -141,7 +144,7 @@ internal static class TestGenerator
 			var methodSymbol = model.GetDeclaredSymbol(methodNode)!;
 			var typeSymbol = methodSymbol.Parameters[0].Type.OriginalDefinition;
 
-			if (MockModel.Create(methodNode, typeSymbol, null, new(model), isCreate ? BuildType.Create : BuildType.Make, true).Information is not null)
+			if (MockModel.Create(methodNode, typeSymbol, null, new(model), isCreate ? Analysis.BuildType.Create : Analysis.BuildType.Make, true).Information is not null)
 			{
 				var methodIndex = methodSymbol.Name.Replace("Target", string.Empty, StringComparison.InvariantCulture);
 				var typeIndex = int.Parse(methodIndex, CultureInfo.InvariantCulture);
@@ -154,7 +157,7 @@ internal static class TestGenerator
 
 	internal static (ImmutableArray<Issue> issues, Times times) Generate(
 		IIncrementalGenerator generator, ImmutableArray<Type> targetTypes, ImmutableArray<Type> typesToLoadAssembliesFrom,
-		 string[] aliases, BuildType buildType)
+		 string[] aliases, Analysis.BuildType buildType)
 	{
 		var issues = new List<Issue>();
 		var assemblies = targetTypes.Select(_ => _.Assembly).ToHashSet();
@@ -225,7 +228,7 @@ internal static class TestGenerator
 
 	internal static (ImmutableArray<Issue> issues, Times times) GenerateNoEmit(
 		IIncrementalGenerator generator, ImmutableArray<Type> targetTypes, ImmutableArray<Type> typesToLoadAssembliesFrom,
-		 string[] aliases, BuildType buildType)
+		 string[] aliases, Analysis.BuildType buildType)
 	{
 		var issues = new List<Issue>();
 		var assemblies = targetTypes.Select(_ => _.Assembly).ToHashSet();
@@ -350,7 +353,7 @@ internal static class TestGenerator
 		}
 	}
 
-	internal static string GetCode(ImmutableArray<Type> types, BuildType buildType, string[] aliases)
+	internal static string GetCode(ImmutableArray<Type> types, Analysis.BuildType buildType, string[] aliases)
 	{
 		using var writer = new StringWriter();
 		using var indentWriter = new IndentedTextWriter(writer, "\t");
@@ -367,7 +370,7 @@ internal static class TestGenerator
 
 		indentWriter.Write(
 			"""
-			using Rocks;
+			using Rocks.Runtime;
 			using System;
 
 			[assembly: CLSCompliant(false)]
@@ -379,12 +382,12 @@ internal static class TestGenerator
 			var type = types[i];
 			var buildTypes = new List<string>();
 
-			if (buildType.HasFlag(BuildType.Create))
+			if (buildType.HasFlag(Analysis.BuildType.Create))
 			{
 				buildTypes.Add("BuildType.Create");
 			}
 
-			if (buildType.HasFlag(BuildType.Make))
+			if (buildType.HasFlag(Analysis.BuildType.Make))
 			{
 				buildTypes.Add("BuildType.Make");
 			}
@@ -399,12 +402,12 @@ internal static class TestGenerator
 			var type = types[i];
 			var buildTypes = new List<string>();
 
-			if (buildType.HasFlag(BuildType.Create))
+			if (buildType.HasFlag(Analysis.BuildType.Create))
 			{
 				buildTypes.Add("BuildType.Create");
 			}
 
-			if (buildType.HasFlag(BuildType.Make))
+			if (buildType.HasFlag(Analysis.BuildType.Make))
 			{
 				buildTypes.Add("BuildType.Make");
 			}
