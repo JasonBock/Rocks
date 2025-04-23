@@ -10,7 +10,7 @@ This is the code I need to keep around:
 
 ```c#
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeActions;
+using Microsoft.CodeAnalysis.CodeActions;s
 using Microsoft.CodeAnalysis.CodeRefactorings;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;

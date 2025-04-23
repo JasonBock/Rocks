@@ -8,7 +8,7 @@ using System.Collections.Immutable;
 namespace Rocks.Analysis;
 
 /// <summary>
-/// An analyzer that looks for invalid <see cref="RockAttribute"/> usage.
+/// An analyzer that looks for invalid <c>RockAttribute</c> usage.
 /// </summary>
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
 public sealed class RockAnalyzer

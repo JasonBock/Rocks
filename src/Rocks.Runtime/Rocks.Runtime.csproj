@@ -1,6 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<AssemblyName>Rocks.Runtime</AssemblyName>
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+		<DebugType>embedded</DebugType>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>$(NoWarn),CA1032</NoWarn>
 		<RootNamespace>Rocks.Runtime</RootNamespace>
 	</PropertyGroup>

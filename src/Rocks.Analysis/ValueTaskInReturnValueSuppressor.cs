@@ -10,7 +10,7 @@ namespace Rocks.Analysis;
 /// <summary>
 /// A suppressor that will suppress CA2012 when
 /// <see cref="ValueTask"/> or <see cref="ValueTask{TResult}"/> is passed to 
-/// <see cref="IAdornments{TAdornments, THandler, TCallback, TReturnValue}.ReturnValue(TReturnValue)"/>.
+/// <c>IAdornments{TAdornments, THandler, TCallback, TReturnValue}.ReturnValue(TReturnValue)</c>/>.
 /// </summary>
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
 public sealed class ValueTaskInReturnValueSuppressor
