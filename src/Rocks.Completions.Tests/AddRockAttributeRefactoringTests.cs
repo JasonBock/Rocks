@@ -20,6 +20,7 @@ public static class AddRockAttributeRefactoringTests
 			using Rocks.Runtime;
 
 			[assembly: Rock(typeof(IAmMockable), BuildType.Create)]
+
 			public interface IAmMockable
 			{
 				void Do();

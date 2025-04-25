@@ -75,7 +75,9 @@ public sealed class AddRockAttributeRefactoring
 				[assembly: Rock(typeof({mockTypeSymbol.Name}), BuildType.Create)]
 				""")
 				.GetRoot().DescendantNodes().OfType<AttributeListSyntax>().Single()
-				.WithTrailingTrivia(SyntaxFactory.EndOfLine(Environment.NewLine));
+				.WithTrailingTrivia(
+					SyntaxFactory.EndOfLine(Environment.NewLine),
+					SyntaxFactory.EndOfLine(Environment.NewLine));
 
 			newRoot = newRoot.AddAttributeLists(attributeSyntax);
 
