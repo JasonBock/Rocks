@@ -1,36 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<AssemblyName>Rocks.Analysis.Tests</AssemblyName>
+		<AssemblyName>Rocks.Completions.Tests</AssemblyName>
 		<!--
 		Turning this diagnostic off based on this advice:
 		https://github.com/dotnet/roslyn-analyzers/issues/7436
 		-->
-		<NoWarn>$(NoWarn),CA2007,CA1861,RS1039</NoWarn>
-		<RootNamespace>Rocks.Analysis.Tests</RootNamespace>
+		<NoWarn>$(NoWarn),CA2007,CA1861,NU1701,RS1039</NoWarn>
+		<RootNamespace>Rocks.Completions.Tests</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\Rocks.Analysis\Rocks.Analysis.csproj" />
+		<ProjectReference Include="..\Rocks.Completions\Rocks.Completions.csproj" />
 		<ProjectReference Include="..\Rocks.Runtime\Rocks.Runtime.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing" />
-		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing">
-			<NoWarn>NU1608</NoWarn>
-		</PackageReference>
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp">
 			<NoWarn>NU1608</NoWarn>
 		</PackageReference>
 		<PackageReference Include="Microsoft.CodeAnalysis.Common">
 			<NoWarn>NU1608</NoWarn>
 		</PackageReference>
-		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-		<Reference Include="$(PkgMicrosoft_CodeAnalysis_NetAnalyzers)\analyzers\dotnet\cs\Microsoft.CodeAnalysis.NetAnalyzers.dll" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.CodeRefactoring.Testing" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" />
-		<PackageReference Include="Mono.Cecil" />
 		<PackageReference Include="NuGet.Frameworks" />
 		<PackageReference Include="NUnit" />
 		<PackageReference Include="NUnit.Analyzers">

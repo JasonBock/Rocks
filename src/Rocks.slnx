@@ -7,11 +7,13 @@
     <File Path="Directory.Build.props" />
     <File Path="Directory.Packages.props" />
   </Folder>
-  <Project Path="Rocks.Analysis/Rocks.Analysis.csproj" />
-  <Project Path="Rocks.Analysis.IntegrationTests/Rocks.Analysis.IntegrationTests.csproj" />
   <Project Path="Rocks.Analysis.IntegrationTests.Referenced/Rocks.Analysis.IntegrationTests.Referenced.csproj" />
+  <Project Path="Rocks.Analysis.IntegrationTests/Rocks.Analysis.IntegrationTests.csproj" />
   <Project Path="Rocks.Analysis.Tests/Rocks.Analysis.Tests.csproj" />
+  <Project Path="Rocks.Analysis/Rocks.Analysis.csproj" />
   <Project Path="Rocks.CodeGenerationTest/Rocks.CodeGenerationTest.csproj" />
+  <Project Path="Rocks.Completions.Tests/Rocks.Completions.Tests.csproj" Id="a3c7856a-b12b-435f-9d16-67d25047971e" />
+  <Project Path="Rocks.Completions/Rocks.Completions.csproj" Id="77849458-7ea6-4d58-81be-2f4a6b942bf9" />
   <Project Path="Rocks.Performance/Rocks.Performance.csproj" />
   <Project Path="Rocks.Playground/Rocks.Playground.csproj" />
   <Project Path="Rocks.Runtime.Tests/Rocks.Runtime.Tests.csproj" />
