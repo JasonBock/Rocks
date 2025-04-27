@@ -70,20 +70,35 @@ public sealed class AddRockAttributeRefactoring
 			// TODO: We COULD also create a [RockPartialAttribute] declaration,
 			// but that requires being tied to a partial class, so that would have to be created as well,
 			// and what name would we give it? and where would it go?
-			var attributeSyntax = SyntaxFactory.ParseSyntaxTree(
-				$"""
-				[assembly: Rock(typeof({mockTypeSymbol.Name}), BuildType.Create)]
-				""")
-				.GetRoot().DescendantNodes().OfType<AttributeListSyntax>().Single()
-				.WithTrailingTrivia(
-					SyntaxFactory.EndOfLine(Environment.NewLine),
-					SyntaxFactory.EndOfLine(Environment.NewLine));
-
-			newRoot = newRoot.AddAttributeLists(attributeSyntax);
-
-			context.RegisterRefactoring(CodeAction.Create(
-				"Add RockAttribute definition", token => Task.FromResult(document.WithSyntaxRoot(newRoot))));
+			AddRockAttributeRefactoring.AddRefactoring(
+				"BuildType.Create", "Add RockAttribute definition - Create",
+				newRoot, mockTypeSymbol, context, document);
+			AddRockAttributeRefactoring.AddRefactoring(
+				"BuildType.Make", "Add RockAttribute definition - Make",
+				newRoot, mockTypeSymbol, context, document);
+			AddRockAttributeRefactoring.AddRefactoring(
+				"BuildType.Create | BuildType.Make", "Add RockAttribute definition - Create and Make",
+				newRoot, mockTypeSymbol, context, document);
 		}
+	}
+
+	private static void AddRefactoring(string buildTypes, string title,
+		CompilationUnitSyntax newRoot, INamedTypeSymbol mockTypeSymbol,
+		CodeRefactoringContext context, Document document)
+	{
+		var attributeSyntax = SyntaxFactory.ParseSyntaxTree(
+			$"""
+			[assembly: Rock(typeof({mockTypeSymbol.Name}), {buildTypes})]
+			""")
+			.GetRoot().DescendantNodes().OfType<AttributeListSyntax>().Single()
+			.WithTrailingTrivia(
+				SyntaxFactory.EndOfLine(Environment.NewLine),
+				SyntaxFactory.EndOfLine(Environment.NewLine));
+
+		newRoot = newRoot.AddAttributeLists(attributeSyntax);
+
+		context.RegisterRefactoring(CodeAction.Create(
+			title, token => Task.FromResult(document.WithSyntaxRoot(newRoot))));
 	}
 }
 
