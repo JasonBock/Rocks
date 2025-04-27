@@ -5,7 +5,7 @@ namespace Rocks.Completions.Tests;
 public static class AddRockAttributeRefactoringTests
 {
 	[Test]
-	public static async Task RunAsync()
+	public static async Task RunWhenCursorIsOnInterfaceDeclarationAsync()
 	{
 		var source =
 			"""
