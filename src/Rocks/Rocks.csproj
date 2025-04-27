@@ -29,7 +29,16 @@
 		<None Include="README.md" Pack="true" PackagePath="" />
 		<None Include="../../LICENSE" Pack="true" PackagePath="" />
 		<None Include="../Images/Icon.png" Pack="true" PackagePath="" Visible="false" />
-		<None Include="../Rocks.Analysis/bin/$(Configuration)/netstandard2.0/Rocks.Analysis.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None 
+			Include="../Rocks.Analysis/bin/$(Configuration)/netstandard2.0/Rocks.Analysis.dll" 
+			Pack="true" 
+			PackagePath="analyzers/dotnet/cs" 
+			Visible="false" />
+		<None 
+			Include="../Rocks.Completions/bin/$(Configuration)/netstandard2.0/Rocks.Completions.dll" 
+			Pack="true" 
+			PackagePath="analyzers/dotnet/cs" 
+			Visible="false" />
 		<TfmSpecificPackageFile
             Include="../Rocks.Runtime/bin/$(Configuration)/$(TargetFramework)/Rocks.Runtime.dll"
             Pack="true"
@@ -41,6 +50,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="../Rocks.Analysis/Rocks.Analysis.csproj" ReferenceOutputAssembly="false" />
+		<ProjectReference Include="../Rocks.Completions/Rocks.Completions.csproj" ReferenceOutputAssembly="false" />
 		<ProjectReference Include="../Rocks.Runtime/Rocks.Runtime.csproj" ReferenceOutputAssembly="false" />
 	</ItemGroup>
 </Project>
