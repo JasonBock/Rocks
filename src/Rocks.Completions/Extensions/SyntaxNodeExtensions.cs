@@ -38,7 +38,7 @@ internal static class SyntaxNodeExtensions
 					RecordDeclarationSyntax recordDeclarationSyntax =>
 						model.GetDeclaredSymbol(recordDeclarationSyntax, cancellationToken),
 					ParameterSyntax parameterSyntax =>
-						((IParameterSymbol)model.GetSymbolInfo(parameterSyntax, cancellationToken).Symbol!).Type,
+						((IParameterSymbol)model.GetDeclaredSymbol(parameterSyntax, cancellationToken)!).Type,
 					ObjectCreationExpressionSyntax objectCreationExpressionSyntax =>
 						((IMethodSymbol)model.GetSymbolInfo(objectCreationExpressionSyntax, cancellationToken).Symbol!).ContainingType,
 					_ => null

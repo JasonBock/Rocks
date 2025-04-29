@@ -1,8 +1,10 @@
 <Solution>
-  <Folder Name="/Solution Items/" Id="8ec462fd-d22e-90a8-e5ce-7e832ba40c5d">
+  <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
     <File Path="Directory.Build.props" />
   </Folder>
-  <Project Path="Rocks.Scenarios/Rocks.Scenarios.csproj" Id="8b1bd5da-a79a-4379-aa85-9ea4e1603d5d" />
-  <Project Path="Rocks/Rocks.csproj" />
+  <Project Path="Rocks.Scenarios/Rocks.Scenarios.csproj" />
+  <Project Path="Rocks.Analysis/Rocks.Analysis.csproj" />
+  <Project Path="Rocks.Completions/Rocks.Completions.csproj" />
+  <Project Path="Rocks.Runtime/Rocks.Runtime.csproj" />
 </Solution>

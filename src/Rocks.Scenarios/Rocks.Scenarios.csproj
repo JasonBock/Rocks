@@ -1,5 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<ProjectReference Include="..\Rocks\Rocks.csproj" OutputItemType="Analyzer" />
+		<ProjectReference Include="..\Rocks.Analysis\Rocks.Analysis.csproj" OutputItemType="Analyzer" />
+		<ProjectReference Include="..\Rocks.Completions\Rocks.Completions.csproj" OutputItemType="Analyzer" />
+		<ProjectReference Include="..\Rocks.Runtime\Rocks.Runtime.csproj" />
 	</ItemGroup>
 </Project>

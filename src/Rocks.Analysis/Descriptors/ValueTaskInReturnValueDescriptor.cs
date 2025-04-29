@@ -2,13 +2,13 @@
 
 namespace Rocks.Analysis.Descriptors;
 
-internal static class ValueTestInReturnValueDescriptor
+internal static class ValueTaskInReturnValueDescriptor
 {
 	internal static SuppressionDescriptor Create() =>
 		new(
-			ValueTestInReturnValueDescriptor.Id, 
-			ValueTestInReturnValueDescriptor.SuppressedId,
-			ValueTestInReturnValueDescriptor.Description);
+			ValueTaskInReturnValueDescriptor.Id, 
+			ValueTaskInReturnValueDescriptor.SuppressedId,
+			ValueTaskInReturnValueDescriptor.Description);
 
 	internal const string Description = "Suppress CA2012 on ReturnValue() invocations when parameter type is either ValueTask or ValueTask<>";
 	internal const string Id = "ROCK15";

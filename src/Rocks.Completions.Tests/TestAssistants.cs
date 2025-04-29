@@ -7,22 +7,23 @@ namespace Rocks.Completions.Tests;
 
 internal static class TestAssistants
 {
-	internal static async Task RunRefactoringAsync<TCodeRefactoring>(string source, string[] fixedSources)
+	internal static async Task RunRefactoringAsync<TCodeRefactoring>(
+		string source, string fixedSource, int codeActionIndex)
 		where TCodeRefactoring : CodeRefactoringProvider, new()
 	{
 		var test = new CodeRefactoringTest<TCodeRefactoring>
 		{
+			CodeActionIndex = codeActionIndex,
 			ReferenceAssemblies = TestAssistants.GetNet90(),
 			TestState =
 			{
 				Sources = { source }
+			},
+			FixedState =
+			{
+				Sources = { fixedSource }
 			}
 		};
-
-		foreach (var fixedSource in fixedSources)
-		{
-			test.FixedState.Sources.Add(fixedSource);
-		}
 
 		test.TestState.AdditionalReferences.Add(typeof(TCodeRefactoring).Assembly);
 		test.TestState.AdditionalReferences.Add(typeof(RockAttribute).Assembly);

@@ -17,7 +17,7 @@ public sealed class ValueTaskInReturnValueSuppressor
 	: DiagnosticSuppressor
 {
 	private static readonly SuppressionDescriptor descriptor =
-		ValueTestInReturnValueDescriptor.Create();
+		ValueTaskInReturnValueDescriptor.Create();
 
 	/// <summary>
 	/// Gets an <see cref="ImmutableArray{SuppressionDescriptor}"/> instance
@@ -33,7 +33,7 @@ public sealed class ValueTaskInReturnValueSuppressor
 	public override void ReportSuppressions(SuppressionAnalysisContext context)
 	{
 		foreach (var diagnostic in context.ReportedDiagnostics.Where(
-			_ => _.Id == ValueTestInReturnValueDescriptor.SuppressedId))
+			_ => _.Id == ValueTaskInReturnValueDescriptor.SuppressedId))
 		{
 			var location = diagnostic.Location;
 
@@ -61,7 +61,7 @@ public sealed class ValueTaskInReturnValueSuppressor
 								invocationMethod.Name == "ReturnValue" &&
 								SymbolEqualityComparer.Default.Equals(
 									invocationMethod.ContainingType.ConstructedFrom,
-									context.Compilation.GetTypeByMetadataName("Rocks.Adornments`4")))
+									context.Compilation.GetTypeByMetadataName("Rocks.Runtime.Adornments`4")))
 							{
 								var constructedParameterType = (invocationMethod.Parameters[0].Type as INamedTypeSymbol)?.ConstructedFrom;
 

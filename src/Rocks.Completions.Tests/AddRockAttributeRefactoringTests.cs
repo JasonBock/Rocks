@@ -2,10 +2,41 @@
 
 namespace Rocks.Completions.Tests;
 
-public static class AddRockAttributeRefactoringTests
+public static partial class AddRockAttributeRefactoringTests
 {
-	[Test]
-	public static async Task RunWhenCursorIsOnIdentifierNameAsync()
+	[TestCase("BuildType.Create", 0)]
+	[TestCase("BuildType.Make", 1)]
+	[TestCase("BuildType.Create | BuildType.Make", 2)]
+	public static async Task RunClassDeclarationFixAsync(string buildType, int codeActionIndex)
+	{
+		var source =
+			"""
+			public [|c|]lass Mockable
+			{
+				public virtual void Do() { }
+			}
+			""";
+
+		var fixedSource =
+			$$"""
+			using Rocks.Runtime;
+
+			[assembly: Rock(typeof(Mockable), {{buildType}})]
+
+			public class Mockable
+			{
+				public virtual void Do() { }
+			}
+			""";
+
+		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
+			source, fixedSource, codeActionIndex);
+	}
+
+	[TestCase("BuildType.Create", 0)]
+	[TestCase("BuildType.Make", 1)]
+	[TestCase("BuildType.Create | BuildType.Make", 2)]
+	public static async Task RunIdentifierNameFixAsync(string buildType, int codeActionIndex)
 	{
 		var source =
 			"""
@@ -23,11 +54,11 @@ public static class AddRockAttributeRefactoringTests
 			}
 			""";
 
-		var createFixedSource =
-			"""
+		var fixedSource =
+			$$"""
 			using Rocks.Runtime;
 
-			[assembly: Rock(typeof(Mockable), BuildType.Create)]
+			[assembly: Rock(typeof(Mockable), {{buildType}})]
 
 			public static class MockableUser
 			{
@@ -44,52 +75,27 @@ public static class AddRockAttributeRefactoringTests
 			""";
 
 		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
-			source, [createFixedSource]);
+			source, fixedSource, codeActionIndex);
 	}
 
-	[Test]
-	public static async Task RunWhenCursorIsOnClassDeclarationAsync()
+	[TestCase("BuildType.Create", 0)]
+	[TestCase("BuildType.Make", 1)]
+	[TestCase("BuildType.Create | BuildType.Make", 2)]
+	public static async Task RunInterfaceDeclarationFixAsync(string buildType, int codeActionIndex)
 	{
 		var source =
 			"""
-			public class [|M|]ockable
-			{
-				public virtual void Do() { }
-			}
-			""";
-
-		var createFixedSource =
-			"""
-			using Rocks.Runtime;
-
-			[assembly: Rock(typeof(Mockable), BuildType.Create)]
-
-			public class Mockable
-			{
-				public virtual void Do() { }
-			}
-			""";
-
-		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
-			source, [createFixedSource]);
-	}
-
-	[Test]
-	public static async Task RunWhenCursorIsOnInterfaceDeclarationAsync()
-	{
-		var source =
-			"""
-			public interface IAm[|M|]ockable
+			public [|i|]nterface IAmMockable
 			{
 				void Do();
 			}
 			""";
 
-		var createFixedSource =
-			"""
+		var fixedSource =
+			$$"""
 			using Rocks.Runtime;
 
-			[assembly: Rock(typeof(IAmMockable), BuildType.Create)]
+			[assembly: Rock(typeof(IAmMockable), {{buildType}})]
 
 			public interface IAmMockable
 			{
@@ -98,25 +104,27 @@ public static class AddRockAttributeRefactoringTests
 			""";
 
 		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
-			source, [createFixedSource]);
+			source, fixedSource, codeActionIndex);
 	}
 
-	[Test]
-	public static async Task RunWhenCursorIsOnRecordDeclarationAsync()
+	[TestCase("BuildType.Create", 0)]
+	[TestCase("BuildType.Make", 1)]
+	[TestCase("BuildType.Create | BuildType.Make", 2)]
+	public static async Task RunRecordDeclarationFixAsync(string buildType, int codeActionIndex)
 	{
 		var source =
 			"""
-			public record [|M|]ockable
+			public [|r|]ecord Mockable
 			{
 				public virtual void Do() { }
 			}
 			""";
 
-		var createFixedSource =
-			"""
+		var fixedSource =
+			$$"""
 			using Rocks.Runtime;
 
-			[assembly: Rock(typeof(Mockable), BuildType.Create)]
+			[assembly: Rock(typeof(Mockable), {{buildType}})]
 
 			public record Mockable
 			{
@@ -125,17 +133,19 @@ public static class AddRockAttributeRefactoringTests
 			""";
 
 		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
-			source, [createFixedSource]);
+			source, fixedSource, codeActionIndex);
 	}
 
-	[Test]
-	public static async Task RunWhenCursorIsOnParameterAsync()
+	[TestCase("BuildType.Create", 0)]
+	[TestCase("BuildType.Make", 1)]
+	[TestCase("BuildType.Create | BuildType.Make", 2)]
+	public static async Task RunParameterFixAsync(string buildType, int codeActionIndex)
 	{
 		var source =
 			"""
 			public static class MockableUser
 			{
-				public static void Use(IAm[|M|]ockable mockable) { }
+				public static void Use(IAmMockable [|m|]ockable) { }
 			}
 
 			public interface IAmMockable
@@ -144,11 +154,11 @@ public static class AddRockAttributeRefactoringTests
 			}
 			""";
 
-		var createFixedSource =
-			"""
+		var fixedSource =
+			$$"""
 			using Rocks.Runtime;
 
-			[assembly: Rock(typeof(IAmMockable), BuildType.Create)]
+			[assembly: Rock(typeof(IAmMockable), {{buildType}})]
 
 			public static class MockableUser
 			{
@@ -162,11 +172,13 @@ public static class AddRockAttributeRefactoringTests
 			""";
 
 		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
-			source, [createFixedSource]);
+			source, fixedSource, codeActionIndex);
 	}
 
-	[Test]
-	public static async Task RunWhenCursorIsOnObjectCreationAsync()
+	[TestCase("BuildType.Create", 0)]
+	[TestCase("BuildType.Make", 1)]
+	[TestCase("BuildType.Create | BuildType.Make", 2)]
+	public static async Task RunObjectCreationFixAsync(string buildType, int codeActionIndex)
 	{
 		var source =
 			"""
@@ -184,11 +196,11 @@ public static class AddRockAttributeRefactoringTests
 			}
 			""";
 
-		var createFixedSource =
-			"""
+		var fixedSource =
+			$$"""
 			using Rocks.Runtime;
 
-			[assembly: Rock(typeof(Mockable), BuildType.Create)]
+			[assembly: Rock(typeof(Mockable), {{buildType}})]
 
 			public static class MockableUser
 			{
@@ -205,7 +217,7 @@ public static class AddRockAttributeRefactoringTests
 			""";
 
 		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
-			source, [createFixedSource]);
+			source, fixedSource, codeActionIndex);
 	}
 
 	[Test]
@@ -232,6 +244,6 @@ public static class AddRockAttributeRefactoringTests
 			""";
 
 		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
-			source, [fixedSource]);
+			source, fixedSource, 0);
 	}
 }
