@@ -4,6 +4,38 @@ namespace Rocks.Completions.Tests;
 
 public static partial class AddRockAttributeRefactoringTests
 {
+	[Test]
+	public static async Task RunWithTargetInMultiplePartNamespaceAsync()
+	{
+		var source =
+			"""
+			namespace Inner.Middle.Outer;
+
+			public [|c|]lass Mockable
+			{
+				public virtual void Do() { }
+			}
+			""";
+
+		var fixedSource =
+			"""
+			using Rocks.Runtime;
+			using Inner.Middle.Outer;
+
+			[assembly: Rock(typeof(Mockable), BuildType.Create)]
+
+			namespace Inner.Middle.Outer;
+			
+			public class Mockable
+			{
+				public virtual void Do() { }
+			}
+			""";
+
+		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
+			source, fixedSource, 0);
+	}
+
 	[TestCase("BuildType.Create", 0)]
 	[TestCase("BuildType.Make", 1)]
 	[TestCase("BuildType.Create | BuildType.Make", 2)]

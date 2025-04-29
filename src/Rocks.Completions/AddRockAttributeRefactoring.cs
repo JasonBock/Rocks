@@ -16,7 +16,7 @@ namespace Rocks.Completions;
 [ExportCodeRefactoringProvider(LanguageNames.CSharp,
 	Name = nameof(AddRockAttributeRefactoring))]
 [Shared]
-public sealed class AddRockAttributeRefactoring
+public sealed partial class AddRockAttributeRefactoring
 	: CodeRefactoringProvider
 {
 	/// <inheritdoc />
@@ -27,9 +27,6 @@ public sealed class AddRockAttributeRefactoring
 		if (document.Project.Solution.Workspace.Kind == WorkspaceKind.MiscellaneousFiles) { return; }
 
 		var span = context.Span;
-
-		//if (!span.IsEmpty) { return; }
-
 		var cancellationToken = context.CancellationToken;
 		var model = await document.GetSemanticModelAsync(cancellationToken);
 
@@ -59,30 +56,26 @@ public sealed class AddRockAttributeRefactoring
 					SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("Rocks.Runtime")));
 			}
 
-			// TODO: May need more here for the namespace.
 			if (!mockTypeSymbol.ContainingNamespace.IsGlobalNamespace &&
-				!root.HasUsing(mockTypeSymbol.ContainingNamespace.Name))
+				!root.HasUsing(mockTypeSymbol.ContainingNamespace.ToDisplayString()))
 			{
 				newRoot = newRoot.AddUsings(
-					SyntaxFactory.UsingDirective(SyntaxFactory.ParseName(mockTypeSymbol.ContainingNamespace.Name)));
+					SyntaxFactory.UsingDirective(SyntaxFactory.ParseName(mockTypeSymbol.ContainingNamespace.ToDisplayString())));
 			}
 
-			// TODO: We COULD also create a [RockPartialAttribute] declaration,
-			// but that requires being tied to a partial class, so that would have to be created as well,
-			// and what name would we give it? and where would it go?
-			AddRockAttributeRefactoring.AddRefactoring(
+			AddRockAttributeRefactoring.AddRockAttribute(
 				"BuildType.Create", "Add RockAttribute definition - Create",
 				newRoot, mockTypeSymbol, context, document);
-			AddRockAttributeRefactoring.AddRefactoring(
+			AddRockAttributeRefactoring.AddRockAttribute(
 				"BuildType.Make", "Add RockAttribute definition - Make",
 				newRoot, mockTypeSymbol, context, document);
-			AddRockAttributeRefactoring.AddRefactoring(
+			AddRockAttributeRefactoring.AddRockAttribute(
 				"BuildType.Create | BuildType.Make", "Add RockAttribute definition - Create and Make",
 				newRoot, mockTypeSymbol, context, document);
 		}
 	}
 
-	private static void AddRefactoring(string buildTypes, string title,
+	private static void AddRockAttribute(string buildTypes, string title,
 		CompilationUnitSyntax newRoot, INamedTypeSymbol mockTypeSymbol,
 		CodeRefactoringContext context, Document document)
 	{
@@ -101,4 +94,3 @@ public sealed class AddRockAttributeRefactoring
 			title, token => Task.FromResult(document.WithSyntaxRoot(newRoot))));
 	}
 }
-
