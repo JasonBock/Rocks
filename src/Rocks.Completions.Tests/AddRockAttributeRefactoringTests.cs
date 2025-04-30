@@ -5,6 +5,41 @@ namespace Rocks.Completions.Tests;
 public static partial class AddRockAttributeRefactoringTests
 {
 	[Test]
+	public static async Task RunWhenExtraBlankLineIsNotNeededAsync()
+	{
+		var source =
+			"""
+			using Rocks.Runtime;
+			using Test.Scenarios;
+
+			namespace Test.Scenarios;
+
+			public interface [|I|]HaveNotBeenUsed
+			{
+				void Done();
+			}
+			""";
+
+		var fixedSource =
+			"""
+			using Rocks.Runtime;
+			using Test.Scenarios;
+			
+			[assembly: Rock(typeof(IHaveNotBeenUsed), BuildType.Create)]
+			
+			namespace Test.Scenarios;
+			
+			public interface IHaveNotBeenUsed
+			{
+				void Done();
+			}
+			""";
+
+		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
+			source, fixedSource, 0);
+	}
+
+	[Test]
 	public static async Task RunWithTargetInMultiplePartNamespaceAsync()
 	{
 		var source =

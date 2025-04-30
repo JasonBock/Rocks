@@ -63,34 +63,74 @@ public sealed partial class AddRockAttributeRefactoring
 					SyntaxFactory.UsingDirective(SyntaxFactory.ParseName(mockTypeSymbol.ContainingNamespace.ToDisplayString())));
 			}
 
-			AddRockAttributeRefactoring.AddRockAttribute(
-				"BuildType.Create", "Add RockAttribute definition - Create",
-				newRoot, mockTypeSymbol, context, document);
-			AddRockAttributeRefactoring.AddRockAttribute(
-				"BuildType.Make", "Add RockAttribute definition - Make",
-				newRoot, mockTypeSymbol, context, document);
-			AddRockAttributeRefactoring.AddRockAttribute(
-				"BuildType.Create | BuildType.Make", "Add RockAttribute definition - Create and Make",
-				newRoot, mockTypeSymbol, context, document);
+			var options = context.TextDocument.Project.AnalyzerOptions;
+			AddRockAttributeRefactoring.AddRockAttribute(newRoot, mockTypeSymbol, context, document);
 		}
 	}
 
-	private static void AddRockAttribute(string buildTypes, string title,
-		CompilationUnitSyntax newRoot, INamedTypeSymbol mockTypeSymbol,
+	private static void AddRockAttribute(
+		CompilationUnitSyntax root, INamedTypeSymbol mockTypeSymbol,
 		CodeRefactoringContext context, Document document)
 	{
-		var attributeSyntax = SyntaxFactory.ParseSyntaxTree(
-			$"""
-			[assembly: Rock(typeof({mockTypeSymbol.Name}), {buildTypes})]
-			""")
-			.GetRoot().DescendantNodes().OfType<AttributeListSyntax>().Single()
-			.WithTrailingTrivia(
-				SyntaxFactory.EndOfLine(Environment.NewLine),
-				SyntaxFactory.EndOfLine(Environment.NewLine));
+		static CompilationUnitSyntax CreateNewRoot(
+			CompilationUnitSyntax root, bool addCreateType, bool addMakeType, string mockTypeName)
+		{
+			var buildTypeArgument = (addCreateType && addMakeType) ?
+				SyntaxFactory.AttributeArgument(
+					SyntaxFactory.BinaryExpression(
+							SyntaxKind.BitwiseOrExpression,
+							SyntaxFactory.MemberAccessExpression(
+								SyntaxKind.SimpleMemberAccessExpression,
+								SyntaxFactory.IdentifierName("BuildType"),
+								SyntaxFactory.IdentifierName("Create")),
+							SyntaxFactory.MemberAccessExpression(
+								SyntaxKind.SimpleMemberAccessExpression,
+								SyntaxFactory.IdentifierName("BuildType"),
+								SyntaxFactory.IdentifierName("Make")))) :
+				SyntaxFactory.AttributeArgument(
+					SyntaxFactory.MemberAccessExpression(
+						SyntaxKind.SimpleMemberAccessExpression,
+						SyntaxFactory.IdentifierName("BuildType"),
+						SyntaxFactory.IdentifierName(addCreateType ? "Create" : "Make")));
 
-		newRoot = newRoot.AddAttributeLists(attributeSyntax);
+			// This creates:
+			//
+			// [assembly: Rock(typeof(MockTypeName), BuildType.Create]
+			// 
+			// The buildTypeArgument above figures out how to create
+			// the correct values for BuildType
+			// https://roslynquoter.azurewebsites.net/
+			var attributeSyntax = SyntaxFactory.AttributeList(
+				SyntaxFactory.SingletonSeparatedList(
+					SyntaxFactory.Attribute(
+						SyntaxFactory.IdentifierName("Rock"))
+				.WithArgumentList(
+					SyntaxFactory.AttributeArgumentList(
+						SyntaxFactory.SeparatedList<AttributeArgumentSyntax>(
+							new SyntaxNodeOrToken[]
+							{
+								SyntaxFactory.AttributeArgument(
+									SyntaxFactory.TypeOfExpression(
+										SyntaxFactory.IdentifierName(mockTypeName))),
+								SyntaxFactory.Token(SyntaxKind.CommaToken),
+								buildTypeArgument
+							})))))
+				.WithTarget(
+					SyntaxFactory.AttributeTargetSpecifier(
+						SyntaxFactory.Token(SyntaxKind.AssemblyKeyword)));
 
-		context.RegisterRefactoring(CodeAction.Create(
-			title, token => Task.FromResult(document.WithSyntaxRoot(newRoot))));
+			return root.AddAttributeLists(attributeSyntax);
+		}
+
+		context.RegisterRefactoring(
+			CodeAction.Create("Add RockAttribute definition...",
+			[
+				CodeAction.Create("Create",
+					token => Task.FromResult(document.WithSyntaxRoot(CreateNewRoot(root, true, false, mockTypeSymbol.Name)))),
+				CodeAction.Create("Make",
+					token => Task.FromResult(document.WithSyntaxRoot(CreateNewRoot(root, false, true, mockTypeSymbol.Name)))),
+				CodeAction.Create("Create and Make",
+					token => Task.FromResult(document.WithSyntaxRoot(CreateNewRoot(root, true, true, mockTypeSymbol.Name)))),
+			], false));
 	}
 }

@@ -13,7 +13,7 @@ TODO:
 * DONE - Need to add project to package
 * DONE - Add `BuildType.Make` as well
 * Figure out how to add project configuration values to specify a different file
-* Look for any nodes after the last created attribute list node to determine if one or two lines should be added
+* DONE - Look for any nodes after the last created attribute list node to determine if one or two lines should be added
 * Add more tests
     * DONE - For all target syntax nodes
     * DONE - When the cursor won't "parent up" to a target syntax nodes
