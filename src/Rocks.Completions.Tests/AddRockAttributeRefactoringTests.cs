@@ -53,10 +53,7 @@ public static class AddRockAttributeRefactoringTests
 
 		var fixedSource =
 			"""
-			using Rocks.Runtime;
-			using Inner.Middle.Outer;
-
-			[assembly: Rock(typeof(Mockable), BuildType.Create)]
+			[assembly: Rocks.Runtime.Rock(typeof(Inner.Middle.Outer.Mockable), Rocks.Runtime.BuildType.Create)]
 
 			namespace Inner.Middle.Outer;
 			
@@ -70,9 +67,9 @@ public static class AddRockAttributeRefactoringTests
 			[("Source.cs", source)], [("Source.cs", fixedSource)], 0, false);
 	}
 
-	[TestCase("BuildType.Create", 0)]
-	[TestCase("BuildType.Make", 1)]
-	[TestCase("BuildType.Create | BuildType.Make", 2)]
+	[TestCase("Rocks.Runtime.BuildType.Create", 0)]
+	[TestCase("Rocks.Runtime.BuildType.Make", 1)]
+	[TestCase("Rocks.Runtime.BuildType.Create | Rocks.Runtime.BuildType.Make", 2)]
 	public static async Task RunClassDeclarationFixAsync(string buildType, int codeActionIndex)
 	{
 		var source =
@@ -85,9 +82,7 @@ public static class AddRockAttributeRefactoringTests
 
 		var fixedSource =
 			$$"""
-			using Rocks.Runtime;
-
-			[assembly: Rock(typeof(Mockable), {{buildType}})]
+			[assembly: Rocks.Runtime.Rock(typeof(Mockable), {{buildType}})]
 
 			public class Mockable
 			{

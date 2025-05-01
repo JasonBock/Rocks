@@ -22,12 +22,13 @@ The 2nd link is probably what I want.
 TODO:
 * DONE - Need to add project to package
 * DONE - Add `BuildType.Make` as well
-* Figure out how to add project configuration values to specify a different file
+* DONE - Figure out how to add project configuration values to specify a different file
 * DONE - Look for any nodes after the last created attribute list node to determine if one or two lines should be added
-* Add more tests
+* DONE - Add more tests
     * DONE - For all target syntax nodes
     * DONE - When the cursor won't "parent up" to a target syntax nodes
     * DONE - When multiple refactorings are offered
-* Look at removing the `<NoWarn>` elements at this point.
-
-When I want to do a project property...what I should really do is add "source" and "fixed source" as a combo of `(file_name, code)`, and then when I test for the property, also add a `("MockDefinitions.cs", "")`, and also make sure that analyzer config stuff is added too.
+* DONE - Look at removing the `<NoWarn>` elements at this point.
+* Should consider not adding a `using` for the mock type and just put in a fully qualified one. That would remove ambiguity
+* Need to handle an open generic scenario
+* Update docs so people know about the refactoring.

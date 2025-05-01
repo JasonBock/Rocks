@@ -48,6 +48,11 @@ public sealed partial class AddRockAttributeRefactoring
 
 			//if (mockModel.Information is not null)
 
+			if (mockTypeSymbol.IsUnboundGenericType)
+			{
+				mockTypeSymbol = mockTypeSymbol.OriginalDefinition;
+			}
+
 			var newRoot = (CompilationUnitSyntax)root;
 
 			// Figure out which document we should actually put the changes in.
@@ -68,19 +73,6 @@ public sealed partial class AddRockAttributeRefactoring
 				}
 			}
 
-			if (!newRoot.HasUsing("Rocks.Runtime"))
-			{
-				newRoot = newRoot.AddUsings(
-					SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("Rocks.Runtime")));
-			}
-
-			if (!mockTypeSymbol.ContainingNamespace.IsGlobalNamespace &&
-				!root.HasUsing(mockTypeSymbol.ContainingNamespace.ToDisplayString()))
-			{
-				newRoot = newRoot.AddUsings(
-					SyntaxFactory.UsingDirective(SyntaxFactory.ParseName(mockTypeSymbol.ContainingNamespace.ToDisplayString())));
-			}
-
 			AddRockAttributeRefactoring.AddRockAttribute(newRoot, mockTypeSymbol, context, document);
 		}
 	}
@@ -90,24 +82,42 @@ public sealed partial class AddRockAttributeRefactoring
 		CodeRefactoringContext context, Document document)
 	{
 		static CompilationUnitSyntax CreateNewRoot(
-			CompilationUnitSyntax root, bool addCreateType, bool addMakeType, string mockTypeName)
+			CompilationUnitSyntax root, bool addCreateType, bool addMakeType, INamedTypeSymbol mockTypeSymbol)
 		{
 			var buildTypeArgument = (addCreateType && addMakeType) ?
 				SyntaxFactory.AttributeArgument(
 					SyntaxFactory.BinaryExpression(
-							SyntaxKind.BitwiseOrExpression,
+						SyntaxKind.BitwiseOrExpression,
+						SyntaxFactory.MemberAccessExpression(
+							SyntaxKind.SimpleMemberAccessExpression,
 							SyntaxFactory.MemberAccessExpression(
 								SyntaxKind.SimpleMemberAccessExpression,
-								SyntaxFactory.IdentifierName("BuildType"),
-								SyntaxFactory.IdentifierName("Create")),
+								SyntaxFactory.MemberAccessExpression(
+									SyntaxKind.SimpleMemberAccessExpression,
+									SyntaxFactory.IdentifierName("Rocks"),
+									SyntaxFactory.IdentifierName("Runtime")),
+								SyntaxFactory.IdentifierName("BuildType")),
+							SyntaxFactory.IdentifierName("Create")),
+						SyntaxFactory.MemberAccessExpression(
+							SyntaxKind.SimpleMemberAccessExpression,
 							SyntaxFactory.MemberAccessExpression(
 								SyntaxKind.SimpleMemberAccessExpression,
-								SyntaxFactory.IdentifierName("BuildType"),
-								SyntaxFactory.IdentifierName("Make")))) :
+								SyntaxFactory.MemberAccessExpression(
+									SyntaxKind.SimpleMemberAccessExpression,
+									SyntaxFactory.IdentifierName("Rocks"),
+									SyntaxFactory.IdentifierName("Runtime")),
+								SyntaxFactory.IdentifierName("BuildType")),
+							SyntaxFactory.IdentifierName("Make")))) :
 				SyntaxFactory.AttributeArgument(
 					SyntaxFactory.MemberAccessExpression(
 						SyntaxKind.SimpleMemberAccessExpression,
-						SyntaxFactory.IdentifierName("BuildType"),
+						SyntaxFactory.MemberAccessExpression(
+							SyntaxKind.SimpleMemberAccessExpression,
+							SyntaxFactory.MemberAccessExpression(
+								SyntaxKind.SimpleMemberAccessExpression,
+								SyntaxFactory.IdentifierName("Rocks"),
+								SyntaxFactory.IdentifierName("Runtime")),
+							SyntaxFactory.IdentifierName("BuildType")),
 						SyntaxFactory.IdentifierName(addCreateType ? "Create" : "Make")));
 
 			// This creates:
@@ -117,18 +127,22 @@ public sealed partial class AddRockAttributeRefactoring
 			// The buildTypeArgument above figures out how to create
 			// the correct values for BuildType
 			// https://roslynquoter.azurewebsites.net/
+
 			var attributeSyntax = SyntaxFactory.AttributeList(
 				SyntaxFactory.SingletonSeparatedList(
-					SyntaxFactory.Attribute(
-						SyntaxFactory.IdentifierName("Rock"))
+					 SyntaxFactory.Attribute(
+						  SyntaxFactory.QualifiedName(
+								SyntaxFactory.QualifiedName(
+									 SyntaxFactory.IdentifierName("Rocks"),
+									 SyntaxFactory.IdentifierName("Runtime")),
+								SyntaxFactory.IdentifierName("Rock")))
 				.WithArgumentList(
 					SyntaxFactory.AttributeArgumentList(
 						SyntaxFactory.SeparatedList<AttributeArgumentSyntax>(
 							new SyntaxNodeOrToken[]
 							{
 								SyntaxFactory.AttributeArgument(
-									SyntaxFactory.TypeOfExpression(
-										SyntaxFactory.IdentifierName(mockTypeName))),
+									SyntaxFactory.TypeOfExpression(mockTypeSymbol.GetFullName())),
 								SyntaxFactory.Token(SyntaxKind.CommaToken),
 								buildTypeArgument
 							})))))
@@ -143,11 +157,11 @@ public sealed partial class AddRockAttributeRefactoring
 			CodeAction.Create("Add RockAttribute definition...",
 			[
 				CodeAction.Create("Create",
-					token => Task.FromResult(document.WithSyntaxRoot(CreateNewRoot(root, true, false, mockTypeSymbol.Name)))),
+					token => Task.FromResult(document.WithSyntaxRoot(CreateNewRoot(root, true, false, mockTypeSymbol)))),
 				CodeAction.Create("Make",
-					token => Task.FromResult(document.WithSyntaxRoot(CreateNewRoot(root, false, true, mockTypeSymbol.Name)))),
+					token => Task.FromResult(document.WithSyntaxRoot(CreateNewRoot(root, false, true, mockTypeSymbol)))),
 				CodeAction.Create("Create and Make",
-					token => Task.FromResult(document.WithSyntaxRoot(CreateNewRoot(root, true, true, mockTypeSymbol.Name)))),
+					token => Task.FromResult(document.WithSyntaxRoot(CreateNewRoot(root, true, true, mockTypeSymbol)))),
 			], false));
 	}
 }
