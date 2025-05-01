@@ -6,7 +6,15 @@
 		Turning this diagnostic off based on this advice:
 		https://github.com/dotnet/roslyn-analyzers/issues/7436
 		-->
-		<NoWarn>$(NoWarn),CA2007,CA1861,RS1039</NoWarn>
+		<!--
+		I'd love to not suppress warnings, but RS1039 currently has
+		way too many false positives:
+		
+		https://github.com/dotnet/roslyn-analyzers/issues/7436
+		
+		Once this is addressed, this can be removed.
+		-->
+		<NoWarn>$(NoWarn),RS1039</NoWarn>
 		<RootNamespace>Rocks.Analysis.Tests</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>

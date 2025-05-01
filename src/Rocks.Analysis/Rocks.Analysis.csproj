@@ -7,7 +7,6 @@
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 		<EnforceExtendedAnalyzerRules>false</EnforceExtendedAnalyzerRules>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<NoWarn>$(NoWarn),RS1036</NoWarn>
 		<RootNamespace>Rocks.Analysis</RootNamespace>
 		<TargetFramework>netstandard2.0</TargetFramework>
 	</PropertyGroup>

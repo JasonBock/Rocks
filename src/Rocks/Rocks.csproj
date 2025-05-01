@@ -3,7 +3,6 @@
 		<Description>A mocking library based on the Compiler APIs (Roslyn + Mocks)</Description>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<IncludeBuildOutput>false</IncludeBuildOutput>
-		<NoWarn>$(NoWarn),RS1036</NoWarn>
 		<PackageIcon>Icon.png</PackageIcon>
 		<PackageId>Rocks</PackageId>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>

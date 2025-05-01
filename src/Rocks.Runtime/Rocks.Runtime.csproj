@@ -5,6 +5,10 @@
 		<DebugType>embedded</DebugType>
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<!--
+		CA1032 is suppressed because it's annoying for all of the things
+		it reports on exceptions, which frankly, I don't quite agree with.
+		-->
 		<NoWarn>$(NoWarn),CA1032</NoWarn>
 		<RootNamespace>Rocks.Runtime</RootNamespace>
 	</PropertyGroup>

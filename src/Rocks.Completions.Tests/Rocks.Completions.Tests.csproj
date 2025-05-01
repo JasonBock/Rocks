@@ -5,7 +5,6 @@
 		Turning this diagnostic off based on this advice:
 		https://github.com/dotnet/roslyn-analyzers/issues/7436
 		-->
-		<NoWarn>$(NoWarn),CA2007,CA1861,NU1701,RS1039</NoWarn>
 		<RootNamespace>Rocks.Completions.Tests</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
