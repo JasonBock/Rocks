@@ -122,7 +122,7 @@ public sealed partial class AddRockAttributeRefactoring
 
 			// This creates:
 			//
-			// [assembly: Rock(typeof(MockTypeName), BuildType.Create]
+			// [assembly: Rocks.Runtime.Rock(typeof(MockTypeName), Rocks.Runtime.BuildType.Create]
 			// 
 			// The buildTypeArgument above figures out how to create
 			// the correct values for BuildType

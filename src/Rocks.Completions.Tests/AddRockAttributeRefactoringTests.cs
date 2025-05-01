@@ -65,6 +65,33 @@ public static class AddRockAttributeRefactoringTests
 			[("Source.cs", source)], [("Source.cs", fixedSource)], 0, false);
 	}
 
+	[TestCase("Mockable<T1>", "Mockable<>")]
+	[TestCase("Mockable<T1, T2>", "Mockable<,>")]
+	[TestCase("Mockable<T1, T2, T3>", "Mockable<,,>")]
+	public static async Task RunWithGenericTypeAsync(string targetType, string expectedName)
+	{
+		var source =
+			$$"""
+			public abstract [|c|]lass {{targetType}}
+			{
+				public abstract T1 Do();
+			}
+			""";
+
+		var fixedSource =
+			$$"""
+			[assembly: Rocks.Runtime.Rock(typeof({{expectedName}}), Rocks.Runtime.BuildType.Create)]
+
+			public abstract class {{targetType}}
+			{
+				public abstract T1 Do();
+			}
+			""";
+
+		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
+			[("Source.cs", source)], [("Source.cs", fixedSource)], 0, false);
+	}
+
 	[TestCase("Rocks.Runtime.BuildType.Create", 0)]
 	[TestCase("Rocks.Runtime.BuildType.Make", 1)]
 	[TestCase("Rocks.Runtime.BuildType.Create | Rocks.Runtime.BuildType.Make", 2)]
