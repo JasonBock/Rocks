@@ -1,7 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<RocksAttributeFile>MockDefinitions.cs</RocksAttributeFile>
+	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Rocks.Analysis\Rocks.Analysis.csproj" OutputItemType="Analyzer" />
 		<ProjectReference Include="..\Rocks.Completions\Rocks.Completions.csproj" OutputItemType="Analyzer" />
 		<ProjectReference Include="..\Rocks.Runtime\Rocks.Runtime.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<CompilerVisibleProperty Include="RocksAttributeFile" /> 
 	</ItemGroup>
 </Project>
