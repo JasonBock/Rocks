@@ -48,15 +48,18 @@ public sealed partial class AddRockAttributeRefactoring
 
 			//if (mockModel.Information is not null)
 
+			var newRoot = (CompilationUnitSyntax)root;
+
 			// Figure out which document we should actually put the changes in.
 			var options = context.TextDocument.Project.AnalyzerOptions
 				.AnalyzerConfigOptionsProvider.GlobalOptions;
 
-			var newRoot = (CompilationUnitSyntax)root;
-
 			if (options.TryGetValue("build_property.RocksAttributeFile", out var mockFile))
 			{
-				var mockDocument = document.Project.Documents.FirstOrDefault(_ => _.FilePath == mockFile);
+				var fullMockFilePath = document.Project.FilePath is not null ?
+					Path.Combine(Path.GetDirectoryName(document.Project.FilePath), mockFile) :
+					mockFile;
+				var mockDocument = document.Project.Documents.FirstOrDefault(_ => _.FilePath == fullMockFilePath);
 
 				if (mockDocument is not null)
 				{
