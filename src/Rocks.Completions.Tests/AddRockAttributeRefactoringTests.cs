@@ -2,41 +2,40 @@
 
 namespace Rocks.Completions.Tests;
 
-public static partial class AddRockAttributeRefactoringTests
+public static class AddRockAttributeRefactoringTests
 {
 	[Test]
-	public static async Task RunWhenExtraBlankLineIsNotNeededAsync()
+	public static async Task RunWhenBuildPropertyIsAddedAsync()
 	{
 		var source =
 			"""
-			using Rocks.Runtime;
-			using Test.Scenarios;
-
-			namespace Test.Scenarios;
-
-			public interface [|I|]HaveNotBeenUsed
+			public [|c|]lass Mockable
 			{
-				void Done();
+				public virtual void Do() { }
 			}
 			""";
+
+		var sourceMockDefinitions = "";
 
 		var fixedSource =
 			"""
-			using Rocks.Runtime;
-			using Test.Scenarios;
-			
-			[assembly: Rock(typeof(IHaveNotBeenUsed), BuildType.Create)]
-			
-			namespace Test.Scenarios;
-			
-			public interface IHaveNotBeenUsed
+			public class Mockable
 			{
-				void Done();
+				public virtual void Do() { }
 			}
 			""";
 
+		var fixedMockDefinitionsSource =
+			"""
+			using Rocks.Runtime;
+			
+			[assembly: Rock(typeof(Mockable), BuildType.Create)]
+
+			""";
+
 		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
-			source, fixedSource, 0);
+			[("Source.cs", source), ("MockDefinitions.cs", sourceMockDefinitions)], 
+			[("Source.cs", fixedSource), ("MockDefinitions.cs", fixedMockDefinitionsSource)], 0, true);
 	}
 
 	[Test]
@@ -68,7 +67,7 @@ public static partial class AddRockAttributeRefactoringTests
 			""";
 
 		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
-			source, fixedSource, 0);
+			[("Source.cs", source)], [("Source.cs", fixedSource)], 0, false);
 	}
 
 	[TestCase("BuildType.Create", 0)]
@@ -97,7 +96,7 @@ public static partial class AddRockAttributeRefactoringTests
 			""";
 
 		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
-			source, fixedSource, codeActionIndex);
+			[("Source.cs", source)], [("Source.cs", fixedSource)], codeActionIndex, false);
 	}
 
 	[TestCase("BuildType.Create", 0)]
@@ -142,7 +141,7 @@ public static partial class AddRockAttributeRefactoringTests
 			""";
 
 		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
-			source, fixedSource, codeActionIndex);
+			[("Source.cs", source)], [("Source.cs", fixedSource)], codeActionIndex, false);
 	}
 
 	[TestCase("BuildType.Create", 0)]
@@ -171,7 +170,7 @@ public static partial class AddRockAttributeRefactoringTests
 			""";
 
 		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
-			source, fixedSource, codeActionIndex);
+			[("Source.cs", source)], [("Source.cs", fixedSource)], codeActionIndex, false);
 	}
 
 	[TestCase("BuildType.Create", 0)]
@@ -200,7 +199,7 @@ public static partial class AddRockAttributeRefactoringTests
 			""";
 
 		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
-			source, fixedSource, codeActionIndex);
+			[("Source.cs", source)], [("Source.cs", fixedSource)], codeActionIndex, false);
 	}
 
 	[TestCase("BuildType.Create", 0)]
@@ -239,7 +238,7 @@ public static partial class AddRockAttributeRefactoringTests
 			""";
 
 		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
-			source, fixedSource, codeActionIndex);
+			[("Source.cs", source)], [("Source.cs", fixedSource)], codeActionIndex, false);
 	}
 
 	[TestCase("BuildType.Create", 0)]
@@ -284,7 +283,7 @@ public static partial class AddRockAttributeRefactoringTests
 			""";
 
 		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
-			source, fixedSource, codeActionIndex);
+			[("Source.cs", source)], [("Source.cs", fixedSource)], codeActionIndex, false);
 	}
 
 	[Test]
@@ -311,6 +310,6 @@ public static partial class AddRockAttributeRefactoringTests
 			""";
 
 		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
-			source, fixedSource, 0);
+			[("Source.cs", source)], [("Source.cs", fixedSource)], 0, false);
 	}
 }

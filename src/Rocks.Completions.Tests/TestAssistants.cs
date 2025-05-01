@@ -8,22 +8,37 @@ namespace Rocks.Completions.Tests;
 internal static class TestAssistants
 {
 	internal static async Task RunRefactoringAsync<TCodeRefactoring>(
-		string source, string fixedSource, int codeActionIndex)
+		IEnumerable<(string, string)> sources,
+		IEnumerable<(string, string)> fixedSources,
+		int codeActionIndex, bool addBuildProperty)
 		where TCodeRefactoring : CodeRefactoringProvider, new()
 	{
 		var test = new CodeRefactoringTest<TCodeRefactoring>
 		{
 			CodeActionIndex = codeActionIndex,
 			ReferenceAssemblies = TestAssistants.GetNet90(),
-			TestState =
-			{
-				Sources = { source }
-			},
-			FixedState =
-			{
-				Sources = { fixedSource }
-			}
 		};
+
+		foreach (var source in sources)
+		{
+			test.TestState.Sources.Add(source);
+		}
+
+		foreach (var fixedSource in fixedSources)
+		{
+			test.FixedState.Sources.Add(fixedSource);
+		}
+
+		if (addBuildProperty)
+		{
+			test.TestState.AnalyzerConfigFiles.Add(
+				(@"c:\users\example\src\SomeProject",
+				"""
+				is_global = true
+
+				build_property.RocksAttributeFile = MockDefinitions.cs
+				"""));
+		}
 
 		test.TestState.AdditionalReferences.Add(typeof(TCodeRefactoring).Assembly);
 		test.TestState.AdditionalReferences.Add(typeof(RockAttribute).Assembly);

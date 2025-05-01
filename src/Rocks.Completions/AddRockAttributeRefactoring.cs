@@ -48,7 +48,22 @@ public sealed partial class AddRockAttributeRefactoring
 
 			//if (mockModel.Information is not null)
 
+			// Figure out which document we should actually put the changes in.
+			var options = context.TextDocument.Project.AnalyzerOptions
+				.AnalyzerConfigOptionsProvider.GlobalOptions;
+
 			var newRoot = (CompilationUnitSyntax)root;
+
+			if (options.TryGetValue("build_property.RocksAttributeFile", out var mockFile))
+			{
+				var mockDocument = document.Project.Documents.FirstOrDefault(_ => _.FilePath == mockFile);
+
+				if (mockDocument is not null)
+				{
+					document = mockDocument;
+					newRoot = (CompilationUnitSyntax)(await (await mockDocument.GetSemanticModelAsync(cancellationToken))!.SyntaxTree.GetRootAsync(cancellationToken));
+				}
+			}
 
 			if (!newRoot.HasUsing("Rocks.Runtime"))
 			{
@@ -63,7 +78,6 @@ public sealed partial class AddRockAttributeRefactoring
 					SyntaxFactory.UsingDirective(SyntaxFactory.ParseName(mockTypeSymbol.ContainingNamespace.ToDisplayString())));
 			}
 
-			var options = context.TextDocument.Project.AnalyzerOptions;
 			AddRockAttributeRefactoring.AddRockAttribute(newRoot, mockTypeSymbol, context, document);
 		}
 	}
