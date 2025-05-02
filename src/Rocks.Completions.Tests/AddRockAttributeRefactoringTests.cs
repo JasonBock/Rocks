@@ -27,7 +27,7 @@ public static class AddRockAttributeRefactoringTests
 
 		var fixedMockDefinitionsSource =
 			"""
-			[assembly: Rocks.Runtime.Rock(typeof(Mockable), Rocks.Runtime.BuildType.Create)]
+			[assembly: Rocks.Runtime.Rock(typeof(Mockable), Rocks.Runtime.BuildType.Create | Rocks.Runtime.BuildType.Make)]
 
 			""";
 
@@ -51,7 +51,7 @@ public static class AddRockAttributeRefactoringTests
 
 		var fixedSource =
 			"""
-			[assembly: Rocks.Runtime.Rock(typeof(Inner.Middle.Outer.Mockable), Rocks.Runtime.BuildType.Create)]
+			[assembly: Rocks.Runtime.Rock(typeof(Inner.Middle.Outer.Mockable), Rocks.Runtime.BuildType.Create | Rocks.Runtime.BuildType.Make)]
 
 			namespace Inner.Middle.Outer;
 			
@@ -80,7 +80,7 @@ public static class AddRockAttributeRefactoringTests
 
 		var fixedSource =
 			$$"""
-			[assembly: Rocks.Runtime.Rock(typeof({{expectedName}}), Rocks.Runtime.BuildType.Create)]
+			[assembly: Rocks.Runtime.Rock(typeof({{expectedName}}), Rocks.Runtime.BuildType.Create | Rocks.Runtime.BuildType.Make)]
 
 			public abstract class {{targetType}}
 			{
@@ -92,9 +92,9 @@ public static class AddRockAttributeRefactoringTests
 			[("Source.cs", source)], [("Source.cs", fixedSource)], 0, false);
 	}
 
-	[TestCase("Rocks.Runtime.BuildType.Create", 0)]
-	[TestCase("Rocks.Runtime.BuildType.Make", 1)]
-	[TestCase("Rocks.Runtime.BuildType.Create | Rocks.Runtime.BuildType.Make", 2)]
+	[TestCase("Rocks.Runtime.BuildType.Create | Rocks.Runtime.BuildType.Make", 0)]
+	[TestCase("Rocks.Runtime.BuildType.Create", 1)]
+	[TestCase("Rocks.Runtime.BuildType.Make", 2)]
 	public static async Task RunClassDeclarationFixAsync(string buildType, int codeActionIndex)
 	{
 		var source =
@@ -119,9 +119,9 @@ public static class AddRockAttributeRefactoringTests
 			[("Source.cs", source)], [("Source.cs", fixedSource)], codeActionIndex, false);
 	}
 
-	[TestCase("Rocks.Runtime.BuildType.Create", 0)]
-	[TestCase("Rocks.Runtime.BuildType.Make", 1)]
-	[TestCase("Rocks.Runtime.BuildType.Create | Rocks.Runtime.BuildType.Make", 2)]
+	[TestCase("Rocks.Runtime.BuildType.Create | Rocks.Runtime.BuildType.Make", 0)]
+	[TestCase("Rocks.Runtime.BuildType.Create", 1)]
+	[TestCase("Rocks.Runtime.BuildType.Make", 2)]
 	public static async Task RunIdentifierNameFixAsync(string buildType, int codeActionIndex)
 	{
 		var source =
@@ -162,9 +162,9 @@ public static class AddRockAttributeRefactoringTests
 			[("Source.cs", source)], [("Source.cs", fixedSource)], codeActionIndex, false);
 	}
 
-	[TestCase("Rocks.Runtime.BuildType.Create", 0)]
-	[TestCase("Rocks.Runtime.BuildType.Make", 1)]
-	[TestCase("Rocks.Runtime.BuildType.Create | Rocks.Runtime.BuildType.Make", 2)]
+	[TestCase("Rocks.Runtime.BuildType.Create | Rocks.Runtime.BuildType.Make", 0)]
+	[TestCase("Rocks.Runtime.BuildType.Create", 1)]
+	[TestCase("Rocks.Runtime.BuildType.Make", 2)]
 	public static async Task RunInterfaceDeclarationFixAsync(string buildType, int codeActionIndex)
 	{
 		var source =
@@ -189,9 +189,9 @@ public static class AddRockAttributeRefactoringTests
 			[("Source.cs", source)], [("Source.cs", fixedSource)], codeActionIndex, false);
 	}
 
-	[TestCase("Rocks.Runtime.BuildType.Create", 0)]
-	[TestCase("Rocks.Runtime.BuildType.Make", 1)]
-	[TestCase("Rocks.Runtime.BuildType.Create | Rocks.Runtime.BuildType.Make", 2)]
+	[TestCase("Rocks.Runtime.BuildType.Create | Rocks.Runtime.BuildType.Make", 0)]
+	[TestCase("Rocks.Runtime.BuildType.Create", 1)]
+	[TestCase("Rocks.Runtime.BuildType.Make", 2)]
 	public static async Task RunRecordDeclarationFixAsync(string buildType, int codeActionIndex)
 	{
 		var source =
@@ -216,9 +216,9 @@ public static class AddRockAttributeRefactoringTests
 			[("Source.cs", source)], [("Source.cs", fixedSource)], codeActionIndex, false);
 	}
 
-	[TestCase("Rocks.Runtime.BuildType.Create", 0)]
-	[TestCase("Rocks.Runtime.BuildType.Make", 1)]
-	[TestCase("Rocks.Runtime.BuildType.Create | Rocks.Runtime.BuildType.Make", 2)]
+	[TestCase("Rocks.Runtime.BuildType.Create | Rocks.Runtime.BuildType.Make", 0)]
+	[TestCase("Rocks.Runtime.BuildType.Create", 1)]
+	[TestCase("Rocks.Runtime.BuildType.Make", 2)]
 	public static async Task RunParameterFixAsync(string buildType, int codeActionIndex)
 	{
 		var source =
@@ -253,9 +253,9 @@ public static class AddRockAttributeRefactoringTests
 			[("Source.cs", source)], [("Source.cs", fixedSource)], codeActionIndex, false);
 	}
 
-	[TestCase("Rocks.Runtime.BuildType.Create", 0)]
-	[TestCase("Rocks.Runtime.BuildType.Make", 1)]
-	[TestCase("Rocks.Runtime.BuildType.Create | Rocks.Runtime.BuildType.Make", 2)]
+	[TestCase("Rocks.Runtime.BuildType.Create | Rocks.Runtime.BuildType.Make", 0)]
+	[TestCase("Rocks.Runtime.BuildType.Create", 1)]
+	[TestCase("Rocks.Runtime.BuildType.Make", 2)]
 	public static async Task RunObjectCreationFixAsync(string buildType, int codeActionIndex)
 	{
 		var source =

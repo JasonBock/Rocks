@@ -156,12 +156,12 @@ public sealed partial class AddRockAttributeRefactoring
 		context.RegisterRefactoring(
 			CodeAction.Create("Add RockAttribute definition...",
 			[
+				CodeAction.Create("Create and Make",
+					token => Task.FromResult(document.WithSyntaxRoot(CreateNewRoot(root, true, true, mockTypeSymbol)))),
 				CodeAction.Create("Create",
 					token => Task.FromResult(document.WithSyntaxRoot(CreateNewRoot(root, true, false, mockTypeSymbol)))),
 				CodeAction.Create("Make",
 					token => Task.FromResult(document.WithSyntaxRoot(CreateNewRoot(root, false, true, mockTypeSymbol)))),
-				CodeAction.Create("Create and Make",
-					token => Task.FromResult(document.WithSyntaxRoot(CreateNewRoot(root, true, true, mockTypeSymbol)))),
 			], false));
 	}
 }
