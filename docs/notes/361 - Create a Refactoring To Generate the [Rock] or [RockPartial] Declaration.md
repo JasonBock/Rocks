@@ -29,6 +29,6 @@ TODO:
     * DONE - When the cursor won't "parent up" to a target syntax nodes
     * DONE - When multiple refactorings are offered
 * DONE - Look at removing the `<NoWarn>` elements at this point.
-* Should consider not adding a `using` for the mock type and just put in a fully qualified one. That would remove ambiguity
-* Need to handle an open generic scenario
-* Update docs so people know about the refactoring.
+* DONE - Should consider not adding a `using` for the mock type and just put in a fully qualified one. That would remove ambiguity
+* DONE - Need to handle an open generic scenario
+* DONE - Update docs so people know about the refactoring.
