@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [9.1.0] - Not Yet Released
 
+### Added
+
+- Created a refactoring to simplify `[Rock]` creation (issue [#361](https://github.com/JasonBock/Rocks/issues/361))
+
 ### Changed
 
 - Made a number of minor internal refactorings that made compile-time code generation consume slightly less memory (issue [#358](https://github.com/JasonBock/Rocks/issues/358))
