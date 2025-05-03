@@ -25,6 +25,33 @@ public static class ConstructorModelTests
 
 		Assert.Multiple(() =>
 		{
+			Assert.That(model.RequiresSetsRequiredMembersAttribute, Is.False);
+			Assert.That(model.Parameters, Has.Length.EqualTo(1));
+			Assert.That(model.Parameters[0].Name, Is.EqualTo("value"));
+		});
+	}
+
+	[Test]
+	public static void CreateWhenSetsRequiredMembersExists()
+	{
+		var code =
+			"""
+			using System.Diagnostics.CodeAnalysis;
+			
+			public class Target
+			{
+				[SetsRequiredMembers]
+				public Target(string value) { }
+			}
+			""";
+
+		(var type, var constructor, var modelContext) = ConstructorModelTests.GetSymbolsCompilation(code);
+		var mockType = modelContext.CreateTypeReference(type);
+		var model = new ConstructorModel(constructor, modelContext);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(model.RequiresSetsRequiredMembersAttribute, Is.True);
 			Assert.That(model.Parameters, Has.Length.EqualTo(1));
 			Assert.That(model.Parameters[0].Name, Is.EqualTo("value"));
 		});

@@ -24,12 +24,12 @@ internal static class MockMakeBuilder
 		{
 			foreach (var constructor in mockType.Constructors)
 			{
-				MockConstructorBuilder.Build(writer, mockType, constructor.Parameters);
+				MockConstructorBuilder.Build(writer, mockType, constructor);
 			}
 		}
 		else
 		{
-			MockConstructorBuilder.Build(writer, mockType, []);
+			MockConstructorBuilder.Build(writer, mockType, null);
 		}
 
 		writer.WriteLine();

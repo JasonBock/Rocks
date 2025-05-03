@@ -7,11 +7,13 @@
 		<CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
 		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
 		-->
+		<RocksAttributeFile>MockDefinitions.cs</RocksAttributeFile>
 		<RootNamespace>Rocks.Analysis.IntegrationTests</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Rocks.Analysis.IntegrationTests.Referenced\Rocks.Analysis.IntegrationTests.Referenced.csproj" />
 		<ProjectReference Include="..\Rocks.Analysis\Rocks.Analysis.csproj" OutputItemType="Analyzer" />
+		<ProjectReference Include="..\Rocks.Completions\Rocks.Completions.csproj" OutputItemType="Analyzer" />
 		<ProjectReference Include="..\Rocks\Rocks.csproj" />
 	</ItemGroup>
 	<ItemGroup>
@@ -26,5 +28,8 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+	</ItemGroup>
+	<ItemGroup>
+		<CompilerVisibleProperty Include="RocksAttributeFile" />
 	</ItemGroup>
 </Project>

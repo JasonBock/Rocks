@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Rocks.Analysis.IntegrationTests.ClassConstructorTestTypes;
 
@@ -36,8 +37,28 @@ public class ClassConstructor
 	public string? StringData { get; }
 }
 
+public class ClassRequiredConstructor
+{
+	[SetsRequiredMembers] 
+	public ClassRequiredConstructor() { }
+	
+	public virtual void DoRequired() { }
+}
+
 public static class ClassConstructorTests
 {
+	[Test]
+	public static void CreateRequiredConstructor()
+	{
+		var expectations = new ClassRequiredConstructorCreateExpectations();
+		expectations.Methods.DoRequired();
+
+		var mock = expectations.Instance();
+		mock.DoRequired();
+
+		expectations.Verify();
+	}
+
 	[Test]
 	public static void CreateSpecialConstructor()
 	{

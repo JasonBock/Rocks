@@ -42,6 +42,7 @@
 [assembly: Rock(typeof(Rocks.Analysis.IntegrationTests.AttributeTestTypes.NotNullIfNotCases), BuildType.Create | BuildType.Make)]
 [assembly: Rock(typeof(Rocks.Analysis.IntegrationTests.ClassConstructorTestTypes.ClassConstructor), BuildType.Create | BuildType.Make)]
 [assembly: Rock(typeof(Rocks.Analysis.IntegrationTests.ClassConstructorTestTypes.ClassConstructorWithSpecialParameters), BuildType.Create | BuildType.Make)]
+[assembly: Rock(typeof(Rocks.Analysis.IntegrationTests.ClassConstructorTestTypes.ClassRequiredConstructor), BuildType.Create | BuildType.Make)]
 [assembly: Rock(typeof(Rocks.Analysis.IntegrationTests.ClassGenericEventsTestTypes.ClassGenericEvents<>), BuildType.Create | BuildType.Make)]
 [assembly: Rock(typeof(Rocks.Analysis.IntegrationTests.ClassGenericIndexerTestTypes.ClassGenericIndexer<>), BuildType.Create | BuildType.Make)]
 [assembly: Rock(typeof(Rocks.Analysis.IntegrationTests.ClassGenericIndexerTestTypes.ClassGenericIndexerGetAndInit<>), BuildType.Create | BuildType.Make)]

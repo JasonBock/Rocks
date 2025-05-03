@@ -10,10 +10,11 @@ namespace Rocks.Analysis.Builders.Create;
 internal static class MockConstructorBuilder
 {
 	internal static void Build(IndentedTextWriter writer, TypeMockModel type, 
-		ImmutableArray<ParameterModel> parameters, ImmutableArray<TypeMockModel> shims, 
+		ConstructorModel? constructor, ImmutableArray<TypeMockModel> shims, 
 		string expectationsFullyQualifiedName)
 	{
 		var typeToMockName = type.Type.FullyQualifiedName;
+		var parameters = constructor is not null ? constructor.Parameters : [];
 		var namingContext = new VariablesNamingContext(parameters);
 		var hasRequiredProperties = type.ConstructorProperties.Any(_ => _.IsRequired);
 
@@ -36,7 +37,7 @@ internal static class MockConstructorBuilder
 					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}";
 				})));
 
-		if (hasRequiredProperties)
+		if ((constructor?.RequiresSetsRequiredMembersAttribute ?? false) || hasRequiredProperties)
 		{
 			writer.WriteLine("[global::System.Diagnostics.CodeAnalysis.SetsRequiredMembers]");
 		}

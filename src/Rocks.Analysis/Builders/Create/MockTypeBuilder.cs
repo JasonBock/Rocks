@@ -34,12 +34,12 @@ internal static class MockTypeBuilder
 		{
 			foreach (var constructor in type.Constructors)
 			{
-				MockConstructorBuilder.Build(writer, type, constructor.Parameters, type.Shims, expectationsFullyQualifiedName);
+				MockConstructorBuilder.Build(writer, type, constructor, type.Shims, expectationsFullyQualifiedName);
 			}
 		}
 		else
 		{
-			MockConstructorBuilder.Build(writer, type, [], type.Shims, expectationsFullyQualifiedName);
+			MockConstructorBuilder.Build(writer, type, null, type.Shims, expectationsFullyQualifiedName);
 		}
 
 		writer.WriteLine();
