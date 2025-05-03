@@ -38,16 +38,6 @@ public sealed partial class AddRockAttributeRefactoring
 
 		if (mockTypeSymbol is not null)
 		{
-			// TODO: This code exists in Rocks.Analysis. We don't want to reference that 
-			// project explicitly. We could create a shared project, but the stuff within
-			// MockModel is quite extensive. For now, we're not going to check if this is a valid
-			// type to mock. When the attribute is created, the check will kick in anyway.
-
-			//var mockModel = MockModel.Create(
-			//	node, mockTypeSymbol, null, new ModelContext(model), BuildType.Create, true);
-
-			//if (mockModel.Information is not null)
-
 			if (mockTypeSymbol.IsUnboundGenericType)
 			{
 				mockTypeSymbol = mockTypeSymbol.OriginalDefinition;
@@ -69,11 +59,15 @@ public sealed partial class AddRockAttributeRefactoring
 				if (mockDocument is not null)
 				{
 					document = mockDocument;
+					model = await document.GetSemanticModelAsync(cancellationToken);
 					newRoot = (CompilationUnitSyntax)(await (await mockDocument.GetSemanticModelAsync(cancellationToken))!.SyntaxTree.GetRootAsync(cancellationToken));
 				}
 			}
 
-			AddRockAttributeRefactoring.AddRockAttribute(newRoot, mockTypeSymbol, context, document);
+			if (!(model?.HasRockAttributeDefinition(mockTypeSymbol) ?? false))
+			{
+				AddRockAttributeRefactoring.AddRockAttribute(newRoot, mockTypeSymbol, context, document);
+			}
 		}
 	}
 

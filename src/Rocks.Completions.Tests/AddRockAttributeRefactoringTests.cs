@@ -65,6 +65,37 @@ public static class AddRockAttributeRefactoringTests
 			[("Source.cs", source)], [("Source.cs", fixedSource)], 0, false);
 	}
 
+	[Test]
+	public static async Task RunWithExistingTargetAsync()
+	{
+		var source =
+			"""
+			[assembly: Rocks.Runtime.Rock(typeof(Inner.Middle.Outer.Mockable), Rocks.Runtime.BuildType.Create | Rocks.Runtime.BuildType.Make)]
+			
+			namespace Inner.Middle.Outer;
+
+			public [|c|]lass Mockable
+			{
+				public virtual void Do() { }
+			}
+			""";
+
+		var fixedSource =
+			"""
+			[assembly: Rocks.Runtime.Rock(typeof(Inner.Middle.Outer.Mockable), Rocks.Runtime.BuildType.Create | Rocks.Runtime.BuildType.Make)]
+
+			namespace Inner.Middle.Outer;
+			
+			public class Mockable
+			{
+				public virtual void Do() { }
+			}
+			""";
+
+		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
+			[("Source.cs", source)], [("Source.cs", fixedSource)], 0, false);
+	}
+
 	[TestCase("Mockable<T1>", "Mockable<>")]
 	[TestCase("Mockable<T1, T2>", "Mockable<,>")]
 	[TestCase("Mockable<T1, T2, T3>", "Mockable<,,>")]
