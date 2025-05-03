@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Rocks.Runtime.Exceptions;
+using Rocks.Exceptions;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Rocks.Analysis.IntegrationTests.DoesNotReturnTestTypes;

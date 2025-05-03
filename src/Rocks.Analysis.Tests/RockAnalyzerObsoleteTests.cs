@@ -12,7 +12,7 @@ public static class RockAnalyzerObsoleteTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 			using System;
 			using System.Collections;
 			using System.Collections.Generic;
@@ -48,7 +48,7 @@ public static class RockAnalyzerObsoleteTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 			using System;
 			using System.Collections;
 			using System.Collections.Generic;
@@ -84,7 +84,7 @@ public static class RockAnalyzerObsoleteTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 			using System;
 			using System.Collections;
 			using System.Collections.Generic;
@@ -126,7 +126,7 @@ public static class RockAnalyzerObsoleteTests
 		var code =
 			"""
 			using System; 
-			using Rocks.Runtime; 
+			using Rocks; 
 			
 			[assembly: Rock(typeof(UsesObsolete), BuildType.Create | BuildType.Make)] 
 			
@@ -152,7 +152,7 @@ public static class RockAnalyzerObsoleteTests
 		var code =
 			"""
 			using System; 
-			using Rocks.Runtime; 
+			using Rocks; 
 			
 			[assembly: Rock(typeof(UsesObsolete), BuildType.Create | BuildType.Make)] 
 			
@@ -177,7 +177,7 @@ public static class RockAnalyzerObsoleteTests
 		var code =
 			"""
 			using System; 
-			using Rocks.Runtime; 
+			using Rocks; 
 			
 			[assembly: Rock(typeof(UsesObsolete), BuildType.Create | BuildType.Make)]
 			
@@ -202,7 +202,7 @@ public static class RockAnalyzerObsoleteTests
 		var code =
 			"""
 			using System; 
-			using Rocks.Runtime; 
+			using Rocks; 
 			
 			[assembly: Rock(typeof(UsesObsolete), BuildType.Create | BuildType.Make)]
 			
@@ -227,7 +227,7 @@ public static class RockAnalyzerObsoleteTests
 		var code =
 			"""
 			using System;
-			using Rocks.Runtime;
+			using Rocks;
 			
 			[assembly: Rock(typeof(UsesObsolete), BuildType.Create | BuildType.Make)]
 			
@@ -252,7 +252,7 @@ public static class RockAnalyzerObsoleteTests
 		var code =
 			"""
 			using System;
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(ObsoleteType), BuildType.Create | BuildType.Make)]
 
@@ -272,7 +272,7 @@ public static class RockAnalyzerObsoleteTests
 		var code =
 			"""
 			using System;
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(ObsoleteType), BuildType.Create | BuildType.Make)]
 

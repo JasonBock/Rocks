@@ -28,7 +28,7 @@ internal static class MockBuilder
 			$$"""
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			{{mockType.Accessibility}} {{isUnsafe}}{{isSealed}}{{isPartial}}class {{mockType.ExpectationsName}}
-				: global::Rocks.Runtime.Expectations
+				: global::Rocks.Expectations
 			""");
 
 		if (mockType.Type.Constraints.Length > 0)

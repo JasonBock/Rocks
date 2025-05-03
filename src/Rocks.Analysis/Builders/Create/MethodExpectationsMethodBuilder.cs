@@ -69,7 +69,7 @@ internal static class MethodExpectationsMethodBuilder
 
 			if (method.ReturnType.IsPointer)
 			{
-				adornmentsType = $"global::Rocks.Runtime.Adornments<AdornmentsForHandler{method.MemberIdentifier}{typeArguments}, {handlerTypeName}, {callbackDelegateTypeName}>";
+				adornmentsType = $"global::Rocks.Adornments<AdornmentsForHandler{method.MemberIdentifier}{typeArguments}, {handlerTypeName}, {callbackDelegateTypeName}>";
 			}
 			else
 			{
@@ -81,8 +81,8 @@ internal static class MethodExpectationsMethodBuilder
 							method.ReturnType.BuildName(typeArgumentsNamingContext);
 
 				adornmentsType = method.ReturnsVoid ?
-					$"global::Rocks.Runtime.Adornments<AdornmentsForHandler{method.MemberIdentifier}{typeArguments}, {handlerTypeName}, {callbackDelegateTypeName}>" :
-					$"global::Rocks.Runtime.Adornments<AdornmentsForHandler{method.MemberIdentifier}{typeArguments}, {handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
+					$"global::Rocks.Adornments<AdornmentsForHandler{method.MemberIdentifier}{typeArguments}, {handlerTypeName}, {callbackDelegateTypeName}>" :
+					$"global::Rocks.Adornments<AdornmentsForHandler{method.MemberIdentifier}{typeArguments}, {handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
 			}
 
 			var constraints = method.Constraints.Length > 0 ?
@@ -94,7 +94,7 @@ internal static class MethodExpectationsMethodBuilder
 			if (isGeneratedWithDefaults)
 			{
 				var parameterValues = string.Join(", ", method.Parameters.Select(
-					p => p.HasExplicitDefaultValue || p.IsParams ? $"global::Rocks.Runtime.Arg.Is(@{p.Name})" : $"@{p.Name}"));
+					p => p.HasExplicitDefaultValue || p.IsParams ? $"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}"));
 
 				writer.WriteLines(
 					$$"""
@@ -108,7 +108,7 @@ internal static class MethodExpectationsMethodBuilder
 					$$"""
 					internal {{hiding}}{{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{method.MemberIdentifier}}{{typeArguments}} {{method.Name}}{{typeArguments}}({{instanceParameters}}){{constraints}}
 					{
-						global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.{{type.ExpectationsPropertyName}}.WasInstanceInvoked);
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.{{type.ExpectationsPropertyName}}.WasInstanceInvoked);
 						var handler = new {{expectationsFullyQualifiedName}}.Handler{{method.MemberIdentifier}}{{typeArguments}}();
 						if (this.{{type.ExpectationsPropertyName}}.handlers{{method.MemberIdentifier}} is null) { this.{{type.ExpectationsPropertyName}}.handlers{{method.MemberIdentifier}} = new(handler); }
 						else { this.{{type.ExpectationsPropertyName}}.handlers{{method.MemberIdentifier}}.Add(handler); }
@@ -122,7 +122,7 @@ internal static class MethodExpectationsMethodBuilder
 				writer.WriteLine($"internal {hiding}{expectationsFullyQualifiedName}.Adornments.AdornmentsForHandler{method.MemberIdentifier}{typeArguments} {method.Name}{typeArguments}({instanceParameters}){constraints}");
 				writer.WriteLine("{");
 				writer.Indent++;
-				writer.WriteLine("global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);");
+				writer.WriteLine("global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);");
 
 				foreach (var parameter in method.Parameters)
 				{
@@ -147,7 +147,7 @@ internal static class MethodExpectationsMethodBuilder
 					}
 					else if (parameter.RefKind == RefKind.Out)
 					{
-						writer.WriteLine($"@{handlerNamingContext[parameter.Name]} = global::Rocks.Runtime.Arg.Any<{parameter.Type.BuildName(typeArgumentsNamingContext)}{(parameter.RequiresNullableAnnotation ? "?" : string.Empty)}>(),");
+						writer.WriteLine($"@{handlerNamingContext[parameter.Name]} = global::Rocks.Arg.Any<{parameter.Type.BuildName(typeArgumentsNamingContext)}{(parameter.RequiresNullableAnnotation ? "?" : string.Empty)}>(),");
 					}
 					else
 					{

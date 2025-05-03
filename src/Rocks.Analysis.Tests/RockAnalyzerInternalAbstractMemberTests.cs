@@ -21,7 +21,7 @@ public static class RockAnalyzerInternalAbstractMemberTests
 
 		var code =
 			$$"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(InternalTargets), BuildType.Create)]
 			""";
@@ -49,7 +49,7 @@ public static class RockAnalyzerInternalAbstractMemberTests
 
 		var code =
 			$$"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(InternalTargets), BuildType.Create)]
 			""";
@@ -86,7 +86,7 @@ public static class RockAnalyzerInternalAbstractMemberTests
 
 		var code =
 			$$"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(InternalTargets), BuildType.Make)]
 			""";
@@ -120,7 +120,7 @@ public static class RockAnalyzerInternalAbstractMemberTests
 
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(InternalTargets), BuildType.Create | BuildType.Make)]
 			""";

@@ -55,7 +55,7 @@ internal static class MockExpectationsVerifyBuilder
 
 					if (failures.Count > 0)
 					{
-						throw new global::Rocks.Runtime.Exceptions.VerificationException(failures);
+						throw new global::Rocks.Exceptions.VerificationException(failures);
 					}
 				}
 			}

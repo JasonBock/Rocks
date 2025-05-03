@@ -4,7 +4,6 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Rocks.Analysis;
 using Rocks.Analysis.Models;
 using Rocks.CodeGenerationTest.Extensions;
-using Rocks.Runtime;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
 using System.ComponentModel;
@@ -88,7 +87,7 @@ internal static class TestGenerator
 
 			indentWriter.Write(
 				 $$"""
-				    using Rocks.Runtime;
+				    using Rocks;
 				    using System;
 
 				    [assembly: CLSCompliant(false)]
@@ -370,7 +369,7 @@ internal static class TestGenerator
 
 		indentWriter.Write(
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 			using System;
 
 			[assembly: CLSCompliant(false)]

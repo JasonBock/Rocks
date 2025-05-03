@@ -20,7 +20,7 @@ internal static class MockAdornmentsBuilder
 		writer.WriteLines(
 			$$"""
 			public interface IAdornmentsFor{{adornmentsFlattenedName}}<TAdornments>
-				: global::Rocks.Runtime.IAdornments<TAdornments>
+				: global::Rocks.IAdornments<TAdornments>
 				where TAdornments : IAdornmentsFor{{adornmentsFlattenedName}}<TAdornments>
 			{ }
 			""");

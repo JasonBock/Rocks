@@ -25,12 +25,10 @@ internal static class SemanticModelExtensions
 
 					if (attributeCtor is not null &&
 						attributeCtor.ContainingType.Name == "RockAttribute" &&
-						attributeCtor.ContainingType.ContainingNamespace.ToDisplayString() == "Rocks.Runtime" &&
-						attributeCtor.ContainingType.ContainingAssembly.ToDisplayString().StartsWith("Rocks.Runtime") &&
+						attributeCtor.ContainingType.ContainingNamespace.ToDisplayString() == "Rocks" &&
+						attributeCtor.ContainingType.ContainingAssembly.ToDisplayString().StartsWith("Rocks") &&
 						attributeCtor.Parameters.Length == 2)
 					{
-						// self.GetSymbolInfo((attributeSyntax.ArgumentList.Arguments[0].Expression as TypeOfExpressionSyntax).Type).Symbol is INamedTypeSymbol
-
 						if (attributeSyntax.ArgumentList?.Arguments[0].Expression is TypeOfExpressionSyntax attributeTypeOf)
 						{
 							if (self.GetSymbolInfo(attributeTypeOf.Type).Symbol is INamedTypeSymbol attributeTypeOfSymbol &&

@@ -6,6 +6,6 @@
 
 internal static class Constants
 {
-	internal const string RockAttributeName = "Rocks.Runtime.RockAttribute";
-	internal const string RockPartialAttributeName = "Rocks.Runtime.RockPartialAttribute";
+	internal const string RockAttributeName = "Rocks.RockAttribute";
+	internal const string RockPartialAttributeName = "Rocks.RockPartialAttribute";
 }

@@ -1,6 +1,4 @@
-﻿using Rocks.Runtime;
-
-namespace Rocks.Performance;
+﻿namespace Rocks.Performance;
 
 public sealed class HandlerInt
 	: Handler<Func<int, int>, int>

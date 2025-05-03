@@ -9,7 +9,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(IPointerUsage), BuildType.Create | BuildType.Make)]
 
@@ -30,19 +30,19 @@ public static class ProjectionMultiplePointerGeneratorTests
 			
 			#nullable enable
 			
-			using Rocks.Runtime.Extensions;
+			using Rocks.Extensions;
 			
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal unsafe sealed class IPointerUsageCreateExpectations
-				: global::Rocks.Runtime.Expectations
+				: global::Rocks.Expectations
 			{
 				internal sealed class Handler0
-					: global::Rocks.Runtime.Handler<Handler0.CallbackForHandler>
+					: global::Rocks.Handler<Handler0.CallbackForHandler>
 				{
 					internal unsafe delegate void CallbackForHandler(int** @value);
-					public global::Rocks.Runtime.Projections.PointerPointerArgument<int> @value { get; set; }
+					public global::Rocks.Projections.PointerPointerArgument<int> @value { get; set; }
 				}
-				private global::Rocks.Runtime.Handlers<global::IPointerUsageCreateExpectations.Handler0>? @handlers0;
+				private global::Rocks.Handlers<global::IPointerUsageCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -54,7 +54,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 				
 						if (failures.Count > 0)
 						{
-							throw new global::Rocks.Runtime.Exceptions.VerificationException(failures);
+							throw new global::Rocks.Exceptions.VerificationException(failures);
 						}
 					}
 				}
@@ -67,7 +67,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.Runtime.MemberIdentifier(0)]
+					[global::Rocks.MemberIdentifier(0)]
 					public unsafe void PointerParameter(int** @value)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -87,7 +87,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
 										value: <Not formattable>
@@ -96,7 +96,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 						}
 						else
 						{
-							throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}
 									value: <Not formattable>
@@ -112,9 +112,9 @@ public static class ProjectionMultiplePointerGeneratorTests
 					internal MethodExpectations(global::IPointerUsageCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::IPointerUsageCreateExpectations.Adornments.AdornmentsForHandler0 PointerParameter(global::Rocks.Runtime.Projections.PointerPointerArgument<int> @value)
+					internal global::IPointerUsageCreateExpectations.Adornments.AdornmentsForHandler0 PointerParameter(global::Rocks.Projections.PointerPointerArgument<int> @value)
 					{
-						global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
 						
 						var @handler = new global::IPointerUsageCreateExpectations.Handler0
@@ -146,19 +146,19 @@ public static class ProjectionMultiplePointerGeneratorTests
 					}
 					else
 					{
-						throw new global::Rocks.Runtime.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 					}
 				}
 				
 				internal static class Adornments
 				{
 					public interface IAdornmentsForIPointerUsage<TAdornments>
-						: global::Rocks.Runtime.IAdornments<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForIPointerUsage<TAdornments>
 					{ }
 					
 					public sealed class AdornmentsForHandler0
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler0, global::IPointerUsageCreateExpectations.Handler0, global::IPointerUsageCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForIPointerUsage<AdornmentsForHandler0>
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IPointerUsageCreateExpectations.Handler0, global::IPointerUsageCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForIPointerUsage<AdornmentsForHandler0>
 					{
 						public AdornmentsForHandler0(global::IPointerUsageCreateExpectations.Handler0 handler)
 							: base(handler) { }
@@ -225,7 +225,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 			
 			#nullable enable
 			
-			namespace Rocks.Runtime.Projections;
+			namespace Rocks.Projections;
 			
 			internal unsafe delegate bool PointerPointerArgumentEvaluation<T>(T** @value) where T : unmanaged;
 			
@@ -285,7 +285,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(IPointerUsage), BuildType.Create | BuildType.Make)]
 
@@ -306,19 +306,19 @@ public static class ProjectionMultiplePointerGeneratorTests
 			
 			#nullable enable
 			
-			using Rocks.Runtime.Extensions;
+			using Rocks.Extensions;
 			
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal unsafe sealed class IPointerUsageCreateExpectations
-				: global::Rocks.Runtime.Expectations
+				: global::Rocks.Expectations
 			{
 				internal sealed class Handler0
-					: global::Rocks.Runtime.Handler<Handler0.CallbackForHandler>
+					: global::Rocks.Handler<Handler0.CallbackForHandler>
 				{
 					internal unsafe delegate int** CallbackForHandler();
 					public int** ReturnValue { get; set; }
 				}
-				private global::Rocks.Runtime.Handlers<global::IPointerUsageCreateExpectations.Handler0>? @handlers0;
+				private global::Rocks.Handlers<global::IPointerUsageCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -330,7 +330,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 				
 						if (failures.Count > 0)
 						{
-							throw new global::Rocks.Runtime.Exceptions.VerificationException(failures);
+							throw new global::Rocks.Exceptions.VerificationException(failures);
 						}
 					}
 				}
@@ -343,7 +343,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.Runtime.MemberIdentifier(0)]
+					[global::Rocks.MemberIdentifier(0)]
 					public unsafe int** PointerReturn()
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -355,7 +355,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 							return @result!;
 						}
 						
-						throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+						throw new global::Rocks.Exceptions.ExpectationException(
 							$"""
 							No handlers were found for {this.GetType().GetMemberDescription(0)}
 							""");
@@ -371,7 +371,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 					
 					internal global::IPointerUsageCreateExpectations.Adornments.AdornmentsForHandler0 PointerReturn()
 					{
-						global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::IPointerUsageCreateExpectations.Handler0();
 						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
 						else { this.Expectations.handlers0.Add(handler); }
@@ -397,19 +397,19 @@ public static class ProjectionMultiplePointerGeneratorTests
 					}
 					else
 					{
-						throw new global::Rocks.Runtime.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 					}
 				}
 				
 				internal static class Adornments
 				{
 					public interface IAdornmentsForIPointerUsage<TAdornments>
-						: global::Rocks.Runtime.IAdornments<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForIPointerUsage<TAdornments>
 					{ }
 					
 					public sealed class AdornmentsForHandler0
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler0, global::IPointerUsageCreateExpectations.Handler0, global::IPointerUsageCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForIPointerUsage<AdornmentsForHandler0>
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IPointerUsageCreateExpectations.Handler0, global::IPointerUsageCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForIPointerUsage<AdornmentsForHandler0>
 					{
 						public AdornmentsForHandler0(global::IPointerUsageCreateExpectations.Handler0 handler)
 							: base(handler) { }
@@ -482,7 +482,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 			
 			#nullable enable
 			
-			namespace Rocks.Runtime.Projections;
+			namespace Rocks.Projections;
 			
 			internal unsafe delegate bool PointerPointerArgumentEvaluation<T>(T** @value) where T : unmanaged;
 			
@@ -542,7 +542,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 			using System;
 			
 			[assembly: Rock(typeof(MockTests.IHavePointers), BuildType.Create | BuildType.Make)]
@@ -569,28 +569,28 @@ public static class ProjectionMultiplePointerGeneratorTests
 			
 			#nullable enable
 			
-			using Rocks.Runtime.Extensions;
+			using Rocks.Extensions;
 			
 			namespace MockTests
 			{
 				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal unsafe sealed class IHavePointersCreateExpectations
-					: global::Rocks.Runtime.Expectations
+					: global::Rocks.Expectations
 				{
 					internal sealed class Handler0
-						: global::Rocks.Runtime.Handler<Handler0.CallbackForHandler>
+						: global::Rocks.Handler<Handler0.CallbackForHandler>
 					{
 						internal unsafe delegate int** CallbackForHandler();
 						public int** ReturnValue { get; set; }
 					}
-					private global::Rocks.Runtime.Handlers<global::MockTests.IHavePointersCreateExpectations.Handler0>? @handlers0;
+					private global::Rocks.Handlers<global::MockTests.IHavePointersCreateExpectations.Handler0>? @handlers0;
 					internal sealed class Handler1
-						: global::Rocks.Runtime.Handler<Handler1.CallbackForHandler>
+						: global::Rocks.Handler<Handler1.CallbackForHandler>
 					{
 						internal unsafe delegate void CallbackForHandler(int** @value);
-						public global::Rocks.Runtime.Projections.PointerPointerArgument<int> @value { get; set; }
+						public global::Rocks.Projections.PointerPointerArgument<int> @value { get; set; }
 					}
-					private global::Rocks.Runtime.Handlers<global::MockTests.IHavePointersCreateExpectations.Handler1>? @handlers1;
+					private global::Rocks.Handlers<global::MockTests.IHavePointersCreateExpectations.Handler1>? @handlers1;
 					
 					public override void Verify()
 					{
@@ -603,7 +603,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 					
 							if (failures.Count > 0)
 							{
-								throw new global::Rocks.Runtime.Exceptions.VerificationException(failures);
+								throw new global::Rocks.Exceptions.VerificationException(failures);
 							}
 						}
 					}
@@ -616,8 +616,8 @@ public static class ProjectionMultiplePointerGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.Runtime.MemberIdentifier(0, global::Rocks.Runtime.PropertyAccessor.Get)]
-						[global::Rocks.Runtime.MemberIdentifier(1, global::Rocks.Runtime.PropertyAccessor.Set)]
+						[global::Rocks.MemberIdentifier(0, global::Rocks.PropertyAccessor.Get)]
+						[global::Rocks.MemberIdentifier(1, global::Rocks.PropertyAccessor.Set)]
 						public unsafe int** Data
 						{
 							get
@@ -631,7 +631,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 									return @result!;
 								}
 								
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
 									""");
@@ -651,7 +651,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 											
 											if (!@foundMatch)
 											{
-												throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+												throw new global::Rocks.Exceptions.ExpectationException(
 													$"""
 													No handlers match for {this.GetType().GetMemberDescription(1)}
 														value: <Not formattable>
@@ -664,8 +664,8 @@ public static class ProjectionMultiplePointerGeneratorTests
 								}
 								else
 								{
-									throw new global::Rocks.Runtime.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
-									throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+									throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
+									throw new global::Rocks.Exceptions.ExpectationException(
 										$"""
 										No handlers were found for {this.GetType().GetMemberDescription(1)}
 											value: <Not formattable>
@@ -685,7 +685,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 							
 							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler0 Data()
 							{
-								global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0();
 								if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
 								else { this.Expectations.handlers0.Add(handler); }
@@ -699,9 +699,9 @@ public static class ProjectionMultiplePointerGeneratorTests
 							internal PropertySetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler1 Data(global::Rocks.Runtime.Projections.PointerPointerArgument<int> @value)
+							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler1 Data(global::Rocks.Projections.PointerPointerArgument<int> @value)
 							{
-								global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@value);
 							
 								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler1
@@ -739,19 +739,19 @@ public static class ProjectionMultiplePointerGeneratorTests
 						}
 						else
 						{
-							throw new global::Rocks.Runtime.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
 					
 					internal static class Adornments
 					{
 						public interface IAdornmentsForIHavePointers<TAdornments>
-							: global::Rocks.Runtime.IAdornments<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
 							where TAdornments : IAdornmentsForIHavePointers<TAdornments>
 						{ }
 						
 						public sealed class AdornmentsForHandler0
-							: global::Rocks.Runtime.Adornments<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
 						{
 							public AdornmentsForHandler0(global::MockTests.IHavePointersCreateExpectations.Handler0 handler)
 								: base(handler) { }
@@ -762,7 +762,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 							}
 						}
 						public sealed class AdornmentsForHandler1
-							: global::Rocks.Runtime.Adornments<AdornmentsForHandler1, global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Handler1.CallbackForHandler>, IAdornmentsForIHavePointers<AdornmentsForHandler1>
+							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Handler1.CallbackForHandler>, IAdornmentsForIHavePointers<AdornmentsForHandler1>
 						{
 							public AdornmentsForHandler1(global::MockTests.IHavePointersCreateExpectations.Handler1 handler)
 								: base(handler) { }
@@ -835,7 +835,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 			
 			#nullable enable
 			
-			namespace Rocks.Runtime.Projections;
+			namespace Rocks.Projections;
 			
 			internal unsafe delegate bool PointerPointerArgumentEvaluation<T>(T** @value) where T : unmanaged;
 			
@@ -895,7 +895,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 			using System;
 			
 			[assembly: Rock(typeof(MockTests.IHavePointers), BuildType.Create | BuildType.Make)]
@@ -922,29 +922,29 @@ public static class ProjectionMultiplePointerGeneratorTests
 			
 			#nullable enable
 			
-			using Rocks.Runtime.Extensions;
+			using Rocks.Extensions;
 			
 			namespace MockTests
 			{
 				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal unsafe sealed class IHavePointersCreateExpectations
-					: global::Rocks.Runtime.Expectations
+					: global::Rocks.Expectations
 				{
 					internal sealed class Handler0
-						: global::Rocks.Runtime.Handler<Handler0.CallbackForHandler, string>
+						: global::Rocks.Handler<Handler0.CallbackForHandler, string>
 					{
 						internal unsafe delegate string CallbackForHandler(int** @index);
-						public global::Rocks.Runtime.Projections.PointerPointerArgument<int> @index { get; set; }
+						public global::Rocks.Projections.PointerPointerArgument<int> @index { get; set; }
 					}
-					private global::Rocks.Runtime.Handlers<global::MockTests.IHavePointersCreateExpectations.Handler0>? @handlers0;
+					private global::Rocks.Handlers<global::MockTests.IHavePointersCreateExpectations.Handler0>? @handlers0;
 					internal sealed class Handler1
-						: global::Rocks.Runtime.Handler<Handler1.CallbackForHandler>
+						: global::Rocks.Handler<Handler1.CallbackForHandler>
 					{
 						internal unsafe delegate void CallbackForHandler(int** @index, string @value);
-						public global::Rocks.Runtime.Projections.PointerPointerArgument<int> @index { get; set; }
-						public global::Rocks.Runtime.Argument<string> @value { get; set; }
+						public global::Rocks.Projections.PointerPointerArgument<int> @index { get; set; }
+						public global::Rocks.Argument<string> @value { get; set; }
 					}
-					private global::Rocks.Runtime.Handlers<global::MockTests.IHavePointersCreateExpectations.Handler1>? @handlers1;
+					private global::Rocks.Handlers<global::MockTests.IHavePointersCreateExpectations.Handler1>? @handlers1;
 					
 					public override void Verify()
 					{
@@ -957,7 +957,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 					
 							if (failures.Count > 0)
 							{
-								throw new global::Rocks.Runtime.Exceptions.VerificationException(failures);
+								throw new global::Rocks.Exceptions.VerificationException(failures);
 							}
 						}
 					}
@@ -970,8 +970,8 @@ public static class ProjectionMultiplePointerGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.Runtime.MemberIdentifier(0, global::Rocks.Runtime.PropertyAccessor.Get)]
-						[global::Rocks.Runtime.MemberIdentifier(1, global::Rocks.Runtime.PropertyAccessor.Set)]
+						[global::Rocks.MemberIdentifier(0, global::Rocks.PropertyAccessor.Get)]
+						[global::Rocks.MemberIdentifier(1, global::Rocks.PropertyAccessor.Set)]
 						public unsafe string this[int** @index]
 						{
 							get
@@ -989,14 +989,14 @@ public static class ProjectionMultiplePointerGeneratorTests
 										}
 									}
 									
-									throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+									throw new global::Rocks.Exceptions.ExpectationException(
 										$"""
 										No handlers match for {this.GetType().GetMemberDescription(0)}
 											index: <Not formattable>
 										""");
 								}
 								
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers were found for {this.GetType().GetMemberDescription(0)}
 										index: <Not formattable>
@@ -1017,7 +1017,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 										}
 									}
 									
-									throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+									throw new global::Rocks.Exceptions.ExpectationException(
 										$"""
 										No handlers match for {this.GetType().GetMemberDescription(1)}
 											index: <Not formattable>
@@ -1025,7 +1025,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 										""");
 								}
 								
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers were found for {this.GetType().GetMemberDescription(1)}
 										index: <Not formattable>
@@ -1043,9 +1043,9 @@ public static class ProjectionMultiplePointerGeneratorTests
 							internal IndexerGetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler0 This(global::Rocks.Runtime.Projections.PointerPointerArgument<int> @index)
+							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler0 This(global::Rocks.Projections.PointerPointerArgument<int> @index)
 							{
-								global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								
 								var @handler = new global::MockTests.IHavePointersCreateExpectations.Handler0
@@ -1065,9 +1065,9 @@ public static class ProjectionMultiplePointerGeneratorTests
 							internal IndexerSetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler1 This(global::Rocks.Runtime.Argument<string> @value, global::Rocks.Runtime.Projections.PointerPointerArgument<int> @index)
+							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler1 This(global::Rocks.Argument<string> @value, global::Rocks.Projections.PointerPointerArgument<int> @index)
 							{
-								global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								global::System.ArgumentNullException.ThrowIfNull(@value);
 								
@@ -1107,25 +1107,25 @@ public static class ProjectionMultiplePointerGeneratorTests
 						}
 						else
 						{
-							throw new global::Rocks.Runtime.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
 					
 					internal static class Adornments
 					{
 						public interface IAdornmentsForIHavePointers<TAdornments>
-							: global::Rocks.Runtime.IAdornments<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
 							where TAdornments : IAdornmentsForIHavePointers<TAdornments>
 						{ }
 						
 						public sealed class AdornmentsForHandler0
-							: global::Rocks.Runtime.Adornments<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Handler0.CallbackForHandler, string>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Handler0.CallbackForHandler, string>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
 						{
 							public AdornmentsForHandler0(global::MockTests.IHavePointersCreateExpectations.Handler0 handler)
 								: base(handler) { }
 						}
 						public sealed class AdornmentsForHandler1
-							: global::Rocks.Runtime.Adornments<AdornmentsForHandler1, global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Handler1.CallbackForHandler>, IAdornmentsForIHavePointers<AdornmentsForHandler1>
+							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Handler1.CallbackForHandler>, IAdornmentsForIHavePointers<AdornmentsForHandler1>
 						{
 							public AdornmentsForHandler1(global::MockTests.IHavePointersCreateExpectations.Handler1 handler)
 								: base(handler) { }
@@ -1198,7 +1198,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 			
 			#nullable enable
 			
-			namespace Rocks.Runtime.Projections;
+			namespace Rocks.Projections;
 			
 			internal unsafe delegate bool PointerPointerArgumentEvaluation<T>(T** @value) where T : unmanaged;
 			
@@ -1258,7 +1258,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 			using System;
 			
 			[assembly: Rock(typeof(MockTests.IHavePointers), BuildType.Create | BuildType.Make)]
@@ -1285,30 +1285,30 @@ public static class ProjectionMultiplePointerGeneratorTests
 			
 			#nullable enable
 			
-			using Rocks.Runtime.Extensions;
+			using Rocks.Extensions;
 			
 			namespace MockTests
 			{
 				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal unsafe sealed class IHavePointersCreateExpectations
-					: global::Rocks.Runtime.Expectations
+					: global::Rocks.Expectations
 				{
 					internal sealed class Handler0
-						: global::Rocks.Runtime.Handler<Handler0.CallbackForHandler>
+						: global::Rocks.Handler<Handler0.CallbackForHandler>
 					{
 						internal unsafe delegate int** CallbackForHandler(string @index);
-						public global::Rocks.Runtime.Argument<string> @index { get; set; }
+						public global::Rocks.Argument<string> @index { get; set; }
 						public int** ReturnValue { get; set; }
 					}
-					private global::Rocks.Runtime.Handlers<global::MockTests.IHavePointersCreateExpectations.Handler0>? @handlers0;
+					private global::Rocks.Handlers<global::MockTests.IHavePointersCreateExpectations.Handler0>? @handlers0;
 					internal sealed class Handler1
-						: global::Rocks.Runtime.Handler<Handler1.CallbackForHandler>
+						: global::Rocks.Handler<Handler1.CallbackForHandler>
 					{
 						internal unsafe delegate void CallbackForHandler(string @index, int** @value);
-						public global::Rocks.Runtime.Argument<string> @index { get; set; }
-						public global::Rocks.Runtime.Projections.PointerPointerArgument<int> @value { get; set; }
+						public global::Rocks.Argument<string> @index { get; set; }
+						public global::Rocks.Projections.PointerPointerArgument<int> @value { get; set; }
 					}
-					private global::Rocks.Runtime.Handlers<global::MockTests.IHavePointersCreateExpectations.Handler1>? @handlers1;
+					private global::Rocks.Handlers<global::MockTests.IHavePointersCreateExpectations.Handler1>? @handlers1;
 					
 					public override void Verify()
 					{
@@ -1321,7 +1321,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 					
 							if (failures.Count > 0)
 							{
-								throw new global::Rocks.Runtime.Exceptions.VerificationException(failures);
+								throw new global::Rocks.Exceptions.VerificationException(failures);
 							}
 						}
 					}
@@ -1334,8 +1334,8 @@ public static class ProjectionMultiplePointerGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.Runtime.MemberIdentifier(0, global::Rocks.Runtime.PropertyAccessor.Get)]
-						[global::Rocks.Runtime.MemberIdentifier(1, global::Rocks.Runtime.PropertyAccessor.Set)]
+						[global::Rocks.MemberIdentifier(0, global::Rocks.PropertyAccessor.Get)]
+						[global::Rocks.MemberIdentifier(1, global::Rocks.PropertyAccessor.Set)]
 						public unsafe int** this[string @index]
 						{
 							get
@@ -1353,14 +1353,14 @@ public static class ProjectionMultiplePointerGeneratorTests
 										}
 									}
 									
-									throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+									throw new global::Rocks.Exceptions.ExpectationException(
 										$"""
 										No handlers match for {this.GetType().GetMemberDescription(0)}
 											index: {@index.FormatValue()}
 										""");
 								}
 								
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers were found for {this.GetType().GetMemberDescription(0)}
 										index: {@index.FormatValue()}
@@ -1381,7 +1381,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 										}
 									}
 									
-									throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+									throw new global::Rocks.Exceptions.ExpectationException(
 										$"""
 										No handlers match for {this.GetType().GetMemberDescription(1)}
 											index: {@index.FormatValue()}
@@ -1389,7 +1389,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 										""");
 								}
 								
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers were found for {this.GetType().GetMemberDescription(1)}
 										index: {@index.FormatValue()}
@@ -1407,9 +1407,9 @@ public static class ProjectionMultiplePointerGeneratorTests
 							internal IndexerGetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler0 This(global::Rocks.Runtime.Argument<string> @index)
+							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler0 This(global::Rocks.Argument<string> @index)
 							{
-								global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								
 								var @handler = new global::MockTests.IHavePointersCreateExpectations.Handler0
@@ -1429,9 +1429,9 @@ public static class ProjectionMultiplePointerGeneratorTests
 							internal IndexerSetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler1 This(global::Rocks.Runtime.Projections.PointerPointerArgument<int> @value, global::Rocks.Runtime.Argument<string> @index)
+							internal global::MockTests.IHavePointersCreateExpectations.Adornments.AdornmentsForHandler1 This(global::Rocks.Projections.PointerPointerArgument<int> @value, global::Rocks.Argument<string> @index)
 							{
-								global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								global::System.ArgumentNullException.ThrowIfNull(@value);
 								
@@ -1471,19 +1471,19 @@ public static class ProjectionMultiplePointerGeneratorTests
 						}
 						else
 						{
-							throw new global::Rocks.Runtime.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
 					
 					internal static class Adornments
 					{
 						public interface IAdornmentsForIHavePointers<TAdornments>
-							: global::Rocks.Runtime.IAdornments<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
 							where TAdornments : IAdornmentsForIHavePointers<TAdornments>
 						{ }
 						
 						public sealed class AdornmentsForHandler0
-							: global::Rocks.Runtime.Adornments<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForIHavePointers<AdornmentsForHandler0>
 						{
 							public AdornmentsForHandler0(global::MockTests.IHavePointersCreateExpectations.Handler0 handler)
 								: base(handler) { }
@@ -1494,7 +1494,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 							}
 						}
 						public sealed class AdornmentsForHandler1
-							: global::Rocks.Runtime.Adornments<AdornmentsForHandler1, global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Handler1.CallbackForHandler>, IAdornmentsForIHavePointers<AdornmentsForHandler1>
+							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Handler1.CallbackForHandler>, IAdornmentsForIHavePointers<AdornmentsForHandler1>
 						{
 							public AdornmentsForHandler1(global::MockTests.IHavePointersCreateExpectations.Handler1 handler)
 								: base(handler) { }
@@ -1567,7 +1567,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 			
 			#nullable enable
 			
-			namespace Rocks.Runtime.Projections;
+			namespace Rocks.Projections;
 			
 			internal unsafe delegate bool PointerPointerArgumentEvaluation<T>(T** @value) where T : unmanaged;
 			

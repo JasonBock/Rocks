@@ -86,20 +86,14 @@ public sealed partial class AddRockAttributeRefactoring
 							SyntaxKind.SimpleMemberAccessExpression,
 							SyntaxFactory.MemberAccessExpression(
 								SyntaxKind.SimpleMemberAccessExpression,
-								SyntaxFactory.MemberAccessExpression(
-									SyntaxKind.SimpleMemberAccessExpression,
-									SyntaxFactory.IdentifierName("Rocks"),
-									SyntaxFactory.IdentifierName("Runtime")),
+								SyntaxFactory.IdentifierName("Rocks"),
 								SyntaxFactory.IdentifierName("BuildType")),
 							SyntaxFactory.IdentifierName("Create")),
 						SyntaxFactory.MemberAccessExpression(
 							SyntaxKind.SimpleMemberAccessExpression,
 							SyntaxFactory.MemberAccessExpression(
 								SyntaxKind.SimpleMemberAccessExpression,
-								SyntaxFactory.MemberAccessExpression(
-									SyntaxKind.SimpleMemberAccessExpression,
-									SyntaxFactory.IdentifierName("Rocks"),
-									SyntaxFactory.IdentifierName("Runtime")),
+								SyntaxFactory.IdentifierName("Rocks"),
 								SyntaxFactory.IdentifierName("BuildType")),
 							SyntaxFactory.IdentifierName("Make")))) :
 				SyntaxFactory.AttributeArgument(
@@ -107,16 +101,13 @@ public sealed partial class AddRockAttributeRefactoring
 						SyntaxKind.SimpleMemberAccessExpression,
 						SyntaxFactory.MemberAccessExpression(
 							SyntaxKind.SimpleMemberAccessExpression,
-							SyntaxFactory.MemberAccessExpression(
-								SyntaxKind.SimpleMemberAccessExpression,
-								SyntaxFactory.IdentifierName("Rocks"),
-								SyntaxFactory.IdentifierName("Runtime")),
+							SyntaxFactory.IdentifierName("Rocks"),
 							SyntaxFactory.IdentifierName("BuildType")),
 						SyntaxFactory.IdentifierName(addCreateType ? "Create" : "Make")));
 
 			// This creates:
 			//
-			// [assembly: Rocks.Runtime.Rock(typeof(MockTypeName), Rocks.Runtime.BuildType.Create]
+			// [assembly: Rocks.Rock(typeof(MockTypeName), Rocks.BuildType.Create]
 			// 
 			// The buildTypeArgument above figures out how to create
 			// the correct values for BuildType
@@ -124,12 +115,10 @@ public sealed partial class AddRockAttributeRefactoring
 
 			var attributeSyntax = SyntaxFactory.AttributeList(
 				SyntaxFactory.SingletonSeparatedList(
-					 SyntaxFactory.Attribute(
-						  SyntaxFactory.QualifiedName(
-								SyntaxFactory.QualifiedName(
-									 SyntaxFactory.IdentifierName("Rocks"),
-									 SyntaxFactory.IdentifierName("Runtime")),
-								SyntaxFactory.IdentifierName("Rock")))
+					SyntaxFactory.Attribute(
+						SyntaxFactory.QualifiedName(
+							SyntaxFactory.IdentifierName("Rocks"),
+							SyntaxFactory.IdentifierName("Rock")))
 				.WithArgumentList(
 					SyntaxFactory.AttributeArgumentList(
 						SyntaxFactory.SeparatedList<AttributeArgumentSyntax>(

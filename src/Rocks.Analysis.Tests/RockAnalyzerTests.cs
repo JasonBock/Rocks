@@ -23,7 +23,7 @@ public static class RockAnalyzerTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(IService), BuildType.Create | BuildType.Make)]
 
@@ -41,7 +41,7 @@ public static class RockAnalyzerTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			public interface IService
 			{ 
@@ -60,7 +60,7 @@ public static class RockAnalyzerTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(SealedService), BuildType.Create | BuildType.Make)]
 
@@ -80,7 +80,7 @@ public static class RockAnalyzerTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			public sealed class SealedService
 			{ 

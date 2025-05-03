@@ -27,7 +27,7 @@ internal static class IndexerExpectationsIndexerBuilder
 
 			if (property.Type.IsPointer)
 			{
-				adornmentsType = $"global::Rocks.Runtime.Adornments<AdornmentsForHandler{memberIdentifier}, {handlerTypeName}, {callbackDelegateTypeName}>";
+				adornmentsType = $"global::Rocks.Adornments<AdornmentsForHandler{memberIdentifier}, {handlerTypeName}, {callbackDelegateTypeName}>";
 			}
 			else
 			{
@@ -36,7 +36,7 @@ internal static class IndexerExpectationsIndexerBuilder
 						$"global::System.Func<{property.Type.FullyQualifiedName}>" :
 						property.Type.FullyQualifiedName;
 
-				adornmentsType = $"global::Rocks.Runtime.Adornments<AdornmentsForHandler{memberIdentifier}, {handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
+				adornmentsType = $"global::Rocks.Adornments<AdornmentsForHandler{memberIdentifier}, {handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
 			}
 
 			adornmentsFQNsPipeline(new(adornmentsType, string.Empty, string.Empty, property.GetMethod!, memberIdentifier));
@@ -82,7 +82,7 @@ internal static class IndexerExpectationsIndexerBuilder
 			{
 				var parameterValues = string.Join(", ", propertyGetMethod.Parameters.Select(
 					p => p.HasExplicitDefaultValue || p.IsParams ?
-						$"global::Rocks.Runtime.Arg.Is(@{p.Name})" : $"@{p.Name}"));
+						$"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}"));
 				writer.WriteLines(
 					$$"""
 					internal {{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{memberIdentifier}} This({{instanceParameters}}) =>
@@ -95,7 +95,7 @@ internal static class IndexerExpectationsIndexerBuilder
 				writer.WriteLine($"internal {expectationsFullyQualifiedName}.Adornments.AdornmentsForHandler{memberIdentifier} This({instanceParameters})");
 				writer.WriteLine("{");
 				writer.Indent++;
-				writer.WriteLine("global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);");
+				writer.WriteLine("global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);");
 
 				foreach (var parameter in propertyGetMethod.Parameters)
 				{
@@ -166,7 +166,7 @@ internal static class IndexerExpectationsIndexerBuilder
 			var callbackDelegateTypeName = propertySetMethod.RequiresProjectedDelegate ?
 				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, property.MockType, expectationsFullyQualifiedName, memberIdentifier) :
 				DelegateBuilder.Build(propertySetMethod);
-			var adornmentsType = $"global::Rocks.Runtime.Adornments<AdornmentsForHandler{memberIdentifier}, {expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}>";
+			var adornmentsType = $"global::Rocks.Adornments<AdornmentsForHandler{memberIdentifier}, {expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}>";
 			adornmentsFQNsPipeline(new(adornmentsType, string.Empty, string.Empty, property.SetMethod!, memberIdentifier));
 
 			// We need to put the value parameter immediately after "self"
@@ -216,7 +216,7 @@ internal static class IndexerExpectationsIndexerBuilder
 				var parameterValues = string.Join(", ", $"@{propertySetMethod.Parameters[propertySetMethod.Parameters.Length - 1].Name}",
 					string.Join(", ", propertySetMethod.Parameters.Take(propertySetMethod.Parameters.Length - 1).Select(
 						p => p.HasExplicitDefaultValue || p.IsParams ?
-							$"global::Rocks.Runtime.Arg.Is(@{p.Name})" : $"@{p.Name}")));
+							$"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}")));
 				writer.WriteLines(
 					$$"""
 					internal {{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{memberIdentifier}} This({{instanceParameters}}) =>
@@ -229,7 +229,7 @@ internal static class IndexerExpectationsIndexerBuilder
 				writer.WriteLine($"internal {expectationsFullyQualifiedName}.Adornments.AdornmentsForHandler{memberIdentifier} This({instanceParameters})");
 				writer.WriteLine("{");
 				writer.Indent++;
-				writer.WriteLine("global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);");
+				writer.WriteLine("global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);");
 
 				foreach (var parameter in propertySetMethod.Parameters)
 				{

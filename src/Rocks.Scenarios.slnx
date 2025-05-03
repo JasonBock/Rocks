@@ -6,5 +6,5 @@
   <Project Path="Rocks.Scenarios/Rocks.Scenarios.csproj" />
   <Project Path="Rocks.Analysis/Rocks.Analysis.csproj" />
   <Project Path="Rocks.Completions/Rocks.Completions.csproj" />
-  <Project Path="Rocks.Runtime/Rocks.Runtime.csproj" />
+  <Project Path="Rocks/Rocks.csproj" />
 </Solution>

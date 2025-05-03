@@ -21,7 +21,7 @@ internal static class MockTypeBuilder
 
 		var canRaiseEvents = type.Events.Length > 0;
 
-		writer.WriteLine($": {type.Type.FullyQualifiedName}{(canRaiseEvents ? $", global::Rocks.Runtime.IRaiseEvents" : string.Empty)}");
+		writer.WriteLine($": {type.Type.FullyQualifiedName}{(canRaiseEvents ? $", global::Rocks.IRaiseEvents" : string.Empty)}");
 		writer.Indent--;
 
 		writer.WriteLine("{");

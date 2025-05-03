@@ -41,7 +41,7 @@ static void TestWithCode()
 		"""
 		#nullable enable
 
-		using Rocks.Runtime;
+		using Rocks;
 		using System;
 				
 		[assembly: Rock(typeof(MonadIO<>), BuildType.Create)]
@@ -73,7 +73,7 @@ static void TestWithType()
 		typeof(System.Reflection.ConstructorInfo),
 		typeof(System.Xml.Linq.SaveOptions),
 		typeof(Azure.Core.Amqp.AmqpAnnotatedMessage),
-		typeof(Rocks.Runtime.Arg),
+		typeof(Rocks.Arg),
 	}.ToImmutableArray();
 
 #pragma warning disable EF1001 // Internal EF Core API usage.

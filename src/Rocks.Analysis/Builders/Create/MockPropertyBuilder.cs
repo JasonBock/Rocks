@@ -168,7 +168,7 @@ internal static class MockPropertyBuilder
 		}
 		else
 		{
-			writer.WriteLine($$"""throw new global::Rocks.Runtime.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription({{memberIdentifier}})}");""");
+			writer.WriteLine($$"""throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription({{memberIdentifier}})}");""");
 			ExpectationExceptionBuilder.Build(
 				writer, property.SetMethod!, "No handlers were found for", memberIdentifier);
 		}
@@ -202,7 +202,7 @@ internal static class MockPropertyBuilder
 
 			if (isGetterVisible)
 			{
-				writer.WriteLine($"[global::Rocks.Runtime.MemberIdentifier({memberIdentifierAttribute}, global::Rocks.Runtime.PropertyAccessor.Get)]");
+				writer.WriteLine($"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, global::Rocks.PropertyAccessor.Get)]");
 				memberIdentifierAttribute++;
 			}
 		}
@@ -214,7 +214,7 @@ internal static class MockPropertyBuilder
 
 			if (isSetterVisible)
 			{
-				writer.WriteLine($"[global::Rocks.Runtime.MemberIdentifier({memberIdentifierAttribute}, global::Rocks.Runtime.PropertyAccessor.Set)]");
+				writer.WriteLine($"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, global::Rocks.PropertyAccessor.Set)]");
 			}
 		}
 

@@ -9,7 +9,7 @@ public static class InterfaceGeneratorTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 			using System;
 
 			#nullable enable
@@ -72,7 +72,7 @@ public static class InterfaceGeneratorTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 			using System;
 
 			#nullable enable
@@ -102,26 +102,26 @@ public static class InterfaceGeneratorTests
 			
 			#nullable enable
 			
-			using Rocks.Runtime.Extensions;
+			using Rocks.Extensions;
 			
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IHaveStaticVirtualsCreateExpectations
-				: global::Rocks.Runtime.Expectations
+				: global::Rocks.Expectations
 			{
 				internal sealed class Handler0
-					: global::Rocks.Runtime.Handler<global::System.Func<string>, string>
+					: global::Rocks.Handler<global::System.Func<string>, string>
 				{ }
-				private global::Rocks.Runtime.Handlers<global::IHaveStaticVirtualsCreateExpectations.Handler0>? @handlers0;
+				private global::Rocks.Handlers<global::IHaveStaticVirtualsCreateExpectations.Handler0>? @handlers0;
 				internal sealed class Handler1
-					: global::Rocks.Runtime.Handler<global::System.Func<string?>, string?>
+					: global::Rocks.Handler<global::System.Func<string?>, string?>
 				{ }
-				private global::Rocks.Runtime.Handlers<global::IHaveStaticVirtualsCreateExpectations.Handler1>? @handlers1;
+				private global::Rocks.Handlers<global::IHaveStaticVirtualsCreateExpectations.Handler1>? @handlers1;
 				internal sealed class Handler2
-					: global::Rocks.Runtime.Handler<global::System.Action<string?>>
+					: global::Rocks.Handler<global::System.Action<string?>>
 				{
-					public global::Rocks.Runtime.Argument<string?> @value { get; set; }
+					public global::Rocks.Argument<string?> @value { get; set; }
 				}
-				private global::Rocks.Runtime.Handlers<global::IHaveStaticVirtualsCreateExpectations.Handler2>? @handlers2;
+				private global::Rocks.Handlers<global::IHaveStaticVirtualsCreateExpectations.Handler2>? @handlers2;
 				
 				public override void Verify()
 				{
@@ -135,7 +135,7 @@ public static class InterfaceGeneratorTests
 				
 						if (failures.Count > 0)
 						{
-							throw new global::Rocks.Runtime.Exceptions.VerificationException(failures);
+							throw new global::Rocks.Exceptions.VerificationException(failures);
 						}
 					}
 				}
@@ -148,7 +148,7 @@ public static class InterfaceGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.Runtime.MemberIdentifier(0)]
+					[global::Rocks.MemberIdentifier(0)]
 					public string InstanceLift()
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -160,14 +160,14 @@ public static class InterfaceGeneratorTests
 							return @result!;
 						}
 						
-						throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+						throw new global::Rocks.Exceptions.ExpectationException(
 							$"""
 							No handlers were found for {this.GetType().GetMemberDescription(0)}
 							""");
 					}
 					
-					[global::Rocks.Runtime.MemberIdentifier(1, global::Rocks.Runtime.PropertyAccessor.Get)]
-					[global::Rocks.Runtime.MemberIdentifier(2, global::Rocks.Runtime.PropertyAccessor.Set)]
+					[global::Rocks.MemberIdentifier(1, global::Rocks.PropertyAccessor.Get)]
+					[global::Rocks.MemberIdentifier(2, global::Rocks.PropertyAccessor.Set)]
 					public string? InstancePush
 					{
 						get
@@ -181,7 +181,7 @@ public static class InterfaceGeneratorTests
 								return @result!;
 							}
 							
-							throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers match for {this.GetType().GetMemberDescription(1)}
 								""");
@@ -201,7 +201,7 @@ public static class InterfaceGeneratorTests
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+											throw new global::Rocks.Exceptions.ExpectationException(
 												$"""
 												No handlers match for {this.GetType().GetMemberDescription(2)}
 													value: {@value.FormatValue()}
@@ -214,8 +214,8 @@ public static class InterfaceGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(2)}");
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(2)}");
+								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers were found for {this.GetType().GetMemberDescription(2)}
 										value: {@value.FormatValue()}
@@ -234,7 +234,7 @@ public static class InterfaceGeneratorTests
 					
 					internal global::IHaveStaticVirtualsCreateExpectations.Adornments.AdornmentsForHandler0 InstanceLift()
 					{
-						global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::IHaveStaticVirtualsCreateExpectations.Handler0();
 						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
 						else { this.Expectations.handlers0.Add(handler); }
@@ -253,7 +253,7 @@ public static class InterfaceGeneratorTests
 						
 						internal global::IHaveStaticVirtualsCreateExpectations.Adornments.AdornmentsForHandler1 InstancePush()
 						{
-							global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::IHaveStaticVirtualsCreateExpectations.Handler1();
 							if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
 							else { this.Expectations.handlers1.Add(handler); }
@@ -267,9 +267,9 @@ public static class InterfaceGeneratorTests
 						internal PropertySetterExpectations(global::IHaveStaticVirtualsCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::IHaveStaticVirtualsCreateExpectations.Adornments.AdornmentsForHandler2 InstancePush(global::Rocks.Runtime.Argument<string?> @value)
+						internal global::IHaveStaticVirtualsCreateExpectations.Adornments.AdornmentsForHandler2 InstancePush(global::Rocks.Argument<string?> @value)
 						{
-							global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 						
 							var handler = new global::IHaveStaticVirtualsCreateExpectations.Handler2
@@ -308,31 +308,31 @@ public static class InterfaceGeneratorTests
 					}
 					else
 					{
-						throw new global::Rocks.Runtime.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 					}
 				}
 				
 				internal static class Adornments
 				{
 					public interface IAdornmentsForIHaveStaticVirtuals<TAdornments>
-						: global::Rocks.Runtime.IAdornments<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForIHaveStaticVirtuals<TAdornments>
 					{ }
 					
 					public sealed class AdornmentsForHandler0
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler0, global::IHaveStaticVirtualsCreateExpectations.Handler0, global::System.Func<string>, string>, IAdornmentsForIHaveStaticVirtuals<AdornmentsForHandler0>
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IHaveStaticVirtualsCreateExpectations.Handler0, global::System.Func<string>, string>, IAdornmentsForIHaveStaticVirtuals<AdornmentsForHandler0>
 					{
 						public AdornmentsForHandler0(global::IHaveStaticVirtualsCreateExpectations.Handler0 handler)
 							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler1
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler1, global::IHaveStaticVirtualsCreateExpectations.Handler1, global::System.Func<string?>, string?>, IAdornmentsForIHaveStaticVirtuals<AdornmentsForHandler1>
+						: global::Rocks.Adornments<AdornmentsForHandler1, global::IHaveStaticVirtualsCreateExpectations.Handler1, global::System.Func<string?>, string?>, IAdornmentsForIHaveStaticVirtuals<AdornmentsForHandler1>
 					{
 						public AdornmentsForHandler1(global::IHaveStaticVirtualsCreateExpectations.Handler1 handler)
 							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler2
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler2, global::IHaveStaticVirtualsCreateExpectations.Handler2, global::System.Action<string?>>, IAdornmentsForIHaveStaticVirtuals<AdornmentsForHandler2>
+						: global::Rocks.Adornments<AdornmentsForHandler2, global::IHaveStaticVirtualsCreateExpectations.Handler2, global::System.Action<string?>>, IAdornmentsForIHaveStaticVirtuals<AdornmentsForHandler2>
 					{
 						public AdornmentsForHandler2(global::IHaveStaticVirtualsCreateExpectations.Handler2 handler)
 							: base(handler) { }
@@ -404,7 +404,7 @@ public static class InterfaceGeneratorTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 			using System;
 
 			[assembly: Rock(typeof(ISealed), BuildType.Create | BuildType.Make)]
@@ -433,26 +433,26 @@ public static class InterfaceGeneratorTests
 			
 			#nullable enable
 			
-			using Rocks.Runtime.Extensions;
+			using Rocks.Extensions;
 			
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ISealedCreateExpectations
-				: global::Rocks.Runtime.Expectations
+				: global::Rocks.Expectations
 			{
 				internal sealed class Handler0
-					: global::Rocks.Runtime.Handler<global::System.Action>
+					: global::Rocks.Handler<global::System.Action>
 				{ }
-				private global::Rocks.Runtime.Handlers<global::ISealedCreateExpectations.Handler0>? @handlers0;
+				private global::Rocks.Handlers<global::ISealedCreateExpectations.Handler0>? @handlers0;
 				internal sealed class Handler1
-					: global::Rocks.Runtime.Handler<global::System.Func<string>, string>
+					: global::Rocks.Handler<global::System.Func<string>, string>
 				{ }
-				private global::Rocks.Runtime.Handlers<global::ISealedCreateExpectations.Handler1>? @handlers1;
+				private global::Rocks.Handlers<global::ISealedCreateExpectations.Handler1>? @handlers1;
 				internal sealed class Handler2
-					: global::Rocks.Runtime.Handler<global::System.Action<string>>
+					: global::Rocks.Handler<global::System.Action<string>>
 				{
-					public global::Rocks.Runtime.Argument<string> @value { get; set; }
+					public global::Rocks.Argument<string> @value { get; set; }
 				}
-				private global::Rocks.Runtime.Handlers<global::ISealedCreateExpectations.Handler2>? @handlers2;
+				private global::Rocks.Handlers<global::ISealedCreateExpectations.Handler2>? @handlers2;
 				
 				public override void Verify()
 				{
@@ -466,20 +466,20 @@ public static class InterfaceGeneratorTests
 				
 						if (failures.Count > 0)
 						{
-							throw new global::Rocks.Runtime.Exceptions.VerificationException(failures);
+							throw new global::Rocks.Exceptions.VerificationException(failures);
 						}
 					}
 				}
 				
 				private sealed class Mock
-					: global::ISealed, global::Rocks.Runtime.IRaiseEvents
+					: global::ISealed, global::Rocks.IRaiseEvents
 				{
 					public Mock(global::ISealedCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.Runtime.MemberIdentifier(0)]
+					[global::Rocks.MemberIdentifier(0)]
 					public void NonSealedMethod()
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -491,15 +491,15 @@ public static class InterfaceGeneratorTests
 						}
 						else
 						{
-							throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}
 								""");
 						}
 					}
 					
-					[global::Rocks.Runtime.MemberIdentifier(1, global::Rocks.Runtime.PropertyAccessor.Get)]
-					[global::Rocks.Runtime.MemberIdentifier(2, global::Rocks.Runtime.PropertyAccessor.Set)]
+					[global::Rocks.MemberIdentifier(1, global::Rocks.PropertyAccessor.Get)]
+					[global::Rocks.MemberIdentifier(2, global::Rocks.PropertyAccessor.Set)]
 					public string NonSealedData
 					{
 						get
@@ -514,7 +514,7 @@ public static class InterfaceGeneratorTests
 								return @result!;
 							}
 							
-							throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers match for {this.GetType().GetMemberDescription(1)}
 								""");
@@ -534,7 +534,7 @@ public static class InterfaceGeneratorTests
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+											throw new global::Rocks.Exceptions.ExpectationException(
 												$"""
 												No handlers match for {this.GetType().GetMemberDescription(2)}
 													value: {@value.FormatValue()}
@@ -548,8 +548,8 @@ public static class InterfaceGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(2)}");
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(2)}");
+								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers were found for {this.GetType().GetMemberDescription(2)}
 										value: {@value.FormatValue()}
@@ -562,7 +562,7 @@ public static class InterfaceGeneratorTests
 					public event global::System.EventHandler? NonSealedEvent;
 					#pragma warning restore CS0067
 					
-					void global::Rocks.Runtime.IRaiseEvents.Raise(string @fieldName, object @args)
+					void global::Rocks.IRaiseEvents.Raise(string @fieldName, object @args)
 					{
 						var @thisType = this.GetType();
 						var @eventDelegate = (global::System.MulticastDelegate)thisType.GetField(@fieldName, 
@@ -587,7 +587,7 @@ public static class InterfaceGeneratorTests
 					
 					internal global::ISealedCreateExpectations.Adornments.AdornmentsForHandler0 NonSealedMethod()
 					{
-						global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::ISealedCreateExpectations.Handler0();
 						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
 						else { this.Expectations.handlers0.Add(handler); }
@@ -606,7 +606,7 @@ public static class InterfaceGeneratorTests
 						
 						internal global::ISealedCreateExpectations.Adornments.AdornmentsForHandler1 NonSealedData()
 						{
-							global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							var handler = new global::ISealedCreateExpectations.Handler1();
 							if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
 							else { this.Expectations.handlers1.Add(handler); }
@@ -620,9 +620,9 @@ public static class InterfaceGeneratorTests
 						internal PropertySetterExpectations(global::ISealedCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::ISealedCreateExpectations.Adornments.AdornmentsForHandler2 NonSealedData(global::Rocks.Runtime.Argument<string> @value)
+						internal global::ISealedCreateExpectations.Adornments.AdornmentsForHandler2 NonSealedData(global::Rocks.Argument<string> @value)
 						{
-							global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 						
 							var handler = new global::ISealedCreateExpectations.Handler2
@@ -661,31 +661,31 @@ public static class InterfaceGeneratorTests
 					}
 					else
 					{
-						throw new global::Rocks.Runtime.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 					}
 				}
 				
 				internal static class Adornments
 				{
 					public interface IAdornmentsForISealed<TAdornments>
-						: global::Rocks.Runtime.IAdornments<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForISealed<TAdornments>
 					{ }
 					
 					public sealed class AdornmentsForHandler0
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler0, global::ISealedCreateExpectations.Handler0, global::System.Action>, IAdornmentsForISealed<AdornmentsForHandler0>
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::ISealedCreateExpectations.Handler0, global::System.Action>, IAdornmentsForISealed<AdornmentsForHandler0>
 					{
 						public AdornmentsForHandler0(global::ISealedCreateExpectations.Handler0 handler)
 							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler1
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler1, global::ISealedCreateExpectations.Handler1, global::System.Func<string>, string>, IAdornmentsForISealed<AdornmentsForHandler1>
+						: global::Rocks.Adornments<AdornmentsForHandler1, global::ISealedCreateExpectations.Handler1, global::System.Func<string>, string>, IAdornmentsForISealed<AdornmentsForHandler1>
 					{
 						public AdornmentsForHandler1(global::ISealedCreateExpectations.Handler1 handler)
 							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler2
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler2, global::ISealedCreateExpectations.Handler2, global::System.Action<string>>, IAdornmentsForISealed<AdornmentsForHandler2>
+						: global::Rocks.Adornments<AdornmentsForHandler2, global::ISealedCreateExpectations.Handler2, global::System.Action<string>>, IAdornmentsForISealed<AdornmentsForHandler2>
 					{
 						public AdornmentsForHandler2(global::ISealedCreateExpectations.Handler2 handler)
 							: base(handler) { }
@@ -766,7 +766,7 @@ public static class InterfaceGeneratorTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 			
 			[assembly: Rock(typeof(IRequest), BuildType.Create | BuildType.Make)]
 
@@ -789,18 +789,18 @@ public static class InterfaceGeneratorTests
 			
 			#nullable enable
 			
-			using Rocks.Runtime.Extensions;
+			using Rocks.Extensions;
 			
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IRequestCreateExpectations
-				: global::Rocks.Runtime.Expectations
+				: global::Rocks.Expectations
 			{
 				internal sealed class Handler0
-					: global::Rocks.Runtime.Handler<global::System.Action<int>>
+					: global::Rocks.Handler<global::System.Action<int>>
 				{
-					public global::Rocks.Runtime.Argument<int> @options { get; set; }
+					public global::Rocks.Argument<int> @options { get; set; }
 				}
-				private global::Rocks.Runtime.Handlers<global::IRequestCreateExpectations.Handler0>? @handlers0;
+				private global::Rocks.Handlers<global::IRequestCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -812,7 +812,7 @@ public static class InterfaceGeneratorTests
 				
 						if (failures.Count > 0)
 						{
-							throw new global::Rocks.Runtime.Exceptions.VerificationException(failures);
+							throw new global::Rocks.Exceptions.VerificationException(failures);
 						}
 					}
 				}
@@ -825,7 +825,7 @@ public static class InterfaceGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.Runtime.MemberIdentifier(0)]
+					[global::Rocks.MemberIdentifier(0)]
 					public void AddInvokeMethodOptions(int @options)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -845,7 +845,7 @@ public static class InterfaceGeneratorTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
 										options: {@options.FormatValue()}
@@ -854,7 +854,7 @@ public static class InterfaceGeneratorTests
 						}
 						else
 						{
-							throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}
 									options: {@options.FormatValue()}
@@ -870,9 +870,9 @@ public static class InterfaceGeneratorTests
 					internal MethodExpectations(global::IRequestCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::IRequestCreateExpectations.Adornments.AdornmentsForHandler0 AddInvokeMethodOptions(global::Rocks.Runtime.Argument<int> @options)
+					internal global::IRequestCreateExpectations.Adornments.AdornmentsForHandler0 AddInvokeMethodOptions(global::Rocks.Argument<int> @options)
 					{
-						global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@options);
 						
 						var @handler = new global::IRequestCreateExpectations.Handler0
@@ -904,19 +904,19 @@ public static class InterfaceGeneratorTests
 					}
 					else
 					{
-						throw new global::Rocks.Runtime.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 					}
 				}
 				
 				internal static class Adornments
 				{
 					public interface IAdornmentsForIRequest<TAdornments>
-						: global::Rocks.Runtime.IAdornments<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForIRequest<TAdornments>
 					{ }
 					
 					public sealed class AdornmentsForHandler0
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler0, global::IRequestCreateExpectations.Handler0, global::System.Action<int>>, IAdornmentsForIRequest<AdornmentsForHandler0>
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IRequestCreateExpectations.Handler0, global::System.Action<int>>, IAdornmentsForIRequest<AdornmentsForHandler0>
 					{
 						public AdornmentsForHandler0(global::IRequestCreateExpectations.Handler0 handler)
 							: base(handler) { }
@@ -982,7 +982,7 @@ public static class InterfaceGeneratorTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 			using System;
 
 			[assembly: Rock(typeof(MockTests.ITarget), BuildType.Create | BuildType.Make)]
@@ -1007,20 +1007,20 @@ public static class InterfaceGeneratorTests
 			
 			#nullable enable
 			
-			using Rocks.Runtime.Extensions;
+			using Rocks.Extensions;
 			
 			namespace MockTests
 			{
 				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class ITargetCreateExpectations
-					: global::Rocks.Runtime.Expectations
+					: global::Rocks.Expectations
 				{
 					internal sealed class Handler0
-						: global::Rocks.Runtime.Handler<global::System.Func<int, string>, string>
+						: global::Rocks.Handler<global::System.Func<int, string>, string>
 					{
-						public global::Rocks.Runtime.Argument<int> @value { get; set; }
+						public global::Rocks.Argument<int> @value { get; set; }
 					}
-					private global::Rocks.Runtime.Handlers<global::MockTests.ITargetCreateExpectations.Handler0>? @handlers0;
+					private global::Rocks.Handlers<global::MockTests.ITargetCreateExpectations.Handler0>? @handlers0;
 					
 					public override void Verify()
 					{
@@ -1032,7 +1032,7 @@ public static class InterfaceGeneratorTests
 					
 							if (failures.Count > 0)
 							{
-								throw new global::Rocks.Runtime.Exceptions.VerificationException(failures);
+								throw new global::Rocks.Exceptions.VerificationException(failures);
 							}
 						}
 					}
@@ -1045,7 +1045,7 @@ public static class InterfaceGeneratorTests
 							this.Expectations = @expectations;
 						}
 						
-						[global::Rocks.Runtime.MemberIdentifier(0)]
+						[global::Rocks.MemberIdentifier(0)]
 						public string Retrieve(int @value)
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -1061,14 +1061,14 @@ public static class InterfaceGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
 										value: {@value.FormatValue()}
 									""");
 							}
 							
-							throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}
 									value: {@value.FormatValue()}
@@ -1083,9 +1083,9 @@ public static class InterfaceGeneratorTests
 						internal MethodExpectations(global::MockTests.ITargetCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::MockTests.ITargetCreateExpectations.Adornments.AdornmentsForHandler0 Retrieve(global::Rocks.Runtime.Argument<int> @value)
+						internal global::MockTests.ITargetCreateExpectations.Adornments.AdornmentsForHandler0 Retrieve(global::Rocks.Argument<int> @value)
 						{
-							global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
 							var @handler = new global::MockTests.ITargetCreateExpectations.Handler0
@@ -1117,19 +1117,19 @@ public static class InterfaceGeneratorTests
 						}
 						else
 						{
-							throw new global::Rocks.Runtime.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
 					
 					internal static class Adornments
 					{
 						public interface IAdornmentsForITarget<TAdornments>
-							: global::Rocks.Runtime.IAdornments<TAdornments>
+							: global::Rocks.IAdornments<TAdornments>
 							where TAdornments : IAdornmentsForITarget<TAdornments>
 						{ }
 						
 						public sealed class AdornmentsForHandler0
-							: global::Rocks.Runtime.Adornments<AdornmentsForHandler0, global::MockTests.ITargetCreateExpectations.Handler0, global::System.Func<int, string>, string>, IAdornmentsForITarget<AdornmentsForHandler0>
+							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.ITargetCreateExpectations.Handler0, global::System.Func<int, string>, string>, IAdornmentsForITarget<AdornmentsForHandler0>
 						{
 							public AdornmentsForHandler0(global::MockTests.ITargetCreateExpectations.Handler0 handler)
 								: base(handler) { }

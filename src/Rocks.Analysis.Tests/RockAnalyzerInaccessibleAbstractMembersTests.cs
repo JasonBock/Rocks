@@ -15,7 +15,7 @@ public static class RockAnalyzerInaccessibleAbstractMembersTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 			
 			[assembly: Rock(typeof(ArgumentMapper), BuildType.Create | BuildType.Make)]
 			
@@ -48,7 +48,7 @@ public static class RockAnalyzerInaccessibleAbstractMembersTests
 
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 			
 			[assembly: Rock(typeof(InternalAbstractMember), BuildType.Create | BuildType.Make)]
 			""";
@@ -108,7 +108,7 @@ public static class RockAnalyzerInaccessibleAbstractMembersTests
 
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(InternalAbstractInvalidMember), BuildType.Create | BuildType.Make)]
 			""";

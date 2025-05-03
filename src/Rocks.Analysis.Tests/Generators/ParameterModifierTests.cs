@@ -9,7 +9,7 @@ public static class ParameterModifierTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(IParameterModifier), BuildType.Create | BuildType.Make)]
 
@@ -30,18 +30,18 @@ public static class ParameterModifierTests
 			
 			#nullable enable
 			
-			using Rocks.Runtime.Extensions;
+			using Rocks.Extensions;
 			
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IParameterModifierCreateExpectations
-				: global::Rocks.Runtime.Expectations
+				: global::Rocks.Expectations
 			{
 				internal sealed class Handler0
-					: global::Rocks.Runtime.Handler<global::System.Action<string>>
+					: global::Rocks.Handler<global::System.Action<string>>
 				{
-					public global::Rocks.Runtime.Argument<string> @value { get; set; }
+					public global::Rocks.Argument<string> @value { get; set; }
 				}
-				private global::Rocks.Runtime.Handlers<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
+				private global::Rocks.Handlers<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -53,7 +53,7 @@ public static class ParameterModifierTests
 				
 						if (failures.Count > 0)
 						{
-							throw new global::Rocks.Runtime.Exceptions.VerificationException(failures);
+							throw new global::Rocks.Exceptions.VerificationException(failures);
 						}
 					}
 				}
@@ -66,7 +66,7 @@ public static class ParameterModifierTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.Runtime.MemberIdentifier(0)]
+					[global::Rocks.MemberIdentifier(0)]
 					public void Modify(in string @value)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -86,7 +86,7 @@ public static class ParameterModifierTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
 										value: {@value.FormatValue()}
@@ -95,7 +95,7 @@ public static class ParameterModifierTests
 						}
 						else
 						{
-							throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}
 									value: {@value.FormatValue()}
@@ -111,9 +111,9 @@ public static class ParameterModifierTests
 					internal MethodExpectations(global::IParameterModifierCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler0 Modify(global::Rocks.Runtime.Argument<string> @value)
+					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler0 Modify(global::Rocks.Argument<string> @value)
 					{
-						global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
 						
 						var @handler = new global::IParameterModifierCreateExpectations.Handler0
@@ -145,19 +145,19 @@ public static class ParameterModifierTests
 					}
 					else
 					{
-						throw new global::Rocks.Runtime.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 					}
 				}
 				
 				internal static class Adornments
 				{
 					public interface IAdornmentsForIParameterModifier<TAdornments>
-						: global::Rocks.Runtime.IAdornments<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForIParameterModifier<TAdornments>
 					{ }
 					
 					public sealed class AdornmentsForHandler0
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::System.Action<string>>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::System.Action<string>>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
 					{
 						public AdornmentsForHandler0(global::IParameterModifierCreateExpectations.Handler0 handler)
 							: base(handler) { }
@@ -224,7 +224,7 @@ public static class ParameterModifierTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(IParameterModifier), BuildType.Create | BuildType.Make)]
 
@@ -245,19 +245,19 @@ public static class ParameterModifierTests
 			
 			#nullable enable
 			
-			using Rocks.Runtime.Extensions;
+			using Rocks.Extensions;
 			
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IParameterModifierCreateExpectations
-				: global::Rocks.Runtime.Expectations
+				: global::Rocks.Expectations
 			{
 				internal sealed class Handler0
-					: global::Rocks.Runtime.Handler<Handler0.CallbackForHandler>
+					: global::Rocks.Handler<Handler0.CallbackForHandler>
 				{
 					internal delegate void CallbackForHandler(out string @value);
-					public global::Rocks.Runtime.Argument<string> @value { get; set; }
+					public global::Rocks.Argument<string> @value { get; set; }
 				}
-				private global::Rocks.Runtime.Handlers<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
+				private global::Rocks.Handlers<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -269,7 +269,7 @@ public static class ParameterModifierTests
 				
 						if (failures.Count > 0)
 						{
-							throw new global::Rocks.Runtime.Exceptions.VerificationException(failures);
+							throw new global::Rocks.Exceptions.VerificationException(failures);
 						}
 					}
 				}
@@ -282,7 +282,7 @@ public static class ParameterModifierTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.Runtime.MemberIdentifier(0)]
+					[global::Rocks.MemberIdentifier(0)]
 					public void Modify(out string @value)
 					{
 						value = default!;
@@ -303,7 +303,7 @@ public static class ParameterModifierTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
 										value: {@value.FormatValue()}
@@ -312,7 +312,7 @@ public static class ParameterModifierTests
 						}
 						else
 						{
-							throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}
 									value: {@value.FormatValue()}
@@ -328,14 +328,14 @@ public static class ParameterModifierTests
 					internal MethodExpectations(global::IParameterModifierCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler0 Modify(global::Rocks.Runtime.Argument<string> @value)
+					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler0 Modify(global::Rocks.Argument<string> @value)
 					{
-						global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
 						
 						var @handler = new global::IParameterModifierCreateExpectations.Handler0
 						{
-							@value = global::Rocks.Runtime.Arg.Any<string>(),
+							@value = global::Rocks.Arg.Any<string>(),
 						};
 						
 						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
@@ -362,19 +362,19 @@ public static class ParameterModifierTests
 					}
 					else
 					{
-						throw new global::Rocks.Runtime.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 					}
 				}
 				
 				internal static class Adornments
 				{
 					public interface IAdornmentsForIParameterModifier<TAdornments>
-						: global::Rocks.Runtime.IAdornments<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForIParameterModifier<TAdornments>
 					{ }
 					
 					public sealed class AdornmentsForHandler0
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
 					{
 						public AdornmentsForHandler0(global::IParameterModifierCreateExpectations.Handler0 handler)
 							: base(handler) { }
@@ -441,7 +441,7 @@ public static class ParameterModifierTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(IParameterModifier), BuildType.Create | BuildType.Make)]
 
@@ -462,19 +462,19 @@ public static class ParameterModifierTests
 			
 			#nullable enable
 			
-			using Rocks.Runtime.Extensions;
+			using Rocks.Extensions;
 			
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IParameterModifierCreateExpectations
-				: global::Rocks.Runtime.Expectations
+				: global::Rocks.Expectations
 			{
 				internal sealed class Handler0
-					: global::Rocks.Runtime.Handler<Handler0.CallbackForHandler>
+					: global::Rocks.Handler<Handler0.CallbackForHandler>
 				{
 					internal delegate void CallbackForHandler(ref string @value);
-					public global::Rocks.Runtime.Argument<string> @value { get; set; }
+					public global::Rocks.Argument<string> @value { get; set; }
 				}
-				private global::Rocks.Runtime.Handlers<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
+				private global::Rocks.Handlers<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -486,7 +486,7 @@ public static class ParameterModifierTests
 				
 						if (failures.Count > 0)
 						{
-							throw new global::Rocks.Runtime.Exceptions.VerificationException(failures);
+							throw new global::Rocks.Exceptions.VerificationException(failures);
 						}
 					}
 				}
@@ -499,7 +499,7 @@ public static class ParameterModifierTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.Runtime.MemberIdentifier(0)]
+					[global::Rocks.MemberIdentifier(0)]
 					public void Modify(ref string @value)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -519,7 +519,7 @@ public static class ParameterModifierTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
 										value: {@value.FormatValue()}
@@ -528,7 +528,7 @@ public static class ParameterModifierTests
 						}
 						else
 						{
-							throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}
 									value: {@value.FormatValue()}
@@ -544,9 +544,9 @@ public static class ParameterModifierTests
 					internal MethodExpectations(global::IParameterModifierCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler0 Modify(global::Rocks.Runtime.Argument<string> @value)
+					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler0 Modify(global::Rocks.Argument<string> @value)
 					{
-						global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
 						
 						var @handler = new global::IParameterModifierCreateExpectations.Handler0
@@ -578,19 +578,19 @@ public static class ParameterModifierTests
 					}
 					else
 					{
-						throw new global::Rocks.Runtime.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 					}
 				}
 				
 				internal static class Adornments
 				{
 					public interface IAdornmentsForIParameterModifier<TAdornments>
-						: global::Rocks.Runtime.IAdornments<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForIParameterModifier<TAdornments>
 					{ }
 					
 					public sealed class AdornmentsForHandler0
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
 					{
 						public AdornmentsForHandler0(global::IParameterModifierCreateExpectations.Handler0 handler)
 							: base(handler) { }
@@ -656,7 +656,7 @@ public static class ParameterModifierTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(IParameterModifier), BuildType.Create | BuildType.Make)]
 
@@ -677,18 +677,18 @@ public static class ParameterModifierTests
 			
 			#nullable enable
 			
-			using Rocks.Runtime.Extensions;
+			using Rocks.Extensions;
 			
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IParameterModifierCreateExpectations
-				: global::Rocks.Runtime.Expectations
+				: global::Rocks.Expectations
 			{
 				internal sealed class Handler0
-					: global::Rocks.Runtime.Handler<global::System.Action<string>>
+					: global::Rocks.Handler<global::System.Action<string>>
 				{
-					public global::Rocks.Runtime.Argument<string> @value { get; set; }
+					public global::Rocks.Argument<string> @value { get; set; }
 				}
-				private global::Rocks.Runtime.Handlers<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
+				private global::Rocks.Handlers<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -700,7 +700,7 @@ public static class ParameterModifierTests
 				
 						if (failures.Count > 0)
 						{
-							throw new global::Rocks.Runtime.Exceptions.VerificationException(failures);
+							throw new global::Rocks.Exceptions.VerificationException(failures);
 						}
 					}
 				}
@@ -713,7 +713,7 @@ public static class ParameterModifierTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.Runtime.MemberIdentifier(0)]
+					[global::Rocks.MemberIdentifier(0)]
 					public void Modify(ref readonly string @value)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -733,7 +733,7 @@ public static class ParameterModifierTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
 										value: {@value.FormatValue()}
@@ -742,7 +742,7 @@ public static class ParameterModifierTests
 						}
 						else
 						{
-							throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}
 									value: {@value.FormatValue()}
@@ -758,9 +758,9 @@ public static class ParameterModifierTests
 					internal MethodExpectations(global::IParameterModifierCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler0 Modify(global::Rocks.Runtime.Argument<string> @value)
+					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler0 Modify(global::Rocks.Argument<string> @value)
 					{
-						global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
 						
 						var @handler = new global::IParameterModifierCreateExpectations.Handler0
@@ -792,19 +792,19 @@ public static class ParameterModifierTests
 					}
 					else
 					{
-						throw new global::Rocks.Runtime.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 					}
 				}
 				
 				internal static class Adornments
 				{
 					public interface IAdornmentsForIParameterModifier<TAdornments>
-						: global::Rocks.Runtime.IAdornments<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForIParameterModifier<TAdornments>
 					{ }
 					
 					public sealed class AdornmentsForHandler0
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::System.Action<string>>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::System.Action<string>>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
 					{
 						public AdornmentsForHandler0(global::IParameterModifierCreateExpectations.Handler0 handler)
 							: base(handler) { }
@@ -870,7 +870,7 @@ public static class ParameterModifierTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(IParameterModifier), BuildType.Create | BuildType.Make)]
 
@@ -894,42 +894,42 @@ public static class ParameterModifierTests
 			
 			#nullable enable
 			
-			using Rocks.Runtime.Extensions;
+			using Rocks.Extensions;
 			
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IParameterModifierCreateExpectations
-				: global::Rocks.Runtime.Expectations
+				: global::Rocks.Expectations
 			{
 				internal sealed class Handler0
-					: global::Rocks.Runtime.Handler<Handler0.CallbackForHandler>
+					: global::Rocks.Handler<Handler0.CallbackForHandler>
 				{
 					internal delegate void CallbackForHandler(ref int @a);
-					public global::Rocks.Runtime.Argument<int> @a { get; set; }
+					public global::Rocks.Argument<int> @a { get; set; }
 				}
-				private global::Rocks.Runtime.Handlers<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
+				private global::Rocks.Handlers<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
 				internal sealed class Handler1<T1, T2>
-					: global::Rocks.Runtime.Handler<Handler1<T1, T2>.CallbackForHandler>
+					: global::Rocks.Handler<Handler1<T1, T2>.CallbackForHandler>
 				{
 					internal delegate void CallbackForHandler(T1 @a, ref T2 @b);
-					public global::Rocks.Runtime.Argument<T1> @a { get; set; }
-					public global::Rocks.Runtime.Argument<T2> @b { get; set; }
+					public global::Rocks.Argument<T1> @a { get; set; }
+					public global::Rocks.Argument<T2> @b { get; set; }
 				}
-				private global::Rocks.Runtime.Handlers<global::Rocks.Runtime.Handler>? @handlers1;
+				private global::Rocks.Handlers<global::Rocks.Handler>? @handlers1;
 				internal sealed class Handler2
-					: global::Rocks.Runtime.Handler<Handler2.CallbackForHandler>
+					: global::Rocks.Handler<Handler2.CallbackForHandler>
 				{
 					internal delegate void CallbackForHandler(out int @a);
-					public global::Rocks.Runtime.Argument<int> @a { get; set; }
+					public global::Rocks.Argument<int> @a { get; set; }
 				}
-				private global::Rocks.Runtime.Handlers<global::IParameterModifierCreateExpectations.Handler2>? @handlers2;
+				private global::Rocks.Handlers<global::IParameterModifierCreateExpectations.Handler2>? @handlers2;
 				internal sealed class Handler3<T1, T2>
-					: global::Rocks.Runtime.Handler<Handler3<T1, T2>.CallbackForHandler>
+					: global::Rocks.Handler<Handler3<T1, T2>.CallbackForHandler>
 				{
 					internal delegate void CallbackForHandler(T1 @a, out T2 @b);
-					public global::Rocks.Runtime.Argument<T1> @a { get; set; }
-					public global::Rocks.Runtime.Argument<T2> @b { get; set; }
+					public global::Rocks.Argument<T1> @a { get; set; }
+					public global::Rocks.Argument<T2> @b { get; set; }
 				}
-				private global::Rocks.Runtime.Handlers<global::Rocks.Runtime.Handler>? @handlers3;
+				private global::Rocks.Handlers<global::Rocks.Handler>? @handlers3;
 				
 				public override void Verify()
 				{
@@ -944,7 +944,7 @@ public static class ParameterModifierTests
 				
 						if (failures.Count > 0)
 						{
-							throw new global::Rocks.Runtime.Exceptions.VerificationException(failures);
+							throw new global::Rocks.Exceptions.VerificationException(failures);
 						}
 					}
 				}
@@ -957,7 +957,7 @@ public static class ParameterModifierTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.Runtime.MemberIdentifier(0)]
+					[global::Rocks.MemberIdentifier(0)]
 					public void RefArgument(ref int @a)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -977,7 +977,7 @@ public static class ParameterModifierTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
 										a: {@a.FormatValue()}
@@ -986,7 +986,7 @@ public static class ParameterModifierTests
 						}
 						else
 						{
-							throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}
 									a: {@a.FormatValue()}
@@ -994,7 +994,7 @@ public static class ParameterModifierTests
 						}
 					}
 					
-					[global::Rocks.Runtime.MemberIdentifier(1)]
+					[global::Rocks.MemberIdentifier(1)]
 					public void RefArgumentsWithGenerics<T1, T2>(T1 @a, ref T2 @b)
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -1018,7 +1018,7 @@ public static class ParameterModifierTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(1)}
 										a: {@a.FormatValue()}
@@ -1028,7 +1028,7 @@ public static class ParameterModifierTests
 						}
 						else
 						{
-							throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(1)}
 									a: {@a.FormatValue()}
@@ -1037,7 +1037,7 @@ public static class ParameterModifierTests
 						}
 					}
 					
-					[global::Rocks.Runtime.MemberIdentifier(2)]
+					[global::Rocks.MemberIdentifier(2)]
 					public void OutArgument(out int @a)
 					{
 						a = default!;
@@ -1058,7 +1058,7 @@ public static class ParameterModifierTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(2)}
 										a: {@a.FormatValue()}
@@ -1067,7 +1067,7 @@ public static class ParameterModifierTests
 						}
 						else
 						{
-							throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(2)}
 									a: {@a.FormatValue()}
@@ -1075,7 +1075,7 @@ public static class ParameterModifierTests
 						}
 					}
 					
-					[global::Rocks.Runtime.MemberIdentifier(3)]
+					[global::Rocks.MemberIdentifier(3)]
 					public void OutArgumentsWithGenerics<T1, T2>(T1 @a, out T2 @b)
 					{
 						b = default!;
@@ -1100,7 +1100,7 @@ public static class ParameterModifierTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(3)}
 										a: {@a.FormatValue()}
@@ -1110,7 +1110,7 @@ public static class ParameterModifierTests
 						}
 						else
 						{
-							throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(3)}
 									a: {@a.FormatValue()}
@@ -1127,9 +1127,9 @@ public static class ParameterModifierTests
 					internal MethodExpectations(global::IParameterModifierCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler0 RefArgument(global::Rocks.Runtime.Argument<int> @a)
+					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler0 RefArgument(global::Rocks.Argument<int> @a)
 					{
-						global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@a);
 						
 						var @handler = new global::IParameterModifierCreateExpectations.Handler0
@@ -1142,9 +1142,9 @@ public static class ParameterModifierTests
 						return new(@handler);
 					}
 					
-					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler1<T1, T2> RefArgumentsWithGenerics<T1, T2>(global::Rocks.Runtime.Argument<T1> @a, global::Rocks.Runtime.Argument<T2> @b)
+					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler1<T1, T2> RefArgumentsWithGenerics<T1, T2>(global::Rocks.Argument<T1> @a, global::Rocks.Argument<T2> @b)
 					{
-						global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@a);
 						global::System.ArgumentNullException.ThrowIfNull(@b);
 						
@@ -1159,14 +1159,14 @@ public static class ParameterModifierTests
 						return new(@handler);
 					}
 					
-					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler2 OutArgument(global::Rocks.Runtime.Argument<int> @a)
+					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler2 OutArgument(global::Rocks.Argument<int> @a)
 					{
-						global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@a);
 						
 						var @handler = new global::IParameterModifierCreateExpectations.Handler2
 						{
-							@a = global::Rocks.Runtime.Arg.Any<int>(),
+							@a = global::Rocks.Arg.Any<int>(),
 						};
 						
 						if (this.Expectations.handlers2 is null) { this.Expectations.handlers2 = new(@handler); }
@@ -1174,16 +1174,16 @@ public static class ParameterModifierTests
 						return new(@handler);
 					}
 					
-					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler3<T1, T2> OutArgumentsWithGenerics<T1, T2>(global::Rocks.Runtime.Argument<T1> @a, global::Rocks.Runtime.Argument<T2> @b)
+					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler3<T1, T2> OutArgumentsWithGenerics<T1, T2>(global::Rocks.Argument<T1> @a, global::Rocks.Argument<T2> @b)
 					{
-						global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@a);
 						global::System.ArgumentNullException.ThrowIfNull(@b);
 						
 						var @handler = new global::IParameterModifierCreateExpectations.Handler3<T1, T2>
 						{
 							@a = @a,
-							@b = global::Rocks.Runtime.Arg.Any<T2>(),
+							@b = global::Rocks.Arg.Any<T2>(),
 						};
 						
 						if (this.Expectations.handlers3 is null) { this.Expectations.handlers3 = new(@handler); }
@@ -1210,37 +1210,37 @@ public static class ParameterModifierTests
 					}
 					else
 					{
-						throw new global::Rocks.Runtime.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 					}
 				}
 				
 				internal static class Adornments
 				{
 					public interface IAdornmentsForIParameterModifier<TAdornments>
-						: global::Rocks.Runtime.IAdornments<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForIParameterModifier<TAdornments>
 					{ }
 					
 					public sealed class AdornmentsForHandler0
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
 					{
 						public AdornmentsForHandler0(global::IParameterModifierCreateExpectations.Handler0 handler)
 							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler1<T1, T2>
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler1<T1, T2>, global::IParameterModifierCreateExpectations.Handler1<T1, T2>, global::IParameterModifierCreateExpectations.Handler1<T1, T2>.CallbackForHandler>, IAdornmentsForIParameterModifier<AdornmentsForHandler1<T1, T2>>
+						: global::Rocks.Adornments<AdornmentsForHandler1<T1, T2>, global::IParameterModifierCreateExpectations.Handler1<T1, T2>, global::IParameterModifierCreateExpectations.Handler1<T1, T2>.CallbackForHandler>, IAdornmentsForIParameterModifier<AdornmentsForHandler1<T1, T2>>
 					{
 						public AdornmentsForHandler1(global::IParameterModifierCreateExpectations.Handler1<T1, T2> handler)
 							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler2
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler2, global::IParameterModifierCreateExpectations.Handler2, global::IParameterModifierCreateExpectations.Handler2.CallbackForHandler>, IAdornmentsForIParameterModifier<AdornmentsForHandler2>
+						: global::Rocks.Adornments<AdornmentsForHandler2, global::IParameterModifierCreateExpectations.Handler2, global::IParameterModifierCreateExpectations.Handler2.CallbackForHandler>, IAdornmentsForIParameterModifier<AdornmentsForHandler2>
 					{
 						public AdornmentsForHandler2(global::IParameterModifierCreateExpectations.Handler2 handler)
 							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler3<T1, T2>
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler3<T1, T2>, global::IParameterModifierCreateExpectations.Handler3<T1, T2>, global::IParameterModifierCreateExpectations.Handler3<T1, T2>.CallbackForHandler>, IAdornmentsForIParameterModifier<AdornmentsForHandler3<T1, T2>>
+						: global::Rocks.Adornments<AdornmentsForHandler3<T1, T2>, global::IParameterModifierCreateExpectations.Handler3<T1, T2>, global::IParameterModifierCreateExpectations.Handler3<T1, T2>.CallbackForHandler>, IAdornmentsForIParameterModifier<AdornmentsForHandler3<T1, T2>>
 					{
 						public AdornmentsForHandler3(global::IParameterModifierCreateExpectations.Handler3<T1, T2> handler)
 							: base(handler) { }

@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
-using Rocks.Runtime;
-using Rocks.Runtime.Exceptions;
+using Rocks.Exceptions;
 
 namespace Rocks.Analysis.IntegrationTests.InterfaceGenericMethodTestTypes;
 

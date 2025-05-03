@@ -9,7 +9,7 @@ public static class ProjectionSpecialTypesGeneratorTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 			using System;
 
 			[assembly: Rock(typeof(ISpecialTypes), BuildType.Create | BuildType.Make)]
@@ -31,19 +31,19 @@ public static class ProjectionSpecialTypesGeneratorTests
 			
 			#nullable enable
 			
-			using Rocks.Runtime.Extensions;
+			using Rocks.Extensions;
 			
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ISpecialTypesCreateExpectations
-				: global::Rocks.Runtime.Expectations
+				: global::Rocks.Expectations
 			{
 				internal sealed class Handler0
-					: global::Rocks.Runtime.Handler<Handler0.CallbackForHandler>
+					: global::Rocks.Handler<Handler0.CallbackForHandler>
 				{
 					internal delegate void CallbackForHandler(global::System.ArgIterator @value);
-					public global::Rocks.Runtime.Projections.ArgIteratorArgument @value { get; set; }
+					public global::Rocks.Projections.ArgIteratorArgument @value { get; set; }
 				}
-				private global::Rocks.Runtime.Handlers<global::ISpecialTypesCreateExpectations.Handler0>? @handlers0;
+				private global::Rocks.Handlers<global::ISpecialTypesCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -55,7 +55,7 @@ public static class ProjectionSpecialTypesGeneratorTests
 				
 						if (failures.Count > 0)
 						{
-							throw new global::Rocks.Runtime.Exceptions.VerificationException(failures);
+							throw new global::Rocks.Exceptions.VerificationException(failures);
 						}
 					}
 				}
@@ -68,7 +68,7 @@ public static class ProjectionSpecialTypesGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.Runtime.MemberIdentifier(0)]
+					[global::Rocks.MemberIdentifier(0)]
 					public void Use(global::System.ArgIterator @value)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -88,7 +88,7 @@ public static class ProjectionSpecialTypesGeneratorTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
 										value: <Not formattable>
@@ -97,7 +97,7 @@ public static class ProjectionSpecialTypesGeneratorTests
 						}
 						else
 						{
-							throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}
 									value: <Not formattable>
@@ -113,9 +113,9 @@ public static class ProjectionSpecialTypesGeneratorTests
 					internal MethodExpectations(global::ISpecialTypesCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::ISpecialTypesCreateExpectations.Adornments.AdornmentsForHandler0 Use(global::Rocks.Runtime.Projections.ArgIteratorArgument @value)
+					internal global::ISpecialTypesCreateExpectations.Adornments.AdornmentsForHandler0 Use(global::Rocks.Projections.ArgIteratorArgument @value)
 					{
-						global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
 						
 						var @handler = new global::ISpecialTypesCreateExpectations.Handler0
@@ -147,19 +147,19 @@ public static class ProjectionSpecialTypesGeneratorTests
 					}
 					else
 					{
-						throw new global::Rocks.Runtime.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 					}
 				}
 				
 				internal static class Adornments
 				{
 					public interface IAdornmentsForISpecialTypes<TAdornments>
-						: global::Rocks.Runtime.IAdornments<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForISpecialTypes<TAdornments>
 					{ }
 					
 					public sealed class AdornmentsForHandler0
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler0, global::ISpecialTypesCreateExpectations.Handler0, global::ISpecialTypesCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForISpecialTypes<AdornmentsForHandler0>
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::ISpecialTypesCreateExpectations.Handler0, global::ISpecialTypesCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForISpecialTypes<AdornmentsForHandler0>
 					{
 						public AdornmentsForHandler0(global::ISpecialTypesCreateExpectations.Handler0 handler)
 							: base(handler) { }
@@ -226,7 +226,7 @@ public static class ProjectionSpecialTypesGeneratorTests
 			
 			#nullable enable
 			
-			namespace Rocks.Runtime.Projections;
+			namespace Rocks.Projections;
 			
 			internal delegate bool ArgIteratorArgumentEvaluation(global::System.ArgIterator @value);
 			
@@ -275,7 +275,7 @@ public static class ProjectionSpecialTypesGeneratorTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 			using System;
 
 			[assembly: Rock(typeof(ISpecialTypes), BuildType.Create | BuildType.Make)]
@@ -297,19 +297,19 @@ public static class ProjectionSpecialTypesGeneratorTests
 			
 			#nullable enable
 			
-			using Rocks.Runtime.Extensions;
+			using Rocks.Extensions;
 			
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ISpecialTypesCreateExpectations
-				: global::Rocks.Runtime.Expectations
+				: global::Rocks.Expectations
 			{
 				internal sealed class Handler0
-					: global::Rocks.Runtime.Handler<Handler0.CallbackForHandler>
+					: global::Rocks.Handler<Handler0.CallbackForHandler>
 				{
 					internal delegate void CallbackForHandler(global::System.RuntimeArgumentHandle @value);
-					public global::Rocks.Runtime.Projections.RuntimeArgumentHandleArgument @value { get; set; }
+					public global::Rocks.Projections.RuntimeArgumentHandleArgument @value { get; set; }
 				}
-				private global::Rocks.Runtime.Handlers<global::ISpecialTypesCreateExpectations.Handler0>? @handlers0;
+				private global::Rocks.Handlers<global::ISpecialTypesCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -321,7 +321,7 @@ public static class ProjectionSpecialTypesGeneratorTests
 				
 						if (failures.Count > 0)
 						{
-							throw new global::Rocks.Runtime.Exceptions.VerificationException(failures);
+							throw new global::Rocks.Exceptions.VerificationException(failures);
 						}
 					}
 				}
@@ -334,7 +334,7 @@ public static class ProjectionSpecialTypesGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.Runtime.MemberIdentifier(0)]
+					[global::Rocks.MemberIdentifier(0)]
 					public void Use(global::System.RuntimeArgumentHandle @value)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -354,7 +354,7 @@ public static class ProjectionSpecialTypesGeneratorTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
 										value: <Not formattable>
@@ -363,7 +363,7 @@ public static class ProjectionSpecialTypesGeneratorTests
 						}
 						else
 						{
-							throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}
 									value: <Not formattable>
@@ -379,9 +379,9 @@ public static class ProjectionSpecialTypesGeneratorTests
 					internal MethodExpectations(global::ISpecialTypesCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::ISpecialTypesCreateExpectations.Adornments.AdornmentsForHandler0 Use(global::Rocks.Runtime.Projections.RuntimeArgumentHandleArgument @value)
+					internal global::ISpecialTypesCreateExpectations.Adornments.AdornmentsForHandler0 Use(global::Rocks.Projections.RuntimeArgumentHandleArgument @value)
 					{
-						global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
 						
 						var @handler = new global::ISpecialTypesCreateExpectations.Handler0
@@ -413,19 +413,19 @@ public static class ProjectionSpecialTypesGeneratorTests
 					}
 					else
 					{
-						throw new global::Rocks.Runtime.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 					}
 				}
 				
 				internal static class Adornments
 				{
 					public interface IAdornmentsForISpecialTypes<TAdornments>
-						: global::Rocks.Runtime.IAdornments<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForISpecialTypes<TAdornments>
 					{ }
 					
 					public sealed class AdornmentsForHandler0
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler0, global::ISpecialTypesCreateExpectations.Handler0, global::ISpecialTypesCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForISpecialTypes<AdornmentsForHandler0>
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::ISpecialTypesCreateExpectations.Handler0, global::ISpecialTypesCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForISpecialTypes<AdornmentsForHandler0>
 					{
 						public AdornmentsForHandler0(global::ISpecialTypesCreateExpectations.Handler0 handler)
 							: base(handler) { }
@@ -492,7 +492,7 @@ public static class ProjectionSpecialTypesGeneratorTests
 			
 			#nullable enable
 			
-			namespace Rocks.Runtime.Projections;
+			namespace Rocks.Projections;
 			
 			internal delegate bool RuntimeArgumentHandleArgumentEvaluation(global::System.RuntimeArgumentHandle @value);
 			
@@ -541,7 +541,7 @@ public static class ProjectionSpecialTypesGeneratorTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 			using System;
 
 			[assembly: Rock(typeof(ISpecialTypes), BuildType.Create | BuildType.Make)]
@@ -563,19 +563,19 @@ public static class ProjectionSpecialTypesGeneratorTests
 			
 			#nullable enable
 			
-			using Rocks.Runtime.Extensions;
+			using Rocks.Extensions;
 			
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ISpecialTypesCreateExpectations
-				: global::Rocks.Runtime.Expectations
+				: global::Rocks.Expectations
 			{
 				internal sealed class Handler0
-					: global::Rocks.Runtime.Handler<Handler0.CallbackForHandler>
+					: global::Rocks.Handler<Handler0.CallbackForHandler>
 				{
 					internal delegate void CallbackForHandler(global::System.TypedReference @value);
-					public global::Rocks.Runtime.Projections.TypedReferenceArgument @value { get; set; }
+					public global::Rocks.Projections.TypedReferenceArgument @value { get; set; }
 				}
-				private global::Rocks.Runtime.Handlers<global::ISpecialTypesCreateExpectations.Handler0>? @handlers0;
+				private global::Rocks.Handlers<global::ISpecialTypesCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -587,7 +587,7 @@ public static class ProjectionSpecialTypesGeneratorTests
 				
 						if (failures.Count > 0)
 						{
-							throw new global::Rocks.Runtime.Exceptions.VerificationException(failures);
+							throw new global::Rocks.Exceptions.VerificationException(failures);
 						}
 					}
 				}
@@ -600,7 +600,7 @@ public static class ProjectionSpecialTypesGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.Runtime.MemberIdentifier(0)]
+					[global::Rocks.MemberIdentifier(0)]
 					public void Use(global::System.TypedReference @value)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -620,7 +620,7 @@ public static class ProjectionSpecialTypesGeneratorTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
 										value: <Not formattable>
@@ -629,7 +629,7 @@ public static class ProjectionSpecialTypesGeneratorTests
 						}
 						else
 						{
-							throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}
 									value: <Not formattable>
@@ -645,9 +645,9 @@ public static class ProjectionSpecialTypesGeneratorTests
 					internal MethodExpectations(global::ISpecialTypesCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::ISpecialTypesCreateExpectations.Adornments.AdornmentsForHandler0 Use(global::Rocks.Runtime.Projections.TypedReferenceArgument @value)
+					internal global::ISpecialTypesCreateExpectations.Adornments.AdornmentsForHandler0 Use(global::Rocks.Projections.TypedReferenceArgument @value)
 					{
-						global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
 						
 						var @handler = new global::ISpecialTypesCreateExpectations.Handler0
@@ -679,19 +679,19 @@ public static class ProjectionSpecialTypesGeneratorTests
 					}
 					else
 					{
-						throw new global::Rocks.Runtime.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 					}
 				}
 				
 				internal static class Adornments
 				{
 					public interface IAdornmentsForISpecialTypes<TAdornments>
-						: global::Rocks.Runtime.IAdornments<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForISpecialTypes<TAdornments>
 					{ }
 					
 					public sealed class AdornmentsForHandler0
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler0, global::ISpecialTypesCreateExpectations.Handler0, global::ISpecialTypesCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForISpecialTypes<AdornmentsForHandler0>
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::ISpecialTypesCreateExpectations.Handler0, global::ISpecialTypesCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForISpecialTypes<AdornmentsForHandler0>
 					{
 						public AdornmentsForHandler0(global::ISpecialTypesCreateExpectations.Handler0 handler)
 							: base(handler) { }
@@ -758,7 +758,7 @@ public static class ProjectionSpecialTypesGeneratorTests
 			
 			#nullable enable
 			
-			namespace Rocks.Runtime.Projections;
+			namespace Rocks.Projections;
 			
 			internal delegate bool TypedReferenceArgumentEvaluation(global::System.TypedReference @value);
 			

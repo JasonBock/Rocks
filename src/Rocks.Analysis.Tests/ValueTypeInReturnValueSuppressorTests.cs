@@ -16,7 +16,7 @@ public static class ValueTypeInReturnValueSuppressorTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 			using System;
 			using System.Threading.Tasks;
 			

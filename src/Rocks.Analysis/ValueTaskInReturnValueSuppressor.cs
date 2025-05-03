@@ -61,7 +61,7 @@ public sealed class ValueTaskInReturnValueSuppressor
 								invocationMethod.Name == "ReturnValue" &&
 								SymbolEqualityComparer.Default.Equals(
 									invocationMethod.ContainingType.ConstructedFrom,
-									context.Compilation.GetTypeByMetadataName("Rocks.Runtime.Adornments`4")))
+									context.Compilation.GetTypeByMetadataName("Rocks.Adornments`4")))
 							{
 								var constructedParameterType = (invocationMethod.Parameters[0].Type as INamedTypeSymbol)?.ConstructedFrom;
 

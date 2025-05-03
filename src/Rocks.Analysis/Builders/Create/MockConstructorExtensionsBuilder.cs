@@ -199,7 +199,7 @@ internal static class MockConstructorExtensionsBuilder
 			}
 			else
 			{
-				throw new global::Rocks.Runtime.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+				throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 			}
 			""");
 

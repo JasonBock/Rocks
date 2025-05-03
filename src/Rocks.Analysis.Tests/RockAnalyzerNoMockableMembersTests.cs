@@ -12,7 +12,7 @@ public static class RockAnalyzerNoMockableMembersTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(NoMockables), BuildType.Create | BuildType.Make)]
 
@@ -34,7 +34,7 @@ public static class RockAnalyzerNoMockableMembersTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(NoMockables), BuildType.Create | BuildType.Make)]
 

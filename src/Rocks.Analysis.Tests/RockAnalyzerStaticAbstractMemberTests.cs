@@ -12,7 +12,7 @@ public static class RockAnalyzerStaticAbstractMemberTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(IHaveStaticAbstractMethod), BuildType.Create | BuildType.Make)]
 

@@ -9,7 +9,7 @@ public static class ProjectionGenericsAndPointersGeneratorTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(ISurface), BuildType.Create | BuildType.Make)]
 
@@ -30,20 +30,20 @@ public static class ProjectionGenericsAndPointersGeneratorTests
 			
 			#nullable enable
 			
-			using Rocks.Runtime.Extensions;
+			using Rocks.Extensions;
 			
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal unsafe sealed class ISurfaceCreateExpectations
-				: global::Rocks.Runtime.Expectations
+				: global::Rocks.Expectations
 			{
 				internal sealed class Handler0<T>
-					: global::Rocks.Runtime.Handler<Handler0<T>.CallbackForHandler>
+					: global::Rocks.Handler<Handler0<T>.CallbackForHandler>
 					where T : unmanaged
 				{
 					internal unsafe delegate void CallbackForHandler(T* @allocator);
-					public global::Rocks.Runtime.Projections.PointerArgument<T> @allocator { get; set; }
+					public global::Rocks.Projections.PointerArgument<T> @allocator { get; set; }
 				}
-				private global::Rocks.Runtime.Handlers<global::Rocks.Runtime.Handler>? @handlers0;
+				private global::Rocks.Handlers<global::Rocks.Handler>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -55,7 +55,7 @@ public static class ProjectionGenericsAndPointersGeneratorTests
 				
 						if (failures.Count > 0)
 						{
-							throw new global::Rocks.Runtime.Exceptions.VerificationException(failures);
+							throw new global::Rocks.Exceptions.VerificationException(failures);
 						}
 					}
 				}
@@ -68,7 +68,7 @@ public static class ProjectionGenericsAndPointersGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.Runtime.MemberIdentifier(0)]
+					[global::Rocks.MemberIdentifier(0)]
 					public unsafe void Create<T>(T* @allocator)
 						where T : unmanaged
 					{
@@ -92,7 +92,7 @@ public static class ProjectionGenericsAndPointersGeneratorTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
 										allocator: <Not formattable>
@@ -101,7 +101,7 @@ public static class ProjectionGenericsAndPointersGeneratorTests
 						}
 						else
 						{
-							throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}
 									allocator: <Not formattable>
@@ -117,9 +117,9 @@ public static class ProjectionGenericsAndPointersGeneratorTests
 					internal MethodExpectations(global::ISurfaceCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::ISurfaceCreateExpectations.Adornments.AdornmentsForHandler0<T> Create<T>(global::Rocks.Runtime.Projections.PointerArgument<T> @allocator) where T : unmanaged
+					internal global::ISurfaceCreateExpectations.Adornments.AdornmentsForHandler0<T> Create<T>(global::Rocks.Projections.PointerArgument<T> @allocator) where T : unmanaged
 					{
-						global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@allocator);
 						
 						var @handler = new global::ISurfaceCreateExpectations.Handler0<T>
@@ -151,19 +151,19 @@ public static class ProjectionGenericsAndPointersGeneratorTests
 					}
 					else
 					{
-						throw new global::Rocks.Runtime.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 					}
 				}
 				
 				internal static class Adornments
 				{
 					public interface IAdornmentsForISurface<TAdornments>
-						: global::Rocks.Runtime.IAdornments<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForISurface<TAdornments>
 					{ }
 					
 					public sealed class AdornmentsForHandler0<T>
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler0<T>, global::ISurfaceCreateExpectations.Handler0<T>, global::ISurfaceCreateExpectations.Handler0<T>.CallbackForHandler>, IAdornmentsForISurface<AdornmentsForHandler0<T>> where T : unmanaged
+						: global::Rocks.Adornments<AdornmentsForHandler0<T>, global::ISurfaceCreateExpectations.Handler0<T>, global::ISurfaceCreateExpectations.Handler0<T>.CallbackForHandler>, IAdornmentsForISurface<AdornmentsForHandler0<T>> where T : unmanaged
 					{
 						public AdornmentsForHandler0(global::ISurfaceCreateExpectations.Handler0<T> handler)
 							: base(handler) { }
@@ -231,7 +231,7 @@ public static class ProjectionGenericsAndPointersGeneratorTests
 			
 			#nullable enable
 			
-			namespace Rocks.Runtime.Projections;
+			namespace Rocks.Projections;
 			
 			internal unsafe delegate bool PointerArgumentEvaluation<T>(T* @value) where T : unmanaged;
 			

@@ -13,7 +13,7 @@ public static class RockAnalyzerNoAccessibleConstructorsTests
 		var code =
 			"""
 			using System; 
-			using Rocks.Runtime; 
+			using Rocks; 
 			
 			[assembly: Rock(typeof(Constructable), BuildType.Create | BuildType.Make)] 
 			
@@ -36,7 +36,7 @@ public static class RockAnalyzerNoAccessibleConstructorsTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(NoConstructors), BuildType.Create | BuildType.Make)]
 

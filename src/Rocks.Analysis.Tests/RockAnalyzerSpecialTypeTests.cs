@@ -12,7 +12,7 @@ public static class RockAnalyzerSpecialTypeTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(System.Enum), BuildType.Create | BuildType.Make)]
 			""";
@@ -27,7 +27,7 @@ public static class RockAnalyzerSpecialTypeTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(System.ValueType), BuildType.Create | BuildType.Make)]
 			""";
@@ -42,7 +42,7 @@ public static class RockAnalyzerSpecialTypeTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(System.Delegate), BuildType.Create | BuildType.Make)]
 			""";
@@ -57,7 +57,7 @@ public static class RockAnalyzerSpecialTypeTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(System.MulticastDelegate), BuildType.Create | BuildType.Make)]
 			""";

@@ -33,7 +33,7 @@ internal sealed class RockProjectionBuilder
 			
 			#nullable enable
 
-			namespace Rocks.Runtime.Projections;
+			namespace Rocks.Projections;
 			
 			""");
 

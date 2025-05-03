@@ -62,7 +62,7 @@ internal static class MockMethodValueBuilder
 			writer.WriteLine(method.ReturnTypeAttributesDescription);
 		}
 
-		writer.WriteLine($"[global::Rocks.Runtime.MemberIdentifier({method.MemberIdentifier})]");
+		writer.WriteLine($"[global::Rocks.MemberIdentifier({method.MemberIdentifier})]");
 		var isPublic = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 			$"{method.OverridingCodeValue} " : string.Empty;
 		writer.WriteLine($"{isPublic}{(method.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{methodSignature}");
@@ -163,7 +163,7 @@ internal static class MockMethodValueBuilder
 			if (shouldThrowDoesNotReturnException)
 			{
 				writer.WriteLine($"_ = {target}.{method.Name}{typeArguments}({passedParameter});");
-				writer.WriteLine("throw new global::Rocks.Runtime.Exceptions.DoesNotReturnException();");
+				writer.WriteLine("throw new global::Rocks.Exceptions.DoesNotReturnException();");
 			}
 			else
 			{
@@ -231,7 +231,7 @@ internal static class MockMethodValueBuilder
 
 		if (shouldThrowDoesNotReturnException)
 		{
-			writer.WriteLine($"throw new global::Rocks.Runtime.Exceptions.DoesNotReturnException();");
+			writer.WriteLine($"throw new global::Rocks.Exceptions.DoesNotReturnException();");
 		}
 		else
 		{

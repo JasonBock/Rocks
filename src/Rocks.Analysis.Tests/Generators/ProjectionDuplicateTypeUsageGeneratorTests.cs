@@ -9,7 +9,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 			using System;
 
 			[assembly: Rock(typeof(ISpecialTypes), BuildType.Create | BuildType.Make)]
@@ -31,22 +31,22 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			
 			#nullable enable
 			
-			using Rocks.Runtime.Extensions;
+			using Rocks.Extensions;
 			
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal unsafe sealed class ISpecialTypesCreateExpectations
-				: global::Rocks.Runtime.Expectations
+				: global::Rocks.Expectations
 			{
 				internal sealed class Handler0
-					: global::Rocks.Runtime.Handler<Handler0.CallbackForHandler>
+					: global::Rocks.Handler<Handler0.CallbackForHandler>
 				{
 					internal unsafe delegate int* CallbackForHandler(global::System.ArgIterator @value1, global::System.ArgIterator @value2, int* @value3);
-					public global::Rocks.Runtime.Projections.ArgIteratorArgument @value1 { get; set; }
-					public global::Rocks.Runtime.Projections.ArgIteratorArgument @value2 { get; set; }
-					public global::Rocks.Runtime.Projections.PointerArgument<int> @value3 { get; set; }
+					public global::Rocks.Projections.ArgIteratorArgument @value1 { get; set; }
+					public global::Rocks.Projections.ArgIteratorArgument @value2 { get; set; }
+					public global::Rocks.Projections.PointerArgument<int> @value3 { get; set; }
 					public int* ReturnValue { get; set; }
 				}
-				private global::Rocks.Runtime.Handlers<global::ISpecialTypesCreateExpectations.Handler0>? @handlers0;
+				private global::Rocks.Handlers<global::ISpecialTypesCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -58,7 +58,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 				
 						if (failures.Count > 0)
 						{
-							throw new global::Rocks.Runtime.Exceptions.VerificationException(failures);
+							throw new global::Rocks.Exceptions.VerificationException(failures);
 						}
 					}
 				}
@@ -71,7 +71,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.Runtime.MemberIdentifier(0)]
+					[global::Rocks.MemberIdentifier(0)]
 					public unsafe int* Use(global::System.ArgIterator @value1, global::System.ArgIterator @value2, int* @value3)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -89,7 +89,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers match for {this.GetType().GetMemberDescription(0)}
 									value1: <Not formattable>
@@ -98,7 +98,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 								""");
 						}
 						
-						throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+						throw new global::Rocks.Exceptions.ExpectationException(
 							$"""
 							No handlers were found for {this.GetType().GetMemberDescription(0)}
 								value1: <Not formattable>
@@ -115,9 +115,9 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 					internal MethodExpectations(global::ISpecialTypesCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::ISpecialTypesCreateExpectations.Adornments.AdornmentsForHandler0 Use(global::Rocks.Runtime.Projections.ArgIteratorArgument @value1, global::Rocks.Runtime.Projections.ArgIteratorArgument @value2, global::Rocks.Runtime.Projections.PointerArgument<int> @value3)
+					internal global::ISpecialTypesCreateExpectations.Adornments.AdornmentsForHandler0 Use(global::Rocks.Projections.ArgIteratorArgument @value1, global::Rocks.Projections.ArgIteratorArgument @value2, global::Rocks.Projections.PointerArgument<int> @value3)
 					{
-						global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value1);
 						global::System.ArgumentNullException.ThrowIfNull(@value2);
 						global::System.ArgumentNullException.ThrowIfNull(@value3);
@@ -153,19 +153,19 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 					}
 					else
 					{
-						throw new global::Rocks.Runtime.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 					}
 				}
 				
 				internal static class Adornments
 				{
 					public interface IAdornmentsForISpecialTypes<TAdornments>
-						: global::Rocks.Runtime.IAdornments<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForISpecialTypes<TAdornments>
 					{ }
 					
 					public sealed class AdornmentsForHandler0
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler0, global::ISpecialTypesCreateExpectations.Handler0, global::ISpecialTypesCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForISpecialTypes<AdornmentsForHandler0>
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::ISpecialTypesCreateExpectations.Handler0, global::ISpecialTypesCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForISpecialTypes<AdornmentsForHandler0>
 					{
 						public AdornmentsForHandler0(global::ISpecialTypesCreateExpectations.Handler0 handler)
 							: base(handler) { }
@@ -238,7 +238,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			
 			#nullable enable
 			
-			namespace Rocks.Runtime.Projections;
+			namespace Rocks.Projections;
 			
 			internal delegate bool ArgIteratorArgumentEvaluation(global::System.ArgIterator @value);
 			
@@ -287,7 +287,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			
 			#nullable enable
 			
-			namespace Rocks.Runtime.Projections;
+			namespace Rocks.Projections;
 			
 			internal unsafe delegate bool PointerArgumentEvaluation<T>(T* @value) where T : unmanaged;
 			
@@ -348,7 +348,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 			using System;
 
 			[assembly: Rock(typeof(ISpecialTypes), BuildType.Create | BuildType.Make)]
@@ -370,32 +370,32 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			
 			#nullable enable
 			
-			using Rocks.Runtime.Extensions;
+			using Rocks.Extensions;
 			
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal unsafe sealed class ISpecialTypesCreateExpectations
-				: global::Rocks.Runtime.Expectations
+				: global::Rocks.Expectations
 			{
 				internal sealed class Handler0
-					: global::Rocks.Runtime.Handler<Handler0.CallbackForHandler>
+					: global::Rocks.Handler<Handler0.CallbackForHandler>
 				{
 					internal unsafe delegate int* CallbackForHandler(global::System.ArgIterator @value1, global::System.ArgIterator @value2, int* @value3);
-					public global::Rocks.Runtime.Projections.ArgIteratorArgument @value1 { get; set; }
-					public global::Rocks.Runtime.Projections.ArgIteratorArgument @value2 { get; set; }
-					public global::Rocks.Runtime.Projections.PointerArgument<int> @value3 { get; set; }
+					public global::Rocks.Projections.ArgIteratorArgument @value1 { get; set; }
+					public global::Rocks.Projections.ArgIteratorArgument @value2 { get; set; }
+					public global::Rocks.Projections.PointerArgument<int> @value3 { get; set; }
 					public int* ReturnValue { get; set; }
 				}
-				private global::Rocks.Runtime.Handlers<global::ISpecialTypesCreateExpectations.Handler0>? @handlers0;
+				private global::Rocks.Handlers<global::ISpecialTypesCreateExpectations.Handler0>? @handlers0;
 				internal sealed class Handler1
-					: global::Rocks.Runtime.Handler<Handler1.CallbackForHandler>
+					: global::Rocks.Handler<Handler1.CallbackForHandler>
 				{
 					internal unsafe delegate void CallbackForHandler(global::System.ArgIterator @value1, global::System.ArgIterator @value2, int* @value3, int* @value);
-					public global::Rocks.Runtime.Projections.ArgIteratorArgument @value1 { get; set; }
-					public global::Rocks.Runtime.Projections.ArgIteratorArgument @value2 { get; set; }
-					public global::Rocks.Runtime.Projections.PointerArgument<int> @value3 { get; set; }
-					public global::Rocks.Runtime.Projections.PointerArgument<int> @value { get; set; }
+					public global::Rocks.Projections.ArgIteratorArgument @value1 { get; set; }
+					public global::Rocks.Projections.ArgIteratorArgument @value2 { get; set; }
+					public global::Rocks.Projections.PointerArgument<int> @value3 { get; set; }
+					public global::Rocks.Projections.PointerArgument<int> @value { get; set; }
 				}
-				private global::Rocks.Runtime.Handlers<global::ISpecialTypesCreateExpectations.Handler1>? @handlers1;
+				private global::Rocks.Handlers<global::ISpecialTypesCreateExpectations.Handler1>? @handlers1;
 				
 				public override void Verify()
 				{
@@ -408,7 +408,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 				
 						if (failures.Count > 0)
 						{
-							throw new global::Rocks.Runtime.Exceptions.VerificationException(failures);
+							throw new global::Rocks.Exceptions.VerificationException(failures);
 						}
 					}
 				}
@@ -421,8 +421,8 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.Runtime.MemberIdentifier(0, global::Rocks.Runtime.PropertyAccessor.Get)]
-					[global::Rocks.Runtime.MemberIdentifier(1, global::Rocks.Runtime.PropertyAccessor.Set)]
+					[global::Rocks.MemberIdentifier(0, global::Rocks.PropertyAccessor.Get)]
+					[global::Rocks.MemberIdentifier(1, global::Rocks.PropertyAccessor.Set)]
 					public unsafe int* this[global::System.ArgIterator @value1, global::System.ArgIterator @value2, int* @value3]
 					{
 						get
@@ -442,7 +442,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
 										value1: <Not formattable>
@@ -451,7 +451,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 									""");
 							}
 							
-							throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}
 									value1: <Not formattable>
@@ -476,7 +476,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(1)}
 										value1: <Not formattable>
@@ -486,7 +486,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 									""");
 							}
 							
-							throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(1)}
 									value1: <Not formattable>
@@ -506,9 +506,9 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 						internal IndexerGetterExpectations(global::ISpecialTypesCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::ISpecialTypesCreateExpectations.Adornments.AdornmentsForHandler0 This(global::Rocks.Runtime.Projections.ArgIteratorArgument @value1, global::Rocks.Runtime.Projections.ArgIteratorArgument @value2, global::Rocks.Runtime.Projections.PointerArgument<int> @value3)
+						internal global::ISpecialTypesCreateExpectations.Adornments.AdornmentsForHandler0 This(global::Rocks.Projections.ArgIteratorArgument @value1, global::Rocks.Projections.ArgIteratorArgument @value2, global::Rocks.Projections.PointerArgument<int> @value3)
 						{
-							global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value1);
 							global::System.ArgumentNullException.ThrowIfNull(@value2);
 							global::System.ArgumentNullException.ThrowIfNull(@value3);
@@ -532,9 +532,9 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 						internal IndexerSetterExpectations(global::ISpecialTypesCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::ISpecialTypesCreateExpectations.Adornments.AdornmentsForHandler1 This(global::Rocks.Runtime.Projections.PointerArgument<int> @value, global::Rocks.Runtime.Projections.ArgIteratorArgument @value1, global::Rocks.Runtime.Projections.ArgIteratorArgument @value2, global::Rocks.Runtime.Projections.PointerArgument<int> @value3)
+						internal global::ISpecialTypesCreateExpectations.Adornments.AdornmentsForHandler1 This(global::Rocks.Projections.PointerArgument<int> @value, global::Rocks.Projections.ArgIteratorArgument @value1, global::Rocks.Projections.ArgIteratorArgument @value2, global::Rocks.Projections.PointerArgument<int> @value3)
 						{
-							global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value1);
 							global::System.ArgumentNullException.ThrowIfNull(@value2);
 							global::System.ArgumentNullException.ThrowIfNull(@value3);
@@ -578,19 +578,19 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 					}
 					else
 					{
-						throw new global::Rocks.Runtime.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 					}
 				}
 				
 				internal static class Adornments
 				{
 					public interface IAdornmentsForISpecialTypes<TAdornments>
-						: global::Rocks.Runtime.IAdornments<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForISpecialTypes<TAdornments>
 					{ }
 					
 					public sealed class AdornmentsForHandler0
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler0, global::ISpecialTypesCreateExpectations.Handler0, global::ISpecialTypesCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForISpecialTypes<AdornmentsForHandler0>
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::ISpecialTypesCreateExpectations.Handler0, global::ISpecialTypesCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForISpecialTypes<AdornmentsForHandler0>
 					{
 						public AdornmentsForHandler0(global::ISpecialTypesCreateExpectations.Handler0 handler)
 							: base(handler) { }
@@ -601,7 +601,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 						}
 					}
 					public sealed class AdornmentsForHandler1
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler1, global::ISpecialTypesCreateExpectations.Handler1, global::ISpecialTypesCreateExpectations.Handler1.CallbackForHandler>, IAdornmentsForISpecialTypes<AdornmentsForHandler1>
+						: global::Rocks.Adornments<AdornmentsForHandler1, global::ISpecialTypesCreateExpectations.Handler1, global::ISpecialTypesCreateExpectations.Handler1.CallbackForHandler>, IAdornmentsForISpecialTypes<AdornmentsForHandler1>
 					{
 						public AdornmentsForHandler1(global::ISpecialTypesCreateExpectations.Handler1 handler)
 							: base(handler) { }
@@ -670,7 +670,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			
 			#nullable enable
 			
-			namespace Rocks.Runtime.Projections;
+			namespace Rocks.Projections;
 			
 			internal unsafe delegate bool PointerArgumentEvaluation<T>(T* @value) where T : unmanaged;
 			
@@ -730,7 +730,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			
 			#nullable enable
 			
-			namespace Rocks.Runtime.Projections;
+			namespace Rocks.Projections;
 			
 			internal delegate bool ArgIteratorArgumentEvaluation(global::System.ArgIterator @value);
 			
@@ -780,7 +780,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 			using System;
 
 			[assembly: Rock(typeof(ISpecialTypes), BuildType.Create | BuildType.Make)]
@@ -802,20 +802,20 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			
 			#nullable enable
 			
-			using Rocks.Runtime.Extensions;
+			using Rocks.Extensions;
 			
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal unsafe sealed class ISpecialTypesCreateExpectations
-				: global::Rocks.Runtime.Expectations
+				: global::Rocks.Expectations
 			{
 				internal sealed class Handler0
-					: global::Rocks.Runtime.Handler<Handler0.CallbackForHandler>
+					: global::Rocks.Handler<Handler0.CallbackForHandler>
 				{
 					internal unsafe delegate void CallbackForHandler(int* @value1, char* @value2);
-					public global::Rocks.Runtime.Projections.PointerArgument<int> @value1 { get; set; }
-					public global::Rocks.Runtime.Projections.PointerArgument<char> @value2 { get; set; }
+					public global::Rocks.Projections.PointerArgument<int> @value1 { get; set; }
+					public global::Rocks.Projections.PointerArgument<char> @value2 { get; set; }
 				}
-				private global::Rocks.Runtime.Handlers<global::ISpecialTypesCreateExpectations.Handler0>? @handlers0;
+				private global::Rocks.Handlers<global::ISpecialTypesCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -827,7 +827,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 				
 						if (failures.Count > 0)
 						{
-							throw new global::Rocks.Runtime.Exceptions.VerificationException(failures);
+							throw new global::Rocks.Exceptions.VerificationException(failures);
 						}
 					}
 				}
@@ -840,7 +840,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.Runtime.MemberIdentifier(0)]
+					[global::Rocks.MemberIdentifier(0)]
 					public unsafe void Use(int* @value1, char* @value2)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -861,7 +861,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
 										value1: <Not formattable>
@@ -871,7 +871,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 						}
 						else
 						{
-							throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}
 									value1: <Not formattable>
@@ -888,9 +888,9 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 					internal MethodExpectations(global::ISpecialTypesCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::ISpecialTypesCreateExpectations.Adornments.AdornmentsForHandler0 Use(global::Rocks.Runtime.Projections.PointerArgument<int> @value1, global::Rocks.Runtime.Projections.PointerArgument<char> @value2)
+					internal global::ISpecialTypesCreateExpectations.Adornments.AdornmentsForHandler0 Use(global::Rocks.Projections.PointerArgument<int> @value1, global::Rocks.Projections.PointerArgument<char> @value2)
 					{
-						global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value1);
 						global::System.ArgumentNullException.ThrowIfNull(@value2);
 						
@@ -924,19 +924,19 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 					}
 					else
 					{
-						throw new global::Rocks.Runtime.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 					}
 				}
 				
 				internal static class Adornments
 				{
 					public interface IAdornmentsForISpecialTypes<TAdornments>
-						: global::Rocks.Runtime.IAdornments<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForISpecialTypes<TAdornments>
 					{ }
 					
 					public sealed class AdornmentsForHandler0
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler0, global::ISpecialTypesCreateExpectations.Handler0, global::ISpecialTypesCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForISpecialTypes<AdornmentsForHandler0>
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::ISpecialTypesCreateExpectations.Handler0, global::ISpecialTypesCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForISpecialTypes<AdornmentsForHandler0>
 					{
 						public AdornmentsForHandler0(global::ISpecialTypesCreateExpectations.Handler0 handler)
 							: base(handler) { }
@@ -1003,7 +1003,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			
 			#nullable enable
 			
-			namespace Rocks.Runtime.Projections;
+			namespace Rocks.Projections;
 			
 			internal unsafe delegate bool PointerArgumentEvaluation<T>(T* @value) where T : unmanaged;
 			
@@ -1063,7 +1063,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 			using System;
 
 			[assembly: Rock(typeof(ISpecialTypes), BuildType.Create | BuildType.Make)]
@@ -1085,29 +1085,29 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			
 			#nullable enable
 			
-			using Rocks.Runtime.Extensions;
+			using Rocks.Extensions;
 			
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal unsafe sealed class ISpecialTypesCreateExpectations
-				: global::Rocks.Runtime.Expectations
+				: global::Rocks.Expectations
 			{
 				internal sealed class Handler0
-					: global::Rocks.Runtime.Handler<Handler0.CallbackForHandler, int>
+					: global::Rocks.Handler<Handler0.CallbackForHandler, int>
 				{
 					internal unsafe delegate int CallbackForHandler(int* @value1, char* @value3);
-					public global::Rocks.Runtime.Projections.PointerArgument<int> @value1 { get; set; }
-					public global::Rocks.Runtime.Projections.PointerArgument<char> @value3 { get; set; }
+					public global::Rocks.Projections.PointerArgument<int> @value1 { get; set; }
+					public global::Rocks.Projections.PointerArgument<char> @value3 { get; set; }
 				}
-				private global::Rocks.Runtime.Handlers<global::ISpecialTypesCreateExpectations.Handler0>? @handlers0;
+				private global::Rocks.Handlers<global::ISpecialTypesCreateExpectations.Handler0>? @handlers0;
 				internal sealed class Handler1
-					: global::Rocks.Runtime.Handler<Handler1.CallbackForHandler>
+					: global::Rocks.Handler<Handler1.CallbackForHandler>
 				{
 					internal unsafe delegate void CallbackForHandler(int* @value1, char* @value3, int @value);
-					public global::Rocks.Runtime.Projections.PointerArgument<int> @value1 { get; set; }
-					public global::Rocks.Runtime.Projections.PointerArgument<char> @value3 { get; set; }
-					public global::Rocks.Runtime.Argument<int> @value { get; set; }
+					public global::Rocks.Projections.PointerArgument<int> @value1 { get; set; }
+					public global::Rocks.Projections.PointerArgument<char> @value3 { get; set; }
+					public global::Rocks.Argument<int> @value { get; set; }
 				}
-				private global::Rocks.Runtime.Handlers<global::ISpecialTypesCreateExpectations.Handler1>? @handlers1;
+				private global::Rocks.Handlers<global::ISpecialTypesCreateExpectations.Handler1>? @handlers1;
 				
 				public override void Verify()
 				{
@@ -1120,7 +1120,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 				
 						if (failures.Count > 0)
 						{
-							throw new global::Rocks.Runtime.Exceptions.VerificationException(failures);
+							throw new global::Rocks.Exceptions.VerificationException(failures);
 						}
 					}
 				}
@@ -1133,8 +1133,8 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.Runtime.MemberIdentifier(0, global::Rocks.Runtime.PropertyAccessor.Get)]
-					[global::Rocks.Runtime.MemberIdentifier(1, global::Rocks.Runtime.PropertyAccessor.Set)]
+					[global::Rocks.MemberIdentifier(0, global::Rocks.PropertyAccessor.Get)]
+					[global::Rocks.MemberIdentifier(1, global::Rocks.PropertyAccessor.Set)]
 					public unsafe int this[int* @value1, char* @value3]
 					{
 						get
@@ -1153,7 +1153,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
 										value1: <Not formattable>
@@ -1161,7 +1161,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 									""");
 							}
 							
-							throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}
 									value1: <Not formattable>
@@ -1184,7 +1184,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 									}
 								}
 								
-								throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(1)}
 										value1: <Not formattable>
@@ -1193,7 +1193,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 									""");
 							}
 							
-							throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(1)}
 									value1: <Not formattable>
@@ -1212,9 +1212,9 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 						internal IndexerGetterExpectations(global::ISpecialTypesCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::ISpecialTypesCreateExpectations.Adornments.AdornmentsForHandler0 This(global::Rocks.Runtime.Projections.PointerArgument<int> @value1, global::Rocks.Runtime.Projections.PointerArgument<char> @value3)
+						internal global::ISpecialTypesCreateExpectations.Adornments.AdornmentsForHandler0 This(global::Rocks.Projections.PointerArgument<int> @value1, global::Rocks.Projections.PointerArgument<char> @value3)
 						{
-							global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value1);
 							global::System.ArgumentNullException.ThrowIfNull(@value3);
 							
@@ -1236,9 +1236,9 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 						internal IndexerSetterExpectations(global::ISpecialTypesCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::ISpecialTypesCreateExpectations.Adornments.AdornmentsForHandler1 This(global::Rocks.Runtime.Argument<int> @value, global::Rocks.Runtime.Projections.PointerArgument<int> @value1, global::Rocks.Runtime.Projections.PointerArgument<char> @value3)
+						internal global::ISpecialTypesCreateExpectations.Adornments.AdornmentsForHandler1 This(global::Rocks.Argument<int> @value, global::Rocks.Projections.PointerArgument<int> @value1, global::Rocks.Projections.PointerArgument<char> @value3)
 						{
-							global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value1);
 							global::System.ArgumentNullException.ThrowIfNull(@value3);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -1280,25 +1280,25 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 					}
 					else
 					{
-						throw new global::Rocks.Runtime.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 					}
 				}
 				
 				internal static class Adornments
 				{
 					public interface IAdornmentsForISpecialTypes<TAdornments>
-						: global::Rocks.Runtime.IAdornments<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForISpecialTypes<TAdornments>
 					{ }
 					
 					public sealed class AdornmentsForHandler0
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler0, global::ISpecialTypesCreateExpectations.Handler0, global::ISpecialTypesCreateExpectations.Handler0.CallbackForHandler, int>, IAdornmentsForISpecialTypes<AdornmentsForHandler0>
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::ISpecialTypesCreateExpectations.Handler0, global::ISpecialTypesCreateExpectations.Handler0.CallbackForHandler, int>, IAdornmentsForISpecialTypes<AdornmentsForHandler0>
 					{
 						public AdornmentsForHandler0(global::ISpecialTypesCreateExpectations.Handler0 handler)
 							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler1
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler1, global::ISpecialTypesCreateExpectations.Handler1, global::ISpecialTypesCreateExpectations.Handler1.CallbackForHandler>, IAdornmentsForISpecialTypes<AdornmentsForHandler1>
+						: global::Rocks.Adornments<AdornmentsForHandler1, global::ISpecialTypesCreateExpectations.Handler1, global::ISpecialTypesCreateExpectations.Handler1.CallbackForHandler>, IAdornmentsForISpecialTypes<AdornmentsForHandler1>
 					{
 						public AdornmentsForHandler1(global::ISpecialTypesCreateExpectations.Handler1 handler)
 							: base(handler) { }
@@ -1367,7 +1367,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			
 			#nullable enable
 			
-			namespace Rocks.Runtime.Projections;
+			namespace Rocks.Projections;
 			
 			internal unsafe delegate bool PointerArgumentEvaluation<T>(T* @value) where T : unmanaged;
 			

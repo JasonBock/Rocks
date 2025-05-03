@@ -10,7 +10,7 @@ internal static class ExpectationExceptionBuilder
 	{
 		writer.WriteLines(
 			$$""""
-			throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+			throw new global::Rocks.Exceptions.ExpectationException(
 				$"""
 				{{message}} {this.GetType().GetMemberDescription({{memberIdentifier}})}
 			"""");

@@ -9,7 +9,7 @@ public static class ConstructorGeneratorTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(Constructable), BuildType.Create | BuildType.Make)]
 
@@ -33,7 +33,7 @@ public static class ConstructorGeneratorTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 			using System;
 
 			[assembly: Rock(typeof(Constructable), BuildType.Create | BuildType.Make)]
@@ -59,7 +59,7 @@ public static class ConstructorGeneratorTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(AnyOf<,>), BuildType.Create | BuildType.Make)]
 
@@ -86,30 +86,30 @@ public static class ConstructorGeneratorTests
 			
 			#nullable enable
 			
-			using Rocks.Runtime.Extensions;
+			using Rocks.Extensions;
 			
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class AnyOfCreateExpectations<T1, T2>
-				: global::Rocks.Runtime.Expectations
+				: global::Rocks.Expectations
 			{
 				internal sealed class Handler0
-					: global::Rocks.Runtime.Handler<global::System.Func<object?, bool>, bool>
+					: global::Rocks.Handler<global::System.Func<object?, bool>, bool>
 				{
-					public global::Rocks.Runtime.Argument<object?> @obj { get; set; }
+					public global::Rocks.Argument<object?> @obj { get; set; }
 				}
-				private global::Rocks.Runtime.Handlers<global::AnyOfCreateExpectations<T1, T2>.Handler0>? @handlers0;
+				private global::Rocks.Handlers<global::AnyOfCreateExpectations<T1, T2>.Handler0>? @handlers0;
 				internal sealed class Handler1
-					: global::Rocks.Runtime.Handler<global::System.Func<int>, int>
+					: global::Rocks.Handler<global::System.Func<int>, int>
 				{ }
-				private global::Rocks.Runtime.Handlers<global::AnyOfCreateExpectations<T1, T2>.Handler1>? @handlers1;
+				private global::Rocks.Handlers<global::AnyOfCreateExpectations<T1, T2>.Handler1>? @handlers1;
 				internal sealed class Handler2
-					: global::Rocks.Runtime.Handler<global::System.Func<string?>, string?>
+					: global::Rocks.Handler<global::System.Func<string?>, string?>
 				{ }
-				private global::Rocks.Runtime.Handlers<global::AnyOfCreateExpectations<T1, T2>.Handler2>? @handlers2;
+				private global::Rocks.Handlers<global::AnyOfCreateExpectations<T1, T2>.Handler2>? @handlers2;
 				internal sealed class Handler3
-					: global::Rocks.Runtime.Handler<global::System.Func<object>, object>
+					: global::Rocks.Handler<global::System.Func<object>, object>
 				{ }
-				private global::Rocks.Runtime.Handlers<global::AnyOfCreateExpectations<T1, T2>.Handler3>? @handlers3;
+				private global::Rocks.Handlers<global::AnyOfCreateExpectations<T1, T2>.Handler3>? @handlers3;
 				
 				public override void Verify()
 				{
@@ -124,7 +124,7 @@ public static class ConstructorGeneratorTests
 				
 						if (failures.Count > 0)
 						{
-							throw new global::Rocks.Runtime.Exceptions.VerificationException(failures);
+							throw new global::Rocks.Exceptions.VerificationException(failures);
 						}
 					}
 				}
@@ -143,7 +143,7 @@ public static class ConstructorGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.Runtime.MemberIdentifier(0)]
+					[global::Rocks.MemberIdentifier(0)]
 					public override bool Equals(object? @obj)
 					{
 						if (this.Expectations.handlers0 is not null)
@@ -159,7 +159,7 @@ public static class ConstructorGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Runtime.Exceptions.ExpectationException(
+							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers match for {this.GetType().GetMemberDescription(0)}
 									obj: {@obj.FormatValue()}
@@ -171,7 +171,7 @@ public static class ConstructorGeneratorTests
 						}
 					}
 					
-					[global::Rocks.Runtime.MemberIdentifier(1)]
+					[global::Rocks.MemberIdentifier(1)]
 					public override int GetHashCode()
 					{
 						if (this.Expectations.handlers1 is not null)
@@ -188,7 +188,7 @@ public static class ConstructorGeneratorTests
 						}
 					}
 					
-					[global::Rocks.Runtime.MemberIdentifier(2)]
+					[global::Rocks.MemberIdentifier(2)]
 					public override string? ToString()
 					{
 						if (this.Expectations.handlers2 is not null)
@@ -205,7 +205,7 @@ public static class ConstructorGeneratorTests
 						}
 					}
 					
-					[global::Rocks.Runtime.MemberIdentifier(3)]
+					[global::Rocks.MemberIdentifier(3)]
 					public override object GetValue()
 					{
 						if (this.Expectations.handlers3 is not null)
@@ -230,9 +230,9 @@ public static class ConstructorGeneratorTests
 					internal MethodExpectations(global::AnyOfCreateExpectations<T1, T2> expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::AnyOfCreateExpectations<T1, T2>.Adornments.AdornmentsForHandler0 Equals(global::Rocks.Runtime.Argument<object?> @obj)
+					internal global::AnyOfCreateExpectations<T1, T2>.Adornments.AdornmentsForHandler0 Equals(global::Rocks.Argument<object?> @obj)
 					{
-						global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
 						var @handler = new global::AnyOfCreateExpectations<T1, T2>.Handler0
@@ -247,7 +247,7 @@ public static class ConstructorGeneratorTests
 					
 					internal new global::AnyOfCreateExpectations<T1, T2>.Adornments.AdornmentsForHandler1 GetHashCode()
 					{
-						global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::AnyOfCreateExpectations<T1, T2>.Handler1();
 						if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
 						else { this.Expectations.handlers1.Add(handler); }
@@ -256,7 +256,7 @@ public static class ConstructorGeneratorTests
 					
 					internal new global::AnyOfCreateExpectations<T1, T2>.Adornments.AdornmentsForHandler2 ToString()
 					{
-						global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::AnyOfCreateExpectations<T1, T2>.Handler2();
 						if (this.Expectations.handlers2 is null) { this.Expectations.handlers2 = new(handler); }
 						else { this.Expectations.handlers2.Add(handler); }
@@ -265,7 +265,7 @@ public static class ConstructorGeneratorTests
 					
 					internal global::AnyOfCreateExpectations<T1, T2>.Adornments.AdornmentsForHandler3 GetValue()
 					{
-						global::Rocks.Runtime.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						var handler = new global::AnyOfCreateExpectations<T1, T2>.Handler3();
 						if (this.Expectations.handlers3 is null) { this.Expectations.handlers3 = new(handler); }
 						else { this.Expectations.handlers3.Add(handler); }
@@ -291,7 +291,7 @@ public static class ConstructorGeneratorTests
 					}
 					else
 					{
-						throw new global::Rocks.Runtime.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 					}
 				}
 				internal global::AnyOf<T1, T2> Instance(T2 @value)
@@ -305,37 +305,37 @@ public static class ConstructorGeneratorTests
 					}
 					else
 					{
-						throw new global::Rocks.Runtime.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 					}
 				}
 				
 				internal static class Adornments
 				{
 					public interface IAdornmentsForAnyOf<TAdornments>
-						: global::Rocks.Runtime.IAdornments<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForAnyOf<TAdornments>
 					{ }
 					
 					public sealed class AdornmentsForHandler0
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler0, global::AnyOfCreateExpectations<T1, T2>.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForAnyOf<AdornmentsForHandler0>
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::AnyOfCreateExpectations<T1, T2>.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForAnyOf<AdornmentsForHandler0>
 					{
 						public AdornmentsForHandler0(global::AnyOfCreateExpectations<T1, T2>.Handler0 handler)
 							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler1
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler1, global::AnyOfCreateExpectations<T1, T2>.Handler1, global::System.Func<int>, int>, IAdornmentsForAnyOf<AdornmentsForHandler1>
+						: global::Rocks.Adornments<AdornmentsForHandler1, global::AnyOfCreateExpectations<T1, T2>.Handler1, global::System.Func<int>, int>, IAdornmentsForAnyOf<AdornmentsForHandler1>
 					{
 						public AdornmentsForHandler1(global::AnyOfCreateExpectations<T1, T2>.Handler1 handler)
 							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler2
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler2, global::AnyOfCreateExpectations<T1, T2>.Handler2, global::System.Func<string?>, string?>, IAdornmentsForAnyOf<AdornmentsForHandler2>
+						: global::Rocks.Adornments<AdornmentsForHandler2, global::AnyOfCreateExpectations<T1, T2>.Handler2, global::System.Func<string?>, string?>, IAdornmentsForAnyOf<AdornmentsForHandler2>
 					{
 						public AdornmentsForHandler2(global::AnyOfCreateExpectations<T1, T2>.Handler2 handler)
 							: base(handler) { }
 					}
 					public sealed class AdornmentsForHandler3
-						: global::Rocks.Runtime.Adornments<AdornmentsForHandler3, global::AnyOfCreateExpectations<T1, T2>.Handler3, global::System.Func<object>, object>, IAdornmentsForAnyOf<AdornmentsForHandler3>
+						: global::Rocks.Adornments<AdornmentsForHandler3, global::AnyOfCreateExpectations<T1, T2>.Handler3, global::System.Func<object>, object>, IAdornmentsForAnyOf<AdornmentsForHandler3>
 					{
 						public AdornmentsForHandler3(global::AnyOfCreateExpectations<T1, T2>.Handler3 handler)
 							: base(handler) { }

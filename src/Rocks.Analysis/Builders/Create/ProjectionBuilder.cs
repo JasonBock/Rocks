@@ -16,15 +16,15 @@ internal static class ProjectionBuilder
 		{
 			if (type.TypeKind == TypeKind.FunctionPointer)
 			{
-				argumentTypeName = $"global::Rocks.Runtime.Projections.ArgumentFor{type.FlattenedName}";
+				argumentTypeName = $"global::Rocks.Projections.ArgumentFor{type.FlattenedName}";
 			}
 			else if (type.PointedAt!.SpecialType == SpecialType.System_Void)
 			{
-				argumentTypeName = $"global::Rocks.Runtime.Projections.{type.PointerNames!}VoidArgument";
+				argumentTypeName = $"global::Rocks.Projections.{type.PointerNames!}VoidArgument";
 			}
 			else
 			{
-				argumentTypeName = $"global::Rocks.Runtime.Projections.{type.PointerNames!}Argument<{type.PointedAt!.BuildName(typeArgumentsNamingContext)}>";
+				argumentTypeName = $"global::Rocks.Projections.{type.PointerNames!}Argument<{type.PointedAt!.BuildName(typeArgumentsNamingContext)}>";
 			}
 		}
 		else
@@ -32,10 +32,10 @@ internal static class ProjectionBuilder
 			var nullableAnnotation = requiresNullableAnnotation ? "?" : string.Empty;
 
 			argumentTypeName = type.RequiresProjectedArgument ?
-				$"global::Rocks.Runtime.Projections.{type.Name}Argument" :
+				$"global::Rocks.Projections.{type.Name}Argument" :
 				type.IsRefLikeType || type.AllowsRefLikeType ?
-					$"global::Rocks.Runtime.RefStructArgument<{type.BuildName(typeArgumentsNamingContext)}{nullableAnnotation}>" :
-					$"global::Rocks.Runtime.Argument<{type.BuildName(typeArgumentsNamingContext)}{nullableAnnotation}>";
+					$"global::Rocks.RefStructArgument<{type.BuildName(typeArgumentsNamingContext)}{nullableAnnotation}>" :
+					$"global::Rocks.Argument<{type.BuildName(typeArgumentsNamingContext)}{nullableAnnotation}>";
 		}
 
 		return argumentTypeName;

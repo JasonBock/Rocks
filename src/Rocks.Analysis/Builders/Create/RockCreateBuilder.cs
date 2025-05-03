@@ -53,7 +53,7 @@ internal sealed class RockCreateBuilder
 			content.AddRange([string.Join(Environment.NewLine, requiredAliases), string.Empty]);
 		}
 
-		content.AddRange(["using Rocks.Runtime.Extensions;", string.Empty]);
+		content.AddRange(["using Rocks.Extensions;", string.Empty]);
 
 		content.Add(writer.ToString());
 

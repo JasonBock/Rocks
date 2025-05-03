@@ -12,7 +12,7 @@ public static class RockAnalyzerSealedTypeTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(Data), BuildType.Create | BuildType.Make)]
 
@@ -29,7 +29,7 @@ public static class RockAnalyzerSealedTypeTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(Data), BuildType.Create | BuildType.Make)]
 
@@ -46,7 +46,7 @@ public static class RockAnalyzerSealedTypeTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(StructType), BuildType.Create | BuildType.Make)]
 
@@ -63,7 +63,7 @@ public static class RockAnalyzerSealedTypeTests
 	{
 		var code =
 			"""
-			using Rocks.Runtime;
+			using Rocks;
 
 			[assembly: Rock(typeof(DelegateType), BuildType.Create | BuildType.Make)]
 

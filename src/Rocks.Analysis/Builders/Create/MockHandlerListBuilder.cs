@@ -29,17 +29,17 @@ internal static class MockHandlerListBuilder
 
 		if (method.ReturnsVoid || method.ReturnType.RequiresProjectedArgument)
 		{
-			handlerBaseType = $"global::Rocks.Runtime.Handler<{callbackDelegateTypeName}>";
+			handlerBaseType = $"global::Rocks.Handler<{callbackDelegateTypeName}>";
 		}
 		else
 		{
 			if (method.ReturnType.IsRefLikeType || method.ReturnType.AllowsRefLikeType)
 			{
-				handlerBaseType = $"global::Rocks.Runtime.Handler<{callbackDelegateTypeName}, global::System.Func<{method.ReturnType.BuildName(typeArgumentsNamingContext)}>>";
+				handlerBaseType = $"global::Rocks.Handler<{callbackDelegateTypeName}, global::System.Func<{method.ReturnType.BuildName(typeArgumentsNamingContext)}>>";
 			}
 			else
 			{
-				handlerBaseType = $"global::Rocks.Runtime.Handler<{callbackDelegateTypeName}, {method.ReturnType.BuildName(typeArgumentsNamingContext)}>";
+				handlerBaseType = $"global::Rocks.Handler<{callbackDelegateTypeName}, {method.ReturnType.BuildName(typeArgumentsNamingContext)}>";
 			}
 		}
 
@@ -94,8 +94,8 @@ internal static class MockHandlerListBuilder
 		// If the method has open generics, we have to use the base Handler type -
 		// we'll cast it later within the method implementation.
 		var handlers = method.TypeArguments.Length == 0 ?
-			$"private global::Rocks.Runtime.Handlers<{expectationsFullyQualifiedName}.Handler{memberIdentifier}>? @handlers{memberIdentifier};" :
-			$"private global::Rocks.Runtime.Handlers<global::Rocks.Runtime.Handler>? @handlers{memberIdentifier};";
+			$"private global::Rocks.Handlers<{expectationsFullyQualifiedName}.Handler{memberIdentifier}>? @handlers{memberIdentifier};" :
+			$"private global::Rocks.Handlers<global::Rocks.Handler>? @handlers{memberIdentifier};";
 		writer.WriteLine(handlers);
 	}
 

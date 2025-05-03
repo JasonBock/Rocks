@@ -1,7 +1,7 @@
 ﻿using Microsoft.CodeAnalysis.CodeRefactorings;
 using Microsoft.CodeAnalysis.Testing;
 using NuGet.Frameworks;
-using Rocks.Runtime;
+using Rocks;
 
 namespace Rocks.Completions.Tests;
 

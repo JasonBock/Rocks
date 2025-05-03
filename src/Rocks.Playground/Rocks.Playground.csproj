@@ -12,6 +12,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Rocks.Analysis\Rocks.Analysis.csproj" OutputItemType="Analyzer" />
-		<ProjectReference Include="..\Rocks.Runtime\Rocks.Runtime.csproj" />
+		<ProjectReference Include="..\Rocks\Rocks.csproj" />
 	</ItemGroup>
 </Project>

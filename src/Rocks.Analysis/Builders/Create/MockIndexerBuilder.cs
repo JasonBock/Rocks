@@ -177,7 +177,7 @@ internal static class MockIndexerBuilder
 
 		if (shouldThrowDoesNotReturnException)
 		{
-			writer.WriteLine($"throw new global::Rocks.Runtime.Exceptions.DoesNotReturnException();");
+			writer.WriteLine($"throw new global::Rocks.Exceptions.DoesNotReturnException();");
 		}
 		else
 		{
@@ -258,7 +258,7 @@ internal static class MockIndexerBuilder
 			isGetterVisible = indexer.GetCanBeSeenByContainingAssembly;
 			if (isGetterVisible)
 			{
-				writer.WriteLine($"[global::Rocks.Runtime.MemberIdentifier({memberIdentifierAttribute}, global::Rocks.Runtime.PropertyAccessor.Get)]");
+				writer.WriteLine($"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, global::Rocks.PropertyAccessor.Get)]");
 				memberIdentifierAttribute++;
 			}
 		}
@@ -268,7 +268,7 @@ internal static class MockIndexerBuilder
 			isSetterVisible = indexer.SetCanBeSeenByContainingAssembly || indexer.InitCanBeSeenByContainingAssembly;
 			if (isSetterVisible)
 			{
-				writer.WriteLine($"[global::Rocks.Runtime.MemberIdentifier({memberIdentifierAttribute}, global::Rocks.Runtime.PropertyAccessor.Set)]");
+				writer.WriteLine($"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, global::Rocks.PropertyAccessor.Set)]");
 			}
 		}
 
