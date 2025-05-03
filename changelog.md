@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Created a refactoring to simplify `[Rock]` creation (issue [#361](https://github.com/JasonBock/Rocks/issues/361))
+- Created a refactoring to simplify `[Rock]` creation (issue [#361](https://github.com/JasonBock/Rocks/issues/361) and issue [#369](https://github.com/JasonBock/Rocks/issues/369))
 
 ### Changed
 
