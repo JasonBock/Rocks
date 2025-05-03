@@ -33,6 +33,11 @@
     <PackageVersion Include="Dapper" Version="2.1.66" />
     <PackageVersion Include="DiffEngine" Version="16.2.1" />
     <PackageVersion Include="DnsClient" Version="1.8.0" />
+    <PackageVersion Include="DotNext" Version="5.21.0" />
+    <PackageVersion Include="DotNext.IO" Version="5.21.0" />
+    <PackageVersion Include="DotNext.Metaprogramming" Version="5.21.0" />
+    <PackageVersion Include="DotNext.Threading" Version="5.21.0" />
+    <PackageVersion Include="DotNext.Unsafe" Version="5.21.0" />
     <PackageVersion Include="DryIoc" Version="5.4.3" />
     <PackageVersion Include="DSharpPlus" Version="5.0.0-nightly-02402" />
     <PackageVersion Include="Duende.IdentityModel" Version="7.0.0" />

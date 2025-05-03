@@ -41,6 +41,10 @@
 		<PackageReference Include="Dapper" />
 		<PackageReference Include="DiffEngine" />
 		<PackageReference Include="DnsClient" />
+		<PackageReference Include="DotNext" />
+		<PackageReference Include="DotNext.IO" />
+		<PackageReference Include="DotNext.Metaprogramming" />
+		<PackageReference Include="DotNext.Threading" />
 		<PackageReference Include="DSharpPlus" />
 		<PackageReference Include="Duende.IdentityModel" />
 		<PackageReference Include="DynamicData" />
