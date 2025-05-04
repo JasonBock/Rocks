@@ -246,7 +246,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					
 					internal global::MockTests.VoidMethodWithParamsCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal VoidMethodWithParamsCreateExpectations() =>
+					public VoidMethodWithParamsCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.VoidMethodWithParams Instance()
@@ -603,7 +603,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					
 					internal global::MockTests.ValueMethodWithParamsCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal ValueMethodWithParamsCreateExpectations() =>
+					public ValueMethodWithParamsCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.ValueMethodWithParams Instance()
@@ -838,7 +838,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					
 					internal global::MockTests.IHaveImplementationCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal IHaveImplementationCreateExpectations() =>
+					public IHaveImplementationCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.IHaveImplementation Instance()
@@ -1044,7 +1044,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					
 					internal global::MockTests.IHaveImplementationCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal IHaveImplementationCreateExpectations() =>
+					public IHaveImplementationCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.IHaveImplementation Instance()
@@ -1351,7 +1351,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					
 					internal global::MockTests.HaveImplementationCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal HaveImplementationCreateExpectations() =>
+					public HaveImplementationCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.HaveImplementation Instance()
@@ -1689,7 +1689,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					
 					internal global::MockTests.HaveImplementationCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal HaveImplementationCreateExpectations() =>
+					public HaveImplementationCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.HaveImplementation Instance()

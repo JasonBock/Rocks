@@ -158,7 +158,7 @@ public static class ShimBuilderGeneratorTests
 				
 				internal global::IDialogServiceCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IDialogServiceCreateExpectations() =>
+				public IDialogServiceCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IDialogService Instance()
@@ -546,7 +546,7 @@ public static class ShimBuilderGeneratorTests
 				internal global::IRuntimeKeyCreateExpectations.PropertyExpectations Properties { get; }
 				internal global::IRuntimeKeyCreateExpectations.ExplicitPropertyExpectationsForIReadOnlyKey ExplicitPropertiesForIReadOnlyKey { get; }
 				
-				internal IRuntimeKeyCreateExpectations() =>
+				public IRuntimeKeyCreateExpectations() =>
 					(this.Methods, this.Properties, this.ExplicitPropertiesForIReadOnlyKey) = (new(this), new(this), new(this));
 				
 				internal global::IRuntimeKey Instance()
@@ -1039,7 +1039,7 @@ public static class ShimBuilderGeneratorTests
 				internal global::IHaveDimsCreateExpectations.PropertyExpectations Properties { get; }
 				internal global::IHaveDimsCreateExpectations.IndexerExpectations Indexers { get; }
 				
-				internal IHaveDimsCreateExpectations() =>
+				public IHaveDimsCreateExpectations() =>
 					(this.Methods, this.Properties, this.Indexers) = (new(this), new(this), new(this));
 				
 				internal global::IHaveDims Instance()
