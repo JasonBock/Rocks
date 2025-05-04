@@ -17,14 +17,13 @@ public static class ParamsTests
 	[Test]
 	public static void CreateMembersWithReadOnlySpanParamsArgumentsSpecified()
 	{
-		var expectations = new IHaveParamsCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHaveParamsCreateExpectations>();
 		expectations.Methods.ParamsFoo(1, 
 			new(_ => _.Length == 2 && _[0] == "b" && _[1] == "c"));
 
 		var mock = expectations.Instance();
 		mock.ParamsFoo(1, "b", "c");
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -38,15 +37,14 @@ public static class ParamsTests
 	public static void CreateMembersWithParamsArgumentsSpecified()
 	{
 		var returnValue = 3;
-		var expectations = new IHaveParamsCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHaveParamsCreateExpectations>();
 		expectations.Methods.Foo(1, new[] { "b" });
 		expectations.Indexers.Getters.This(1, new[] { "b" }).ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		mock.Foo(1, "b");
 		var value = mock[1, "b"];
-
-		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(returnValue));
 	}
@@ -68,15 +66,14 @@ public static class ParamsTests
 	public static void CreateMembersWithParamsArgumentsNotSpecified()
 	{
 		var returnValue = 3;
-		var expectations = new IHaveParamsCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHaveParamsCreateExpectations>();
 		expectations.Methods.Foo(1, Array.Empty<string>());
 		expectations.Indexers.Getters.This(1, Array.Empty<string>()).ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		mock.Foo(1);
 		var value = mock[1];
-
-		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(returnValue));
 	}

@@ -12,23 +12,23 @@ public static class OpenGenericsTests
 	[Test]
 	public static void CreateWithIntAndString()
 	{
-		var intStringExpectations = new IServiceCreateExpectations<int, string>();
+		using var context = new RockContext();
+		var intStringExpectations = context.Create<IServiceCreateExpectations<int, string>>();
 		intStringExpectations.Methods.Service(3).ReturnValue("three");
 
 		var intStringMock = intStringExpectations.Instance();
 		Assert.That(intStringMock.Service(3), Is.EqualTo("three"));
-		intStringExpectations.Verify();
 	}
 
 	[Test]
 	public static void CreateWithStringAndInt()
 	{
-		var stringIntExpectations = new IServiceCreateExpectations<string, int>();
+		using var context = new RockContext();
+		var stringIntExpectations = context.Create<IServiceCreateExpectations<string, int>>();
 		stringIntExpectations.Methods.Service("four").ReturnValue(4);
 
 		var stringIntMock = stringIntExpectations.Instance();
 		Assert.That(stringIntMock.Service("four"), Is.EqualTo(4));
-		stringIntExpectations.Verify();
 	}
 
 	[Test]

@@ -8,25 +8,23 @@ public static class VisibilityTests
 	[Test]
 	public static void CreateUsingInternalStuff()
 	{
-		var expectations = new IDoInternalStuffCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IDoInternalStuffCreateExpectations>();
 		expectations.Methods.Perform(Arg.Any<InternalDataStuff>());
 
 		var mock = expectations.Instance();
 		mock.Perform(new());
-
-		expectations.Verify();
 	}
 
 	[Test]
 	public static void CreateUsingPublicStuff()
 	{
-		var expectations = new IDoPublicStuffCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IDoPublicStuffCreateExpectations>();
 		expectations.Methods.Perform(Arg.Any<PublicDataStuff>());
 
 		var mock = expectations.Instance();
 		mock.Perform(new());
-
-		expectations.Verify();
 	}
 
 	[Test]

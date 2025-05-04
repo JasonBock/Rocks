@@ -18,8 +18,9 @@ public static class MultipleRockCallsTests
 	[Test]
 	public static void CreateMocks()
 	{
-		var expectations1 = new IMultipleRockCallsCreateExpectations();
-		var expectations2 = new IMultipleRockCallsCreateExpectations();
+		using var context = new RockContext();
+		var expectations1 = context.Create<IMultipleRockCallsCreateExpectations>();
+		var expectations2 = context.Create<IMultipleRockCallsCreateExpectations>();
 
 		expectations1.Methods.Foo();
 		expectations2.Methods.Foo();
@@ -29,9 +30,6 @@ public static class MultipleRockCallsTests
 
 		mock1.Foo();
 		mock2.Foo();
-
-		expectations1.Verify();
-		expectations2.Verify();
 	}
 
 	[Test]

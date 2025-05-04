@@ -15,49 +15,45 @@ public static class VerificationTests
 	[Test]
 	public static void VerifyWhenVoidCallbackThrowsException()
 	{
-		var expectations = new IDataCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IDataCreateExpectations>();
 		expectations.Methods.Calculate().Callback(() => throw new NotSupportedException());
 
 		var data = expectations.Instance();
 		Assert.That(data.Calculate, Throws.TypeOf<NotSupportedException>());
-
-		expectations.Verify();
 	}
 
 	[Test]
 	public static void VerifyWhenIntCallbackThrowsException()
 	{
-		var expectations = new IDataCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IDataCreateExpectations>();
 		expectations.Methods.CalculateValue().Callback(() => throw new NotSupportedException());
 
 		var data = expectations.Instance();
 		Assert.That(data.CalculateValue, Throws.TypeOf<NotSupportedException>());
-
-		expectations.Verify();
 	}
 
 	[Test]
 	public static void VerifyWhenGetterCallbackThrowsException()
 	{
-		var expectations = new IDataCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IDataCreateExpectations>();
 		expectations.Properties.Getters.Value().Callback(() => throw new NotSupportedException());
 
 		var data = expectations.Instance();
 		Assert.That(() => data.Value, Throws.TypeOf<NotSupportedException>());
-
-		expectations.Verify();
 	}
 
 	[Test]
 	public static void VerifyWhenSetterCallbackThrowsException()
 	{
-		var expectations = new IDataCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IDataCreateExpectations>();
 		expectations.Properties.Setters.Value("x").Callback(_ => throw new NotSupportedException());
 
 		var data = expectations.Instance();
 		Assert.That(() => data.Value = "x", Throws.TypeOf<NotSupportedException>());
-
-		expectations.Verify();
 	}
 
 	[Test]

@@ -53,76 +53,70 @@ public static class VirtualsWithImplementationsTests
 	[Test]
 	public static void CallVirtualIndexerOnInterfaceWithNoExpectation()
 	{
-		var expectations = new IIndexerPolygonCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IIndexerPolygonCreateExpectations>();
 		expectations.Properties.Getters.SideLength().ReturnValue(3);
 
 		var mock = expectations.Instance();
 		Assert.That(mock[5], Is.EqualTo(15));
-
-		expectations.Verify();
 	}
 
 	[Test]
 	public static void CallVirtualMethodOnInterfaceWithNoExpectation()
 	{
-		var expectations = new IMethodPolygonCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IMethodPolygonCreateExpectations>();
 		expectations.Properties.Getters.SideLength().ReturnValue(3);
 		expectations.Properties.Getters.NumberOfSides().ReturnValue(5);
 
 		var mock = expectations.Instance();
 		Assert.That(mock.GetPerimeter(), Is.EqualTo(15));
-
-		expectations.Verify();
 	}
 
 	[Test]
 	public static void CallVirtualPropertyOnInterfaceWithNoExpectation()
 	{
-		var expectations = new IPropertyPolygonCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IPropertyPolygonCreateExpectations>();
 		expectations.Properties.Getters.SideLength().ReturnValue(3);
 		expectations.Properties.Getters.NumberOfSides().ReturnValue(5);
 
 		var mock = expectations.Instance();
 		Assert.That(mock.Perimeter, Is.EqualTo(15));
-
-		expectations.Verify();
 	}
 
 	[Test]
 	public static void CallVirtualIndexerOnClassWithNoExpectation()
 	{
-		var expectations = new IndexerPolygonCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IndexerPolygonCreateExpectations>();
 		expectations.Properties.Getters.SideLength().ReturnValue(3);
 
 		var mock = expectations.Instance();
 		Assert.That(mock[5], Is.EqualTo(15));
-
-		expectations.Verify();
 	}
 
 	[Test]
 	public static void CallVirtualMethodOnClassWithNoExpectation()
 	{
-		var expectations = new MethodPolygonCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<MethodPolygonCreateExpectations>();
 		expectations.Properties.Getters.SideLength().ReturnValue(3);
 		expectations.Properties.Getters.NumberOfSides().ReturnValue(5);
 
 		var mock = expectations.Instance();
 		Assert.That(mock.GetPerimeter(), Is.EqualTo(15));
-
-		expectations.Verify();
 	}
 
 	[Test]
 	public static void CallVirtualPropertyOnClassWithNoExpectation()
 	{
-		var expectations = new PropertyPolygonCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<PropertyPolygonCreateExpectations>();
 		expectations.Properties.Getters.SideLength().ReturnValue(3);
 		expectations.Properties.Getters.NumberOfSides().ReturnValue(5);
 
 		var mock = expectations.Instance();
 		Assert.That(mock.Perimeter, Is.EqualTo(15));
-
-		expectations.Verify();
 	}
 }

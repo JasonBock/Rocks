@@ -29,25 +29,23 @@ public static class PartialTests
 	[Test]
 	public static void Create()
 	{
-		var expectations = new PartialCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<PartialCreateExpectations>();
 		expectations.Methods.Work();
 
 		var mock = expectations.Instance();
 		mock.Work();
-
-		expectations.Verify();
 	}
 
 	[Test]
 	public static void CreateGeneric()
 	{
-		var expectations = new GenericPartialCreateExpectations<int>();
+		using var context = new RockContext();
+		var expectations = context.Create<GenericPartialCreateExpectations<int>>();
 		expectations.Methods.Work().ReturnValue(3);
 
 		var mock = expectations.Instance();
 		Assert.That(mock.Work(), Is.EqualTo(3));
-
-		expectations.Verify();
 	}
 
 	[Test]

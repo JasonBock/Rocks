@@ -18,7 +18,8 @@ public static class InterfaceStaticVirtualTests
 	[Test]
 	public static void Create()
 	{
-		var expectations = new IHaveStaticVirtualsCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHaveStaticVirtualsCreateExpectations>();
 		expectations.Methods.InstanceLift().ReturnValue("a");
 		expectations.Properties.Getters.InstancePush().ReturnValue("b");
 		expectations.Properties.Setters.InstancePush("c");
@@ -31,8 +32,6 @@ public static class InterfaceStaticVirtualTests
 			Assert.That(mock.InstancePush, Is.EqualTo("b"));
 			Assert.That(mock.InstanceLift(), Is.EqualTo("a"));
 		});
-
-		expectations.Verify();
 	}
 
 	[Test]

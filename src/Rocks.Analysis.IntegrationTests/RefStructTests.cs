@@ -30,7 +30,8 @@ public static class RefStructTests
 	[Test]
 	public static void CreateScoped()
 	{
-		var expectations = new IHaveScopedCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHaveScopedCreateExpectations>();
 		expectations.Methods.Foo(new()).ReturnValue(() => new[] { 1, 2 }.AsSpan());
 
 		var mock = expectations.Instance();
@@ -43,7 +44,6 @@ public static class RefStructTests
 			Assert.That(data[0], Is.EqualTo(1));
 			Assert.That(data[1], Is.EqualTo(2));
 		});
-		expectations.Verify();
 	}
 
 	[Test]
@@ -61,7 +61,8 @@ public static class RefStructTests
 	[Test]
 	public static void CreateInAndOut()
 	{
-		var expectations = new IHaveInAndOutSpanCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHaveInAndOutSpanCreateExpectations>();
 		expectations.Methods.Foo(new()).ReturnValue(() => new[] { 1, 2 }.AsSpan());
 		expectations.Properties.Getters.Values().ReturnValue(() => new byte[] { 3, 4, 5 }.AsSpan());
 
@@ -79,8 +80,6 @@ public static class RefStructTests
 			Assert.That(values[1], Is.EqualTo(4));
 			Assert.That(values[2], Is.EqualTo(5));
 		});
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -97,7 +96,8 @@ public static class RefStructTests
 	[Test]
 	public static void CreateWithReturnValues()
 	{
-		var expectations = new IReturnSpanCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IReturnSpanCreateExpectations>();
 		expectations.Methods.GetRandomData().ReturnValue(() => new[] { 1, 2 }.AsSpan());
 		expectations.Properties.Getters.Values().ReturnValue(() => new byte[] { 3, 4, 5 }.AsSpan());
 
@@ -115,8 +115,6 @@ public static class RefStructTests
 			Assert.That(values[1], Is.EqualTo(4));
 			Assert.That(values[2], Is.EqualTo(5));
 		});
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -133,15 +131,14 @@ public static class RefStructTests
 	[Test]
 	public static void CreateWithSpanOfInt()
 	{
-		var expectations = new IHaveSpanCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHaveSpanCreateExpectations>();
 		expectations.Methods.Foo(new());
 
 		var mock = expectations.Instance();
 		var buffer = new int[] { 3 };
 
 		mock.Foo(new Span<int>(buffer));
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -158,29 +155,27 @@ public static class RefStructTests
 		static bool FooEvaluation(Span<int> value) =>
 			value.Length == 1 && value[0] == 3;
 
-		var expectations = new IHaveSpanCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHaveSpanCreateExpectations>();
 		expectations.Methods.Foo(new(FooEvaluation));
 
 		var mock = expectations.Instance();
 		var buffer = new int[] { 3 };
 
 		mock.Foo(new Span<int>(buffer));
-
-		expectations.Verify();
 	}
 
 	[Test]
 	public static void CreateWithSpanOfT()
 	{
-		var expectations = new IHaveSpanCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHaveSpanCreateExpectations>();
 		expectations.Methods.Bar<int>(new());
 
 		var mock = expectations.Instance();
 		var buffer = new int[] { 3 };
 
 		mock.Bar(new Span<int>(buffer));
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -197,14 +192,13 @@ public static class RefStructTests
 		static bool BarEvaluation(Span<int> value) =>
 			value.Length == 1 && value[0] == 3;
 
-		var expectations = new IHaveSpanCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHaveSpanCreateExpectations>();
 		expectations.Methods.Bar<int>(new(BarEvaluation));
 
 		var mock = expectations.Instance();
 		var buffer = new int[] { 3 };
 
 		mock.Bar(new Span<int>(buffer));
-
-		expectations.Verify();
 	}
 }

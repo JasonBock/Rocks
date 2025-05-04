@@ -29,7 +29,8 @@ public static class RequiredInitPropertyTests
 	[Test]
 	public static void InitPropertiesWithCreate()
 	{
-		var expectations = new InitsCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<InitsCreateExpectations>();
 		expectations.Methods.Foo();
 
 		var mock = expectations.Instance(
@@ -43,8 +44,6 @@ public static class RequiredInitPropertyTests
 			Assert.That(mock.NonNullableReferenceType, Is.EqualTo("3"));
 			Assert.That(mock.NullableReferenceType, Is.EqualTo("2"));
 		});
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -66,7 +65,8 @@ public static class RequiredInitPropertyTests
 	[Test]
 	public static void InitPropertiesWithNullWithCreate()
 	{
-		var expectations = new InitsCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<InitsCreateExpectations>();
 		expectations.Methods.Foo();
 
 		var mock = expectations.Instance(null);
@@ -79,8 +79,6 @@ public static class RequiredInitPropertyTests
 			Assert.That(mock.NonNullableReferenceType, Is.Null);
 			Assert.That(mock.NullableReferenceType, Is.Null);
 		});
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -101,7 +99,8 @@ public static class RequiredInitPropertyTests
 	[Test]
 	public static void RequiredPropertiesWithCreate()
 	{
-		var expectations = new RequiredsCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<RequiredsCreateExpectations>();
 		expectations.Methods.Foo();
 
 		var mock = expectations.Instance(
@@ -115,8 +114,6 @@ public static class RequiredInitPropertyTests
 			Assert.That(mock.NonNullableReferenceType, Is.EqualTo("3"));
 			Assert.That(mock.NullableReferenceType, Is.EqualTo("2"));
 		});
-
-		expectations.Verify();
 	}
 
 	[Test]

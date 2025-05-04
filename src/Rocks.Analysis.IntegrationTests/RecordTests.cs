@@ -12,13 +12,12 @@ public static class RecordTests
 	[Test]
 	public static void Create()
 	{
-		var expectations = new MyRecordCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<MyRecordCreateExpectations>();
 		expectations.Methods.Foo();
 
 		var mock = expectations.Instance();
 		mock.Foo();
-
-		expectations.Verify();
 	}
 
 	[Test]

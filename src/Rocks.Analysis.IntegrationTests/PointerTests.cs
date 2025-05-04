@@ -24,13 +24,12 @@ public static unsafe class PointerTests
 		var value = 10;
 		var pValue = &value;
 
-		var expectations = new ISurfaceCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<ISurfaceCreateExpectations>();
 		expectations.Methods.Create<int>(pValue);
 
 		var mock = expectations.Instance();
 		mock.Create(pValue);
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -49,13 +48,12 @@ public static unsafe class PointerTests
 		var value = 10;
 		var pValue = &value;
 
-		var expectations = new IHavePointersCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHavePointersCreateExpectations>();
 		expectations.Methods.PointerParameter(new(pValue));
 
 		var mock = expectations.Instance();
 		mock.PointerParameter(pValue);
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -74,13 +72,12 @@ public static unsafe class PointerTests
 		var value = 10;
 		var pValue = &value;
 
-		var expectations = new IHavePointersCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHavePointersCreateExpectations>();
 		expectations.Methods.PointerParameter(pValue);
 
 		var mock = expectations.Instance();
 		mock.PointerParameter(pValue);
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -107,13 +104,12 @@ public static unsafe class PointerTests
 		var value = 10;
 		var pValue = &value;
 
-		var expectations = new IHavePointersCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHavePointersCreateExpectations>();
 		expectations.Methods.PointerParameter(pValue).Callback(PointerParameterCallback);
 
 		var mock = expectations.Instance();
 		mock.PointerParameter(pValue);
-
-		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(20));
 	}
@@ -121,13 +117,12 @@ public static unsafe class PointerTests
 	[Test]
 	public static void CreateWithPointerReturn()
 	{
-		var expectations = new IHavePointersCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHavePointersCreateExpectations>();
 		expectations.Methods.PointerReturn();
 
 		var mock = expectations.Instance();
 		mock.PointerReturn();
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -139,25 +134,23 @@ public static unsafe class PointerTests
 	{
 		unsafe static int* PointerReturnCallback() => default;
 
-		var expectations = new IHavePointersCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHavePointersCreateExpectations>();
 		expectations.Methods.PointerReturn().Callback(PointerReturnCallback);
 
 		var mock = expectations.Instance();
 		mock.PointerReturn();
-
-		expectations.Verify();
 	}
 
 	[Test]
 	public static void CreateWithPointerReturnWithResult()
 	{
-		var expectations = new IHavePointersCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHavePointersCreateExpectations>();
 		expectations.Methods.PointerReturn().ReturnValue(default);
 
 		var mock = expectations.Instance();
 		mock.PointerReturn();
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -165,13 +158,12 @@ public static unsafe class PointerTests
 	{
 		static void DelegatePointerParameterDelegate(int a) { }
 
-		var expectations = new IHavePointersCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHavePointersCreateExpectations>();
 		expectations.Methods.DelegatePointerParameter(new(&DelegatePointerParameterDelegate));
 
 		var mock = expectations.Instance();
 		mock.DelegatePointerParameter(&DelegatePointerParameterDelegate);
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -198,14 +190,13 @@ public static unsafe class PointerTests
 		var value = 10;
 		var pValue = &value;
 
-		var expectations = new IHavePointersCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHavePointersCreateExpectations>();
 		expectations.Methods.DelegatePointerParameter(new(&DelegatePointerParameterDelegate))
 			.Callback(DelegatePointerParameterCallback);
 
 		var mock = expectations.Instance();
 		mock.DelegatePointerParameter(&DelegatePointerParameterDelegate);
-
-		expectations.Verify();
 
 		Assert.That(wasCalled, Is.True);
 	}
@@ -213,13 +204,12 @@ public static unsafe class PointerTests
 	[Test]
 	public static void CreateWithDelegatePointerReturn()
 	{
-		var expectations = new IHavePointersCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHavePointersCreateExpectations>();
 		expectations.Methods.DelegatePointerReturn();
 
 		var mock = expectations.Instance();
 		mock.DelegatePointerReturn();
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -235,13 +225,12 @@ public static unsafe class PointerTests
 			return &DelegatePointerParameterDelegate;
 		}
 
-		var expectations = new IHavePointersCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHavePointersCreateExpectations>();
 		expectations.Methods.DelegatePointerReturn().Callback(DelegatePointerReturnCallback);
 
 		var mock = expectations.Instance();
 		var value = mock.DelegatePointerReturn();
-
-		expectations.Verify();
 
 		Assert.Multiple(() =>
 		{
@@ -254,12 +243,11 @@ public static unsafe class PointerTests
 	{
 		static void DelegatePointerParameterDelegate(int a) { }
 
-		var expectations = new IHavePointersCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHavePointersCreateExpectations>();
 		expectations.Methods.DelegatePointerReturn().ReturnValue(&DelegatePointerParameterDelegate);
 
 		var mock = expectations.Instance();
 		mock.DelegatePointerReturn();
-
-		expectations.Verify();
 	}
 }

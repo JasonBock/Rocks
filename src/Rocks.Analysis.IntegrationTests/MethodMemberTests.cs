@@ -39,7 +39,8 @@ public static class MethodMemberTests
 	[Test]
 	public static void CreateWithLotsOfParameters()
 	{
-		var expectations = new IHaveLotsOfParametersCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHaveLotsOfParametersCreateExpectations>();
 		expectations.Methods.CallThis(
 			0, 1, 2, 3, 4,
 			5, 6, 7, 8, 9,
@@ -52,20 +53,18 @@ public static class MethodMemberTests
 			5, 6, 7, 8, 9,
 			10, 11, 12, 13, 14,
 			15, 16, 17, 18, 19);
-
-		expectations.Verify();
 	}
 
 	[Test]
 	public static void CreateMethodWithRefReturn()
 	{
-		var expectations = new IHaveRefReturnCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHaveRefReturnCreateExpectations>();
 		expectations.Methods.MethodRefReturn().ReturnValue(3);
 
 		var mock = expectations.Instance();
 		ref var value = ref mock.MethodRefReturn();
 
-		expectations.Verify();
 		Assert.That(value, Is.EqualTo(3));
 	}
 
@@ -81,13 +80,13 @@ public static class MethodMemberTests
 	[Test]
 	public static void CreatePropertyWithRefReturn()
 	{
-		var expectations = new IHaveRefReturnCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHaveRefReturnCreateExpectations>();
 		expectations.Properties.Getters.PropertyRefReturn().ReturnValue(3);
 
 		var mock = expectations.Instance();
 		ref var value = ref mock.PropertyRefReturn;
 
-		expectations.Verify();
 		Assert.That(value, Is.EqualTo(3));
 	}
 
@@ -103,13 +102,13 @@ public static class MethodMemberTests
 	[Test]
 	public static void CreateIndexerWithRefReturn()
 	{
-		var expectations = new IHaveRefReturnCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHaveRefReturnCreateExpectations>();
 		expectations.Indexers.Getters.This(3).ReturnValue(4);
 
 		var mock = expectations.Instance();
 		ref var value = ref mock[3];
 
-		expectations.Verify();
 		Assert.That(value, Is.EqualTo(4));
 	}
 
@@ -125,13 +124,13 @@ public static class MethodMemberTests
 	[Test]
 	public static void CreateMethodWithRefReadonlyReturn()
 	{
-		var expectations = new IHaveRefReturnCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHaveRefReturnCreateExpectations>();
 		expectations.Methods.MethodRefReadonlyReturn().ReturnValue(3);
 
 		var mock = expectations.Instance();
 		var value = mock.MethodRefReadonlyReturn();
 
-		expectations.Verify();
 		Assert.That(value, Is.EqualTo(3));
 	}
 
@@ -147,13 +146,13 @@ public static class MethodMemberTests
 	[Test]
 	public static void CreatePropertyWithRefReadonlyReturn()
 	{
-		var expectations = new IHaveRefReturnCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHaveRefReturnCreateExpectations>();
 		expectations.Properties.Getters.PropertyRefReadonlyReturn().ReturnValue(3);
 
 		var mock = expectations.Instance();
 		var value = mock.PropertyRefReadonlyReturn;
 
-		expectations.Verify();
 		Assert.That(value, Is.EqualTo(3));
 	}
 
@@ -169,13 +168,13 @@ public static class MethodMemberTests
 	[Test]
 	public static void CreateIndexerWithRefReadonlyReturn()
 	{
-		var expectations = new IHaveRefReturnCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHaveRefReturnCreateExpectations>();
 		expectations.Indexers.Getters.This("b").ReturnValue(4);
 
 		var mock = expectations.Instance();
 		var value = mock["b"];
 
-		expectations.Verify();
 		Assert.That(value, Is.EqualTo(4));
 	}
 
@@ -191,15 +190,14 @@ public static class MethodMemberTests
 	[Test]
 	public static void CreateMembersWithInParameters()
 	{
-		var expectations = new IHaveInCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHaveInCreateExpectations>();
 		expectations.Methods.InArgument(3);
 		expectations.Indexers.Getters.This(4).ReturnValue(5);
 
 		var mock = expectations.Instance();
 		mock.InArgument(3);
 		var value = mock[4];
-
-		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(5));
 	}
@@ -220,13 +218,12 @@ public static class MethodMemberTests
 	[Test]
 	public static void CreateMemberWithOutParameter()
 	{
-		var expectations = new IHaveRefAndOutCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHaveRefAndOutCreateExpectations>();
 		expectations.Methods.OutArgument(3);
 
 		var mock = expectations.Instance();
 		mock.OutArgument(out var value);
-
-		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(0));
 	}
@@ -245,13 +242,12 @@ public static class MethodMemberTests
 	{
 		static void OutArgumentCallback(out int a) => a = 4;
 
-		var expectations = new IHaveRefAndOutCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHaveRefAndOutCreateExpectations>();
 		expectations.Methods.OutArgument(3).Callback(OutArgumentCallback);
 
 		var mock = expectations.Instance();
 		mock.OutArgument(out var value);
-
-		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(4));
 	}
@@ -259,13 +255,12 @@ public static class MethodMemberTests
 	[Test]
 	public static void CreateMemberWithOutParameterAndGenerics()
 	{
-		var expectations = new IHaveRefAndOutCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHaveRefAndOutCreateExpectations>();
 		expectations.Methods.OutArgumentsWithGenerics<int, string>(3, "b");
 
 		var mock = expectations.Instance();
 		mock.OutArgumentsWithGenerics<int, string>(3, out var value);
-
-		expectations.Verify();
 
 		Assert.Multiple(() =>
 		{
@@ -288,14 +283,13 @@ public static class MethodMemberTests
 		static void OutArgumentsWithGenericsCallback(int a, out string b) =>
 			b = a.ToString(CultureInfo.CurrentCulture);
 
-		var expectations = new IHaveRefAndOutCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHaveRefAndOutCreateExpectations>();
 		expectations.Methods.OutArgumentsWithGenerics<int, string>(3, "b")
 			.Callback(OutArgumentsWithGenericsCallback);
 
 		var mock = expectations.Instance();
 		mock.OutArgumentsWithGenerics<int, string>(3, out var value);
-
-		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo("3"));
 	}
@@ -303,14 +297,13 @@ public static class MethodMemberTests
 	[Test]
 	public static void CreateMemberWithRefParameter()
 	{
-		var expectations = new IHaveRefAndOutCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHaveRefAndOutCreateExpectations>();
 		expectations.Methods.RefArgument(3);
 
 		var mock = expectations.Instance();
 		var value = 3;
 		mock.RefArgument(ref value);
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -330,14 +323,13 @@ public static class MethodMemberTests
 	{
 		static void RefArgumentCallback(ref int a) => a = 4;
 
-		var expectations = new IHaveRefAndOutCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHaveRefAndOutCreateExpectations>();
 		expectations.Methods.RefArgument(3).Callback(RefArgumentCallback);
 
 		var mock = expectations.Instance();
 		var value = 3;
 		mock.RefArgument(ref value);
-
-		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(4));
 	}
@@ -345,14 +337,13 @@ public static class MethodMemberTests
 	[Test]
 	public static void CreateMemberWithRefParameterAndGenerics()
 	{
-		var expectations = new IHaveRefAndOutCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHaveRefAndOutCreateExpectations>();
 		expectations.Methods.RefArgumentsWithGenerics<int, string>(3, "b");
 
 		var mock = expectations.Instance();
 		var value = "b";
 		mock.RefArgumentsWithGenerics(3, ref value);
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -373,14 +364,13 @@ public static class MethodMemberTests
 		static void RefArgumentsWithGenericsCallback(int a, ref string b) =>
 			b = a.ToString(CultureInfo.CurrentCulture);
 
-		var expectations = new IHaveRefAndOutCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<IHaveRefAndOutCreateExpectations>();
 		expectations.Methods.RefArgumentsWithGenerics<int, string>(3, "b").Callback(RefArgumentsWithGenericsCallback);
 
 		var mock = expectations.Instance();
 		var value = "b";
 		mock.RefArgumentsWithGenerics(3, ref value);
-
-		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo("3"));
 	}
