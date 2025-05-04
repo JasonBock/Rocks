@@ -131,7 +131,7 @@ public static class ParameterModifierTests
 				
 				internal global::IParameterModifierCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IParameterModifierCreateExpectations() =>
+				public IParameterModifierCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IParameterModifier Instance()
@@ -348,7 +348,7 @@ public static class ParameterModifierTests
 				
 				internal global::IParameterModifierCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IParameterModifierCreateExpectations() =>
+				public IParameterModifierCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IParameterModifier Instance()
@@ -564,7 +564,7 @@ public static class ParameterModifierTests
 				
 				internal global::IParameterModifierCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IParameterModifierCreateExpectations() =>
+				public IParameterModifierCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IParameterModifier Instance()
@@ -778,7 +778,7 @@ public static class ParameterModifierTests
 				
 				internal global::IParameterModifierCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IParameterModifierCreateExpectations() =>
+				public IParameterModifierCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IParameterModifier Instance()
@@ -1196,7 +1196,7 @@ public static class ParameterModifierTests
 				
 				internal global::IParameterModifierCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IParameterModifierCreateExpectations() =>
+				public IParameterModifierCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IParameterModifier Instance()

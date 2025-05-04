@@ -198,7 +198,7 @@ public static class OptionalArgumentsTests
 				internal global::ICallerParameterCreateExpectations.MethodExpectations Methods { get; }
 				internal global::ICallerParameterCreateExpectations.ExplicitMethodExpectationsForIBaseCallerParameter ExplicitMethodsForIBaseCallerParameter { get; }
 				
-				internal ICallerParameterCreateExpectations() =>
+				public ICallerParameterCreateExpectations() =>
 					(this.Methods, this.ExplicitMethodsForIBaseCallerParameter) = (new(this), new(this));
 				
 				internal global::ICallerParameter Instance()
@@ -589,7 +589,7 @@ public static class OptionalArgumentsTests
 				internal global::IHaveOptionalArgumentsCreateExpectations.MethodExpectations Methods { get; }
 				internal global::IHaveOptionalArgumentsCreateExpectations.IndexerExpectations Indexers { get; }
 				
-				internal IHaveOptionalArgumentsCreateExpectations() =>
+				public IHaveOptionalArgumentsCreateExpectations() =>
 					(this.Methods, this.Indexers) = (new(this), new(this));
 				
 				internal global::IHaveOptionalArguments Instance()

@@ -222,7 +222,7 @@ public static class ConstructorGeneratorTests
 				
 				internal global::RequiredConstructorCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal RequiredConstructorCreateExpectations() =>
+				public RequiredConstructorCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::RequiredConstructor Instance()
@@ -614,7 +614,7 @@ public static class ConstructorGeneratorTests
 				
 				internal global::AnyOfCreateExpectations<T1, T2>.MethodExpectations Methods { get; }
 				
-				internal AnyOfCreateExpectations() =>
+				public AnyOfCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::AnyOf<T1, T2> Instance(T1 @value)

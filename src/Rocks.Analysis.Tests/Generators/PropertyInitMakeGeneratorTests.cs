@@ -471,7 +471,7 @@ public static class PropertyInitMakeGeneratorTests
 					
 					internal global::MockTests.ITestCreateExpectations.PropertyExpectations Properties { get; }
 					
-					internal ITestCreateExpectations() =>
+					public ITestCreateExpectations() =>
 						(this.Properties) = (new(this));
 					
 					internal sealed class ConstructorProperties
@@ -870,7 +870,7 @@ public static class PropertyInitMakeGeneratorTests
 					
 					internal global::MockTests.TestCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal TestCreateExpectations() =>
+					public TestCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal sealed class ConstructorProperties

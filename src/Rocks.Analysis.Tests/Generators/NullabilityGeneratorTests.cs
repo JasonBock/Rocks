@@ -259,7 +259,7 @@ public static class NullabilityGeneratorTests
 				
 				internal global::ConnectionBuilderCreateExpectations<TSourceType>.MethodExpectations Methods { get; }
 				
-				internal ConnectionBuilderCreateExpectations() =>
+				public ConnectionBuilderCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::ConnectionBuilder<TSourceType> Instance()
@@ -651,7 +651,7 @@ public static class NullabilityGeneratorTests
 				
 				internal global::SubTracerCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal SubTracerCreateExpectations() =>
+				public SubTracerCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::SubTracer Instance()
@@ -1028,7 +1028,7 @@ public static class NullabilityGeneratorTests
 				internal global::IConventionSkipNavigationCreateExpectations.ExplicitPropertyExpectationsForIReadOnlySkipNavigation ExplicitPropertiesForIReadOnlySkipNavigation { get; }
 				internal global::IConventionSkipNavigationCreateExpectations.ExplicitPropertyExpectationsForIReadOnlyNavigationBase ExplicitPropertiesForIReadOnlyNavigationBase { get; }
 				
-				internal IConventionSkipNavigationCreateExpectations() =>
+				public IConventionSkipNavigationCreateExpectations() =>
 					(this.Properties, this.ExplicitPropertiesForIReadOnlySkipNavigation, this.ExplicitPropertiesForIReadOnlyNavigationBase) = (new(this), new(this), new(this));
 				
 				internal global::IConventionSkipNavigation Instance()
@@ -1248,7 +1248,7 @@ public static class NullabilityGeneratorTests
 				
 				internal global::IDestinationCreateExpectations<TDestination>.MethodExpectations Methods { get; }
 				
-				internal IDestinationCreateExpectations() =>
+				public IDestinationCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IDestination<TDestination> Instance()

@@ -260,7 +260,7 @@ public static class DoesNotReturnGeneratorTests
 					
 					internal global::MockTests.ClassTestCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal ClassTestCreateExpectations() =>
+					public ClassTestCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.ClassTest Instance()
@@ -540,7 +540,7 @@ public static class DoesNotReturnGeneratorTests
 					
 					internal global::MockTests.IInterfaceTestCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal IInterfaceTestCreateExpectations() =>
+					public IInterfaceTestCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.IInterfaceTest Instance()

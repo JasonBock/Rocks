@@ -245,7 +245,7 @@ public static class AsyncIteratorGeneratorTests
 				
 				internal global::AsyncEnumerationCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal AsyncEnumerationCreateExpectations() =>
+				public AsyncEnumerationCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::AsyncEnumeration Instance()

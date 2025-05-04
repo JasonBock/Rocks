@@ -277,7 +277,7 @@ public static class RecordGeneratorTests
 					internal global::MockTests.RecordTestCreateExpectations.MethodExpectations Methods { get; }
 					internal global::MockTests.RecordTestCreateExpectations.PropertyExpectations Properties { get; }
 					
-					internal RecordTestCreateExpectations() =>
+					public RecordTestCreateExpectations() =>
 						(this.Methods, this.Properties) = (new(this), new(this));
 					
 					internal global::MockTests.RecordTest Instance()

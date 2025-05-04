@@ -132,7 +132,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 				
 				internal global::IPointerUsageCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IPointerUsageCreateExpectations() =>
+				public IPointerUsageCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IPointerUsage Instance()
@@ -383,7 +383,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 				
 				internal global::IPointerUsageCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IPointerUsageCreateExpectations() =>
+				public IPointerUsageCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IPointerUsage Instance()
@@ -725,7 +725,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 					
 					internal global::MockTests.IHavePointersCreateExpectations.PropertyExpectations Properties { get; }
 					
-					internal IHavePointersCreateExpectations() =>
+					public IHavePointersCreateExpectations() =>
 						(this.Properties) = (new(this));
 					
 					internal global::MockTests.IHavePointers Instance()
@@ -1093,7 +1093,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 					
 					internal global::MockTests.IHavePointersCreateExpectations.IndexerExpectations Indexers { get; }
 					
-					internal IHavePointersCreateExpectations() =>
+					public IHavePointersCreateExpectations() =>
 						(this.Indexers) = (new(this));
 					
 					internal global::MockTests.IHavePointers Instance()
@@ -1457,7 +1457,7 @@ public static class ProjectionMultiplePointerGeneratorTests
 					
 					internal global::MockTests.IHavePointersCreateExpectations.IndexerExpectations Indexers { get; }
 					
-					internal IHavePointersCreateExpectations() =>
+					public IHavePointersCreateExpectations() =>
 						(this.Indexers) = (new(this));
 					
 					internal global::MockTests.IHavePointers Instance()

@@ -189,7 +189,7 @@ public static class AllowNullGeneratorTests
 					
 					internal global::MockTests.IAllowCreateExpectations.PropertyExpectations Properties { get; }
 					
-					internal IAllowCreateExpectations() =>
+					public IAllowCreateExpectations() =>
 						(this.Properties) = (new(this));
 					
 					internal global::MockTests.IAllow Instance()
@@ -590,7 +590,7 @@ public static class AllowNullGeneratorTests
 					internal global::MockTests.AllowCreateExpectations.MethodExpectations Methods { get; }
 					internal global::MockTests.AllowCreateExpectations.PropertyExpectations Properties { get; }
 					
-					internal AllowCreateExpectations() =>
+					public AllowCreateExpectations() =>
 						(this.Methods, this.Properties) = (new(this), new(this));
 					
 					internal global::MockTests.Allow Instance()

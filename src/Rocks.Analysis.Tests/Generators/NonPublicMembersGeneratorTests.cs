@@ -325,7 +325,7 @@ public static class NonPublicMembersGeneratorTests
 				internal global::VisibilityIssuesCreateExpectations.MethodExpectations Methods { get; }
 				internal global::VisibilityIssuesCreateExpectations.PropertyExpectations Properties { get; }
 				
-				internal VisibilityIssuesCreateExpectations() =>
+				public VisibilityIssuesCreateExpectations() =>
 					(this.Methods, this.Properties) = (new(this), new(this));
 				
 				internal global::VisibilityIssues Instance()
@@ -847,7 +847,7 @@ public static class NonPublicMembersGeneratorTests
 				internal global::VisibilityIssuesCreateExpectations.MethodExpectations Methods { get; }
 				internal global::VisibilityIssuesCreateExpectations.PropertyExpectations Properties { get; }
 				
-				internal VisibilityIssuesCreateExpectations() =>
+				public VisibilityIssuesCreateExpectations() =>
 					(this.Methods, this.Properties) = (new(this), new(this));
 				
 				internal global::VisibilityIssues Instance()
@@ -1357,7 +1357,7 @@ public static class NonPublicMembersGeneratorTests
 				internal global::HasInternalVirtualCreateExpectations.PropertyExpectations Properties { get; }
 				internal global::HasInternalVirtualCreateExpectations.IndexerExpectations Indexers { get; }
 				
-				internal HasInternalVirtualCreateExpectations() =>
+				public HasInternalVirtualCreateExpectations() =>
 					(this.Methods, this.Properties, this.Indexers) = (new(this), new(this), new(this));
 				
 				internal global::HasInternalVirtual Instance(string @key)
@@ -1860,7 +1860,7 @@ public static class NonPublicMembersGeneratorTests
 					internal global::MockTests.TestCreateExpectations.MethodExpectations Methods { get; }
 					internal global::MockTests.TestCreateExpectations.PropertyExpectations Properties { get; }
 					
-					internal TestCreateExpectations() =>
+					public TestCreateExpectations() =>
 						(this.Methods, this.Properties) = (new(this), new(this));
 					
 					internal global::MockTests.Test Instance()
@@ -2371,7 +2371,7 @@ public static class NonPublicMembersGeneratorTests
 					internal global::MockTests.TestCreateExpectations.MethodExpectations Methods { get; }
 					internal global::MockTests.TestCreateExpectations.PropertyExpectations Properties { get; }
 					
-					internal TestCreateExpectations() =>
+					public TestCreateExpectations() =>
 						(this.Methods, this.Properties) = (new(this), new(this));
 					
 					internal global::MockTests.Test Instance()
@@ -2882,7 +2882,7 @@ public static class NonPublicMembersGeneratorTests
 					internal global::MockTests.TestCreateExpectations.MethodExpectations Methods { get; }
 					internal global::MockTests.TestCreateExpectations.PropertyExpectations Properties { get; }
 					
-					internal TestCreateExpectations() =>
+					public TestCreateExpectations() =>
 						(this.Methods, this.Properties) = (new(this), new(this));
 					
 					internal global::MockTests.Test Instance()

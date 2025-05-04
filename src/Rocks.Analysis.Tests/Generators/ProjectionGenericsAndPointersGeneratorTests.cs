@@ -137,7 +137,7 @@ public static class ProjectionGenericsAndPointersGeneratorTests
 				
 				internal global::ISurfaceCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal ISurfaceCreateExpectations() =>
+				public ISurfaceCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::ISurface Instance()

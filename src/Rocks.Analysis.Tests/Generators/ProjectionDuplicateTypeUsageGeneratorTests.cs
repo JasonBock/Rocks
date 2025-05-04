@@ -139,7 +139,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 				
 				internal global::ISpecialTypesCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal ISpecialTypesCreateExpectations() =>
+				public ISpecialTypesCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::ISpecialTypes Instance()
@@ -564,7 +564,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 				
 				internal global::ISpecialTypesCreateExpectations.IndexerExpectations Indexers { get; }
 				
-				internal ISpecialTypesCreateExpectations() =>
+				public ISpecialTypesCreateExpectations() =>
 					(this.Indexers) = (new(this));
 				
 				internal global::ISpecialTypes Instance()
@@ -910,7 +910,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 				
 				internal global::ISpecialTypesCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal ISpecialTypesCreateExpectations() =>
+				public ISpecialTypesCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::ISpecialTypes Instance()
@@ -1266,7 +1266,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 				
 				internal global::ISpecialTypesCreateExpectations.IndexerExpectations Indexers { get; }
 				
-				internal ISpecialTypesCreateExpectations() =>
+				public ISpecialTypesCreateExpectations() =>
 					(this.Indexers) = (new(this));
 				
 				internal global::ISpecialTypes Instance()

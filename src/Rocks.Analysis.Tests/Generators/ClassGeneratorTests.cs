@@ -221,7 +221,7 @@ public static class ClassGeneratorTests
 					
 					internal global::MockTests.ClassTestCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal ClassTestCreateExpectations() =>
+					public ClassTestCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.ClassTest Instance()

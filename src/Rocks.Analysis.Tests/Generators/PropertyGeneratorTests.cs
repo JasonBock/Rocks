@@ -196,7 +196,7 @@ public static class PropertyGeneratorTests
 				internal global::IMessagePublishTopologyConfiguratorCreateExpectations.PropertyExpectations Properties { get; }
 				internal global::IMessagePublishTopologyConfiguratorCreateExpectations.ExplicitPropertyExpectationsForIMessagePublishTopology ExplicitPropertiesForIMessagePublishTopology { get; }
 				
-				internal IMessagePublishTopologyConfiguratorCreateExpectations() =>
+				public IMessagePublishTopologyConfiguratorCreateExpectations() =>
 					(this.Properties, this.ExplicitPropertiesForIMessagePublishTopology) = (new(this), new(this));
 				
 				internal global::IMessagePublishTopologyConfigurator Instance()
@@ -665,7 +665,7 @@ public static class PropertyGeneratorTests
 				internal global::PrivatePublicPropertiesCreateExpectations.MethodExpectations Methods { get; }
 				internal global::PrivatePublicPropertiesCreateExpectations.PropertyExpectations Properties { get; }
 				
-				internal PrivatePublicPropertiesCreateExpectations() =>
+				public PrivatePublicPropertiesCreateExpectations() =>
 					(this.Methods, this.Properties) = (new(this), new(this));
 				
 				internal global::PrivatePublicProperties Instance()
@@ -1060,7 +1060,7 @@ public static class PropertyGeneratorTests
 				internal global::PrivatePublicPropertyCreateExpectations.MethodExpectations Methods { get; }
 				internal global::PrivatePublicPropertyCreateExpectations.PropertyExpectations Properties { get; }
 				
-				internal PrivatePublicPropertyCreateExpectations() =>
+				public PrivatePublicPropertyCreateExpectations() =>
 					(this.Methods, this.Properties) = (new(this), new(this));
 				
 				internal global::PrivatePublicProperty Instance()
@@ -1703,7 +1703,7 @@ public static class PropertyGeneratorTests
 				internal global::MixedIndexersCreateExpectations.MethodExpectations Methods { get; }
 				internal global::MixedIndexersCreateExpectations.IndexerExpectations Indexers { get; }
 				
-				internal MixedIndexersCreateExpectations() =>
+				public MixedIndexersCreateExpectations() =>
 					(this.Methods, this.Indexers) = (new(this), new(this));
 				
 				internal global::MixedIndexers Instance()
@@ -2336,7 +2336,7 @@ public static class PropertyGeneratorTests
 				internal global::MixedPropertiesCreateExpectations.MethodExpectations Methods { get; }
 				internal global::MixedPropertiesCreateExpectations.PropertyExpectations Properties { get; }
 				
-				internal MixedPropertiesCreateExpectations() =>
+				public MixedPropertiesCreateExpectations() =>
 					(this.Methods, this.Properties) = (new(this), new(this));
 				
 				internal global::MixedProperties Instance()

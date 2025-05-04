@@ -220,7 +220,7 @@ public static class HiddenMembersGeneratorTests
 				internal global::IServiceDerivedCreateExpectations.MethodExpectations Methods { get; }
 				internal global::IServiceDerivedCreateExpectations.ExplicitMethodExpectationsForIServiceBase ExplicitMethodsForIServiceBase { get; }
 				
-				internal IServiceDerivedCreateExpectations() =>
+				public IServiceDerivedCreateExpectations() =>
 					(this.Methods, this.ExplicitMethodsForIServiceBase) = (new(this), new(this));
 				
 				internal global::IServiceDerived Instance()
@@ -545,7 +545,7 @@ public static class HiddenMembersGeneratorTests
 					
 					internal global::MockTests.NewCopyCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal NewCopyCreateExpectations() =>
+					public NewCopyCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.NewCopy Instance()
@@ -1080,7 +1080,7 @@ public static class HiddenMembersGeneratorTests
 				internal global::SubClassCreateExpectations.PropertyExpectations Properties { get; }
 				internal global::SubClassCreateExpectations.IndexerExpectations Indexers { get; }
 				
-				internal SubClassCreateExpectations() =>
+				public SubClassCreateExpectations() =>
 					(this.Methods, this.Properties, this.Indexers) = (new(this), new(this), new(this));
 				
 				internal global::SubClass Instance()
@@ -1766,7 +1766,7 @@ public static class HiddenMembersGeneratorTests
 				internal global::ISubCreateExpectations.ExplicitPropertyExpectationsForIBase ExplicitPropertiesForIBase { get; }
 				internal global::ISubCreateExpectations.ExplicitIndexerExpectationsForIBase ExplicitIndexersForIBase { get; }
 				
-				internal ISubCreateExpectations() =>
+				public ISubCreateExpectations() =>
 					(this.Methods, this.ExplicitMethodsForIBase, this.Properties, this.Indexers, this.ExplicitPropertiesForIBase, this.ExplicitIndexersForIBase) = (new(this), new(this), new(this), new(this), new(this), new(this));
 				
 				internal global::ISub Instance()

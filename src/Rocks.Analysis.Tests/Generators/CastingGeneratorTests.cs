@@ -345,7 +345,7 @@ public static class CastingGeneratorTests
 					
 					internal global::MockTests.IHaveOpenGenericsCreateExpectations<Q>.MethodExpectations Methods { get; }
 					
-					internal IHaveOpenGenericsCreateExpectations() =>
+					public IHaveOpenGenericsCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.IHaveOpenGenerics<Q> Instance()

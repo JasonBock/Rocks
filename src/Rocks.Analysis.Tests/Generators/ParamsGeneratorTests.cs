@@ -296,7 +296,7 @@ public static class ParamsGeneratorTests
 				
 				internal global::ParamMethodsCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal ParamMethodsCreateExpectations() =>
+				public ParamMethodsCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::ParamMethods Instance()

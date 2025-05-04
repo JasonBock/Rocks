@@ -116,7 +116,7 @@ public static class ObsoleteGeneratorTests
 					
 					internal global::MockTests.IContainerCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal IContainerCreateExpectations() =>
+					public IContainerCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.IContainer Instance()
@@ -433,7 +433,7 @@ public static class ObsoleteGeneratorTests
 					
 					internal global::MockTests.ContainerCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal ContainerCreateExpectations() =>
+					public ContainerCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.Container Instance(string @value)
@@ -897,7 +897,7 @@ public static class ObsoleteGeneratorTests
 					internal global::MockTests.IPixelShaderCreateExpectations.MethodExpectations Methods { get; }
 					internal global::MockTests.IPixelShaderCreateExpectations.PropertyExpectations Properties { get; }
 					
-					internal IPixelShaderCreateExpectations() =>
+					public IPixelShaderCreateExpectations() =>
 						(this.Methods, this.Properties) = (new(this), new(this));
 					
 					internal global::MockTests.IPixelShader Instance()
@@ -1203,7 +1203,7 @@ public static class ObsoleteGeneratorTests
 					internal global::MockTests.IPixelShaderCreateExpectations.MethodExpectations Methods { get; }
 					internal global::MockTests.IPixelShaderCreateExpectations.PropertyExpectations Properties { get; }
 					
-					internal IPixelShaderCreateExpectations() =>
+					public IPixelShaderCreateExpectations() =>
 						(this.Methods, this.Properties) = (new(this), new(this));
 					
 					internal global::MockTests.IPixelShader Instance()

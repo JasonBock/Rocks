@@ -106,7 +106,7 @@ public static class PartialExpectationsTests
 				
 				internal global::TargetExpectationsStuff.MethodExpectations Methods { get; }
 				
-				internal TargetExpectationsStuff() =>
+				public TargetExpectationsStuff() =>
 					(this.Methods) = (new(this));
 				
 				internal global::ITarget Instance()
@@ -290,7 +290,7 @@ public static class PartialExpectationsTests
 				
 				internal global::ITargetCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal ITargetCreateExpectations() =>
+				public ITargetCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::ITarget Instance()
@@ -443,7 +443,7 @@ public static class PartialExpectationsTests
 				
 				internal global::TargetExpectationsStuff.MethodExpectations Methods { get; }
 				
-				internal TargetExpectationsStuff() =>
+				public TargetExpectationsStuff() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IPartialTarget Instance()
@@ -654,7 +654,7 @@ public static class PartialExpectationsTests
 				
 				internal global::TargetExpectationsStuff<T>.MethodExpectations Methods { get; }
 				
-				internal TargetExpectationsStuff() =>
+				public TargetExpectationsStuff() =>
 					(this.Methods) = (new(this));
 				
 				internal global::ITarget<T> Instance()
@@ -811,7 +811,7 @@ public static class PartialExpectationsTests
 					
 					internal global::ExpectationsTarget.TargetExpectationsStuff.MethodExpectations Methods { get; }
 					
-					internal TargetExpectationsStuff() =>
+					public TargetExpectationsStuff() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTarget.ITarget Instance()

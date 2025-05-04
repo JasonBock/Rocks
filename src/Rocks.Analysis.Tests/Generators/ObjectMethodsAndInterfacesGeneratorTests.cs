@@ -160,7 +160,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 					
 					internal global::MockTests.StaticToStringCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal StaticToStringCreateExpectations() =>
+					public StaticToStringCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.StaticToString Instance()
@@ -489,7 +489,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 					internal global::MockTests.IMatchObjectCreateExpectations<T>.MethodExpectations Methods { get; }
 					internal global::MockTests.IMatchObjectCreateExpectations<T>.ExplicitMethodExpectationsForIMatchObjectOfT ExplicitMethodsForIMatchObjectOfT { get; }
 					
-					internal IMatchObjectCreateExpectations() =>
+					public IMatchObjectCreateExpectations() =>
 						(this.Methods, this.ExplicitMethodsForIMatchObjectOfT) = (new(this), new(this));
 					
 					internal global::MockTests.IMatchObject<T> Instance()

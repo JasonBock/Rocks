@@ -134,7 +134,7 @@ public static class MultipleModelGeneratorTests
 					
 					internal global::MockTests.ITargetCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal ITargetCreateExpectations() =>
+					public ITargetCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.ITarget Instance()

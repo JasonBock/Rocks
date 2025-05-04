@@ -133,7 +133,7 @@ public static class ProjectionSpecialTypesGeneratorTests
 				
 				internal global::ISpecialTypesCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal ISpecialTypesCreateExpectations() =>
+				public ISpecialTypesCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::ISpecialTypes Instance()
@@ -399,7 +399,7 @@ public static class ProjectionSpecialTypesGeneratorTests
 				
 				internal global::ISpecialTypesCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal ISpecialTypesCreateExpectations() =>
+				public ISpecialTypesCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::ISpecialTypes Instance()
@@ -665,7 +665,7 @@ public static class ProjectionSpecialTypesGeneratorTests
 				
 				internal global::ISpecialTypesCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal ISpecialTypesCreateExpectations() =>
+				public ISpecialTypesCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::ISpecialTypes Instance()

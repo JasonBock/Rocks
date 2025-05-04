@@ -212,7 +212,7 @@ public static class NullableAnnotationTests
 				
 				internal global::IUseTaskDefaultCreateExpectations<T>.MethodExpectations Methods { get; }
 				
-				internal IUseTaskDefaultCreateExpectations() =>
+				public IUseTaskDefaultCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IUseTaskDefault<T> Instance()
@@ -490,7 +490,7 @@ public static class NullableAnnotationTests
 				
 				internal global::NeedNullableCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal NeedNullableCreateExpectations() =>
+				public NeedNullableCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::NeedNullable Instance(object? @initializationData)
@@ -889,7 +889,7 @@ public static class NullableAnnotationTests
 				
 				internal global::NeedNullableCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal NeedNullableCreateExpectations() =>
+				public NeedNullableCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::NeedNullable Instance()

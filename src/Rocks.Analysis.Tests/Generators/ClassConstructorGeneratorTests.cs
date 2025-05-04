@@ -222,7 +222,7 @@ public static class ClassConstructorGeneratorTests
 					
 					internal global::MockTests.BaseCtorCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal BaseCtorCreateExpectations() =>
+					public BaseCtorCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.BaseCtor Instance(int @a, ref string @b, out string @c, params string[] @d)

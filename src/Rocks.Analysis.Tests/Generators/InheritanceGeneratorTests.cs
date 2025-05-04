@@ -193,7 +193,7 @@ public static class InheritanceGeneratorTests
 				
 				internal global::BindableReactivePropertyCreateExpectations<T>.MethodExpectations Methods { get; }
 				
-				internal BindableReactivePropertyCreateExpectations() =>
+				public BindableReactivePropertyCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::BindableReactiveProperty<T> Instance()
@@ -496,7 +496,7 @@ public static class InheritanceGeneratorTests
 				
 				internal global::BindableReactivePropertyCreateExpectations<T>.MethodExpectations Methods { get; }
 				
-				internal BindableReactivePropertyCreateExpectations() =>
+				public BindableReactivePropertyCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::BindableReactiveProperty<T> Instance()
@@ -905,7 +905,7 @@ public static class InheritanceGeneratorTests
 					
 					internal global::MockTests.JsBinaryOperatorCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal JsBinaryOperatorCreateExpectations() =>
+					public JsBinaryOperatorCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.JsBinaryOperator Instance()

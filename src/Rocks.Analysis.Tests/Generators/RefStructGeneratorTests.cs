@@ -134,7 +134,7 @@ public static class RefStructGeneratorTests
 				
 				internal global::IAmNonGenericCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IAmNonGenericCreateExpectations() =>
+				public IAmNonGenericCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IAmNonGeneric Instance()
@@ -475,7 +475,7 @@ public static class RefStructGeneratorTests
 				
 				internal global::IDuplicatesCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IDuplicatesCreateExpectations() =>
+				public IDuplicatesCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IDuplicates Instance()
@@ -929,7 +929,7 @@ public static class RefStructGeneratorTests
 				
 				internal global::ScopedParameterCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal ScopedParameterCreateExpectations() =>
+				public ScopedParameterCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::ScopedParameter Instance()
@@ -1201,7 +1201,7 @@ public static class RefStructGeneratorTests
 				
 				internal global::IUseSpanWithOpenGenericCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IUseSpanWithOpenGenericCreateExpectations() =>
+				public IUseSpanWithOpenGenericCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IUseSpanWithOpenGeneric Instance()
@@ -1417,7 +1417,7 @@ public static class RefStructGeneratorTests
 				
 				internal global::IHaveRefStructCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IHaveRefStructCreateExpectations() =>
+				public IHaveRefStructCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IHaveRefStruct Instance()
@@ -1605,7 +1605,7 @@ public static class RefStructGeneratorTests
 				
 				internal global::IHaveRefStructCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IHaveRefStructCreateExpectations() =>
+				public IHaveRefStructCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IHaveRefStruct Instance()
@@ -1870,7 +1870,7 @@ public static class RefStructGeneratorTests
 				
 				internal global::IHaveRefStructCreateExpectations.PropertyExpectations Properties { get; }
 				
-				internal IHaveRefStructCreateExpectations() =>
+				public IHaveRefStructCreateExpectations() =>
 					(this.Properties) = (new(this));
 				
 				internal global::IHaveRefStruct Instance()
@@ -2159,7 +2159,7 @@ public static class RefStructGeneratorTests
 				
 				internal global::IHaveRefStructCreateExpectations.IndexerExpectations Indexers { get; }
 				
-				internal IHaveRefStructCreateExpectations() =>
+				public IHaveRefStructCreateExpectations() =>
 					(this.Indexers) = (new(this));
 				
 				internal global::IHaveRefStruct Instance()
@@ -2448,7 +2448,7 @@ public static class RefStructGeneratorTests
 				
 				internal global::IHaveRefStructCreateExpectations.IndexerExpectations Indexers { get; }
 				
-				internal IHaveRefStructCreateExpectations() =>
+				public IHaveRefStructCreateExpectations() =>
 					(this.Indexers) = (new(this));
 				
 				internal global::IHaveRefStruct Instance()

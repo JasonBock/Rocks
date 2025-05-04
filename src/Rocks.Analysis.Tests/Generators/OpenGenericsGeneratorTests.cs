@@ -254,7 +254,7 @@ public static class OpenGenericsGeneratorTests
 				internal global::IRequestCreateExpectations<TResponse, TResponse2, TResponse3>.ExplicitPropertyExpectationsForIRequestOfTResponse_TResponse2 ExplicitPropertiesForIRequestOfTResponse_TResponse2 { get; }
 				internal global::IRequestCreateExpectations<TResponse, TResponse2, TResponse3>.ExplicitPropertyExpectationsForIRequestOfTResponse ExplicitPropertiesForIRequestOfTResponse { get; }
 				
-				internal IRequestCreateExpectations() =>
+				public IRequestCreateExpectations() =>
 					(this.Properties, this.ExplicitPropertiesForIRequestOfTResponse_TResponse2, this.ExplicitPropertiesForIRequestOfTResponse) = (new(this), new(this), new(this));
 				
 				internal global::IRequest<TResponse, TResponse2, TResponse3> Instance()
@@ -563,7 +563,7 @@ public static class OpenGenericsGeneratorTests
 				
 				internal global::IConsumerContextCreateExpectations<T>.MethodExpectations Methods { get; }
 				
-				internal IConsumerContextCreateExpectations() =>
+				public IConsumerContextCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IConsumerContext<T> Instance()
@@ -815,7 +815,7 @@ public static class OpenGenericsGeneratorTests
 				
 				internal global::IServiceCreateExpectations<T>.MethodExpectations Methods { get; }
 				
-				internal IServiceCreateExpectations() =>
+				public IServiceCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IService<T> Instance()
@@ -1029,7 +1029,7 @@ public static class OpenGenericsGeneratorTests
 				
 				internal global::IServiceCreateExpectations<T, TReturn>.MethodExpectations Methods { get; }
 				
-				internal IServiceCreateExpectations() =>
+				public IServiceCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IService<T, TReturn> Instance()
@@ -1431,7 +1431,7 @@ public static class OpenGenericsGeneratorTests
 				internal global::IServiceCreateExpectations<T, TReturn>.PropertyExpectations Properties { get; }
 				internal global::IServiceCreateExpectations<T, TReturn>.IndexerExpectations Indexers { get; }
 				
-				internal IServiceCreateExpectations() =>
+				public IServiceCreateExpectations() =>
 					(this.Properties, this.Indexers) = (new(this), new(this));
 				
 				internal global::IService<T, TReturn> Instance()
@@ -1670,7 +1670,7 @@ public static class OpenGenericsGeneratorTests
 				
 				internal global::IServiceCreateExpectations<T, TReturn>.MethodExpectations Methods { get; }
 				
-				internal IServiceCreateExpectations() =>
+				public IServiceCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IService<T, TReturn> Instance()
@@ -1901,7 +1901,7 @@ public static class OpenGenericsGeneratorTests
 				
 				internal global::IHasTypeConverterOptionsCreateExpectations<TClass, TMember>.MethodExpectations Methods { get; }
 				
-				internal IHasTypeConverterOptionsCreateExpectations() =>
+				public IHasTypeConverterOptionsCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IHasTypeConverterOptions<TClass, TMember> Instance()
@@ -2220,7 +2220,7 @@ public static class OpenGenericsGeneratorTests
 				internal global::IExceptionConsumeContextCreateExpectations<T>.MethodExpectations Methods { get; }
 				internal global::IExceptionConsumeContextCreateExpectations<T>.PropertyExpectations Properties { get; }
 				
-				internal IExceptionConsumeContextCreateExpectations() =>
+				public IExceptionConsumeContextCreateExpectations() =>
 					(this.Methods, this.Properties) = (new(this), new(this));
 				
 				internal global::IExceptionConsumeContext<T> Instance()
@@ -2515,7 +2515,7 @@ public static class OpenGenericsGeneratorTests
 				
 				internal global::IServiceCreateExpectations<T>.MethodExpectations Methods { get; }
 				
-				internal IServiceCreateExpectations() =>
+				public IServiceCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IService<T> Instance()
@@ -2745,7 +2745,7 @@ public static class OpenGenericsGeneratorTests
 				
 				internal global::IPixelOperationsCreateExpectations<TPixel>.MethodExpectations Methods { get; }
 				
-				internal IPixelOperationsCreateExpectations() =>
+				public IPixelOperationsCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IPixelOperations<TPixel> Instance()
@@ -2974,7 +2974,7 @@ public static class OpenGenericsGeneratorTests
 				
 				internal global::INotificationCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal INotificationCreateExpectations() =>
+				public INotificationCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::INotification Instance()
@@ -3200,7 +3200,7 @@ public static class OpenGenericsGeneratorTests
 				
 				internal global::IReaderWriterCreateExpectations<TCollection, TConcreteCollection, TElement>.MethodExpectations Methods { get; }
 				
-				internal IReaderWriterCreateExpectations() =>
+				public IReaderWriterCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IReaderWriter<TCollection, TConcreteCollection, TElement> Instance()
@@ -3413,7 +3413,7 @@ public static class OpenGenericsGeneratorTests
 				
 				internal global::INotificationCreateExpectations<T>.MethodExpectations Methods { get; }
 				
-				internal INotificationCreateExpectations() =>
+				public INotificationCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::INotification<T> Instance()
@@ -3643,7 +3643,7 @@ public static class OpenGenericsGeneratorTests
 				
 				internal global::IWriterCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IWriterCreateExpectations() =>
+				public IWriterCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IWriter Instance()

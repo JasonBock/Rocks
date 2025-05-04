@@ -191,7 +191,7 @@ public static class InternalGeneratorTests
 				
 				internal global::IDoStuffCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IDoStuffCreateExpectations() =>
+				public IDoStuffCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IDoStuff Instance()
@@ -424,7 +424,7 @@ public static class InternalGeneratorTests
 				
 				internal global::IDoStuffCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IDoStuffCreateExpectations() =>
+				public IDoStuffCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IDoStuff Instance()
