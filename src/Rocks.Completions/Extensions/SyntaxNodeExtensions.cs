@@ -8,6 +8,11 @@ internal static class SyntaxNodeExtensions
 	internal static INamedTypeSymbol? FindParentSymbol(this SyntaxNode self,
 		SemanticModel model, CancellationToken cancellationToken)
 	{
+		//if (self.SyntaxTree.GetDiagnostics(cancellationToken).Any())
+		//{
+		//	return null;
+		//}
+
 		Type[] syntaxNodeTypes =
 			[
 				typeof(IdentifierNameSyntax),
@@ -27,22 +32,52 @@ internal static class SyntaxNodeExtensions
 
 			if (syntaxNodeTypeMatch is not null)
 			{
-				var parentSymbol = parent switch
+				ISymbol? parentSymbol = null;
+
+				if (parent is IdentifierNameSyntax identifierNameSyntax)
 				{
-					IdentifierNameSyntax identifierNameSyntax =>
-						model.GetSymbolInfo(identifierNameSyntax, cancellationToken).Symbol,
-					ClassDeclarationSyntax classDeclarationSyntax =>
-						model.GetDeclaredSymbol(classDeclarationSyntax, cancellationToken),
-					InterfaceDeclarationSyntax interfaceDeclarationSyntax =>
-						model.GetDeclaredSymbol(interfaceDeclarationSyntax, cancellationToken),
-					RecordDeclarationSyntax recordDeclarationSyntax =>
-						model.GetDeclaredSymbol(recordDeclarationSyntax, cancellationToken),
-					ParameterSyntax parameterSyntax =>
-						((IParameterSymbol)model.GetDeclaredSymbol(parameterSyntax, cancellationToken)!).Type,
-					ObjectCreationExpressionSyntax objectCreationExpressionSyntax =>
-						((IMethodSymbol)model.GetSymbolInfo(objectCreationExpressionSyntax, cancellationToken).Symbol!).ContainingType,
-					_ => null
-				};
+					var identifierNameSymbol = model.GetSymbolInfo(identifierNameSyntax, cancellationToken);
+
+					if (identifierNameSymbol.Symbol is not null)
+					{
+						parentSymbol = identifierNameSymbol.Symbol;
+					}
+					else if (identifierNameSymbol.CandidateSymbols.Length > 0)
+					{
+						parentSymbol = identifierNameSymbol.CandidateSymbols[0];
+					}
+				}
+				else if (parent is ParameterSyntax parameterSyntax)
+				{
+					var parameterSymbol = model.GetDeclaredSymbol(parameterSyntax, cancellationToken) as IParameterSymbol;
+
+					if (parameterSymbol is not null)
+					{
+						parentSymbol = parameterSymbol.Type;
+					}
+				}
+				else if (parent is ObjectCreationExpressionSyntax objectCreationExpressionSyntax)
+				{
+					var objectCreationSymbol = model.GetSymbolInfo(objectCreationExpressionSyntax, cancellationToken).Symbol as IMethodSymbol;
+
+					if (objectCreationSymbol is not null)
+					{
+						parentSymbol = objectCreationSymbol.ContainingType;
+					}
+				}
+				else
+				{
+					parentSymbol = parent switch
+					{
+						ClassDeclarationSyntax classDeclarationSyntax =>
+							model.GetDeclaredSymbol(classDeclarationSyntax, cancellationToken),
+						InterfaceDeclarationSyntax interfaceDeclarationSyntax =>
+							model.GetDeclaredSymbol(interfaceDeclarationSyntax, cancellationToken),
+						RecordDeclarationSyntax recordDeclarationSyntax =>
+							model.GetDeclaredSymbol(recordDeclarationSyntax, cancellationToken),
+						_ => null
+					};
+				}
 
 				if (parentSymbol is INamedTypeSymbol namedTypeSymbol)
 				{

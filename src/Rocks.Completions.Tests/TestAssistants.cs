@@ -10,7 +10,9 @@ internal static class TestAssistants
 	internal static async Task RunRefactoringAsync<TCodeRefactoring>(
 		IEnumerable<(string, string)> sources,
 		IEnumerable<(string, string)> fixedSources,
-		int codeActionIndex, bool addBuildProperty)
+		int codeActionIndex, bool addBuildProperty,
+		IEnumerable<DiagnosticResult> expectedSourceDiagnostics,
+		IEnumerable<DiagnosticResult> expectedFixedDiagnostics)
 		where TCodeRefactoring : CodeRefactoringProvider, new()
 	{
 		var test = new CodeRefactoringTest<TCodeRefactoring>
@@ -40,6 +42,8 @@ internal static class TestAssistants
 				"""));
 		}
 
+		test.TestState.ExpectedDiagnostics.AddRange(expectedSourceDiagnostics);
+		test.FixedState.ExpectedDiagnostics.AddRange(expectedFixedDiagnostics);
 		test.TestState.AdditionalReferences.Add(typeof(TCodeRefactoring).Assembly);
 		test.TestState.AdditionalReferences.Add(typeof(RockAttribute).Assembly);
 
