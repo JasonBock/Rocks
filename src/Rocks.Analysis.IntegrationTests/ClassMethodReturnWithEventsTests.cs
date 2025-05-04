@@ -18,7 +18,8 @@ public static class ClassMethodReturnWithEventsTests
 	[Test]
 	public static void CreateRaiseEvent()
 	{
-		var expectations = new ClassMethodReturnWithEventsCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassMethodReturnWithEventsCreateExpectations>();
 		expectations.Methods.NoParameters().RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
@@ -26,12 +27,10 @@ public static class ClassMethodReturnWithEventsTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		var value = mock.NoParameters();
 
-		expectations.Verify();
-
 		Assert.Multiple(() =>
 		{
 			Assert.That(wasEventRaised, Is.True);
-			Assert.That(value, Is.EqualTo(default(int)));
+			Assert.That(value, Is.Default);
 		});
 	}
 
@@ -39,7 +38,8 @@ public static class ClassMethodReturnWithEventsTests
 	public static void CreateRaiseEventWithCallback()
 	{
 		var wasCallbackInvoked = false;
-		var expectations = new ClassMethodReturnWithEventsCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassMethodReturnWithEventsCreateExpectations>();
 		expectations.Methods.NoParameters()
 			.Callback(() =>
 			{
@@ -53,8 +53,6 @@ public static class ClassMethodReturnWithEventsTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		var value = mock.NoParameters();
 
-		expectations.Verify();
-
 		Assert.Multiple(() =>
 		{
 			Assert.That(wasEventRaised, Is.True);
@@ -66,7 +64,8 @@ public static class ClassMethodReturnWithEventsTests
 	[Test]
 	public static void CreateRaiseEventWithMultipleCalls()
 	{
-		var expectations = new ClassMethodReturnWithEventsCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassMethodReturnWithEventsCreateExpectations>();
 		expectations.Methods.NoParameters()
 			.ExpectedCallCount(2)
 			.RaiseMyEvent(EventArgs.Empty);
@@ -77,13 +76,11 @@ public static class ClassMethodReturnWithEventsTests
 		var valueOne = mock.NoParameters();
 		var valueTwo = mock.NoParameters();
 
-		expectations.Verify();
-
 		Assert.Multiple(() =>
 		{
 			Assert.That(eventRaisedCount, Is.EqualTo(2));
-			Assert.That(valueOne, Is.EqualTo(default(int)));
-			Assert.That(valueTwo, Is.EqualTo(default(int)));
+			Assert.That(valueOne, Is.Default);
+			Assert.That(valueTwo, Is.Default);
 		});
 	}
 
@@ -91,7 +88,8 @@ public static class ClassMethodReturnWithEventsTests
 	public static void CreateRaiseEventWithMultipleCallsWithCallback()
 	{
 		var callbackInvokedCount = 0;
-		var expectations = new ClassMethodReturnWithEventsCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassMethodReturnWithEventsCreateExpectations>();
 		expectations.Methods.NoParameters()
 			.ExpectedCallCount(2)
 			.Callback(() =>
@@ -106,8 +104,6 @@ public static class ClassMethodReturnWithEventsTests
 		mock.MyEvent += (s, e) => eventRaisedCount++;
 		var valueOne = mock.NoParameters();
 		var valueTwo = mock.NoParameters();
-
-		expectations.Verify();
 
 		Assert.Multiple(() =>
 		{

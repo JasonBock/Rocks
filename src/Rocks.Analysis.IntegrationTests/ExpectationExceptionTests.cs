@@ -39,7 +39,7 @@ public static class ExpectationExceptionTests
 
 		var mock = expectations.Instance();
 
-		Assert.That(() => expectations.Methods.Work(), Throws.TypeOf<ExpectationException>());
+		Assert.That(expectations.Methods.Work, Throws.TypeOf<ExpectationException>());
 	}
 
 	[Test]
@@ -50,7 +50,7 @@ public static class ExpectationExceptionTests
 
 		var mock = expectations.Instance();
 
-		Assert.That(() => expectations.Properties.Getters.Data(), Throws.TypeOf<ExpectationException>());
+		Assert.That(expectations.Properties.Getters.Data, Throws.TypeOf<ExpectationException>());
 	}
 
 	[Test]

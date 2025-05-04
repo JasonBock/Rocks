@@ -1,7 +1,6 @@
 ﻿using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
-using Rocks;
 
 namespace Rocks.Analysis.Tests.Generators;
 

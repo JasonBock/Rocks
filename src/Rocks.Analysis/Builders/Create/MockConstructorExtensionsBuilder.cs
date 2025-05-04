@@ -11,7 +11,7 @@ internal static class MockConstructorExtensionsBuilder
 	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType,
 		string expectationsFullyQualifiedName, List<ExpectationMapping> expectationMappings)
 	{
-		writer.WriteLine($"internal {mockType.ExpectationsNameNoGenerics}() =>");
+		writer.WriteLine($"public {mockType.ExpectationsNameNoGenerics}() =>");
 		writer.Indent++;
 		var thisExpectations = $"({string.Join(", ", expectationMappings.Select(_ => $"this.{_.PropertyName}"))})";
 		var newExpectations = $"({string.Join(", ", expectationMappings.Select(_ => "new(this)"))})";

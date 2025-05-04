@@ -20,7 +20,8 @@ public static class EventTests
 		var eventArgs = new NotEventArgs();
 		NotEventArgs? mockEventArgs = null;
 
-		var expectations = new IUseNotEventArgsCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IUseNotEventArgsCreateExpectations>();
 		expectations.Methods.A().RaiseNotEvent(eventArgs);
 
 		var mock = expectations.Instance();
@@ -28,6 +29,5 @@ public static class EventTests
 		mock.A();
 
 		Assert.That(mockEventArgs, Is.SameAs(eventArgs));
-		expectations.Verify();
 	}
 }

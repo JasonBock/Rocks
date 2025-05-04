@@ -23,7 +23,7 @@ public static class InterfaceMethodReturnTests
 
 		expectations.Verify();
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -32,7 +32,7 @@ public static class InterfaceMethodReturnTests
 		var mock = new IInterfaceMethodReturnMakeExpectations().Instance();
 		var value = mock.NoParameters();
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -55,7 +55,7 @@ public static class InterfaceMethodReturnTests
 		var mock = new IInterfaceMethodReturnMakeExpectations().Instance();
 		var value = mock.NoParameters();
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -129,7 +129,7 @@ public static class InterfaceMethodReturnTests
 
 		expectations.Verify();
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -138,7 +138,7 @@ public static class InterfaceMethodReturnTests
 		var mock = new IInterfaceMethodReturnMakeExpectations().Instance();
 		var value = mock.OneParameter(3);
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -161,7 +161,7 @@ public static class InterfaceMethodReturnTests
 		var mock = new IInterfaceMethodReturnMakeExpectations().Instance();
 		var value = mock.OneParameter(3);
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -200,7 +200,7 @@ public static class InterfaceMethodReturnTests
 
 		expectations.Verify();
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -209,7 +209,7 @@ public static class InterfaceMethodReturnTests
 		var mock = new IInterfaceMethodReturnMakeExpectations().Instance();
 		var value = mock.MultipleParameters(3, "b");
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -232,7 +232,7 @@ public static class InterfaceMethodReturnTests
 		var mock = new IInterfaceMethodReturnMakeExpectations().Instance();
 		var value = mock.MultipleParameters(3, "b");
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]

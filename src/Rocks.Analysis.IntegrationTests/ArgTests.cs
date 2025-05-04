@@ -33,60 +33,55 @@ public static class ArgTests
 	[Test]
 	public static void DeclareArgumentWithValue()
 	{
-		var expectations = new IHaveArgumentCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IHaveArgumentCreateExpectations>();
 		expectations.Methods.Foo(3);
 
 		var mock = expectations.Instance();
 		mock.Foo(3);
-
-		expectations.Verify();
 	}
 
 	[Test]
 	public static void DeclareArgumentWithIs()
 	{
-		var expectations = new IHaveArgumentCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IHaveArgumentCreateExpectations>();
 		expectations.Methods.Foo(Arg.Is(3));
 
 		var mock = expectations.Instance();
 		mock.Foo(3);
-
-		expectations.Verify();
 	}
 
 	[Test]
 	public static void DeclareArgumentWithAny()
 	{
-		var expectations = new IHaveArgumentCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IHaveArgumentCreateExpectations>();
 		expectations.Methods.Foo(Arg.Any<int>());
 
 		var mock = expectations.Instance();
 		mock.Foo(3);
-
-		expectations.Verify();
 	}
 
 	[Test]
 	public static void DeclareArgumentWithValidate()
 	{
-		var expectations = new IHaveArgumentCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IHaveArgumentCreateExpectations>();
 		expectations.Methods.Foo(Arg.Validate<int>(_ => _ is > 20 and < 30));
 
 		var mock = expectations.Instance();
 		mock.Foo(25);
-
-		expectations.Verify();
 	}
 
 	[Test]
 	public static void DeclareArgumentWithDefault()
 	{
-		var expectations = new IHaveArgumentCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IHaveArgumentCreateExpectations>();
 		expectations.Methods.Bar(Arg.IsDefault<int>());
 
 		var mock = expectations.Instance();
 		mock.Bar(3);
-
-		expectations.Verify();
 	}
 }

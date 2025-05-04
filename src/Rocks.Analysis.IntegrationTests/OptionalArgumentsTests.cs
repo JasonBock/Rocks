@@ -90,7 +90,7 @@ public static class OptionalArgumentsTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(value, Is.EqualTo(default(int)));
+			Assert.That(value, Is.Default);
 			Assert.That(() => mock.Foo(1), Throws.Nothing);
 		});
 	}

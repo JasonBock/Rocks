@@ -19,15 +19,14 @@ public static class InterfaceGenericEventsTests
 	public static void CreateUsingGenericType()
 	{
 		var returnValue = new List<string>();
-		var expectations = new IInterfaceGenericEventsCreateExpectations<InterfaceEventArgs>();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceGenericEventsCreateExpectations<InterfaceEventArgs>>();
 		expectations.Methods.Foo().AddRaiseEvent(new("MyEvent", new InterfaceEventArgs()));
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		mock.Foo();
-
-		expectations.Verify();
 
 		Assert.That(wasEventRaised, Is.True);
 	}

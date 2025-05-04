@@ -47,21 +47,21 @@ public static class InterfaceIndexerTests
 	[Test]
 	public static void CreateWithOneParameterGetterAndInit()
 	{
-		var expectations = new IInterfaceIndexerGetterInitCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceIndexerGetterInitCreateExpectations>();
 		expectations.Indexers.Getters.This(3);
 
 		var mock = expectations.Instance(null);
 		var value = mock[3];
 
-		expectations.Verify();
-
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
 	public static void CreateWithOneParameterGetterAndSetter()
 	{
-		var expectations = new IInterfaceIndexerGetterSetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceIndexerGetterSetterCreateExpectations>();
 		expectations.Indexers.Getters.This(3);
 		expectations.Indexers.Setters.This(4, 3);
 
@@ -69,9 +69,7 @@ public static class InterfaceIndexerTests
 		var value = mock[3];
 		mock[3] = 4;
 
-		expectations.Verify();
-
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -80,7 +78,7 @@ public static class InterfaceIndexerTests
 		var mock = new IInterfaceIndexerGetterInitMakeExpectations().Instance(null);
 		var value = mock[3];
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -91,7 +89,7 @@ public static class InterfaceIndexerTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(value, Is.EqualTo(default(int)));
+			Assert.That(value, Is.Default);
 			Assert.That(() => mock[3] = 4, Throws.Nothing);
 		});
 	}
@@ -99,15 +97,14 @@ public static class InterfaceIndexerTests
 	[Test]
 	public static void CreateWithOneParameterGetter()
 	{
-		var expectations = new IInterfaceIndexerGetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceIndexerGetterCreateExpectations>();
 		expectations.Indexers.Getters.This(3);
 
 		var mock = expectations.Instance();
 		var value = mock[3];
 
-		expectations.Verify();
-
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -116,13 +113,14 @@ public static class InterfaceIndexerTests
 		var mock = new IInterfaceIndexerGetterMakeExpectations().Instance();
 		var value = mock[3];
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
 	public static void CreateWithOneParameterGetterRaiseEvent()
 	{
-		var expectations = new IInterfaceIndexerGetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceIndexerGetterCreateExpectations>();
 		expectations.Indexers.Getters.This(3).RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
@@ -130,11 +128,9 @@ public static class InterfaceIndexerTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		var value = mock[3];
 
-		expectations.Verify();
-
 		Assert.Multiple(() =>
 		{
-			Assert.That(value, Is.EqualTo(default(int)));
+			Assert.That(value, Is.Default);
 			Assert.That(wasEventRaised, Is.True);
 		});
 	}
@@ -143,7 +139,8 @@ public static class InterfaceIndexerTests
 	public static void CreateWithOneParameterGetterCallback()
 	{
 		var wasCallbackInvoked = false;
-		var expectations = new IInterfaceIndexerGetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceIndexerGetterCreateExpectations>();
 		expectations.Indexers.Getters.This(3).Callback(_ =>
 		{
 			wasCallbackInvoked = true;
@@ -152,8 +149,6 @@ public static class InterfaceIndexerTests
 
 		var mock = expectations.Instance();
 		var value = mock[3];
-
-		expectations.Verify();
 
 		Assert.Multiple(() =>
 		{
@@ -166,7 +161,8 @@ public static class InterfaceIndexerTests
 	public static void CreateWithOneParameterGetterRaiseEventWithCallback()
 	{
 		var wasCallbackInvoked = false;
-		var expectations = new IInterfaceIndexerGetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceIndexerGetterCreateExpectations>();
 		expectations.Indexers.Getters.This(3)
 			.RaiseMyEvent(EventArgs.Empty)
 			.Callback(_ =>
@@ -180,8 +176,6 @@ public static class InterfaceIndexerTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		var value = mock[3];
 
-		expectations.Verify();
-
 		Assert.Multiple(() =>
 		{
 			Assert.That(value, Is.EqualTo(3));
@@ -193,16 +187,15 @@ public static class InterfaceIndexerTests
 	[Test]
 	public static void CreateWithOneParameterGetterMultipleCalls()
 	{
-		var expectations = new IInterfaceIndexerGetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceIndexerGetterCreateExpectations>();
 		expectations.Indexers.Getters.This(3).ExpectedCallCount(2);
 
 		var mock = expectations.Instance();
 		_ = mock[3];
 		var value = mock[3];
 
-		expectations.Verify();
-
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -215,13 +208,12 @@ public static class InterfaceIndexerTests
 	[Test]
 	public static void CreateWithOneParameterSetter()
 	{
-		var expectations = new IInterfaceIndexerSetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceIndexerSetterCreateExpectations>();
 		expectations.Indexers.Setters.This(4, 3);
 
 		var mock = expectations.Instance();
 		mock[3] = 4;
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -235,15 +227,14 @@ public static class InterfaceIndexerTests
 	[Test]
 	public static void CreateWithOneParameterSetterRaiseEvent()
 	{
-		var expectations = new IInterfaceIndexerSetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceIndexerSetterCreateExpectations>();
 		expectations.Indexers.Setters.This(4, 3).RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		mock[3] = 4;
-
-		expectations.Verify();
 
 		Assert.That(wasEventRaised, Is.True);
 	}
@@ -252,13 +243,12 @@ public static class InterfaceIndexerTests
 	public static void CreateWithOneParameterSetterCallback()
 	{
 		var wasCallbackInvoked = false;
-		var expectations = new IInterfaceIndexerSetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceIndexerSetterCreateExpectations>();
 		expectations.Indexers.Setters.This(4, 3).Callback((a, value) => wasCallbackInvoked = true);
 
 		var mock = expectations.Instance();
 		mock[3] = 4;
-
-		expectations.Verify();
 
 		Assert.That(wasCallbackInvoked, Is.True);
 	}
@@ -267,7 +257,8 @@ public static class InterfaceIndexerTests
 	public static void CreateWithOneParameterSetterRaiseEventWithCallback()
 	{
 		var wasCallbackInvoked = false;
-		var expectations = new IInterfaceIndexerSetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceIndexerSetterCreateExpectations>();
 		expectations.Indexers.Setters.This(4, 3)
 			.RaiseMyEvent(EventArgs.Empty)
 			.Callback((a, value) => wasCallbackInvoked = true);
@@ -276,8 +267,6 @@ public static class InterfaceIndexerTests
 		var mock = expectations.Instance();
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		mock[3] = 4;
-
-		expectations.Verify();
 
 		Assert.Multiple(() =>
 		{
@@ -289,20 +278,20 @@ public static class InterfaceIndexerTests
 	[Test]
 	public static void CreateWithOneParameterSetterMultipleCalls()
 	{
-		var expectations = new IInterfaceIndexerSetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceIndexerSetterCreateExpectations>();
 		expectations.Indexers.Setters.This(4, 3).ExpectedCallCount(2);
 
 		var mock = expectations.Instance();
 		mock[3] = 4;
 		mock[3] = 4;
-
-		expectations.Verify();
 	}
 
 	[Test]
 	public static void CreateWithMultipleParametersGetterAndSetter()
 	{
-		var expectations = new IInterfaceIndexerGetterSetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceIndexerGetterSetterCreateExpectations>();
 		expectations.Indexers.Getters.This(3, "b");
 		expectations.Indexers.Setters.This(4, 3, "b");
 
@@ -310,9 +299,7 @@ public static class InterfaceIndexerTests
 		var value = mock[3, "b"];
 		mock[3, "b"] = 4;
 
-		expectations.Verify();
-
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -323,7 +310,7 @@ public static class InterfaceIndexerTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(value, Is.EqualTo(default(int)));
+			Assert.That(value, Is.Default);
 			Assert.That(() => mock[3, "b"] = 4, Throws.Nothing);
 		});
 	}
@@ -331,15 +318,14 @@ public static class InterfaceIndexerTests
 	[Test]
 	public static void CreateWithMultipleParametersGetter()
 	{
-		var expectations = new IInterfaceIndexerGetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceIndexerGetterCreateExpectations>();
 		expectations.Indexers.Getters.This(3, "b");
 
 		var mock = expectations.Instance();
 		var value = mock[3, "b"];
 
-		expectations.Verify();
-
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -348,13 +334,14 @@ public static class InterfaceIndexerTests
 		var mock = new IInterfaceIndexerGetterMakeExpectations().Instance();
 		var value = mock[3, "b"];
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
 	public static void CreateWithMultipleParametersGetterRaiseEvent()
 	{
-		var expectations = new IInterfaceIndexerGetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceIndexerGetterCreateExpectations>();
 		expectations.Indexers.Getters.This(3, "b")
 			.RaiseMyEvent(EventArgs.Empty);
 
@@ -363,11 +350,9 @@ public static class InterfaceIndexerTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		var value = mock[3, "b"];
 
-		expectations.Verify();
-
 		Assert.Multiple(() =>
 		{
-			Assert.That(value, Is.EqualTo(default(int)));
+			Assert.That(value, Is.Default);
 			Assert.That(wasEventRaised, Is.True);
 		});
 	}
@@ -376,7 +361,8 @@ public static class InterfaceIndexerTests
 	public static void CreateWithMultipleParametersGetterCallback()
 	{
 		var wasCallbackInvoked = false;
-		var expectations = new IInterfaceIndexerGetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceIndexerGetterCreateExpectations>();
 		expectations.Indexers.Getters.This(3, "b").Callback((a, b) =>
 		{
 			wasCallbackInvoked = true;
@@ -385,8 +371,6 @@ public static class InterfaceIndexerTests
 
 		var mock = expectations.Instance();
 		var value = mock[3, "b"];
-
-		expectations.Verify();
 
 		Assert.Multiple(() =>
 		{
@@ -399,7 +383,8 @@ public static class InterfaceIndexerTests
 	public static void CreateWithMultipleParametersGetterRaiseEventWithCallback()
 	{
 		var wasCallbackInvoked = false;
-		var expectations = new IInterfaceIndexerGetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceIndexerGetterCreateExpectations>();
 		expectations.Indexers.Getters.This(3, "b")
 			.RaiseMyEvent(EventArgs.Empty)
 			.Callback((a, b) =>
@@ -413,8 +398,6 @@ public static class InterfaceIndexerTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		var value = mock[3, "b"];
 
-		expectations.Verify();
-
 		Assert.Multiple(() =>
 		{
 			Assert.That(value, Is.EqualTo(3));
@@ -426,28 +409,26 @@ public static class InterfaceIndexerTests
 	[Test]
 	public static void CreateWithMultipleParametersGetterMultipleCalls()
 	{
-		var expectations = new IInterfaceIndexerGetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceIndexerGetterCreateExpectations>();
 		expectations.Indexers.Getters.This(3, "b").ExpectedCallCount(2);
 
 		var mock = expectations.Instance();
 		_ = mock[3, "b"];
 		var value = mock[3, "b"];
 
-		expectations.Verify();
-
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
 	public static void CreateWithMultipleParametersSetter()
 	{
-		var expectations = new IInterfaceIndexerSetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceIndexerSetterCreateExpectations>();
 		expectations.Indexers.Setters.This(4, 3, "b");
 
 		var mock = expectations.Instance();
 		mock[3, "b"] = 4;
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -461,7 +442,8 @@ public static class InterfaceIndexerTests
 	[Test]
 	public static void CreateWithMultipleParametersSetterRaiseEvent()
 	{
-		var expectations = new IInterfaceIndexerSetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceIndexerSetterCreateExpectations>();
 		expectations.Indexers.Setters.This(4, 3, "b")
 			.RaiseMyEvent(EventArgs.Empty);
 
@@ -470,8 +452,6 @@ public static class InterfaceIndexerTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		mock[3, "b"] = 4;
 
-		expectations.Verify();
-
 		Assert.That(wasEventRaised, Is.True);
 	}
 
@@ -479,13 +459,12 @@ public static class InterfaceIndexerTests
 	public static void CreateWithMultipleParametersSetterCallback()
 	{
 		var wasCallbackInvoked = false;
-		var expectations = new IInterfaceIndexerSetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceIndexerSetterCreateExpectations>();
 		expectations.Indexers.Setters.This(4, 3, "b").Callback((a, b, value) => wasCallbackInvoked = true);
 
 		var mock = expectations.Instance();
 		mock[3, "b"] = 4;
-
-		expectations.Verify();
 
 		Assert.That(wasCallbackInvoked, Is.True);
 	}
@@ -494,7 +473,8 @@ public static class InterfaceIndexerTests
 	public static void CreateWithMultipleParametersSetterRaiseEventWithCallback()
 	{
 		var wasCallbackInvoked = false;
-		var expectations = new IInterfaceIndexerSetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceIndexerSetterCreateExpectations>();
 		expectations.Indexers.Setters.This(4, 3, "b")
 			.RaiseMyEvent(EventArgs.Empty)
 			.Callback((a, b, value) => wasCallbackInvoked = true);
@@ -503,8 +483,6 @@ public static class InterfaceIndexerTests
 		var mock = expectations.Instance();
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		mock[3, "b"] = 4;
-
-		expectations.Verify();
 
 		Assert.Multiple(() =>
 		{
@@ -516,13 +494,12 @@ public static class InterfaceIndexerTests
 	[Test]
 	public static void CreateWithMultipleParametersSetterMultipleCalls()
 	{
-		var expectations = new IInterfaceIndexerSetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceIndexerSetterCreateExpectations>();
 		expectations.Indexers.Setters.This(4, 3, "b").ExpectedCallCount(2);
 
 		var mock = expectations.Instance();
 		mock[3, "b"] = 4;
 		mock[3, "b"] = 4;
-
-		expectations.Verify();
 	}
 }

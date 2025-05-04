@@ -19,7 +19,7 @@ public static class VerificationTests
 		expectations.Methods.Calculate().Callback(() => throw new NotSupportedException());
 
 		var data = expectations.Instance();
-		Assert.That(() => data.Calculate(), Throws.TypeOf<NotSupportedException>());
+		Assert.That(data.Calculate, Throws.TypeOf<NotSupportedException>());
 
 		expectations.Verify();
 	}
@@ -31,7 +31,7 @@ public static class VerificationTests
 		expectations.Methods.CalculateValue().Callback(() => throw new NotSupportedException());
 
 		var data = expectations.Instance();
-		Assert.That(() => data.CalculateValue(), Throws.TypeOf<NotSupportedException>());
+		Assert.That(data.CalculateValue, Throws.TypeOf<NotSupportedException>());
 
 		expectations.Verify();
 	}

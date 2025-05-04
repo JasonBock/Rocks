@@ -15,15 +15,14 @@ public static class ClassMethodReturnTests
 	[Test]
 	public static void CreateWithNoParameters()
 	{
-		var expectations = new ClassMethodReturnCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassMethodReturnCreateExpectations>();
 		expectations.Methods.NoParameters();
 
 		var mock = expectations.Instance();
 		var value = mock.NoParameters();
 
-		expectations.Verify();
-
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -32,19 +31,18 @@ public static class ClassMethodReturnTests
 		var mock = new ClassMethodReturnMakeExpectations().Instance();
 		var value = mock.NoParameters();
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
 	public static void CreateWithNoParametersWithReturn()
 	{
-		var expectations = new ClassMethodReturnCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassMethodReturnCreateExpectations>();
 		expectations.Methods.NoParameters().ReturnValue(3);
 
 		var mock = expectations.Instance();
 		var value = mock.NoParameters();
-
-		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(3));
 	}
@@ -52,14 +50,13 @@ public static class ClassMethodReturnTests
 	[Test]
 	public static void CreateWithNoParametersMultipleCalls()
 	{
-		var expectations = new ClassMethodReturnCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassMethodReturnCreateExpectations>();
 		expectations.Methods.NoParameters().ExpectedCallCount(2);
 
 		var mock = expectations.Instance();
 		mock.NoParameters();
 		mock.NoParameters();
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -77,13 +74,12 @@ public static class ClassMethodReturnTests
 	[Test]
 	public static void CreateWithNoParametersAndCallback()
 	{
-		var expectations = new ClassMethodReturnCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassMethodReturnCreateExpectations>();
 		expectations.Methods.NoParameters().Callback(() => 3);
 
 		var mock = expectations.Instance();
 		var value = mock.NoParameters();
-
-		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(3));
 	}
@@ -112,15 +108,14 @@ public static class ClassMethodReturnTests
 	[Test]
 	public static void CreateWithOneParameter()
 	{
-		var expectations = new ClassMethodReturnCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassMethodReturnCreateExpectations>();
 		expectations.Methods.OneParameter(3);
 
 		var mock = expectations.Instance();
 		var value = mock.OneParameter(3);
 
-		expectations.Verify();
-
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -129,19 +124,18 @@ public static class ClassMethodReturnTests
 		var mock = new ClassMethodReturnMakeExpectations().Instance();
 		var value = mock.OneParameter(3);
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
 	public static void CreateWithOneParameterWithReturn()
 	{
-		var expectations = new ClassMethodReturnCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassMethodReturnCreateExpectations>();
 		expectations.Methods.OneParameter(3).ReturnValue(3);
 
 		var mock = expectations.Instance();
 		var value = mock.OneParameter(3);
-
-		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(3));
 	}
@@ -149,13 +143,12 @@ public static class ClassMethodReturnTests
 	[Test]
 	public static void CreateWithOneParameterWithCallback()
 	{
-		var expectations = new ClassMethodReturnCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassMethodReturnCreateExpectations>();
 		expectations.Methods.OneParameter(3).Callback(_ => 3);
 
 		var mock = expectations.Instance();
 		var value = mock.OneParameter(3);
-
-		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(3));
 	}
@@ -174,15 +167,14 @@ public static class ClassMethodReturnTests
 	[Test]
 	public static void CreateWithMultipleParameters()
 	{
-		var expectations = new ClassMethodReturnCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassMethodReturnCreateExpectations>();
 		expectations.Methods.MultipleParameters(3, "b");
 
 		var mock = expectations.Instance();
 		var value = mock.MultipleParameters(3, "b");
 
-		expectations.Verify();
-
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -191,19 +183,18 @@ public static class ClassMethodReturnTests
 		var mock = new ClassMethodReturnMakeExpectations().Instance();
 		var value = mock.MultipleParameters(3, "b");
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
 	public static void CreateWithMultipleParametersWithReturn()
 	{
-		var expectations = new ClassMethodReturnCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassMethodReturnCreateExpectations>();
 		expectations.Methods.MultipleParameters(3, "b").ReturnValue(3);
 
 		var mock = expectations.Instance();
 		var value = mock.MultipleParameters(3, "b");
-
-		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(3));
 	}
@@ -213,7 +204,8 @@ public static class ClassMethodReturnTests
 	{
 		var aValue = 0;
 		var bValue = string.Empty;
-		var expectations = new ClassMethodReturnCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassMethodReturnCreateExpectations>();
 		expectations.Methods.MultipleParameters(3, "b").Callback((a, b) =>
 		{
 			(aValue, bValue) = (a, b);
@@ -222,8 +214,6 @@ public static class ClassMethodReturnTests
 
 		var mock = expectations.Instance();
 		var value = mock.MultipleParameters(3, "b");
-
-		expectations.Verify();
 
 		Assert.Multiple(() =>
 		{

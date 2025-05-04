@@ -36,7 +36,8 @@ public static class AsynchronousTests
 			yield return "x";
 		}
 
-		var expectations = new AsyncEnumerationCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AsyncEnumerationCreateExpectations>();
 		expectations.Methods.GetRecordsAsync(Arg.IsDefault<CancellationToken>()).ReturnValue(ReturnsAsyncIterator());
 		var mock = expectations.Instance();
 
@@ -52,15 +53,14 @@ public static class AsynchronousTests
 			Assert.That(values, Has.Count.EqualTo(1));
 			Assert.That(values[0], Is.EqualTo("x"));
 		});
-
-		expectations.Verify();
 	}
 
 	[Test]
 	public static async Task CreateAsynchronousMethodsAsync()
 	{
 		const int returnValue = 3;
-		var expectations = new IAmAsynchronousCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IAmAsynchronousCreateExpectations>();
 		expectations.Methods.FooAsync().ReturnValue(Task.CompletedTask);
 		expectations.Methods.FooReturnAsync().ReturnValue(Task.FromResult(returnValue));
 		expectations.Methods.ValueFooAsync().ReturnValue(new ValueTask());
@@ -72,8 +72,6 @@ public static class AsynchronousTests
 		await mock.ValueFooAsync().ConfigureAwait(false);
 		var valueValue = await mock.ValueFooReturnAsync().ConfigureAwait(false);
 
-		expectations.Verify();
-
 		Assert.Multiple(() =>
 		{
 			Assert.That(value, Is.EqualTo(returnValue));
@@ -84,7 +82,8 @@ public static class AsynchronousTests
 	[Test]
 	public static async Task CreateAsynchronousMethodsWithAsyncCallbackAsync()
 	{
-		var expectations = new IAmAsynchronousCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IAmAsynchronousCreateExpectations>();
 		expectations.Methods.FooAsync().Callback(async () => await Task.Delay(10).ConfigureAwait(false));
 		expectations.Methods.FooReturnAsync().Callback(async () =>
 		{
@@ -95,8 +94,6 @@ public static class AsynchronousTests
 		var mock = expectations.Instance();
 		await mock.FooAsync().ConfigureAwait(false);
 		var value = await mock.FooReturnAsync().ConfigureAwait(false);
-
-		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(3));
 	}
@@ -112,8 +109,8 @@ public static class AsynchronousTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(value, Is.EqualTo(default(int)));
-			Assert.That(valueValue, Is.EqualTo(default(int)));
+			Assert.That(value, Is.Default);
+			Assert.That(valueValue, Is.Default);
 		});
 	}
 }

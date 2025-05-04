@@ -26,26 +26,24 @@ public static class AttributeTests
 		var node = new object();
 		var result = new object();
 
-		var expectations = new NotNullIfNotCasesCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<NotNullIfNotCasesCreateExpectations>();
 		expectations.Methods.VisitMethod(node).ReturnValue(result);
 
 		var mock = expectations.Instance();
 		var mockResult = mock.VisitMethod(node);
 
 		Assert.That(mockResult, Is.SameAs(result));
-
-		expectations.Verify();
 	}
 
 	[Test]
 	public static void CreateWithConditional()
 	{
-		var expectations = new ConventionDispatcherCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ConventionDispatcherCreateExpectations>();
 		expectations.Methods.AssertNoScope();
 
 		var mock = expectations.Instance();
 		mock.AssertNoScope();
-
-		expectations.Verify();
 	}
 }

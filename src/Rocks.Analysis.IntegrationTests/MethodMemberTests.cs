@@ -75,7 +75,7 @@ public static class MethodMemberTests
 		var mock = new IHaveRefReturnMakeExpectations().Instance();
 		ref var value = ref mock.MethodRefReturn();
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -97,7 +97,7 @@ public static class MethodMemberTests
 		var mock = new IHaveRefReturnMakeExpectations().Instance();
 		ref var value = ref mock.PropertyRefReturn;
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -119,7 +119,7 @@ public static class MethodMemberTests
 		var mock = new IHaveRefReturnMakeExpectations().Instance();
 		ref var value = ref mock[3];
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -141,7 +141,7 @@ public static class MethodMemberTests
 		var mock = new IHaveRefReturnMakeExpectations().Instance();
 		var value = mock.MethodRefReadonlyReturn();
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -163,7 +163,7 @@ public static class MethodMemberTests
 		var mock = new IHaveRefReturnMakeExpectations().Instance();
 		var value = mock.PropertyRefReadonlyReturn;
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -185,7 +185,7 @@ public static class MethodMemberTests
 		var mock = new IHaveRefReturnMakeExpectations().Instance();
 		var value = mock["b"];
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -212,7 +212,7 @@ public static class MethodMemberTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(value, Is.EqualTo(default(int)));
+			Assert.That(value, Is.Default);
 			Assert.That(() => mock.InArgument(3), Throws.Nothing);
 		});
 	}
@@ -237,7 +237,7 @@ public static class MethodMemberTests
 		var mock = new IHaveRefAndOutMakeExpectations().Instance();
 		mock.OutArgument(out var value);
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -279,7 +279,7 @@ public static class MethodMemberTests
 		var mock = new IHaveRefAndOutMakeExpectations().Instance();
 		mock.OutArgumentsWithGenerics<int, string>(3, out var value);
 
-		Assert.That(value, Is.EqualTo(default(string)));
+		Assert.That(value, Is.Null);
 	}
 
 	[Test]

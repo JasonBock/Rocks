@@ -44,15 +44,14 @@ public static class GenericTests
 	[Test]
 	public static void CreateWithOverloadUsingDifferentTypeParameter()
 	{
-		var expectations = new ISourceUpdaterCreateExpectations<string, Guid>();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ISourceUpdaterCreateExpectations<string, Guid>>();
 		expectations.Methods.Refresh(Arg.Any<IEnumerable<string>>());
 		expectations.Methods.Refresh(Arg.Any<IEnumerable<Guid>>());
 
 		var mock = expectations.Instance();
 		mock.Refresh(["a"]);
 		mock.Refresh([Guid.NewGuid()]);
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -61,7 +60,8 @@ public static class GenericTests
 		var referencedContainerOne = new ReferencedContainer<ReferenceTypeOne>();
 		var referencedContainerTwo = new ReferencedContainer<ReferenceTypeTwo>();
 
-		var expectations = new GenericContainerCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<GenericContainerCreateExpectations>();
 		expectations.Methods.SetThings<ReferenceTypeOne>().ReturnValue(referencedContainerOne);
 		expectations.Methods.SetThings<ReferenceTypeTwo>().ReturnValue(referencedContainerTwo);
 
@@ -71,7 +71,6 @@ public static class GenericTests
 			Assert.That(mock.SetThings<ReferenceTypeOne>(), Is.SameAs(referencedContainerOne));
 			Assert.That(mock.SetThings<ReferenceTypeTwo>(), Is.EqualTo(referencedContainerTwo));
 		});
-		expectations.Verify();
 	}
 
 	[Test]
@@ -79,7 +78,8 @@ public static class GenericTests
 	{
 		var guidReturn = Guid.NewGuid();
 
-		var expectations = new GenericContainerCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<GenericContainerCreateExpectations>();
 		expectations.Methods.Run<int>().ReturnValue(4);
 		expectations.Methods.Run<Guid>().ReturnValue(guidReturn);
 
@@ -89,7 +89,6 @@ public static class GenericTests
 			Assert.That(mock.Run<int>(), Is.EqualTo(4));
 			Assert.That(mock.Run<Guid>(), Is.EqualTo(guidReturn));
 		});
-		expectations.Verify();
 	}
 
 	[Test]
@@ -97,7 +96,8 @@ public static class GenericTests
 	{
 		var guidReturn = Guid.NewGuid();
 
-		var expectations = new IGenericContainerCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IGenericContainerCreateExpectations>();
 		expectations.Methods.Run<int>().ReturnValue(4);
 		expectations.Methods.Run<Guid>().ReturnValue(guidReturn);
 
@@ -107,8 +107,6 @@ public static class GenericTests
 			Assert.That(mock.Run<int>(), Is.EqualTo(4));
 			Assert.That(mock.Run<Guid>(), Is.EqualTo(guidReturn));
 		});
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -117,7 +115,8 @@ public static class GenericTests
 		var guidReturn = Guid.NewGuid();
 		var guidArgument = Guid.NewGuid();
 
-		var expectations = new IGenericContainerCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IGenericContainerCreateExpectations>();
 		expectations.Methods.Run<int, Guid>(4).ReturnValue(guidReturn);
 		expectations.Methods.Run<Guid, int>(guidArgument).ReturnValue(5);
 
@@ -127,6 +126,5 @@ public static class GenericTests
 			Assert.That(mock.Run<int, Guid>(4), Is.EqualTo(guidReturn));
 			Assert.That(mock.Run<Guid, int>(guidArgument), Is.EqualTo(5));
 		});
-		expectations.Verify();
 	}
 }

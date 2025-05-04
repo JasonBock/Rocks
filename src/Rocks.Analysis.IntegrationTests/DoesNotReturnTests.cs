@@ -18,88 +18,82 @@ public static class DoesNotReturnTests
 	[Test]
 	public static void CreateWithVoidCallThatHasHandler()
 	{
-		var expectations = new UsesDoesNotReturnCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<UsesDoesNotReturnCreateExpectations>();
 		expectations.Methods.VoidMethod().Callback(() => throw new NotImplementedException());
 
 		var mock = expectations.Instance();
 
-		Assert.That(() => mock.VoidMethod(), Throws.TypeOf<NotImplementedException>());
-
-		expectations.Verify();
+		Assert.That(mock.VoidMethod, Throws.TypeOf<NotImplementedException>());
 	}
 
 	[Test]
 	public static void CreateWithVoidCallThatDoesNotHaveHandler()
 	{
-		var expectations = new UsesDoesNotReturnCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<UsesDoesNotReturnCreateExpectations>();
 		expectations.Methods.VoidMethod();
 
 		var mock = expectations.Instance();
 
-		Assert.That(() => mock.VoidMethod(), Throws.TypeOf<DoesNotReturnException>());
-
-		expectations.Verify();
+		Assert.That(mock.VoidMethod, Throws.TypeOf<DoesNotReturnException>());
 	}
 
 	[Test]
 	public static void CreateWithVoidCallThatDoesNotHaveExpectation()
 	{
-		var expectations = new UsesDoesNotReturnCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<UsesDoesNotReturnCreateExpectations>();
 		var mock = expectations.Instance();
 
-		Assert.That(() => mock.VoidMethod(), Throws.TypeOf<NotSupportedException>());
-
-		expectations.Verify();
+		Assert.That(mock.VoidMethod, Throws.TypeOf<NotSupportedException>());
 	}
 
 	[Test]
 	public static void CreateWithIntCallThatHasHandler()
 	{
-		var expectations = new UsesDoesNotReturnCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<UsesDoesNotReturnCreateExpectations>();
 		expectations.Methods.IntMethod().Callback(() => throw new NotImplementedException());
 
 		var mock = expectations.Instance();
 
-		Assert.That(() => mock.IntMethod(), Throws.TypeOf<NotImplementedException>());
-
-		expectations.Verify();
+		Assert.That(mock.IntMethod, Throws.TypeOf<NotImplementedException>());
 	}
 
 	[Test]
 	public static void CreateWithIntCallThatDoesNotHaveHandler()
 	{
-		var expectations = new UsesDoesNotReturnCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<UsesDoesNotReturnCreateExpectations>();
 		expectations.Methods.IntMethod().ReturnValue(1);
 
 		var mock = expectations.Instance();
 
-		Assert.That(() => mock.IntMethod(), Throws.TypeOf<DoesNotReturnException>());
-
-		expectations.Verify();
+		Assert.That(mock.IntMethod, Throws.TypeOf<DoesNotReturnException>());
 	}
 
 	[Test]
 	public static void CreateWithIntCallThatDoesNotHaveExpectation()
 	{
-		var expectations = new UsesDoesNotReturnCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<UsesDoesNotReturnCreateExpectations>();
 		var mock = expectations.Instance();
 
-		Assert.That(() => mock.IntMethod(), Throws.TypeOf<NotSupportedException>());
-
-		expectations.Verify();
+		Assert.That(mock.IntMethod, Throws.TypeOf<NotSupportedException>());
 	}
 
 	[Test]
 	public static void MakeWithVoidCall()
 	{
 		var mock = new UsesDoesNotReturnMakeExpectations().Instance();
-		Assert.That(() => mock.VoidMethod(), Throws.TypeOf<DoesNotReturnException>());
+		Assert.That(mock.VoidMethod, Throws.TypeOf<DoesNotReturnException>());
 	}
 
 	[Test]
 	public static void MakeWithIntCall()
 	{
 		var mock = new UsesDoesNotReturnMakeExpectations().Instance();
-		Assert.That(() => mock.IntMethod(), Throws.TypeOf<DoesNotReturnException>());
+		Assert.That(mock.IntMethod, Throws.TypeOf<DoesNotReturnException>());
 	}
 }

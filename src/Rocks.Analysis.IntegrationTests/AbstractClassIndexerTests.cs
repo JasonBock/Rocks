@@ -37,7 +37,8 @@ public static class AbstractClassIndexerTests
 	[Test]
 	public static void CreateWithOneParameterGetterAndSetter()
 	{
-		var expectations = new AbstractClassIndexerGetterSetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AbstractClassIndexerGetterSetterCreateExpectations>();
 		expectations.Indexers.Getters.This(3);
 		expectations.Indexers.Setters.This(4, 3);
 
@@ -45,23 +46,20 @@ public static class AbstractClassIndexerTests
 		var value = mock[3];
 		mock[3] = 4;
 
-		expectations.Verify();
-
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
 	public static void CreateWithOneParameterGetterAndInit()
 	{
-		var expectations = new AbstractClassIndexerGetterInitCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AbstractClassIndexerGetterInitCreateExpectations>();
 		expectations.Indexers.Getters.This(3);
 
 		var mock = expectations.Instance(null);
 		var value = mock[3];
 
-		expectations.Verify();
-
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -71,21 +69,20 @@ public static class AbstractClassIndexerTests
 		var value = mock[3];
 		mock[3] = 4;
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
 	public static void CreateWithOneParameterGetter()
 	{
-		var expectations = new AbstractClassIndexerGetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AbstractClassIndexerGetterCreateExpectations>();
 		expectations.Indexers.Getters.This(3);
 
 		var mock = expectations.Instance();
 		var value = mock[3];
 
-		expectations.Verify();
-
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -94,13 +91,14 @@ public static class AbstractClassIndexerTests
 		var mock = new AbstractClassIndexerGetterMakeExpectations().Instance();
 		var value = mock[3];
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
 	public static void CreateWithOneParameterGetterRaiseEvent()
 	{
-		var expectations = new AbstractClassIndexerGetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AbstractClassIndexerGetterCreateExpectations>();
 		expectations.Indexers.Getters.This(3).RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
@@ -108,11 +106,9 @@ public static class AbstractClassIndexerTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		var value = mock[3];
 
-		expectations.Verify();
-
 		Assert.Multiple(() =>
 		{
-			Assert.That(value, Is.EqualTo(default(int)));
+			Assert.That(value, Is.Default);
 			Assert.That(wasEventRaised, Is.True);
 		});
 	}
@@ -121,7 +117,8 @@ public static class AbstractClassIndexerTests
 	public static void CreateWithOneParameterGetterCallback()
 	{
 		var wasCallbackInvoked = false;
-		var expectations = new AbstractClassIndexerGetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AbstractClassIndexerGetterCreateExpectations>();
 		expectations.Indexers.Getters.This(3).Callback(_ =>
 		{
 			wasCallbackInvoked = true;
@@ -130,8 +127,6 @@ public static class AbstractClassIndexerTests
 
 		var mock = expectations.Instance();
 		var value = mock[3];
-
-		expectations.Verify();
 
 		Assert.Multiple(() =>
 		{
@@ -144,7 +139,8 @@ public static class AbstractClassIndexerTests
 	public static void CreateWithOneParameterGetterRaiseEventWithCallback()
 	{
 		var wasCallbackInvoked = false;
-		var expectations = new AbstractClassIndexerGetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AbstractClassIndexerGetterCreateExpectations>();
 		expectations.Indexers.Getters.This(3).RaiseMyEvent(EventArgs.Empty)
 			.Callback(_ =>
 			{
@@ -157,8 +153,6 @@ public static class AbstractClassIndexerTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		var value = mock[3];
 
-		expectations.Verify();
-
 		Assert.Multiple(() =>
 		{
 			Assert.That(value, Is.EqualTo(3));
@@ -170,28 +164,26 @@ public static class AbstractClassIndexerTests
 	[Test]
 	public static void CreateWithOneParameterGetterMultipleCalls()
 	{
-		var expectations = new AbstractClassIndexerGetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AbstractClassIndexerGetterCreateExpectations>();
 		expectations.Indexers.Getters.This(3).ExpectedCallCount(2);
 
 		var mock = expectations.Instance();
 		_ = mock[3];
 		var value = mock[3];
 
-		expectations.Verify();
-
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
 	public static void CreateWithOneParameterSetter()
 	{
-		var expectations = new AbstractClassIndexerSetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AbstractClassIndexerSetterCreateExpectations>();
 		expectations.Indexers.Setters.This(4, 3);
 
 		var mock = expectations.Instance();
 		mock[3] = 4;
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -205,15 +197,14 @@ public static class AbstractClassIndexerTests
 	[Test]
 	public static void CreateWithOneParameterSetterRaiseEvent()
 	{
-		var expectations = new AbstractClassIndexerSetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AbstractClassIndexerSetterCreateExpectations>();
 		expectations.Indexers.Setters.This(4, 3).RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		mock[3] = 4;
-
-		expectations.Verify();
 
 		Assert.That(wasEventRaised, Is.True);
 	}
@@ -222,13 +213,12 @@ public static class AbstractClassIndexerTests
 	public static void CreateWithOneParameterSetterCallback()
 	{
 		var wasCallbackInvoked = false;
-		var expectations = new AbstractClassIndexerSetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AbstractClassIndexerSetterCreateExpectations>();
 		expectations.Indexers.Setters.This(4, 3).Callback((a, value) => wasCallbackInvoked = true);
 
 		var mock = expectations.Instance();
 		mock[3] = 4;
-
-		expectations.Verify();
 
 		Assert.That(wasCallbackInvoked, Is.True);
 	}
@@ -237,7 +227,8 @@ public static class AbstractClassIndexerTests
 	public static void CreateWithOneParameterSetterRaiseEventWithCallback()
 	{
 		var wasCallbackInvoked = false;
-		var expectations = new AbstractClassIndexerSetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AbstractClassIndexerSetterCreateExpectations>();
 		expectations.Indexers.Setters.This(4, 3).RaiseMyEvent(EventArgs.Empty)
 			.Callback((a, value) => wasCallbackInvoked = true);
 
@@ -245,8 +236,6 @@ public static class AbstractClassIndexerTests
 		var mock = expectations.Instance();
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		mock[3] = 4;
-
-		expectations.Verify();
 
 		Assert.Multiple(() =>
 		{
@@ -281,7 +270,7 @@ public static class AbstractClassIndexerTests
 
 		expectations.Verify();
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -292,7 +281,7 @@ public static class AbstractClassIndexerTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(value, Is.EqualTo(default(int)));
+			Assert.That(value, Is.Default);
 			Assert.That(() => mock[3, "b"] = 4, Throws.Nothing);
 		});
 	}
@@ -300,15 +289,14 @@ public static class AbstractClassIndexerTests
 	[Test]
 	public static void CreateWithMultipleParametersGetter()
 	{
-		var expectations = new AbstractClassIndexerGetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AbstractClassIndexerGetterCreateExpectations>();
 		expectations.Indexers.Getters.This(3, "b");
 
 		var mock = expectations.Instance();
 		var value = mock[3, "b"];
 
-		expectations.Verify();
-
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -317,13 +305,14 @@ public static class AbstractClassIndexerTests
 		var mock = new AbstractClassIndexerGetterMakeExpectations().Instance();
 		var value = mock[3, "b"];
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
 	public static void CreateWithMultipleParametersGetterRaiseEvent()
 	{
-		var expectations = new AbstractClassIndexerGetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AbstractClassIndexerGetterCreateExpectations>();
 		expectations.Indexers.Getters.This(3, "b").RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
@@ -331,11 +320,9 @@ public static class AbstractClassIndexerTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		var value = mock[3, "b"];
 
-		expectations.Verify();
-
 		Assert.Multiple(() =>
 		{
-			Assert.That(value, Is.EqualTo(default(int)));
+			Assert.That(value, Is.Default);
 			Assert.That(wasEventRaised, Is.True);
 		});
 	}
@@ -344,7 +331,8 @@ public static class AbstractClassIndexerTests
 	public static void CreateWithMultipleParametersGetterCallback()
 	{
 		var wasCallbackInvoked = false;
-		var expectations = new AbstractClassIndexerGetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AbstractClassIndexerGetterCreateExpectations>();
 		expectations.Indexers.Getters.This(3, "b").Callback((a, b) =>
 		{
 			wasCallbackInvoked = true;
@@ -353,8 +341,6 @@ public static class AbstractClassIndexerTests
 
 		var mock = expectations.Instance();
 		var value = mock[3, "b"];
-
-		expectations.Verify();
 
 		Assert.Multiple(() =>
 		{
@@ -367,7 +353,8 @@ public static class AbstractClassIndexerTests
 	public static void CreateWithMultipleParametersGetterRaiseEventWithCallback()
 	{
 		var wasCallbackInvoked = false;
-		var expectations = new AbstractClassIndexerGetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AbstractClassIndexerGetterCreateExpectations>();
 		expectations.Indexers.Getters.This(3, "b").RaiseMyEvent(EventArgs.Empty)
 			.Callback((a, b) =>
 			{
@@ -380,8 +367,6 @@ public static class AbstractClassIndexerTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		var value = mock[3, "b"];
 
-		expectations.Verify();
-
 		Assert.Multiple(() =>
 		{
 			Assert.That(value, Is.EqualTo(3));
@@ -393,28 +378,26 @@ public static class AbstractClassIndexerTests
 	[Test]
 	public static void CreateWithMultipleParametersGetterMultipleCalls()
 	{
-		var expectations = new AbstractClassIndexerGetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AbstractClassIndexerGetterCreateExpectations>();
 		expectations.Indexers.Getters.This(3, "b").ExpectedCallCount(2);
 
 		var mock = expectations.Instance();
 		_ = mock[3, "b"];
 		var value = mock[3, "b"];
 
-		expectations.Verify();
-
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
 	public static void CreateWithMultipleParametersSetter()
 	{
-		var expectations = new AbstractClassIndexerSetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AbstractClassIndexerSetterCreateExpectations>();
 		expectations.Indexers.Setters.This(4, 3, "b");
 
 		var mock = expectations.Instance();
 		mock[3, "b"] = 4;
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -428,15 +411,14 @@ public static class AbstractClassIndexerTests
 	[Test]
 	public static void CreateWithMultipleParametersSetterRaiseEvent()
 	{
-		var expectations = new AbstractClassIndexerSetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AbstractClassIndexerSetterCreateExpectations>();
 		expectations.Indexers.Setters.This(4, 3, "b").RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		mock[3, "b"] = 4;
-
-		expectations.Verify();
 
 		Assert.That(wasEventRaised, Is.True);
 	}
@@ -445,13 +427,12 @@ public static class AbstractClassIndexerTests
 	public static void CreateWithMultipleParametersSetterCallback()
 	{
 		var wasCallbackInvoked = false;
-		var expectations = new AbstractClassIndexerSetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AbstractClassIndexerSetterCreateExpectations>();
 		expectations.Indexers.Setters.This(4, 3, "b").Callback((a, b, value) => wasCallbackInvoked = true);
 
 		var mock = expectations.Instance();
 		mock[3, "b"] = 4;
-
-		expectations.Verify();
 
 		Assert.That(wasCallbackInvoked, Is.True);
 	}
@@ -460,7 +441,8 @@ public static class AbstractClassIndexerTests
 	public static void CreateWithMultipleParametersSetterRaiseEventWithCallback()
 	{
 		var wasCallbackInvoked = false;
-		var expectations = new AbstractClassIndexerSetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AbstractClassIndexerSetterCreateExpectations>();
 		expectations.Indexers.Setters.This(4, 3, "b").RaiseMyEvent(EventArgs.Empty)
 			.Callback((a, b, value) => wasCallbackInvoked = true);
 
@@ -468,8 +450,6 @@ public static class AbstractClassIndexerTests
 		var mock = expectations.Instance();
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		mock[3, "b"] = 4;
-
-		expectations.Verify();
 
 		Assert.Multiple(() =>
 		{
@@ -481,13 +461,12 @@ public static class AbstractClassIndexerTests
 	[Test]
 	public static void CreateWithMultipleParametersSetterMultipleCalls()
 	{
-		var expectations = new AbstractClassIndexerSetterCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AbstractClassIndexerSetterCreateExpectations>();
 		expectations.Indexers.Setters.This(4, 3, "b").ExpectedCallCount(2);
 
 		var mock = expectations.Instance();
 		mock[3, "b"] = 4;
 		mock[3, "b"] = 4;
-
-		expectations.Verify();
 	}
 }

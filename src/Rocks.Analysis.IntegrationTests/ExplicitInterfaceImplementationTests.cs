@@ -51,29 +51,27 @@ public static class ExplicitInterfaceImplementationTests
 	[Test]
 	public static void CreateDifferByReturnTypeOnly()
 	{
-		var expectations = new IIterableCreateExpectations<string>();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IIterableCreateExpectations<string>>();
 		expectations.Methods.GetIterator();
 		expectations.ExplicitMethodsForIIterable.GetIterator();
 
 		var mock = expectations.Instance();
 		mock.GetIterator();
 		_ = ((IIterable)mock).GetIterator();
-
-		expectations.Verify();
 	}
 
 	[Test]
 	public static void CreateMethod()
 	{
-		var expectations = new IExplicitInterfaceImplementationCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IExplicitInterfaceImplementationCreateExpectations>();
 		expectations.ExplicitMethodsForIExplicitInterfaceImplementationOne.A();
 		expectations.ExplicitMethodsForIExplicitInterfaceImplementationTwo.A();
 
 		var mock = expectations.Instance();
 		((IExplicitInterfaceImplementationOne)mock).A();
 		((IExplicitInterfaceImplementationTwo)mock).A();
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -91,7 +89,8 @@ public static class ExplicitInterfaceImplementationTests
 	[Test]
 	public static void CreateProperty()
 	{
-		var expectations = new IExplicitInterfaceImplementationCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IExplicitInterfaceImplementationCreateExpectations>();
 		expectations.ExplicitPropertiesForIExplicitInterfaceImplementationOne.Getters.B();
 		expectations.ExplicitPropertiesForIExplicitInterfaceImplementationOne.Setters.B(Arg.Any<int>());
 		expectations.ExplicitPropertiesForIExplicitInterfaceImplementationTwo.Getters.B();
@@ -102,22 +101,19 @@ public static class ExplicitInterfaceImplementationTests
 		((IExplicitInterfaceImplementationOne)mock).B = oneValue;
 		var twoValue = ((IExplicitInterfaceImplementationTwo)mock).B;
 		((IExplicitInterfaceImplementationTwo)mock).B = twoValue;
-
-		expectations.Verify();
 	}
 
 	[Test]
 	public static void CreatePropertyWithInit()
 	{
-		var expectations = new IExplicitInterfaceImplementationCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IExplicitInterfaceImplementationCreateExpectations>();
 		expectations.ExplicitPropertiesForIExplicitInterfaceImplementationOne.Getters.D();
 		expectations.ExplicitPropertiesForIExplicitInterfaceImplementationTwo.Getters.D();
 
 		var mock = expectations.Instance();
 		_ = ((IExplicitInterfaceImplementationOne)mock).D;
 		_ = ((IExplicitInterfaceImplementationTwo)mock).D;
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -129,8 +125,8 @@ public static class ExplicitInterfaceImplementationTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(oneValue, Is.EqualTo(default(int)));
-			Assert.That(twoValue, Is.EqualTo(default(int)));
+			Assert.That(oneValue, Is.Default);
+			Assert.That(twoValue, Is.Default);
 			Assert.That(() => ((IExplicitInterfaceImplementationOne)mock).B = oneValue, Throws.Nothing);
 			Assert.That(() => ((IExplicitInterfaceImplementationTwo)mock).B = twoValue, Throws.Nothing);
 		});
@@ -145,15 +141,16 @@ public static class ExplicitInterfaceImplementationTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(oneValue, Is.EqualTo(default(int)));
-			Assert.That(twoValue, Is.EqualTo(default(int)));
+			Assert.That(oneValue, Is.Default);
+			Assert.That(twoValue, Is.Default);
 		});
 	}
 
 	[Test]
 	public static void CreateIndexer()
 	{
-		var expectations = new IExplicitInterfaceImplementationCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IExplicitInterfaceImplementationCreateExpectations>();
 		expectations.ExplicitIndexersForIExplicitInterfaceImplementationOne.Getters.This(Arg.Any<int>());
 		expectations.ExplicitIndexersForIExplicitInterfaceImplementationOne.Setters.This(Arg.Any<int>(), Arg.Any<int>());
 		expectations.ExplicitIndexersForIExplicitInterfaceImplementationTwo.Getters.This(Arg.Any<int>());
@@ -164,8 +161,6 @@ public static class ExplicitInterfaceImplementationTests
 		((IExplicitInterfaceImplementationOne)mock)[3] = oneValue;
 		var twoValue = ((IExplicitInterfaceImplementationTwo)mock)[3];
 		((IExplicitInterfaceImplementationTwo)mock)[3] = twoValue;
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -177,8 +172,8 @@ public static class ExplicitInterfaceImplementationTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(oneValue, Is.EqualTo(default(int)));
-			Assert.That(twoValue, Is.EqualTo(default(int)));
+			Assert.That(oneValue, Is.Default);
+			Assert.That(twoValue, Is.Default);
 			Assert.That(() => ((IExplicitInterfaceImplementationOne)mock)[3] = oneValue, Throws.Nothing);
 			Assert.That(() => ((IExplicitInterfaceImplementationTwo)mock)[3] = twoValue, Throws.Nothing);
 		});

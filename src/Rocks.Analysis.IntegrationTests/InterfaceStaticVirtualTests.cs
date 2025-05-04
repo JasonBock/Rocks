@@ -43,8 +43,8 @@ public static class InterfaceStaticVirtualTests
 		Assert.Multiple(() =>
 		{
 			mock.InstancePush = "a";
-			Assert.That(mock.InstanceLift(), Is.EqualTo(default(string)));
-			Assert.That(mock.InstancePush, Is.EqualTo(default(string)));
+			Assert.That(mock.InstanceLift(), Is.Null);
+			Assert.That(mock.InstancePush, Is.Null);
 		});
 	}
 }

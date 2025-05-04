@@ -26,13 +26,12 @@ public static class InterfaceGenericMethodTests
 	[Test]
 	public static void CreateUsingGenericType()
 	{
-		var expectations = new IInterfaceGenericMethodCreateExpectations<int>();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceGenericMethodCreateExpectations<int>>();
 		expectations.Methods.Foo(Arg.Any<List<string>>());
 
 		var mock = expectations.Instance();
 		mock.Foo([]);
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -46,13 +45,12 @@ public static class InterfaceGenericMethodTests
 	[Test]
 	public static void CreateWithGenericTypeParameter()
 	{
-		var expectations = new IInterfaceGenericMethodCreateExpectations<int>();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceGenericMethodCreateExpectations<int>>();
 		expectations.Methods.Quux(Arg.Any<int>());
 
 		var mock = expectations.Instance();
 		mock.Quux(3);
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -66,13 +64,12 @@ public static class InterfaceGenericMethodTests
 	[Test]
 	public static void CreateWithGenericParameterType()
 	{
-		var expectations = new IInterfaceGenericMethodCreateExpectations<int>();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceGenericMethodCreateExpectations<int>>();
 		expectations.Methods.Bar(Arg.Any<int>());
 
 		var mock = expectations.Instance();
 		mock.Bar(3);
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -98,13 +95,12 @@ public static class InterfaceGenericMethodTests
 	public static void CreateUsingGenericTypeAsReturn()
 	{
 		var returnValue = new List<string>();
-		var expectations = new IInterfaceGenericMethodCreateExpectations<int>();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceGenericMethodCreateExpectations<int>>();
 		expectations.Methods.FooReturn().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		var value = mock.FooReturn();
-
-		expectations.Verify();
 
 		Assert.That(value, Is.SameAs(returnValue));
 	}
@@ -122,13 +118,12 @@ public static class InterfaceGenericMethodTests
 	public static void CreateWithGenericTypeParameterAsReturn()
 	{
 		var returnValue = 3;
-		var expectations = new IInterfaceGenericMethodCreateExpectations<int>();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceGenericMethodCreateExpectations<int>>();
 		expectations.Methods.QuuxReturn().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		var value = mock.QuuxReturn();
-
-		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(returnValue));
 	}
@@ -139,20 +134,19 @@ public static class InterfaceGenericMethodTests
 		var mock = new IInterfaceGenericMethodMakeExpectations<int>().Instance();
 		var value = mock.QuuxReturn();
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
 	public static void CreateWithGenericParameterTypeAsReturn()
 	{
 		var returnValue = 3;
-		var expectations = new IInterfaceGenericMethodCreateExpectations<int>();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceGenericMethodCreateExpectations<int>>();
 		expectations.Methods.BarReturn<int>().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		var value = mock.BarReturn<int>();
-
-		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(returnValue));
 	}
@@ -163,7 +157,7 @@ public static class InterfaceGenericMethodTests
 		var mock = new IInterfaceGenericMethodMakeExpectations<int>().Instance();
 		var value = mock.BarReturn<int>();
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -182,13 +176,12 @@ public static class InterfaceGenericMethodTests
 	public static void CreateWithNullableGenericParameterTypes()
 	{
 		var returnValue = "c";
-		var expectations = new IInterfaceGenericMethodCreateExpectations<int>();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IInterfaceGenericMethodCreateExpectations<int>>();
 		expectations.Methods.NullableValues<string>("b").ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		var value = mock.NullableValues("b");
-
-		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(returnValue));
 	}
@@ -199,6 +192,6 @@ public static class InterfaceGenericMethodTests
 		var mock = new IInterfaceGenericMethodMakeExpectations<int>().Instance();
 		var value = mock.NullableValues("b");
 
-		Assert.That(value, Is.EqualTo(default(string)));
+		Assert.That(value, Is.Null);
 	}
 }

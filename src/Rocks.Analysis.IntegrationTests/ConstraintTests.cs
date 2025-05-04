@@ -17,12 +17,11 @@ public static class ConstraintTests
 	[Test]
 	public static void Create()
 	{
-		var expectations = new BaseForConstraintCaseCreateExpectations<string>();
+		using var context = new RockContext(); 
+		var expectations = context.Create<BaseForConstraintCaseCreateExpectations<string>>();
 		expectations.Methods.As<string>();
 
 		var mock = expectations.Instance();
 		mock.As<string>();
-
-		expectations.Verify();
 	}
 }

@@ -27,7 +27,7 @@ public static class InterfaceMethodReturnWithEventsTests
 		Assert.Multiple(() =>
 		{
 			Assert.That(wasEventRaised, Is.True);
-			Assert.That(value, Is.EqualTo(default(int)));
+			Assert.That(value, Is.Default);
 		});
 	}
 
@@ -78,8 +78,8 @@ public static class InterfaceMethodReturnWithEventsTests
 		Assert.Multiple(() =>
 		{
 			Assert.That(eventRaisedCount, Is.EqualTo(2));
-			Assert.That(valueOne, Is.EqualTo(default(int)));
-			Assert.That(valueTwo, Is.EqualTo(default(int)));
+			Assert.That(valueOne, Is.Default);
+			Assert.That(valueTwo, Is.Default);
 		});
 	}
 

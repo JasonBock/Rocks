@@ -23,15 +23,14 @@ public static class ClassGenericEventsTests
 	public static void CreateUsingGenericType()
 	{
 		var returnValue = new List<string>();
-		var expectations = new ClassGenericEventsCreateExpectations<ClassEventArgs>();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassGenericEventsCreateExpectations<ClassEventArgs>>();
 		expectations.Methods.Foo().AddRaiseEvent(new("MyEvent", new ClassEventArgs()));
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		mock.Foo();
-
-		expectations.Verify();
 
 		Assert.That(wasEventRaised, Is.True);
 	}

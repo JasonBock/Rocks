@@ -50,13 +50,12 @@ public static class ClassConstructorTests
 	[Test]
 	public static void CreateRequiredConstructor()
 	{
-		var expectations = new ClassRequiredConstructorCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassRequiredConstructorCreateExpectations>();
 		expectations.Methods.DoRequired();
 
 		var mock = expectations.Instance();
 		mock.DoRequired();
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -66,7 +65,8 @@ public static class ClassConstructorTests
 		var d1Value = "d1";
 		var d2Value = "d2";
 
-		var expectations = new ClassConstructorWithSpecialParametersCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassConstructorWithSpecialParametersCreateExpectations>();
 		expectations.Methods.Foo();
 
 		var mock = expectations.Instance(2, ref bValue, out var cValue, d1Value, d2Value);
@@ -80,8 +80,6 @@ public static class ClassConstructorTests
 			Assert.That(cValue, Is.EqualTo("42"));
 			Assert.That(mock.D, Is.EquivalentTo(new[] { d1Value, d2Value }));
 		});
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -106,13 +104,12 @@ public static class ClassConstructorTests
 	[Test]
 	public static void CreateWithNoParametersAndPublicConstructor()
 	{
-		var expectations = new ClassConstructorCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassConstructorCreateExpectations>();
 		expectations.Methods.NoParameters();
 
 		var mock = expectations.Instance(3);
 		var value = mock.NoParameters();
-
-		expectations.Verify();
 
 		Assert.Multiple(() =>
 		{
@@ -127,23 +124,22 @@ public static class ClassConstructorTests
 		var mock = new ClassConstructorMakeExpectations().Instance(3);
 		var value = mock.NoParameters();
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
 	public static void CreateWithNoParametersAndProtectedConstructor()
 	{
-		var expectations = new ClassConstructorCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassConstructorCreateExpectations>();
 		expectations.Methods.NoParameters();
 
 		var mock = expectations.Instance("b");
 		var value = mock.NoParameters();
 
-		expectations.Verify();
-
 		Assert.Multiple(() =>
 		{
-			Assert.That(mock.IntData, Is.EqualTo(default(int)));
+			Assert.That(mock.IntData, Is.Default);
 			Assert.That(mock.StringData, Is.EqualTo("b"));
 		});
 	}
@@ -154,6 +150,6 @@ public static class ClassConstructorTests
 		var mock = new ClassConstructorMakeExpectations().Instance("b");
 		var value = mock.NoParameters();
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 }

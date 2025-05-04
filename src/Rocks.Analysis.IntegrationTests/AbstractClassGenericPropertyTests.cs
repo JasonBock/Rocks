@@ -20,13 +20,12 @@ public static class AbstractClassGenericPropertyTests
 	public static void CreateUsingGenericType()
 	{
 		var returnValue = new List<string>();
-		var expectations = new AbstractClassGenericPropertyCreateExpectations<int>();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AbstractClassGenericPropertyCreateExpectations<int>>();
 		expectations.Properties.Getters.Values().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		var value = mock.Values;
-
-		expectations.Verify();
 
 		Assert.That(value, Is.SameAs(returnValue));
 	}
@@ -35,13 +34,12 @@ public static class AbstractClassGenericPropertyTests
 	public static void CreateUsingGenericTypeWithInit()
 	{
 		var returnValue = new List<string>();
-		var expectations = new AbstractClassGenericPropertyGetAndInitCreateExpectations<int>();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AbstractClassGenericPropertyGetAndInitCreateExpectations<int>>();
 		expectations.Properties.Getters.Values().ReturnValue(returnValue);
 
 		var mock = expectations.Instance(null);
 		var value = mock.Values;
-
-		expectations.Verify();
 
 		Assert.That(value, Is.SameAs(returnValue));
 	}
@@ -68,13 +66,12 @@ public static class AbstractClassGenericPropertyTests
 	public static void CreateUsingGenericTypeParameter()
 	{
 		var returnValue = 3;
-		var expectations = new AbstractClassGenericPropertyCreateExpectations<int>();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AbstractClassGenericPropertyCreateExpectations<int>>();
 		expectations.Properties.Getters.Data().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		var value = mock.Data;
-
-		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(returnValue));
 	}
@@ -83,13 +80,12 @@ public static class AbstractClassGenericPropertyTests
 	public static void CreateUsingGenericTypeParameterWithInit()
 	{
 		var returnValue = 3;
-		var expectations = new AbstractClassGenericPropertyGetAndInitCreateExpectations<int>();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AbstractClassGenericPropertyGetAndInitCreateExpectations<int>>();
 		expectations.Properties.Getters.Data().ReturnValue(returnValue);
 
 		var mock = expectations.Instance(null);
 		var value = mock.Data;
-
-		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(returnValue));
 	}
@@ -100,7 +96,7 @@ public static class AbstractClassGenericPropertyTests
 		var mock = new AbstractClassGenericPropertyMakeExpectations<int>().Instance();
 		var value = mock.Data;
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -109,6 +105,6 @@ public static class AbstractClassGenericPropertyTests
 		var mock = new AbstractClassGenericPropertyGetAndInitMakeExpectations<int>().Instance(null);
 		var value = mock.Data;
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 }

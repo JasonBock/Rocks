@@ -28,7 +28,7 @@ public static class InterfacePropertyTests
 
 		expectations.Verify();
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -37,7 +37,7 @@ public static class InterfacePropertyTests
 		var mock = new IInterfacePropertyMakeExpectations().Instance();
 		var value = mock.GetData;
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -56,7 +56,7 @@ public static class InterfacePropertyTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(value, Is.EqualTo(default(int)));
+			Assert.That(value, Is.Default);
 			Assert.That(wasEventRaised, Is.True);
 		});
 	}
@@ -198,7 +198,7 @@ public static class InterfacePropertyTests
 
 		expectations.Verify();
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -214,7 +214,7 @@ public static class InterfacePropertyTests
 
 		expectations.Verify();
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -223,7 +223,7 @@ public static class InterfacePropertyTests
 		var mock = new IInterfacePropertyMakeExpectations().Instance();
 		var value = mock.GetAndInitData;
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -234,7 +234,7 @@ public static class InterfacePropertyTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(value, Is.EqualTo(default(int)));
+			Assert.That(value, Is.Default);
 			Assert.That(() => mock.GetAndSetData = value, Throws.Nothing);
 		});
 	}

@@ -18,15 +18,14 @@ public static class ClassMethodVoidWithEventsTests
 	[Test]
 	public static void CreateEvent()
 	{
-		var expectations = new ClassMethodVoidWithEventsCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassMethodVoidWithEventsCreateExpectations>();
 		expectations.Methods.NoParameters().RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		mock.NoParameters();
-
-		expectations.Verify();
 
 		Assert.That(wasEventRaised, Is.True);
 	}
@@ -35,7 +34,8 @@ public static class ClassMethodVoidWithEventsTests
 	public static void CreateEventWithCallback()
 	{
 		var wasCallbackInvoked = false;
-		var expectations = new ClassMethodVoidWithEventsCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassMethodVoidWithEventsCreateExpectations>();
 		expectations.Methods.NoParameters()
 			.Callback(() => wasCallbackInvoked = true)
 			.RaiseMyEvent(EventArgs.Empty);
@@ -44,8 +44,6 @@ public static class ClassMethodVoidWithEventsTests
 		var mock = expectations.Instance();
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		mock.NoParameters();
-
-		expectations.Verify();
 
 		Assert.Multiple(() =>
 		{
@@ -57,7 +55,8 @@ public static class ClassMethodVoidWithEventsTests
 	[Test]
 	public static void CreateEventWithMultipleCalls()
 	{
-		var expectations = new ClassMethodVoidWithEventsCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassMethodVoidWithEventsCreateExpectations>();
 		expectations.Methods.NoParameters()
 			.ExpectedCallCount(2)
 			.RaiseMyEvent(EventArgs.Empty);
@@ -68,8 +67,6 @@ public static class ClassMethodVoidWithEventsTests
 		mock.NoParameters();
 		mock.NoParameters();
 
-		expectations.Verify();
-
 		Assert.That(eventRaisedCount, Is.EqualTo(2));
 	}
 
@@ -77,7 +74,8 @@ public static class ClassMethodVoidWithEventsTests
 	public static void CreateEventWithMultipleCallsWithCallback()
 	{
 		var callbackInvokedCount = 0;
-		var expectations = new ClassMethodVoidWithEventsCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassMethodVoidWithEventsCreateExpectations>();
 		expectations.Methods.NoParameters()
 			.ExpectedCallCount(2)
 			.Callback(() => callbackInvokedCount++)
@@ -88,8 +86,6 @@ public static class ClassMethodVoidWithEventsTests
 		mock.MyEvent += (s, e) => eventRaisedCount++;
 		mock.NoParameters();
 		mock.NoParameters();
-
-		expectations.Verify();
 
 		Assert.Multiple(() =>
 		{

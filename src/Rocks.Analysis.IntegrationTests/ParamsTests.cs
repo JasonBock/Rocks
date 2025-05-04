@@ -59,7 +59,7 @@ public static class ParamsTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(value, Is.EqualTo(default(int)));
+			Assert.That(value, Is.Default);
 			Assert.That(() => mock.Foo(1, "b"), Throws.Nothing);
 		});
 	}
@@ -89,7 +89,7 @@ public static class ParamsTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(value, Is.EqualTo(default(int)));
+			Assert.That(value, Is.Default);
 			Assert.That(() => mock.Foo(1), Throws.Nothing);
 		});
 	}

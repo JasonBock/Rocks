@@ -13,7 +13,8 @@ public static class HttpMessageHandlerTests
 			StatusCode = HttpStatusCode.OK,
 			Content = new StringContent("OK")
 		};
-		var expectations = new HttpMessageHandlerCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<HttpMessageHandlerCreateExpectations>();
 		expectations.Methods.SendAsync(Arg.Any<HttpRequestMessage>(), Arg.Any<CancellationToken>())
 			.ReturnValue(Task.FromResult(response));
 
@@ -26,7 +27,5 @@ public static class HttpMessageHandlerTests
 			Assert.That(getResponse.StatusCode, Is.EqualTo(response.StatusCode));
 			Assert.That(getResponse.Content, Is.EqualTo(response.Content));
 		});
-
-		expectations.Verify();
 	}
 }

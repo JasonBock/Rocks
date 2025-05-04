@@ -24,15 +24,14 @@ public static class ClassPropertyTests
 	[Test]
 	public static void CreateGet()
 	{
-		var expectations = new ClassPropertyCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassPropertyCreateExpectations>();
 		expectations.Properties.Getters.GetData();
 
 		var mock = expectations.Instance(null);
 		var value = mock.GetData;
 
-		expectations.Verify();
-
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -41,13 +40,14 @@ public static class ClassPropertyTests
 		var mock = new ClassPropertyMakeExpectations().Instance(null);
 		var value = mock.GetData;
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
 	public static void CreateGetWithRaiseEvent()
 	{
-		var expectations = new ClassPropertyCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassPropertyCreateExpectations>();
 		expectations.Properties.Getters.GetData().RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
@@ -55,11 +55,9 @@ public static class ClassPropertyTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		var value = mock.GetData;
 
-		expectations.Verify();
-
 		Assert.Multiple(() =>
 		{
-			Assert.That(value, Is.EqualTo(default(int)));
+			Assert.That(value, Is.Default);
 			Assert.That(wasEventRaised, Is.True);
 		});
 	}
@@ -68,7 +66,8 @@ public static class ClassPropertyTests
 	public static void CreateGetWithCallback()
 	{
 		var wasCallbackInvoked = false;
-		var expectations = new ClassPropertyCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassPropertyCreateExpectations>();
 		expectations.Properties.Getters.GetData().Callback(() =>
 		{
 			wasCallbackInvoked = true;
@@ -77,8 +76,6 @@ public static class ClassPropertyTests
 
 		var mock = expectations.Instance(null);
 		var value = mock.GetData;
-
-		expectations.Verify();
 
 		Assert.Multiple(() =>
 		{
@@ -91,7 +88,8 @@ public static class ClassPropertyTests
 	public static void CreateGetWithRaiseEventAndCallback()
 	{
 		var wasCallbackInvoked = false;
-		var expectations = new ClassPropertyCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassPropertyCreateExpectations>();
 		expectations.Properties.Getters.GetData().Callback(() =>
 		{
 			wasCallbackInvoked = true;
@@ -104,8 +102,6 @@ public static class ClassPropertyTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		var value = mock.GetData;
 
-		expectations.Verify();
-
 		Assert.Multiple(() =>
 		{
 			Assert.That(value, Is.EqualTo(3));
@@ -117,13 +113,12 @@ public static class ClassPropertyTests
 	[Test]
 	public static void CreateSet()
 	{
-		var expectations = new ClassPropertyCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassPropertyCreateExpectations>();
 		expectations.Properties.Setters.SetData(Arg.Any<int>());
 
 		var mock = expectations.Instance(null);
 		mock.SetData = 1;
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -137,7 +132,8 @@ public static class ClassPropertyTests
 	[Test]
 	public static void CreateSetWithRaiseEvent()
 	{
-		var expectations = new ClassPropertyCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassPropertyCreateExpectations>();
 		expectations.Properties.Setters.SetData(Arg.Any<int>())
 			.RaiseMyEvent(EventArgs.Empty);
 
@@ -146,8 +142,6 @@ public static class ClassPropertyTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		mock.SetData = 1;
 
-		expectations.Verify();
-
 		Assert.That(wasEventRaised, Is.True);
 	}
 
@@ -155,14 +149,13 @@ public static class ClassPropertyTests
 	public static void CreateSetWithCallback()
 	{
 		var wasCallbackInvoked = false;
-		var expectations = new ClassPropertyCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassPropertyCreateExpectations>();
 		expectations.Properties.Setters.SetData(Arg.Any<int>())
 			.Callback(_ => wasCallbackInvoked = true);
 
 		var mock = expectations.Instance(null);
 		mock.SetData = 1;
-
-		expectations.Verify();
 
 		Assert.That(wasCallbackInvoked, Is.True);
 	}
@@ -171,7 +164,8 @@ public static class ClassPropertyTests
 	public static void CreateSetWithRaiseEventAndCallback()
 	{
 		var wasCallbackInvoked = false;
-		var expectations = new ClassPropertyCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassPropertyCreateExpectations>();
 		expectations.Properties.Setters.SetData(Arg.Any<int>())
 			.RaiseMyEvent(EventArgs.Empty)
 			.Callback(_ => wasCallbackInvoked = true);
@@ -180,8 +174,6 @@ public static class ClassPropertyTests
 		var mock = expectations.Instance(null);
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		mock.SetData = 1;
-
-		expectations.Verify();
 
 		Assert.Multiple(() =>
 		{
@@ -193,21 +185,21 @@ public static class ClassPropertyTests
 	[Test]
 	public static void CreateGetAndInit()
 	{
-		var expectations = new ClassPropertyCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassPropertyCreateExpectations>();
 		expectations.Properties.Getters.GetAndInitData();
 
 		var mock = expectations.Instance(null);
 		var value = mock.GetAndInitData;
 
-		expectations.Verify();
-
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
 	public static void CreateGetAndSet()
 	{
-		var expectations = new ClassPropertyCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<ClassPropertyCreateExpectations>();
 		expectations.Properties.Getters.GetAndSetData();
 		expectations.Properties.Setters.GetAndSetData(Arg.Any<int>());
 
@@ -215,9 +207,7 @@ public static class ClassPropertyTests
 		var value = mock.GetAndSetData;
 		mock.GetAndSetData = value;
 
-		expectations.Verify();
-
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -226,7 +216,7 @@ public static class ClassPropertyTests
 		var mock = new ClassPropertyMakeExpectations().Instance(null);
 		var value = mock.GetAndInitData;
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -237,7 +227,7 @@ public static class ClassPropertyTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(value, Is.EqualTo(default(int)));
+			Assert.That(value, Is.Default);
 			Assert.That(() => mock.GetAndSetData = value, Throws.Nothing);
 		});
 	}

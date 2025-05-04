@@ -5,7 +5,6 @@ using Microsoft.CodeAnalysis.Testing;
 using NuGet.Frameworks;
 using Rocks.Analysis.Extensions;
 using Rocks.Analysis.Tests.Extensions;
-using Rocks;
 using System.Collections.Immutable;
 
 namespace Rocks.Analysis.Tests;

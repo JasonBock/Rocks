@@ -20,13 +20,12 @@ public static class AllowNullTests
 	[Test]
 	public static void CreateWithAbstract()
 	{
-		var expectations = new IAllowCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<IAllowCreateExpectations>();
 		expectations.Properties.Setters.NewLine(Arg.Is<string>(null!));
 
 		var mock = expectations.Instance();
 		mock.NewLine = null;
-
-		expectations.Verify();
 	}
 
 	[Test]
@@ -39,13 +38,12 @@ public static class AllowNullTests
 	[Test]
 	public static void CreateWithNonAbstract()
 	{
-		var expectations = new AllowCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AllowCreateExpectations>();
 		expectations.Properties.Setters.NewLine(Arg.Is<string>(null!));
 
 		var chunk = expectations.Instance();
 		chunk.NewLine = null;
-
-		expectations.Verify();
 	}
 
 	[Test]

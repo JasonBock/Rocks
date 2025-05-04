@@ -22,13 +22,12 @@ public static class AbstractClassConstructorTests
 	[Test]
 	public static void CreateWithNoParametersAndPublicConstructor()
 	{
-		var expectations = new AbstractClassConstructorCreateExpectations();
+		using var context = new RockContext();
+		var expectations = context.Create<AbstractClassConstructorCreateExpectations>();
 		expectations.Methods.NoParameters();
 
 		var mock = expectations.Instance(3);
 		var value = mock.NoParameters();
-
-		expectations.Verify();
 
 		Assert.Multiple(() =>
 		{
@@ -43,23 +42,22 @@ public static class AbstractClassConstructorTests
 		var mock = new AbstractClassConstructorMakeExpectations().Instance(3);
 		var value = mock.NoParameters();
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
 	public static void CreateWithNoParametersAndProtectedConstructor()
 	{
-		var expectations = new AbstractClassConstructorCreateExpectations();
+		using var context = new RockContext(); 
+		var expectations = context.Create<AbstractClassConstructorCreateExpectations>();
 		expectations.Methods.NoParameters();
 
 		var mock = expectations.Instance("b");
 		var value = mock.NoParameters();
 
-		expectations.Verify();
-
 		Assert.Multiple(() =>
 		{
-			Assert.That(mock.IntData, Is.EqualTo(default(int)));
+			Assert.That(mock.IntData, Is.Default);
 			Assert.That(mock.StringData, Is.EqualTo("b"));
 		});
 	}
@@ -70,6 +68,6 @@ public static class AbstractClassConstructorTests
 		var mock = new AbstractClassConstructorMakeExpectations().Instance("b");
 		var value = mock.NoParameters();
 
-		Assert.That(value, Is.EqualTo(default(int)));
+		Assert.That(value, Is.Default);
 	}
 }
