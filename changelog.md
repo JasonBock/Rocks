@@ -10,11 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Created a refactoring to simplify `[Rock]` creation (issue [#361](https://github.com/JasonBock/Rocks/issues/361) and issue [#369](https://github.com/JasonBock/Rocks/issues/369))
+- Added a suppressor for `CA2012` when a `ValueTask` is passed to `ReturnValue` (issue [#354](https://github.com/JasonBock/Rocks/issues/354))
+- Added `RockContext` to group expectation instances together and automatically call `Verify()` (issue [#365](https://github.com/JasonBock/Rocks/issues/365))
 
 ### Changed
 
 - Made a number of minor internal refactorings that made compile-time code generation consume slightly less memory (issue [#358](https://github.com/JasonBock/Rocks/issues/358))
-- Added a suppressor for `CA2012` when a `ValueTask` is passed to `ReturnValue` (issue [#354](https://github.com/JasonBock/Rocks/issues/354))
 - Restructured package to separate analyzers and runtime types (issue [#339](https://github.com/JasonBock/Rocks/issues/339))
 
 ### Fixed
