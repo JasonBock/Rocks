@@ -258,7 +258,7 @@ public static class GenericsGeneratorTests
 				
 				internal global::HistoricalSchedulerCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal HistoricalSchedulerCreateExpectations() =>
+				public HistoricalSchedulerCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::HistoricalScheduler Instance()
@@ -629,7 +629,7 @@ public static class GenericsGeneratorTests
 				
 				internal global::CustomSerializerCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal CustomSerializerCreateExpectations() =>
+				public CustomSerializerCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::CustomSerializer Instance()
@@ -1008,7 +1008,7 @@ public static class GenericsGeneratorTests
 				
 				internal global::ISourceUpdaterCreateExpectations<TObject, TKey>.MethodExpectations Methods { get; }
 				
-				internal ISourceUpdaterCreateExpectations() =>
+				public ISourceUpdaterCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::ISourceUpdater<TObject, TKey> Instance()
@@ -1276,7 +1276,7 @@ public static class GenericsGeneratorTests
 				
 				internal global::IUseGenericCreateExpectations<T>.MethodExpectations Methods { get; }
 				
-				internal IUseGenericCreateExpectations() =>
+				public IUseGenericCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IUseGeneric<T> Instance()
@@ -1578,7 +1578,7 @@ public static class GenericsGeneratorTests
 				
 				internal global::IGenericsAndEventCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IGenericsAndEventCreateExpectations() =>
+				public IGenericsAndEventCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IGenericsAndEvent Instance()
@@ -1810,7 +1810,7 @@ public static class GenericsGeneratorTests
 				
 				internal global::IServiceCreateExpectations<T, TReturn>.MethodExpectations Methods { get; }
 				
-				internal IServiceCreateExpectations() =>
+				public IServiceCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IService<T, TReturn> Instance()
@@ -2140,7 +2140,7 @@ public static class GenericsGeneratorTests
 				
 				internal global::MCreateExpectations<A>.MethodExpectations Methods { get; }
 				
-				internal MCreateExpectations() =>
+				public MCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::M<A> Instance()
@@ -2536,7 +2536,7 @@ public static class GenericsGeneratorTests
 				
 				internal global::GenericContainerCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal GenericContainerCreateExpectations() =>
+				public GenericContainerCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::GenericContainer Instance()
@@ -2850,7 +2850,7 @@ public static class GenericsGeneratorTests
 				
 				internal global::CriterionCreateExpectations<T>.MethodExpectations Methods { get; }
 				
-				internal CriterionCreateExpectations() =>
+				public CriterionCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::Criterion<T> Instance()
@@ -3251,7 +3251,7 @@ public static class GenericsGeneratorTests
 				
 				internal global::GeometryValueComparerCreateExpectations<TGeometry>.MethodExpectations Methods { get; }
 				
-				internal GeometryValueComparerCreateExpectations() =>
+				public GeometryValueComparerCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::GeometryValueComparer<TGeometry> Instance()
@@ -3565,7 +3565,7 @@ public static class GenericsGeneratorTests
 					
 					internal global::MockTests.IRequestClientCreateExpectations<TRequest>.MethodExpectations Methods { get; }
 					
-					internal IRequestClientCreateExpectations() =>
+					public IRequestClientCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.IRequestClient<TRequest> Instance()
@@ -3862,7 +3862,7 @@ public static class GenericsGeneratorTests
 					
 					internal global::MockTests.IRequestCreateExpectations<T>.MethodExpectations Methods { get; }
 					
-					internal IRequestCreateExpectations() =>
+					public IRequestCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.IRequest<T> Instance()

@@ -204,7 +204,7 @@ public static class DefaultValuesGeneratorTests
 					
 					internal global::MockTests.IRequestCreateExpectations<T>.MethodExpectations Methods { get; }
 					
-					internal IRequestCreateExpectations() =>
+					public IRequestCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.IRequest<T> Instance()
@@ -440,7 +440,7 @@ public static class DefaultValuesGeneratorTests
 				
 				internal global::IGenericDefaultCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IGenericDefaultCreateExpectations() =>
+				public IGenericDefaultCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IGenericDefault Instance()
@@ -657,7 +657,7 @@ public static class DefaultValuesGeneratorTests
 				
 				internal global::IUseInfinityCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IUseInfinityCreateExpectations() =>
+				public IUseInfinityCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IUseInfinity Instance()

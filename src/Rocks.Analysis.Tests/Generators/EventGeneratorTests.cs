@@ -126,7 +126,7 @@ public static class EventGeneratorTests
 				
 				internal global::IOpenGenericAndEventCreateExpectations<TService>.MethodExpectations Methods { get; }
 				
-				internal IOpenGenericAndEventCreateExpectations() =>
+				public IOpenGenericAndEventCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IOpenGenericAndEvent<TService> Instance()
@@ -352,7 +352,7 @@ public static class EventGeneratorTests
 				
 				internal global::IOpenGenericAndEventCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IOpenGenericAndEventCreateExpectations() =>
+				public IOpenGenericAndEventCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IOpenGenericAndEvent Instance()
@@ -687,7 +687,7 @@ public static class EventGeneratorTests
 				
 				internal global::AbstractClassMethodReturnWithEventsCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal AbstractClassMethodReturnWithEventsCreateExpectations() =>
+				public AbstractClassMethodReturnWithEventsCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::AbstractClassMethodReturnWithEvents Instance()
@@ -999,7 +999,7 @@ public static class EventGeneratorTests
 				internal global::IExplicitInterfaceImplementationCreateExpectations.ExplicitMethodExpectationsForIExplicitInterfaceImplementationOne ExplicitMethodsForIExplicitInterfaceImplementationOne { get; }
 				internal global::IExplicitInterfaceImplementationCreateExpectations.ExplicitMethodExpectationsForIExplicitInterfaceImplementationTwo ExplicitMethodsForIExplicitInterfaceImplementationTwo { get; }
 				
-				internal IExplicitInterfaceImplementationCreateExpectations() =>
+				public IExplicitInterfaceImplementationCreateExpectations() =>
 					(this.ExplicitMethodsForIExplicitInterfaceImplementationOne, this.ExplicitMethodsForIExplicitInterfaceImplementationTwo) = (new(this), new(this));
 				
 				internal global::IExplicitInterfaceImplementation Instance()
@@ -1245,7 +1245,7 @@ public static class EventGeneratorTests
 					
 					internal global::MockTests.IHaveEventsCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal IHaveEventsCreateExpectations() =>
+					public IHaveEventsCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.IHaveEvents Instance()
@@ -1473,7 +1473,7 @@ public static class EventGeneratorTests
 					
 					internal global::MockTests.IHaveEventsCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal IHaveEventsCreateExpectations() =>
+					public IHaveEventsCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.IHaveEvents Instance()

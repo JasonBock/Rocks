@@ -294,7 +294,7 @@ public static class InterfaceGeneratorTests
 				internal global::IHaveStaticVirtualsCreateExpectations.MethodExpectations Methods { get; }
 				internal global::IHaveStaticVirtualsCreateExpectations.PropertyExpectations Properties { get; }
 				
-				internal IHaveStaticVirtualsCreateExpectations() =>
+				public IHaveStaticVirtualsCreateExpectations() =>
 					(this.Methods, this.Properties) = (new(this), new(this));
 				
 				internal global::IHaveStaticVirtuals Instance()
@@ -647,7 +647,7 @@ public static class InterfaceGeneratorTests
 				internal global::ISealedCreateExpectations.MethodExpectations Methods { get; }
 				internal global::ISealedCreateExpectations.PropertyExpectations Properties { get; }
 				
-				internal ISealedCreateExpectations() =>
+				public ISealedCreateExpectations() =>
 					(this.Methods, this.Properties) = (new(this), new(this));
 				
 				internal global::ISealed Instance()
@@ -890,7 +890,7 @@ public static class InterfaceGeneratorTests
 				
 				internal global::IRequestCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IRequestCreateExpectations() =>
+				public IRequestCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IRequest Instance()
@@ -1103,7 +1103,7 @@ public static class InterfaceGeneratorTests
 					
 					internal global::MockTests.ITargetCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal ITargetCreateExpectations() =>
+					public ITargetCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.ITarget Instance()

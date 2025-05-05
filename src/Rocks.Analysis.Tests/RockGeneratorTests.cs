@@ -140,7 +140,7 @@ public static class RockGeneratorTests
 					
 					internal global::MockTests.IContainNullableReferencesCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal IContainNullableReferencesCreateExpectations() =>
+					public IContainNullableReferencesCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.IContainNullableReferences Instance()
@@ -338,7 +338,7 @@ public static class RockGeneratorTests
 					
 					internal global::MockTests.ITestCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal ITestCreateExpectations() =>
+					public ITestCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.ITest Instance()
@@ -530,7 +530,7 @@ public static class RockGeneratorTests
 				
 				internal global::ITestCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal ITestCreateExpectations() =>
+				public ITestCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::ITest Instance()
@@ -809,7 +809,7 @@ public static class RockGeneratorTests
 					
 					internal global::MockTests.ITestCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal ITestCreateExpectations() =>
+					public ITestCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.ITest Instance()
@@ -1021,7 +1021,7 @@ public static class RockGeneratorTests
 					
 					internal global::MockTests.ITestCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal ITestCreateExpectations() =>
+					public ITestCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.ITest Instance()

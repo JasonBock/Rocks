@@ -109,7 +109,7 @@ public static class MethodGeneratorTests
 					
 					internal global::MockTests.IMemberCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal IMemberCreateExpectations() =>
+					public IMemberCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.IMember Instance()
@@ -344,7 +344,7 @@ public static class MethodGeneratorTests
 					
 					internal global::MockTests.IMemberCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal IMemberCreateExpectations() =>
+					public IMemberCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.IMember Instance()
@@ -651,7 +651,7 @@ public static class MethodGeneratorTests
 					
 					internal global::MockTests.IMapperCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal IMapperCreateExpectations() =>
+					public IMapperCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.IMapper Instance()
@@ -899,7 +899,7 @@ public static class MethodGeneratorTests
 					
 					internal global::MockTests.IHaveOptionalArgumentsCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal IHaveOptionalArgumentsCreateExpectations() =>
+					public IHaveOptionalArgumentsCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.IHaveOptionalArguments Instance()
@@ -1137,7 +1137,7 @@ public static class MethodGeneratorTests
 					
 					internal global::MockTests.IProjectionCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal IProjectionCreateExpectations() =>
+					public IProjectionCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.IProjection Instance()
@@ -1472,7 +1472,7 @@ public static class MethodGeneratorTests
 					
 					internal global::MockTests.IHaveTooMuchCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal IHaveTooMuchCreateExpectations() =>
+					public IHaveTooMuchCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.IHaveTooMuch Instance()

@@ -120,7 +120,7 @@ public static class NamingGeneratorTests
 					
 					internal global::Types.Container.IInnerCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal IInnerCreateExpectations() =>
+					public IInnerCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::Types.Container.IOuter.IMiddle.IInner Instance()
@@ -412,7 +412,7 @@ public static class NamingGeneratorTests
 				
 				internal global::Class1CreateExpectations2.MethodExpectations Methods { get; }
 				
-				internal Class1CreateExpectations2() =>
+				public Class1CreateExpectations2() =>
 					(this.Methods) = (new(this));
 				
 				internal global::Class1 Instance()
@@ -667,7 +667,7 @@ public static class NamingGeneratorTests
 				
 				internal global::Class1CreateExpectations.MethodExpectations Methods { get; }
 				
-				internal Class1CreateExpectations() =>
+				public Class1CreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::Class1 Instance()
@@ -1094,7 +1094,7 @@ public static class NamingGeneratorTests
 				internal global::NewNameUsageCreateExpectations.MethodExpectations Methods { get; }
 				internal global::NewNameUsageCreateExpectations.IndexerExpectations Indexers { get; }
 				
-				internal NewNameUsageCreateExpectations() =>
+				public NewNameUsageCreateExpectations() =>
 					(this.Methods, this.Indexers) = (new(this), new(this));
 				
 				internal global::NewNameUsage Instance()
@@ -1447,7 +1447,7 @@ public static class NamingGeneratorTests
 				internal global::IHandleCreateExpectations.MethodExpectations Methods { get; }
 				internal global::IHandleCreateExpectations.PropertyExpectations Properties { get; }
 				
-				internal IHandleCreateExpectations() =>
+				public IHandleCreateExpectations() =>
 					(this.Methods, this.Properties) = (new(this), new(this));
 				
 				internal global::IHandle Instance()
@@ -1653,7 +1653,7 @@ public static class NamingGeneratorTests
 				
 				internal global::IHandleCreateExpectations2.MethodExpectations Methods { get; }
 				
-				internal IHandleCreateExpectations2() =>
+				public IHandleCreateExpectations2() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IHandle Instance()
@@ -1804,7 +1804,7 @@ public static class NamingGeneratorTests
 					
 					internal global::Names.IHandleCreateExpectations2.MethodExpectations Methods { get; }
 					
-					internal IHandleCreateExpectations2() =>
+					public IHandleCreateExpectations2() =>
 						(this.Methods) = (new(this));
 					
 					internal global::Names.IHandle Instance()
@@ -2177,7 +2177,7 @@ public static class NamingGeneratorTests
 				internal global::IHandleCreateExpectations.MethodExpectations Methods { get; }
 				internal global::IHandleCreateExpectations.IndexerExpectations Indexers { get; }
 				
-				internal IHandleCreateExpectations() =>
+				public IHandleCreateExpectations() =>
 					(this.Methods, this.Indexers) = (new(this), new(this));
 				
 				internal global::IHandle Instance()
@@ -2436,7 +2436,7 @@ public static class NamingGeneratorTests
 				
 				internal global::IUseSameNamesCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IUseSameNamesCreateExpectations() =>
+				public IUseSameNamesCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal First::IUseSameNames Instance()
@@ -2746,7 +2746,7 @@ public static class NamingGeneratorTests
 				
 				internal global::DbSetCreateExpectations<TEntity>.MethodExpectations Methods { get; }
 				
-				internal DbSetCreateExpectations() =>
+				public DbSetCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::DbSet<TEntity> Instance()
@@ -3081,7 +3081,7 @@ public static class NamingGeneratorTests
 				
 				internal global::IHaveDelegateCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IHaveDelegateCreateExpectations() =>
+				public IHaveDelegateCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal sealed class ConstructorProperties
@@ -3351,7 +3351,7 @@ public static class NamingGeneratorTests
 				
 				internal global::IUseKeywordCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IUseKeywordCreateExpectations() =>
+				public IUseKeywordCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IUseKeyword Instance()
@@ -3649,7 +3649,7 @@ public static class NamingGeneratorTests
 				
 				internal global::HaveNamingConflictsCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal HaveNamingConflictsCreateExpectations() =>
+				public HaveNamingConflictsCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::HaveNamingConflicts Instance(string @self, string @expectations)
@@ -3921,7 +3921,7 @@ public static class NamingGeneratorTests
 				
 				internal global::IHaveNamingConflictsCreateExpectations.IndexerExpectations Indexers { get; }
 				
-				internal IHaveNamingConflictsCreateExpectations() =>
+				public IHaveNamingConflictsCreateExpectations() =>
 					(this.Indexers) = (new(this));
 				
 				internal global::IHaveNamingConflicts Instance()
@@ -4153,7 +4153,7 @@ public static class NamingGeneratorTests
 				
 				internal global::IHaveNamingConflictsCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IHaveNamingConflictsCreateExpectations() =>
+				public IHaveNamingConflictsCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IHaveNamingConflicts Instance()
@@ -4457,7 +4457,7 @@ public static class NamingGeneratorTests
 				
 				internal global::HasRequiredPropertyCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal HasRequiredPropertyCreateExpectations() =>
+				public HasRequiredPropertyCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal sealed class ConstructorProperties
@@ -4736,7 +4736,7 @@ public static class NamingGeneratorTests
 				
 				internal global::IUsesThingCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IUsesThingCreateExpectations() =>
+				public IUsesThingCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IUsesThing Instance()
@@ -4936,7 +4936,7 @@ public static class NamingGeneratorTests
 				
 				internal global::IUseMethodInformationCreateExpectations.PropertyExpectations Properties { get; }
 				
-				internal IUseMethodInformationCreateExpectations() =>
+				public IUseMethodInformationCreateExpectations() =>
 					(this.Properties) = (new(this));
 				
 				internal global::IUseMethodInformation Instance()
@@ -5137,7 +5137,7 @@ public static class NamingGeneratorTests
 				
 				internal global::IOperationCreateExpectations.PropertyExpectations Properties { get; }
 				
-				internal IOperationCreateExpectations() =>
+				public IOperationCreateExpectations() =>
 					(this.Properties) = (new(this));
 				
 				internal global::IOperation Instance()
@@ -5368,7 +5368,7 @@ public static class NamingGeneratorTests
 					
 					internal global::Namespace2.IUseConstraintCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal IUseConstraintCreateExpectations() =>
+					public IUseConstraintCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::Namespace2.IUseConstraint Instance()

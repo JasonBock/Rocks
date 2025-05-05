@@ -266,7 +266,7 @@ public static class IndexerGeneratorTests
 				internal global::ISubIndexCreateExpectations.ExplicitIndexerExpectationsForIBaseIndexOne ExplicitIndexersForIBaseIndexOne { get; }
 				internal global::ISubIndexCreateExpectations.ExplicitIndexerExpectationsForIBaseIndexTwo ExplicitIndexersForIBaseIndexTwo { get; }
 				
-				internal ISubIndexCreateExpectations() =>
+				public ISubIndexCreateExpectations() =>
 					(this.Properties, this.ExplicitIndexersForIBaseIndexOne, this.ExplicitIndexersForIBaseIndexTwo) = (new(this), new(this), new(this));
 				
 				internal global::ISubIndex Instance()
@@ -811,7 +811,7 @@ public static class IndexerGeneratorTests
 				internal global::AbstractClassIndexerGetterSetterCreateExpectations.MethodExpectations Methods { get; }
 				internal global::AbstractClassIndexerGetterSetterCreateExpectations.IndexerExpectations Indexers { get; }
 				
-				internal AbstractClassIndexerGetterSetterCreateExpectations() =>
+				public AbstractClassIndexerGetterSetterCreateExpectations() =>
 					(this.Methods, this.Indexers) = (new(this), new(this));
 				
 				internal global::AbstractClassIndexerGetterSetter Instance()
@@ -1163,7 +1163,7 @@ public static class IndexerGeneratorTests
 				
 				internal global::IHaveOptionalArgumentsCreateExpectations.IndexerExpectations Indexers { get; }
 				
-				internal IHaveOptionalArgumentsCreateExpectations() =>
+				public IHaveOptionalArgumentsCreateExpectations() =>
 					(this.Indexers) = (new(this));
 				
 				internal global::IHaveOptionalArguments Instance()
@@ -1544,7 +1544,7 @@ public static class IndexerGeneratorTests
 				
 				internal global::IHaveIndexersWithInitCreateExpectations.IndexerExpectations Indexers { get; }
 				
-				internal IHaveIndexersWithInitCreateExpectations() =>
+				public IHaveIndexersWithInitCreateExpectations() =>
 					(this.Indexers) = (new(this));
 				
 				internal sealed class ConstructorProperties
@@ -2092,7 +2092,7 @@ public static class IndexerGeneratorTests
 					internal global::MockTests.TargetCreateExpectations.MethodExpectations Methods { get; }
 					internal global::MockTests.TargetCreateExpectations.IndexerExpectations Indexers { get; }
 					
-					internal TargetCreateExpectations() =>
+					public TargetCreateExpectations() =>
 						(this.Methods, this.Indexers) = (new(this), new(this));
 					
 					internal sealed class ConstructorProperties

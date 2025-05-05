@@ -165,7 +165,7 @@ public static class ExplicitImplementationGeneratorTests
 					
 					internal global::MockTests.IHtmlMediaElementCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal IHtmlMediaElementCreateExpectations() =>
+					public IHtmlMediaElementCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.IHtmlMediaElement Instance()
@@ -580,7 +580,7 @@ public static class ExplicitImplementationGeneratorTests
 				internal global::ILeftRightCreateExpectations.ExplicitPropertyExpectationsForILeft ExplicitPropertiesForILeft { get; }
 				internal global::ILeftRightCreateExpectations.ExplicitPropertyExpectationsForIRight ExplicitPropertiesForIRight { get; }
 				
-				internal ILeftRightCreateExpectations() =>
+				public ILeftRightCreateExpectations() =>
 					(this.ExplicitPropertiesForILeft, this.ExplicitPropertiesForIRight) = (new(this), new(this));
 				
 				internal global::ILeftRight Instance()
@@ -849,7 +849,7 @@ public static class ExplicitImplementationGeneratorTests
 				internal global::IIterableCreateExpectations<T>.MethodExpectations Methods { get; }
 				internal global::IIterableCreateExpectations<T>.ExplicitMethodExpectationsForIIterable ExplicitMethodsForIIterable { get; }
 				
-				internal IIterableCreateExpectations() =>
+				public IIterableCreateExpectations() =>
 					(this.Methods, this.ExplicitMethodsForIIterable) = (new(this), new(this));
 				
 				internal global::IIterable<T> Instance()
@@ -1089,7 +1089,7 @@ public static class ExplicitImplementationGeneratorTests
 				internal global::ISetupListCreateExpectations.MethodExpectations Methods { get; }
 				internal global::ISetupListCreateExpectations.ExplicitMethodExpectationsForIEnumerable ExplicitMethodsForIEnumerable { get; }
 				
-				internal ISetupListCreateExpectations() =>
+				public ISetupListCreateExpectations() =>
 					(this.Methods, this.ExplicitMethodsForIEnumerable) = (new(this), new(this));
 				
 				internal global::ISetupList Instance()

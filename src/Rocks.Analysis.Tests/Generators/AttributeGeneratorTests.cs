@@ -254,7 +254,7 @@ public static class AttributeGeneratorTests
 				
 				internal global::CallerCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal CallerCreateExpectations() =>
+				public CallerCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::Caller Instance()
@@ -519,7 +519,7 @@ public static class AttributeGeneratorTests
 				
 				internal global::INotNullCreateExpectations.PropertyExpectations Properties { get; }
 				
-				internal INotNullCreateExpectations() =>
+				public INotNullCreateExpectations() =>
 					(this.Properties) = (new(this));
 				
 				internal global::INotNull Instance()
@@ -737,7 +737,7 @@ public static class AttributeGeneratorTests
 				
 				internal global::IItemsCreateExpectations.PropertyExpectations Properties { get; }
 				
-				internal IItemsCreateExpectations() =>
+				public IItemsCreateExpectations() =>
 					(this.Properties) = (new(this));
 				
 				internal global::IItems Instance()
@@ -1036,7 +1036,7 @@ public static class AttributeGeneratorTests
 				
 				internal global::ConventionDispatcherCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal ConventionDispatcherCreateExpectations() =>
+				public ConventionDispatcherCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::ConventionDispatcher Instance()
@@ -1689,7 +1689,7 @@ public static class AttributeGeneratorTests
 				internal global::NotNullIfNotCasesCreateExpectations.PropertyExpectations Properties { get; }
 				internal global::NotNullIfNotCasesCreateExpectations.IndexerExpectations Indexers { get; }
 				
-				internal NotNullIfNotCasesCreateExpectations() =>
+				public NotNullIfNotCasesCreateExpectations() =>
 					(this.Methods, this.Properties, this.Indexers) = (new(this), new(this), new(this));
 				
 				internal global::NotNullIfNotCases Instance()
@@ -1975,7 +1975,7 @@ public static class AttributeGeneratorTests
 				
 				internal global::IUseTuplesCreateExpectations.PropertyExpectations Properties { get; }
 				
-				internal IUseTuplesCreateExpectations() =>
+				public IUseTuplesCreateExpectations() =>
 					(this.Properties) = (new(this));
 				
 				internal global::IUseTuples Instance()
@@ -2278,7 +2278,7 @@ public static class AttributeGeneratorTests
 				
 				internal global::HaveDynamicCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal HaveDynamicCreateExpectations() =>
+				public HaveDynamicCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::HaveDynamic Instance()
@@ -2512,7 +2512,7 @@ public static class AttributeGeneratorTests
 					
 					internal global::MockTests.IHaveGenericAttributeCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal IHaveGenericAttributeCreateExpectations() =>
+					public IHaveGenericAttributeCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.IHaveGenericAttribute Instance()
@@ -2746,7 +2746,7 @@ public static class AttributeGeneratorTests
 					
 					internal global::MockTests.IHaveMultipleAttributesCreateExpectations.MethodExpectations Methods { get; }
 					
-					internal IHaveMultipleAttributesCreateExpectations() =>
+					public IHaveMultipleAttributesCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.IHaveMultipleAttributes Instance()

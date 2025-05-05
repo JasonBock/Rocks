@@ -184,7 +184,7 @@ public static class ConstraintsGeneratorTests
 				
 				internal global::IAllowRefStructsCreateExpectations<T>.MethodExpectations Methods { get; }
 				
-				internal IAllowRefStructsCreateExpectations() =>
+				public IAllowRefStructsCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IAllowRefStructs<T> Instance()
@@ -464,7 +464,7 @@ public static class ConstraintsGeneratorTests
 				
 				internal global::IAllowRefStructsCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IAllowRefStructsCreateExpectations() =>
+				public IAllowRefStructsCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IAllowRefStructs Instance()
@@ -813,7 +813,7 @@ public static class ConstraintsGeneratorTests
 				
 				internal global::ClassMapCreateExpectations<TClass>.MethodExpectations Methods { get; }
 				
-				internal ClassMapCreateExpectations() =>
+				public ClassMapCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::ClassMap<TClass> Instance()
@@ -1168,7 +1168,7 @@ public static class ConstraintsGeneratorTests
 				
 				internal global::BaseStuffCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal BaseStuffCreateExpectations() =>
+				public BaseStuffCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::BaseStuff Instance()
@@ -1432,7 +1432,7 @@ public static class ConstraintsGeneratorTests
 				
 				internal global::INeedDelegateCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal INeedDelegateCreateExpectations() =>
+				public INeedDelegateCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::INeedDelegate Instance()
@@ -1963,7 +1963,7 @@ public static class ConstraintsGeneratorTests
 				
 				internal global::ITypeConstraintsCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal ITypeConstraintsCreateExpectations() =>
+				public ITypeConstraintsCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::ITypeConstraints Instance()
@@ -2650,7 +2650,7 @@ public static class ConstraintsGeneratorTests
 				
 				internal global::TypeConstraintsCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal TypeConstraintsCreateExpectations() =>
+				public TypeConstraintsCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::TypeConstraints Instance()
@@ -2974,7 +2974,7 @@ public static class ConstraintsGeneratorTests
 				
 				internal global::IUnmanagedValueCreateExpectations.MethodExpectations Methods { get; }
 				
-				internal IUnmanagedValueCreateExpectations() =>
+				public IUnmanagedValueCreateExpectations() =>
 					(this.Methods) = (new(this));
 				
 				internal global::IUnmanagedValue Instance()
@@ -3298,7 +3298,7 @@ public static class ConstraintsGeneratorTests
 					
 					internal global::MockTests.ThingCreateExpectations<T>.MethodExpectations Methods { get; }
 					
-					internal ThingCreateExpectations() =>
+					public ThingCreateExpectations() =>
 						(this.Methods) = (new(this));
 					
 					internal global::MockTests.Thing<T> Instance()
