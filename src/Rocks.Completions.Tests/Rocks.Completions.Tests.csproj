@@ -1,11 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<AssemblyName>Rocks.Completions.Tests</AssemblyName>
+		<EnableNUnitRunner>true</EnableNUnitRunner>
 		<!--
 		Turning this diagnostic off based on this advice:
 		https://github.com/dotnet/roslyn-analyzers/issues/7436
 		-->
 		<RootNamespace>Rocks.Completions.Tests</RootNamespace>
+		<TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Rocks.Completions\Rocks.Completions.csproj" />
@@ -27,9 +29,6 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="NUnit3TestAdapter">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
+		<PackageReference Include="NUnit3TestAdapter" />
 	</ItemGroup>
 </Project>

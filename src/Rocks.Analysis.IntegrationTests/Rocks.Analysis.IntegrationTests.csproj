@@ -7,8 +7,10 @@
 		<CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
 		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
 		-->
+		<EnableNUnitRunner>true</EnableNUnitRunner>
 		<RocksAttributeFile>MockDefinitions.cs</RocksAttributeFile>
 		<RootNamespace>Rocks.Analysis.IntegrationTests</RootNamespace>
+		<TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Rocks.Analysis.IntegrationTests.Referenced\Rocks.Analysis.IntegrationTests.Referenced.csproj" />
@@ -24,10 +26,7 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="NUnit3TestAdapter">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
+		<PackageReference Include="NUnit3TestAdapter" />
 	</ItemGroup>
 	<ItemGroup>
 		<CompilerVisibleProperty Include="RocksAttributeFile" />
