@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Made a number of minor internal refactorings that made compile-time code generation consume slightly less memory (issue [#358](https://github.com/JasonBock/Rocks/issues/358))
+- Made a number of minor internal refactorings that made compile-time code generation consume slightly less memory (issue [#358](https://github.com/JasonBock/Rocks/issues/358) and issue [#367](https://github.com/JasonBock/Rocks/issues/367))
 - Restructured package to separate analyzers and runtime types (issue [#339](https://github.com/JasonBock/Rocks/issues/339))
 
 ### Fixed
