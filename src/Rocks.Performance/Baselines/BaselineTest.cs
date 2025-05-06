@@ -21,6 +21,7 @@ public abstract class BaselineTest
 			.Concat(
 			[
 				MetadataReference.CreateFromFile(typeof(RockGenerator).Assembly.Location),
+				MetadataReference.CreateFromFile(typeof(RockAttribute).Assembly.Location),
 			]);
 		this.compilation = CSharpCompilation.Create("generator", [tree],
 			references, new(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));

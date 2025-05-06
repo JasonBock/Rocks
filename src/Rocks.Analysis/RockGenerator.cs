@@ -7,6 +7,17 @@ using System.Collections.Immutable;
 
 namespace Rocks.Analysis;
 
+internal sealed class MocksEqualityComparer
+	: IEqualityComparer<(ITypeSymbol, BuildType)>
+{
+   public bool Equals((ITypeSymbol, BuildType) x, (ITypeSymbol, BuildType) y) =>
+		SymbolEqualityComparer.Default.Equals(x.Item1, y.Item1) &&
+		x.Item2 == y.Item2;
+ 
+	public int GetHashCode((ITypeSymbol, BuildType) obj) => 
+		obj.GetHashCode();
+}
+
 [Generator]
 internal sealed class RockGenerator
 	: IIncrementalGenerator
@@ -21,6 +32,7 @@ internal sealed class RockGenerator
 				.ForAttributeWithMetadataName(Constants.RockAttributeName, (_, _) => true,
 					(context, token) =>
 					{
+						var mocks = new HashSet<(ITypeSymbol, BuildType)>(new MocksEqualityComparer());
 						var models = new List<MockModelInformation>(context.Attributes.Length);
 						var modelContext = new ModelContext(context.SemanticModel);
 
@@ -42,7 +54,7 @@ internal sealed class RockGenerator
 
 							if (!mockType.ContainsDiagnostics())
 							{
-								if (buildType.HasFlag(BuildType.Create))
+								if (buildType.HasFlag(BuildType.Create) && mocks.Add((mockType, BuildType.Create)))
 								{
 									var model = MockModel.Create(attributeClass.ApplicationSyntaxReference!.GetSyntax(token),
 									  mockType, null, modelContext, BuildType.Create, true);
@@ -53,7 +65,7 @@ internal sealed class RockGenerator
 									}
 								}
 
-								if (buildType.HasFlag(BuildType.Make))
+								if (buildType.HasFlag(BuildType.Make) && mocks.Add((mockType, BuildType.Make)))
 								{
 									var model = MockModel.Create(attributeClass.ApplicationSyntaxReference!.GetSyntax(token),
 									  mockType, null, modelContext, BuildType.Make, true);
@@ -76,6 +88,7 @@ internal sealed class RockGenerator
 				.ForAttributeWithMetadataName(Constants.RockPartialAttributeName, (_, _) => true,
 					(context, token) =>
 					{
+						var mocks = new HashSet<(ITypeSymbol, BuildType)>(new MocksEqualityComparer());
 						var models = new List<MockModelInformation>(context.Attributes.Length);
 						var modelContext = new ModelContext(context.SemanticModel);
 
@@ -99,7 +112,7 @@ internal sealed class RockGenerator
 
 							if (!mockType.ContainsDiagnostics())
 							{
-								if (buildType.HasFlag(BuildType.Create))
+								if (buildType.HasFlag(BuildType.Create) && mocks.Add((mockType, BuildType.Create)))
 								{
 									var model = MockModel.Create(attributeClass.ApplicationSyntaxReference!.GetSyntax(token),
 									  mockType, expectationsInformationSource, modelContext, BuildType.Create, true);
@@ -110,7 +123,7 @@ internal sealed class RockGenerator
 									}
 								}
 
-								if (buildType.HasFlag(BuildType.Make))
+								if (buildType.HasFlag(BuildType.Make) && mocks.Add((mockType, BuildType.Make)))
 								{
 									var model = MockModel.Create(attributeClass.ApplicationSyntaxReference!.GetSyntax(token),
 									  mockType, expectationsInformationSource, modelContext, BuildType.Make, true);
@@ -145,7 +158,7 @@ internal sealed class RockGenerator
 	{
 		var projections = new HashSet<ITypeReferenceModel>();
 
-		foreach (var mock in mocks.leftMocks.Distinct())
+		foreach (var mock in mocks.leftMocks)
 		{
 			foreach (var projection in mock.Type.Projections)
 			{
@@ -165,7 +178,7 @@ internal sealed class RockGenerator
 			}
 		}
 
-		foreach (var mock in mocks.rightMocks.Distinct())
+		foreach (var mock in mocks.rightMocks)
 		{
 			foreach (var projection in mock.Type.Projections)
 			{
