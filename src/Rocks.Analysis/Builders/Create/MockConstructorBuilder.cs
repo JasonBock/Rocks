@@ -90,7 +90,7 @@ internal static class MockConstructorBuilder
 		}
 		else
 		{
-			var shimFields = string.Join(", ", shims.Select(_ => $"this.shimFor{_.Type.FlattenedName}"));
+			var shimFields = string.Join(", ", shims.Select(_ => $"this.shimFor{ShimBuilder.GetShimName(_.Type)}"));
 			var shimConstructors = string.Join(", ", shims.Select(_ => $"new {ShimBuilder.GetShimName(_.Type)}(this)"));
 			writer.WriteLine($"(this.{type.ExpectationsPropertyName}, {shimFields}) = (@{namingContext["expectations"]}, {shimConstructors});");
 		}

@@ -109,7 +109,7 @@ internal static class MockTypeBuilder
 	{
 		foreach (var shimType in type.Shims)
 		{
-			writer.WriteLine($"private readonly {shimType.Type.FullyQualifiedName} shimFor{shimType.Type.FlattenedName};");
+			writer.WriteLine($"private readonly {shimType.Type.FullyQualifiedName} shimFor{ShimBuilder.GetShimName(shimType.Type)};");
 		}
 	}
 

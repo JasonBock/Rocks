@@ -1,4 +1,2 @@
-There are two things to fix:
-
-* The field names for shims should just be `shim0`, `shim1`, and keep a mapping between the shim type and the field name when referenced.
-* When the shim type is generated within the mock type, if it's generic, it needs to have the type parameters as well.
+* DONE - Anywhere where we say, `this.shimFor`, make sure it calls `ShimBuilder.GetName()` for the correct `ITypeReferenceModel` instance
+* Run all integration and code generation tests

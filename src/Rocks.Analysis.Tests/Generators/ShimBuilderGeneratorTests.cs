@@ -70,11 +70,11 @@ public static class ShimBuilderGeneratorTests
 				private sealed class Mock
 					: global::IAuditTrail<T>
 				{
-					private readonly global::IAuditTrail<T> shimForIAuditTrail;
-					private readonly global::IAuditTrail shimForIAuditTrail;
+					private readonly global::IAuditTrail<T> shimForShimIAuditTrailT;
+					private readonly global::IAuditTrail shimForShimIAuditTrail;
 					public Mock(global::IAuditTrailCreateExpectations<T> @expectations)
 					{
-						(this.Expectations, this.shimForIAuditTrail, this.shimForIAuditTrail) = (@expectations, new ShimIAuditTrail(this), new ShimIAuditTrail(this));
+						(this.Expectations, this.shimForShimIAuditTrailT, this.shimForShimIAuditTrail) = (@expectations, new ShimIAuditTrailT(this), new ShimIAuditTrail(this));
 					}
 					
 					[global::Rocks.MemberIdentifier(0)]
@@ -88,7 +88,7 @@ public static class ShimBuilderGeneratorTests
 						}
 						else
 						{
-							this.shimForIAuditTrail.Perform();
+							this.shimForShimIAuditTrailT.Perform();
 						}
 					}
 					
@@ -103,17 +103,17 @@ public static class ShimBuilderGeneratorTests
 						}
 						else
 						{
-							this.shimForIAuditTrail.Work();
+							this.shimForShimIAuditTrail.Work();
 						}
 					}
 					
 					
-					private sealed class ShimIAuditTrail
+					private sealed class ShimIAuditTrailT
 						: global::IAuditTrail<T>
 					{
 						private readonly Mock mock;
 						
-						public ShimIAuditTrail(Mock @mock) =>
+						public ShimIAuditTrailT(Mock @mock) =>
 							this.mock = @mock;
 					}
 					

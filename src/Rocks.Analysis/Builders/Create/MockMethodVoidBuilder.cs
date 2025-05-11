@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Analysis.Builders.Shim;
 using Rocks.Analysis.Extensions;
 using Rocks.Analysis.Models;
 using System.CodeDom.Compiler;
@@ -140,7 +141,7 @@ internal static class MockMethodVoidBuilder
 				return $"@{_.Name}: {direction}@{_.Name}!";
 			}));
 			var target = method.ContainingType.TypeKind == TypeKind.Interface ?
-				$"this.shimFor{method.ContainingType.FlattenedName}" : "base";
+				$"this.shimFor{ShimBuilder.GetShimName(method.ContainingType)}" : "base";
 
 			if (shouldThrowDoesNotReturnException)
 			{

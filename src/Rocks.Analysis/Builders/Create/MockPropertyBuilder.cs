@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Analysis.Builders.Shim;
 using Rocks.Analysis.Extensions;
 using Rocks.Analysis.Models;
 using System.CodeDom.Compiler;
@@ -77,7 +78,7 @@ internal static class MockPropertyBuilder
 			// https://github.com/dotnet/csharplang/issues/2337
 			var refReturn = property.ReturnsByRef || property.ReturnsByRefReadOnly ? "ref " : string.Empty;
 			var target = property.ContainingType.TypeKind == TypeKind.Interface ?
-				$"this.shimFor{property.ContainingType.FlattenedName}" : "base";
+				$"this.shimFor{ShimBuilder.GetShimName(property.ContainingType)}" : "base";
 			writer.WriteLine($"return {refReturn}{target}.{property.Name};");
 
 			writer.Indent--;
@@ -163,7 +164,7 @@ internal static class MockPropertyBuilder
 			// If something like this is added in the future, then I'll revisit this:
 			// https://github.com/dotnet/csharplang/issues/2337
 			var target = property.ContainingType.TypeKind == TypeKind.Interface ?
-				$"this.shimFor{property.ContainingType.FlattenedName}" : "base";
+				$"this.shimFor{ShimBuilder.GetShimName(property.ContainingType)}" : "base";
 			writer.WriteLine($"{target}.{property.Name} = value!;");
 		}
 		else

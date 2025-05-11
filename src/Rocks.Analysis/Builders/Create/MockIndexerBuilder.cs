@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Analysis.Builders.Shim;
 using Rocks.Analysis.Extensions;
 using Rocks.Analysis.Models;
 using System.CodeDom.Compiler;
@@ -100,7 +101,7 @@ internal static class MockIndexerBuilder
 			}));
 			var refReturn = indexer.ReturnsByRef || indexer.ReturnsByRefReadOnly ? "ref " : string.Empty;
 			var target = indexer.ContainingType.TypeKind == TypeKind.Interface ?
-				$"this.shimFor{indexer.ContainingType.FlattenedName}" : "base";
+				$"this.shimFor{ShimBuilder.GetShimName(indexer.ContainingType)}" : "base";
 			writer.WriteLine($"return {refReturn}{target}[{parameters}];");
 
 			writer.Indent--;
@@ -218,7 +219,7 @@ internal static class MockIndexerBuilder
 				return $"@{_.Name}: {direction}@{_.Name}!";
 			}));
 			var target = indexer.ContainingType.TypeKind == TypeKind.Interface ?
-				$"this.shimFor{indexer.ContainingType.FlattenedName}" : "base";
+				$"this.shimFor{ShimBuilder.GetShimName(indexer.ContainingType)}" : "base";
 			writer.WriteLine($"{target}[{parameters}] = @value!;");
 
 			writer.Indent--;

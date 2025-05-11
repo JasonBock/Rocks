@@ -6,10 +6,19 @@ namespace Rocks.Analysis.Builders.Shim;
 
 internal static class ShimBuilder
 {
-   internal static string GetShimName(ITypeReferenceModel shimType) => 
-		$"Shim{shimType.FlattenedName}";
+	internal static string GetShimName(ITypeReferenceModel shimType)
+	{
+		var name = $"Shim{shimType.FlattenedName}";
 
-   internal static void Build(IndentedTextWriter writer, TypeMockModel shimType)
+		if(shimType.TypeParameters.Length > 0)
+		{
+			name = $"{name}{string.Join("", shimType.TypeParameters.Select(_ => _.Name))}";
+		}
+
+		return name;
+	}
+
+	internal static void Build(IndentedTextWriter writer, TypeMockModel shimType)
 	{
 		var shimName = ShimBuilder.GetShimName(shimType.Type);
 
