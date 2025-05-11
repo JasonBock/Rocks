@@ -270,6 +270,9 @@ var x = mock.TargetFunc();
 expectations.Verify();
 ```
 
+> [!TIP]
+> If a method returns a value, you only need to call `Callback()` or `ReturnValue()`. Rocks will look to see if a callback has been given, and if it has, it uses that delegate to get the return value - it'll ignore the return value specified with `ReturnValue()`. If no callback is given, then you must call `ReturnValue()` to provide a return value. 
+
 ### Passing Constructor Arguments to a Mock
 
 If you want to mock a class with virtual members where the class only has constructors with multiple arguments, you can do it. You pass the constructor arguments to `Instance()`. Rocks will generate an override of `Instance()` for each constructor that exists on the target type. Here's an example:
