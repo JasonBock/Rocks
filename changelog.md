@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Interfaces with non-public members that have a default implementation are no longer considered for mocking (issue [#364](https://github.com/JasonBock/Rocks/issues/364))
 - Generated constructors calling a base constructor attributed with `[SetsRequiredMembers]` will now have that attribute as well (issue [#368](https://github.com/JasonBock/Rocks/issues/368))
 - Shim types now include generic type parameter names (issue [#374](https://github.com/JasonBock/Rocks/issues/374))
+- Shim types with an `init` property now work with no issues (issue [#373](https://github.com/JasonBock/Rocks/issues/373))
 
 ## [9.0.2] - 2025-03-17
 
