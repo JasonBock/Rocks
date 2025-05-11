@@ -43,7 +43,7 @@ internal static class ShimPropertyBuilder
 
 			if (accessors == PropertyAccessor.Init || accessors == PropertyAccessor.GetAndInit)
 			{
-				writer.WriteLine($"init => (({shimType.Type.FullyQualifiedName})this.mock).{property.Name} = value!;");
+				writer.WriteLine("init { }");
 			}
 
 			writer.Indent--;

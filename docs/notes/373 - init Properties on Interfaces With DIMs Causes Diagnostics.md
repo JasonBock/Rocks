@@ -1,0 +1,1 @@
+Side note: Create an issue to change shim member implementation to do what a make does. Then we probably don't need to pass in the mock to the shim, and it'll make things cleaner.
