@@ -311,10 +311,10 @@ public static class ShimBuilderGeneratorTests
 				private sealed class Mock
 					: global::IDialogService, global::Rocks.IRaiseEvents
 				{
-					private readonly global::IDialogService shimForIDialogService;
+					private readonly global::IDialogService shimForShimIDialogService;
 					public Mock(global::IDialogServiceCreateExpectations @expectations)
 					{
-						(this.Expectations, this.shimForIDialogService) = (@expectations, new ShimIDialogService(this));
+						(this.Expectations, this.shimForShimIDialogService) = (@expectations, new ShimIDialogService(this));
 					}
 					
 					[global::Rocks.MemberIdentifier(0)]
@@ -342,7 +342,7 @@ public static class ShimBuilderGeneratorTests
 						}
 						else
 						{
-							return this.shimForIDialogService.ShowSuccess(@message: @message!);
+							return this.shimForShimIDialogService.ShowSuccess(@message: @message!);
 						}
 					}
 					
@@ -598,11 +598,11 @@ public static class ShimBuilderGeneratorTests
 				private sealed class Mock
 					: global::IRuntimeKey
 				{
-					private readonly global::IKey shimForIKey;
-					private readonly global::IReadOnlyKey shimForIReadOnlyKey;
+					private readonly global::IKey shimForShimIKey;
+					private readonly global::IReadOnlyKey shimForShimIReadOnlyKey;
 					public Mock(global::IRuntimeKeyCreateExpectations @expectations)
 					{
-						(this.Expectations, this.shimForIKey, this.shimForIReadOnlyKey) = (@expectations, new ShimIKey(this), new ShimIReadOnlyKey(this));
+						(this.Expectations, this.shimForShimIKey, this.shimForShimIReadOnlyKey) = (@expectations, new ShimIKey(this), new ShimIReadOnlyKey(this));
 					}
 					
 					[global::Rocks.MemberIdentifier(0)]
@@ -618,7 +618,7 @@ public static class ShimBuilderGeneratorTests
 						}
 						else
 						{
-							return this.shimForIKey.GetKeyType();
+							return this.shimForShimIKey.GetKeyType();
 						}
 					}
 					
@@ -635,7 +635,7 @@ public static class ShimBuilderGeneratorTests
 						}
 						else
 						{
-							return this.shimForIReadOnlyKey.IsPrimaryKey();
+							return this.shimForShimIReadOnlyKey.IsPrimaryKey();
 						}
 					}
 					
@@ -1007,10 +1007,10 @@ public static class ShimBuilderGeneratorTests
 				private sealed class Mock
 					: global::IHaveDims
 				{
-					private readonly global::IHaveDims shimForIHaveDims;
+					private readonly global::IHaveDims shimForShimIHaveDims;
 					public Mock(global::IHaveDimsCreateExpectations @expectations)
 					{
-						(this.Expectations, this.shimForIHaveDims) = (@expectations, new ShimIHaveDims(this));
+						(this.Expectations, this.shimForShimIHaveDims) = (@expectations, new ShimIHaveDims(this));
 					}
 					
 					[global::Rocks.MemberIdentifier(0)]
@@ -1026,7 +1026,7 @@ public static class ShimBuilderGeneratorTests
 						}
 						else
 						{
-							return this.shimForIHaveDims.IAmADim();
+							return this.shimForShimIHaveDims.IAmADim();
 						}
 					}
 					
@@ -1063,7 +1063,7 @@ public static class ShimBuilderGeneratorTests
 							}
 							else
 							{
-								return this.shimForIHaveDims.AmADim;
+								return this.shimForShimIHaveDims.AmADim;
 							}
 						}
 					}
@@ -1116,7 +1116,7 @@ public static class ShimBuilderGeneratorTests
 							}
 							else
 							{
-								return this.shimForIHaveDims[@dimKey: @dimKey!, @dimValue: @dimValue!];
+								return this.shimForShimIHaveDims[@dimKey: @dimKey!, @dimValue: @dimValue!];
 							}
 						}
 					}

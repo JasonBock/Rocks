@@ -786,10 +786,10 @@ public static class VirtualsWithImplementationsGeneratorTests
 					private sealed class Mock
 						: global::MockTests.IHaveImplementation
 					{
-						private readonly global::MockTests.IHaveImplementation shimForIHaveImplementation;
+						private readonly global::MockTests.IHaveImplementation shimForShimIHaveImplementation;
 						public Mock(global::MockTests.IHaveImplementationCreateExpectations @expectations)
 						{
-							(this.Expectations, this.shimForIHaveImplementation) = (@expectations, new ShimIHaveImplementation(this));
+							(this.Expectations, this.shimForShimIHaveImplementation) = (@expectations, new ShimIHaveImplementation(this));
 						}
 						
 						[global::Rocks.MemberIdentifier(0)]
@@ -803,7 +803,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 							else
 							{
-								this.shimForIHaveImplementation.Foo();
+								this.shimForShimIHaveImplementation.Foo();
 							}
 						}
 						
@@ -990,10 +990,10 @@ public static class VirtualsWithImplementationsGeneratorTests
 					private sealed class Mock
 						: global::MockTests.IHaveImplementation
 					{
-						private readonly global::MockTests.IHaveImplementation shimForIHaveImplementation;
+						private readonly global::MockTests.IHaveImplementation shimForShimIHaveImplementation;
 						public Mock(global::MockTests.IHaveImplementationCreateExpectations @expectations)
 						{
-							(this.Expectations, this.shimForIHaveImplementation) = (@expectations, new ShimIHaveImplementation(this));
+							(this.Expectations, this.shimForShimIHaveImplementation) = (@expectations, new ShimIHaveImplementation(this));
 						}
 						
 						[global::Rocks.MemberIdentifier(0)]
@@ -1009,7 +1009,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 							else
 							{
-								return this.shimForIHaveImplementation.Foo();
+								return this.shimForShimIHaveImplementation.Foo();
 							}
 						}
 						

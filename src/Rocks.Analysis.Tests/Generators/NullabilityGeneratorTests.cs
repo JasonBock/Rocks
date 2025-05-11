@@ -866,10 +866,10 @@ public static class NullabilityGeneratorTests
 				private sealed class Mock
 					: global::IConventionSkipNavigation
 				{
-					private readonly global::IConventionSkipNavigation shimForIConventionSkipNavigation;
+					private readonly global::IConventionSkipNavigation shimForShimIConventionSkipNavigation;
 					public Mock(global::IConventionSkipNavigationCreateExpectations @expectations)
 					{
-						(this.Expectations, this.shimForIConventionSkipNavigation) = (@expectations, new ShimIConventionSkipNavigation(this));
+						(this.Expectations, this.shimForShimIConventionSkipNavigation) = (@expectations, new ShimIConventionSkipNavigation(this));
 					}
 					
 					[global::Rocks.MemberIdentifier(0, global::Rocks.PropertyAccessor.Get)]
@@ -887,7 +887,7 @@ public static class NullabilityGeneratorTests
 							}
 							else
 							{
-								return this.shimForIConventionSkipNavigation.Inverse;
+								return this.shimForShimIConventionSkipNavigation.Inverse;
 							}
 						}
 					}
