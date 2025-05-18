@@ -6,11 +6,12 @@ namespace Rocks.Analysis.Builders.Create;
 
 internal static class ExpectationExceptionBuilder
 {
-	internal static void Build(IndentedTextWriter writer, MethodModel method, string message, uint memberIdentifier)
+	internal static void Build(IndentedTextWriter writer, MethodModel method, 
+		string message, uint memberIdentifier, string expectationsPropertyName)
 	{
 		writer.WriteLines(
 			$$""""
-			this.Expectations.WasExceptionThrown = true;
+			this.{{expectationsPropertyName}}.WasExceptionThrown = true;
 			throw new global::Rocks.Exceptions.ExpectationException(
 				$"""
 				{{message}} {this.GetType().GetMemberDescription({{memberIdentifier}})}

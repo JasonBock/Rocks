@@ -74,7 +74,7 @@ internal static class MockTypeBuilder
 		foreach (var indexer in type.Properties.Where(_ => _.IsIndexer))
 		{
 			hasIndexers = true;
-			MockIndexerBuilder.Build(writer, indexer, canRaiseEvents);
+			MockIndexerBuilder.Build(writer, type, indexer, canRaiseEvents);
 		}
 
 		if (hasIndexers)

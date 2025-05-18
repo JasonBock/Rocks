@@ -88,7 +88,7 @@ internal static class MockPropertyBuilder
 		{
 			writer.WriteLine();
 			ExpectationExceptionBuilder.Build(
-				writer, propertyGetMethod, "No handlers match for", memberIdentifier);
+				writer, propertyGetMethod, "No handlers match for", memberIdentifier, type.ExpectationsPropertyName);
 		}
 
 		writer.Indent--;
@@ -127,7 +127,7 @@ internal static class MockPropertyBuilder
 
 		writer.Indent += 5;
 		ExpectationExceptionBuilder.Build(
-			writer, property.SetMethod!, "No handlers match for", memberIdentifier);
+			writer, property.SetMethod!, "No handlers match for", memberIdentifier, type.ExpectationsPropertyName);
 		writer.Indent -= 5;
 
 		writer.WriteLines(
@@ -170,7 +170,7 @@ internal static class MockPropertyBuilder
 		else
 		{
 			ExpectationExceptionBuilder.Build(
-				writer, property.SetMethod!, "No handlers were found for", memberIdentifier);
+				writer, property.SetMethod!, "No handlers were found for", memberIdentifier, type.ExpectationsPropertyName);
 		}
 
 		writer.Indent--;
