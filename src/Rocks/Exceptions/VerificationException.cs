@@ -23,7 +23,7 @@ public sealed class VerificationException
 	/// </summary>
 	public override string Message =>
 		this.Failures.Count > 0 ?
-			$"The following verification failure(s) occured: {string.Join(", ", this.Failures)}" :
+			$"The following verification failure(s) occurred: {string.Join(", ", this.Failures)}" :
 			$"No failures were reported.";
 
 	/// <summary>

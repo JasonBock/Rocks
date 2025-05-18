@@ -14,7 +14,7 @@ public static class VerificationExceptionTests
 		}
 		catch (VerificationException e)
 		{
-			Assert.That(e.Message, Is.EqualTo("The following verification failure(s) occured: failure one, failure two"));
+			Assert.That(e.Message, Is.EqualTo("The following verification failure(s) occurred: failure one, failure two"));
 		}
 	}
 }

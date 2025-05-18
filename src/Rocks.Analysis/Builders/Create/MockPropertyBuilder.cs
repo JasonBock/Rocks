@@ -169,7 +169,6 @@ internal static class MockPropertyBuilder
 		}
 		else
 		{
-			writer.WriteLine($$"""throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription({{memberIdentifier}})}");""");
 			ExpectationExceptionBuilder.Build(
 				writer, property.SetMethod!, "No handlers were found for", memberIdentifier);
 		}

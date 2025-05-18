@@ -8,8 +8,16 @@
 public sealed class RockContext
   : IDisposable
 {
+	private DisableVerification disableVerification = DisableVerification.No;
 	private bool isDisposed;
 	private readonly List<Expectations> createdExpectations = [];
+
+	/// <summary>
+	/// Creates a new <see cref="RockContext"/> instance.
+	/// </summary>
+	/// <param name="disableVerification">Allows for verification to be disabled. The default is <c>false</c>.</param>
+	public RockContext(DisableVerification disableVerification = DisableVerification.No) =>
+		this.disableVerification = disableVerification;
 
 	/// <summary>
 	/// Creates an instance of the provided expectations type.
@@ -26,6 +34,7 @@ public sealed class RockContext
 
 		var expectations = new T();
 		this.createdExpectations.Add(expectations);
+
 		return expectations;
 	}
 
@@ -36,9 +45,12 @@ public sealed class RockContext
 	{
 		ObjectDisposedException.ThrowIf(this.isDisposed, this);
 
-		foreach (var createdExpectations in this.createdExpectations)
+		if (this.disableVerification == DisableVerification.No)
 		{
-			createdExpectations.Verify();
+			foreach (var createdExpectations in this.createdExpectations)
+			{
+				createdExpectations.Verify();
+			}
 		}
 
 		this.isDisposed = true;

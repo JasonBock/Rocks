@@ -1,4 +1,5 @@
-﻿using Rocks.Extensions;
+﻿using Rocks.Exceptions;
+using Rocks.Extensions;
 
 namespace Rocks;
 
@@ -29,7 +30,7 @@ public abstract class Expectations
 				.Select(_ =>
 				{
 					var member = this.MockType!.GetMemberDescription(memberIdentifier);
-					return $"Mock type: {this.MockType!.FullName}, member: {member}, messsage: The expected call count is incorrect. Expected: {_.ExpectedCallCount}, received: {_.CallCount}.";
+					return $"Mock type: {this.MockType!.FullName}, member: {member}, message: The expected call count is incorrect. Expected: {_.ExpectedCallCount}, received: {_.CallCount}.";
 				})
 			];
 
@@ -37,6 +38,11 @@ public abstract class Expectations
 	/// Gets or sets the mock type.
 	/// </summary>
 	protected Type? MockType { get; set; }
+
+	/// <summary>
+	/// Gets or sets the flag to determine if a mock threw an exception, like <see cref="ExpectationException"/>.
+	/// </summary>
+	protected bool WasExceptionThrown { get; set; }
 
 	/// <summary>
 	/// Gets or sets the flag to determine if an mock instance was created.
