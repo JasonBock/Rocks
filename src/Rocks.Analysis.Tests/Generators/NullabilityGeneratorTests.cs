@@ -1217,11 +1217,11 @@ public static class NullabilityGeneratorTests
 							}
 							else
 							{
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								The provided handler does not match for {this.GetType().GetMemberDescription(0)}
-								""");
+								this.Expectations.WasExceptionThrown = true;
+								throw new global::Rocks.Exceptions.ExpectationException(
+									$"""
+									The provided handler does not match for {this.GetType().GetMemberDescription(0)}
+									""");
 							}
 						}
 						else

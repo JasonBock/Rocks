@@ -18,16 +18,16 @@ internal static class MockPropertyBuilder
 		var visibility = methodVisibility != propertyVisibility ?
 			methodVisibility : string.Empty;
 
-		writer.WriteLine($"{visibility}get");
-		writer.WriteLine("{");
-		writer.Indent++;
-
-		writer.WriteLine($"if (this.{type.ExpectationsPropertyName}.handlers{memberIdentifier} is not null)");
-		writer.WriteLine("{");
-		writer.Indent++;
-
-		writer.WriteLine($"var @handler = this.{type.ExpectationsPropertyName}.handlers{memberIdentifier}.First;");
-		writer.WriteLine("@handler.CallCount++;");
+		writer.WriteLines(
+			$$"""
+			{{visibility}}get
+			{
+				if (this.{{type.ExpectationsPropertyName}}.handlers{{memberIdentifier}} is not null)
+				{
+					var @handler = this.{{type.ExpectationsPropertyName}}.handlers{{memberIdentifier}}.First;
+					@handler.CallCount++;
+			""");
+		writer.Indent += 2;
 
 		var returnValueCall = property.Type.IsRefLikeType || property.Type.AllowsRefLikeType ?
 			".ReturnValue!()" : ".ReturnValue";

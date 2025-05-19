@@ -1663,11 +1663,11 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								The provided handler does not match for {this.GetType().GetMemberDescription(0)}
-								""");
+								this.Expectations.WasExceptionThrown = true;
+								throw new global::Rocks.Exceptions.ExpectationException(
+									$"""
+									The provided handler does not match for {this.GetType().GetMemberDescription(0)}
+									""");
 							}
 						}
 						else
@@ -1694,11 +1694,11 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								The provided handler does not match for {this.GetType().GetMemberDescription(1)}
-								""");
+								this.Expectations.WasExceptionThrown = true;
+								throw new global::Rocks.Exceptions.ExpectationException(
+									$"""
+									The provided handler does not match for {this.GetType().GetMemberDescription(1)}
+									""");
 							}
 						}
 						else
@@ -1725,11 +1725,11 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								The provided handler does not match for {this.GetType().GetMemberDescription(2)}
-								""");
+								this.Expectations.WasExceptionThrown = true;
+								throw new global::Rocks.Exceptions.ExpectationException(
+									$"""
+									The provided handler does not match for {this.GetType().GetMemberDescription(2)}
+									""");
 							}
 						}
 						else
@@ -1756,11 +1756,11 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								The provided handler does not match for {this.GetType().GetMemberDescription(3)}
-								""");
+								this.Expectations.WasExceptionThrown = true;
+								throw new global::Rocks.Exceptions.ExpectationException(
+									$"""
+									The provided handler does not match for {this.GetType().GetMemberDescription(3)}
+									""");
 							}
 						}
 						else
@@ -1787,11 +1787,11 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								The provided handler does not match for {this.GetType().GetMemberDescription(4)}
-								""");
+								this.Expectations.WasExceptionThrown = true;
+								throw new global::Rocks.Exceptions.ExpectationException(
+									$"""
+									The provided handler does not match for {this.GetType().GetMemberDescription(4)}
+									""");
 							}
 						}
 						else
@@ -1818,11 +1818,11 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								The provided handler does not match for {this.GetType().GetMemberDescription(5)}
-								""");
+								this.Expectations.WasExceptionThrown = true;
+								throw new global::Rocks.Exceptions.ExpectationException(
+									$"""
+									The provided handler does not match for {this.GetType().GetMemberDescription(5)}
+									""");
 							}
 						}
 						else
@@ -1849,11 +1849,11 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								The provided handler does not match for {this.GetType().GetMemberDescription(6)}
-								""");
+								this.Expectations.WasExceptionThrown = true;
+								throw new global::Rocks.Exceptions.ExpectationException(
+									$"""
+									The provided handler does not match for {this.GetType().GetMemberDescription(6)}
+									""");
 							}
 						}
 						else
@@ -2360,11 +2360,11 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								The provided handler does not match for {this.GetType().GetMemberDescription(3)}
-								""");
+								this.Expectations.WasExceptionThrown = true;
+								throw new global::Rocks.Exceptions.ExpectationException(
+									$"""
+									The provided handler does not match for {this.GetType().GetMemberDescription(3)}
+									""");
 							}
 						}
 						else
@@ -2386,11 +2386,11 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								The provided handler does not match for {this.GetType().GetMemberDescription(4)}
-								""");
+								this.Expectations.WasExceptionThrown = true;
+								throw new global::Rocks.Exceptions.ExpectationException(
+									$"""
+									The provided handler does not match for {this.GetType().GetMemberDescription(4)}
+									""");
 							}
 						}
 						else
@@ -2413,11 +2413,11 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								The provided handler does not match for {this.GetType().GetMemberDescription(5)}
-								""");
+								this.Expectations.WasExceptionThrown = true;
+								throw new global::Rocks.Exceptions.ExpectationException(
+									$"""
+									The provided handler does not match for {this.GetType().GetMemberDescription(5)}
+									""");
 							}
 						}
 						else
@@ -2440,11 +2440,11 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								The provided handler does not match for {this.GetType().GetMemberDescription(6)}
-								""");
+								this.Expectations.WasExceptionThrown = true;
+								throw new global::Rocks.Exceptions.ExpectationException(
+									$"""
+									The provided handler does not match for {this.GetType().GetMemberDescription(6)}
+									""");
 							}
 						}
 						else
@@ -2466,11 +2466,11 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								The provided handler does not match for {this.GetType().GetMemberDescription(7)}
-								""");
+								this.Expectations.WasExceptionThrown = true;
+								throw new global::Rocks.Exceptions.ExpectationException(
+									$"""
+									The provided handler does not match for {this.GetType().GetMemberDescription(7)}
+									""");
 							}
 						}
 						else
@@ -2492,11 +2492,11 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								The provided handler does not match for {this.GetType().GetMemberDescription(8)}
-								""");
+								this.Expectations.WasExceptionThrown = true;
+								throw new global::Rocks.Exceptions.ExpectationException(
+									$"""
+									The provided handler does not match for {this.GetType().GetMemberDescription(8)}
+									""");
 							}
 						}
 						else
@@ -2518,11 +2518,11 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								The provided handler does not match for {this.GetType().GetMemberDescription(9)}
-								""");
+								this.Expectations.WasExceptionThrown = true;
+								throw new global::Rocks.Exceptions.ExpectationException(
+									$"""
+									The provided handler does not match for {this.GetType().GetMemberDescription(9)}
+									""");
 							}
 						}
 						else

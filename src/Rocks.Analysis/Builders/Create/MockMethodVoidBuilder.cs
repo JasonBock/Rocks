@@ -197,8 +197,10 @@ internal static class MockMethodVoidBuilder
 				{
 				""");
 
+			writer.Indent++;
 			ExpectationExceptionBuilder.Build(
 				writer, method, "The provided handler does not match for", method.MemberIdentifier, type.ExpectationsPropertyName);
+			writer.Indent--;
 
 			writer.WriteLine("}");
 		}
