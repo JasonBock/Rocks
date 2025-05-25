@@ -8,19 +8,16 @@ internal static class SyntaxNodeExtensions
 	internal static INamedTypeSymbol? FindParentSymbol(this SyntaxNode self,
 		SemanticModel model, CancellationToken cancellationToken)
 	{
-		//if (self.SyntaxTree.GetDiagnostics(cancellationToken).Any())
-		//{
-		//	return null;
-		//}
-
 		Type[] syntaxNodeTypes =
 			[
 				typeof(IdentifierNameSyntax),
-				typeof(ClassDeclarationSyntax),
-				typeof(InterfaceDeclarationSyntax),
-				typeof(RecordDeclarationSyntax),
 				typeof(ParameterSyntax),
 				typeof(ObjectCreationExpressionSyntax),
+				typeof(BaseTypeSyntax),
+				typeof(PredefinedTypeSyntax),
+				typeof(ClassDeclarationSyntax),
+				typeof(InterfaceDeclarationSyntax),
+				typeof(RecordDeclarationSyntax)
 			];
 
 		var parent = self;
@@ -28,7 +25,7 @@ internal static class SyntaxNodeExtensions
 		while (parent is not null)
 		{
 			var syntaxNodeTypeMatch = syntaxNodeTypes.FirstOrDefault(
-				t => parent.GetType() == t);
+				t => t.IsAssignableFrom(parent.GetType()));
 
 			if (syntaxNodeTypeMatch is not null)
 			{
@@ -64,6 +61,14 @@ internal static class SyntaxNodeExtensions
 					{
 						parentSymbol = objectCreationSymbol.ContainingType;
 					}
+				}
+				else if (parent is BaseTypeSyntax baseTypeSyntax)
+				{
+					parentSymbol = model.GetSymbolInfo(baseTypeSyntax.Type, cancellationToken).Symbol;
+				}
+				else if (parent is PredefinedTypeSyntax predefinedTypeSyntax)
+				{
+					parentSymbol = model.GetSymbolInfo(predefinedTypeSyntax, cancellationToken).Symbol;
 				}
 				else
 				{
