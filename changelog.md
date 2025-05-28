@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added more syntax node support for `AddRockAttributeRefactoring` (issue [#378](https://github.com/JasonBock/Rocks/issues/378))
 - Added `DisableVerification` flag to `RockContext` to allow developers to temporarily disable verification (issue [#377](https://github.com/JasonBock/Rocks/issues/377))
 
 ### Fixed

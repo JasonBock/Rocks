@@ -28,7 +28,7 @@ public static class AddRockAttributeRefactoringTests
 			{
 				public static void Run()
 				{
-					[|o|]bject o = new();
+					object o = new();
 				}
 			}
 			""";
