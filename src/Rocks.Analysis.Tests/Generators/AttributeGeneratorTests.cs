@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Testing;
 using NUnit.Framework;
+using NUnit.VisualStudio.TestAdapter.Internal;
 
 namespace Rocks.Analysis.Tests.Generators;
 
