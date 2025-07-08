@@ -50,7 +50,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked)
+					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -89,6 +89,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 								}
 							}
 							
+							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers match for {this.GetType().GetMemberDescription(0)}
@@ -98,6 +99,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 								""");
 						}
 						
+						this.Expectations.WasExceptionThrown = true;
 						throw new global::Rocks.Exceptions.ExpectationException(
 							$"""
 							No handlers were found for {this.GetType().GetMemberDescription(0)}
@@ -399,7 +401,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked)
+					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -442,6 +444,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 									}
 								}
 								
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
@@ -451,6 +454,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 									""");
 							}
 							
+							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}
@@ -476,6 +480,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 									}
 								}
 								
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(1)}
@@ -486,6 +491,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 									""");
 							}
 							
+							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(1)}
@@ -819,7 +825,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked)
+					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -861,6 +867,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 							
 							if (!@foundMatch)
 							{
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
@@ -871,6 +878,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 						}
 						else
 						{
+							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}
@@ -1111,7 +1119,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked)
+					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -1153,6 +1161,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 									}
 								}
 								
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
@@ -1161,6 +1170,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 									""");
 							}
 							
+							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}
@@ -1184,6 +1194,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 									}
 								}
 								
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(1)}
@@ -1193,6 +1204,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 									""");
 							}
 							
+							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(1)}

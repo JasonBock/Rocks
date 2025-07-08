@@ -57,7 +57,7 @@ public static class AllowNullGeneratorTests
 					
 					public override void Verify()
 					{
-						if (this.WasInstanceInvoked)
+						if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
@@ -95,6 +95,7 @@ public static class AllowNullGeneratorTests
 									return @result!;
 								}
 								
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
@@ -115,6 +116,7 @@ public static class AllowNullGeneratorTests
 											
 											if (!@foundMatch)
 											{
+												this.Expectations.WasExceptionThrown = true;
 												throw new global::Rocks.Exceptions.ExpectationException(
 													$"""
 													No handlers match for {this.GetType().GetMemberDescription(1)}
@@ -128,7 +130,7 @@ public static class AllowNullGeneratorTests
 								}
 								else
 								{
-									throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
+									this.Expectations.WasExceptionThrown = true;
 									throw new global::Rocks.Exceptions.ExpectationException(
 										$"""
 										No handlers were found for {this.GetType().GetMemberDescription(1)}
@@ -356,7 +358,7 @@ public static class AllowNullGeneratorTests
 					
 					public override void Verify()
 					{
-						if (this.WasInstanceInvoked)
+						if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
@@ -397,6 +399,7 @@ public static class AllowNullGeneratorTests
 									}
 								}
 								
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
@@ -478,6 +481,7 @@ public static class AllowNullGeneratorTests
 											
 											if (!@foundMatch)
 											{
+												this.Expectations.WasExceptionThrown = true;
 												throw new global::Rocks.Exceptions.ExpectationException(
 													$"""
 													No handlers match for {this.GetType().GetMemberDescription(4)}

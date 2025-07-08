@@ -17,7 +17,20 @@ public static class RockContextTests
 		Assert.That(expectations!.HasBeenVerified, Is.True);
 	}
 
-   [Test]
+	[Test]
+	public static void UseWithVerificationsDisabled()
+	{
+		MyExpectations? expectations = null;
+
+		using (var context = new RockContext(DisableVerification.Yes))
+		{
+			expectations = context.Create<MyExpectations>();
+		}
+
+		Assert.That(expectations!.HasBeenVerified, Is.False);
+	}
+
+	[Test]
    public static void UseWithNoExpectationsCreated() => 
 		Assert.DoesNotThrow(() => { using var context = new RockContext(); });
 

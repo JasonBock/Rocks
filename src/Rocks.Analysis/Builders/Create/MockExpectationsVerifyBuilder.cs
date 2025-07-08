@@ -12,7 +12,7 @@ internal static class MockExpectationsVerifyBuilder
 			"""
 			public override void Verify()
 			{
-				if (this.WasInstanceInvoked)
+				if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 				{
 					var failures = new global::System.Collections.Generic.List<string>();
 

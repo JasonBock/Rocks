@@ -7,6 +7,109 @@ namespace Rocks.Completions.Tests;
 public static class AddRockAttributeRefactoringTests
 {
 	[Test]
+	public static async Task RunWhenTargetIsPredefinedTypeAsync()
+	{
+		var source =
+			"""
+			public static class TargetUsage
+			{
+				public static void Run()
+				{
+					[|o|]bject o = new();
+				}
+			}
+			""";
+
+		var fixedSource =
+			"""
+			[assembly: Rocks.Rock(typeof(System.Object), Rocks.BuildType.Create | Rocks.BuildType.Make)]
+
+			public static class TargetUsage
+			{
+				public static void Run()
+				{
+					object o = new();
+				}
+			}
+			""";
+
+		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
+			[("Source.cs", source)], [("Source.cs", fixedSource)], 0, false, [], []);
+	}
+
+	[Test]
+	public static async Task RunWhenTargetIsExplicitTypeAsync()
+	{
+		var source =
+			"""
+			public class Target
+			{
+				public virtual void Do() { }
+			}
+
+			public static class ITargetUsage
+			{
+				public static void Run()
+				{
+					[|T|]arget target = new();
+				}
+			}
+			""";
+
+		var fixedSource =
+			"""
+			[assembly: Rocks.Rock(typeof(Target), Rocks.BuildType.Create | Rocks.BuildType.Make)]
+
+			public class Target
+			{
+				public virtual void Do() { }
+			}
+			
+			public static class ITargetUsage
+			{
+				public static void Run()
+				{
+					Target target = new();
+				}
+			}
+			""";
+
+		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
+			[("Source.cs", source)], [("Source.cs", fixedSource)], 0, false, [], []);
+	}
+
+	[Test]
+	public static async Task RunWhenTargetIsBaseTypeAsync()
+	{
+		var source =
+			"""
+			public abstract class BaseClass
+			{
+				protected BaseClass() { }
+			}
+
+			public class DerivedClass
+				: [|B|]aseClass { }
+			""";
+
+		var fixedSource =
+			"""
+			[assembly: Rocks.Rock(typeof(BaseClass), Rocks.BuildType.Create | Rocks.BuildType.Make)]
+
+			public abstract class BaseClass
+			{
+				protected BaseClass() { }
+			}
+			
+			public class DerivedClass
+				: BaseClass { }
+			""";
+
+		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
+			[("Source.cs", source)], [("Source.cs", fixedSource)], 0, false, [], []);
+	}
+
+	[Test]
 	public static async Task RunWhenBuildPropertyIsAddedAsync()
 	{
 		var source =

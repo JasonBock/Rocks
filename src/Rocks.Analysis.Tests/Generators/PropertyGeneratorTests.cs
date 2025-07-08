@@ -55,7 +55,7 @@ public static class PropertyGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked)
+					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -95,6 +95,7 @@ public static class PropertyGeneratorTests
 										
 										if (!@foundMatch)
 										{
+											this.Expectations.WasExceptionThrown = true;
 											throw new global::Rocks.Exceptions.ExpectationException(
 												$"""
 												No handlers match for {this.GetType().GetMemberDescription(0)}
@@ -108,7 +109,7 @@ public static class PropertyGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(0)}");
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers were found for {this.GetType().GetMemberDescription(0)}
@@ -131,6 +132,7 @@ public static class PropertyGeneratorTests
 								return @result!;
 							}
 							
+							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers match for {this.GetType().GetMemberDescription(1)}
@@ -366,7 +368,7 @@ public static class PropertyGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked)
+					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -408,6 +410,7 @@ public static class PropertyGeneratorTests
 								}
 							}
 							
+							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers match for {this.GetType().GetMemberDescription(0)}
@@ -472,6 +475,7 @@ public static class PropertyGeneratorTests
 										
 										if (!@foundMatch)
 										{
+											this.Expectations.WasExceptionThrown = true;
 											throw new global::Rocks.Exceptions.ExpectationException(
 												$"""
 												No handlers match for {this.GetType().GetMemberDescription(3)}
@@ -507,6 +511,7 @@ public static class PropertyGeneratorTests
 										
 										if (!@foundMatch)
 										{
+											this.Expectations.WasExceptionThrown = true;
 											throw new global::Rocks.Exceptions.ExpectationException(
 												$"""
 												No handlers match for {this.GetType().GetMemberDescription(5)}
@@ -542,6 +547,7 @@ public static class PropertyGeneratorTests
 										
 										if (!@foundMatch)
 										{
+											this.Expectations.WasExceptionThrown = true;
 											throw new global::Rocks.Exceptions.ExpectationException(
 												$"""
 												No handlers match for {this.GetType().GetMemberDescription(7)}
@@ -861,7 +867,7 @@ public static class PropertyGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked)
+					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -901,6 +907,7 @@ public static class PropertyGeneratorTests
 								}
 							}
 							
+							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers match for {this.GetType().GetMemberDescription(0)}
@@ -965,6 +972,7 @@ public static class PropertyGeneratorTests
 										
 										if (!@foundMatch)
 										{
+											this.Expectations.WasExceptionThrown = true;
 											throw new global::Rocks.Exceptions.ExpectationException(
 												$"""
 												No handlers match for {this.GetType().GetMemberDescription(3)}
@@ -1272,7 +1280,7 @@ public static class PropertyGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked)
+					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -1317,6 +1325,7 @@ public static class PropertyGeneratorTests
 								}
 							}
 							
+							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers match for {this.GetType().GetMemberDescription(0)}
@@ -1381,6 +1390,7 @@ public static class PropertyGeneratorTests
 									}
 								}
 								
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(3)}
@@ -1412,6 +1422,7 @@ public static class PropertyGeneratorTests
 									}
 								}
 								
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(5)}
@@ -1438,6 +1449,7 @@ public static class PropertyGeneratorTests
 									}
 								}
 								
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(6)}
@@ -1469,6 +1481,7 @@ public static class PropertyGeneratorTests
 									}
 								}
 								
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(7)}
@@ -1501,6 +1514,7 @@ public static class PropertyGeneratorTests
 									}
 								}
 								
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(9)}
@@ -1527,6 +1541,7 @@ public static class PropertyGeneratorTests
 									}
 								}
 								
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(10)}
@@ -1950,7 +1965,7 @@ public static class PropertyGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked)
+					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -1995,6 +2010,7 @@ public static class PropertyGeneratorTests
 								}
 							}
 							
+							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers match for {this.GetType().GetMemberDescription(0)}
@@ -2094,6 +2110,7 @@ public static class PropertyGeneratorTests
 										
 										if (!@foundMatch)
 										{
+											this.Expectations.WasExceptionThrown = true;
 											throw new global::Rocks.Exceptions.ExpectationException(
 												$"""
 												No handlers match for {this.GetType().GetMemberDescription(6)}
@@ -2129,6 +2146,7 @@ public static class PropertyGeneratorTests
 										
 										if (!@foundMatch)
 										{
+											this.Expectations.WasExceptionThrown = true;
 											throw new global::Rocks.Exceptions.ExpectationException(
 												$"""
 												No handlers match for {this.GetType().GetMemberDescription(7)}
@@ -2180,6 +2198,7 @@ public static class PropertyGeneratorTests
 										
 										if (!@foundMatch)
 										{
+											this.Expectations.WasExceptionThrown = true;
 											throw new global::Rocks.Exceptions.ExpectationException(
 												$"""
 												No handlers match for {this.GetType().GetMemberDescription(10)}

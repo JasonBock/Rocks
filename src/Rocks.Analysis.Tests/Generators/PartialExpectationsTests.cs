@@ -45,7 +45,7 @@ public static class PartialExpectationsTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked)
+					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -77,6 +77,7 @@ public static class PartialExpectationsTests
 						}
 						else
 						{
+							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}
@@ -204,7 +205,7 @@ public static class PartialExpectationsTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked)
+					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -245,6 +246,7 @@ public static class PartialExpectationsTests
 							
 							if (!@foundMatch)
 							{
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
@@ -254,6 +256,7 @@ public static class PartialExpectationsTests
 						}
 						else
 						{
+							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}
@@ -357,7 +360,7 @@ public static class PartialExpectationsTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked)
+					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -398,6 +401,7 @@ public static class PartialExpectationsTests
 							
 							if (!@foundMatch)
 							{
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
@@ -407,6 +411,7 @@ public static class PartialExpectationsTests
 						}
 						else
 						{
+							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}
@@ -593,7 +598,7 @@ public static class PartialExpectationsTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked)
+					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -626,6 +631,7 @@ public static class PartialExpectationsTests
 							return @result!;
 						}
 						
+						this.Expectations.WasExceptionThrown = true;
 						throw new global::Rocks.Exceptions.ExpectationException(
 							$"""
 							No handlers were found for {this.GetType().GetMemberDescription(0)}
@@ -750,7 +756,7 @@ public static class PartialExpectationsTests
 					
 					public override void Verify()
 					{
-						if (this.WasInstanceInvoked)
+						if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
@@ -782,6 +788,7 @@ public static class PartialExpectationsTests
 							}
 							else
 							{
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers were found for {this.GetType().GetMemberDescription(0)}

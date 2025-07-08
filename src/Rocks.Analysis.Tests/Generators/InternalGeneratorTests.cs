@@ -105,7 +105,7 @@ public static class InternalGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked)
+					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -146,6 +146,7 @@ public static class InternalGeneratorTests
 							
 							if (!@foundMatch)
 							{
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
@@ -155,6 +156,7 @@ public static class InternalGeneratorTests
 						}
 						else
 						{
+							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}
@@ -338,7 +340,7 @@ public static class InternalGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked)
+					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -379,6 +381,7 @@ public static class InternalGeneratorTests
 							
 							if (!@foundMatch)
 							{
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
@@ -388,6 +391,7 @@ public static class InternalGeneratorTests
 						}
 						else
 						{
+							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}

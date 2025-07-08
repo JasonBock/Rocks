@@ -9,7 +9,7 @@ namespace Rocks.Analysis.Builders.Create;
 
 internal static class MockIndexerBuilder
 {
-	private static void BuildGetter(IndentedTextWriter writer,
+	private static void BuildGetter(IndentedTextWriter writer, TypeMockModel type,
 		PropertyModel indexer, string indexerVisibility,
 		uint memberIdentifier, bool raiseEvents)
 	{
@@ -74,7 +74,7 @@ internal static class MockIndexerBuilder
 
 		writer.WriteLine();
 		ExpectationExceptionBuilder.Build(
-			writer, method, "No handlers match for", memberIdentifier);
+			writer, method, "No handlers match for", memberIdentifier, type.ExpectationsPropertyName);
 
 		writer.Indent--;
 		writer.WriteLine("}");
@@ -111,14 +111,14 @@ internal static class MockIndexerBuilder
 		{
 			writer.WriteLine();
 			ExpectationExceptionBuilder.Build(
-				writer, method, "No handlers were found for", memberIdentifier);
+				writer, method, "No handlers were found for", memberIdentifier, type.ExpectationsPropertyName);
 		}
 
 		writer.Indent--;
 		writer.WriteLine("}");
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer,
+	private static void BuildSetter(IndentedTextWriter writer, TypeMockModel type,
 		PropertyModel indexer, string indexerVisibility,
 		uint memberIdentifier, bool raiseEvents)
 	{
@@ -193,7 +193,7 @@ internal static class MockIndexerBuilder
 
 		writer.WriteLine();
 		ExpectationExceptionBuilder.Build(
-			writer, method, "No handlers match for", memberIdentifier);
+			writer, method, "No handlers match for", memberIdentifier, type.ExpectationsPropertyName);
 
 		writer.Indent--;
 		writer.WriteLine("}");
@@ -229,14 +229,14 @@ internal static class MockIndexerBuilder
 		{
 			writer.WriteLine();
 			ExpectationExceptionBuilder.Build(
-				writer, method, "No handlers were found for", memberIdentifier);
+				writer, method, "No handlers were found for", memberIdentifier, type.ExpectationsPropertyName);
 		}
 
 		writer.Indent--;
 		writer.WriteLine("}");
 	}
 
-	internal static void Build(IndentedTextWriter writer,
+	internal static void Build(IndentedTextWriter writer, TypeMockModel type,
 		PropertyModel indexer, bool raiseEvents)
 	{
 		var explicitTypeName = indexer.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
@@ -288,13 +288,13 @@ internal static class MockIndexerBuilder
 
 		if (isGetterVisible)
 		{
-			MockIndexerBuilder.BuildGetter(writer, indexer, visibility, memberIdentifier, raiseEvents);
+			MockIndexerBuilder.BuildGetter(writer, type, indexer, visibility, memberIdentifier, raiseEvents);
 			memberIdentifier++;
 		}
 
 		if (isSetterVisible)
 		{
-			MockIndexerBuilder.BuildSetter(writer, indexer, visibility, memberIdentifier, raiseEvents);
+			MockIndexerBuilder.BuildSetter(writer, type, indexer, visibility, memberIdentifier, raiseEvents);
 		}
 
 		writer.Indent--;

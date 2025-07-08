@@ -18,16 +18,16 @@ internal static class MockPropertyBuilder
 		var visibility = methodVisibility != propertyVisibility ?
 			methodVisibility : string.Empty;
 
-		writer.WriteLine($"{visibility}get");
-		writer.WriteLine("{");
-		writer.Indent++;
-
-		writer.WriteLine($"if (this.{type.ExpectationsPropertyName}.handlers{memberIdentifier} is not null)");
-		writer.WriteLine("{");
-		writer.Indent++;
-
-		writer.WriteLine($"var @handler = this.{type.ExpectationsPropertyName}.handlers{memberIdentifier}.First;");
-		writer.WriteLine("@handler.CallCount++;");
+		writer.WriteLines(
+			$$"""
+			{{visibility}}get
+			{
+				if (this.{{type.ExpectationsPropertyName}}.handlers{{memberIdentifier}} is not null)
+				{
+					var @handler = this.{{type.ExpectationsPropertyName}}.handlers{{memberIdentifier}}.First;
+					@handler.CallCount++;
+			""");
+		writer.Indent += 2;
 
 		var returnValueCall = property.Type.IsRefLikeType || property.Type.AllowsRefLikeType ?
 			".ReturnValue!()" : ".ReturnValue";
@@ -88,7 +88,7 @@ internal static class MockPropertyBuilder
 		{
 			writer.WriteLine();
 			ExpectationExceptionBuilder.Build(
-				writer, propertyGetMethod, "No handlers match for", memberIdentifier);
+				writer, propertyGetMethod, "No handlers match for", memberIdentifier, type.ExpectationsPropertyName);
 		}
 
 		writer.Indent--;
@@ -127,7 +127,7 @@ internal static class MockPropertyBuilder
 
 		writer.Indent += 5;
 		ExpectationExceptionBuilder.Build(
-			writer, property.SetMethod!, "No handlers match for", memberIdentifier);
+			writer, property.SetMethod!, "No handlers match for", memberIdentifier, type.ExpectationsPropertyName);
 		writer.Indent -= 5;
 
 		writer.WriteLines(
@@ -169,9 +169,8 @@ internal static class MockPropertyBuilder
 		}
 		else
 		{
-			writer.WriteLine($$"""throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription({{memberIdentifier}})}");""");
 			ExpectationExceptionBuilder.Build(
-				writer, property.SetMethod!, "No handlers were found for", memberIdentifier);
+				writer, property.SetMethod!, "No handlers were found for", memberIdentifier, type.ExpectationsPropertyName);
 		}
 
 		writer.Indent--;

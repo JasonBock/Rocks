@@ -125,7 +125,7 @@ public static class InterfaceGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked)
+					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -160,6 +160,7 @@ public static class InterfaceGeneratorTests
 							return @result!;
 						}
 						
+						this.Expectations.WasExceptionThrown = true;
 						throw new global::Rocks.Exceptions.ExpectationException(
 							$"""
 							No handlers were found for {this.GetType().GetMemberDescription(0)}
@@ -181,6 +182,7 @@ public static class InterfaceGeneratorTests
 								return @result!;
 							}
 							
+							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers match for {this.GetType().GetMemberDescription(1)}
@@ -201,6 +203,7 @@ public static class InterfaceGeneratorTests
 										
 										if (!@foundMatch)
 										{
+											this.Expectations.WasExceptionThrown = true;
 											throw new global::Rocks.Exceptions.ExpectationException(
 												$"""
 												No handlers match for {this.GetType().GetMemberDescription(2)}
@@ -214,7 +217,7 @@ public static class InterfaceGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(2)}");
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers were found for {this.GetType().GetMemberDescription(2)}
@@ -456,7 +459,7 @@ public static class InterfaceGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked)
+					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -491,6 +494,7 @@ public static class InterfaceGeneratorTests
 						}
 						else
 						{
+							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}
@@ -514,6 +518,7 @@ public static class InterfaceGeneratorTests
 								return @result!;
 							}
 							
+							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers match for {this.GetType().GetMemberDescription(1)}
@@ -534,6 +539,7 @@ public static class InterfaceGeneratorTests
 										
 										if (!@foundMatch)
 										{
+											this.Expectations.WasExceptionThrown = true;
 											throw new global::Rocks.Exceptions.ExpectationException(
 												$"""
 												No handlers match for {this.GetType().GetMemberDescription(2)}
@@ -548,7 +554,7 @@ public static class InterfaceGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(2)}");
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers were found for {this.GetType().GetMemberDescription(2)}
@@ -804,7 +810,7 @@ public static class InterfaceGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked)
+					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -845,6 +851,7 @@ public static class InterfaceGeneratorTests
 							
 							if (!@foundMatch)
 							{
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
@@ -854,6 +861,7 @@ public static class InterfaceGeneratorTests
 						}
 						else
 						{
+							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}
@@ -1024,7 +1032,7 @@ public static class InterfaceGeneratorTests
 					
 					public override void Verify()
 					{
-						if (this.WasInstanceInvoked)
+						if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
@@ -1061,6 +1069,7 @@ public static class InterfaceGeneratorTests
 									}
 								}
 								
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
@@ -1068,6 +1077,7 @@ public static class InterfaceGeneratorTests
 									""");
 							}
 							
+							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}

@@ -54,7 +54,7 @@ public static class ProjectionVoidPointerGeneratorTests
 					
 					public override void Verify()
 					{
-						if (this.WasInstanceInvoked)
+						if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
@@ -95,6 +95,7 @@ public static class ProjectionVoidPointerGeneratorTests
 								
 								if (!@foundMatch)
 								{
+									this.Expectations.WasExceptionThrown = true;
 									throw new global::Rocks.Exceptions.ExpectationException(
 										$"""
 										No handlers match for {this.GetType().GetMemberDescription(0)}
@@ -104,6 +105,7 @@ public static class ProjectionVoidPointerGeneratorTests
 							}
 							else
 							{
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers were found for {this.GetType().GetMemberDescription(0)}
@@ -341,7 +343,7 @@ public static class ProjectionVoidPointerGeneratorTests
 					
 					public override void Verify()
 					{
-						if (this.WasInstanceInvoked)
+						if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
@@ -374,6 +376,7 @@ public static class ProjectionVoidPointerGeneratorTests
 								return @result!;
 							}
 							
+							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
 								No handlers were found for {this.GetType().GetMemberDescription(0)}
@@ -616,7 +619,7 @@ public static class ProjectionVoidPointerGeneratorTests
 					
 					public override void Verify()
 					{
-						if (this.WasInstanceInvoked)
+						if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
@@ -653,6 +656,7 @@ public static class ProjectionVoidPointerGeneratorTests
 									return @result!;
 								}
 								
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers match for {this.GetType().GetMemberDescription(0)}
@@ -673,6 +677,7 @@ public static class ProjectionVoidPointerGeneratorTests
 											
 											if (!@foundMatch)
 											{
+												this.Expectations.WasExceptionThrown = true;
 												throw new global::Rocks.Exceptions.ExpectationException(
 													$"""
 													No handlers match for {this.GetType().GetMemberDescription(1)}
@@ -686,7 +691,7 @@ public static class ProjectionVoidPointerGeneratorTests
 								}
 								else
 								{
-									throw new global::Rocks.Exceptions.ExpectationException($"No handlers were found for {this.GetType().GetMemberDescription(1)}");
+									this.Expectations.WasExceptionThrown = true;
 									throw new global::Rocks.Exceptions.ExpectationException(
 										$"""
 										No handlers were found for {this.GetType().GetMemberDescription(1)}
@@ -969,7 +974,7 @@ public static class ProjectionVoidPointerGeneratorTests
 					
 					public override void Verify()
 					{
-						if (this.WasInstanceInvoked)
+						if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
@@ -1010,6 +1015,7 @@ public static class ProjectionVoidPointerGeneratorTests
 										}
 									}
 									
+									this.Expectations.WasExceptionThrown = true;
 									throw new global::Rocks.Exceptions.ExpectationException(
 										$"""
 										No handlers match for {this.GetType().GetMemberDescription(0)}
@@ -1017,6 +1023,7 @@ public static class ProjectionVoidPointerGeneratorTests
 										""");
 								}
 								
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers were found for {this.GetType().GetMemberDescription(0)}
@@ -1038,6 +1045,7 @@ public static class ProjectionVoidPointerGeneratorTests
 										}
 									}
 									
+									this.Expectations.WasExceptionThrown = true;
 									throw new global::Rocks.Exceptions.ExpectationException(
 										$"""
 										No handlers match for {this.GetType().GetMemberDescription(1)}
@@ -1046,6 +1054,7 @@ public static class ProjectionVoidPointerGeneratorTests
 										""");
 								}
 								
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers were found for {this.GetType().GetMemberDescription(1)}
@@ -1332,7 +1341,7 @@ public static class ProjectionVoidPointerGeneratorTests
 					
 					public override void Verify()
 					{
-						if (this.WasInstanceInvoked)
+						if (this.WasInstanceInvoked && !this.WasExceptionThrown)
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
@@ -1373,6 +1382,7 @@ public static class ProjectionVoidPointerGeneratorTests
 										}
 									}
 									
+									this.Expectations.WasExceptionThrown = true;
 									throw new global::Rocks.Exceptions.ExpectationException(
 										$"""
 										No handlers match for {this.GetType().GetMemberDescription(0)}
@@ -1380,6 +1390,7 @@ public static class ProjectionVoidPointerGeneratorTests
 										""");
 								}
 								
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers were found for {this.GetType().GetMemberDescription(0)}
@@ -1401,6 +1412,7 @@ public static class ProjectionVoidPointerGeneratorTests
 										}
 									}
 									
+									this.Expectations.WasExceptionThrown = true;
 									throw new global::Rocks.Exceptions.ExpectationException(
 										$"""
 										No handlers match for {this.GetType().GetMemberDescription(1)}
@@ -1409,6 +1421,7 @@ public static class ProjectionVoidPointerGeneratorTests
 										""");
 								}
 								
+								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
 									No handlers were found for {this.GetType().GetMemberDescription(1)}
