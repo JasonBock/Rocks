@@ -12,7 +12,16 @@ public interface IData
 
 public static class VerificationTests
 {
-	[Test]
+   [Test]
+   public static void VerifyWhenExpectationsWereMadeButInstanceWasNeverCreated() => 
+		Assert.That(() =>
+		{
+			using var context = new RockContext();
+			var expectations = context.Create<IDataCreateExpectations>();
+			expectations.Methods.Calculate().Callback(() => throw new NotSupportedException());
+		}, Throws.TypeOf<VerificationException>());
+
+   [Test]
 	public static void VerifyWhenVoidCallbackThrowsException()
 	{
 		using var context = new RockContext();
