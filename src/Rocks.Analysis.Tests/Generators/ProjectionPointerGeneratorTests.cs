@@ -54,7 +54,11 @@ public static class ProjectionPointerGeneratorTests
 					
 					public override void Verify()
 					{
-						if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+						if (!this.WasInstanceInvoked)
+						{
+							throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::MockTests.IHavePointersCreateExpectations was never made."]);
+						}
+						else if (!this.WasExceptionThrown)
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
@@ -344,7 +348,11 @@ public static class ProjectionPointerGeneratorTests
 					
 					public override void Verify()
 					{
-						if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+						if (!this.WasInstanceInvoked)
+						{
+							throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::MockTests.IHavePointersCreateExpectations was never made."]);
+						}
+						else if (!this.WasExceptionThrown)
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
@@ -621,7 +629,11 @@ public static class ProjectionPointerGeneratorTests
 					
 					public override void Verify()
 					{
-						if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+						if (!this.WasInstanceInvoked)
+						{
+							throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::MockTests.IHavePointersCreateExpectations was never made."]);
+						}
+						else if (!this.WasExceptionThrown)
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
@@ -977,7 +989,11 @@ public static class ProjectionPointerGeneratorTests
 					
 					public override void Verify()
 					{
-						if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+						if (!this.WasInstanceInvoked)
+						{
+							throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::MockTests.IHavePointersCreateExpectations was never made."]);
+						}
+						else if (!this.WasExceptionThrown)
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
@@ -1345,7 +1361,11 @@ public static class ProjectionPointerGeneratorTests
 					
 					public override void Verify()
 					{
-						if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+						if (!this.WasInstanceInvoked)
+						{
+							throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::MockTests.IHavePointersCreateExpectations was never made."]);
+						}
+						else if (!this.WasExceptionThrown)
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					

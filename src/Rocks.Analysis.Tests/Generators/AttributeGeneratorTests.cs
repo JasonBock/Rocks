@@ -69,7 +69,11 @@ public static class AttributeGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+					if (!this.WasInstanceInvoked)
+					{
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::CallerCreateExpectations was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -421,7 +425,11 @@ public static class AttributeGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+					if (!this.WasInstanceInvoked)
+					{
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::INotNullCreateExpectations was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -670,7 +678,11 @@ public static class AttributeGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+					if (!this.WasInstanceInvoked)
+					{
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::IItemsCreateExpectations was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -886,7 +898,11 @@ public static class AttributeGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+					if (!this.WasInstanceInvoked)
+					{
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::ConventionDispatcherCreateExpectations was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -1256,7 +1272,11 @@ public static class AttributeGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+					if (!this.WasInstanceInvoked)
+					{
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::NotNullIfNotCasesCreateExpectations was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -1917,7 +1937,11 @@ public static class AttributeGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+					if (!this.WasInstanceInvoked)
+					{
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::IUseTuplesCreateExpectations was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -2134,7 +2158,11 @@ public static class AttributeGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+					if (!this.WasInstanceInvoked)
+					{
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::HaveDynamicCreateExpectations was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -2465,7 +2493,11 @@ public static class AttributeGeneratorTests
 					
 					public override void Verify()
 					{
-						if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+						if (!this.WasInstanceInvoked)
+						{
+							throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::MockTests.IHaveGenericAttributeCreateExpectations was never made."]);
+						}
+						else if (!this.WasExceptionThrown)
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
@@ -2676,7 +2708,11 @@ public static class AttributeGeneratorTests
 					
 					public override void Verify()
 					{
-						if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+						if (!this.WasInstanceInvoked)
+						{
+							throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::MockTests.IHaveMultipleAttributesCreateExpectations was never made."]);
+						}
+						else if (!this.WasExceptionThrown)
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					

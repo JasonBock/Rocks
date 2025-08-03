@@ -73,7 +73,11 @@ public static class ExplicitImplementationGeneratorTests
 					
 					public override void Verify()
 					{
-						if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+						if (!this.WasInstanceInvoked)
+						{
+							throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::MockTests.IHtmlMediaElementCreateExpectations was never made."]);
+						}
+						else if (!this.WasExceptionThrown)
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
@@ -346,7 +350,11 @@ public static class ExplicitImplementationGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+					if (!this.WasInstanceInvoked)
+					{
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::ILeftRightCreateExpectations was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -757,7 +765,11 @@ public static class ExplicitImplementationGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+					if (!this.WasInstanceInvoked)
+					{
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::IIterableCreateExpectations<T> was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -999,7 +1011,11 @@ public static class ExplicitImplementationGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+					if (!this.WasInstanceInvoked)
+					{
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::ISetupListCreateExpectations was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				

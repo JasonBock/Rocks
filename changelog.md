@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [9.3.0] - Not Yet Released
 
+### Changed
+
+- Made `Verify()` throw an exception if expectations were set and an instance was never made (issue [#382](https://github.com/JasonBock/Rocks/issues/358) and issue [#367](https://github.com/JasonBock/Rocks/issues/382))
+
 ## [9.2.0] - 2025-07-07
 
 ### Added

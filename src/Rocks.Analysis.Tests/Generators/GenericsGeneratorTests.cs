@@ -72,7 +72,11 @@ public static class GenericsGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+					if (!this.WasInstanceInvoked)
+					{
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::HistoricalSchedulerCreateExpectations was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -444,7 +448,11 @@ public static class GenericsGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+					if (!this.WasInstanceInvoked)
+					{
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::CustomSerializerCreateExpectations was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -820,7 +828,11 @@ public static class GenericsGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+					if (!this.WasInstanceInvoked)
+					{
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::ISourceUpdaterCreateExpectations<TObject, TKey> was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -1176,7 +1188,11 @@ public static class GenericsGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+					if (!this.WasInstanceInvoked)
+					{
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::IUseGenericCreateExpectations<T> was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -1438,7 +1454,11 @@ public static class GenericsGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+					if (!this.WasInstanceInvoked)
+					{
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::IGenericsAndEventCreateExpectations was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -1748,7 +1768,11 @@ public static class GenericsGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+					if (!this.WasInstanceInvoked)
+					{
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::IServiceCreateExpectations<T, TReturn> was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -1981,7 +2005,11 @@ public static class GenericsGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+					if (!this.WasInstanceInvoked)
+					{
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::MCreateExpectations<A> was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -2347,7 +2375,11 @@ public static class GenericsGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+					if (!this.WasInstanceInvoked)
+					{
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::GenericContainerCreateExpectations was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -2743,7 +2775,11 @@ public static class GenericsGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+					if (!this.WasInstanceInvoked)
+					{
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::CriterionCreateExpectations<T> was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -3057,7 +3093,11 @@ public static class GenericsGeneratorTests
 				
 				public override void Verify()
 				{
-					if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+					if (!this.WasInstanceInvoked)
+					{
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::GeometryValueComparerCreateExpectations<TGeometry> was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
@@ -3468,7 +3508,11 @@ public static class GenericsGeneratorTests
 					
 					public override void Verify()
 					{
-						if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+						if (!this.WasInstanceInvoked)
+						{
+							throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::MockTests.IRequestClientCreateExpectations<TRequest> was never made."]);
+						}
+						else if (!this.WasExceptionThrown)
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
@@ -3759,7 +3803,11 @@ public static class GenericsGeneratorTests
 					
 					public override void Verify()
 					{
-						if (this.WasInstanceInvoked && !this.WasExceptionThrown)
+						if (!this.WasInstanceInvoked)
+						{
+							throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::MockTests.IRequestCreateExpectations<T> was never made."]);
+						}
+						else if (!this.WasExceptionThrown)
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
