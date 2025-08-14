@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<AssemblyName>Rocks.Comparisons.Tests</AssemblyName>
+		<!-- Only include these for debugging purposes -->
+		<!--
+		<CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
+		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+		-->
+		<EnableNUnitRunner>true</EnableNUnitRunner>
+		<RocksAttributeFile>MockDefinitions.cs</RocksAttributeFile>
+		<RootNamespace>Rocks.Comparisons.Tests</RootNamespace>
+		<TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Rocks.Comparisons\Rocks.Comparisons.csproj" />
+		<ProjectReference Include="..\Rocks.Analysis\Rocks.Analysis.csproj" OutputItemType="Analyzer" />
+		<ProjectReference Include="..\Rocks.Completions\Rocks.Completions.csproj" OutputItemType="Analyzer" />
+		<ProjectReference Include="..\Rocks\Rocks.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+		<PackageReference Include="Moq" />
+		<PackageReference Include="NSubstitute" />
+		<PackageReference Include="NUnit" />
+		<PackageReference Include="NUnit.Analyzers">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="NUnit3TestAdapter" />
+	</ItemGroup>
+	<ItemGroup>
+		<CompilerVisibleProperty Include="RocksAttributeFile" />
+	</ItemGroup>
+</Project>

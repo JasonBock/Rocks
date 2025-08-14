@@ -7,18 +7,20 @@
     <File Path="Directory.Build.props" />
     <File Path="Directory.Packages.props" />
   </Folder>
-  <Project Path="Rocks/Rocks.csproj" />
   <Project Path="Rocks.Analysis.IntegrationTests.Referenced/Rocks.Analysis.IntegrationTests.Referenced.csproj" />
   <Project Path="Rocks.Analysis.IntegrationTests/Rocks.Analysis.IntegrationTests.csproj" />
   <Project Path="Rocks.Analysis.Tests/Rocks.Analysis.Tests.csproj" />
   <Project Path="Rocks.Analysis/Rocks.Analysis.csproj" />
   <Project Path="Rocks.CodeGenerationTest/Rocks.CodeGenerationTest.csproj" />
+  <Project Path="Rocks.Comparisons.Tests/Rocks.Comparisons.Tests.csproj" Id="dc091d8f-ae94-49a0-916b-18abacf6a647" />
+  <Project Path="Rocks.Comparisons/Rocks.Comparisons.csproj" Id="5727c2df-83be-4840-900a-eeb836da3c9c" />
   <Project Path="Rocks.Completions.Tests/Rocks.Completions.Tests.csproj" Id="a3c7856a-b12b-435f-9d16-67d25047971e" />
   <Project Path="Rocks.Completions/Rocks.Completions.csproj" Id="77849458-7ea6-4d58-81be-2f4a6b942bf9" />
   <Project Path="Rocks.Package/Rocks.Package.csproj" />
   <Project Path="Rocks.Performance/Rocks.Performance.csproj" />
   <Project Path="Rocks.Playground/Rocks.Playground.csproj" />
   <Project Path="Rocks.Tests/Rocks.Tests.csproj" />
+  <Project Path="Rocks/Rocks.csproj" />
   <Properties Name="Performance">
     <Property Name="HasPerformanceSessions" Value="true" />
   </Properties>
