@@ -43,7 +43,7 @@ internal static class UsesDefaultInterfaceMemberTests
 		var uses = new UsesDefaultInterfaceMember(expectations.Object);
 		Assert.That(uses.Execute(), Is.EqualTo(5));
 
-		expectations.VerifyAll();
+		repository.VerifyAll();
 	}
 
 	[Test]
@@ -57,7 +57,7 @@ internal static class UsesDefaultInterfaceMemberTests
 		var uses = new UsesDefaultInterfaceMember(expectations.Object);
 		Assert.That(uses.Execute(), Is.EqualTo(6));
 
-		expectations.VerifyAll();
+		repository.VerifyAll();
 	}
 
 	// NSubstitute will fail if you don't provide an implementation.

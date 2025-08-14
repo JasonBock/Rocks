@@ -1,1 +1,6 @@
 ﻿[assembly: Rocks.Rock(typeof(Rocks.Comparisons.IHaveDefaultInterfaceMember), Rocks.BuildType.Create | Rocks.BuildType.Make)]
+[assembly: Rocks.Rock(typeof(Rocks.Comparisons.AccessModifiers), Rocks.BuildType.Create | Rocks.BuildType.Make)]
+[assembly: Rocks.Rock(typeof(Rocks.Comparisons.IHavePointers), Rocks.BuildType.Create | Rocks.BuildType.Make)]
+[assembly: Rocks.Rock(typeof(Rocks.Comparisons.IHaveSpan), Rocks.BuildType.Create | Rocks.BuildType.Make)]
+[assembly: Rocks.Rock(typeof(Rocks.Comparisons.HasInitAndRequired), Rocks.BuildType.Create | Rocks.BuildType.Make)]
+[assembly: Rocks.Rock(typeof(Rocks.Comparisons.CombinesValues), Rocks.BuildType.Create | Rocks.BuildType.Make)]
