@@ -2,6 +2,8 @@
 
 namespace Rocks.Analysis.IntegrationTests.RefStructTestTypes;
 
+#pragma warning disable IDE0305
+
 public interface IHaveInAndOutSpan
 {
 	Span<int> Foo(Span<int> values);
@@ -32,9 +34,9 @@ public static class RefStructTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveScopedCreateExpectations>();
-		expectations.Methods.Foo(new()).ReturnValue(() => new[] { 1, 2 }.AsSpan());
+	  expectations.Methods.Foo(new()).ReturnValue(() => new[] { 1, 2 }.AsSpan());
 
-		var mock = expectations.Instance();
+	  var mock = expectations.Instance();
 		var buffer = new int[] { 3 };
 
 		Assert.Multiple(() =>

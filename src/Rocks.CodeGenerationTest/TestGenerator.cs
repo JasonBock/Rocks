@@ -26,7 +26,8 @@ internal static class TestGenerator
 	* UTF7 encoding (SYSLIB0001)
 	* Code access security (SYSLIB0003)
 	* EF "future" warnings (EF9100)
-	* Aspire evaluation warnings (ASPIREPUBLISHERS001, ASPIRECOMPUTE001)
+	* Aspire evaluation warnings (ASPIREPUBLISHERS001, ASPIRECOMPUTE001, ASPIREINTERACTION001)
+	* StackExchange.Redis evaluation warnings (SER001)
 
 	These are warnings, and they should not cause errors. A user can decide to treat them
 	as errors, but Rocks should still be able to create code that cause these warnings.
@@ -51,7 +52,9 @@ internal static class TestGenerator
 		{ "SYSLIB0050", ReportDiagnostic.Info },
 		{ "SYSLIB0051", ReportDiagnostic.Info },
 		{ "ASPIREPUBLISHERS001", ReportDiagnostic.Suppress },
-		{ "ASPIRECOMPUTE001", ReportDiagnostic.Suppress }
+		{ "ASPIRECOMPUTE001", ReportDiagnostic.Suppress },
+		{ "ASPIREINTERACTION001", ReportDiagnostic.Suppress },
+		{ "SER001", ReportDiagnostic.Suppress }
 	};
 
 	internal static ImmutableArray<Type> GetTargets(HashSet<Assembly> targetAssemblies, ImmutableArray<Type> typesToIgnore,

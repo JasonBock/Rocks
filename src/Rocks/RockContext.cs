@@ -8,7 +8,7 @@
 public sealed class RockContext
   : IDisposable
 {
-	private DisableVerification disableVerification = DisableVerification.No;
+	private readonly DisableVerification disableVerification = DisableVerification.No;
 	private bool isDisposed;
 	private readonly List<Expectations> createdExpectations = [];
 

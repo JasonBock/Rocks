@@ -121,9 +121,6 @@
 		<PackageReference Include="System.IO.Abstractions" />
 		<PackageReference Include="System.Numerics.Tensors" />
 		<PackageReference Include="System.Reactive" />
-		<PackageReference Include="System.Reflection.Metadata" />
-		<PackageReference Include="System.Text.Json" />
-		<PackageReference Include="System.Threading.Channels" />
 		<PackageReference Include="TerraFX.Interop.D3D12MemoryAllocator" />
 		<PackageReference Include="TerraFX.Interop.Windows" />
 		<PackageReference Include="Testcontainers" />

@@ -1,5 +1,4 @@
 ﻿using Moq;
-using NSubstitute;
 using NUnit.Framework;
 
 namespace Rocks.Comparisons.Tests;
@@ -42,9 +41,10 @@ internal static class UsesSpanTests
 	// and removing that with passing in a Span<int>
 	// results in a CLR program error.
 	[Test]
-	public static void UseNSubstitute()
+    [Ignore("Only used to illustrate mocking framework failure")]
+    public static void UseNSubstitute()
 	{
-		var expectations = Substitute.For<IHaveSpan>();
+		//var expectations = Substitute.For<IHaveSpan>();
 		//expectations.Process(NSubstitute.Arg.Any<Span<int>>());
 	}
 }

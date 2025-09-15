@@ -68,6 +68,14 @@ dotnet_diagnostic.IDE0055.severity = none
 # IDE0130 - don't need to match folder structure.
 dotnet_diagnostic.IDE0130.severity = none
 
+# IDE0290 - don't need to do primary constructors
+dotnet_diagnostic.IDE0290.severity = none
+
+dotnet_diagnostic.IDE0040.severity = suggestion
+dotnet_diagnostic.IDE0046.severity = suggestion
+dotnet_diagnostic.IDE0058.severity = suggestion
+dotnet_diagnostic.IDE0072.severity = suggestion
+
 # NUnit analyzers
 dotnet_diagnostic.NUnit2029.severity=error
 dotnet_diagnostic.NUnit2001.severity=error

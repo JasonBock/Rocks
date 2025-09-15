@@ -5,17 +5,18 @@ using System.Security.Cryptography;
 
 namespace Rocks.Tests.Extensions;
 
+#pragma warning disable IDE0060 // Remove unused parameter
 public class Identifiers
 {
-	private int data = RandomNumberGenerator.GetInt32(int.MaxValue);
+	private readonly int data = RandomNumberGenerator.GetInt32(int.MaxValue);
 
 	[MemberIdentifier(1)]
 	public static void Foo() { }
 
 	[MemberIdentifier(2)]
-	public static Guid Foo(string name, ImmutableArray<int> values) => Guid.NewGuid();
+   public static Guid Foo(string name, ImmutableArray<int> values) => Guid.NewGuid();
 
-	[MemberIdentifier(3)]
+   [MemberIdentifier(3)]
 	public static Guid Foo<TName, TValue>(TName name, ImmutableArray<TValue> values) => Guid.NewGuid();
 
 	[MemberIdentifier(4, PropertyAccessor.Get)]

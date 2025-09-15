@@ -22,15 +22,10 @@ public sealed class RockPartialAttribute
 	{
 		this.MockType = mockType;
 
-		if (buildType.HasFlag(BuildType.Create) && buildType.HasFlag(BuildType.Make))
-		{
-			this.BuildType = BuildType.Create;
-		}
-		else
-		{
-			this.BuildType = buildType;
-		}
-	}
+		this.BuildType = buildType.HasFlag(BuildType.Create) && buildType.HasFlag(BuildType.Make) ? 
+			BuildType.Create : 
+			buildType;
+   }
 
 	/// <summary>
 	/// Gets the kind of mock to build.

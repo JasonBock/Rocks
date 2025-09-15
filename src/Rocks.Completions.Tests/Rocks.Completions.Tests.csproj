@@ -6,6 +6,7 @@
 		Turning this diagnostic off based on this advice:
 		https://github.com/dotnet/roslyn-analyzers/issues/7436
 		-->
+		<NoWarn>$(NoWarn),CS1705</NoWarn>
 		<RootNamespace>Rocks.Completions.Tests</RootNamespace>
 		<TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
 	</PropertyGroup>

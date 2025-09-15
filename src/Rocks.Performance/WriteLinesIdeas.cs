@@ -57,7 +57,7 @@ internal static class Extensions
 			self.Indent += indentation;
 		}
 
-		foreach (var line in content.Split(new[] { self.NewLine }, StringSplitOptions.None))
+		foreach (var line in content.Split([self.NewLine], StringSplitOptions.None))
 		{
 			self.WriteLine(line);
 		}

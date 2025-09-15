@@ -3,6 +3,7 @@
 namespace Rocks.Analysis.IntegrationTests.OptionalArgumentsTestTypes;
 
 #nullable disable
+#pragma warning disable IDE0060 // Remove unused parameter
 public class NeedNullableAnnotation
 {
 	public NeedNullableAnnotation(object initializationData = null) { }

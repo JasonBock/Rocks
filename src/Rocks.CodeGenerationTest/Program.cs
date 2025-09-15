@@ -184,7 +184,7 @@ static void TestWithTypes()
 		new (typeof(Microsoft.FluentUI.AspNetCore.Components.AccordionChangeEventArgs), []),
 		new (typeof(Microsoft.Identity.Client.AadAuthorityAudience), []),
 		new (typeof(Microsoft.Kiota.Abstractions.ApiClientBuilder), []),
-		new (typeof(Microsoft.OpenApi.Any.AnyType), []),
+		new (typeof(Microsoft.OpenApi.OpenApiWriterAnyExtensions), []),
 		new (typeof(Microsoft.Quantum.AmplitudeAmplification.AmpAmpByOracle), []),
 		new (typeof(Mono.Cecil.FixedSysStringMarshalInfo), []),
 		new (typeof(Mscc.GenerativeAI.BlockedError), []),

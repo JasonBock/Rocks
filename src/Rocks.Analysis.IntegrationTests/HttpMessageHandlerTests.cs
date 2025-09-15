@@ -13,10 +13,12 @@ public static class HttpMessageHandlerTests
 			StatusCode = HttpStatusCode.OK,
 			Content = new StringContent("OK")
 		};
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<HttpMessageHandlerCreateExpectations>();
+#pragma warning disable CA2025 // Do not pass 'IDisposable' instances into unawaited tasks
 		expectations.Methods.SendAsync(Arg.Any<HttpRequestMessage>(), Arg.Any<CancellationToken>())
-			.ReturnValue(Task.FromResult(response));
+			 .ReturnValue(Task.FromResult(response));
+#pragma warning restore CA2025 // Do not pass 'IDisposable' instances into unawaited tasks
 
 		using var mock = expectations.Instance();
 		using var client = new HttpClient(mock);

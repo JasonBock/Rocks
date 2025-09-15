@@ -78,7 +78,7 @@ public static class ClassConstructorTests
 			Assert.That(mock.B, Is.EqualTo("b"));
 			Assert.That(mock.C, Is.EqualTo("42"));
 			Assert.That(cValue, Is.EqualTo("42"));
-			Assert.That(mock.D, Is.EquivalentTo(new[] { d1Value, d2Value }));
+			Assert.That(mock.D, Is.EquivalentTo([d1Value, d2Value]));
 		});
 	}
 
@@ -97,7 +97,7 @@ public static class ClassConstructorTests
 			Assert.That(mock.B, Is.EqualTo("b"));
 			Assert.That(mock.C, Is.EqualTo("42"));
 			Assert.That(cValue, Is.EqualTo("42"));
-			Assert.That(mock.D, Is.EquivalentTo(new[] { d1Value, d2Value }));
+			Assert.That(mock.D, Is.EquivalentTo([d1Value, d2Value]));
 		});
 	}
 

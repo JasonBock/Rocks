@@ -8,6 +8,7 @@
 		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
 		-->
 		<EnableNUnitRunner>true</EnableNUnitRunner>
+		<NoWarn>$(NoWarn),CS1705</NoWarn>
 		<RocksAttributeFile>MockDefinitions.cs</RocksAttributeFile>
 		<RootNamespace>Rocks.Comparisons.Tests</RootNamespace>
 		<TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
