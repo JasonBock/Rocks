@@ -7,6 +7,145 @@ namespace Rocks.Completions.Tests;
 public static class AddRockAttributeRefactoringTests
 {
 	[Test]
+	public static async Task RunWhenTargetIsVariableAsync()
+	{
+		var source =
+			"""
+			using System;
+
+			public class TargetUsage
+			{ 
+				public string Work()
+				{
+					var x = Guid.NewGuid();
+					return [|x|].ToString() + this.ToString();
+				}
+			}
+			""";
+
+		var fixedSource =
+			"""
+			using System;
+			
+			[assembly: Rocks.Rock(typeof(System.Guid), Rocks.BuildType.Create | Rocks.BuildType.Make)]
+			
+			public class TargetUsage
+			{ 
+				public string Work()
+				{
+					var x = Guid.NewGuid();
+					return x.ToString() + this.ToString();
+				}
+			}
+			""";
+
+		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
+			[("Source.cs", source)], [("Source.cs", fixedSource)], 0, false, [], []);
+	}
+
+	[Test]
+	public static async Task RunWhenTargetIsThisAsync()
+	{
+		var source =
+			"""
+			using System;
+
+			public class TargetUsage
+			{ 
+				public string Work()
+				{
+					var x = Guid.NewGuid();
+					return x.ToString() + t[|h|]is.ToString();
+				}
+			}
+			""";
+
+		var fixedSource =
+			"""
+			using System;
+			
+			[assembly: Rocks.Rock(typeof(TargetUsage), Rocks.BuildType.Create | Rocks.BuildType.Make)]
+			
+			public class TargetUsage
+			{ 
+				public string Work()
+				{
+					var x = Guid.NewGuid();
+					return x.ToString() + this.ToString();
+				}
+			}
+			""";
+
+		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
+			[("Source.cs", source)], [("Source.cs", fixedSource)], 0, false, [], []);
+	}
+
+	[Test]
+	public static async Task RunWhenTargetIsInvocationAsync()
+	{
+		var source =
+			"""
+			using System;
+
+			public static class TargetUsage
+			{ 
+				public static Guid Work() => Guid.NewGu[|i|]d();
+			}
+			""";
+
+		var fixedSource =
+			"""
+			using System;
+			
+			[assembly: Rocks.Rock(typeof(System.Guid), Rocks.BuildType.Create | Rocks.BuildType.Make)]
+			
+			public static class TargetUsage
+			{ 
+				public static Guid Work() => Guid.NewGuid();
+			}
+			""";
+
+		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
+			[("Source.cs", source)], [("Source.cs", fixedSource)], 0, false, [], []);
+	}
+
+	[Test]
+	public static async Task RunWhenTargetIsAttributeAsync()
+	{
+		var source =
+			"""
+			using System;
+
+			[AttributeUsage(AttributeTargets.All)]
+			public sealed class DataAttribute
+				: Attribute
+			{ }
+			
+			[D[|a|]ta]
+			public static class TargetUsage
+			{ }
+			""";
+
+		var fixedSource =
+			"""
+			using System;
+			
+			[assembly: Rocks.Rock(typeof(DataAttribute), Rocks.BuildType.Create | Rocks.BuildType.Make)]
+			[AttributeUsage(AttributeTargets.All)]
+			public sealed class DataAttribute
+				: Attribute
+			{ }
+			
+			[Data]
+			public static class TargetUsage
+			{ }
+			""";
+
+		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
+			[("Source.cs", source)], [("Source.cs", fixedSource)], 0, false, [], []);
+	}
+
+	[Test]
 	public static async Task RunWhenTargetIsPredefinedTypeAsync()
 	{
 		var source =

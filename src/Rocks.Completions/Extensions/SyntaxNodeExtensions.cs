@@ -1,6 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Collections;
 
 namespace Rocks.Completions.Extensions;
 
@@ -16,6 +15,7 @@ internal static class SyntaxNodeExtensions
 				typeof(ObjectCreationExpressionSyntax),
 				typeof(BaseTypeSyntax),
 				typeof(PredefinedTypeSyntax),
+				typeof(AttributeSyntax),
 				typeof(ClassDeclarationSyntax),
 				typeof(InterfaceDeclarationSyntax),
 				typeof(RecordDeclarationSyntax)
@@ -71,6 +71,10 @@ internal static class SyntaxNodeExtensions
 				{
 					parentSymbol = model.GetSymbolInfo(predefinedTypeSyntax, cancellationToken).Symbol;
 				}
+				else if (parent is AttributeSyntax attributeSyntax)
+				{
+					parentSymbol = model.GetSymbolInfo(attributeSyntax, cancellationToken).Symbol;
+				}
 				else
 				{
 					parentSymbol = parent switch
@@ -88,6 +92,14 @@ internal static class SyntaxNodeExtensions
 				if (parentSymbol is INamedTypeSymbol namedTypeSymbol)
 				{
 					return namedTypeSymbol;
+				}
+				else if (parentSymbol is IMethodSymbol methodSymbol)
+				{
+					return methodSymbol.ContainingType;
+				}
+				else if (parentSymbol is ILocalSymbol localSymbol && localSymbol.Type is INamedTypeSymbol localNamedTypeSymbol)
+				{
+					return localNamedTypeSymbol;
 				}
 			}
 

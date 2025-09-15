@@ -25,6 +25,7 @@ internal static class UsesSpanTests
 	// you'll get a very bad exception at runtime:
 	// System.InvalidProgramException : Common Language Runtime detected an invalid program.
 	[Test]
+	[Ignore("Only used to illustrate mocking framework failure")]
 	public static void UseMoq()
 	{
 		var repository = new MockRepository(MockBehavior.Loose);

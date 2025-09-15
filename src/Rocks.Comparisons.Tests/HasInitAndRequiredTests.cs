@@ -25,6 +25,7 @@ internal static class HasInitAndRequiredTests
 	// where you'll get an exception like this:
 	// System.NotSupportedException : Unsupported expression: _ => _.InitValue
 	[Test]
+	[Ignore("Only used to illustrate mocking framework failure")]
 	public static void UseMoq()
 	{
 		var repository = new MockRepository(MockBehavior.Strict);
@@ -48,6 +49,7 @@ internal static class HasInitAndRequiredTests
 	// If you try, you won't find out until runtime
 	// where you'll get a CouldNotSetReturnDueToNoLastCallException.
 	[Test]
+	[Ignore("Only used to illustrate mocking framework failure")]
 	public static void UseNSubstitute()
 	{
 		var mock = Substitute.For<HasInitAndRequired>();
