@@ -111,9 +111,11 @@ Once you set your expectations, you can create an instance of the mock from the 
 
 Note that all mocks generated with Rocks are strict. That is, if you didn't set up an expectation for the `TargetAction()` call, the `Verify()` call would fail with a `VerificationException`. This exception type provided details on why verification failed.
 
-With 9.1.0, Rocks now includes a refactoring that makes it easier to create a `[Rock]` definition. If your cursor is on an identifier name, a type definition, or a parameter, you can use your IDE to invoke a refactoring. The following screenshot shows you what this looks like in Visual Studio:
+With 9.1.0, Rocks now includes a refactoring that makes it easier to create a `[Rock]` definition. If your cursor is on an identifier name, a type definition, or other elements in your code, you can use your IDE to invoke a refactoring. The following screenshot shows you what this looks like in Visual Studio:
 
 ![using refactoring in VS](./Refactoring%20in%20Visual%20Studio.png)
+
+The target type will depend on where your cursor is in the file.
 
 You can define a `<RocksAttributeFile>` project property to specify a file that the `[Rock]` definition will be created (you'll also need to define that property name using `<CompilerVisibleProperty>`). If you don't do this, the new definition will be created in the same file where the refactoring was invoked. For an example, look at the `Rocks.Scenarios.csproj` file in the `Rocks.Scenarios` solution with the Rocks repository.
 

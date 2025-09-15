@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Made `Verify()` throw an exception if expectations were set and an instance was never made (issue [#382](https://github.com/JasonBock/Rocks/issues/358) and issue [#367](https://github.com/JasonBock/Rocks/issues/382))
+- Made `Verify()` throw an exception if expectations were set and an instance was never made (issue [#382](https://github.com/JasonBock/Rocks/issues/382) and issue [#367](https://github.com/JasonBock/Rocks/issues/367))
+- Refined symbol search for refactoring (issue [#384](https://github.com/JasonBock/Rocks/issues/384))
 
 ## [9.2.0] - 2025-07-07
 
