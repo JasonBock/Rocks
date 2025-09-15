@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DebugRoslynComponent": {
+      "commandName": "DebugRoslynComponent",
+      "targetProject": "..\\Rocks.Playground\\Rocks.Playground.csproj"
+    }
+  }
+}
