@@ -29,21 +29,21 @@
 		<None Include="../../LICENSE" Pack="true" PackagePath="" />
 		<None Include="../Images/Icon.png" Pack="true" PackagePath="" Visible="false" />
 		<None 
-			Include="../Rocks.Analysis/bin/$(Configuration)/netstandard2.0/Rocks.Analysis.dll" 
+			Include="../artifacts/bin/Rocks.Analysis/$(Configuration)/Rocks.Analysis.dll"
 			Pack="true" 
 			PackagePath="analyzers/dotnet/cs" 
 			Visible="false" />
 		<None 
-			Include="../Rocks.Completions/bin/$(Configuration)/netstandard2.0/Rocks.Completions.dll" 
+			Include="../artifacts/bin/Rocks.Completions/$(Configuration)/Rocks.Completions.dll"
 			Pack="true" 
 			PackagePath="analyzers/dotnet/cs" 
 			Visible="false" />
 		<TfmSpecificPackageFile
-            Include="../Rocks/bin/$(Configuration)/$(TargetFramework)/Rocks.dll"
+			Include="../artifacts/bin/Rocks/$(Configuration)/Rocks.dll"
             Pack="true"
             PackagePath="lib/$(TargetFramework)" />
 		<TfmSpecificPackageFile
-            Include="../Rocks/bin/$(Configuration)/$(TargetFramework)/Rocks.xml"
+			Include="../artifacts/bin/Rocks/$(Configuration)/Rocks.xml"
             Pack="true"
             PackagePath="lib/$(TargetFramework)" />
 	</ItemGroup>
