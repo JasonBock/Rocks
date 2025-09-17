@@ -111,6 +111,7 @@ internal static class AttributeDataExtensions
 		// * EnumeratorCancellationAttribute - I can't reference the type because it's not in .NET Standard 2.0 :(, but I have to filter it out.
 		// * TupleElementNamesAttribute - If a base member has this, it's because the compiler emitted it. Code can't do that - CS8138
 		// * DefaultMemberAttribute - This would only be on a type, but it can't be included if the type has indexers. It's just easier to not include it - CS0646.
+		// * UnscopedRefAttribute - Essentially, this can't be included on implemented mock members because they're non-virtual (I think) - CS9101.
 		//
 		// There are a handful of attributes we can't "see" when targeting NS 2.0 
 		// that we can't emit. Therefore, we do a string comparison against the FQN
@@ -144,6 +145,7 @@ internal static class AttributeDataExtensions
 		const string asyncIteratorStateMachineAttribute = "global::System.Runtime.CompilerServices.AsyncIteratorStateMachineAttribute";
 		const string nullableAttribute = "global::System.Runtime.CompilerServices.NullableAttribute";
 		const string nullableContextAttribute = "global::System.Runtime.CompilerServices.NullableContextAttribute";
+		const string unscopedRefAttribute = "global::System.Diagnostics.CodeAnalysis.UnscopedRefAttribute";
 
 		var attributes = self.Where(
 			_ => _.AttributeClass is not null &&
@@ -160,7 +162,8 @@ internal static class AttributeDataExtensions
 				_.AttributeClass.GetFullyQualifiedName(compilation) != enumeratorCancellationAttribute &&
 				_.AttributeClass.GetFullyQualifiedName(compilation) != asyncIteratorStateMachineAttribute &&
 				_.AttributeClass.GetFullyQualifiedName(compilation) != nullableAttribute &&
-				_.AttributeClass.GetFullyQualifiedName(compilation) != nullableContextAttribute).ToImmutableArray();
+				_.AttributeClass.GetFullyQualifiedName(compilation) != nullableContextAttribute &&
+				_.AttributeClass.GetFullyQualifiedName(compilation) != unscopedRefAttribute).ToImmutableArray();
 
 		// Do another pass where we eliminate "caller" attribute if necessary.
 		if (requiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes &&
