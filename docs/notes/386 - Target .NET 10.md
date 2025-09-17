@@ -1,7 +1,8 @@
 What are some things to fix?
 
-* Suppressed tests, trying to find `UseValueTasksCorrectlyAnalyzer` doesn't work. I think it has something to do with `<Reference Include="$(PkgMicrosoft_CodeAnalysis_NetAnalyzers)\analyzers\dotnet\cs\Microsoft.CodeAnalysis.NetAnalyzers.dll" />`
+* FIXED - Suppressed tests, trying to find `UseValueTasksCorrectlyAnalyzer` doesn't work. I think it has something to do with `<Reference Include="$(PkgMicrosoft_CodeAnalysis_NetAnalyzers)\analyzers\dotnet\cs\Microsoft.CodeAnalysis.NetAnalyzers.dll" />`
 
+All issues now have GitHub issues.
 
 Errors:
 
