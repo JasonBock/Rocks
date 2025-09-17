@@ -961,12 +961,12 @@ public static class NullabilityGeneratorTests
 						
 						global::IReadOnlySkipNavigation global::IReadOnlySkipNavigation.Inverse
 						{
-							get => ((global::IConventionSkipNavigation)this.mock).Inverse!;
+							get => ((global::IReadOnlySkipNavigation)this.mock).Inverse!;
 						}
 						
 						global::IReadOnlyNavigationBase? global::IReadOnlyNavigationBase.Inverse
 						{
-							get => ((global::IConventionSkipNavigation)this.mock).Inverse!;
+							get => ((global::IReadOnlyNavigationBase)this.mock).Inverse!;
 						}
 					}
 					private global::IConventionSkipNavigationCreateExpectations Expectations { get; }

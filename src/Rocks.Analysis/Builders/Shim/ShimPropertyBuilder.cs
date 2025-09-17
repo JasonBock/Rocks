@@ -28,17 +28,21 @@ internal static class ShimPropertyBuilder
 			writer.WriteLine("{");
 			writer.Indent++;
 
+			var castTypeName = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
+				shimType.Type.FullyQualifiedName :
+				property.ContainingType.FullyQualifiedName;
+
 			var accessors = property.Accessors;
 			if (accessors == PropertyAccessor.Get || accessors == PropertyAccessor.GetAndInit ||
 				accessors == PropertyAccessor.GetAndSet)
 			{
 				var refReturn = property.ReturnsByRef || property.ReturnsByRefReadOnly ? "ref " : string.Empty;
-				writer.WriteLine($"get => {refReturn}(({shimType.Type.FullyQualifiedName})this.mock).{property.Name}!;");
+				writer.WriteLine($"get => {refReturn}(({castTypeName})this.mock).{property.Name}!;");
 			}
 
 			if (accessors == PropertyAccessor.Set || accessors == PropertyAccessor.GetAndSet)
 			{
-				writer.WriteLine($"set => (({shimType.Type.FullyQualifiedName})this.mock).{property.Name} = value!;");
+				writer.WriteLine($"set => (({castTypeName})this.mock).{property.Name} = value!;");
 			}
 
 			if (accessors == PropertyAccessor.Init || accessors == PropertyAccessor.GetAndInit)

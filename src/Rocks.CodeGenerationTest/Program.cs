@@ -15,9 +15,9 @@ var stopwatch = Stopwatch.StartNew();
 
 //TestTypeValidity();
 //TestWithCode();
-TestWithType();
+//TestWithType();
 //TestWithTypeNoEmit();
-//TestWithTypes();
+TestWithTypes();
 //TestTypesIndividually();
 
 stopwatch.Stop();
@@ -79,7 +79,7 @@ static void TestWithType()
 #pragma warning disable EF1001 // Internal EF Core API usage.
 #pragma warning disable EF9100 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 	(var issues, var times) = TestGenerator.Generate(new RockGenerator(),
-		[typeof(System.Numerics.Tensors.IReadOnlyTensor)],
+		[typeof(Microsoft.EntityFrameworkCore.Metadata.IMutableEntityType)],
 		typesToLoadAssembliesFrom,
 		[], Rocks.Analysis.BuildType.Create);
 #pragma warning restore EF9100 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.

@@ -40,22 +40,25 @@ internal static class ShimIndexerBuilder
 				return $"{direction}@{_.Name}";
 			}));
 
+			var castTypeName = indexer.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
+				shimType.Type.FullyQualifiedName :
+				indexer.ContainingType.FullyQualifiedName;
 			var accessors = indexer.Accessors;
 			if (accessors == PropertyAccessor.Get || accessors == PropertyAccessor.GetAndInit ||
 				accessors == PropertyAccessor.GetAndSet)
 			{
 				var refReturn = indexer.ReturnsByRef || indexer.ReturnsByRefReadOnly ? "ref " : string.Empty;
-				writer.WriteLine($"get => {refReturn}(({shimType.Type.FullyQualifiedName})this.mock)[{parameters}]!;");
+				writer.WriteLine($"get => {refReturn}(({castTypeName})this.mock)[{parameters}]!;");
 			}
 
 			if (accessors == PropertyAccessor.Set || accessors == PropertyAccessor.GetAndSet)
 			{
-				writer.WriteLine($"set => (({shimType.Type.FullyQualifiedName})this.mock)[{parameters}] = value!;");
+				writer.WriteLine($"set => (({castTypeName})this.mock)[{parameters}] = value!;");
 			}
 
 			if (accessors == PropertyAccessor.Init || accessors == PropertyAccessor.GetAndInit)
 			{
-				writer.WriteLine("init { }");
+				writer.WriteLine($"init => (({castTypeName})this.mock)[{parameters}] = value!;");
 			}
 
 			writer.Indent--;

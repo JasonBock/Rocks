@@ -102,7 +102,11 @@ internal static class ShimMethodBuilder
 				return $"{direction}@{_.Name}";
 			}));
 
-			writer.WriteLine($"(({shimType.Type.FullyQualifiedName})this.mock).{method.Name}{typeArguments}({passedParameters}){useNullForgiving};");
+			var castTypeName = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
+				shimType.Type.FullyQualifiedName :
+				method.ContainingType.FullyQualifiedName;
+
+			writer.WriteLine($"(({castTypeName})this.mock).{method.Name}{typeArguments}({passedParameters}){useNullForgiving};");
 			writer.Indent--;
 		}
 	}
