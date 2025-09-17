@@ -37,6 +37,7 @@
 [assembly: Rocks.Rock(typeof(Rocks.Analysis.IntegrationTests.AsynchronousTestTypes.AsyncEnumeration), Rocks.BuildType.Create | Rocks.BuildType.Make)]
 [assembly: Rocks.Rock(typeof(Rocks.Analysis.IntegrationTests.AsynchronousTestTypes.IAmAsynchronous), Rocks.BuildType.Create | Rocks.BuildType.Make)]
 [assembly: Rocks.Rock(typeof(Rocks.Analysis.IntegrationTests.AttributeTestTypes.ConventionDispatcher), Rocks.BuildType.Create | Rocks.BuildType.Make)]
+[assembly: Rocks.Rock(typeof(Rocks.Analysis.IntegrationTests.AttributeTestTypes.ITense), Rocks.BuildType.Create | Rocks.BuildType.Make)]
 [assembly: Rocks.Rock(typeof(Rocks.Analysis.IntegrationTests.AttributeTestTypes.NotNullIfNotCases), Rocks.BuildType.Create | Rocks.BuildType.Make)]
 [assembly: Rocks.Rock(typeof(Rocks.Analysis.IntegrationTests.ClassConstructorTestTypes.ClassConstructor), Rocks.BuildType.Create | Rocks.BuildType.Make)]
 [assembly: Rocks.Rock(typeof(Rocks.Analysis.IntegrationTests.ClassConstructorTestTypes.ClassConstructorWithSpecialParameters), Rocks.BuildType.Create | Rocks.BuildType.Make)]

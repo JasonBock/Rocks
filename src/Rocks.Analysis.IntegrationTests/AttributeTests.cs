@@ -6,6 +6,12 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Rocks.Analysis.IntegrationTests.AttributeTestTypes;
 
+public interface ITense
+{
+	[UnscopedRef]
+	ReadOnlySpan<nint> Lengths { get; }
+}
+
 public class NotNullIfNotCases
 {
 	[return: NotNullIfNotNull(nameof(node))]
@@ -20,6 +26,24 @@ public class ConventionDispatcher
 
 public static class AttributeTests
 {
+	[Test]
+	public static void CreateWithUnscopedRef()
+	{
+		using var context = new RockContext();
+		var expectations = context.Create<ITenseCreateExpectations>();
+		expectations.Properties.Getters.Lengths().ReturnValue(() => []);
+
+		var mock = expectations.Instance();
+		_ = mock.Lengths;
+	}
+
+	[Test]
+	public static void MakeWithUnscopedRef()
+	{
+		var mock = new ITenseMakeExpectations().Instance();
+		_ = mock.Lengths;
+	}
+
 	[Test]
 	public static void CreateWithNotNullIfNotNull()
 	{
