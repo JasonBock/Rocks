@@ -2,7 +2,7 @@ What are some things to fix?
 
 * FIXED - Suppressed tests, trying to find `UseValueTasksCorrectlyAnalyzer` doesn't work. I think it has something to do with `<Reference Include="$(PkgMicrosoft_CodeAnalysis_NetAnalyzers)\analyzers\dotnet\cs\Microsoft.CodeAnalysis.NetAnalyzers.dll" />`
 
-All issues now have GitHub issues.
+* FIXED - All issues now have GitHub issues.
 
 Errors:
 
@@ -150,3 +150,4 @@ Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\System.Numerics.Tensors
 Code:
 global::System.Diagnostics.CodeAnalysis.UnscopedRefAttribute
 ```
+
