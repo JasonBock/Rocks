@@ -42,10 +42,10 @@ public abstract class Expectations
 	/// <summary>
 	/// Gets or sets the flag to determine if a mock threw an exception, like <see cref="ExpectationException"/>.
 	/// </summary>
-	protected bool WasExceptionThrown { get; set; }
+	public bool WasExceptionThrown { get; protected set; }
 
 	/// <summary>
 	/// Gets or sets the flag to determine if an mock instance was created.
 	/// </summary>
-	protected bool WasInstanceInvoked { get; set; }
+	public bool WasInstanceInvoked { get; protected set; }
 }

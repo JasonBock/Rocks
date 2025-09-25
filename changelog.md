@@ -7,7 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.0.0-alpha.1] - Not Yet Released
 
+### Changed
+
+- Removed `DisableVerification` flag from `RockContext` (issue [#393](https://github.com/JasonBock/Rocks/issues/393))
+
 ### Fixed
+
 - Made all explicit implementations in shim members cast to the type of the explicit implementation (issue [#389](https://github.com/JasonBock/Rocks/issues/389) and issue [#390](https://github.com/JasonBock/Rocks/issues/390))
 - Mocks no longer includes `[UnscopedRef]` (issue [#391](https://github.com/JasonBock/Rocks/issues/391))
 

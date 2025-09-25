@@ -18,19 +18,6 @@ public static class RockContextTests
 	}
 
 	[Test]
-	public static void UseWithVerificationsDisabled()
-	{
-		MyExpectations? expectations = null;
-
-		using (var context = new RockContext(DisableVerification.Yes))
-		{
-			expectations = context.Create<MyExpectations>();
-		}
-
-		Assert.That(expectations!.HasBeenVerified, Is.False);
-	}
-
-	[Test]
    public static void UseWithNoExpectationsCreated() => 
 		Assert.DoesNotThrow(() => { using var context = new RockContext(); });
 
@@ -42,6 +29,7 @@ public static class RockContextTests
 
 		Assert.Throws<ObjectDisposedException>(() => context.Create<MyExpectations>());
 	}
+
 	[Test]
 	public static void UseDisposeAfterDisposing()
 	{
@@ -51,11 +39,26 @@ public static class RockContextTests
 		Assert.Throws<ObjectDisposedException>(() => context.Dispose());
 	}
 
+	[Test]
+	public static void UseWhenExpectationThrewException()
+	{
+		MyExpectations? expectations = null;
+
+		using (var context = new RockContext()) 
+		{
+			expectations = context.Create<MyExpectations>();
+			expectations.SetWasExceptionThrown(true);
+		}
+
+		Assert.That(expectations.HasBeenVerified, Is.False);
+	}
 }
 
 internal sealed class MyExpectations
 	: Expectations
 {
+	public void SetWasExceptionThrown(bool value) => this.WasExceptionThrown = value;
+
 	public override void Verify() =>
 		this.HasBeenVerified = true;
 
