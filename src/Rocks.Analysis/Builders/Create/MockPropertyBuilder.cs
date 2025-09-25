@@ -120,35 +120,32 @@ internal static class MockPropertyBuilder
 							@handler.CallCount++;
 							@foundMatch = true;
 							@handler.Callback?.Invoke(value!);
-							
-							if (!@foundMatch)
-							{
 			""");
 
-		writer.Indent += 5;
-		ExpectationExceptionBuilder.Build(
-			writer, property.SetMethod!, "No handlers match for", memberIdentifier, type.ExpectationsPropertyName);
-		writer.Indent -= 5;
-
-		writer.WriteLines(
-			"""
-							}
-							
-			""");
-
-		writer.Indent += 4;
-		
 		if (raiseEvents)
 		{
+			writer.Indent += 4;
 			writer.WriteLine("@handler.RaiseEvents(this);");
+			writer.Indent -= 4;
 		}
-
-		writer.Indent -= 4;
 
 		writer.WriteLines(
 			"""
 							break;
 						}
+					}
+
+					if (!@foundMatch)
+					{
+			""");
+
+		writer.Indent += 3;
+		ExpectationExceptionBuilder.Build(
+			writer, property.SetMethod!, "No handlers match for", memberIdentifier, type.ExpectationsPropertyName);
+		writer.Indent -= 3;
+
+		writer.WriteLines(
+			"""
 					}
 				}
 				else

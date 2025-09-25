@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Rocks.Exceptions;
 
 namespace Rocks.Analysis.IntegrationTests.InterfacePropertyTestTypes;
 
@@ -29,6 +30,18 @@ public static class InterfacePropertyTests
 
 		Assert.That(value, Is.Default);
 	}
+
+	[Test]
+	public static void CreateSetWhenExpectationIsNotMet() =>
+		Assert.That(() =>
+		{
+			using var context = new RockContext();
+			var expectations = context.Create<IInterfacePropertyCreateExpectations>();
+			expectations.Properties.Setters.SetData(3);
+
+			var mock = expectations.Instance();
+			mock.SetData = 4;
+		}, Throws.TypeOf<ExpectationException>());
 
 	[Test]
 	public static void MakeGet()
