@@ -1666,19 +1666,18 @@ public static class AttributeGeneratorTests
 										@handler.CallCount++;
 										@foundMatch = true;
 										@handler.Callback?.Invoke(value!);
-										
-										if (!@foundMatch)
-										{
-											this.Expectations.WasExceptionThrown = true;
-											throw new global::Rocks.Exceptions.ExpectationException(
-												$"""
-												No handlers match for {this.GetType().GetMemberDescription(6)}
-													value: {@value.FormatValue()}
-												""");
-										}
-										
 										break;
 									}
+								}
+						
+								if (!@foundMatch)
+								{
+									this.Expectations.WasExceptionThrown = true;
+									throw new global::Rocks.Exceptions.ExpectationException(
+										$"""
+										No handlers match for {this.GetType().GetMemberDescription(6)}
+											value: {@value.FormatValue()}
+										""");
 								}
 							}
 							else

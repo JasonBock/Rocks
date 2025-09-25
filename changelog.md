@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fixed generated code for property setter expectation logic (issue [#392](https://github.com/JasonBock/Rocks/issues/392))
 - Made all explicit implementations in shim members cast to the type of the explicit implementation (issue [#389](https://github.com/JasonBock/Rocks/issues/389) and issue [#390](https://github.com/JasonBock/Rocks/issues/390))
 - Mocks no longer includes `[UnscopedRef]` (issue [#391](https://github.com/JasonBock/Rocks/issues/391))
 

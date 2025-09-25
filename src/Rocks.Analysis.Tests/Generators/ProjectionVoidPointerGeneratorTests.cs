@@ -686,19 +686,18 @@ public static class ProjectionVoidPointerGeneratorTests
 											@handler.CallCount++;
 											@foundMatch = true;
 											@handler.Callback?.Invoke(value!);
-											
-											if (!@foundMatch)
-											{
-												this.Expectations.WasExceptionThrown = true;
-												throw new global::Rocks.Exceptions.ExpectationException(
-													$"""
-													No handlers match for {this.GetType().GetMemberDescription(1)}
-														value: <Not formattable>
-													""");
-											}
-											
 											break;
 										}
+									}
+							
+									if (!@foundMatch)
+									{
+										this.Expectations.WasExceptionThrown = true;
+										throw new global::Rocks.Exceptions.ExpectationException(
+											$"""
+											No handlers match for {this.GetType().GetMemberDescription(1)}
+												value: <Not formattable>
+											""");
 									}
 								}
 								else

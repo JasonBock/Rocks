@@ -215,19 +215,18 @@ public static class NonPublicMembersGeneratorTests
 										@handler.CallCount++;
 										@foundMatch = true;
 										@handler.Callback?.Invoke(value!);
-										
-										if (!@foundMatch)
-										{
-											this.Expectations.WasExceptionThrown = true;
-											throw new global::Rocks.Exceptions.ExpectationException(
-												$"""
-												No handlers match for {this.GetType().GetMemberDescription(4)}
-													value: {@value.FormatValue()}
-												""");
-										}
-										
 										break;
 									}
+								}
+						
+								if (!@foundMatch)
+								{
+									this.Expectations.WasExceptionThrown = true;
+									throw new global::Rocks.Exceptions.ExpectationException(
+										$"""
+										No handlers match for {this.GetType().GetMemberDescription(4)}
+											value: {@value.FormatValue()}
+										""");
 								}
 							}
 							else
@@ -743,19 +742,18 @@ public static class NonPublicMembersGeneratorTests
 										@handler.CallCount++;
 										@foundMatch = true;
 										@handler.Callback?.Invoke(value!);
-										
-										if (!@foundMatch)
-										{
-											this.Expectations.WasExceptionThrown = true;
-											throw new global::Rocks.Exceptions.ExpectationException(
-												$"""
-												No handlers match for {this.GetType().GetMemberDescription(4)}
-													value: {@value.FormatValue()}
-												""");
-										}
-										
 										break;
 									}
+								}
+						
+								if (!@foundMatch)
+								{
+									this.Expectations.WasExceptionThrown = true;
+									throw new global::Rocks.Exceptions.ExpectationException(
+										$"""
+										No handlers match for {this.GetType().GetMemberDescription(4)}
+											value: {@value.FormatValue()}
+										""");
 								}
 							}
 							else
@@ -1739,20 +1737,19 @@ public static class NonPublicMembersGeneratorTests
 											@handler.CallCount++;
 											@foundMatch = true;
 											@handler.Callback?.Invoke(value!);
-											
-											if (!@foundMatch)
-											{
-												this.Expectations.WasExceptionThrown = true;
-												throw new global::Rocks.Exceptions.ExpectationException(
-													$"""
-													No handlers match for {this.GetType().GetMemberDescription(5)}
-														value: {@value.FormatValue()}
-													""");
-											}
-											
 											@handler.RaiseEvents(this);
 											break;
 										}
+									}
+							
+									if (!@foundMatch)
+									{
+										this.Expectations.WasExceptionThrown = true;
+										throw new global::Rocks.Exceptions.ExpectationException(
+											$"""
+											No handlers match for {this.GetType().GetMemberDescription(5)}
+												value: {@value.FormatValue()}
+											""");
 									}
 								}
 								else
@@ -2253,20 +2250,19 @@ public static class NonPublicMembersGeneratorTests
 											@handler.CallCount++;
 											@foundMatch = true;
 											@handler.Callback?.Invoke(value!);
-											
-											if (!@foundMatch)
-											{
-												this.Expectations.WasExceptionThrown = true;
-												throw new global::Rocks.Exceptions.ExpectationException(
-													$"""
-													No handlers match for {this.GetType().GetMemberDescription(5)}
-														value: {@value.FormatValue()}
-													""");
-											}
-											
 											@handler.RaiseEvents(this);
 											break;
 										}
+									}
+							
+									if (!@foundMatch)
+									{
+										this.Expectations.WasExceptionThrown = true;
+										throw new global::Rocks.Exceptions.ExpectationException(
+											$"""
+											No handlers match for {this.GetType().GetMemberDescription(5)}
+												value: {@value.FormatValue()}
+											""");
 									}
 								}
 								else
@@ -2552,7 +2548,7 @@ public static class NonPublicMembersGeneratorTests
 	}
 
 	[Test]
-	public static async Task GenerateWithNonPublicVirtualMenbersAsync()
+	public static async Task GenerateWithNonPublicVirtualMembersAsync()
 	{
 		var code =
 			"""
@@ -2772,20 +2768,19 @@ public static class NonPublicMembersGeneratorTests
 											@handler.CallCount++;
 											@foundMatch = true;
 											@handler.Callback?.Invoke(value!);
-											
-											if (!@foundMatch)
-											{
-												this.Expectations.WasExceptionThrown = true;
-												throw new global::Rocks.Exceptions.ExpectationException(
-													$"""
-													No handlers match for {this.GetType().GetMemberDescription(5)}
-														value: {@value.FormatValue()}
-													""");
-											}
-											
 											@handler.RaiseEvents(this);
 											break;
 										}
+									}
+							
+									if (!@foundMatch)
+									{
+										this.Expectations.WasExceptionThrown = true;
+										throw new global::Rocks.Exceptions.ExpectationException(
+											$"""
+											No handlers match for {this.GetType().GetMemberDescription(5)}
+												value: {@value.FormatValue()}
+											""");
 									}
 								}
 								else
