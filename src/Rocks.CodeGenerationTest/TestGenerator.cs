@@ -26,7 +26,7 @@ internal static class TestGenerator
 	* UTF7 encoding (SYSLIB0001)
 	* Code access security (SYSLIB0003)
 	* EF "future" warnings (EF9100)
-	* Aspire evaluation warnings (ASPIREPUBLISHERS001, ASPIRECOMPUTE001, ASPIREINTERACTION001)
+	* Aspire evaluation warnings (ASPIREPUBLISHERS001, ASPIRECOMPUTE001, ASPIREINTERACTION001, ASPIREPROBES001)
 	* StackExchange.Redis evaluation warnings (SER001)
 
 	These are warnings, and they should not cause errors. A user can decide to treat them
@@ -54,18 +54,19 @@ internal static class TestGenerator
 		{ "ASPIREPUBLISHERS001", ReportDiagnostic.Suppress },
 		{ "ASPIRECOMPUTE001", ReportDiagnostic.Suppress },
 		{ "ASPIREINTERACTION001", ReportDiagnostic.Suppress },
+		{ "ASPIREPROBES001", ReportDiagnostic.Suppress },
 		{ "SER001", ReportDiagnostic.Suppress }
 	};
 
 	internal static ImmutableArray<Type> GetTargets(HashSet<Assembly> targetAssemblies, ImmutableArray<Type> typesToIgnore,
 		 ImmutableArray<Type> typesToLoadAssembliesFrom, string[] aliases)
 	{
-		var initialTypes = targetAssemblies.SelectMany(_ => 
+		var initialTypes = targetAssemblies.SelectMany(_ =>
 			_.GetTypes().Where(
-				_ => _.IsPublic && 
-				!_.IsSubclassOf(typeof(Delegate)) 
-				&& !_.IsValueType 
-				&& !_.IsSealed 
+				_ => _.IsPublic &&
+				!_.IsSubclassOf(typeof(Delegate))
+				&& !_.IsValueType
+				&& !_.IsSealed
 				&& !typesToIgnore.Contains(_)))
 			.ToImmutableArray();
 		return TestGenerator.GetMockableTypes(initialTypes, true, typesToLoadAssembliesFrom, aliases);
@@ -90,15 +91,15 @@ internal static class TestGenerator
 			}
 
 			indentWriter.Write(
-				 $$"""
-				    using Rocks;
-				    using System;
+				$$"""
+				using Rocks;
+				using System;
 
-				    [assembly: CLSCompliant(false)]
+				[assembly: CLSCompliant(false)]
 
-				    internal static class Holder
-				    {
-				    """);
+				internal static class Holder
+				{
+				""");
 
 			for (var i = 0; i < types.Length; i++)
 			{
@@ -312,7 +313,7 @@ internal static class TestGenerator
 		_ = driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out var diagnostics);
 
 		Console.WriteLine(
-			 $"Does generator compilation have any warning or error diagnostics? {diagnostics.Any(_ => _.Severity is DiagnosticSeverity.Error or DiagnosticSeverity.Warning)}");
+			$"Does generator compilation have any warning or error diagnostics? {diagnostics.Any(_ => _.Severity is DiagnosticSeverity.Error or DiagnosticSeverity.Warning)}");
 
 		using var outputStream = new MemoryStream();
 		var result = outputCompilation.Emit(outputStream);
@@ -320,23 +321,23 @@ internal static class TestGenerator
 		Console.WriteLine($"Was emit successful? {result.Success}");
 
 		var errors = result.Diagnostics
-			 .Where(_ => _.Severity == DiagnosticSeverity.Error)
-			 .Select(_ => new
-			 {
-				 _.Id,
-				 Description = _.ToString(),
-			 })
-			 .OrderBy(_ => _.Id).ToArray();
+			.Where(_ => _.Severity == DiagnosticSeverity.Error)
+			.Select(_ => new
+			{
+				_.Id,
+				Description = _.ToString(),
+			})
+			.OrderBy(_ => _.Id).ToArray();
 
 		var ignoredWarnings = Array.Empty<string>();
 		var warnings = result.Diagnostics
-			 .Where(_ => _.Severity == DiagnosticSeverity.Warning && !ignoredWarnings.Contains(_.Id))
-			 .Select(_ => new
-			 {
-				 _.Id,
-				 Description = _.ToString(),
-			 })
-			 .OrderBy(_ => _.Id).ToArray();
+			.Where(_ => _.Severity == DiagnosticSeverity.Warning && !ignoredWarnings.Contains(_.Id))
+			.Select(_ => new
+			{
+				_.Id,
+				Description = _.ToString(),
+			})
+			.OrderBy(_ => _.Id).ToArray();
 
 		var mockCode = outputCompilation.SyntaxTrees.ToArray()[^1];
 
@@ -346,13 +347,13 @@ internal static class TestGenerator
 		foreach (var error in errors)
 		{
 			Console.WriteLine(
-				 $"Error - Id: {error.Id}, Description: {error.Description}");
+				$"Error - Id: {error.Id}, Description: {error.Description}");
 		}
 
 		foreach (var warning in warnings)
 		{
 			Console.WriteLine(
-				 $"Warning - Id: {warning.Id}, Description: {warning.Description}");
+				$"Warning - Id: {warning.Id}, Description: {warning.Description}");
 		}
 	}
 
