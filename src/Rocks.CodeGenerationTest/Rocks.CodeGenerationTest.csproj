@@ -79,6 +79,7 @@
 		<PackageReference Include="Microsoft.Extensions.Logging" />
 		<PackageReference Include="Microsoft.Extensions.ServiceDiscovery" />
 		<PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" />
+		<PackageReference Include="Microsoft.Garnet" />
 		<PackageReference Include="Microsoft.Identity.Client" />
 		<PackageReference Include="Microsoft.Kiota.Abstractions" />
 		<PackageReference Include="Microsoft.OpenApi" />

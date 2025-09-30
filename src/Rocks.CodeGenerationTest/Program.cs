@@ -161,6 +161,7 @@ static void TestWithTypes()
 		new (typeof(FluentValidation.ApplyConditionTo), []),
 		new (typeof(Flurl.GeneratedExtensions), []),
 		new (typeof(Ganss.Xss.HtmlSanitizer), []),
+		new (typeof(Garnet.CommandLineBooleanOption), []),
 		new (typeof(Google.Apis.ETagAction), []),
 		new (typeof(GraphQL.AllowAnonymousAttribute), []),
 		new (typeof(Grpc.Core.AuthContext), []),
