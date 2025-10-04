@@ -51,6 +51,7 @@ More details can be found on the [Overview page](https://github.com/JasonBock/Ro
 * [Changelog](https://github.com/JasonBock/Rocks/blob/main/changelog.md)
 * [Unit testing best practices with .NET Core and .NET Standard](https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices)
 * [BenchmarkMockNet](https://github.com/ecoAPM/BenchmarkMockNet)
+* [Unit Testing CSLA Rules With Rocks](https://blog.lhotka.net/2025/10/02/Unit-Testing-CSLA-Rules-With-Rocks)
 
 ## Feedback
 
