@@ -121,6 +121,7 @@ internal static class TestAssistants
 			test.DisabledDiagnostics.AddRange(disabledDiagnostics);
 		}
 
+		// TODO: Wouldn't these be typeof(TGenerator)?
 		foreach (var (outputFileName, outputCode) in IncrementalGeneratorInitializationContextExtensions.GetOutputCode())
 		{
 			test.TestState.GeneratedSources.Add((typeof(RockGenerator), outputFileName, outputCode));
