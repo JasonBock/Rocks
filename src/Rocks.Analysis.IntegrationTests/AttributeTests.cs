@@ -6,6 +6,14 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Rocks.Analysis.IntegrationTests.AttributeTestTypes;
 
+public abstract class UsingMemberNotNullWhen
+{
+	protected string? Connection { get; set; }
+
+	[MemberNotNullWhen(true, nameof(UsingMemberNotNullWhen.Connection))]
+	public virtual bool IsConnectionProvided => this.Connection is not null;
+}
+
 public interface ITense
 {
 	[UnscopedRef]
@@ -26,6 +34,24 @@ public class ConventionDispatcher
 
 public static class AttributeTests
 {
+	[Test]
+	public static void CreateWithMemberNotNullWhen()
+	{
+		using var context = new RockContext();
+		var expectations = context.Create<UsingMemberNotNullWhenCreateExpectations>();
+		expectations.Properties.Getters.IsConnectionProvided().ReturnValue(true);
+
+		var mock = expectations.Instance();
+		_ = mock.IsConnectionProvided;
+	}
+
+	[Test]
+	public static void MakeWithMemberNotNullWhen()
+	{
+		var mock = new UsingMemberNotNullWhenMakeExpectations().Instance();
+		_ = mock.IsConnectionProvided;
+	}
+
 	[Test]
 	public static void CreateWithUnscopedRef()
 	{
@@ -50,7 +76,7 @@ public static class AttributeTests
 		var node = new object();
 		var result = new object();
 
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<NotNullIfNotCasesCreateExpectations>();
 		expectations.Methods.VisitMethod(node).ReturnValue(result);
 
@@ -63,7 +89,7 @@ public static class AttributeTests
 	[Test]
 	public static void CreateWithConditional()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<ConventionDispatcherCreateExpectations>();
 		expectations.Methods.AssertNoScope();
 

@@ -123,6 +123,8 @@ internal static class AttributeDataExtensions
 		//
 		// For types (i.e. target.Value.HasFlag(AttributeTargets.Class) == true), we will only "leak"
 		// ObsoleteAttribute.
+		//
+		// If MemberNotNullWhenAttribute exists, we don't need to include on the overridden member - CS8776
 
 		var compilerGeneratedAttribute = compilation.GetTypeByMetadataName(typeof(CompilerGeneratedAttribute).FullName);
 		var iteratorStateMachineAttribute = compilation.GetTypeByMetadataName(typeof(IteratorStateMachineAttribute).FullName);
@@ -146,6 +148,7 @@ internal static class AttributeDataExtensions
 		const string nullableAttribute = "global::System.Runtime.CompilerServices.NullableAttribute";
 		const string nullableContextAttribute = "global::System.Runtime.CompilerServices.NullableContextAttribute";
 		const string unscopedRefAttribute = "global::System.Diagnostics.CodeAnalysis.UnscopedRefAttribute";
+		const string memberNotNullWhenAttribute = "global::System.Diagnostics.CodeAnalysis.MemberNotNullWhenAttribute";
 
 		var attributes = self.Where(
 			_ => _.AttributeClass is not null &&
@@ -163,7 +166,8 @@ internal static class AttributeDataExtensions
 				_.AttributeClass.GetFullyQualifiedName(compilation) != asyncIteratorStateMachineAttribute &&
 				_.AttributeClass.GetFullyQualifiedName(compilation) != nullableAttribute &&
 				_.AttributeClass.GetFullyQualifiedName(compilation) != nullableContextAttribute &&
-				_.AttributeClass.GetFullyQualifiedName(compilation) != unscopedRefAttribute).ToImmutableArray();
+				_.AttributeClass.GetFullyQualifiedName(compilation) != unscopedRefAttribute &&
+				_.AttributeClass.GetFullyQualifiedName(compilation) != memberNotNullWhenAttribute).ToImmutableArray();
 
 		// Do another pass where we eliminate "caller" attribute if necessary.
 		if (requiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes &&
