@@ -59,31 +59,6 @@ namespace Rocks.Analysis.Tests.Extensions
 	public static class AttributeDataExtensionsTests
 	{
 		[Test]
-		public static void GetNamespaces()
-		{
-			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
-$$"""
-using {{typeof(TypeOfThis).Namespace}};
-using {{typeof(MethodAttribute).Namespace}};
-
-public interface IA
-{
-	[Method(typeof(TypeOfThis))]
-	void Foo();
-}
-""");
-
-			var namespaces = attributes[0].GetNamespaces();
-
-		 using (Assert.EnterMultipleScope())
-		 {
-				Assert.That(namespaces, Has.Count.EqualTo(2));
-				Assert.That(namespaces.Any(_ => _.Name == typeof(TypeOfThis).Namespace), Is.True);
-				Assert.That(namespaces.Any(_ => _.Name == typeof(MethodAttribute).Namespace), Is.True);
-			}
-		}
-
-		[Test]
 		public static void GetDescriptionWithSpecialCharactersInString()
 		{
 			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(

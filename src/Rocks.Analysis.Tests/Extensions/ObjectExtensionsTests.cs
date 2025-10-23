@@ -74,26 +74,6 @@ public static class ObjectExtensionsTests
 		Assert.That(parameter.ExplicitDefaultValue.GetDefaultValue(parameter.Type, compilation), Is.EqualTo(expectedResult));
 	}
 
-	[Test]
-	public static void FormatValue() =>
-		Assert.That(33.FormatValue(), Is.EqualTo("33"));
-
-	[Test]
-	public static void FormatEnumValue() =>
-		Assert.That(ObjectExtensionValues.Some.FormatValue(), Is.EqualTo("Rocks.Analysis.Tests.Extensions.ObjectExtensionValues.Some"));
-
-	[Test]
-	public static void FormatEnumValueWhenValueIsIncorrect() =>
-		Assert.That(((ObjectExtensionValues)22).FormatValue(), Is.EqualTo("(Rocks.Analysis.Tests.Extensions.ObjectExtensionValues)22"));
-
-	[Test]
-	public static void FormatNullValue() =>
-		Assert.That((null as string).FormatValue(), Is.EqualTo("null"));
-
-	[Test]
-	public static void FormatCollectionValue() =>
-		Assert.That((new int[] { 1, 2, 3 }).FormatValue(), Is.EqualTo("System.Int32[], Count = 3"));
-
 	private static (IParameterSymbol, Compilation) GetParameterSymbol(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);

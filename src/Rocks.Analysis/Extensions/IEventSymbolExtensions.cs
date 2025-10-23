@@ -14,7 +14,4 @@ internal static class IEventSymbolExtensions
 		Compilation compilation) =>
 		((ISymbol)self).CanBeSeenByContainingAssembly(assembly, compilation) &&
 			self.Type.CanBeSeenByContainingAssembly(assembly, compilation);
-
-   internal static ImmutableHashSet<INamespaceSymbol> GetNamespaces(this IEventSymbol self) => 
-		[.. self.Type.GetNamespaces(), .. self.GetAttributes().SelectMany(_ => _.GetNamespaces())];
 }

@@ -108,35 +108,6 @@ internal static class IMethodSymbolExtensions
 		return [.. constraints];
 	}
 
-	internal static ImmutableHashSet<INamespaceSymbol> GetNamespaces(this IMethodSymbol self)
-	{
-		static IEnumerable<INamespaceSymbol> GetParameterNamespaces(IParameterSymbol parameter)
-		{
-			foreach (var parameterTypeNamespace in parameter.Type.GetNamespaces())
-			{
-				yield return parameterTypeNamespace;
-			}
-
-			foreach (var attributeNamespace in parameter.GetAttributes().SelectMany(_ => _.GetNamespaces()))
-			{
-				yield return attributeNamespace;
-			}
-		}
-
-		var namespaces = new HashSet<INamespaceSymbol>();
-
-		if (!self.ReturnsVoid)
-		{
-			namespaces.AddRange(self.ReturnType.GetNamespaces());
-			namespaces.AddRange(self.GetReturnTypeAttributes().SelectMany(_ => _.GetNamespaces()));
-		}
-
-		namespaces.AddRange(self.GetAttributes().SelectMany(_ => _.GetNamespaces()));
-		namespaces.AddRange(self.Parameters.SelectMany(_ => GetParameterNamespaces(_)));
-
-		return [.. namespaces];
-	}
-
 	internal static MethodMatch Match(this IMethodSymbol self, IMethodSymbol other, Compilation compilation)
 	{
 		if (self.Name != other.Name)
