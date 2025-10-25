@@ -26,15 +26,10 @@ public static class TypeExtensions
 	{
 		ArgumentNullException.ThrowIfNull(self);
 
-		static string GetDescription(MemberInfo member, PropertyAccessor? propertyAccessor) =>
-			// Always get to a MethodInfo type. For a property/indexer,
-			// get the "get"/"set"/"init" method, and use that.
+		static string GetDescription(MemberInfo member) =>
 			member switch
 			{
 				MethodInfo methodMember => methodMember.ToString()!.Replace("\"", "\\\"", StringComparison.InvariantCulture),
-				PropertyInfo propertyMember => propertyAccessor! == PropertyAccessor.Get ?
-					 propertyMember.GetMethod!.ToString()!.Replace("\"", "\\\"", StringComparison.InvariantCulture) : 
-					 propertyMember.SetMethod!.ToString()!.Replace("\"", "\\\"", StringComparison.InvariantCulture),
 				_ => "",
 			};
 
@@ -44,6 +39,6 @@ public static class TypeExtensions
 				  from memberIdentifier in member.GetCustomAttributes<MemberIdentifierAttribute>()
 				  where memberIdentifier is not null
 				  where memberIdentifier.Value == identifier
-				  select GetDescription(member, memberIdentifier.PropertyAccessor)).FirstOrDefault();
+				  select GetDescription(member)).FirstOrDefault();
 	}
 }

@@ -7,30 +7,29 @@ namespace Rocks.Analysis.Builders.Create;
 
 internal static class PropertyExpectationsBuilder
 {
-	internal static IEnumerable<ExpectationMapping> Build(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName,
+	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType, 
+		IEnumerable<PropertyModel> properties, 
+		string expectationsFullyQualifiedName, string expectationsSource,
 		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
-		var propertyMappings = new List<ExpectationMapping>(mockType.MemberCount.PropertyCount);
-
 		if (mockType.Properties.Length > 0)
 		{
 			if (mockType.Properties.Any(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 			{
-				propertyMappings.AddRange(PropertyExpectationsBuilder.BuildProperties(writer, mockType, expectationsFullyQualifiedName, adornmentsFQNsPipeline));
-				propertyMappings.AddRange(PropertyExpectationsBuilder.BuildIndexers(writer, mockType, expectationsFullyQualifiedName, adornmentsFQNsPipeline));
+				PropertyExpectationsBuilder.BuildProperties(writer, mockType, expectationsFullyQualifiedName, expectationsSource, adornmentsFQNsPipeline);
+				PropertyExpectationsBuilder.BuildIndexers(writer, mockType, expectationsFullyQualifiedName, expectationsSource, adornmentsFQNsPipeline);
 			}
 
 			if (mockType.Properties.Any(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes))
 			{
-				propertyMappings.AddRange(PropertyExpectationsBuilder.BuildExplicitProperties(writer, mockType, expectationsFullyQualifiedName, adornmentsFQNsPipeline));
-				propertyMappings.AddRange(PropertyExpectationsBuilder.BuildExplicitIndexers(writer, mockType, expectationsFullyQualifiedName, adornmentsFQNsPipeline));
+				PropertyExpectationsBuilder.BuildExplicitProperties(writer, mockType, expectationsFullyQualifiedName, expectationsSource, adornmentsFQNsPipeline);
+				PropertyExpectationsBuilder.BuildExplicitIndexers(writer, mockType, expectationsFullyQualifiedName, expectationsSource, adornmentsFQNsPipeline);
 			}
 		}
-
-		return propertyMappings;
 	}
 
-	private static IEnumerable<ExpectationMapping> BuildExplicitIndexers(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName, 
+	private static void BuildExplicitIndexers(IndentedTextWriter writer, TypeMockModel mockType, 
+		string expectationsFullyQualifiedName, string expectationsSource,
 		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		foreach (var typeGroup in mockType.Properties
@@ -159,12 +158,11 @@ internal static class PropertyExpectationsBuilder
 
 			writer.Indent--;
 			writer.WriteLine("}");
-
-			yield return new($"{expectationsFullyQualifiedName}.ExplicitIndexerExpectationsFor{containingTypeName}", $"ExplicitIndexersFor{containingTypeName}");
 		}
 	}
 
-	private static IEnumerable<ExpectationMapping> BuildIndexers(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName, 
+	private static void BuildIndexers(IndentedTextWriter writer, TypeMockModel mockType, 
+		string expectationsFullyQualifiedName, string expectationsSource,
 		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		if (mockType.Properties.Any(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
@@ -288,12 +286,11 @@ internal static class PropertyExpectationsBuilder
 
 			writer.Indent--;
 			writer.WriteLine("}");
-
-			yield return new($"{expectationsFullyQualifiedName}.IndexerExpectations", "Indexers");
 		}
 	}
 
-	private static IEnumerable<ExpectationMapping> BuildExplicitProperties(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName,
+	private static void BuildExplicitProperties(IndentedTextWriter writer, TypeMockModel mockType, 
+		string expectationsFullyQualifiedName, string expectationsSource,
 		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		foreach (var typeGroup in mockType.Properties
@@ -422,12 +419,11 @@ internal static class PropertyExpectationsBuilder
 
 			writer.Indent--;
 			writer.WriteLine("}");
-
-			yield return new($"{expectationsFullyQualifiedName}.ExplicitPropertyExpectationsFor{containingTypeName}", $"ExplicitPropertiesFor{containingTypeName}");
 		}
 	}
 
-	private static IEnumerable<ExpectationMapping> BuildProperties(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName, 
+	private static void BuildProperties(IndentedTextWriter writer, TypeMockModel mockType, 
+		string expectationsFullyQualifiedName, string expectationsSource,
 		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		if (mockType.Properties.Any(_ => !_.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
@@ -551,8 +547,6 @@ internal static class PropertyExpectationsBuilder
 
 			writer.Indent--;
 			writer.WriteLine("}");
-
-			yield return new($"{expectationsFullyQualifiedName}.PropertyExpectations", "Properties");
 		}
 	}
 }

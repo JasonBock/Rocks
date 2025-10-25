@@ -35,116 +35,104 @@ public static class MethodGeneratorTests
 			
 			using Rocks.Extensions;
 			
-			namespace MockTests
+			namespace MockTests;
+
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+			internal sealed class IMemberCreateExpectations
+				: global::Rocks.Expectations
 			{
-				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-				internal sealed class IMemberCreateExpectations
-					: global::Rocks.Expectations
+				internal global::MockTests.IMemberCreateExpectations.Adornments.AdornmentsForHandler0 Exists()
 				{
-					internal sealed class Handler0
-						: global::Rocks.Handler<global::System.Action>
-					{ }
-					private global::Rocks.Handlers<global::MockTests.IMemberCreateExpectations.Handler0>? @handlers0;
-					
-					public override void Verify()
+					global::Rocks.Exceptions.ExpectationException.ThrowIf(this.WasInstanceInvoked);
+					var handler = new global::MockTests.IMemberCreateExpectations.Handler0();
+					if (this.handlers0 is null) { this.handlers0 = new(handler); }
+					else { this.handlers0.Add(handler); }
+					return new(handler);
+				}
+				
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Action>
+				{ }
+				private global::Rocks.Handlers<global::MockTests.IMemberCreateExpectations.Handler0>? @handlers0;
+				
+				public override void Verify()
+				{
+					if (!this.WasInstanceInvoked)
 					{
-						if (!this.WasInstanceInvoked)
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::MockTests.IMemberCreateExpectations was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
+					{
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+				
+						if (failures.Count > 0)
 						{
-							throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::MockTests.IMemberCreateExpectations was never made."]);
-						}
-						else if (!this.WasExceptionThrown)
-						{
-							var failures = new global::System.Collections.Generic.List<string>();
-					
-							if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-					
-							if (failures.Count > 0)
-							{
-								throw new global::Rocks.Exceptions.VerificationException(failures);
-							}
+							throw new global::Rocks.Exceptions.VerificationException(failures);
 						}
 					}
-					
-					private sealed class Mock
-						: global::MockTests.IMember
+				}
+				
+				private sealed class Mock
+					: global::MockTests.IMember
+				{
+					public Mock(global::MockTests.IMemberCreateExpectations @expectations)
 					{
-						public Mock(global::MockTests.IMemberCreateExpectations @expectations)
-						{
-							this.Expectations = @expectations;
-						}
-						
-						[global::Rocks.MemberIdentifier(0)]
-						public void Exists()
-						{
-							if (this.Expectations.handlers0 is not null)
-							{
-								var @handler = this.Expectations.handlers0.First;
-								@handler.CallCount++;
-								@handler.Callback?.Invoke();
-							}
-							else
-							{
-								this.Expectations.WasExceptionThrown = true;
-								throw new global::Rocks.Exceptions.ExpectationException(
-									$"""
-									No handlers were found for {this.GetType().GetMemberDescription(0)}
-									""");
-							}
-						}
-						
-						private global::MockTests.IMemberCreateExpectations Expectations { get; }
+						this.Expectations = @expectations;
 					}
 					
-					internal sealed class MethodExpectations
+					[global::Rocks.MemberIdentifier(0)]
+					public void Exists()
 					{
-						internal MethodExpectations(global::MockTests.IMemberCreateExpectations expectations) =>
-							this.Expectations = expectations;
-						
-						internal global::MockTests.IMemberCreateExpectations.Adornments.AdornmentsForHandler0 Exists()
+						if (this.Expectations.handlers0 is not null)
 						{
-							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-							var handler = new global::MockTests.IMemberCreateExpectations.Handler0();
-							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
-							else { this.Expectations.handlers0.Add(handler); }
-							return new(handler);
-						}
-						
-						private global::MockTests.IMemberCreateExpectations Expectations { get; }
-					}
-					
-					internal global::MockTests.IMemberCreateExpectations.MethodExpectations Methods { get; }
-					
-					public IMemberCreateExpectations() =>
-						(this.Methods) = (new(this));
-					
-					internal global::MockTests.IMember Instance()
-					{
-						if (!this.WasInstanceInvoked)
-						{
-							this.WasInstanceInvoked = true;
-							var @mock = new Mock(this);
-							this.MockType = @mock.GetType();
-							return @mock;
+							var @handler = this.Expectations.handlers0.First;
+							@handler.CallCount++;
+							@handler.Callback?.Invoke();
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								""");
 						}
 					}
 					
-					internal static class Adornments
+					private global::MockTests.IMemberCreateExpectations Expectations { get; }
+				}
+				
+				public IMemberCreateExpectations() { }
+				
+				internal global::MockTests.IMember Instance()
+				{
+					if (!this.WasInstanceInvoked)
 					{
-						public interface IAdornmentsForIMember<TAdornments>
-							: global::Rocks.IAdornments<TAdornments>
-							where TAdornments : IAdornmentsForIMember<TAdornments>
-						{ }
-						
-						public sealed class AdornmentsForHandler0
-							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IMemberCreateExpectations.Handler0, global::System.Action>, IAdornmentsForIMember<AdornmentsForHandler0>
-						{
-							public AdornmentsForHandler0(global::MockTests.IMemberCreateExpectations.Handler0 handler)
-								: base(handler) { }
-						}
+						this.WasInstanceInvoked = true;
+						var @mock = new Mock(this);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForIMember<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForIMember<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IMemberCreateExpectations.Handler0, global::System.Action>, IAdornmentsForIMember<AdornmentsForHandler0>
+					{
+						public AdornmentsForHandler0(global::MockTests.IMemberCreateExpectations.Handler0 handler)
+							: base(handler) { }
 					}
 				}
 			}

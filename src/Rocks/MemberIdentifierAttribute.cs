@@ -24,19 +24,6 @@ public sealed class MemberIdentifierAttribute
 	public MemberIdentifierAttribute(uint value) => this.Value = value;
 
 	/// <summary>
-	/// Creates a new <see cref="MemberIdentifierAttribute"/> instance.
-	/// </summary>
-	/// <param name="value">The identifier.</param>
-	/// <param name="propertyAccessor">The property accessor value if this is used to identify a property.</param>
-	public MemberIdentifierAttribute(uint value, PropertyAccessor propertyAccessor) =>
-		(this.Value, this.PropertyAccessor) = (value, propertyAccessor);
-
-	/// <summary>
-	/// Gets the property accessor.
-	/// </summary>
-	public PropertyAccessor? PropertyAccessor { get; }
-
-	/// <summary>
 	/// Gets the identifier.
 	/// </summary>
 	public uint Value { get; }

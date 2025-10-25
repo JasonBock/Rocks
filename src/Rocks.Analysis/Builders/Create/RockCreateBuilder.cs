@@ -23,18 +23,11 @@ internal sealed class RockCreateBuilder
 
 		if (mockNamespace is not null)
 		{
-			indentWriter.WriteLine($"namespace {mockNamespace}");
-			indentWriter.WriteLine("{");
-			indentWriter.Indent++;
+			indentWriter.WriteLine($"namespace {mockNamespace};");
+			indentWriter.WriteLine();
 		}
 
 		MockBuilder.Build(indentWriter, this.MockType);
-
-		if (mockNamespace is not null)
-		{
-			indentWriter.Indent--;
-			indentWriter.WriteLine("}");
-		}
 
 		var content = new List<string>
 		{

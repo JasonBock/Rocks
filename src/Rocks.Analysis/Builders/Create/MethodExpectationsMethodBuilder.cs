@@ -7,11 +7,14 @@ namespace Rocks.Analysis.Builders.Create;
 
 internal static class MethodExpectationsMethodBuilder
 {
-	internal static void Build(IndentedTextWriter writer, TypeMockModel type, MethodModel method, string expectationsFullyQualifiedName,
+	// expectationsSource will either be "this" or "this.parent"
+	internal static void Build(IndentedTextWriter writer, TypeMockModel type, MethodModel method, 
+		string expectationsFullyQualifiedName, string expectationsSource,
 		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
-		static void BuildImplementation(IndentedTextWriter writer, TypeMockModel type, MethodModel method, bool isGeneratedWithDefaults,
-			string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
+		static void BuildImplementation(IndentedTextWriter writer, TypeMockModel type, MethodModel method, 
+			bool isGeneratedWithDefaults, string expectationsFullyQualifiedName, string expectationsSource,
+			Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 		{
 			var needsGenerationWithDefaults = false;
 			var typeArgumentsNamingContext = method.IsGenericMethod ?
@@ -108,10 +111,10 @@ internal static class MethodExpectationsMethodBuilder
 					$$"""
 					internal {{hiding}}{{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{method.MemberIdentifier}}{{typeArguments}} {{method.Name}}{{typeArguments}}({{instanceParameters}}){{constraints}}
 					{
-						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.{{type.ExpectationsPropertyName}}.WasInstanceInvoked);
+						global::Rocks.Exceptions.ExpectationException.ThrowIf({{expectationsSource}}.WasInstanceInvoked);
 						var handler = new {{expectationsFullyQualifiedName}}.Handler{{method.MemberIdentifier}}{{typeArguments}}();
-						if (this.{{type.ExpectationsPropertyName}}.handlers{{method.MemberIdentifier}} is null) { this.{{type.ExpectationsPropertyName}}.handlers{{method.MemberIdentifier}} = new(handler); }
-						else { this.{{type.ExpectationsPropertyName}}.handlers{{method.MemberIdentifier}}.Add(handler); }
+						if ({{expectationsSource}}.handlers{{method.MemberIdentifier}} is null) { {{expectationsSource}}.handlers{{method.MemberIdentifier}} = new(handler); }
+						else { {{expectationsSource}}.handlers{{method.MemberIdentifier}}.Add(handler); }
 						return new(handler);
 					}
 					""");
@@ -122,7 +125,7 @@ internal static class MethodExpectationsMethodBuilder
 				writer.WriteLine($"internal {hiding}{expectationsFullyQualifiedName}.Adornments.AdornmentsForHandler{method.MemberIdentifier}{typeArguments} {method.Name}{typeArguments}({instanceParameters}){constraints}");
 				writer.WriteLine("{");
 				writer.Indent++;
-				writer.WriteLine("global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);");
+				writer.WriteLine($"global::Rocks.Exceptions.ExpectationException.ThrowIf({expectationsSource}.WasInstanceInvoked);");
 
 				foreach (var parameter in method.Parameters)
 				{
@@ -160,8 +163,8 @@ internal static class MethodExpectationsMethodBuilder
 					$$"""
 					};
 
-					if (this.{{type.ExpectationsPropertyName}}.handlers{{method.MemberIdentifier}} is null) { this.{{type.ExpectationsPropertyName}}.handlers{{method.MemberIdentifier}} = new(@{{handlerContext["handler"]}}); }
-					else { this.{{type.ExpectationsPropertyName}}.handlers{{method.MemberIdentifier}}.Add(@{{handlerContext["handler"]}}); }
+					if ({{expectationsSource}}.handlers{{method.MemberIdentifier}} is null) { {{expectationsSource}}.handlers{{method.MemberIdentifier}} = new(@{{handlerContext["handler"]}}); }
+					else { {{expectationsSource}}.handlers{{method.MemberIdentifier}}.Add(@{{handlerContext["handler"]}}); }
 					return new(@{{handlerContext["handler"]}});
 					""");
 
@@ -171,10 +174,10 @@ internal static class MethodExpectationsMethodBuilder
 
 			if (needsGenerationWithDefaults)
 			{
-				BuildImplementation(writer, type, method, true, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+				BuildImplementation(writer, type, method, true, expectationsFullyQualifiedName, expectationsSource, adornmentsFQNsPipeline);
 			}
 		}
 
-		BuildImplementation(writer, type, method, false, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+		BuildImplementation(writer, type, method, false, expectationsFullyQualifiedName, expectationsSource, adornmentsFQNsPipeline);
 	}
 }

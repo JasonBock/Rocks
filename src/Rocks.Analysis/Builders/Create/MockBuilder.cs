@@ -44,8 +44,11 @@ internal static class MockBuilder
 		}
 
 		writer.WriteLine("{");
-
 		writer.Indent++;
+
+		// START - This is what needs to change.
+		MockMembersExpectationsBuilder.Build(writer, mockType, expectationsFQN, adornmentsPipeline);
+		// END - This is what needs to change.
 
 		MockHandlerListBuilder.Build(writer, mockType, expectationsFQN);
 		writer.WriteLine();
@@ -55,32 +58,8 @@ internal static class MockBuilder
 
 		MockTypeBuilder.Build(writer, mockType, expectationsFQN);
 
-		var expectationMappings = new List<ExpectationMapping>(mockType.MemberCount.TotalCount);
-
-		expectationMappings.AddRange(MethodExpectationsBuilder.Build(writer, mockType, expectationsFQN, adornmentsPipeline));
-
-		if (expectationMappings.Count > 0)
-		{
-			writer.WriteLine();
-		}
-
-		var currentMappingCount = expectationMappings.Count;
-
-		expectationMappings.AddRange(PropertyExpectationsBuilder.Build(writer, mockType, expectationsFQN, adornmentsPipeline));
-
-		if (expectationMappings.Count != currentMappingCount)
-		{
-			writer.WriteLine();
-		}
-
-		foreach (var expectationMapping in expectationMappings)
-		{
-			writer.WriteLine($"internal {expectationMapping.PropertyExpectationTypeName} {expectationMapping.PropertyName} {{ get; }}");
-		}
-
 		writer.WriteLine();
-
-		MockConstructorExtensionsBuilder.Build(writer, mockType, expectationsFQN, expectationMappings);
+		MockConstructorExtensionsBuilder.Build(writer, mockType, expectationsFQN);
 
 		writer.WriteLine();
 		MockAdornmentsBuilder.Build(writer, mockType, expectationsFQN, adornments);

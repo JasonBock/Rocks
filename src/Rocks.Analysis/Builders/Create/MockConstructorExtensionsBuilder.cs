@@ -9,14 +9,9 @@ namespace Rocks.Analysis.Builders.Create;
 internal static class MockConstructorExtensionsBuilder
 {
 	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType,
-		string expectationsFullyQualifiedName, List<ExpectationMapping> expectationMappings)
+		string expectationsFullyQualifiedName)
 	{
-		writer.WriteLine($"public {mockType.ExpectationsNameNoGenerics}() =>");
-		writer.Indent++;
-		var thisExpectations = $"({string.Join(", ", expectationMappings.Select(_ => $"this.{_.PropertyName}"))})";
-		var newExpectations = $"({string.Join(", ", expectationMappings.Select(_ => "new(this)"))})";
-		writer.WriteLine($"{thisExpectations} = {newExpectations};");
-		writer.Indent--;
+		writer.WriteLine($"public {mockType.ExpectationsNameNoGenerics}() {{ }}");
 		writer.WriteLine();
 
 		var constructorProperties = mockType.ConstructorProperties;
