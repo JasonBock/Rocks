@@ -70,8 +70,10 @@ TODO:
         * `MethodExpectationsBuilder`
         * `PropertyExpectationsBuilder` - remember to put `[MemberIdentifier]` on the `get/set/init`, not on the property, with no `PropertyAccessor`
         * `IndexerExpectationsBuilder` - remember to put `[MemberIdentifier]` on the `get/set/init`, not on the property, with no `PropertyAccessor`
-* The `Action<AdornmentsPipeline> adornmentsFQNsPipeline` thing in the expectations may go away with all of this and will not be needed.
-* Ensure original expectation classes are no longer
+* DONE - The `Action<AdornmentsPipeline> adornmentsFQNsPipeline` thing in the expectations may go away with all of this and will not be needed.
+* Need to ensure "defaults" in methods and indexers are handled correctly.
+* Ensure original expectation implementations are no longer there
+* Add some space between `HandlerX` and field definition groupings
 * Update unit tests to ensure things are working
 * Once I think everything is correct, update all unit and integration tests
 * Run code-gen tests and hope they work

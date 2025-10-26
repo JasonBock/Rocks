@@ -6,8 +6,8 @@ namespace Rocks.Analysis.Builders.Create;
 
 internal static class PropertyExpectationsPropertyBuilder
 {
-	private static void BuildGetter(IndentedTextWriter writer, TypeMockModel type, PropertyModel property, uint memberIdentifier, string expectationsFullyQualifiedName, 
-		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
+	private static void BuildGetter(IndentedTextWriter writer, TypeMockModel type, PropertyModel property, uint memberIdentifier, 
+		string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		var propertyGetMethod = property.GetMethod!;
 		var callbackDelegateTypeName = propertyGetMethod.RequiresProjectedDelegate ?
@@ -36,19 +36,19 @@ internal static class PropertyExpectationsPropertyBuilder
 
 		writer.WriteLines(
 			$$"""
-			internal {{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{memberIdentifier}} {{property.Name}}()
+			internal {{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{memberIdentifier}} Gets()
 			{
-				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.{{type.ExpectationsPropertyName}}.WasInstanceInvoked);
+				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 				var handler = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}();
-				if (this.{{type.ExpectationsPropertyName}}.handlers{{memberIdentifier}} is null) { this.{{type.ExpectationsPropertyName}}.handlers{{memberIdentifier}} = new(handler); }
-				else { this.{{type.ExpectationsPropertyName}}.handlers{{memberIdentifier}}.Add(handler); }
+				if (this.parent.handlers{{memberIdentifier}} is null) { this.parent.handlers{{memberIdentifier}} = new(handler); }
+				else { this.parent.handlers{{memberIdentifier}}.Add(handler); }
 				return new(handler);
 			}
 			""");
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, TypeMockModel type, PropertyModel property, uint memberIdentifier, string expectationsFullyQualifiedName, 
-		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
+	private static void BuildSetter(IndentedTextWriter writer, TypeMockModel type, PropertyModel property, uint memberIdentifier, 
+		string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		var propertyParameterType = property.SetMethod!.Parameters[0].Type;
 		var propertyParameterValue = ProjectionBuilder.BuildArgument(
@@ -60,11 +60,14 @@ internal static class PropertyExpectationsPropertyBuilder
 		var adornmentsType = $"global::Rocks.Adornments<AdornmentsForHandler{memberIdentifier}, {expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}>";
 		adornmentsFQNsPipeline(new(adornmentsType, string.Empty, string.Empty, property.SetMethod!, memberIdentifier));
 
+		var name = property.Accessors == PropertyAccessor.Set || property.Accessors == PropertyAccessor.GetAndSet ?
+			"Sets" : "Inits";
+
 		writer.WriteLines(
 			$$"""
-			internal {{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{memberIdentifier}} {{property.Name}}({{propertyParameterValue}} @value)
+			internal {{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{memberIdentifier}} {{name}}({{propertyParameterValue}} @value)
 			{
-				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.{{type.ExpectationsPropertyName}}.WasInstanceInvoked);
+				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 				global::System.ArgumentNullException.ThrowIfNull(@value);
 
 				var handler = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}
@@ -72,27 +75,30 @@ internal static class PropertyExpectationsPropertyBuilder
 					value = @value,
 				};
 
-				if (this.{{type.ExpectationsPropertyName}}.handlers{{memberIdentifier}} is null) { this.{{type.ExpectationsPropertyName}}.handlers{{memberIdentifier}} = new(handler); }
-				else { this.{{type.ExpectationsPropertyName}}.handlers{{memberIdentifier}}.Add(handler); }
+				if (this.parent.handlers{{memberIdentifier}} is null) { this.parent.handlers{{memberIdentifier}} = new(handler); }
+				else { this.parent.handlers{{memberIdentifier}}.Add(handler); }
 				return new(handler);
 			}
 			""");
 	}
 
-	internal static void Build(IndentedTextWriter writer, TypeMockModel type, PropertyModel property, PropertyAccessor accessor, string expectationsFullyQualifiedName,
-		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
+	internal static void Build(IndentedTextWriter writer, TypeMockModel type, PropertyModel property,
+		string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		var memberIdentifier = property.MemberIdentifier;
+		var wasGetGenerated = false;
 
-		if (accessor == PropertyAccessor.Get && property.GetCanBeSeenByContainingAssembly)
+		if ((property.Accessors == PropertyAccessor.Get || property.Accessors == PropertyAccessor.GetAndSet || property.Accessors == PropertyAccessor.GetAndInit) && 
+			property.GetCanBeSeenByContainingAssembly)
 		{
 			PropertyExpectationsPropertyBuilder.BuildGetter(writer, type, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+			wasGetGenerated = true;
 		}
-		else if ((accessor == PropertyAccessor.Set && property.SetCanBeSeenByContainingAssembly) ||
-			(accessor == PropertyAccessor.Init && property.InitCanBeSeenByContainingAssembly))
+	
+		if (((property.Accessors == PropertyAccessor.Set || property.Accessors == PropertyAccessor.GetAndSet) && property.SetCanBeSeenByContainingAssembly) ||
+			((property.Accessors == PropertyAccessor.Init || property.Accessors == PropertyAccessor.GetAndInit) && property.InitCanBeSeenByContainingAssembly))
 		{
-			if ((property.Accessors == PropertyAccessor.GetAndSet || property.Accessors == PropertyAccessor.GetAndInit) &&
-				property.GetCanBeSeenByContainingAssembly)
+			if (wasGetGenerated)
 			{
 				memberIdentifier++;
 			}

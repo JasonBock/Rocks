@@ -110,7 +110,7 @@ namespace Rocks.Experimental
 				global::System.ArgumentNullException.ThrowIfNull(@b);
 				this.parent = parent;
 				this.a = @a;
-				this.b = @b;
+				this.@b = @b;
 			}
 
 			internal global::Rocks.Experimental.IInterfaceCreateExpectations.Adornments.AdornmentsForHandler5 Gets()

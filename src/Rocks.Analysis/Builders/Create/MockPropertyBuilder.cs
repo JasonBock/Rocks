@@ -20,6 +20,7 @@ internal static class MockPropertyBuilder
 
 		writer.WriteLines(
 			$$"""
+			[global::Rocks.MemberIdentifier({{memberIdentifier}})]
 			{{visibility}}get
 			{
 				if (this.{{type.ExpectationsPropertyName}}.handlers{{memberIdentifier}} is not null)
@@ -108,6 +109,7 @@ internal static class MockPropertyBuilder
 
 		writer.WriteLines(
 			$$"""
+			[global::Rocks.MemberIdentifier({{memberIdentifier}})]
 			{{visibility}}{{accessor}}
 			{
 				if (this.{{type.ExpectationsPropertyName}}.handlers{{memberIdentifier}} is not null)
@@ -196,23 +198,12 @@ internal static class MockPropertyBuilder
 			property.Accessors == PropertyAccessor.GetAndInit)
 		{
 			isGetterVisible = property.GetCanBeSeenByContainingAssembly;
-
-			if (isGetterVisible)
-			{
-				writer.WriteLine($"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, global::Rocks.PropertyAccessor.Get)]");
-				memberIdentifierAttribute++;
-			}
 		}
 
 		if (property.Accessors == PropertyAccessor.Set || property.Accessors == PropertyAccessor.GetAndSet ||
 			property.Accessors == PropertyAccessor.Init || property.Accessors == PropertyAccessor.GetAndInit)
 		{
 			isSetterVisible = property.SetCanBeSeenByContainingAssembly || property.InitCanBeSeenByContainingAssembly;
-
-			if (isSetterVisible)
-			{
-				writer.WriteLine($"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, global::Rocks.PropertyAccessor.Set)]");
-			}
 		}
 
 		var visibility = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?

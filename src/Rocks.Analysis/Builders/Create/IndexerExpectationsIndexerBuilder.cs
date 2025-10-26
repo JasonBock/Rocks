@@ -85,14 +85,14 @@ internal static class IndexerExpectationsIndexerBuilder
 						$"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}"));
 				writer.WriteLines(
 					$$"""
-					internal {{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{memberIdentifier}} This({{instanceParameters}}) =>
+					internal {{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{memberIdentifier}} Gets() =>
 						this.This({{parameterValues}});
 					""");
 			}
 			else
 			{
 				var handlerContext = new VariablesNamingContext(property.Parameters);
-				writer.WriteLine($"internal {expectationsFullyQualifiedName}.Adornments.AdornmentsForHandler{memberIdentifier} This({instanceParameters})");
+				writer.WriteLine($"internal {expectationsFullyQualifiedName}.Adornments.AdornmentsForHandler{memberIdentifier} Gets()");
 				writer.WriteLine("{");
 				writer.Indent++;
 				writer.WriteLine("global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);");
@@ -281,20 +281,23 @@ internal static class IndexerExpectationsIndexerBuilder
 		BuildSetterImplementation(writer, property, memberIdentifier, false, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 	}
 
-	internal static void Build(IndentedTextWriter writer, PropertyModel property, PropertyAccessor accessor, string expectationsFullyQualifiedName,
-		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
+	internal static void Build(IndentedTextWriter writer, PropertyModel property,
+		string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		var memberIdentifier = property.MemberIdentifier;
+		var wasGetGenerated = false;
 
-		if (accessor == PropertyAccessor.Get && property.GetCanBeSeenByContainingAssembly)
+		if ((property.Accessors == PropertyAccessor.Get || property.Accessors == PropertyAccessor.GetAndSet || property.Accessors == PropertyAccessor.GetAndInit) &&
+			property.GetCanBeSeenByContainingAssembly)
 		{
 			IndexerExpectationsIndexerBuilder.BuildGetter(writer, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+			wasGetGenerated = true;
 		}
-		else if ((accessor == PropertyAccessor.Set && property.SetCanBeSeenByContainingAssembly) ||
-			(accessor == PropertyAccessor.Init && property.InitCanBeSeenByContainingAssembly))
+		
+		if (((property.Accessors == PropertyAccessor.Set || property.Accessors == PropertyAccessor.GetAndSet) && property.SetCanBeSeenByContainingAssembly) ||
+			((property.Accessors == PropertyAccessor.Init || property.Accessors == PropertyAccessor.GetAndInit) && property.InitCanBeSeenByContainingAssembly))
 		{
-			if ((property.Accessors == PropertyAccessor.GetAndSet || property.Accessors == PropertyAccessor.GetAndInit) &&
-				property.GetCanBeSeenByContainingAssembly)
+			if (wasGetGenerated)
 			{
 				memberIdentifier++;
 			}
