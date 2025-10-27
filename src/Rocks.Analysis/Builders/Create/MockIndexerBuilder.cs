@@ -23,6 +23,7 @@ internal static class MockIndexerBuilder
 
 		writer.WriteLines(
 			$$"""
+			[global::Rocks.MemberIdentifier({{memberIdentifier}})]
 			{{visibility}}get
 			{
 				if (this.Expectations.handlers{{memberIdentifier}} is not null)
@@ -134,6 +135,7 @@ internal static class MockIndexerBuilder
 
 		writer.WriteLines(
 			$$"""
+			[global::Rocks.MemberIdentifier({{memberIdentifier}})]
 			{{visibility}}{{accessor}}
 			{
 				if (this.Expectations.handlers{{memberIdentifier}} is not null)
@@ -257,20 +259,11 @@ internal static class MockIndexerBuilder
 			indexer.Accessors == PropertyAccessor.GetAndInit)
 		{
 			isGetterVisible = indexer.GetCanBeSeenByContainingAssembly;
-			if (isGetterVisible)
-			{
-				writer.WriteLine($"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, global::Rocks.PropertyAccessor.Get)]");
-				memberIdentifierAttribute++;
-			}
 		}
-		if (indexer.Accessors == PropertyAccessor.Set || indexer.Accessors == PropertyAccessor.Init ||
-		indexer.Accessors == PropertyAccessor.GetAndSet || indexer.Accessors == PropertyAccessor.GetAndInit)
+
+		if (indexer.Accessors == PropertyAccessor.Set || indexer.Accessors == PropertyAccessor.Init || indexer.Accessors == PropertyAccessor.GetAndSet || indexer.Accessors == PropertyAccessor.GetAndInit)
 		{
 			isSetterVisible = indexer.SetCanBeSeenByContainingAssembly || indexer.InitCanBeSeenByContainingAssembly;
-			if (isSetterVisible)
-			{
-				writer.WriteLine($"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, global::Rocks.PropertyAccessor.Set)]");
-			}
 		}
 
 		var visibility = indexer.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?

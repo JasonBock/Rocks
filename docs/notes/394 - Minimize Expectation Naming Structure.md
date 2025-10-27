@@ -61,22 +61,32 @@ Create an intermediary set of "property adornments" classes. Instances are retur
 
 ...maybe?
 
+    // Rocks.Analysis\Rocks.Analysis.RockGenerator\IIndexers_Rock_Create.g.cs(105,39): error CS1014: A get or set accessor expected
+    DiagnosticResult.CompilerError("CS1014").WithSpan("Rocks.Analysis\Rocks.Analysis.RockGenerator\IIndexers_Rock_Create.g.cs", 105, 39, 105, 40),
+    // Rocks.Analysis\Rocks.Analysis.RockGenerator\IIndexers_Rock_Create.g.cs(136,39): error CS1014: A get or set accessor expected
+    DiagnosticResult.CompilerError("CS1014").WithSpan("Rocks.Analysis\Rocks.Analysis.RockGenerator\IIndexers_Rock_Create.g.cs", 136, 39, 136, 40),
+
+
+
 TODO:
 * DONE - Update the `Arguments.cs`, `Adornments.cs`, and `Handler.cs` split up the types to one file each.
 * DONE - Change `MemberIdentifier` to only take one parameter
 * DONE - The mocking code can be put in a file-scoped namespaced - e.g. instead of `namespace Stuff { ... }`, it would be `namespace Stuff;`
-* Create updated "Minimized" builders. This should make it easier to build things and make it different from all the others.
+* DONE - Create updated "Minimized" builders. This should make it easier to build things and make it different from all the others.
     * `MockMembersExpectationsBuilder` - This can take a `buildsForExplicit` or something like that to either emit `this.` or `this.parent` with a readonly `Expectations` reference in the method builder. This would also create the containing "explicit" class
         * `MethodExpectationsBuilder`
         * `PropertyExpectationsBuilder` - remember to put `[MemberIdentifier]` on the `get/set/init`, not on the property, with no `PropertyAccessor`
         * `IndexerExpectationsBuilder` - remember to put `[MemberIdentifier]` on the `get/set/init`, not on the property, with no `PropertyAccessor`
 * DONE - The `Action<AdornmentsPipeline> adornmentsFQNsPipeline` thing in the expectations may go away with all of this and will not be needed.
+* DONE - Ensure original expectation implementations are no longer there
+* The `parent` field in the generated expectation classes needs to have a naming context because parameters can have the name "parent".
+* Ensure explicits are handled correctly. Properties will need `expectationsSource` for the constructor.
 * Need to ensure "defaults" in methods and indexers are handled correctly.
-* Ensure original expectation implementations are no longer there
 * Add some space between `HandlerX` and field definition groupings
-* Update unit tests to ensure things are working
-* Once I think everything is correct, update all unit and integration tests
-* Run code-gen tests and hope they work
+* Testing strategy
+    * Run code gen tests
+    * Update and run integration tests
+    * Update and run unit tests
 * Clean up builders
     * "Old" implementations are deleted
     * I think I can get rid of `PropertyExpectationTypeName`

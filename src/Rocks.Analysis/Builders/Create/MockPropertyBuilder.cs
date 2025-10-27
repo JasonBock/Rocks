@@ -190,7 +190,6 @@ internal static class MockPropertyBuilder
 			writer.WriteLine(property.AllAttributesDescription);
 		}
 
-		var memberIdentifierAttribute = property.MemberIdentifier;
 		var explicitTypeName = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 			string.Empty : $"{property.ContainingType.FullyQualifiedName}.";
 

@@ -60,6 +60,8 @@ internal static class PropertyExpectationsBuilder
 				writer.WriteLine($"private readonly {indexerArguments[indexerArguments.Count - 1]};");
 			}
 
+			writer.WriteLine();
+
 			// Constructor
 			writer.WriteLines(
 				$$"""
@@ -82,6 +84,8 @@ internal static class PropertyExpectationsBuilder
 			}
 
 			writer.Indent--;
+			writer.WriteLine("}");
+			writer.WriteLine();
 
 			// Gets and sets
 			IndexerExpectationsIndexerBuilder.Build(writer, property, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
@@ -92,7 +96,7 @@ internal static class PropertyExpectationsBuilder
 				$$"""
 				}
 
-				internal {{expectationsFullyQualifiedName}}.Indexer{{index}}Expectations this[{{string.Join(", ", indexerArguments)}}] { get => new(this, {{string.Join(", ", indexerArguments)}}); }
+				internal {{expectationsFullyQualifiedName}}.Indexer{{index}}Expectations this[{{string.Join(", ", indexerArguments)}}] { get => new(this, {{string.Join(", ", property.Parameters.Select(parameter => $"@{parameter.Name}"))}}); }
 
 				""");
 			index++;
