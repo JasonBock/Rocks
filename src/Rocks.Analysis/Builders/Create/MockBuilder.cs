@@ -46,9 +46,7 @@ internal static class MockBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		// START - This is what needs to change.
 		MockMembersExpectationsBuilder.Build(writer, mockType, expectationsFQN, adornmentsPipeline);
-		// END - This is what needs to change.
 
 		MockHandlerListBuilder.Build(writer, mockType, expectationsFQN);
 		writer.WriteLine();

@@ -67,6 +67,17 @@ Create an intermediary set of "property adornments" classes. Instances are retur
     DiagnosticResult.CompilerError("CS1014").WithSpan("Rocks.Analysis\Rocks.Analysis.RockGenerator\IIndexers_Rock_Create.g.cs", 136, 39, 136, 40),
 
 
+    // Rocks.Analysis\Rocks.Analysis.RockGenerator\ILeftRight_Rock_Create.g.cs(34,65): error CS0102: The type 'ILeftRightCreateExpectations' already contains a definition for 'ExplicitForILeft'
+    DiagnosticResult.CompilerError("CS0102").WithSpan("Rocks.Analysis\Rocks.Analysis.RockGenerator\ILeftRight_Rock_Create.g.cs", 34, 65, 34, 81).WithArguments("ILeftRightCreateExpectations", "ExplicitForILeft"),
+    // Rocks.Analysis\Rocks.Analysis.RockGenerator\ILeftRight_Rock_Create.g.cs(54,66): error CS0102: The type 'ILeftRightCreateExpectations' already contains a definition for 'ExplicitForIRight'
+    DiagnosticResult.CompilerError("CS0102").WithSpan("Rocks.Analysis\Rocks.Analysis.RockGenerator\ILeftRight_Rock_Create.g.cs", 54, 66, 54, 83).WithArguments("ILeftRightCreateExpectations", "ExplicitForIRight"),
+
+
+    // Rocks.Analysis\Rocks.Analysis.RockGenerator\ILeftRight_Rock_Create.g.cs(54,49): error CS0426: The type name 'ValuePropertyExpectations' does not exist in the type 'ILeftRightCreateExpectations'
+    DiagnosticResult.CompilerError("CS0426").WithSpan("Rocks.Analysis\Rocks.Analysis.RockGenerator\ILeftRight_Rock_Create.g.cs", 54, 49, 54, 74).WithArguments("ValuePropertyExpectations", "ILeftRightCreateExpectations"),
+    // Rocks.Analysis\Rocks.Analysis.RockGenerator\ILeftRight_Rock_Create.g.cs(98,49): error CS0426: The type name 'ValuePropertyExpectations' does not exist in the type 'ILeftRightCreateExpectations'
+    DiagnosticResult.CompilerError("CS0426").WithSpan("Rocks.Analysis\Rocks.Analysis.RockGenerator\ILeftRight_Rock_Create.g.cs", 98, 49, 98, 74).WithArguments("ValuePropertyExpectations", "ILeftRightCreateExpectations"),
+
 
 TODO:
 * DONE - Update the `Arguments.cs`, `Adornments.cs`, and `Handler.cs` split up the types to one file each.
@@ -79,10 +90,13 @@ TODO:
         * `IndexerExpectationsBuilder` - remember to put `[MemberIdentifier]` on the `get/set/init`, not on the property, with no `PropertyAccessor`
 * DONE - The `Action<AdornmentsPipeline> adornmentsFQNsPipeline` thing in the expectations may go away with all of this and will not be needed.
 * DONE - Ensure original expectation implementations are no longer there
-* The `parent` field in the generated expectation classes needs to have a naming context because parameters can have the name "parent".
-* Ensure explicits are handled correctly. Properties will need `expectationsSource` for the constructor.
+* DONE - The `parent` field in the generated expectation classes needs to have a naming context because parameters can have the name "parent".
+* DONE - Ensure explicits are handled correctly. Properties will need `expectationsSource` for the constructor. Note: Rocks currently does not handle duplicate interface names, so while I should come up with a solution for that case, it's not pressing ATM. At least put a `TODO` in the code.
 * Need to ensure "defaults" in methods and indexers are handled correctly.
-* Add some space between `HandlerX` and field definition groupings
+    * OK, "defaults" is just doing an extra implementation for the methods and indexers where it puts the correct type instead of an `Argument<>` with the default value set.
+* Add some space between `HandlerX` and field definition groupings, along with all the new expectations changes I made (gotta make things pretty)
+* Naming collisions
+    * A type could have a member the same name that is generated for an explicit implementation
 * Testing strategy
     * Run code gen tests
     * Update and run integration tests
@@ -91,4 +105,4 @@ TODO:
     * "Old" implementations are deleted
     * I think I can get rid of `PropertyExpectationTypeName`
 * Update all documentation such that it reflects the new syntax.
-    * Consider writing an "upgrade" doc that provides assisstance on how test code should be changes from the old to the new style.
+    * Consider writing an "upgrade" doc that provides assistance on how test code should be changes from the old to the new style.
