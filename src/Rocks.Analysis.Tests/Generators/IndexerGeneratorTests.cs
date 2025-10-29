@@ -1294,6 +1294,58 @@ public static class IndexerGeneratorTests
 			internal sealed class IHaveOptionalArgumentsCreateExpectations
 				: global::Rocks.Expectations
 			{
+				internal sealed class Indexer0Expectations
+				{
+					private readonly global::IHaveOptionalArgumentsCreateExpectations @parent;
+					private readonly global::Rocks.Argument<int> @a;
+					private readonly global::Rocks.Argument<string> @b;
+					
+					internal Indexer0Expectations(global::IHaveOptionalArgumentsCreateExpectations @parent, global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
+					{
+						global::System.ArgumentNullException.ThrowIfNull(@a);
+						global::System.ArgumentNullException.ThrowIfNull(@b);
+						this.@parent = @parent;
+						this.@a = @a;
+						this.@b = @b;
+					}
+					
+					internal global::IHaveOptionalArgumentsCreateExpectations.Adornments.AdornmentsForHandler0 Gets()
+					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+						
+						var @handler = new global::IHaveOptionalArgumentsCreateExpectations.Handler0
+						{
+							@a = this.@a,
+							@b = this.@b.Transform("b"),
+						};
+						
+						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
+						else { this.parent.handlers0.Add(@handler); }
+						return new(@handler);
+					}
+					
+					internal global::IHaveOptionalArgumentsCreateExpectations.Adornments.AdornmentsForHandler1 Sets(global::Rocks.Argument<int> @value)
+					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+						global::System.ArgumentNullException.ThrowIfNull(@value);
+						
+						var @handler = new global::IHaveOptionalArgumentsCreateExpectations.Handler1
+						{
+							@a = this.@a,
+							@b = this.@b.Transform("b"),
+							@value = @value,
+						};
+						
+						if (this.parent.handlers1 is null) { this.parent.handlers1 = new(@handler); }
+						else { this.parent.handlers1.Add(@handler); }
+						return new(@handler);
+					}
+				}
+				
+				internal global::IHaveOptionalArgumentsCreateExpectations.Indexer0Expectations this[global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b] { get => new(this, @a, @b); }
+				
+				internal global::IHaveOptionalArgumentsCreateExpectations.Indexer0Expectations this[global::Rocks.Argument<int> @a, string @b = "b"] { get => new(this, @a, global::Rocks.Arg.Is(@b)); }
+				
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Func<int, string, int>, int>
 				{
@@ -1338,10 +1390,9 @@ public static class IndexerGeneratorTests
 						this.Expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, global::Rocks.PropertyAccessor.Get)]
-					[global::Rocks.MemberIdentifier(1, global::Rocks.PropertyAccessor.Set)]
 					public int this[int @a, string @b = "b"]
 					{
+						[global::Rocks.MemberIdentifier(0)]
 						get
 						{
 							if (this.Expectations.handlers0 is not null)
@@ -1375,6 +1426,7 @@ public static class IndexerGeneratorTests
 									b: {@b.FormatValue()}
 								""");
 						}
+						[global::Rocks.MemberIdentifier(1)]
 						set
 						{
 							if (this.Expectations.handlers1 is not null)
@@ -1414,73 +1466,8 @@ public static class IndexerGeneratorTests
 					
 					private global::IHaveOptionalArgumentsCreateExpectations Expectations { get; }
 				}
-				internal sealed class IndexerExpectations
-				{
-					internal sealed class IndexerGetterExpectations
-					{
-						internal IndexerGetterExpectations(global::IHaveOptionalArgumentsCreateExpectations expectations) =>
-							this.Expectations = expectations;
-						
-						internal global::IHaveOptionalArgumentsCreateExpectations.Adornments.AdornmentsForHandler0 This(global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
-						{
-							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-							global::System.ArgumentNullException.ThrowIfNull(@a);
-							global::System.ArgumentNullException.ThrowIfNull(@b);
-							
-							var @handler = new global::IHaveOptionalArgumentsCreateExpectations.Handler0
-							{
-								@a = @a,
-								@b = @b.Transform("b"),
-							};
-							
-							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
-							else { this.Expectations.handlers0.Add(@handler); }
-							return new(@handler);
-						}
-						internal global::IHaveOptionalArgumentsCreateExpectations.Adornments.AdornmentsForHandler0 This(global::Rocks.Argument<int> @a, string @b = "b") =>
-							this.This(@a, global::Rocks.Arg.Is(@b));
-						private global::IHaveOptionalArgumentsCreateExpectations Expectations { get; }
-					}
-					
-					internal sealed class IndexerSetterExpectations
-					{
-						internal IndexerSetterExpectations(global::IHaveOptionalArgumentsCreateExpectations expectations) =>
-							this.Expectations = expectations;
-						
-						internal global::IHaveOptionalArgumentsCreateExpectations.Adornments.AdornmentsForHandler1 This(global::Rocks.Argument<int> @value, global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
-						{
-							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-							global::System.ArgumentNullException.ThrowIfNull(@a);
-							global::System.ArgumentNullException.ThrowIfNull(@b);
-							global::System.ArgumentNullException.ThrowIfNull(@value);
-							
-							var @handler = new global::IHaveOptionalArgumentsCreateExpectations.Handler1
-							{
-								@a = @a,
-								@b = @b.Transform("b"),
-								@value = @value,
-							};
-							
-							if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(@handler); }
-							else { this.Expectations.handlers1.Add(@handler); }
-							return new(@handler);
-						}
-						internal global::IHaveOptionalArgumentsCreateExpectations.Adornments.AdornmentsForHandler1 This(global::Rocks.Argument<int> @value, global::Rocks.Argument<int> @a, string @b = "b") =>
-							this.This(@value, @a, global::Rocks.Arg.Is(@b));
-						private global::IHaveOptionalArgumentsCreateExpectations Expectations { get; }
-					}
-					
-					internal IndexerExpectations(global::IHaveOptionalArgumentsCreateExpectations expectations) =>
-						(this.Getters, this.Setters) = (new(expectations), new(expectations));
-					
-					internal global::IHaveOptionalArgumentsCreateExpectations.IndexerExpectations.IndexerGetterExpectations Getters { get; }
-					internal global::IHaveOptionalArgumentsCreateExpectations.IndexerExpectations.IndexerSetterExpectations Setters { get; }
-				}
 				
-				internal global::IHaveOptionalArgumentsCreateExpectations.IndexerExpectations Indexers { get; }
-				
-				public IHaveOptionalArgumentsCreateExpectations() =>
-					(this.Indexers) = (new(this));
+				public IHaveOptionalArgumentsCreateExpectations() { }
 				
 				internal global::IHaveOptionalArguments Instance()
 				{

@@ -2,17 +2,17 @@
 using Rocks.Analysis.Extensions;
 using Rocks.Analysis.Models;
 using System.CodeDom.Compiler;
-using System.Reflection.Metadata;
 
 namespace Rocks.Analysis.Builders.Create;
 
 internal static class IndexerExpectationsIndexerBuilder
 {
-	private static void BuildGetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string expectationsFullyQualifiedName,
-		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
+	private static IndexerConstructorDefaultValues? BuildGetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, 
+		string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
-		static void BuildGetterImplementation(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, bool isGeneratedWithDefaults,
-			string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
+		static IndexerConstructorDefaultValues? BuildGetterImplementation(IndentedTextWriter writer, PropertyModel property, 
+			uint memberIdentifier, bool isGeneratedWithDefaults,
+			string expectationsFullyQualifiedName, Action< AdornmentsPipeline> adornmentsFQNsPipeline)
 		{
 			var propertyGetMethod = property.GetMethod!;
 			var namingContext = new VariablesNamingContext(propertyGetMethod);
@@ -79,16 +79,13 @@ internal static class IndexerExpectationsIndexerBuilder
 					}
 				}));
 
+
 			if (isGeneratedWithDefaults)
 			{
 				var parameterValues = string.Join(", ", propertyGetMethod.Parameters.Select(
 					p => p.HasExplicitDefaultValue || p.IsParams ?
 						$"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}"));
-				writer.WriteLines(
-					$$"""
-					internal {{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{memberIdentifier}} Gets() =>
-						this.Gets({{parameterValues}});
-					""");
+				return new(instanceParameters, parameterValues);
 			}
 			else
 			{
@@ -135,17 +132,19 @@ internal static class IndexerExpectationsIndexerBuilder
 
 			if (needsGenerationWithDefaults)
 			{
-				BuildGetterImplementation(writer, property, memberIdentifier, true, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+				return BuildGetterImplementation(writer, property, memberIdentifier, true, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 			}
+
+			return null;
 		}
 
-		BuildGetterImplementation(writer, property, memberIdentifier, false, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+		return BuildGetterImplementation(writer, property, memberIdentifier, false, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier,
+	private static IndexerConstructorDefaultValues? BuildSetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier,
 		string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
-		static void BuildSetterImplementation(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, bool isGeneratedWithDefaults,
+		static IndexerConstructorDefaultValues? BuildSetterImplementation(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, bool isGeneratedWithDefaults,
 			string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 		{
 			var propertySetMethod = property.SetMethod!;
@@ -166,8 +165,7 @@ internal static class IndexerExpectationsIndexerBuilder
 
 			// We need to put the value parameter immediately after "self"
 			// and then skip the value parameter by taking only the non-value parameters.
-			var instanceParameters = string.Join(", ", valueParameter,
-				string.Join(", ", propertySetMethod.Parameters.Take(propertySetMethod.Parameters.Length - 1).Select(_ =>
+			var instanceParameters = string.Join(", ", propertySetMethod.Parameters.Take(propertySetMethod.Parameters.Length - 1).Select(_ =>
 				{
 					var argumentTypeName = ProjectionBuilder.BuildArgument(
 						_.Type, new TypeArgumentsNamingContext(), _.RequiresNullableAnnotation);
@@ -202,24 +200,18 @@ internal static class IndexerExpectationsIndexerBuilder
 
 						return $"{argumentTypeName} @{_.Name}";
 					}
-				})));
+				}));
 
 			var name = property.Accessors == PropertyAccessor.Set || property.Accessors == PropertyAccessor.GetAndSet ?
 				"Sets" : "Inits";
 
 			if (isGeneratedWithDefaults)
 			{
-				// We need to put the value parameter first
-				// and then skip the value parameter by taking only the non-value parameters.
-				var parameterValues = string.Join(", ", $"@{propertySetMethod.Parameters[propertySetMethod.Parameters.Length - 1].Name}",
-					string.Join(", ", propertySetMethod.Parameters.Take(propertySetMethod.Parameters.Length - 1).Select(
-						p => p.HasExplicitDefaultValue || p.IsParams ?
-							$"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}")));
-				writer.WriteLines(
-					$$"""
-					internal {{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{memberIdentifier}} {{name}}({{valueParameter}}) =>
-						this.{{name}}({{parameterValues}});
-					""");
+				// We need to skip the value parameter by taking only the non-value parameters.
+				var parameterValues = string.Join(", ", propertySetMethod.Parameters.Take(propertySetMethod.Parameters.Length - 1).Select(
+					p => p.HasExplicitDefaultValue || p.IsParams ?
+						$"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}"));
+				return new(instanceParameters, parameterValues);
 			}
 			else
 			{
@@ -272,23 +264,27 @@ internal static class IndexerExpectationsIndexerBuilder
 
 			if (needsGenerationWithDefaults)
 			{
-				BuildSetterImplementation(writer, property, memberIdentifier, true, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+				return BuildSetterImplementation(writer, property, memberIdentifier, true, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 			}
+
+			return null;
 		}
 
-		BuildSetterImplementation(writer, property, memberIdentifier, false, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+		return BuildSetterImplementation(writer, property, memberIdentifier, false, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 	}
 
-	internal static void Build(IndentedTextWriter writer, PropertyModel property,
+	internal static IndexerConstructorDefaultValues? Build(IndentedTextWriter writer, PropertyModel property,
 		string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		var memberIdentifier = property.MemberIdentifier;
 		var wasGetGenerated = false;
 
+		IndexerConstructorDefaultValues? constructorValues = null;
+
 		if ((property.Accessors == PropertyAccessor.Get || property.Accessors == PropertyAccessor.GetAndSet || property.Accessors == PropertyAccessor.GetAndInit) &&
 			property.GetCanBeSeenByContainingAssembly)
 		{
-			IndexerExpectationsIndexerBuilder.BuildGetter(writer, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+			constructorValues = IndexerExpectationsIndexerBuilder.BuildGetter(writer, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 			wasGetGenerated = true;
 		}
 
@@ -305,7 +301,9 @@ internal static class IndexerExpectationsIndexerBuilder
 				memberIdentifier++;
 			}
 
-			IndexerExpectationsIndexerBuilder.BuildSetter(writer, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+			constructorValues = IndexerExpectationsIndexerBuilder.BuildSetter(writer, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 		}
+
+		return constructorValues;
 	}
 }

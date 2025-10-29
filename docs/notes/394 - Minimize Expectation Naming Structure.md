@@ -79,30 +79,57 @@ Create an intermediary set of "property adornments" classes. Instances are retur
     DiagnosticResult.CompilerError("CS0426").WithSpan("Rocks.Analysis\Rocks.Analysis.RockGenerator\ILeftRight_Rock_Create.g.cs", 98, 49, 98, 74).WithArguments("ValuePropertyExpectations", "ILeftRightCreateExpectations"),
 
 
+`GenerateWhenIndexerHasOptionalArgumentsAsync`
+    // Rocks.Analysis\Rocks.Analysis.RockGenerator\IHaveOptionalArguments_Rock_Create.g.cs(45,94): error CS0111: Type 'IHaveOptionalArgumentsCreateExpectations.Indexer0Expectations' already defines a member called 'Gets' with the same parameter types
+    DiagnosticResult.CompilerError("CS0111").WithSpan("Rocks.Analysis\Rocks.Analysis.RockGenerator\IHaveOptionalArguments_Rock_Create.g.cs", 45, 94, 45, 98).WithArguments("Gets", "IHaveOptionalArgumentsCreateExpectations.Indexer0Expectations"),
+    // Rocks.Analysis\Rocks.Analysis.RockGenerator\IHaveOptionalArguments_Rock_Create.g.cs(46,9): error CS1501: No overload for method 'Gets' takes 2 arguments
+    DiagnosticResult.CompilerError("CS1501").WithSpan("Rocks.Analysis\Rocks.Analysis.RockGenerator\IHaveOptionalArguments_Rock_Create.g.cs", 46, 9, 46, 13).WithArguments("Gets", "2"),
+    // Rocks.Analysis\Rocks.Analysis.RockGenerator\IHaveOptionalArguments_Rock_Create.g.cs(64,94): error CS0111: Type 'IHaveOptionalArgumentsCreateExpectations.Indexer0Expectations' already defines a member called 'Sets' with the same parameter types
+    DiagnosticResult.CompilerError("CS0111").WithSpan("Rocks.Analysis\Rocks.Analysis.RockGenerator\IHaveOptionalArguments_Rock_Create.g.cs", 64, 94, 64, 98).WithArguments("Sets", "IHaveOptionalArgumentsCreateExpectations.Indexer0Expectations"),
+    // Rocks.Analysis\Rocks.Analysis.RockGenerator\IHaveOptionalArguments_Rock_Create.g.cs(65,9): error CS1501: No overload for method 'Sets' takes 3 arguments
+    DiagnosticResult.CompilerError("CS1501").WithSpan("Rocks.Analysis\Rocks.Analysis.RockGenerator\IHaveOptionalArguments_Rock_Create.g.cs", 65, 9, 65, 13).WithArguments("Sets", "3"),
+
+
 TODO:
 * DONE - Update the `Arguments.cs`, `Adornments.cs`, and `Handler.cs` split up the types to one file each.
 * DONE - Change `MemberIdentifier` to only take one parameter
 * DONE - The mocking code can be put in a file-scoped namespaced - e.g. instead of `namespace Stuff { ... }`, it would be `namespace Stuff;`
 * DONE - Create updated "Minimized" builders. This should make it easier to build things and make it different from all the others.
-    * `MockMembersExpectationsBuilder` - This can take a `buildsForExplicit` or something like that to either emit `this.` or `this.parent` with a readonly `Expectations` reference in the method builder. This would also create the containing "explicit" class
-        * `MethodExpectationsBuilder`
-        * `PropertyExpectationsBuilder` - remember to put `[MemberIdentifier]` on the `get/set/init`, not on the property, with no `PropertyAccessor`
-        * `IndexerExpectationsBuilder` - remember to put `[MemberIdentifier]` on the `get/set/init`, not on the property, with no `PropertyAccessor`
+    * DONE - `MockMembersExpectationsBuilder` - This can take a `buildsForExplicit` or something like that to either emit `this.` or `this.parent` with a readonly `Expectations` reference in the method builder. This would also create the containing "explicit" class
+        * DONE - `MethodExpectationsBuilder`
+        * DONE - `PropertyExpectationsBuilder` - remember to put `[MemberIdentifier]` on the `get/set/init`, not on the property, with no `PropertyAccessor`
+        * DONE - `IndexerExpectationsBuilder` - remember to put `[MemberIdentifier]` on the `get/set/init`, not on the property, with no `PropertyAccessor`
 * DONE - The `Action<AdornmentsPipeline> adornmentsFQNsPipeline` thing in the expectations may go away with all of this and will not be needed.
 * DONE - Ensure original expectation implementations are no longer there
 * DONE - The `parent` field in the generated expectation classes needs to have a naming context because parameters can have the name "parent".
 * DONE - Ensure explicits are handled correctly. Properties will need `expectationsSource` for the constructor. Note: Rocks currently does not handle duplicate interface names, so while I should come up with a solution for that case, it's not pressing ATM. At least put a `TODO` in the code.
-* Need to ensure "defaults" in methods and indexers are handled correctly.
-    * OK, "defaults" is just doing an extra implementation for the methods and indexers where it puts the correct type instead of an `Argument<>` with the default value set.
-* Add some space between `HandlerX` and field definition groupings, along with all the new expectations changes I made (gotta make things pretty)
+* DONE - Need to ensure "defaults" in methods and indexers are handled correctly.
+    * DONE - OK, "defaults" is just doing an extra implementation for the methods and indexers where it puts the correct type instead of an `Argument<>` with the default value set.
+    * DONE - Tests to review:
+        * DONE - `MethodGeneratorTests`
+            * DONE - `GenerateWhenOptionalArgumentsAndParamsExistAsync`
+            * DONE - `GenerateWhenOptionalArgumentsExistAsync`
+            * DONE - `GenerateWithOptionalParametersAndParamsAsync`
+        * DONE - `IndexerGeneratorTests`
+            * DONE - `GenerateWhenIndexerHasOptionalArgumentsAsync`
+        * DONE - `DefaultValuesGeneratorTests`
+            * DONE - `GenerateWhenExplicitImplementationHasDefaultValuesAsync`
+            * DONE - `GenerateWhenGenericParameterHasOptionalDefaultValueAsync`
+            * DONE - `GenerateWithPositiveInfinityAsync`
+* Add some space
+    * Between `HandlerX` and field definition groupings
+    * All the new expectations changes I made (gotta make things pretty)
+    * Between the two gen'd methods for optional arguments
 * Naming collisions
     * A type could have a member the same name that is generated for an explicit implementation
 * Testing strategy
     * Run code gen tests
+        * Just run the `System` ones first
+        * Then add some more
+        * Then add all
     * Update and run integration tests
     * Update and run unit tests
 * Clean up builders
-    * "Old" implementations are deleted
     * I think I can get rid of `PropertyExpectationTypeName`
 * Update all documentation such that it reflects the new syntax.
     * Consider writing an "upgrade" doc that provides assistance on how test code should be changes from the old to the new style.

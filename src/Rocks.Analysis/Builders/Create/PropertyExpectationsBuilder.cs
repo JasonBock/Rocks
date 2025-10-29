@@ -88,7 +88,7 @@ internal static class PropertyExpectationsBuilder
 			writer.WriteLine();
 
 			// Gets and sets
-			IndexerExpectationsIndexerBuilder.Build(writer, property, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+			var constructorValues = IndexerExpectationsIndexerBuilder.Build(writer, property, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 
 			writer.Indent--;
 
@@ -99,6 +99,15 @@ internal static class PropertyExpectationsBuilder
 				internal {{propertyExpectationsFullyQualifiedName}}.Indexer{{index}}Expectations this[{{string.Join(", ", indexerArguments)}}] { get => new({{expectationsSource}}, {{string.Join(", ", property.Parameters.Select(parameter => $"@{parameter.Name}"))}}); }
 
 				""");
+
+			if (constructorValues is not null)
+			{
+				writer.WriteLines(
+					$$"""
+					internal {{propertyExpectationsFullyQualifiedName}}.Indexer{{index}}Expectations this[{{constructorValues.ConstructorParameters}}] { get => new({{expectationsSource}}, {{constructorValues.ThisParameters}}); }
+
+					""");
+			}
 			index++;
 		}
 	}
