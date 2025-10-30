@@ -36,38 +36,51 @@ public static class PropertyGeneratorTests
 			internal sealed class IWorkerCreateExpectations
 				: global::Rocks.Expectations
 			{
-				internal sealed class WorksPropertyExpectations
+				private readonly global::IWorkerCreateExpectations.SetupsExpectations setups;
+				
+				internal sealed class SetupsExpectations
 				{
 					private readonly global::IWorkerCreateExpectations parent;
 				
-					internal WorksPropertyExpectations(global::IWorkerCreateExpectations parent) => 
+					internal SetupsExpectations(global::IWorkerCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal global::IWorkerCreateExpectations.Adornments.AdornmentsForHandler0 Gets()
+					internal sealed class WorksPropertyExpectations
 					{
-						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
-						var handler = new global::IWorkerCreateExpectations.Handler0();
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(handler); }
-						else { this.parent.handlers0.Add(handler); }
-						return new(handler);
-					}
-					internal global::IWorkerCreateExpectations.Adornments.AdornmentsForHandler1 Sets(global::Rocks.Argument<bool> @value)
-					{
-						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
-						global::System.ArgumentNullException.ThrowIfNull(@value);
+						private readonly global::IWorkerCreateExpectations parent;
 					
-						var handler = new global::IWorkerCreateExpectations.Handler1
+						internal WorksPropertyExpectations(global::IWorkerCreateExpectations parent) => 
+							this.parent = parent;
+					
+						internal global::IWorkerCreateExpectations.Adornments.AdornmentsForHandler0 Gets()
 						{
-							value = @value,
-						};
-					
-						if (this.parent.handlers1 is null) { this.parent.handlers1 = new(handler); }
-						else { this.parent.handlers1.Add(handler); }
-						return new(handler);
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+							var handler = new global::IWorkerCreateExpectations.Handler0();
+							if (this.parent.handlers0 is null) { this.parent.handlers0 = new(handler); }
+							else { this.parent.handlers0.Add(handler); }
+							return new(handler);
+						}
+						internal global::IWorkerCreateExpectations.Adornments.AdornmentsForHandler1 Sets(global::Rocks.Argument<bool> @value)
+						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+							global::System.ArgumentNullException.ThrowIfNull(@value);
+						
+							var handler = new global::IWorkerCreateExpectations.Handler1
+							{
+								value = @value,
+							};
+						
+							if (this.parent.handlers1 is null) { this.parent.handlers1 = new(handler); }
+							else { this.parent.handlers1.Add(handler); }
+							return new(handler);
+						}
 					}
+					
+					internal global::IWorkerCreateExpectations.SetupsExpectations.WorksPropertyExpectations Works { get => new(this.parent); }
+					
 				}
 				
-				internal global::IWorkerCreateExpectations.WorksPropertyExpectations Works { get => new(this); }
+				internal global::IWorkerCreateExpectations.SetupsExpectations Setups => this.setups;
 				
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Func<bool>, bool>
@@ -170,7 +183,7 @@ public static class PropertyGeneratorTests
 					private global::IWorkerCreateExpectations Expectations { get; }
 				}
 				
-				public IWorkerCreateExpectations() { }
+				public IWorkerCreateExpectations() => this.setups = new(this);
 				
 				internal global::IWorker Instance()
 				{

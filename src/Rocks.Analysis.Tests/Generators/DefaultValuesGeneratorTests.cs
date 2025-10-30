@@ -48,43 +48,56 @@ public static class DefaultValuesGeneratorTests
 				: global::Rocks.Expectations
 				where T : class
 			{
-				internal global::MockTests.IRequestCreateExpectations<T>.Adornments.AdornmentsForHandler0 Send(global::Rocks.Argument<object> @values, global::Rocks.Argument<global::MockTests.SomeStruct> @someStruct)
-				{
-					global::Rocks.Exceptions.ExpectationException.ThrowIf(this.WasInstanceInvoked);
-					global::System.ArgumentNullException.ThrowIfNull(@values);
-					global::System.ArgumentNullException.ThrowIfNull(@someStruct);
-					
-					var @handler = new global::MockTests.IRequestCreateExpectations<T>.Handler0
-					{
-						@values = @values,
-						@someStruct = @someStruct.Transform(default),
-					};
-					
-					if (this.handlers0 is null) { this.handlers0 = new(@handler); }
-					else { this.handlers0.Add(@handler); }
-					return new(@handler);
-				}
-				internal global::MockTests.IRequestCreateExpectations<T>.Adornments.AdornmentsForHandler0 Send(global::Rocks.Argument<object> @values, global::MockTests.SomeStruct @someStruct = default) =>
-					this.Send(@values, global::Rocks.Arg.Is(@someStruct));
+				private readonly global::MockTests.IRequestCreateExpectations<T>.SetupsExpectations setups;
 				
-				internal global::MockTests.IRequestCreateExpectations<T>.Adornments.AdornmentsForHandler1 Send(global::Rocks.Argument<T> @message, global::Rocks.Argument<global::MockTests.SomeStruct> @someStruct)
+				internal sealed class SetupsExpectations
 				{
-					global::Rocks.Exceptions.ExpectationException.ThrowIf(this.WasInstanceInvoked);
-					global::System.ArgumentNullException.ThrowIfNull(@message);
-					global::System.ArgumentNullException.ThrowIfNull(@someStruct);
-					
-					var @handler = new global::MockTests.IRequestCreateExpectations<T>.Handler1
+					private readonly global::MockTests.IRequestCreateExpectations<T> parent;
+				
+					internal SetupsExpectations(global::MockTests.IRequestCreateExpectations<T> parent) =>
+						this.parent = parent;
+				
+					internal global::MockTests.IRequestCreateExpectations<T>.Adornments.AdornmentsForHandler0 Send(global::Rocks.Argument<object> @values, global::Rocks.Argument<global::MockTests.SomeStruct> @someStruct)
 					{
-						@message = @message,
-						@someStruct = @someStruct.Transform(default),
-					};
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+						global::System.ArgumentNullException.ThrowIfNull(@values);
+						global::System.ArgumentNullException.ThrowIfNull(@someStruct);
+						
+						var @handler = new global::MockTests.IRequestCreateExpectations<T>.Handler0
+						{
+							@values = @values,
+							@someStruct = @someStruct.Transform(default),
+						};
+						
+						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
+						else { this.parent.handlers0.Add(@handler); }
+						return new(@handler);
+					}
+					internal global::MockTests.IRequestCreateExpectations<T>.Adornments.AdornmentsForHandler0 Send(global::Rocks.Argument<object> @values, global::MockTests.SomeStruct @someStruct = default) =>
+						this.Send(@values, global::Rocks.Arg.Is(@someStruct));
 					
-					if (this.handlers1 is null) { this.handlers1 = new(@handler); }
-					else { this.handlers1.Add(@handler); }
-					return new(@handler);
+					internal global::MockTests.IRequestCreateExpectations<T>.Adornments.AdornmentsForHandler1 Send(global::Rocks.Argument<T> @message, global::Rocks.Argument<global::MockTests.SomeStruct> @someStruct)
+					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+						global::System.ArgumentNullException.ThrowIfNull(@message);
+						global::System.ArgumentNullException.ThrowIfNull(@someStruct);
+						
+						var @handler = new global::MockTests.IRequestCreateExpectations<T>.Handler1
+						{
+							@message = @message,
+							@someStruct = @someStruct.Transform(default),
+						};
+						
+						if (this.parent.handlers1 is null) { this.parent.handlers1 = new(@handler); }
+						else { this.parent.handlers1.Add(@handler); }
+						return new(@handler);
+					}
+					internal global::MockTests.IRequestCreateExpectations<T>.Adornments.AdornmentsForHandler1 Send(global::Rocks.Argument<T> @message, global::MockTests.SomeStruct @someStruct = default) =>
+						this.Send(@message, global::Rocks.Arg.Is(@someStruct));
+					
 				}
-				internal global::MockTests.IRequestCreateExpectations<T>.Adornments.AdornmentsForHandler1 Send(global::Rocks.Argument<T> @message, global::MockTests.SomeStruct @someStruct = default) =>
-					this.Send(@message, global::Rocks.Arg.Is(@someStruct));
+				
+				internal global::MockTests.IRequestCreateExpectations<T>.SetupsExpectations Setups => this.setups;
 				
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Func<object, global::MockTests.SomeStruct, global::System.Threading.Tasks.Task<T>>, global::System.Threading.Tasks.Task<T>>
@@ -202,7 +215,7 @@ public static class DefaultValuesGeneratorTests
 					private global::MockTests.IRequestCreateExpectations<T> Expectations { get; }
 				}
 				
-				public IRequestCreateExpectations() { }
+				public IRequestCreateExpectations() => this.setups = new(this);
 				
 				internal global::MockTests.IRequest<T> Instance()
 				{
@@ -551,22 +564,35 @@ public static class DefaultValuesGeneratorTests
 			internal sealed class IUseInfinityCreateExpectations
 				: global::Rocks.Expectations
 			{
-				internal global::IUseInfinityCreateExpectations.Adornments.AdornmentsForHandler0 Use(global::Rocks.Argument<double> @value)
+				private readonly global::IUseInfinityCreateExpectations.SetupsExpectations setups;
+				
+				internal sealed class SetupsExpectations
 				{
-					global::Rocks.Exceptions.ExpectationException.ThrowIf(this.WasInstanceInvoked);
-					global::System.ArgumentNullException.ThrowIfNull(@value);
-					
-					var @handler = new global::IUseInfinityCreateExpectations.Handler0
+					private readonly global::IUseInfinityCreateExpectations parent;
+				
+					internal SetupsExpectations(global::IUseInfinityCreateExpectations parent) =>
+						this.parent = parent;
+				
+					internal global::IUseInfinityCreateExpectations.Adornments.AdornmentsForHandler0 Use(global::Rocks.Argument<double> @value)
 					{
-						@value = @value.Transform(double.PositiveInfinity),
-					};
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+						global::System.ArgumentNullException.ThrowIfNull(@value);
+						
+						var @handler = new global::IUseInfinityCreateExpectations.Handler0
+						{
+							@value = @value.Transform(double.PositiveInfinity),
+						};
+						
+						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
+						else { this.parent.handlers0.Add(@handler); }
+						return new(@handler);
+					}
+					internal global::IUseInfinityCreateExpectations.Adornments.AdornmentsForHandler0 Use(double @value = double.PositiveInfinity) =>
+						this.Use(global::Rocks.Arg.Is(@value));
 					
-					if (this.handlers0 is null) { this.handlers0 = new(@handler); }
-					else { this.handlers0.Add(@handler); }
-					return new(@handler);
 				}
-				internal global::IUseInfinityCreateExpectations.Adornments.AdornmentsForHandler0 Use(double @value = double.PositiveInfinity) =>
-					this.Use(global::Rocks.Arg.Is(@value));
+				
+				internal global::IUseInfinityCreateExpectations.SetupsExpectations Setups => this.setups;
 				
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Action<double>>
@@ -644,7 +670,7 @@ public static class DefaultValuesGeneratorTests
 					private global::IUseInfinityCreateExpectations Expectations { get; }
 				}
 				
-				public IUseInfinityCreateExpectations() { }
+				public IUseInfinityCreateExpectations() => this.setups = new(this);
 				
 				internal global::IUseInfinity Instance()
 				{

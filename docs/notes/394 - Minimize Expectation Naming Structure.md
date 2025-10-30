@@ -90,6 +90,25 @@ Create an intermediary set of "property adornments" classes. Instances are retur
     DiagnosticResult.CompilerError("CS1501").WithSpan("Rocks.Analysis\Rocks.Analysis.RockGenerator\IHaveOptionalArguments_Rock_Create.g.cs", 65, 9, 65, 13).WithArguments("Sets", "3"),
 
 
+Error:
+
+ID: CS0102
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Autofac.Core.IActivatedEventArgsT_Rock_Create.g.cs(276,55): error CS0102: The type 'IActivatedEventArgsCreateExpectations<T>' already contains a definition for 'Instance'
+Code:
+Instance
+
+```c#
+var expectations = context.Create<IThingCreateExpectations>();
+var setups = expectations.Setups;
+setups.DoThis().ExpectedCallCount(2);
+setups.Name.Sets("name");
+
+var mock = expectations.Instance();
+mock.DoThis();
+mock.Name = "name";
+```
+
+
 TODO:
 * DONE - Update the `Arguments.cs`, `Adornments.cs`, and `Handler.cs` split up the types to one file each.
 * DONE - Change `MemberIdentifier` to only take one parameter
@@ -116,6 +135,18 @@ TODO:
             * DONE - `GenerateWhenExplicitImplementationHasDefaultValuesAsync`
             * DONE - `GenerateWhenGenericParameterHasOptionalDefaultValueAsync`
             * DONE - `GenerateWithPositiveInfinityAsync`
+* Create a "SetupsExpectations" class that contains all of the expectations stuff that's generated, and then there will be one `Setups` property. This will eliminate **all** naming conflicts that could happen.
+* Use expression bodies for the getters. For example, instead of this:
+
+```c#
+internal global::Autofac.Core.IActivatedEventArgsPartialTarget<T>.ServicePropertyExpectations Service { get => new(this); }
+```
+
+We generate this:
+
+```c#
+internal global::Autofac.Core.IActivatedEventArgsPartialTarget<T>.ServicePropertyExpectations Service => new(this);
+```
 * Add some space
     * Between `HandlerX` and field definition groupings
     * All the new expectations changes I made (gotta make things pretty)

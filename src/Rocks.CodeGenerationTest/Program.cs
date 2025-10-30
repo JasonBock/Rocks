@@ -8,29 +8,9 @@ using Rocks;
 using Rocks.Analysis;
 using Rocks.CodeGenerationTest;
 using Rocks.CodeGenerationTest.Extensions;
-using Rocks.Experimental;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Reflection;
-
-using (var context = new RockContext())
-{
-	var expectations = context.Create<IInterfaceCreateExpectations>();
-	expectations.NoParameters();
-	expectations.OneParameter(3);
-	expectations.GetAndSetData.Gets().ReturnValue(22);
-	expectations.GetAndSetData.Sets(33);
-	expectations[44, "44"].Gets().ReturnValue(55);
-	expectations[66, "66"].Sets(77);
-
-	var mock = expectations.Instance();
-	mock.NoParameters();
-	mock.OneParameter(3);
-	mock.GetAndSetData = 33;
-	mock[66, "66"] = 77;
-	Console.WriteLine(mock.GetAndSetData);
-	Console.WriteLine(mock[44, "44"]);
-}
 
 var stopwatch = Stopwatch.StartNew();
 
@@ -38,7 +18,7 @@ var stopwatch = Stopwatch.StartNew();
 //TestWithCode();
 //TestWithType();
 //TestWithTypeNoEmit();
-//TestWithTypes();
+TestWithTypes();
 //TestTypesIndividually();
 
 stopwatch.Stop();
@@ -100,7 +80,7 @@ static void TestWithType()
 #pragma warning disable EF1001 // Internal EF Core API usage.
 #pragma warning disable EF9100 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 	(var issues, var times) = TestGenerator.Generate(new RockGenerator(),
-		[typeof(System.Numerics.Tensors.IReadOnlyTensor)],
+		[typeof(Autofac.Core.IActivatedEventArgs<>)],
 		typesToLoadAssembliesFrom,
 		[], Rocks.Analysis.BuildType.Create);
 #pragma warning restore EF9100 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.

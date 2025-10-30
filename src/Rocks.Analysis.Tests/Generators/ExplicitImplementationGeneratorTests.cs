@@ -44,45 +44,58 @@ public static class ExplicitImplementationGeneratorTests
 			internal sealed class ILeftRightCreateExpectations
 				: global::Rocks.Expectations
 			{
-				internal sealed class ExplicitForILeftExpectations
+				private readonly global::ILeftRightCreateExpectations.SetupsExpectations setups;
+				
+				internal sealed class SetupsExpectations
 				{
 					private readonly global::ILeftRightCreateExpectations parent;
 				
-					internal ExplicitForILeftExpectations(global::ILeftRightCreateExpectations parent) =>
+					internal SetupsExpectations(global::ILeftRightCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal global::ILeftRightCreateExpectations.Adornments.AdornmentsForHandler0 GetValue()
+					internal sealed class ExplicitForILeftExpectations
 					{
-						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
-						var handler = new global::ILeftRightCreateExpectations.Handler0();
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(handler); }
-						else { this.parent.handlers0.Add(handler); }
-						return new(handler);
+						private readonly global::ILeftRightCreateExpectations parent;
+					
+						internal ExplicitForILeftExpectations(global::ILeftRightCreateExpectations parent) =>
+							this.parent = parent;
+					
+						internal global::ILeftRightCreateExpectations.Adornments.AdornmentsForHandler0 GetValue()
+						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+							var handler = new global::ILeftRightCreateExpectations.Handler0();
+							if (this.parent.handlers0 is null) { this.parent.handlers0 = new(handler); }
+							else { this.parent.handlers0.Add(handler); }
+							return new(handler);
+						}
+						
 					}
+					
+					internal global::ILeftRightCreateExpectations.SetupsExpectations.ExplicitForILeftExpectations ExplicitForILeft { get => new(this.parent); }
+					
+					internal sealed class ExplicitForIRightExpectations
+					{
+						private readonly global::ILeftRightCreateExpectations parent;
+					
+						internal ExplicitForIRightExpectations(global::ILeftRightCreateExpectations parent) =>
+							this.parent = parent;
+					
+						internal global::ILeftRightCreateExpectations.Adornments.AdornmentsForHandler1 GetValue()
+						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+							var handler = new global::ILeftRightCreateExpectations.Handler1();
+							if (this.parent.handlers1 is null) { this.parent.handlers1 = new(handler); }
+							else { this.parent.handlers1.Add(handler); }
+							return new(handler);
+						}
+						
+					}
+					
+					internal global::ILeftRightCreateExpectations.SetupsExpectations.ExplicitForIRightExpectations ExplicitForIRight { get => new(this.parent); }
 					
 				}
 				
-				internal global::ILeftRightCreateExpectations.ExplicitForILeftExpectations ExplicitForILeft { get => new(this); }
-				
-				internal sealed class ExplicitForIRightExpectations
-				{
-					private readonly global::ILeftRightCreateExpectations parent;
-				
-					internal ExplicitForIRightExpectations(global::ILeftRightCreateExpectations parent) =>
-						this.parent = parent;
-				
-					internal global::ILeftRightCreateExpectations.Adornments.AdornmentsForHandler1 GetValue()
-					{
-						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
-						var handler = new global::ILeftRightCreateExpectations.Handler1();
-						if (this.parent.handlers1 is null) { this.parent.handlers1 = new(handler); }
-						else { this.parent.handlers1.Add(handler); }
-						return new(handler);
-					}
-					
-				}
-				
-				internal global::ILeftRightCreateExpectations.ExplicitForIRightExpectations ExplicitForIRight { get => new(this); }
+				internal global::ILeftRightCreateExpectations.SetupsExpectations Setups => this.setups;
 				
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Func<string>, string>
@@ -162,7 +175,7 @@ public static class ExplicitImplementationGeneratorTests
 					private global::ILeftRightCreateExpectations Expectations { get; }
 				}
 				
-				public ILeftRightCreateExpectations() { }
+				public ILeftRightCreateExpectations() => this.setups = new(this);
 				
 				internal global::ILeftRight Instance()
 				{
@@ -582,93 +595,106 @@ public static class ExplicitImplementationGeneratorTests
 			internal sealed class ILeftRightCreateExpectations
 				: global::Rocks.Expectations
 			{
-				internal sealed class ExplicitForILeftExpectations
+				private readonly global::ILeftRightCreateExpectations.SetupsExpectations setups;
+				
+				internal sealed class SetupsExpectations
 				{
 					private readonly global::ILeftRightCreateExpectations parent;
 				
-					internal ExplicitForILeftExpectations(global::ILeftRightCreateExpectations parent) =>
+					internal SetupsExpectations(global::ILeftRightCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal sealed class ValuePropertyExpectations
+					internal sealed class ExplicitForILeftExpectations
 					{
 						private readonly global::ILeftRightCreateExpectations parent;
 					
-						internal ValuePropertyExpectations(global::ILeftRightCreateExpectations parent) => 
+						internal ExplicitForILeftExpectations(global::ILeftRightCreateExpectations parent) =>
 							this.parent = parent;
 					
-						internal global::ILeftRightCreateExpectations.Adornments.AdornmentsForHandler0 Gets()
+						internal sealed class ValuePropertyExpectations
 						{
-							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
-							var handler = new global::ILeftRightCreateExpectations.Handler0();
-							if (this.parent.handlers0 is null) { this.parent.handlers0 = new(handler); }
-							else { this.parent.handlers0.Add(handler); }
-							return new(handler);
-						}
-						internal global::ILeftRightCreateExpectations.Adornments.AdornmentsForHandler1 Sets(global::Rocks.Argument<global::Values.Information> @value)
-						{
-							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
-							global::System.ArgumentNullException.ThrowIfNull(@value);
+							private readonly global::ILeftRightCreateExpectations parent;
 						
-							var handler = new global::ILeftRightCreateExpectations.Handler1
+							internal ValuePropertyExpectations(global::ILeftRightCreateExpectations parent) => 
+								this.parent = parent;
+						
+							internal global::ILeftRightCreateExpectations.Adornments.AdornmentsForHandler0 Gets()
 							{
-								value = @value,
-							};
-						
-							if (this.parent.handlers1 is null) { this.parent.handlers1 = new(handler); }
-							else { this.parent.handlers1.Add(handler); }
-							return new(handler);
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+								var handler = new global::ILeftRightCreateExpectations.Handler0();
+								if (this.parent.handlers0 is null) { this.parent.handlers0 = new(handler); }
+								else { this.parent.handlers0.Add(handler); }
+								return new(handler);
+							}
+							internal global::ILeftRightCreateExpectations.Adornments.AdornmentsForHandler1 Sets(global::Rocks.Argument<global::Values.Information> @value)
+							{
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+								global::System.ArgumentNullException.ThrowIfNull(@value);
+							
+								var handler = new global::ILeftRightCreateExpectations.Handler1
+								{
+									value = @value,
+								};
+							
+								if (this.parent.handlers1 is null) { this.parent.handlers1 = new(handler); }
+								else { this.parent.handlers1.Add(handler); }
+								return new(handler);
+							}
 						}
+						
+						internal global::ILeftRightCreateExpectations.SetupsExpectations.ExplicitForILeftExpectations.ValuePropertyExpectations Value { get => new(this.parent); }
+						
 					}
 					
-					internal global::ILeftRightCreateExpectations.ExplicitForILeftExpectations.ValuePropertyExpectations Value { get => new(this.parent); }
+					internal global::ILeftRightCreateExpectations.SetupsExpectations.ExplicitForILeftExpectations ExplicitForILeft { get => new(this.parent); }
 					
-				}
-				
-				internal global::ILeftRightCreateExpectations.ExplicitForILeftExpectations ExplicitForILeft { get => new(this); }
-				
-				internal sealed class ExplicitForIRightExpectations
-				{
-					private readonly global::ILeftRightCreateExpectations parent;
-				
-					internal ExplicitForIRightExpectations(global::ILeftRightCreateExpectations parent) =>
-						this.parent = parent;
-				
-					internal sealed class ValuePropertyExpectations
+					internal sealed class ExplicitForIRightExpectations
 					{
 						private readonly global::ILeftRightCreateExpectations parent;
 					
-						internal ValuePropertyExpectations(global::ILeftRightCreateExpectations parent) => 
+						internal ExplicitForIRightExpectations(global::ILeftRightCreateExpectations parent) =>
 							this.parent = parent;
 					
-						internal global::ILeftRightCreateExpectations.Adornments.AdornmentsForHandler2 Gets()
+						internal sealed class ValuePropertyExpectations
 						{
-							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
-							var handler = new global::ILeftRightCreateExpectations.Handler2();
-							if (this.parent.handlers2 is null) { this.parent.handlers2 = new(handler); }
-							else { this.parent.handlers2.Add(handler); }
-							return new(handler);
-						}
-						internal global::ILeftRightCreateExpectations.Adornments.AdornmentsForHandler3 Sets(global::Rocks.Argument<global::Values.Information> @value)
-						{
-							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
-							global::System.ArgumentNullException.ThrowIfNull(@value);
+							private readonly global::ILeftRightCreateExpectations parent;
 						
-							var handler = new global::ILeftRightCreateExpectations.Handler3
+							internal ValuePropertyExpectations(global::ILeftRightCreateExpectations parent) => 
+								this.parent = parent;
+						
+							internal global::ILeftRightCreateExpectations.Adornments.AdornmentsForHandler2 Gets()
 							{
-								value = @value,
-							};
-						
-							if (this.parent.handlers3 is null) { this.parent.handlers3 = new(handler); }
-							else { this.parent.handlers3.Add(handler); }
-							return new(handler);
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+								var handler = new global::ILeftRightCreateExpectations.Handler2();
+								if (this.parent.handlers2 is null) { this.parent.handlers2 = new(handler); }
+								else { this.parent.handlers2.Add(handler); }
+								return new(handler);
+							}
+							internal global::ILeftRightCreateExpectations.Adornments.AdornmentsForHandler3 Sets(global::Rocks.Argument<global::Values.Information> @value)
+							{
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+								global::System.ArgumentNullException.ThrowIfNull(@value);
+							
+								var handler = new global::ILeftRightCreateExpectations.Handler3
+								{
+									value = @value,
+								};
+							
+								if (this.parent.handlers3 is null) { this.parent.handlers3 = new(handler); }
+								else { this.parent.handlers3.Add(handler); }
+								return new(handler);
+							}
 						}
+						
+						internal global::ILeftRightCreateExpectations.SetupsExpectations.ExplicitForIRightExpectations.ValuePropertyExpectations Value { get => new(this.parent); }
+						
 					}
 					
-					internal global::ILeftRightCreateExpectations.ExplicitForIRightExpectations.ValuePropertyExpectations Value { get => new(this.parent); }
+					internal global::ILeftRightCreateExpectations.SetupsExpectations.ExplicitForIRightExpectations ExplicitForIRight { get => new(this.parent); }
 					
 				}
 				
-				internal global::ILeftRightCreateExpectations.ExplicitForIRightExpectations ExplicitForIRight { get => new(this); }
+				internal global::ILeftRightCreateExpectations.SetupsExpectations Setups => this.setups;
 				
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Func<global::Values.Information>, global::Values.Information>
@@ -841,7 +867,7 @@ public static class ExplicitImplementationGeneratorTests
 					private global::ILeftRightCreateExpectations Expectations { get; }
 				}
 				
-				public ILeftRightCreateExpectations() { }
+				public ILeftRightCreateExpectations() => this.setups = new(this);
 				
 				internal global::ILeftRight Instance()
 				{

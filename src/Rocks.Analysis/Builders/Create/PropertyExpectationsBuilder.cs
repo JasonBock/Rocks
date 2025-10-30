@@ -9,19 +9,19 @@ internal static class PropertyExpectationsBuilder
 {
 	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType,
 		List<PropertyModel> properties,
-		string expectationsFullyQualifiedName, string propertyExpectationsFullyQualifiedName, string expectationsSource,
+		string expectationsFullyQualifiedName, string propertyExpectationsFullyQualifiedName, 
 		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		if (properties.Count > 0)
 		{
-			PropertyExpectationsBuilder.BuildProperties(writer, mockType, properties, expectationsFullyQualifiedName, propertyExpectationsFullyQualifiedName, expectationsSource, adornmentsFQNsPipeline);
-			PropertyExpectationsBuilder.BuildIndexers(writer, mockType, properties, expectationsFullyQualifiedName, propertyExpectationsFullyQualifiedName, expectationsSource, adornmentsFQNsPipeline);
+			PropertyExpectationsBuilder.BuildProperties(writer, mockType, properties, expectationsFullyQualifiedName, propertyExpectationsFullyQualifiedName, adornmentsFQNsPipeline);
+			PropertyExpectationsBuilder.BuildIndexers(writer, mockType, properties, expectationsFullyQualifiedName, propertyExpectationsFullyQualifiedName, adornmentsFQNsPipeline);
 		}
 	}
 
 	private static void BuildIndexers(IndentedTextWriter writer, TypeMockModel mockType,
 		List<PropertyModel> properties,
-		string expectationsFullyQualifiedName, string propertyExpectationsFullyQualifiedName, string expectationsSource,
+		string expectationsFullyQualifiedName, string propertyExpectationsFullyQualifiedName, 
 		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		var index = 0;
@@ -96,7 +96,7 @@ internal static class PropertyExpectationsBuilder
 				$$"""
 				}
 
-				internal {{propertyExpectationsFullyQualifiedName}}.Indexer{{index}}Expectations this[{{string.Join(", ", indexerArguments)}}] { get => new({{expectationsSource}}, {{string.Join(", ", property.Parameters.Select(parameter => $"@{parameter.Name}"))}}); }
+				internal {{propertyExpectationsFullyQualifiedName}}.Indexer{{index}}Expectations this[{{string.Join(", ", indexerArguments)}}] { get => new(this.parent, {{string.Join(", ", property.Parameters.Select(parameter => $"@{parameter.Name}"))}}); }
 
 				""");
 
@@ -104,7 +104,7 @@ internal static class PropertyExpectationsBuilder
 			{
 				writer.WriteLines(
 					$$"""
-					internal {{propertyExpectationsFullyQualifiedName}}.Indexer{{index}}Expectations this[{{constructorValues.ConstructorParameters}}] { get => new({{expectationsSource}}, {{constructorValues.ThisParameters}}); }
+					internal {{propertyExpectationsFullyQualifiedName}}.Indexer{{index}}Expectations this[{{constructorValues.ConstructorParameters}}] { get => new(this.parent, {{constructorValues.ThisParameters}}); }
 
 					""");
 			}
@@ -114,7 +114,7 @@ internal static class PropertyExpectationsBuilder
 
 	private static void BuildProperties(IndentedTextWriter writer, TypeMockModel mockType,
 		List<PropertyModel> properties,
-		string expectationsFullyQualifiedName, string propertyExpectationsFullyQualifiedName, string expectationsSource,
+		string expectationsFullyQualifiedName, string propertyExpectationsFullyQualifiedName, 
 		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		foreach (var property in properties.Where(property => !property.IsIndexer))
@@ -139,7 +139,7 @@ internal static class PropertyExpectationsBuilder
 				$$"""
 				}
 
-				internal {{propertyExpectationsFullyQualifiedName}}.{{property.Name}}PropertyExpectations {{property.Name}} { get => new({{expectationsSource}}); }
+				internal {{propertyExpectationsFullyQualifiedName}}.{{property.Name}}PropertyExpectations {{property.Name}} { get => new(this.parent); }
 
 				""");
 		}

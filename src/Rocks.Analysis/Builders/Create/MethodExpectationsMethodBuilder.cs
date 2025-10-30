@@ -7,13 +7,12 @@ namespace Rocks.Analysis.Builders.Create;
 
 internal static class MethodExpectationsMethodBuilder
 {
-	// expectationsSource will either be "this" or "this.parent"
 	internal static void Build(IndentedTextWriter writer, TypeMockModel type, MethodModel method, 
-		string expectationsFullyQualifiedName, string expectationsSource,
+		string expectationsFullyQualifiedName, 
 		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		static void BuildImplementation(IndentedTextWriter writer, TypeMockModel type, MethodModel method, 
-			bool isGeneratedWithDefaults, string expectationsFullyQualifiedName, string expectationsSource,
+			bool isGeneratedWithDefaults, string expectationsFullyQualifiedName, 
 			Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 		{
 			var needsGenerationWithDefaults = false;
@@ -111,10 +110,10 @@ internal static class MethodExpectationsMethodBuilder
 					$$"""
 					internal {{hiding}}{{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{method.MemberIdentifier}}{{typeArguments}} {{method.Name}}{{typeArguments}}({{instanceParameters}}){{constraints}}
 					{
-						global::Rocks.Exceptions.ExpectationException.ThrowIf({{expectationsSource}}.WasInstanceInvoked);
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						var handler = new {{expectationsFullyQualifiedName}}.Handler{{method.MemberIdentifier}}{{typeArguments}}();
-						if ({{expectationsSource}}.handlers{{method.MemberIdentifier}} is null) { {{expectationsSource}}.handlers{{method.MemberIdentifier}} = new(handler); }
-						else { {{expectationsSource}}.handlers{{method.MemberIdentifier}}.Add(handler); }
+						if (this.parent.handlers{{method.MemberIdentifier}} is null) { this.parent.handlers{{method.MemberIdentifier}} = new(handler); }
+						else { this.parent.handlers{{method.MemberIdentifier}}.Add(handler); }
 						return new(handler);
 					}
 					""");
@@ -125,7 +124,7 @@ internal static class MethodExpectationsMethodBuilder
 				writer.WriteLine($"internal {hiding}{expectationsFullyQualifiedName}.Adornments.AdornmentsForHandler{method.MemberIdentifier}{typeArguments} {method.Name}{typeArguments}({instanceParameters}){constraints}");
 				writer.WriteLine("{");
 				writer.Indent++;
-				writer.WriteLine($"global::Rocks.Exceptions.ExpectationException.ThrowIf({expectationsSource}.WasInstanceInvoked);");
+				writer.WriteLine($"global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);");
 
 				foreach (var parameter in method.Parameters)
 				{
@@ -163,8 +162,8 @@ internal static class MethodExpectationsMethodBuilder
 					$$"""
 					};
 
-					if ({{expectationsSource}}.handlers{{method.MemberIdentifier}} is null) { {{expectationsSource}}.handlers{{method.MemberIdentifier}} = new(@{{handlerContext["handler"]}}); }
-					else { {{expectationsSource}}.handlers{{method.MemberIdentifier}}.Add(@{{handlerContext["handler"]}}); }
+					if (this.parent.handlers{{method.MemberIdentifier}} is null) { this.parent.handlers{{method.MemberIdentifier}} = new(@{{handlerContext["handler"]}}); }
+					else { this.parent.handlers{{method.MemberIdentifier}}.Add(@{{handlerContext["handler"]}}); }
 					return new(@{{handlerContext["handler"]}});
 					""");
 
@@ -174,10 +173,10 @@ internal static class MethodExpectationsMethodBuilder
 
 			if (needsGenerationWithDefaults)
 			{
-				BuildImplementation(writer, type, method, true, expectationsFullyQualifiedName, expectationsSource, adornmentsFQNsPipeline);
+				BuildImplementation(writer, type, method, true, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 			}
 		}
 
-		BuildImplementation(writer, type, method, false, expectationsFullyQualifiedName, expectationsSource, adornmentsFQNsPipeline);
+		BuildImplementation(writer, type, method, false, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 	}
 }
