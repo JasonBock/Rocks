@@ -19,7 +19,7 @@ internal static class TestAssistants
 	{
 		var test = new AnalyzerTest<TAnalyzer>()
 		{
-			ReferenceAssemblies = TestAssistants.GetNet10(),
+			ReferenceAssemblies = TestAssistants.net10ReferenceAssemblies.Value,
 			TestState =
 			{
 				Sources = { code },
@@ -48,7 +48,7 @@ internal static class TestAssistants
 	{
 		var test = new DiagnosticSuppressorVerifier<TDiagnosticSuppressor, TDiagnosticAnalyzer>()
 		{
-			ReferenceAssemblies = TestAssistants.GetNet10(),
+			ReferenceAssemblies = TestAssistants.net10ReferenceAssemblies.Value,
 			TestState =
 			{
 				Sources = { code },
@@ -108,7 +108,7 @@ internal static class TestAssistants
 	{
 		var test = new IncrementalGeneratorTest<TGenerator>(generalDiagnosticOption)
 		{
-			ReferenceAssemblies = TestAssistants.GetNet10(),
+			ReferenceAssemblies = TestAssistants.net10ReferenceAssemblies.Value,
 			TestState =
 			{
 				Sources = { code },
@@ -144,21 +144,21 @@ internal static class TestAssistants
 		await test.RunAsync();
 	}
 
-	private static ReferenceAssemblies GetNet10()
-	{
-		// Always look here for the latest version of a particular runtime:
-		// https://www.nuget.org/packages/Microsoft.NETCore.App.Ref
-		if (!NuGetFramework.Parse("net10.0").IsPackageBased)
+	private static readonly Lazy<ReferenceAssemblies> net10ReferenceAssemblies = new(() =>
 		{
-			// The NuGet version provided at runtime does not recognize the 'net10.0' target framework
-			throw new NotSupportedException("The 'net10.0' target framework is not supported by this version of NuGet.");
-		}
+			// Always look here for the latest version of a particular runtime:
+			// https://www.nuget.org/packages/Microsoft.NETCore.App.Ref
+			if (!NuGetFramework.Parse("net10.0").IsPackageBased)
+			{
+				// The NuGet version provided at runtime does not recognize the 'net10.0' target framework
+				throw new NotSupportedException("The 'net10.0' target framework is not supported by this version of NuGet.");
+			}
 
-		return new ReferenceAssemblies(
-			 "net10.0",
-			 new PackageIdentity(
-				  "Microsoft.NETCore.App.Ref",
-				  "10.0.0-rc.1.25451.107"),
-			 Path.Combine("ref", "net10.0"));
-	}
+			return new ReferenceAssemblies(
+				 "net10.0",
+				 new PackageIdentity(
+					  "Microsoft.NETCore.App.Ref",
+					  "10.0.0-rc.1.25451.107"),
+				 Path.Combine("ref", "net10.0"));
+		}, LazyThreadSafetyMode.ExecutionAndPublication);
 }
