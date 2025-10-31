@@ -98,7 +98,7 @@ Code:
 Instance
 
 ```c#
-var expectations = context.Create<IThingCreateExpectations>();
+var (expectations, setups) = context.Create<IThingCreateExpectations>();
 var setups = expectations.Setups;
 setups.DoThis().ExpectedCallCount(2);
 setups.Name.Sets("name");
@@ -108,6 +108,44 @@ mock.DoThis();
 mock.Name = "name";
 ```
 
+    // Rocks.Analysis\Rocks.Analysis.RockGenerator\MockTests.IMember_Rock_Create.g.cs(19,7): error CS0027: Keyword 'this' is not available in the current context
+    DiagnosticResult.CompilerError("CS0027").WithSpan("Rocks.Analysis\Rocks.Analysis.RockGenerator\MockTests.IMember_Rock_Create.g.cs", 19, 7, 19, 11),
+
+
+    // Rocks.Analysis\Rocks.Analysis.RockGenerator\IWorker_Rock_Create.g.cs(56,46): error CS0426: The type name 'WorksPropertyExpectations' does not exist in the type 'IWorkerCreateExpectations'
+    DiagnosticResult.CompilerError("CS0426").WithSpan("Rocks.Analysis\Rocks.Analysis.RockGenerator\IWorker_Rock_Create.g.cs", 56, 46, 56, 71).WithArguments("WorksPropertyExpectations", "IWorkerCreateExpectations"),
+
+
+
+    // Rocks.Analysis\Rocks.Analysis.RockGenerator\ILeftRight_Rock_Create.g.cs(43,127): error CS1503: Argument 1: cannot convert from 'ILeftRightCreateExpectations.SetupsExpectations' to 'ILeftRightCreateExpectations'
+    DiagnosticResult.CompilerError("CS1503").WithSpan("Rocks.Analysis\Rocks.Analysis.RockGenerator\ILeftRight_Rock_Create.g.cs", 43, 127, 43, 131).WithArguments("1", "ILeftRightCreateExpectations.SetupsExpectations", "ILeftRightCreateExpectations"),
+    // Rocks.Analysis\Rocks.Analysis.RockGenerator\ILeftRight_Rock_Create.g.cs(63,129): error CS1503: Argument 1: cannot convert from 'ILeftRightCreateExpectations.SetupsExpectations' to 'ILeftRightCreateExpectations'
+    DiagnosticResult.CompilerError("CS1503").WithSpan("Rocks.Analysis\Rocks.Analysis.RockGenerator\ILeftRight_Rock_Create.g.cs", 63, 129, 63, 133).WithArguments("1", "ILeftRightCreateExpectations.SetupsExpectations", "ILeftRightCreateExpectations"),
+
+
+I'm guessing there's an issue with explicit implementation and name conflicts. But I'm curious why this doesn't happen with the current implementation. Let's run this and see the specifics with the new changes.
+
+Target type: `MassTransit.Request<,,,,>`
+
+Seems like the problem is that there are multiple explicit implementation needed for types with the name `Request`, though their type parameters are different. Basically a naming conflict. I think this should be "easy" enough to circumvent, though it'll be a big ugly, but it should also be a pretty rare occurrence.
+
+* In `MockMembersExpectationsBuilder`, we get a hash set of explicit types and `foreach` over that - we may need to change to `for` because we're currently in an enumeration and we need to be able to do the following things:
+    * For the current explicit type, see how many explicit types exist in the list by the type name.
+        * If it's one, just use the type name
+        * If it's more than one, see how many explicit types exist in the list with the type flattened name
+            * If it's one, use the type flattened name
+            * If it's more than one, use the fully qualified name with some modifications (probably):
+                * Replace `"::"` with `string.Empty`
+                * Replace `'.'` with `string.Empty`
+                * How do generics show up here?
+
+For the vast majority of explicit implementation cases, the first case will hold. It only starts getting ugly if we need disambiguation. But this should handle all disambiguation cases.
+
+* DONE (`ExplicitImplementationGeneratorTests`, `GenerateWithDuplicateInterfaceNamesDifferingByTypeParametersAsync()`, `GenerateWithDuplicateInterfaceNamesAsync()`) Create tests where
+    * Two explicit types differ by type parameters
+    * Two explicit types differ by namespace
+* Solve the issue
+* Ensure two new tests pass along with the other current tests
 
 TODO:
 * DONE - Update the `Arguments.cs`, `Adornments.cs`, and `Handler.cs` split up the types to one file each.
@@ -136,6 +174,22 @@ TODO:
             * DONE - `GenerateWhenGenericParameterHasOptionalDefaultValueAsync`
             * DONE - `GenerateWithPositiveInfinityAsync`
 * Create a "SetupsExpectations" class that contains all of the expectations stuff that's generated, and then there will be one `Setups` property. This will eliminate **all** naming conflicts that could happen.
+    * `MethodGeneratorTests`
+        * DONE - `GenerateAsync`
+        * DONE - `GenerateWhenOptionalArgumentsAndParamsExistAsync`
+        * `GenerateWhenOptionalArgumentsExistAsync`
+        * `GenerateWithOptionalParametersAndParamsAsync`
+    * DONE - `PropertyGeneratorTests`
+        * DONE - `GenerateAsync`
+    * `IndexerGeneratorTests`
+        * `GenerateWhenIndexerHasOptionalArgumentsAsync`
+    * `ExplicitImplementationGeneratorTests`
+        * DONE - `GenerateWithExplicitMethodAsync`
+        * DONE - `GenerateWithExplicitPropertySetterAsync`
+    * `DefaultValuesGeneratorTests`
+        * DONE - `GenerateWhenExplicitImplementationHasDefaultValuesAsync`
+        * `GenerateWhenGenericParameterHasOptionalDefaultValueAsync`
+        * `GenerateWithPositiveInfinityAsync`
 * Use expression bodies for the getters. For example, instead of this:
 
 ```c#
