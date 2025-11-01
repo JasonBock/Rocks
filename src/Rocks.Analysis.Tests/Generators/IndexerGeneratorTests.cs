@@ -1351,9 +1351,9 @@ public static class IndexerGeneratorTests
 						}
 					}
 					
-					internal global::IHaveOptionalArgumentsCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b] { get => new(this.parent, @a, @b); }
+					internal global::IHaveOptionalArgumentsCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b] => new(this.parent, @a, @b);
 					
-					internal global::IHaveOptionalArgumentsCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<int> @a, string @b = "b"] { get => new(this.parent, @a, global::Rocks.Arg.Is(@b)); }
+					internal global::IHaveOptionalArgumentsCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<int> @a, string @b = "b"] => new(this.parent, @a, global::Rocks.Arg.Is(@b));
 					
 				}
 				

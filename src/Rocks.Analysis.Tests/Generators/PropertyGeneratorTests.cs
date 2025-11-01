@@ -76,7 +76,7 @@ public static class PropertyGeneratorTests
 						}
 					}
 					
-					internal global::IWorkerCreateExpectations.SetupsExpectations.WorksPropertyExpectations Works { get => new(this.parent); }
+					internal global::IWorkerCreateExpectations.SetupsExpectations.WorksPropertyExpectations Works => new(this.parent);
 					
 				}
 				

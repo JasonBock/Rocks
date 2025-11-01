@@ -96,7 +96,7 @@ internal static class PropertyExpectationsBuilder
 				$$"""
 				}
 
-				internal {{propertyExpectationsFullyQualifiedName}}.Indexer{{index}}Expectations this[{{string.Join(", ", indexerArguments)}}] { get => new(this.parent, {{string.Join(", ", property.Parameters.Select(parameter => $"@{parameter.Name}"))}}); }
+				internal {{propertyExpectationsFullyQualifiedName}}.Indexer{{index}}Expectations this[{{string.Join(", ", indexerArguments)}}] => new(this.parent, {{string.Join(", ", property.Parameters.Select(parameter => $"@{parameter.Name}"))}});
 
 				""");
 
@@ -104,7 +104,7 @@ internal static class PropertyExpectationsBuilder
 			{
 				writer.WriteLines(
 					$$"""
-					internal {{propertyExpectationsFullyQualifiedName}}.Indexer{{index}}Expectations this[{{constructorValues.ConstructorParameters}}] { get => new(this.parent, {{constructorValues.ThisParameters}}); }
+					internal {{propertyExpectationsFullyQualifiedName}}.Indexer{{index}}Expectations this[{{constructorValues.ConstructorParameters}}] => new(this.parent, {{constructorValues.ThisParameters}});
 
 					""");
 			}
@@ -139,7 +139,7 @@ internal static class PropertyExpectationsBuilder
 				$$"""
 				}
 
-				internal {{propertyExpectationsFullyQualifiedName}}.{{property.Name}}PropertyExpectations {{property.Name}} { get => new(this.parent); }
+				internal {{propertyExpectationsFullyQualifiedName}}.{{property.Name}}PropertyExpectations {{property.Name}} => new(this.parent);
 
 				""");
 		}

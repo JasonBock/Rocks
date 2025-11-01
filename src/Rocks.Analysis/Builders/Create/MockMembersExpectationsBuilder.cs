@@ -96,7 +96,7 @@ internal static class MockMembersExpectationsBuilder
 				/// Gets the expectations for the explicit implementation of
 				/// <see cref="{{explicitType.FullyQualifiedName.Replace('<', '{').Replace('>', '}')}}" />
 				/// </summary>
-				internal {{expectationsFullyQualifiedName}}.SetupsExpectations.{{explicitExpectationName}} ExplicitFor{{explicitTypeName}} { get => new(this.parent); }
+				internal {{expectationsFullyQualifiedName}}.SetupsExpectations.{{explicitExpectationName}} ExplicitFor{{explicitTypeName}} => new(this.parent);
 
 				""");
 		}
