@@ -64,11 +64,11 @@ public static class ExplicitImplementationGeneratorTests
 						return new(handler);
 					}
 					
-					internal sealed class ExplicitForISameExpectations
+					internal sealed class ExplicitForISame0Expectations
 					{
 						private readonly global::IImplementCreateExpectations<T, T2> parent;
 					
-						internal ExplicitForISameExpectations(global::IImplementCreateExpectations<T, T2> parent) =>
+						internal ExplicitForISame0Expectations(global::IImplementCreateExpectations<T, T2> parent) =>
 							this.parent = parent;
 					
 						internal global::IImplementCreateExpectations<T, T2>.Adornments.AdornmentsForHandler0 GetValue()
@@ -82,13 +82,17 @@ public static class ExplicitImplementationGeneratorTests
 						
 					}
 					
-					internal global::IImplementCreateExpectations<T, T2>.SetupsExpectations.ExplicitForISameExpectations ExplicitForISame { get => new(this.parent); }
+					/// <summary>
+					/// Gets the expectations for the explicit implementation of
+					/// <see cref="global::ISame{T}" />
+					/// </summary>
+					internal global::IImplementCreateExpectations<T, T2>.SetupsExpectations.ExplicitForISame0Expectations ExplicitForISame0 { get => new(this.parent); }
 					
-					internal sealed class ExplicitForISameExpectations
+					internal sealed class ExplicitForISame1Expectations
 					{
 						private readonly global::IImplementCreateExpectations<T, T2> parent;
 					
-						internal ExplicitForISameExpectations(global::IImplementCreateExpectations<T, T2> parent) =>
+						internal ExplicitForISame1Expectations(global::IImplementCreateExpectations<T, T2> parent) =>
 							this.parent = parent;
 					
 						internal global::IImplementCreateExpectations<T, T2>.Adornments.AdornmentsForHandler1 GetValue()
@@ -102,7 +106,11 @@ public static class ExplicitImplementationGeneratorTests
 						
 					}
 					
-					internal global::IImplementCreateExpectations<T, T2>.SetupsExpectations.ExplicitForISameExpectations ExplicitForISame { get => new(this.parent); }
+					/// <summary>
+					/// Gets the expectations for the explicit implementation of
+					/// <see cref="global::ISame{T, T2}" />
+					/// </summary>
+					internal global::IImplementCreateExpectations<T, T2>.SetupsExpectations.ExplicitForISame1Expectations ExplicitForISame1 { get => new(this.parent); }
 					
 				}
 				
@@ -373,11 +381,11 @@ public static class ExplicitImplementationGeneratorTests
 					internal SetupsExpectations(global::IImplementCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal sealed class ExplicitForISameExpectations
+					internal sealed class ExplicitForISame0Expectations
 					{
 						private readonly global::IImplementCreateExpectations parent;
 					
-						internal ExplicitForISameExpectations(global::IImplementCreateExpectations parent) =>
+						internal ExplicitForISame0Expectations(global::IImplementCreateExpectations parent) =>
 							this.parent = parent;
 					
 						internal global::IImplementCreateExpectations.Adornments.AdornmentsForHandler0 Run()
@@ -391,13 +399,17 @@ public static class ExplicitImplementationGeneratorTests
 						
 					}
 					
-					internal global::IImplementCreateExpectations.SetupsExpectations.ExplicitForISameExpectations ExplicitForISame { get => new(this.parent); }
+					/// <summary>
+					/// Gets the expectations for the explicit implementation of
+					/// <see cref="global::One.ISame" />
+					/// </summary>
+					internal global::IImplementCreateExpectations.SetupsExpectations.ExplicitForISame0Expectations ExplicitForISame0 { get => new(this.parent); }
 					
-					internal sealed class ExplicitForISameExpectations
+					internal sealed class ExplicitForISame1Expectations
 					{
 						private readonly global::IImplementCreateExpectations parent;
 					
-						internal ExplicitForISameExpectations(global::IImplementCreateExpectations parent) =>
+						internal ExplicitForISame1Expectations(global::IImplementCreateExpectations parent) =>
 							this.parent = parent;
 					
 						internal global::IImplementCreateExpectations.Adornments.AdornmentsForHandler1 Run()
@@ -411,7 +423,11 @@ public static class ExplicitImplementationGeneratorTests
 						
 					}
 					
-					internal global::IImplementCreateExpectations.SetupsExpectations.ExplicitForISameExpectations ExplicitForISame { get => new(this.parent); }
+					/// <summary>
+					/// Gets the expectations for the explicit implementation of
+					/// <see cref="global::Two.ISame" />
+					/// </summary>
+					internal global::IImplementCreateExpectations.SetupsExpectations.ExplicitForISame1Expectations ExplicitForISame1 { get => new(this.parent); }
 					
 				}
 				

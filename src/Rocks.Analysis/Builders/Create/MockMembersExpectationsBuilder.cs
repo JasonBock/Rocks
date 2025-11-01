@@ -37,14 +37,29 @@ internal static class MockMembersExpectationsBuilder
 		// Then, get all of the type names that need explicit implementation.
 		var explicitTypes = new HashSet<ITypeReferenceModel>(
 			type.Methods.Where(method => method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes).Select(method => method.ContainingType)
-				.Concat(type.Properties.Where(property => property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes).Select(properties => properties.ContainingType)));
+				.Concat(type.Properties.Where(property => property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes).Select(properties => properties.ContainingType)))
+			.ToList();
 
-		foreach (var explicitType in explicitTypes)
+		var index = 0;
+
+		for (var i = 0; i < explicitTypes.Count; i++)
 		{
-			var explicitExpectationName = $$"""ExplicitFor{{explicitType.Name}}Expectations""";
+			var explicitType = explicitTypes[i];
 
-			// TODO: How do we disambiguate between two interfaces that have the same name, even fully-qualified?
-			// Or two interfaces that have the same name but different type parameter counts?
+			string explicitTypeName;
+
+			if (explicitTypes.Count(type => type.Name == explicitType.Name) > 1)
+			{
+				explicitTypeName = $"{explicitType.Name}{index}";
+				index++;
+			}
+			else
+			{
+				explicitTypeName = $"{explicitType.Name}";
+			}
+
+			var explicitExpectationName = $$"""ExplicitFor{{explicitTypeName}}Expectations""";
+
 			writer.WriteLines(
 				$$"""
 				internal sealed class {{explicitExpectationName}}
@@ -59,14 +74,14 @@ internal static class MockMembersExpectationsBuilder
 
 			// For each explicit implementation type, generate methods, properties, and indexers.
 			var explicitMethods = type.Methods.Where(
-				method => 
+				method =>
 					method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes &&
 					method.ContainingType == explicitType)
 				.ToList();
 			MethodExpectationsBuilder.Build(writer, type, explicitMethods, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 
 			var explicitProperties = type.Properties.Where(
-				property => 
+				property =>
 					property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes &&
 					property.ContainingType == explicitType)
 				.ToList();
@@ -77,7 +92,11 @@ internal static class MockMembersExpectationsBuilder
 				$$"""
 				}
 
-				internal {{expectationsFullyQualifiedName}}.SetupsExpectations.{{explicitExpectationName}} ExplicitFor{{explicitType.Name}} { get => new(this.parent); }
+				/// <summary>
+				/// Gets the expectations for the explicit implementation of
+				/// <see cref="{{explicitType.FullyQualifiedName.Replace('<', '{').Replace('>', '}')}}" />
+				/// </summary>
+				internal {{expectationsFullyQualifiedName}}.SetupsExpectations.{{explicitExpectationName}} ExplicitFor{{explicitTypeName}} { get => new(this.parent); }
 
 				""");
 		}

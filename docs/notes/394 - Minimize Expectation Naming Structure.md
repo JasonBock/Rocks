@@ -207,6 +207,7 @@ internal global::Autofac.Core.IActivatedEventArgsPartialTarget<T>.ServicePropert
     * Between the two gen'd methods for optional arguments
 * Naming collisions
     * A type could have a member the same name that is generated for an explicit implementation
+* Add XML comments for all generated code to help/assist the user. See explicit implementation for an example.
 * Testing strategy
     * Run code gen tests
         * Just run the `System` ones first
