@@ -349,22 +349,35 @@ public static class DefaultValuesGeneratorTests
 			internal sealed class IGenericDefaultCreateExpectations
 				: global::Rocks.Expectations
 			{
-				internal global::IGenericDefaultCreateExpectations.Adornments.AdornmentsForHandler0<T> Setup<T>(global::Rocks.Argument<T> @initialValue)
+				private readonly global::IGenericDefaultCreateExpectations.SetupsExpectations setups;
+				
+				internal sealed class SetupsExpectations
 				{
-					global::Rocks.Exceptions.ExpectationException.ThrowIf(this.WasInstanceInvoked);
-					global::System.ArgumentNullException.ThrowIfNull(@initialValue);
-					
-					var @handler = new global::IGenericDefaultCreateExpectations.Handler0<T>
+					private readonly global::IGenericDefaultCreateExpectations parent;
+				
+					internal SetupsExpectations(global::IGenericDefaultCreateExpectations parent) =>
+						this.parent = parent;
+				
+					internal global::IGenericDefaultCreateExpectations.Adornments.AdornmentsForHandler0<T> Setup<T>(global::Rocks.Argument<T> @initialValue)
 					{
-						@initialValue = @initialValue.Transform(default!),
-					};
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+						global::System.ArgumentNullException.ThrowIfNull(@initialValue);
+						
+						var @handler = new global::IGenericDefaultCreateExpectations.Handler0<T>
+						{
+							@initialValue = @initialValue.Transform(default!),
+						};
+						
+						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
+						else { this.parent.handlers0.Add(@handler); }
+						return new(@handler);
+					}
+					internal global::IGenericDefaultCreateExpectations.Adornments.AdornmentsForHandler0<T> Setup<T>(T @initialValue = default!) =>
+						this.Setup<T>(global::Rocks.Arg.Is(@initialValue));
 					
-					if (this.handlers0 is null) { this.handlers0 = new(@handler); }
-					else { this.handlers0.Add(@handler); }
-					return new(@handler);
 				}
-				internal global::IGenericDefaultCreateExpectations.Adornments.AdornmentsForHandler0<T> Setup<T>(T @initialValue = default!) =>
-					this.Setup<T>(global::Rocks.Arg.Is(@initialValue));
+				
+				internal global::IGenericDefaultCreateExpectations.SetupsExpectations Setups => this.setups;
 				
 				internal sealed class Handler0<T>
 					: global::Rocks.Handler<global::System.Action<T>>
@@ -445,7 +458,7 @@ public static class DefaultValuesGeneratorTests
 					private global::IGenericDefaultCreateExpectations Expectations { get; }
 				}
 				
-				public IGenericDefaultCreateExpectations() { }
+				public IGenericDefaultCreateExpectations() => this.setups = new(this);
 				
 				internal global::IGenericDefault Instance()
 				{

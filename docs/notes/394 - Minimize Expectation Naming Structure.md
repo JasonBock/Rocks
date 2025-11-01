@@ -98,7 +98,7 @@ Code:
 Instance
 
 ```c#
-var (expectations, setups) = context.Create<IThingCreateExpectations>();
+var expectations = context.Create<IThingCreateExpectations>();
 var setups = expectations.Setups;
 setups.DoThis().ExpectedCallCount(2);
 setups.Name.Sets("name");
@@ -173,23 +173,27 @@ TODO:
             * DONE - `GenerateWhenExplicitImplementationHasDefaultValuesAsync`
             * DONE - `GenerateWhenGenericParameterHasOptionalDefaultValueAsync`
             * DONE - `GenerateWithPositiveInfinityAsync`
-* Create a "SetupsExpectations" class that contains all of the expectations stuff that's generated, and then there will be one `Setups` property. This will eliminate **all** naming conflicts that could happen.
-    * `MethodGeneratorTests`
+* DONE - Naming collisions
+    * DONE - A type could have a member the same name that is generated for an explicit implementation
+* DONE - Create a "SetupsExpectations" class that contains all of the expectations stuff that's generated, and then there will be one `Setups` property. This will eliminate **all** naming conflicts that could happen.
+    * DONE - `MethodGeneratorTests`
         * DONE - `GenerateAsync`
         * DONE - `GenerateWhenOptionalArgumentsAndParamsExistAsync`
-        * `GenerateWhenOptionalArgumentsExistAsync`
-        * `GenerateWithOptionalParametersAndParamsAsync`
+        * DONE - `GenerateWhenOptionalArgumentsExistAsync`
+        * DONE - `GenerateWithOptionalParametersAndParamsAsync`
     * DONE - `PropertyGeneratorTests`
         * DONE - `GenerateAsync`
-    * `IndexerGeneratorTests`
-        * `GenerateWhenIndexerHasOptionalArgumentsAsync`
-    * `ExplicitImplementationGeneratorTests`
+    * DONE - `IndexerGeneratorTests`
+        * DONE - `GenerateWhenIndexerHasOptionalArgumentsAsync`
+    * DONE - `ExplicitImplementationGeneratorTests`
         * DONE - `GenerateWithExplicitMethodAsync`
         * DONE - `GenerateWithExplicitPropertySetterAsync`
-    * `DefaultValuesGeneratorTests`
+        * DONE - `GenerateWithDuplicateInterfaceNamesDifferingByTypeParametersAsync`
+        * DONE - `GenerateWithDuplicateInterfaceNamesAsync`
+    * DONE - `DefaultValuesGeneratorTests`
         * DONE - `GenerateWhenExplicitImplementationHasDefaultValuesAsync`
-        * `GenerateWhenGenericParameterHasOptionalDefaultValueAsync`
-        * `GenerateWithPositiveInfinityAsync`
+        * DONE - `GenerateWhenGenericParameterHasOptionalDefaultValueAsync`
+        * DONE - `GenerateWithPositiveInfinityAsync`
 * Use expression bodies for the getters. For example, instead of this:
 
 ```c#
@@ -202,11 +206,13 @@ We generate this:
 internal global::Autofac.Core.IActivatedEventArgsPartialTarget<T>.ServicePropertyExpectations Service => new(this);
 ```
 * Add some space
-    * Between `HandlerX` and field definition groupings
-    * All the new expectations changes I made (gotta make things pretty)
-    * Between the two gen'd methods for optional arguments
-* Naming collisions
-    * A type could have a member the same name that is generated for an explicit implementation
+    * Create
+        * Between `HandlerX` and field definition groupings
+        * All the new expectations changes I made (gotta make things pretty)
+        * Between the two gen'd methods for optional arguments
+        * Between generated adornments classes
+    * Make
+        * Between all gen'd members
 * Add XML comments for all generated code to help/assist the user. See explicit implementation for an example.
 * Testing strategy
     * Run code gen tests

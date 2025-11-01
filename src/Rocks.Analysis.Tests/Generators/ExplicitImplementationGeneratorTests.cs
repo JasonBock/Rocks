@@ -673,6 +673,10 @@ public static class ExplicitImplementationGeneratorTests
 						
 					}
 					
+					/// <summary>
+					/// Gets the expectations for the explicit implementation of
+					/// <see cref="global::ILeft" />
+					/// </summary>
 					internal global::ILeftRightCreateExpectations.SetupsExpectations.ExplicitForILeftExpectations ExplicitForILeft { get => new(this.parent); }
 					
 					internal sealed class ExplicitForIRightExpectations
@@ -693,6 +697,10 @@ public static class ExplicitImplementationGeneratorTests
 						
 					}
 					
+					/// <summary>
+					/// Gets the expectations for the explicit implementation of
+					/// <see cref="global::IRight" />
+					/// </summary>
 					internal global::ILeftRightCreateExpectations.SetupsExpectations.ExplicitForIRightExpectations ExplicitForIRight { get => new(this.parent); }
 					
 				}
@@ -1248,6 +1256,10 @@ public static class ExplicitImplementationGeneratorTests
 						
 					}
 					
+					/// <summary>
+					/// Gets the expectations for the explicit implementation of
+					/// <see cref="global::ILeft" />
+					/// </summary>
 					internal global::ILeftRightCreateExpectations.SetupsExpectations.ExplicitForILeftExpectations ExplicitForILeft { get => new(this.parent); }
 					
 					internal sealed class ExplicitForIRightExpectations
@@ -1292,6 +1304,10 @@ public static class ExplicitImplementationGeneratorTests
 						
 					}
 					
+					/// <summary>
+					/// Gets the expectations for the explicit implementation of
+					/// <see cref="global::IRight" />
+					/// </summary>
 					internal global::ILeftRightCreateExpectations.SetupsExpectations.ExplicitForIRightExpectations ExplicitForIRight { get => new(this.parent); }
 					
 				}
