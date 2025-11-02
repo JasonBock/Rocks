@@ -45,18 +45,108 @@ public static class ShimBuilderGeneratorTests
 			internal sealed class IMutableComplexTypeCreateExpectations
 				: global::Rocks.Expectations
 			{
+				private readonly global::IMutableComplexTypeCreateExpectations.SetupsExpectations setups;
+				
+				internal sealed class SetupsExpectations
+				{
+					private readonly global::IMutableComplexTypeCreateExpectations parent;
+				
+					internal SetupsExpectations(global::IMutableComplexTypeCreateExpectations parent) =>
+						this.parent = parent;
+				
+					internal global::IMutableComplexTypeCreateExpectations.Adornments.AdornmentsForHandler0 ForceShims()
+					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+						var handler = new global::IMutableComplexTypeCreateExpectations.Handler0();
+						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(handler); }
+						else { this.parent.handlers0.Add(handler); }
+						return new(handler);
+					}
+					internal sealed class BaseTypePropertyExpectations
+					{
+						private readonly global::IMutableComplexTypeCreateExpectations parent;
+					
+						internal BaseTypePropertyExpectations(global::IMutableComplexTypeCreateExpectations parent) => 
+							this.parent = parent;
+					
+						internal global::IMutableComplexTypeCreateExpectations.Adornments.AdornmentsForHandler1 Gets()
+						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+							var handler = new global::IMutableComplexTypeCreateExpectations.Handler1();
+							if (this.parent.handlers1 is null) { this.parent.handlers1 = new(handler); }
+							else { this.parent.handlers1.Add(handler); }
+							return new(handler);
+						}
+					}
+					
+					internal global::IMutableComplexTypeCreateExpectations.SetupsExpectations.BaseTypePropertyExpectations BaseType => new(this.parent);
+					
+					internal sealed class ExplicitForIMutableTypeBaseExpectations
+					{
+						private readonly global::IMutableComplexTypeCreateExpectations parent;
+					
+						internal ExplicitForIMutableTypeBaseExpectations(global::IMutableComplexTypeCreateExpectations parent) =>
+							this.parent = parent;
+					
+						internal sealed class BaseTypePropertyExpectations
+						{
+							private readonly global::IMutableComplexTypeCreateExpectations parent;
+						
+							internal BaseTypePropertyExpectations(global::IMutableComplexTypeCreateExpectations parent) => 
+								this.parent = parent;
+						
+							internal global::IMutableComplexTypeCreateExpectations.Adornments.AdornmentsForHandler2 Gets()
+							{
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+								var handler = new global::IMutableComplexTypeCreateExpectations.Handler2();
+								if (this.parent.handlers2 is null) { this.parent.handlers2 = new(handler); }
+								else { this.parent.handlers2.Add(handler); }
+								return new(handler);
+							}
+							internal global::IMutableComplexTypeCreateExpectations.Adornments.AdornmentsForHandler3 Sets(global::Rocks.Argument<global::IMutableTypeBase?> @value)
+							{
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+								global::System.ArgumentNullException.ThrowIfNull(@value);
+							
+								var handler = new global::IMutableComplexTypeCreateExpectations.Handler3
+								{
+									value = @value,
+								};
+							
+								if (this.parent.handlers3 is null) { this.parent.handlers3 = new(handler); }
+								else { this.parent.handlers3.Add(handler); }
+								return new(handler);
+							}
+						}
+						
+						internal global::IMutableComplexTypeCreateExpectations.SetupsExpectations.ExplicitForIMutableTypeBaseExpectations.BaseTypePropertyExpectations BaseType => new(this.parent);
+						
+					}
+					
+					/// <summary>
+					/// Gets the expectations for the explicit implementation of
+					/// <see cref="global::IMutableTypeBase" />
+					/// </summary>
+					internal global::IMutableComplexTypeCreateExpectations.SetupsExpectations.ExplicitForIMutableTypeBaseExpectations ExplicitForIMutableTypeBase => new(this.parent);
+				}
+				
+				internal global::IMutableComplexTypeCreateExpectations.SetupsExpectations Setups => this.setups;
+				
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Func<bool>, bool>
 				{ }
 				private global::Rocks.Handlers<global::IMutableComplexTypeCreateExpectations.Handler0>? @handlers0;
+				
 				internal sealed class Handler1
 					: global::Rocks.Handler<global::System.Func<global::IMutableComplexType?>, global::IMutableComplexType?>
 				{ }
 				private global::Rocks.Handlers<global::IMutableComplexTypeCreateExpectations.Handler1>? @handlers1;
+				
 				internal sealed class Handler2
 					: global::Rocks.Handler<global::System.Func<global::IMutableTypeBase?>, global::IMutableTypeBase?>
 				{ }
 				private global::Rocks.Handlers<global::IMutableComplexTypeCreateExpectations.Handler2>? @handlers2;
+				
 				internal sealed class Handler3
 					: global::Rocks.Handler<global::System.Action<global::IMutableTypeBase?>>
 				{
@@ -90,6 +180,7 @@ public static class ShimBuilderGeneratorTests
 					: global::IMutableComplexType
 				{
 					private readonly global::IMutableComplexType shimForShimIMutableComplexType;
+					
 					public Mock(global::IMutableComplexTypeCreateExpectations @expectations)
 					{
 						(this.Expectations, this.shimForShimIMutableComplexType) = (@expectations, new ShimIMutableComplexType(this));
@@ -112,9 +203,9 @@ public static class ShimBuilderGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, global::Rocks.PropertyAccessor.Get)]
 					public global::IMutableComplexType? BaseType
 					{
+						[global::Rocks.MemberIdentifier(1)]
 						get
 						{
 							if (this.Expectations.handlers1 is not null)
@@ -133,10 +224,9 @@ public static class ShimBuilderGeneratorTests
 								""");
 						}
 					}
-					[global::Rocks.MemberIdentifier(2, global::Rocks.PropertyAccessor.Get)]
-					[global::Rocks.MemberIdentifier(3, global::Rocks.PropertyAccessor.Set)]
 					global::IMutableTypeBase? global::IMutableTypeBase.BaseType
 					{
+						[global::Rocks.MemberIdentifier(2)]
 						get
 						{
 							if (this.Expectations.handlers2 is not null)
@@ -154,6 +244,7 @@ public static class ShimBuilderGeneratorTests
 								No handlers match for {this.GetType().GetMemberDescription(2)}
 								""");
 						}
+						[global::Rocks.MemberIdentifier(3)]
 						set
 						{
 							if (this.Expectations.handlers3 is not null)
@@ -192,7 +283,6 @@ public static class ShimBuilderGeneratorTests
 						}
 					}
 					
-					
 					private sealed class ShimIMutableComplexType
 						: global::IMutableComplexType
 					{
@@ -212,102 +302,11 @@ public static class ShimBuilderGeneratorTests
 							set => ((global::IMutableTypeBase)this.mock).BaseType = value!;
 						}
 					}
-					private global::IMutableComplexTypeCreateExpectations Expectations { get; }
-				}
-				
-				internal sealed class MethodExpectations
-				{
-					internal MethodExpectations(global::IMutableComplexTypeCreateExpectations expectations) =>
-						this.Expectations = expectations;
-					
-					internal global::IMutableComplexTypeCreateExpectations.Adornments.AdornmentsForHandler0 ForceShims()
-					{
-						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-						var handler = new global::IMutableComplexTypeCreateExpectations.Handler0();
-						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
-						else { this.Expectations.handlers0.Add(handler); }
-						return new(handler);
-					}
 					
 					private global::IMutableComplexTypeCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class PropertyExpectations
-				{
-					internal sealed class PropertyGetterExpectations
-					{
-						internal PropertyGetterExpectations(global::IMutableComplexTypeCreateExpectations expectations) =>
-							this.Expectations = expectations;
-						
-						internal global::IMutableComplexTypeCreateExpectations.Adornments.AdornmentsForHandler1 BaseType()
-						{
-							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-							var handler = new global::IMutableComplexTypeCreateExpectations.Handler1();
-							if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
-							else { this.Expectations.handlers1.Add(handler); }
-							return new(handler);
-						}
-						private global::IMutableComplexTypeCreateExpectations Expectations { get; }
-					}
-					
-					
-					internal PropertyExpectations(global::IMutableComplexTypeCreateExpectations expectations) =>
-						(this.Getters) = (new(expectations));
-					
-					internal global::IMutableComplexTypeCreateExpectations.PropertyExpectations.PropertyGetterExpectations Getters { get; }
-				}
-				internal sealed class ExplicitPropertyExpectationsForIMutableTypeBase
-				{
-					internal sealed class ExplicitPropertyGetterExpectationsForIMutableTypeBase
-					{
-						internal ExplicitPropertyGetterExpectationsForIMutableTypeBase(global::IMutableComplexTypeCreateExpectations expectations) =>
-							this.Expectations = expectations;
-						
-						internal global::IMutableComplexTypeCreateExpectations.Adornments.AdornmentsForHandler2 BaseType()
-						{
-							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-							var handler = new global::IMutableComplexTypeCreateExpectations.Handler2();
-							if (this.Expectations.handlers2 is null) { this.Expectations.handlers2 = new(handler); }
-							else { this.Expectations.handlers2.Add(handler); }
-							return new(handler);
-						}
-						private global::IMutableComplexTypeCreateExpectations Expectations { get; }
-					}
-					internal sealed class ExplicitPropertySetterExpectationsForIMutableTypeBase
-					{
-						internal ExplicitPropertySetterExpectationsForIMutableTypeBase(global::IMutableComplexTypeCreateExpectations expectations) =>
-							this.Expectations = expectations;
-						
-						internal global::IMutableComplexTypeCreateExpectations.Adornments.AdornmentsForHandler3 BaseType(global::Rocks.Argument<global::IMutableTypeBase?> @value)
-						{
-							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-							global::System.ArgumentNullException.ThrowIfNull(@value);
-						
-							var handler = new global::IMutableComplexTypeCreateExpectations.Handler3
-							{
-								value = @value,
-							};
-						
-							if (this.Expectations.handlers3 is null) { this.Expectations.handlers3 = new(handler); }
-							else { this.Expectations.handlers3.Add(handler); }
-							return new(handler);
-						}
-						private global::IMutableComplexTypeCreateExpectations Expectations { get; }
-					}
-					
-					internal ExplicitPropertyExpectationsForIMutableTypeBase(global::IMutableComplexTypeCreateExpectations expectations) =>
-						(this.Getters, this.Setters) = (new(expectations), new(expectations));
-					
-					internal global::IMutableComplexTypeCreateExpectations.ExplicitPropertyExpectationsForIMutableTypeBase.ExplicitPropertyGetterExpectationsForIMutableTypeBase Getters { get; }
-					internal global::IMutableComplexTypeCreateExpectations.ExplicitPropertyExpectationsForIMutableTypeBase.ExplicitPropertySetterExpectationsForIMutableTypeBase Setters { get; }
-				}
-				
-				internal global::IMutableComplexTypeCreateExpectations.MethodExpectations Methods { get; }
-				internal global::IMutableComplexTypeCreateExpectations.PropertyExpectations Properties { get; }
-				internal global::IMutableComplexTypeCreateExpectations.ExplicitPropertyExpectationsForIMutableTypeBase ExplicitPropertiesForIMutableTypeBase { get; }
-				
-				public IMutableComplexTypeCreateExpectations() =>
-					(this.Methods, this.Properties, this.ExplicitPropertiesForIMutableTypeBase) = (new(this), new(this), new(this));
+				public IMutableComplexTypeCreateExpectations() => this.setups = new(this);
 				
 				internal global::IMutableComplexType Instance()
 				{
@@ -337,18 +336,21 @@ public static class ShimBuilderGeneratorTests
 						public AdornmentsForHandler0(global::IMutableComplexTypeCreateExpectations.Handler0 handler)
 							: base(handler) { }
 					}
+					
 					public sealed class AdornmentsForHandler1
 						: global::Rocks.Adornments<AdornmentsForHandler1, global::IMutableComplexTypeCreateExpectations.Handler1, global::System.Func<global::IMutableComplexType?>, global::IMutableComplexType?>, IAdornmentsForIMutableComplexType<AdornmentsForHandler1>
 					{
 						public AdornmentsForHandler1(global::IMutableComplexTypeCreateExpectations.Handler1 handler)
 							: base(handler) { }
 					}
+					
 					public sealed class AdornmentsForHandler2
 						: global::Rocks.Adornments<AdornmentsForHandler2, global::IMutableComplexTypeCreateExpectations.Handler2, global::System.Func<global::IMutableTypeBase?>, global::IMutableTypeBase?>, IAdornmentsForIMutableComplexType<AdornmentsForHandler2>
 					{
 						public AdornmentsForHandler2(global::IMutableComplexTypeCreateExpectations.Handler2 handler)
 							: base(handler) { }
 					}
+					
 					public sealed class AdornmentsForHandler3
 						: global::Rocks.Adornments<AdornmentsForHandler3, global::IMutableComplexTypeCreateExpectations.Handler3, global::System.Action<global::IMutableTypeBase?>>, IAdornmentsForIMutableComplexType<AdornmentsForHandler3>
 					{
@@ -394,10 +396,12 @@ public static class ShimBuilderGeneratorTests
 					{
 						return default!;
 					}
+					
 					public global::IMutableComplexType? BaseType
 					{
 						get => default!;
 					}
+					
 					global::IMutableTypeBase? global::IMutableTypeBase.BaseType
 					{
 						get => default!;

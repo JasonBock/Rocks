@@ -49,7 +49,6 @@ internal static class MockBuilder
 		MockMembersExpectationsBuilder.Build(writer, mockType, expectationsFQN, adornmentsPipeline);
 
 		MockHandlerListBuilder.Build(writer, mockType, expectationsFQN);
-		writer.WriteLine();
 
 		MockExpectationsVerifyBuilder.Build(writer, mockType);
 		writer.WriteLine();

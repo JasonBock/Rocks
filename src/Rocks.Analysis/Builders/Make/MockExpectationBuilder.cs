@@ -34,6 +34,7 @@ internal static class MockExpectationBuilder
 
 		MockConstructorExpectationsBuilder.Build(writer, mockType, mockType.ExpectationsFullyQualifiedName);
 		writer.WriteLine();
+
 		MockMakeBuilder.Build(writer, mockType);
 
 		writer.Indent--;

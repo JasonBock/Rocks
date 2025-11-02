@@ -100,8 +100,8 @@ internal static class MockTypeBuilder
 	{
 		foreach (var shimType in type.Shims)
 		{
-			writer.WriteLine();
 			ShimBuilder.Build(writer, shimType);
+			writer.WriteLine();
 		}
 	}
 
@@ -111,18 +111,32 @@ internal static class MockTypeBuilder
 		{
 			writer.WriteLine($"private readonly {shimType.Type.FullyQualifiedName} shimFor{ShimBuilder.GetShimName(shimType.Type)};");
 		}
+
+		if (type.Shims.Length > 0)
+		{
+			writer.WriteLine();
+		}
 	}
 
 	private static void BuildRefReturnFields(IndentedTextWriter writer, TypeMockModel type)
 	{
+		var wereFieldsGenerated = false;
+
 		foreach (var method in type.Methods.Where(_ => _.ReturnsByRef || _.ReturnsByRefReadOnly))
 		{
+			wereFieldsGenerated = true;
 			writer.WriteLine($"private {method.ReturnType.FullyQualifiedName} rr{method.MemberIdentifier};");
 		}
 
 		foreach (var property in type.Properties.Where(_ => _.ReturnsByRef || _.ReturnsByRefReadOnly))
 		{
+			wereFieldsGenerated = true;
 			writer.WriteLine($"private {property.Type.FullyQualifiedName} rr{property.MemberIdentifier};");
+		}
+
+		if (wereFieldsGenerated)
+		{
+			writer.WriteLine();
 		}
 	}
 }

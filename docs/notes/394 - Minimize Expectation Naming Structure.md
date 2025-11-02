@@ -194,7 +194,7 @@ TODO:
         * DONE - `GenerateWhenExplicitImplementationHasDefaultValuesAsync`
         * DONE - `GenerateWhenGenericParameterHasOptionalDefaultValueAsync`
         * DONE - `GenerateWithPositiveInfinityAsync`
-* Use expression bodies for the getters. For example, instead of this:
+* DONE - Use expression bodies for the getters. For example, instead of this:
 
 ```c#
 internal global::Autofac.Core.IActivatedEventArgsPartialTarget<T>.ServicePropertyExpectations Service { get => new(this); }
@@ -207,21 +207,23 @@ internal global::Autofac.Core.IActivatedEventArgsPartialTarget<T>.ServicePropert
 ```
 * Add some space
     * Create
-        * Between `HandlerX` and field definition groupings
-        * All the new expectations changes I made (gotta make things pretty)
-        * Between the two gen'd methods for optional arguments
-        * Between generated adornments classes
+        * DONE - Between `HandlerX` and field definition groupings
+        * DONE - All the new expectations changes I made (gotta make things pretty)
+        * DONE - Between the two gen'd methods for optional arguments
+        * DONE - Between generated adornments classes
+        * DONE - Shims
+        * Mock type generation
     * Make
-        * Between all gen'd members
+        * DONE - Between all gen'd members
 * Add XML comments for all generated code to help/assist the user. See explicit implementation for an example.
 * Testing strategy
     * Run code gen tests
-        * Just run the `System` ones first
-        * Then add some more
-        * Then add all
     * Update and run integration tests
     * Update and run unit tests
+    * Add unit and integeration tests for
+        * Ref returns
 * Clean up builders
     * I think I can get rid of `PropertyExpectationTypeName`
 * Update all documentation such that it reflects the new syntax.
     * Consider writing an "upgrade" doc that provides assistance on how test code should be changes from the old to the new style.
+* Release a new alpha

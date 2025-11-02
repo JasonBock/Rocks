@@ -600,9 +600,9 @@ public static class DefaultValuesGeneratorTests
 						else { this.parent.handlers0.Add(@handler); }
 						return new(@handler);
 					}
+					
 					internal global::IUseInfinityCreateExpectations.Adornments.AdornmentsForHandler0 Use(double @value = double.PositiveInfinity) =>
 						this.Use(global::Rocks.Arg.Is(@value));
-					
 				}
 				
 				internal global::IUseInfinityCreateExpectations.SetupsExpectations Setups => this.setups;

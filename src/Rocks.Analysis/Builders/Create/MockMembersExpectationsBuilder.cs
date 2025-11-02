@@ -97,8 +97,12 @@ internal static class MockMembersExpectationsBuilder
 				/// <see cref="{{explicitType.FullyQualifiedName.Replace('<', '{').Replace('>', '}')}}" />
 				/// </summary>
 				internal {{expectationsFullyQualifiedName}}.SetupsExpectations.{{explicitExpectationName}} ExplicitFor{{explicitTypeName}} => new(this.parent);
-
 				""");
+
+			if (i != explicitTypes.Count - 1)
+			{
+				writer.WriteLine();
+			}
 		}
 
 		writer.Indent--;

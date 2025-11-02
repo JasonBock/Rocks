@@ -26,6 +26,8 @@ internal static class MockAdornmentsBuilder
 			""");
 		writer.WriteLine();
 
+		var index = 0;
+
 		// Create each custom adornment type.
 		foreach (var adornments in adornmentsPipelineInformation)
 		{
@@ -51,6 +53,13 @@ internal static class MockAdornmentsBuilder
 			}
 
 			writer.WriteLine("}");
+
+			if (index != adornmentsPipelineInformation.Count - 1)
+			{
+				writer.WriteLine();
+			}
+
+			index++;
 		}
 
 		writer.Indent--;

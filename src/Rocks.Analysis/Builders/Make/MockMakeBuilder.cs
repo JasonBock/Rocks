@@ -34,8 +34,10 @@ internal static class MockMakeBuilder
 
 		writer.WriteLine();
 
-		foreach (var method in mockType.Methods)
+		for (var i = 0; i < mockType.Methods.Length; i++)
 		{
+			var method = mockType.Methods[i];
+
 			if (method.ReturnsVoid)
 			{
 				MockMethodVoidBuilder.Build(writer, method);
@@ -44,16 +46,53 @@ internal static class MockMakeBuilder
 			{
 				MockMethodValueBuilder.Build(writer, method);
 			}
+
+			if (i != mockType.Methods.Length - 1)
+			{
+				writer.WriteLine();
+			}
 		}
 
-		foreach (var property in mockType.Properties.Where(_ => !_.IsIndexer))
+		var properties = mockType.Properties.Where(_ => !_.IsIndexer).ToArray();
+
+		if (properties.Length > 0)
 		{
-			MockPropertyBuilder.Build(writer, property);
+			if (mockType.Methods.Length > 0)
+			{
+				writer.WriteLine();
+			}
+
+			for (var i = 0; i < properties.Length; i++)
+			{
+				var property = properties[i];
+				MockPropertyBuilder.Build(writer, property);
+
+				if (i != properties.Length - 1)
+				{
+					writer.WriteLine();
+				}
+			}
 		}
 
-		foreach (var indexer in mockType.Properties.Where(_ => _.IsIndexer))
+		var indexers = mockType.Properties.Where(_ => _.IsIndexer).ToArray();
+
+		if (indexers.Length > 0)
 		{
-			MockIndexerBuilder.Build(writer, indexer);
+			if (mockType.Methods.Length > 0 || properties.Length > 0)
+			{
+				writer.WriteLine();
+			}
+
+			for (var i = 0; i < indexers.Length; i++)
+			{
+				var indexer = indexers[i];
+				MockIndexerBuilder.Build(writer, indexer);
+
+				if (i != indexers.Length - 1)
+				{
+					writer.WriteLine();
+				}
+			}
 		}
 
 		if (mockType.Events.Length > 0)
@@ -68,14 +107,23 @@ internal static class MockMakeBuilder
 
 	private static void BuildRefReturnFields(IndentedTextWriter writer, TypeMockModel mockType)
 	{
+		var wereFieldsGenerated = false;
+
 		foreach (var method in mockType.Methods.Where(_ => _.ReturnsByRef || _.ReturnsByRefReadOnly))
 		{
+			wereFieldsGenerated = true;
 			writer.WriteLine($"private {method.ReturnType.FullyQualifiedName} rr{method.MemberIdentifier};");
 		}
 
 		foreach (var property in mockType.Properties.Where(_ => _.ReturnsByRef || _.ReturnsByRefReadOnly))
 		{
+			wereFieldsGenerated = true;
 			writer.WriteLine($"private {property.Type.FullyQualifiedName} rr{property.MemberIdentifier};");
+		}
+
+		if (wereFieldsGenerated)
+		{
+			writer.WriteLine();
 		}
 	}
 }

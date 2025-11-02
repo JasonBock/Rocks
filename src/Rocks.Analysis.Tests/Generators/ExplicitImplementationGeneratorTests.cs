@@ -396,7 +396,6 @@ public static class ExplicitImplementationGeneratorTests
 							else { this.parent.handlers0.Add(handler); }
 							return new(handler);
 						}
-						
 					}
 					
 					/// <summary>
@@ -420,7 +419,6 @@ public static class ExplicitImplementationGeneratorTests
 							else { this.parent.handlers1.Add(handler); }
 							return new(handler);
 						}
-						
 					}
 					
 					/// <summary>
@@ -428,7 +426,6 @@ public static class ExplicitImplementationGeneratorTests
 					/// <see cref="global::Two.ISame" />
 					/// </summary>
 					internal global::IImplementCreateExpectations.SetupsExpectations.ExplicitForISame1Expectations ExplicitForISame1 => new(this.parent);
-					
 				}
 				
 				internal global::IImplementCreateExpectations.SetupsExpectations Setups => this.setups;
@@ -437,6 +434,7 @@ public static class ExplicitImplementationGeneratorTests
 					: global::Rocks.Handler<global::System.Action>
 				{ }
 				private global::Rocks.Handlers<global::IImplementCreateExpectations.Handler0>? @handlers0;
+				
 				internal sealed class Handler1
 					: global::Rocks.Handler<global::System.Action>
 				{ }

@@ -173,6 +173,7 @@ internal static class MethodExpectationsMethodBuilder
 
 			if (needsGenerationWithDefaults)
 			{
+				writer.WriteLine();
 				BuildImplementation(writer, type, method, true, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 			}
 		}

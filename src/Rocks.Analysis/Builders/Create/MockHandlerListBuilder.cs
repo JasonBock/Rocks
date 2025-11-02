@@ -97,6 +97,7 @@ internal static class MockHandlerListBuilder
 			$"private global::Rocks.Handlers<{expectationsFullyQualifiedName}.Handler{memberIdentifier}>? @handlers{memberIdentifier};" :
 			$"private global::Rocks.Handlers<global::Rocks.Handler>? @handlers{memberIdentifier};";
 		writer.WriteLine(handlers);
+		writer.WriteLine();
 	}
 
 	private static void BuildMethodHandlerTypes(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName)
