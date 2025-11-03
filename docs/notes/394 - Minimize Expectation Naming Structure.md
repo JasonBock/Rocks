@@ -205,7 +205,7 @@ We generate this:
 ```c#
 internal global::Autofac.Core.IActivatedEventArgsPartialTarget<T>.ServicePropertyExpectations Service => new(this);
 ```
-* Add some space
+* DONE (for now) - Add some space
     * Create
         * DONE - Between `HandlerX` and field definition groupings
         * DONE - All the new expectations changes I made (gotta make things pretty)
@@ -215,15 +215,7 @@ internal global::Autofac.Core.IActivatedEventArgsPartialTarget<T>.ServicePropert
         * Mock type generation
     * Make
         * DONE - Between all gen'd members
-* Add XML comments for all generated code to help/assist the user. See explicit implementation for an example.
-    * `Expectations`-based type
-        * `.Setups`
-            * Method
-            * Property
-            * Indexer
-        * Handlers
-        * Constructor(s)
-        * Adornments
+* In the implementations for methods that have parameters and indexers, `@handler` is used, but otherwise it's `handler`. Should make that consistent.
 * Testing strategy
     * DONE - Run code gen tests
     * DONE - Update and run integration tests
@@ -249,3 +241,29 @@ To update code to the new format, follow these steps:
 * Indexers
     * Replace `.Indexers().Getters().This(...)` with `.Setups[...].Gets()`
     * Replace `.Indexers().Setters().This(value, ...)` with `.Setups[...].Sets(value)`
+
+* Future
+    * Right now the expectations class and classes within this class are `internal`. It may be desirable for a user to specify that `internal` types should be `public` as these types will be used in another library. Consider letting developers change that in the `[Rock]` or `[RockPartial]` attributes.
+    * Maybe projected types like `ArgIterator` can be added to the `Rocks` library directly, now that we have `Rocks` and `Rocks.Analysis`, where `Rocks` currently targets .NET 9.
+    * Add XML comments for all generated code to help/assist the user. See explicit implementation for an example.
+        * `Expectations`-based type
+            * `.Setups`
+                * Method
+                    * Should I also do parameters and returns?
+                * Property
+                * Indexer
+                * Explicit implementation class
+                    ```c#
+                    $$"""
+                    /// <summary>
+                    /// Gets the expectations for the explicit implementation of
+                    /// <see cref="{{explicitType.FullyQualifiedName.Replace('<', '{').Replace('>', '}')}}" />
+                    /// </summary>
+                    """
+                    ```
+                * `Setups` property getter
+            * Handlers
+            * `Verify()`
+            * Constructor(s)
+            * `Instance()`
+            * Adornments

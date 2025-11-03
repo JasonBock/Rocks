@@ -41,117 +41,117 @@ public static class ObsoleteGeneratorTests
 			
 			using Rocks.Extensions;
 			
-			namespace MockTests
+			namespace MockTests;
+			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+			internal sealed class IContainerCreateExpectations
+				: global::Rocks.Expectations
 			{
-				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-				internal sealed class IContainerCreateExpectations
-					: global::Rocks.Expectations
+				private readonly global::MockTests.IContainerCreateExpectations.SetupsExpectations setups;
+				
+				internal sealed class SetupsExpectations
 				{
-					internal sealed class Handler0
-						: global::Rocks.Handler<global::System.Action>
-					{ }
-					private global::Rocks.Handlers<global::MockTests.IContainerCreateExpectations.Handler0>? @handlers0;
-					
-					public override void Verify()
+					private readonly global::MockTests.IContainerCreateExpectations parent;
+				
+					internal SetupsExpectations(global::MockTests.IContainerCreateExpectations parent) =>
+						this.parent = parent;
+				
+					internal global::MockTests.IContainerCreateExpectations.Adornments.AdornmentsForHandler0 Contain()
 					{
-						if (!this.WasInstanceInvoked)
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+						var handler = new global::MockTests.IContainerCreateExpectations.Handler0();
+						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(handler); }
+						else { this.parent.handlers0.Add(handler); }
+						return new(handler);
+					}
+				}
+				
+				internal global::MockTests.IContainerCreateExpectations.SetupsExpectations Setups => this.setups;
+				
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Action>
+				{ }
+				private global::Rocks.Handlers<global::MockTests.IContainerCreateExpectations.Handler0>? @handlers0;
+				
+				public override void Verify()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::MockTests.IContainerCreateExpectations was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
+					{
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+				
+						if (failures.Count > 0)
 						{
-							throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::MockTests.IContainerCreateExpectations was never made."]);
-						}
-						else if (!this.WasExceptionThrown)
-						{
-							var failures = new global::System.Collections.Generic.List<string>();
-					
-							if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-					
-							if (failures.Count > 0)
-							{
-								throw new global::Rocks.Exceptions.VerificationException(failures);
-							}
+							throw new global::Rocks.Exceptions.VerificationException(failures);
 						}
 					}
-					
-					[type: global::System.ObsoleteAttribute("This relay is obsolete and will be removed in future versions. The reason is that it causes recursion overflow for \"many\" requests if you forget to add IEnumerable<T> customization.\nPlease use the following code snippet instead:\nfixture.Customizations.Add(  new FilteringSpecimenBuilder(    new FixedBuilder(      SEQUENCE_TO_RETURN),    new EqualRequestSpecification(      new MultipleRequest(        new SeededRequest(          typeof(T),          default(T))))));\n\nIf you need that often, please create an extension method inside your project.")]
-					private sealed class Mock
-						: global::MockTests.IContainer
+				}
+				
+				[type: global::System.ObsoleteAttribute("This relay is obsolete and will be removed in future versions. The reason is that it causes recursion overflow for \"many\" requests if you forget to add IEnumerable<T> customization.\nPlease use the following code snippet instead:\nfixture.Customizations.Add(  new FilteringSpecimenBuilder(    new FixedBuilder(      SEQUENCE_TO_RETURN),    new EqualRequestSpecification(      new MultipleRequest(        new SeededRequest(          typeof(T),          default(T))))));\n\nIf you need that often, please create an extension method inside your project.")]
+				private sealed class Mock
+					: global::MockTests.IContainer
+				{
+					public Mock(global::MockTests.IContainerCreateExpectations @expectations)
 					{
-						public Mock(global::MockTests.IContainerCreateExpectations @expectations)
-						{
-							this.Expectations = @expectations;
-						}
-						
-						[global::Rocks.MemberIdentifier(0)]
-						public void Contain()
-						{
-							if (this.Expectations.handlers0 is not null)
-							{
-								var @handler = this.Expectations.handlers0.First;
-								@handler.CallCount++;
-								@handler.Callback?.Invoke();
-							}
-							else
-							{
-								this.Expectations.WasExceptionThrown = true;
-								throw new global::Rocks.Exceptions.ExpectationException(
-									$"""
-									No handlers were found for {this.GetType().GetMemberDescription(0)}
-									""");
-							}
-						}
-						
-						private global::MockTests.IContainerCreateExpectations Expectations { get; }
+						this.Expectations = @expectations;
 					}
 					
-					internal sealed class MethodExpectations
+					[global::Rocks.MemberIdentifier(0)]
+					public void Contain()
 					{
-						internal MethodExpectations(global::MockTests.IContainerCreateExpectations expectations) =>
-							this.Expectations = expectations;
-						
-						internal global::MockTests.IContainerCreateExpectations.Adornments.AdornmentsForHandler0 Contain()
+						if (this.Expectations.handlers0 is not null)
 						{
-							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-							var handler = new global::MockTests.IContainerCreateExpectations.Handler0();
-							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
-							else { this.Expectations.handlers0.Add(handler); }
-							return new(handler);
-						}
-						
-						private global::MockTests.IContainerCreateExpectations Expectations { get; }
-					}
-					
-					internal global::MockTests.IContainerCreateExpectations.MethodExpectations Methods { get; }
-					
-					public IContainerCreateExpectations() =>
-						(this.Methods) = (new(this));
-					
-					internal global::MockTests.IContainer Instance()
-					{
-						if (!this.WasInstanceInvoked)
-						{
-							this.WasInstanceInvoked = true;
-							var @mock = new Mock(this);
-							this.MockType = @mock.GetType();
-							return @mock;
+							var @handler = this.Expectations.handlers0.First;
+							@handler.CallCount++;
+							@handler.Callback?.Invoke();
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								""");
 						}
 					}
 					
-					internal static class Adornments
+					private global::MockTests.IContainerCreateExpectations Expectations { get; }
+				}
+				
+				public IContainerCreateExpectations() => this.setups = new(this);
+				
+				internal global::MockTests.IContainer Instance()
+				{
+					if (!this.WasInstanceInvoked)
 					{
-						public interface IAdornmentsForIContainer<TAdornments>
-							: global::Rocks.IAdornments<TAdornments>
-							where TAdornments : IAdornmentsForIContainer<TAdornments>
-						{ }
-						
-						public sealed class AdornmentsForHandler0
-							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IContainerCreateExpectations.Handler0, global::System.Action>, IAdornmentsForIContainer<AdornmentsForHandler0>
-						{
-							public AdornmentsForHandler0(global::MockTests.IContainerCreateExpectations.Handler0 handler)
-								: base(handler) { }
-						}
+						this.WasInstanceInvoked = true;
+						var @mock = new Mock(this);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForIContainer<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForIContainer<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IContainerCreateExpectations.Handler0, global::System.Action>, IAdornmentsForIContainer<AdornmentsForHandler0>
+					{
+						public AdornmentsForHandler0(global::MockTests.IContainerCreateExpectations.Handler0 handler)
+							: base(handler) { }
 					}
 				}
 			}
@@ -163,7 +163,7 @@ public static class ObsoleteGeneratorTests
 			"""";
 
 		var makeGeneratedCode =
-			"""
+			""""
 			// <auto-generated/>
 			
 			#pragma warning disable CS8618
@@ -202,7 +202,7 @@ public static class ObsoleteGeneratorTests
 			#pragma warning restore CS8714
 			#pragma warning restore CS8775
 			
-			""";
+			"""";
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
@@ -251,248 +251,254 @@ public static class ObsoleteGeneratorTests
 			
 			using Rocks.Extensions;
 			
-			namespace MockTests
+			namespace MockTests;
+			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+			internal sealed class ContainerCreateExpectations
+				: global::Rocks.Expectations
 			{
-				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-				internal sealed class ContainerCreateExpectations
-					: global::Rocks.Expectations
+				private readonly global::MockTests.ContainerCreateExpectations.SetupsExpectations setups;
+				
+				internal sealed class SetupsExpectations
 				{
-					internal sealed class Handler0
-						: global::Rocks.Handler<global::System.Func<object?, bool>, bool>
+					private readonly global::MockTests.ContainerCreateExpectations parent;
+				
+					internal SetupsExpectations(global::MockTests.ContainerCreateExpectations parent) =>
+						this.parent = parent;
+				
+					internal global::MockTests.ContainerCreateExpectations.Adornments.AdornmentsForHandler0 Equals(global::Rocks.Argument<object?> @obj)
 					{
-						public global::Rocks.Argument<object?> @obj { get; set; }
-					}
-					private global::Rocks.Handlers<global::MockTests.ContainerCreateExpectations.Handler0>? @handlers0;
-					internal sealed class Handler1
-						: global::Rocks.Handler<global::System.Func<int>, int>
-					{ }
-					private global::Rocks.Handlers<global::MockTests.ContainerCreateExpectations.Handler1>? @handlers1;
-					internal sealed class Handler2
-						: global::Rocks.Handler<global::System.Func<string?>, string?>
-					{ }
-					private global::Rocks.Handlers<global::MockTests.ContainerCreateExpectations.Handler2>? @handlers2;
-					internal sealed class Handler3
-						: global::Rocks.Handler<global::System.Action>
-					{ }
-					private global::Rocks.Handlers<global::MockTests.ContainerCreateExpectations.Handler3>? @handlers3;
-					
-					public override void Verify()
-					{
-						if (!this.WasInstanceInvoked)
-						{
-							throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::MockTests.ContainerCreateExpectations was never made."]);
-						}
-						else if (!this.WasExceptionThrown)
-						{
-							var failures = new global::System.Collections.Generic.List<string>();
-					
-							if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-							if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
-							if (this.handlers2 is not null) { failures.AddRange(this.Verify(this.handlers2, 2)); }
-							if (this.handlers3 is not null) { failures.AddRange(this.Verify(this.handlers3, 3)); }
-					
-							if (failures.Count > 0)
-							{
-								throw new global::Rocks.Exceptions.VerificationException(failures);
-							}
-						}
-					}
-					
-					private sealed class Mock
-						: global::MockTests.Container
-					{
-						public Mock(global::MockTests.ContainerCreateExpectations @expectations, string @value)
-							: base(@value)
-						{
-							this.Expectations = @expectations;
-						}
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
-						[global::Rocks.MemberIdentifier(0)]
-						public override bool Equals(object? @obj)
+						var @handler = new global::MockTests.ContainerCreateExpectations.Handler0
 						{
-							if (this.Expectations.handlers0 is not null)
+							@obj = @obj,
+						};
+						
+						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
+						else { this.parent.handlers0.Add(@handler); }
+						return new(@handler);
+					}
+					
+					internal new global::MockTests.ContainerCreateExpectations.Adornments.AdornmentsForHandler1 GetHashCode()
+					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+						var handler = new global::MockTests.ContainerCreateExpectations.Handler1();
+						if (this.parent.handlers1 is null) { this.parent.handlers1 = new(handler); }
+						else { this.parent.handlers1.Add(handler); }
+						return new(handler);
+					}
+					
+					internal new global::MockTests.ContainerCreateExpectations.Adornments.AdornmentsForHandler2 ToString()
+					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+						var handler = new global::MockTests.ContainerCreateExpectations.Handler2();
+						if (this.parent.handlers2 is null) { this.parent.handlers2 = new(handler); }
+						else { this.parent.handlers2.Add(handler); }
+						return new(handler);
+					}
+					
+					internal global::MockTests.ContainerCreateExpectations.Adornments.AdornmentsForHandler3 Contain()
+					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+						var handler = new global::MockTests.ContainerCreateExpectations.Handler3();
+						if (this.parent.handlers3 is null) { this.parent.handlers3 = new(handler); }
+						else { this.parent.handlers3.Add(handler); }
+						return new(handler);
+					}
+				}
+				
+				internal global::MockTests.ContainerCreateExpectations.SetupsExpectations Setups => this.setups;
+				
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Func<object?, bool>, bool>
+				{
+					public global::Rocks.Argument<object?> @obj { get; set; }
+				}
+				private global::Rocks.Handlers<global::MockTests.ContainerCreateExpectations.Handler0>? @handlers0;
+				
+				internal sealed class Handler1
+					: global::Rocks.Handler<global::System.Func<int>, int>
+				{ }
+				private global::Rocks.Handlers<global::MockTests.ContainerCreateExpectations.Handler1>? @handlers1;
+				
+				internal sealed class Handler2
+					: global::Rocks.Handler<global::System.Func<string?>, string?>
+				{ }
+				private global::Rocks.Handlers<global::MockTests.ContainerCreateExpectations.Handler2>? @handlers2;
+				
+				internal sealed class Handler3
+					: global::Rocks.Handler<global::System.Action>
+				{ }
+				private global::Rocks.Handlers<global::MockTests.ContainerCreateExpectations.Handler3>? @handlers3;
+				
+				public override void Verify()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::MockTests.ContainerCreateExpectations was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
+					{
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers2 is not null) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+						if (this.handlers3 is not null) { failures.AddRange(this.Verify(this.handlers3, 3)); }
+				
+						if (failures.Count > 0)
+						{
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
+					}
+				}
+				
+				private sealed class Mock
+					: global::MockTests.Container
+				{
+					public Mock(global::MockTests.ContainerCreateExpectations @expectations, string @value)
+						: base(@value)
+					{
+						this.Expectations = @expectations;
+					}
+					
+					[global::Rocks.MemberIdentifier(0)]
+					public override bool Equals(object? @obj)
+					{
+						if (this.Expectations.handlers0 is not null)
+						{
+							foreach (var @handler in this.Expectations.handlers0)
 							{
-								foreach (var @handler in this.Expectations.handlers0)
+								if (@handler.@obj.IsValid(@obj!))
 								{
-									if (@handler.@obj.IsValid(@obj!))
-									{
-										@handler.CallCount++;
-										var @result = @handler.Callback is not null ?
-											@handler.Callback(@obj!) : @handler.ReturnValue;
-										return @result!;
-									}
+									@handler.CallCount++;
+									var @result = @handler.Callback is not null ?
+										@handler.Callback(@obj!) : @handler.ReturnValue;
+									return @result!;
 								}
-								
-								this.Expectations.WasExceptionThrown = true;
-								throw new global::Rocks.Exceptions.ExpectationException(
-									$"""
-									No handlers match for {this.GetType().GetMemberDescription(0)}
-										obj: {@obj.FormatValue()}
-									""");
 							}
-							else
-							{
-								return base.Equals(@obj: @obj!);
-							}
-						}
-						
-						[global::Rocks.MemberIdentifier(1)]
-						public override int GetHashCode()
-						{
-							if (this.Expectations.handlers1 is not null)
-							{
-								var @handler = this.Expectations.handlers1.First;
-								@handler.CallCount++;
-								var @result = @handler.Callback is not null ?
-									@handler.Callback() : @handler.ReturnValue;
-								return @result!;
-							}
-							else
-							{
-								return base.GetHashCode();
-							}
-						}
-						
-						[global::Rocks.MemberIdentifier(2)]
-						public override string? ToString()
-						{
-							if (this.Expectations.handlers2 is not null)
-							{
-								var @handler = this.Expectations.handlers2.First;
-								@handler.CallCount++;
-								var @result = @handler.Callback is not null ?
-									@handler.Callback() : @handler.ReturnValue;
-								return @result!;
-							}
-							else
-							{
-								return base.ToString();
-							}
-						}
-						
-						[global::Rocks.MemberIdentifier(3)]
-						public override void Contain()
-						{
-							if (this.Expectations.handlers3 is not null)
-							{
-								var @handler = this.Expectations.handlers3.First;
-								@handler.CallCount++;
-								@handler.Callback?.Invoke();
-							}
-							else
-							{
-								this.Expectations.WasExceptionThrown = true;
-								throw new global::Rocks.Exceptions.ExpectationException(
-									$"""
-									No handlers were found for {this.GetType().GetMemberDescription(3)}
-									""");
-							}
-						}
-						
-						private global::MockTests.ContainerCreateExpectations Expectations { get; }
-					}
-					
-					internal sealed class MethodExpectations
-					{
-						internal MethodExpectations(global::MockTests.ContainerCreateExpectations expectations) =>
-							this.Expectations = expectations;
-						
-						internal global::MockTests.ContainerCreateExpectations.Adornments.AdornmentsForHandler0 Equals(global::Rocks.Argument<object?> @obj)
-						{
-							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-							global::System.ArgumentNullException.ThrowIfNull(@obj);
 							
-							var @handler = new global::MockTests.ContainerCreateExpectations.Handler0
-							{
-								@obj = @obj,
-							};
-							
-							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
-							else { this.Expectations.handlers0.Add(@handler); }
-							return new(@handler);
-						}
-						
-						internal new global::MockTests.ContainerCreateExpectations.Adornments.AdornmentsForHandler1 GetHashCode()
-						{
-							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-							var handler = new global::MockTests.ContainerCreateExpectations.Handler1();
-							if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
-							else { this.Expectations.handlers1.Add(handler); }
-							return new(handler);
-						}
-						
-						internal new global::MockTests.ContainerCreateExpectations.Adornments.AdornmentsForHandler2 ToString()
-						{
-							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-							var handler = new global::MockTests.ContainerCreateExpectations.Handler2();
-							if (this.Expectations.handlers2 is null) { this.Expectations.handlers2 = new(handler); }
-							else { this.Expectations.handlers2.Add(handler); }
-							return new(handler);
-						}
-						
-						internal global::MockTests.ContainerCreateExpectations.Adornments.AdornmentsForHandler3 Contain()
-						{
-							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-							var handler = new global::MockTests.ContainerCreateExpectations.Handler3();
-							if (this.Expectations.handlers3 is null) { this.Expectations.handlers3 = new(handler); }
-							else { this.Expectations.handlers3.Add(handler); }
-							return new(handler);
-						}
-						
-						private global::MockTests.ContainerCreateExpectations Expectations { get; }
-					}
-					
-					internal global::MockTests.ContainerCreateExpectations.MethodExpectations Methods { get; }
-					
-					public ContainerCreateExpectations() =>
-						(this.Methods) = (new(this));
-					
-					internal global::MockTests.Container Instance(string @value)
-					{
-						if (!this.WasInstanceInvoked)
-						{
-							this.WasInstanceInvoked = true;
-							var @mock = new Mock(this, @value);
-							this.MockType = @mock.GetType();
-							return @mock;
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers match for {this.GetType().GetMemberDescription(0)}
+									obj: {@obj.FormatValue()}
+								""");
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+							return base.Equals(@obj: @obj!);
 						}
 					}
 					
-					internal static class Adornments
+					[global::Rocks.MemberIdentifier(1)]
+					public override int GetHashCode()
 					{
-						public interface IAdornmentsForContainer<TAdornments>
-							: global::Rocks.IAdornments<TAdornments>
-							where TAdornments : IAdornmentsForContainer<TAdornments>
-						{ }
-						
-						public sealed class AdornmentsForHandler0
-							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.ContainerCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForContainer<AdornmentsForHandler0>
+						if (this.Expectations.handlers1 is not null)
 						{
-							public AdornmentsForHandler0(global::MockTests.ContainerCreateExpectations.Handler0 handler)
-								: base(handler) { }
+							var @handler = this.Expectations.handlers1.First;
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
+							return @result!;
 						}
-						public sealed class AdornmentsForHandler1
-							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.ContainerCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForContainer<AdornmentsForHandler1>
+						else
 						{
-							public AdornmentsForHandler1(global::MockTests.ContainerCreateExpectations.Handler1 handler)
-								: base(handler) { }
+							return base.GetHashCode();
 						}
-						public sealed class AdornmentsForHandler2
-							: global::Rocks.Adornments<AdornmentsForHandler2, global::MockTests.ContainerCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForContainer<AdornmentsForHandler2>
+					}
+					
+					[global::Rocks.MemberIdentifier(2)]
+					public override string? ToString()
+					{
+						if (this.Expectations.handlers2 is not null)
 						{
-							public AdornmentsForHandler2(global::MockTests.ContainerCreateExpectations.Handler2 handler)
-								: base(handler) { }
+							var @handler = this.Expectations.handlers2.First;
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
+							return @result!;
 						}
-						public sealed class AdornmentsForHandler3
-							: global::Rocks.Adornments<AdornmentsForHandler3, global::MockTests.ContainerCreateExpectations.Handler3, global::System.Action>, IAdornmentsForContainer<AdornmentsForHandler3>
+						else
 						{
-							public AdornmentsForHandler3(global::MockTests.ContainerCreateExpectations.Handler3 handler)
-								: base(handler) { }
+							return base.ToString();
 						}
+					}
+					
+					[global::Rocks.MemberIdentifier(3)]
+					public override void Contain()
+					{
+						if (this.Expectations.handlers3 is not null)
+						{
+							var @handler = this.Expectations.handlers3.First;
+							@handler.CallCount++;
+							@handler.Callback?.Invoke();
+						}
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(3)}
+								""");
+						}
+					}
+					
+					private global::MockTests.ContainerCreateExpectations Expectations { get; }
+				}
+				
+				public ContainerCreateExpectations() => this.setups = new(this);
+				
+				internal global::MockTests.Container Instance(string @value)
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						this.WasInstanceInvoked = true;
+						var @mock = new Mock(this, @value);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForContainer<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForContainer<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.ContainerCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForContainer<AdornmentsForHandler0>
+					{
+						public AdornmentsForHandler0(global::MockTests.ContainerCreateExpectations.Handler0 handler)
+							: base(handler) { }
+					}
+					
+					public sealed class AdornmentsForHandler1
+						: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.ContainerCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForContainer<AdornmentsForHandler1>
+					{
+						public AdornmentsForHandler1(global::MockTests.ContainerCreateExpectations.Handler1 handler)
+							: base(handler) { }
+					}
+					
+					public sealed class AdornmentsForHandler2
+						: global::Rocks.Adornments<AdornmentsForHandler2, global::MockTests.ContainerCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForContainer<AdornmentsForHandler2>
+					{
+						public AdornmentsForHandler2(global::MockTests.ContainerCreateExpectations.Handler2 handler)
+							: base(handler) { }
+					}
+					
+					public sealed class AdornmentsForHandler3
+						: global::Rocks.Adornments<AdornmentsForHandler3, global::MockTests.ContainerCreateExpectations.Handler3, global::System.Action>, IAdornmentsForContainer<AdornmentsForHandler3>
+					{
+						public AdornmentsForHandler3(global::MockTests.ContainerCreateExpectations.Handler3 handler)
+							: base(handler) { }
 					}
 				}
 			}
@@ -504,7 +510,7 @@ public static class ObsoleteGeneratorTests
 			"""";
 
 		var makeGeneratedCode =
-			"""
+			""""
 			// <auto-generated/>
 			
 			#pragma warning disable CS8618
@@ -536,14 +542,17 @@ public static class ObsoleteGeneratorTests
 						{
 							return default!;
 						}
+						
 						public override int GetHashCode()
 						{
 							return default!;
 						}
+						
 						public override string? ToString()
 						{
 							return default!;
 						}
+						
 						public override void Contain()
 						{
 						}
@@ -556,7 +565,7 @@ public static class ObsoleteGeneratorTests
 			#pragma warning restore CS8714
 			#pragma warning restore CS8775
 			
-			""";
+			"""";
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
@@ -758,56 +767,120 @@ public static class ObsoleteGeneratorTests
 			
 			using Rocks.Extensions;
 			
-			namespace MockTests
+			namespace MockTests;
+			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+			internal sealed class IPixelShaderCreateExpectations
+				: global::Rocks.Expectations
 			{
-				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-				internal sealed class IPixelShaderCreateExpectations
-					: global::Rocks.Expectations
+				private readonly global::MockTests.IPixelShaderCreateExpectations.SetupsExpectations setups;
+				
+				internal sealed class SetupsExpectations
 				{
-					internal sealed class Handler0
-						: global::Rocks.Handler<global::System.Func<uint>, uint>
-					{ }
-					private global::Rocks.Handlers<global::MockTests.IPixelShaderCreateExpectations.Handler0>? @handlers0;
-					internal sealed class Handler1
-						: global::Rocks.Handler<global::System.Func<uint>, uint>
-					{ }
-					private global::Rocks.Handlers<global::MockTests.IPixelShaderCreateExpectations.Handler1>? @handlers1;
-					
-					public override void Verify()
+					private readonly global::MockTests.IPixelShaderCreateExpectations parent;
+				
+					internal SetupsExpectations(global::MockTests.IPixelShaderCreateExpectations parent) =>
+						this.parent = parent;
+				
+					internal global::MockTests.IPixelShaderCreateExpectations.Adornments.AdornmentsForHandler0 GetPixelOptions()
 					{
-						if (!this.WasInstanceInvoked)
-						{
-							throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::MockTests.IPixelShaderCreateExpectations was never made."]);
-						}
-						else if (!this.WasExceptionThrown)
-						{
-							var failures = new global::System.Collections.Generic.List<string>();
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+						var handler = new global::MockTests.IPixelShaderCreateExpectations.Handler0();
+						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(handler); }
+						else { this.parent.handlers0.Add(handler); }
+						return new(handler);
+					}
+					internal sealed class ValuesPropertyExpectations
+					{
+						private readonly global::MockTests.IPixelShaderCreateExpectations parent;
 					
-							if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-							if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						internal ValuesPropertyExpectations(global::MockTests.IPixelShaderCreateExpectations parent) => 
+							this.parent = parent;
 					
-							if (failures.Count > 0)
-							{
-								throw new global::Rocks.Exceptions.VerificationException(failures);
-							}
+						internal global::MockTests.IPixelShaderCreateExpectations.Adornments.AdornmentsForHandler1 Gets()
+						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+							var handler = new global::MockTests.IPixelShaderCreateExpectations.Handler1();
+							if (this.parent.handlers1 is null) { this.parent.handlers1 = new(handler); }
+							else { this.parent.handlers1.Add(handler); }
+							return new(handler);
 						}
 					}
 					
-					private sealed class Mock
-						: global::MockTests.IPixelShader, global::Rocks.IRaiseEvents
+					internal global::MockTests.IPixelShaderCreateExpectations.SetupsExpectations.ValuesPropertyExpectations Values => new(this.parent);
+					
+				}
+				
+				internal global::MockTests.IPixelShaderCreateExpectations.SetupsExpectations Setups => this.setups;
+				
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Func<uint>, uint>
+				{ }
+				private global::Rocks.Handlers<global::MockTests.IPixelShaderCreateExpectations.Handler0>? @handlers0;
+				
+				internal sealed class Handler1
+					: global::Rocks.Handler<global::System.Func<uint>, uint>
+				{ }
+				private global::Rocks.Handlers<global::MockTests.IPixelShaderCreateExpectations.Handler1>? @handlers1;
+				
+				public override void Verify()
+				{
+					if (!this.WasInstanceInvoked)
 					{
-						public Mock(global::MockTests.IPixelShaderCreateExpectations @expectations)
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::MockTests.IPixelShaderCreateExpectations was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
+					{
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+				
+						if (failures.Count > 0)
 						{
-							this.Expectations = @expectations;
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
+					}
+				}
+				
+				private sealed class Mock
+					: global::MockTests.IPixelShader, global::Rocks.IRaiseEvents
+				{
+					public Mock(global::MockTests.IPixelShaderCreateExpectations @expectations)
+					{
+						this.Expectations = @expectations;
+					}
+					
+					[global::System.ObsoleteAttribute("This method is not intended to be used directly by user code")]
+					[global::Rocks.MemberIdentifier(0)]
+					public uint GetPixelOptions()
+					{
+						if (this.Expectations.handlers0 is not null)
+						{
+							var @handler = this.Expectations.handlers0.First;
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
+							@handler.RaiseEvents(this);
+							return @result!;
 						}
 						
-						[global::System.ObsoleteAttribute("This method is not intended to be used directly by user code")]
-						[global::Rocks.MemberIdentifier(0)]
-						public uint GetPixelOptions()
+						this.Expectations.WasExceptionThrown = true;
+						throw new global::Rocks.Exceptions.ExpectationException(
+							$"""
+							No handlers were found for {this.GetType().GetMemberDescription(0)}
+							""");
+					}
+					
+					[global::System.ObsoleteAttribute("This property is not intended to be used directly by user code")]
+					public uint Values
+					{
+						[global::Rocks.MemberIdentifier(1)]
+						get
 						{
-							if (this.Expectations.handlers0 is not null)
+							if (this.Expectations.handlers1 is not null)
 							{
-								var @handler = this.Expectations.handlers0.First;
+								var @handler = this.Expectations.handlers1.First;
 								@handler.CallCount++;
 								var @result = @handler.Callback is not null ?
 									@handler.Callback() : @handler.ReturnValue;
@@ -818,147 +891,78 @@ public static class ObsoleteGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								No handlers match for {this.GetType().GetMemberDescription(1)}
 								""");
 						}
+					}
+					
+					#pragma warning disable CS0067
+					[global::System.ObsoleteAttribute("This event is not intended to be used directly by user code")]
+					public event global::System.EventHandler? ShadingOccurred;
+					#pragma warning restore CS0067
+					
+					void global::Rocks.IRaiseEvents.Raise(string @fieldName, object @args)
+					{
+						var @thisType = this.GetType();
+						var @eventDelegate = (global::System.MulticastDelegate)thisType.GetField(@fieldName, 
+							global::System.Reflection.BindingFlags.Instance | global::System.Reflection.BindingFlags.NonPublic)!.GetValue(this)!;
 						
-						[global::System.ObsoleteAttribute("This property is not intended to be used directly by user code")]
-						[global::Rocks.MemberIdentifier(1, global::Rocks.PropertyAccessor.Get)]
-						public uint Values
+						if (@eventDelegate is not null)
 						{
-							get
+							foreach (var @handler in @eventDelegate.GetInvocationList())
 							{
-								if (this.Expectations.handlers1 is not null)
-								{
-									var @handler = this.Expectations.handlers1.First;
-									@handler.CallCount++;
-									var @result = @handler.Callback is not null ?
-										@handler.Callback() : @handler.ReturnValue;
-									@handler.RaiseEvents(this);
-									return @result!;
-								}
-								
-								this.Expectations.WasExceptionThrown = true;
-								throw new global::Rocks.Exceptions.ExpectationException(
-									$"""
-									No handlers match for {this.GetType().GetMemberDescription(1)}
-									""");
+								@handler.Method.Invoke(@handler.Target, new object[]{this, @args});
 							}
 						}
-						
-						#pragma warning disable CS0067
-						[global::System.ObsoleteAttribute("This event is not intended to be used directly by user code")]
-						public event global::System.EventHandler? ShadingOccurred;
-						#pragma warning restore CS0067
-						
-						void global::Rocks.IRaiseEvents.Raise(string @fieldName, object @args)
-						{
-							var @thisType = this.GetType();
-							var @eventDelegate = (global::System.MulticastDelegate)thisType.GetField(@fieldName, 
-								global::System.Reflection.BindingFlags.Instance | global::System.Reflection.BindingFlags.NonPublic)!.GetValue(this)!;
-							
-							if (@eventDelegate is not null)
-							{
-								foreach (var @handler in @eventDelegate.GetInvocationList())
-								{
-									@handler.Method.Invoke(@handler.Target, new object[]{this, @args});
-								}
-							}
-						}
-						
-						private global::MockTests.IPixelShaderCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class MethodExpectations
+					private global::MockTests.IPixelShaderCreateExpectations Expectations { get; }
+				}
+				
+				public IPixelShaderCreateExpectations() => this.setups = new(this);
+				
+				internal global::MockTests.IPixelShader Instance()
+				{
+					if (!this.WasInstanceInvoked)
 					{
-						internal MethodExpectations(global::MockTests.IPixelShaderCreateExpectations expectations) =>
-							this.Expectations = expectations;
-						
-						internal global::MockTests.IPixelShaderCreateExpectations.Adornments.AdornmentsForHandler0 GetPixelOptions()
-						{
-							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-							var handler = new global::MockTests.IPixelShaderCreateExpectations.Handler0();
-							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
-							else { this.Expectations.handlers0.Add(handler); }
-							return new(handler);
-						}
-						
-						private global::MockTests.IPixelShaderCreateExpectations Expectations { get; }
+						this.WasInstanceInvoked = true;
+						var @mock = new Mock(this);
+						this.MockType = @mock.GetType();
+						return @mock;
 					}
-					
-					internal sealed class PropertyExpectations
+					else
 					{
-						internal sealed class PropertyGetterExpectations
-						{
-							internal PropertyGetterExpectations(global::MockTests.IPixelShaderCreateExpectations expectations) =>
-								this.Expectations = expectations;
-							
-							internal global::MockTests.IPixelShaderCreateExpectations.Adornments.AdornmentsForHandler1 Values()
-							{
-								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-								var handler = new global::MockTests.IPixelShaderCreateExpectations.Handler1();
-								if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
-								else { this.Expectations.handlers1.Add(handler); }
-								return new(handler);
-							}
-							private global::MockTests.IPixelShaderCreateExpectations Expectations { get; }
-						}
-						
-						
-						internal PropertyExpectations(global::MockTests.IPixelShaderCreateExpectations expectations) =>
-							(this.Getters) = (new(expectations));
-						
-						internal global::MockTests.IPixelShaderCreateExpectations.PropertyExpectations.PropertyGetterExpectations Getters { get; }
-					}
-					
-					internal global::MockTests.IPixelShaderCreateExpectations.MethodExpectations Methods { get; }
-					internal global::MockTests.IPixelShaderCreateExpectations.PropertyExpectations Properties { get; }
-					
-					public IPixelShaderCreateExpectations() =>
-						(this.Methods, this.Properties) = (new(this), new(this));
-					
-					internal global::MockTests.IPixelShader Instance()
-					{
-						if (!this.WasInstanceInvoked)
-						{
-							this.WasInstanceInvoked = true;
-							var @mock = new Mock(this);
-							this.MockType = @mock.GetType();
-							return @mock;
-						}
-						else
-						{
-							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
-						}
-					}
-					
-					internal static class Adornments
-					{
-						public interface IAdornmentsForIPixelShader<TAdornments>
-							: global::Rocks.IAdornments<TAdornments>
-							where TAdornments : IAdornmentsForIPixelShader<TAdornments>
-						{ }
-						
-						public sealed class AdornmentsForHandler0
-							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IPixelShaderCreateExpectations.Handler0, global::System.Func<uint>, uint>, IAdornmentsForIPixelShader<AdornmentsForHandler0>
-						{
-							public AdornmentsForHandler0(global::MockTests.IPixelShaderCreateExpectations.Handler0 handler)
-								: base(handler) { }
-						}
-						public sealed class AdornmentsForHandler1
-							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IPixelShaderCreateExpectations.Handler1, global::System.Func<uint>, uint>, IAdornmentsForIPixelShader<AdornmentsForHandler1>
-						{
-							public AdornmentsForHandler1(global::MockTests.IPixelShaderCreateExpectations.Handler1 handler)
-								: base(handler) { }
-						}
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 					}
 				}
 				
-				internal static class IPixelShaderAdornmentsEventExtensions
+				internal static class Adornments
 				{
-					internal static TAdornments RaiseShadingOccurred<TAdornments>(this TAdornments self, global::System.EventArgs args) where TAdornments : global::MockTests.IPixelShaderCreateExpectations.Adornments.IAdornmentsForIPixelShader<TAdornments> => 
-						self.AddRaiseEvent(new("ShadingOccurred", args));
+					public interface IAdornmentsForIPixelShader<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForIPixelShader<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IPixelShaderCreateExpectations.Handler0, global::System.Func<uint>, uint>, IAdornmentsForIPixelShader<AdornmentsForHandler0>
+					{
+						public AdornmentsForHandler0(global::MockTests.IPixelShaderCreateExpectations.Handler0 handler)
+							: base(handler) { }
+					}
+					
+					public sealed class AdornmentsForHandler1
+						: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IPixelShaderCreateExpectations.Handler1, global::System.Func<uint>, uint>, IAdornmentsForIPixelShader<AdornmentsForHandler1>
+					{
+						public AdornmentsForHandler1(global::MockTests.IPixelShaderCreateExpectations.Handler1 handler)
+							: base(handler) { }
+					}
 				}
+			}
+			
+			internal static class IPixelShaderAdornmentsEventExtensions
+			{
+				internal static TAdornments RaiseShadingOccurred<TAdornments>(this TAdornments self, global::System.EventArgs args) where TAdornments : global::MockTests.IPixelShaderCreateExpectations.Adornments.IAdornmentsForIPixelShader<TAdornments> => 
+					self.AddRaiseEvent(new("ShadingOccurred", args));
 			}
 			
 			#pragma warning restore CS8618
@@ -968,7 +972,7 @@ public static class ObsoleteGeneratorTests
 			"""";
 
 		var makeGeneratedCode =
-			"""
+			""""
 			// <auto-generated/>
 			
 			#pragma warning disable CS8618
@@ -1000,6 +1004,7 @@ public static class ObsoleteGeneratorTests
 						{
 							return default!;
 						}
+						
 						[global::System.ObsoleteAttribute("This property is not intended to be used directly by user code")]
 						public uint Values
 						{
@@ -1019,7 +1024,7 @@ public static class ObsoleteGeneratorTests
 			#pragma warning restore CS8714
 			#pragma warning restore CS8775
 			
-			""";
+			"""";
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
@@ -1070,56 +1075,120 @@ public static class ObsoleteGeneratorTests
 			
 			using Rocks.Extensions;
 			
-			namespace MockTests
+			namespace MockTests;
+			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+			internal sealed class IPixelShaderCreateExpectations
+				: global::Rocks.Expectations
 			{
-				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-				internal sealed class IPixelShaderCreateExpectations
-					: global::Rocks.Expectations
+				private readonly global::MockTests.IPixelShaderCreateExpectations.SetupsExpectations setups;
+				
+				internal sealed class SetupsExpectations
 				{
-					internal sealed class Handler0
-						: global::Rocks.Handler<global::System.Func<uint>, uint>
-					{ }
-					private global::Rocks.Handlers<global::MockTests.IPixelShaderCreateExpectations.Handler0>? @handlers0;
-					internal sealed class Handler1
-						: global::Rocks.Handler<global::System.Func<uint>, uint>
-					{ }
-					private global::Rocks.Handlers<global::MockTests.IPixelShaderCreateExpectations.Handler1>? @handlers1;
-					
-					public override void Verify()
+					private readonly global::MockTests.IPixelShaderCreateExpectations parent;
+				
+					internal SetupsExpectations(global::MockTests.IPixelShaderCreateExpectations parent) =>
+						this.parent = parent;
+				
+					internal global::MockTests.IPixelShaderCreateExpectations.Adornments.AdornmentsForHandler0 GetPixelOptions()
 					{
-						if (!this.WasInstanceInvoked)
-						{
-							throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::MockTests.IPixelShaderCreateExpectations was never made."]);
-						}
-						else if (!this.WasExceptionThrown)
-						{
-							var failures = new global::System.Collections.Generic.List<string>();
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+						var handler = new global::MockTests.IPixelShaderCreateExpectations.Handler0();
+						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(handler); }
+						else { this.parent.handlers0.Add(handler); }
+						return new(handler);
+					}
+					internal sealed class ValuesPropertyExpectations
+					{
+						private readonly global::MockTests.IPixelShaderCreateExpectations parent;
 					
-							if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-							if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						internal ValuesPropertyExpectations(global::MockTests.IPixelShaderCreateExpectations parent) => 
+							this.parent = parent;
 					
-							if (failures.Count > 0)
-							{
-								throw new global::Rocks.Exceptions.VerificationException(failures);
-							}
+						internal global::MockTests.IPixelShaderCreateExpectations.Adornments.AdornmentsForHandler1 Gets()
+						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+							var handler = new global::MockTests.IPixelShaderCreateExpectations.Handler1();
+							if (this.parent.handlers1 is null) { this.parent.handlers1 = new(handler); }
+							else { this.parent.handlers1.Add(handler); }
+							return new(handler);
 						}
 					}
 					
-					private sealed class Mock
-						: global::MockTests.IPixelShader, global::Rocks.IRaiseEvents
+					internal global::MockTests.IPixelShaderCreateExpectations.SetupsExpectations.ValuesPropertyExpectations Values => new(this.parent);
+					
+				}
+				
+				internal global::MockTests.IPixelShaderCreateExpectations.SetupsExpectations Setups => this.setups;
+				
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Func<uint>, uint>
+				{ }
+				private global::Rocks.Handlers<global::MockTests.IPixelShaderCreateExpectations.Handler0>? @handlers0;
+				
+				internal sealed class Handler1
+					: global::Rocks.Handler<global::System.Func<uint>, uint>
+				{ }
+				private global::Rocks.Handlers<global::MockTests.IPixelShaderCreateExpectations.Handler1>? @handlers1;
+				
+				public override void Verify()
+				{
+					if (!this.WasInstanceInvoked)
 					{
-						public Mock(global::MockTests.IPixelShaderCreateExpectations @expectations)
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::MockTests.IPixelShaderCreateExpectations was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
+					{
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+				
+						if (failures.Count > 0)
 						{
-							this.Expectations = @expectations;
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
+					}
+				}
+				
+				private sealed class Mock
+					: global::MockTests.IPixelShader, global::Rocks.IRaiseEvents
+				{
+					public Mock(global::MockTests.IPixelShaderCreateExpectations @expectations)
+					{
+						this.Expectations = @expectations;
+					}
+					
+					[global::System.ObsoleteAttribute("This method is not intended to be used directly by user code")]
+					[global::Rocks.MemberIdentifier(0)]
+					public uint GetPixelOptions()
+					{
+						if (this.Expectations.handlers0 is not null)
+						{
+							var @handler = this.Expectations.handlers0.First;
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
+							@handler.RaiseEvents(this);
+							return @result!;
 						}
 						
-						[global::System.ObsoleteAttribute("This method is not intended to be used directly by user code")]
-						[global::Rocks.MemberIdentifier(0)]
-						public uint GetPixelOptions()
+						this.Expectations.WasExceptionThrown = true;
+						throw new global::Rocks.Exceptions.ExpectationException(
+							$"""
+							No handlers were found for {this.GetType().GetMemberDescription(0)}
+							""");
+					}
+					
+					[global::System.ObsoleteAttribute("This property is not intended to be used directly by user code")]
+					public uint Values
+					{
+						[global::Rocks.MemberIdentifier(1)]
+						get
 						{
-							if (this.Expectations.handlers0 is not null)
+							if (this.Expectations.handlers1 is not null)
 							{
-								var @handler = this.Expectations.handlers0.First;
+								var @handler = this.Expectations.handlers1.First;
 								@handler.CallCount++;
 								var @result = @handler.Callback is not null ?
 									@handler.Callback() : @handler.ReturnValue;
@@ -1130,147 +1199,78 @@ public static class ObsoleteGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								No handlers match for {this.GetType().GetMemberDescription(1)}
 								""");
 						}
+					}
+					
+					#pragma warning disable CS0067
+					[global::System.ObsoleteAttribute("This event is not intended to be used directly by user code")]
+					public event global::System.EventHandler? ShadingOccurred;
+					#pragma warning restore CS0067
+					
+					void global::Rocks.IRaiseEvents.Raise(string @fieldName, object @args)
+					{
+						var @thisType = this.GetType();
+						var @eventDelegate = (global::System.MulticastDelegate)thisType.GetField(@fieldName, 
+							global::System.Reflection.BindingFlags.Instance | global::System.Reflection.BindingFlags.NonPublic)!.GetValue(this)!;
 						
-						[global::System.ObsoleteAttribute("This property is not intended to be used directly by user code")]
-						[global::Rocks.MemberIdentifier(1, global::Rocks.PropertyAccessor.Get)]
-						public uint Values
+						if (@eventDelegate is not null)
 						{
-							get
+							foreach (var @handler in @eventDelegate.GetInvocationList())
 							{
-								if (this.Expectations.handlers1 is not null)
-								{
-									var @handler = this.Expectations.handlers1.First;
-									@handler.CallCount++;
-									var @result = @handler.Callback is not null ?
-										@handler.Callback() : @handler.ReturnValue;
-									@handler.RaiseEvents(this);
-									return @result!;
-								}
-								
-								this.Expectations.WasExceptionThrown = true;
-								throw new global::Rocks.Exceptions.ExpectationException(
-									$"""
-									No handlers match for {this.GetType().GetMemberDescription(1)}
-									""");
+								@handler.Method.Invoke(@handler.Target, new object[]{this, @args});
 							}
 						}
-						
-						#pragma warning disable CS0067
-						[global::System.ObsoleteAttribute("This event is not intended to be used directly by user code")]
-						public event global::System.EventHandler? ShadingOccurred;
-						#pragma warning restore CS0067
-						
-						void global::Rocks.IRaiseEvents.Raise(string @fieldName, object @args)
-						{
-							var @thisType = this.GetType();
-							var @eventDelegate = (global::System.MulticastDelegate)thisType.GetField(@fieldName, 
-								global::System.Reflection.BindingFlags.Instance | global::System.Reflection.BindingFlags.NonPublic)!.GetValue(this)!;
-							
-							if (@eventDelegate is not null)
-							{
-								foreach (var @handler in @eventDelegate.GetInvocationList())
-								{
-									@handler.Method.Invoke(@handler.Target, new object[]{this, @args});
-								}
-							}
-						}
-						
-						private global::MockTests.IPixelShaderCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class MethodExpectations
+					private global::MockTests.IPixelShaderCreateExpectations Expectations { get; }
+				}
+				
+				public IPixelShaderCreateExpectations() => this.setups = new(this);
+				
+				internal global::MockTests.IPixelShader Instance()
+				{
+					if (!this.WasInstanceInvoked)
 					{
-						internal MethodExpectations(global::MockTests.IPixelShaderCreateExpectations expectations) =>
-							this.Expectations = expectations;
-						
-						internal global::MockTests.IPixelShaderCreateExpectations.Adornments.AdornmentsForHandler0 GetPixelOptions()
-						{
-							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-							var handler = new global::MockTests.IPixelShaderCreateExpectations.Handler0();
-							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
-							else { this.Expectations.handlers0.Add(handler); }
-							return new(handler);
-						}
-						
-						private global::MockTests.IPixelShaderCreateExpectations Expectations { get; }
+						this.WasInstanceInvoked = true;
+						var @mock = new Mock(this);
+						this.MockType = @mock.GetType();
+						return @mock;
 					}
-					
-					internal sealed class PropertyExpectations
+					else
 					{
-						internal sealed class PropertyGetterExpectations
-						{
-							internal PropertyGetterExpectations(global::MockTests.IPixelShaderCreateExpectations expectations) =>
-								this.Expectations = expectations;
-							
-							internal global::MockTests.IPixelShaderCreateExpectations.Adornments.AdornmentsForHandler1 Values()
-							{
-								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-								var handler = new global::MockTests.IPixelShaderCreateExpectations.Handler1();
-								if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
-								else { this.Expectations.handlers1.Add(handler); }
-								return new(handler);
-							}
-							private global::MockTests.IPixelShaderCreateExpectations Expectations { get; }
-						}
-						
-						
-						internal PropertyExpectations(global::MockTests.IPixelShaderCreateExpectations expectations) =>
-							(this.Getters) = (new(expectations));
-						
-						internal global::MockTests.IPixelShaderCreateExpectations.PropertyExpectations.PropertyGetterExpectations Getters { get; }
-					}
-					
-					internal global::MockTests.IPixelShaderCreateExpectations.MethodExpectations Methods { get; }
-					internal global::MockTests.IPixelShaderCreateExpectations.PropertyExpectations Properties { get; }
-					
-					public IPixelShaderCreateExpectations() =>
-						(this.Methods, this.Properties) = (new(this), new(this));
-					
-					internal global::MockTests.IPixelShader Instance()
-					{
-						if (!this.WasInstanceInvoked)
-						{
-							this.WasInstanceInvoked = true;
-							var @mock = new Mock(this);
-							this.MockType = @mock.GetType();
-							return @mock;
-						}
-						else
-						{
-							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
-						}
-					}
-					
-					internal static class Adornments
-					{
-						public interface IAdornmentsForIPixelShader<TAdornments>
-							: global::Rocks.IAdornments<TAdornments>
-							where TAdornments : IAdornmentsForIPixelShader<TAdornments>
-						{ }
-						
-						public sealed class AdornmentsForHandler0
-							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IPixelShaderCreateExpectations.Handler0, global::System.Func<uint>, uint>, IAdornmentsForIPixelShader<AdornmentsForHandler0>
-						{
-							public AdornmentsForHandler0(global::MockTests.IPixelShaderCreateExpectations.Handler0 handler)
-								: base(handler) { }
-						}
-						public sealed class AdornmentsForHandler1
-							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IPixelShaderCreateExpectations.Handler1, global::System.Func<uint>, uint>, IAdornmentsForIPixelShader<AdornmentsForHandler1>
-						{
-							public AdornmentsForHandler1(global::MockTests.IPixelShaderCreateExpectations.Handler1 handler)
-								: base(handler) { }
-						}
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 					}
 				}
 				
-				internal static class IPixelShaderAdornmentsEventExtensions
+				internal static class Adornments
 				{
-					internal static TAdornments RaiseShadingOccurred<TAdornments>(this TAdornments self, global::System.EventArgs args) where TAdornments : global::MockTests.IPixelShaderCreateExpectations.Adornments.IAdornmentsForIPixelShader<TAdornments> => 
-						self.AddRaiseEvent(new("ShadingOccurred", args));
+					public interface IAdornmentsForIPixelShader<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForIPixelShader<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IPixelShaderCreateExpectations.Handler0, global::System.Func<uint>, uint>, IAdornmentsForIPixelShader<AdornmentsForHandler0>
+					{
+						public AdornmentsForHandler0(global::MockTests.IPixelShaderCreateExpectations.Handler0 handler)
+							: base(handler) { }
+					}
+					
+					public sealed class AdornmentsForHandler1
+						: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.IPixelShaderCreateExpectations.Handler1, global::System.Func<uint>, uint>, IAdornmentsForIPixelShader<AdornmentsForHandler1>
+					{
+						public AdornmentsForHandler1(global::MockTests.IPixelShaderCreateExpectations.Handler1 handler)
+							: base(handler) { }
+					}
 				}
+			}
+			
+			internal static class IPixelShaderAdornmentsEventExtensions
+			{
+				internal static TAdornments RaiseShadingOccurred<TAdornments>(this TAdornments self, global::System.EventArgs args) where TAdornments : global::MockTests.IPixelShaderCreateExpectations.Adornments.IAdornmentsForIPixelShader<TAdornments> => 
+					self.AddRaiseEvent(new("ShadingOccurred", args));
 			}
 			
 			#pragma warning restore CS8618
@@ -1280,7 +1280,7 @@ public static class ObsoleteGeneratorTests
 			"""";
 
 		var makeGeneratedCode =
-			"""
+			""""
 			// <auto-generated/>
 			
 			#pragma warning disable CS8618
@@ -1312,6 +1312,7 @@ public static class ObsoleteGeneratorTests
 						{
 							return default!;
 						}
+						
 						[global::System.ObsoleteAttribute("This property is not intended to be used directly by user code")]
 						public uint Values
 						{
@@ -1331,7 +1332,7 @@ public static class ObsoleteGeneratorTests
 			#pragma warning restore CS8714
 			#pragma warning restore CS8775
 			
-			""";
+			"""";
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[

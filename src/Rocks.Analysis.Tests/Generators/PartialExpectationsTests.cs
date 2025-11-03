@@ -38,6 +38,27 @@ public static class PartialExpectationsTests
 			public partial class TargetExpectationsStuff
 				: global::Rocks.Expectations
 			{
+				private readonly global::TargetExpectationsStuff.SetupsExpectations setups;
+				
+				internal sealed class SetupsExpectations
+				{
+					private readonly global::TargetExpectationsStuff parent;
+				
+					internal SetupsExpectations(global::TargetExpectationsStuff parent) =>
+						this.parent = parent;
+				
+					internal global::TargetExpectationsStuff.Adornments.AdornmentsForHandler0 DoSomething()
+					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+						var handler = new global::TargetExpectationsStuff.Handler0();
+						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(handler); }
+						else { this.parent.handlers0.Add(handler); }
+						return new(handler);
+					}
+				}
+				
+				internal global::TargetExpectationsStuff.SetupsExpectations Setups => this.setups;
+				
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Action>
 				{ }
@@ -92,27 +113,7 @@ public static class PartialExpectationsTests
 					private global::TargetExpectationsStuff Expectations { get; }
 				}
 				
-				internal sealed class MethodExpectations
-				{
-					internal MethodExpectations(global::TargetExpectationsStuff expectations) =>
-						this.Expectations = expectations;
-					
-					internal global::TargetExpectationsStuff.Adornments.AdornmentsForHandler0 DoSomething()
-					{
-						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-						var handler = new global::TargetExpectationsStuff.Handler0();
-						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
-						else { this.Expectations.handlers0.Add(handler); }
-						return new(handler);
-					}
-					
-					private global::TargetExpectationsStuff Expectations { get; }
-				}
-				
-				internal global::TargetExpectationsStuff.MethodExpectations Methods { get; }
-				
-				public TargetExpectationsStuff() =>
-					(this.Methods) = (new(this));
+				public TargetExpectationsStuff() => this.setups = new(this);
 				
 				internal global::ITarget Instance()
 				{
@@ -199,6 +200,33 @@ public static class PartialExpectationsTests
 			internal unsafe sealed class ITargetCreateExpectations
 				: global::Rocks.Expectations
 			{
+				private readonly global::ITargetCreateExpectations.SetupsExpectations setups;
+				
+				internal sealed class SetupsExpectations
+				{
+					private readonly global::ITargetCreateExpectations parent;
+				
+					internal SetupsExpectations(global::ITargetCreateExpectations parent) =>
+						this.parent = parent;
+				
+					internal global::ITargetCreateExpectations.Adornments.AdornmentsForHandler0 PointerParameter(global::Rocks.Projections.PointerArgument<int> @value)
+					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+						global::System.ArgumentNullException.ThrowIfNull(@value);
+						
+						var @handler = new global::ITargetCreateExpectations.Handler0
+						{
+							@value = @value,
+						};
+						
+						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
+						else { this.parent.handlers0.Add(@handler); }
+						return new(@handler);
+					}
+				}
+				
+				internal global::ITargetCreateExpectations.SetupsExpectations Setups => this.setups;
+				
 				internal sealed class Handler0
 					: global::Rocks.Handler<Handler0.CallbackForHandler>
 				{
@@ -276,33 +304,7 @@ public static class PartialExpectationsTests
 					private global::ITargetCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class MethodExpectations
-				{
-					internal MethodExpectations(global::ITargetCreateExpectations expectations) =>
-						this.Expectations = expectations;
-					
-					internal global::ITargetCreateExpectations.Adornments.AdornmentsForHandler0 PointerParameter(global::Rocks.Projections.PointerArgument<int> @value)
-					{
-						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-						global::System.ArgumentNullException.ThrowIfNull(@value);
-						
-						var @handler = new global::ITargetCreateExpectations.Handler0
-						{
-							@value = @value,
-						};
-						
-						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
-						else { this.Expectations.handlers0.Add(@handler); }
-						return new(@handler);
-					}
-					
-					private global::ITargetCreateExpectations Expectations { get; }
-				}
-				
-				internal global::ITargetCreateExpectations.MethodExpectations Methods { get; }
-				
-				public ITargetCreateExpectations() =>
-					(this.Methods) = (new(this));
+				public ITargetCreateExpectations() => this.setups = new(this);
 				
 				internal global::ITarget Instance()
 				{
@@ -358,6 +360,33 @@ public static class PartialExpectationsTests
 			public unsafe partial class TargetExpectationsStuff
 				: global::Rocks.Expectations
 			{
+				private readonly global::TargetExpectationsStuff.SetupsExpectations setups;
+				
+				internal sealed class SetupsExpectations
+				{
+					private readonly global::TargetExpectationsStuff parent;
+				
+					internal SetupsExpectations(global::TargetExpectationsStuff parent) =>
+						this.parent = parent;
+				
+					internal global::TargetExpectationsStuff.Adornments.AdornmentsForHandler0 PointerParameter(global::Rocks.Projections.PointerArgument<int> @value)
+					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+						global::System.ArgumentNullException.ThrowIfNull(@value);
+						
+						var @handler = new global::TargetExpectationsStuff.Handler0
+						{
+							@value = @value,
+						};
+						
+						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
+						else { this.parent.handlers0.Add(@handler); }
+						return new(@handler);
+					}
+				}
+				
+				internal global::TargetExpectationsStuff.SetupsExpectations Setups => this.setups;
+				
 				internal sealed class Handler0
 					: global::Rocks.Handler<Handler0.CallbackForHandler>
 				{
@@ -435,33 +464,7 @@ public static class PartialExpectationsTests
 					private global::TargetExpectationsStuff Expectations { get; }
 				}
 				
-				internal sealed class MethodExpectations
-				{
-					internal MethodExpectations(global::TargetExpectationsStuff expectations) =>
-						this.Expectations = expectations;
-					
-					internal global::TargetExpectationsStuff.Adornments.AdornmentsForHandler0 PointerParameter(global::Rocks.Projections.PointerArgument<int> @value)
-					{
-						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-						global::System.ArgumentNullException.ThrowIfNull(@value);
-						
-						var @handler = new global::TargetExpectationsStuff.Handler0
-						{
-							@value = @value,
-						};
-						
-						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
-						else { this.Expectations.handlers0.Add(@handler); }
-						return new(@handler);
-					}
-					
-					private global::TargetExpectationsStuff Expectations { get; }
-				}
-				
-				internal global::TargetExpectationsStuff.MethodExpectations Methods { get; }
-				
-				public TargetExpectationsStuff() =>
-					(this.Methods) = (new(this));
+				public TargetExpectationsStuff() => this.setups = new(this);
 				
 				internal global::IPartialTarget Instance()
 				{
@@ -603,6 +606,27 @@ public static class PartialExpectationsTests
 			public partial class TargetExpectationsStuff<T>
 				: global::Rocks.Expectations
 			{
+				private readonly global::TargetExpectationsStuff<T>.SetupsExpectations setups;
+				
+				internal sealed class SetupsExpectations
+				{
+					private readonly global::TargetExpectationsStuff<T> parent;
+				
+					internal SetupsExpectations(global::TargetExpectationsStuff<T> parent) =>
+						this.parent = parent;
+				
+					internal global::TargetExpectationsStuff<T>.Adornments.AdornmentsForHandler0 DoSomething()
+					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+						var handler = new global::TargetExpectationsStuff<T>.Handler0();
+						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(handler); }
+						else { this.parent.handlers0.Add(handler); }
+						return new(handler);
+					}
+				}
+				
+				internal global::TargetExpectationsStuff<T>.SetupsExpectations Setups => this.setups;
+				
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Func<T>, T>
 				{ }
@@ -657,27 +681,7 @@ public static class PartialExpectationsTests
 					private global::TargetExpectationsStuff<T> Expectations { get; }
 				}
 				
-				internal sealed class MethodExpectations
-				{
-					internal MethodExpectations(global::TargetExpectationsStuff<T> expectations) =>
-						this.Expectations = expectations;
-					
-					internal global::TargetExpectationsStuff<T>.Adornments.AdornmentsForHandler0 DoSomething()
-					{
-						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-						var handler = new global::TargetExpectationsStuff<T>.Handler0();
-						if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
-						else { this.Expectations.handlers0.Add(handler); }
-						return new(handler);
-					}
-					
-					private global::TargetExpectationsStuff<T> Expectations { get; }
-				}
-				
-				internal global::TargetExpectationsStuff<T>.MethodExpectations Methods { get; }
-				
-				public TargetExpectationsStuff() =>
-					(this.Methods) = (new(this));
+				public TargetExpectationsStuff() => this.setups = new(this);
 				
 				internal global::ITarget<T> Instance()
 				{
@@ -759,116 +763,116 @@ public static class PartialExpectationsTests
 			
 			using Rocks.Extensions;
 			
-			namespace ExpectationsTarget
+			namespace ExpectationsTarget;
+			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+			public partial class TargetExpectationsStuff
+				: global::Rocks.Expectations
 			{
-				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-				public partial class TargetExpectationsStuff
-					: global::Rocks.Expectations
+				private readonly global::ExpectationsTarget.TargetExpectationsStuff.SetupsExpectations setups;
+				
+				internal sealed class SetupsExpectations
 				{
-					internal sealed class Handler0
-						: global::Rocks.Handler<global::System.Action>
-					{ }
-					private global::Rocks.Handlers<global::ExpectationsTarget.TargetExpectationsStuff.Handler0>? @handlers0;
-					
-					public override void Verify()
+					private readonly global::ExpectationsTarget.TargetExpectationsStuff parent;
+				
+					internal SetupsExpectations(global::ExpectationsTarget.TargetExpectationsStuff parent) =>
+						this.parent = parent;
+				
+					internal global::ExpectationsTarget.TargetExpectationsStuff.Adornments.AdornmentsForHandler0 DoSomething()
 					{
-						if (!this.WasInstanceInvoked)
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+						var handler = new global::ExpectationsTarget.TargetExpectationsStuff.Handler0();
+						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(handler); }
+						else { this.parent.handlers0.Add(handler); }
+						return new(handler);
+					}
+				}
+				
+				internal global::ExpectationsTarget.TargetExpectationsStuff.SetupsExpectations Setups => this.setups;
+				
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Action>
+				{ }
+				private global::Rocks.Handlers<global::ExpectationsTarget.TargetExpectationsStuff.Handler0>? @handlers0;
+				
+				public override void Verify()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::ExpectationsTarget.TargetExpectationsStuff was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
+					{
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+				
+						if (failures.Count > 0)
 						{
-							throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::ExpectationsTarget.TargetExpectationsStuff was never made."]);
-						}
-						else if (!this.WasExceptionThrown)
-						{
-							var failures = new global::System.Collections.Generic.List<string>();
-					
-							if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-					
-							if (failures.Count > 0)
-							{
-								throw new global::Rocks.Exceptions.VerificationException(failures);
-							}
+							throw new global::Rocks.Exceptions.VerificationException(failures);
 						}
 					}
-					
-					private sealed class Mock
-						: global::MockTarget.ITarget
+				}
+				
+				private sealed class Mock
+					: global::MockTarget.ITarget
+				{
+					public Mock(global::ExpectationsTarget.TargetExpectationsStuff @expectations)
 					{
-						public Mock(global::ExpectationsTarget.TargetExpectationsStuff @expectations)
-						{
-							this.Expectations = @expectations;
-						}
-						
-						[global::Rocks.MemberIdentifier(0)]
-						public void DoSomething()
-						{
-							if (this.Expectations.handlers0 is not null)
-							{
-								var @handler = this.Expectations.handlers0.First;
-								@handler.CallCount++;
-								@handler.Callback?.Invoke();
-							}
-							else
-							{
-								this.Expectations.WasExceptionThrown = true;
-								throw new global::Rocks.Exceptions.ExpectationException(
-									$"""
-									No handlers were found for {this.GetType().GetMemberDescription(0)}
-									""");
-							}
-						}
-						
-						private global::ExpectationsTarget.TargetExpectationsStuff Expectations { get; }
+						this.Expectations = @expectations;
 					}
 					
-					internal sealed class MethodExpectations
+					[global::Rocks.MemberIdentifier(0)]
+					public void DoSomething()
 					{
-						internal MethodExpectations(global::ExpectationsTarget.TargetExpectationsStuff expectations) =>
-							this.Expectations = expectations;
-						
-						internal global::ExpectationsTarget.TargetExpectationsStuff.Adornments.AdornmentsForHandler0 DoSomething()
+						if (this.Expectations.handlers0 is not null)
 						{
-							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-							var handler = new global::ExpectationsTarget.TargetExpectationsStuff.Handler0();
-							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(handler); }
-							else { this.Expectations.handlers0.Add(handler); }
-							return new(handler);
-						}
-						
-						private global::ExpectationsTarget.TargetExpectationsStuff Expectations { get; }
-					}
-					
-					internal global::ExpectationsTarget.TargetExpectationsStuff.MethodExpectations Methods { get; }
-					
-					public TargetExpectationsStuff() =>
-						(this.Methods) = (new(this));
-					
-					internal global::MockTarget.ITarget Instance()
-					{
-						if (!this.WasInstanceInvoked)
-						{
-							this.WasInstanceInvoked = true;
-							var @mock = new Mock(this);
-							this.MockType = @mock.GetType();
-							return @mock;
+							var @handler = this.Expectations.handlers0.First;
+							@handler.CallCount++;
+							@handler.Callback?.Invoke();
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								""");
 						}
 					}
 					
-					internal static class Adornments
+					private global::ExpectationsTarget.TargetExpectationsStuff Expectations { get; }
+				}
+				
+				public TargetExpectationsStuff() => this.setups = new(this);
+				
+				internal global::MockTarget.ITarget Instance()
+				{
+					if (!this.WasInstanceInvoked)
 					{
-						public interface IAdornmentsForTargetExpectationsStuff<TAdornments>
-							: global::Rocks.IAdornments<TAdornments>
-							where TAdornments : IAdornmentsForTargetExpectationsStuff<TAdornments>
-						{ }
-						
-						public sealed class AdornmentsForHandler0
-							: global::Rocks.Adornments<AdornmentsForHandler0, global::ExpectationsTarget.TargetExpectationsStuff.Handler0, global::System.Action>, IAdornmentsForTargetExpectationsStuff<AdornmentsForHandler0>
-						{
-							public AdornmentsForHandler0(global::ExpectationsTarget.TargetExpectationsStuff.Handler0 handler)
-								: base(handler) { }
-						}
+						this.WasInstanceInvoked = true;
+						var @mock = new Mock(this);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForTargetExpectationsStuff<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForTargetExpectationsStuff<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::ExpectationsTarget.TargetExpectationsStuff.Handler0, global::System.Action>, IAdornmentsForTargetExpectationsStuff<AdornmentsForHandler0>
+					{
+						public AdornmentsForHandler0(global::ExpectationsTarget.TargetExpectationsStuff.Handler0 handler)
+							: base(handler) { }
 					}
 				}
 			}

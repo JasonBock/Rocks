@@ -38,243 +38,249 @@ public static class ClassGeneratorTests
 			
 			using Rocks.Extensions;
 			
-			namespace MockTests
+			namespace MockTests;
+			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+			internal sealed class ClassTestCreateExpectations
+				: global::Rocks.Expectations
 			{
-				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-				internal sealed class ClassTestCreateExpectations
-					: global::Rocks.Expectations
+				private readonly global::MockTests.ClassTestCreateExpectations.SetupsExpectations setups;
+				
+				internal sealed class SetupsExpectations
 				{
-					internal sealed class Handler0
-						: global::Rocks.Handler<global::System.Func<object?, bool>, bool>
+					private readonly global::MockTests.ClassTestCreateExpectations parent;
+				
+					internal SetupsExpectations(global::MockTests.ClassTestCreateExpectations parent) =>
+						this.parent = parent;
+				
+					internal global::MockTests.ClassTestCreateExpectations.Adornments.AdornmentsForHandler0 Equals(global::Rocks.Argument<object?> @obj)
 					{
-						public global::Rocks.Argument<object?> @obj { get; set; }
-					}
-					private global::Rocks.Handlers<global::MockTests.ClassTestCreateExpectations.Handler0>? @handlers0;
-					internal sealed class Handler1
-						: global::Rocks.Handler<global::System.Func<int>, int>
-					{ }
-					private global::Rocks.Handlers<global::MockTests.ClassTestCreateExpectations.Handler1>? @handlers1;
-					internal sealed class Handler2
-						: global::Rocks.Handler<global::System.Func<string?>, string?>
-					{ }
-					private global::Rocks.Handlers<global::MockTests.ClassTestCreateExpectations.Handler2>? @handlers2;
-					internal sealed class Handler3
-						: global::Rocks.Handler<global::System.Action>
-					{ }
-					private global::Rocks.Handlers<global::MockTests.ClassTestCreateExpectations.Handler3>? @handlers3;
-					
-					public override void Verify()
-					{
-						if (!this.WasInstanceInvoked)
-						{
-							throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::MockTests.ClassTestCreateExpectations was never made."]);
-						}
-						else if (!this.WasExceptionThrown)
-						{
-							var failures = new global::System.Collections.Generic.List<string>();
-					
-							if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-							if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
-							if (this.handlers2 is not null) { failures.AddRange(this.Verify(this.handlers2, 2)); }
-							if (this.handlers3 is not null) { failures.AddRange(this.Verify(this.handlers3, 3)); }
-					
-							if (failures.Count > 0)
-							{
-								throw new global::Rocks.Exceptions.VerificationException(failures);
-							}
-						}
-					}
-					
-					private sealed class Mock
-						: global::MockTests.ClassTest
-					{
-						public Mock(global::MockTests.ClassTestCreateExpectations @expectations)
-						{
-							this.Expectations = @expectations;
-						}
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
-						[global::Rocks.MemberIdentifier(0)]
-						public override bool Equals(object? @obj)
+						var @handler = new global::MockTests.ClassTestCreateExpectations.Handler0
 						{
-							if (this.Expectations.handlers0 is not null)
+							@obj = @obj,
+						};
+						
+						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
+						else { this.parent.handlers0.Add(@handler); }
+						return new(@handler);
+					}
+					
+					internal new global::MockTests.ClassTestCreateExpectations.Adornments.AdornmentsForHandler1 GetHashCode()
+					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+						var handler = new global::MockTests.ClassTestCreateExpectations.Handler1();
+						if (this.parent.handlers1 is null) { this.parent.handlers1 = new(handler); }
+						else { this.parent.handlers1.Add(handler); }
+						return new(handler);
+					}
+					
+					internal new global::MockTests.ClassTestCreateExpectations.Adornments.AdornmentsForHandler2 ToString()
+					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+						var handler = new global::MockTests.ClassTestCreateExpectations.Handler2();
+						if (this.parent.handlers2 is null) { this.parent.handlers2 = new(handler); }
+						else { this.parent.handlers2.Add(handler); }
+						return new(handler);
+					}
+					
+					internal global::MockTests.ClassTestCreateExpectations.Adornments.AdornmentsForHandler3 Foo()
+					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+						var handler = new global::MockTests.ClassTestCreateExpectations.Handler3();
+						if (this.parent.handlers3 is null) { this.parent.handlers3 = new(handler); }
+						else { this.parent.handlers3.Add(handler); }
+						return new(handler);
+					}
+				}
+				
+				internal global::MockTests.ClassTestCreateExpectations.SetupsExpectations Setups => this.setups;
+				
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Func<object?, bool>, bool>
+				{
+					public global::Rocks.Argument<object?> @obj { get; set; }
+				}
+				private global::Rocks.Handlers<global::MockTests.ClassTestCreateExpectations.Handler0>? @handlers0;
+				
+				internal sealed class Handler1
+					: global::Rocks.Handler<global::System.Func<int>, int>
+				{ }
+				private global::Rocks.Handlers<global::MockTests.ClassTestCreateExpectations.Handler1>? @handlers1;
+				
+				internal sealed class Handler2
+					: global::Rocks.Handler<global::System.Func<string?>, string?>
+				{ }
+				private global::Rocks.Handlers<global::MockTests.ClassTestCreateExpectations.Handler2>? @handlers2;
+				
+				internal sealed class Handler3
+					: global::Rocks.Handler<global::System.Action>
+				{ }
+				private global::Rocks.Handlers<global::MockTests.ClassTestCreateExpectations.Handler3>? @handlers3;
+				
+				public override void Verify()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::MockTests.ClassTestCreateExpectations was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
+					{
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers2 is not null) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+						if (this.handlers3 is not null) { failures.AddRange(this.Verify(this.handlers3, 3)); }
+				
+						if (failures.Count > 0)
+						{
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
+					}
+				}
+				
+				private sealed class Mock
+					: global::MockTests.ClassTest
+				{
+					public Mock(global::MockTests.ClassTestCreateExpectations @expectations)
+					{
+						this.Expectations = @expectations;
+					}
+					
+					[global::Rocks.MemberIdentifier(0)]
+					public override bool Equals(object? @obj)
+					{
+						if (this.Expectations.handlers0 is not null)
+						{
+							foreach (var @handler in this.Expectations.handlers0)
 							{
-								foreach (var @handler in this.Expectations.handlers0)
+								if (@handler.@obj.IsValid(@obj!))
 								{
-									if (@handler.@obj.IsValid(@obj!))
-									{
-										@handler.CallCount++;
-										var @result = @handler.Callback is not null ?
-											@handler.Callback(@obj!) : @handler.ReturnValue;
-										return @result!;
-									}
+									@handler.CallCount++;
+									var @result = @handler.Callback is not null ?
+										@handler.Callback(@obj!) : @handler.ReturnValue;
+									return @result!;
 								}
-								
-								this.Expectations.WasExceptionThrown = true;
-								throw new global::Rocks.Exceptions.ExpectationException(
-									$"""
-									No handlers match for {this.GetType().GetMemberDescription(0)}
-										obj: {@obj.FormatValue()}
-									""");
 							}
-							else
-							{
-								return base.Equals(@obj: @obj!);
-							}
-						}
-						
-						[global::Rocks.MemberIdentifier(1)]
-						public override int GetHashCode()
-						{
-							if (this.Expectations.handlers1 is not null)
-							{
-								var @handler = this.Expectations.handlers1.First;
-								@handler.CallCount++;
-								var @result = @handler.Callback is not null ?
-									@handler.Callback() : @handler.ReturnValue;
-								return @result!;
-							}
-							else
-							{
-								return base.GetHashCode();
-							}
-						}
-						
-						[global::Rocks.MemberIdentifier(2)]
-						public override string? ToString()
-						{
-							if (this.Expectations.handlers2 is not null)
-							{
-								var @handler = this.Expectations.handlers2.First;
-								@handler.CallCount++;
-								var @result = @handler.Callback is not null ?
-									@handler.Callback() : @handler.ReturnValue;
-								return @result!;
-							}
-							else
-							{
-								return base.ToString();
-							}
-						}
-						
-						[global::Rocks.MemberIdentifier(3)]
-						public override void Foo()
-						{
-							if (this.Expectations.handlers3 is not null)
-							{
-								var @handler = this.Expectations.handlers3.First;
-								@handler.CallCount++;
-								@handler.Callback?.Invoke();
-							}
-							else
-							{
-								base.Foo();
-							}
-						}
-						
-						private global::MockTests.ClassTestCreateExpectations Expectations { get; }
-					}
-					
-					internal sealed class MethodExpectations
-					{
-						internal MethodExpectations(global::MockTests.ClassTestCreateExpectations expectations) =>
-							this.Expectations = expectations;
-						
-						internal global::MockTests.ClassTestCreateExpectations.Adornments.AdornmentsForHandler0 Equals(global::Rocks.Argument<object?> @obj)
-						{
-							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-							global::System.ArgumentNullException.ThrowIfNull(@obj);
 							
-							var @handler = new global::MockTests.ClassTestCreateExpectations.Handler0
-							{
-								@obj = @obj,
-							};
-							
-							if (this.Expectations.handlers0 is null) { this.Expectations.handlers0 = new(@handler); }
-							else { this.Expectations.handlers0.Add(@handler); }
-							return new(@handler);
-						}
-						
-						internal new global::MockTests.ClassTestCreateExpectations.Adornments.AdornmentsForHandler1 GetHashCode()
-						{
-							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-							var handler = new global::MockTests.ClassTestCreateExpectations.Handler1();
-							if (this.Expectations.handlers1 is null) { this.Expectations.handlers1 = new(handler); }
-							else { this.Expectations.handlers1.Add(handler); }
-							return new(handler);
-						}
-						
-						internal new global::MockTests.ClassTestCreateExpectations.Adornments.AdornmentsForHandler2 ToString()
-						{
-							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-							var handler = new global::MockTests.ClassTestCreateExpectations.Handler2();
-							if (this.Expectations.handlers2 is null) { this.Expectations.handlers2 = new(handler); }
-							else { this.Expectations.handlers2.Add(handler); }
-							return new(handler);
-						}
-						
-						internal global::MockTests.ClassTestCreateExpectations.Adornments.AdornmentsForHandler3 Foo()
-						{
-							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-							var handler = new global::MockTests.ClassTestCreateExpectations.Handler3();
-							if (this.Expectations.handlers3 is null) { this.Expectations.handlers3 = new(handler); }
-							else { this.Expectations.handlers3.Add(handler); }
-							return new(handler);
-						}
-						
-						private global::MockTests.ClassTestCreateExpectations Expectations { get; }
-					}
-					
-					internal global::MockTests.ClassTestCreateExpectations.MethodExpectations Methods { get; }
-					
-					public ClassTestCreateExpectations() =>
-						(this.Methods) = (new(this));
-					
-					internal global::MockTests.ClassTest Instance()
-					{
-						if (!this.WasInstanceInvoked)
-						{
-							this.WasInstanceInvoked = true;
-							var @mock = new Mock(this);
-							this.MockType = @mock.GetType();
-							return @mock;
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers match for {this.GetType().GetMemberDescription(0)}
+									obj: {@obj.FormatValue()}
+								""");
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+							return base.Equals(@obj: @obj!);
 						}
 					}
 					
-					internal static class Adornments
+					[global::Rocks.MemberIdentifier(1)]
+					public override int GetHashCode()
 					{
-						public interface IAdornmentsForClassTest<TAdornments>
-							: global::Rocks.IAdornments<TAdornments>
-							where TAdornments : IAdornmentsForClassTest<TAdornments>
-						{ }
-						
-						public sealed class AdornmentsForHandler0
-							: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.ClassTestCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForClassTest<AdornmentsForHandler0>
+						if (this.Expectations.handlers1 is not null)
 						{
-							public AdornmentsForHandler0(global::MockTests.ClassTestCreateExpectations.Handler0 handler)
-								: base(handler) { }
+							var @handler = this.Expectations.handlers1.First;
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
+							return @result!;
 						}
-						public sealed class AdornmentsForHandler1
-							: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.ClassTestCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForClassTest<AdornmentsForHandler1>
+						else
 						{
-							public AdornmentsForHandler1(global::MockTests.ClassTestCreateExpectations.Handler1 handler)
-								: base(handler) { }
+							return base.GetHashCode();
 						}
-						public sealed class AdornmentsForHandler2
-							: global::Rocks.Adornments<AdornmentsForHandler2, global::MockTests.ClassTestCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForClassTest<AdornmentsForHandler2>
+					}
+					
+					[global::Rocks.MemberIdentifier(2)]
+					public override string? ToString()
+					{
+						if (this.Expectations.handlers2 is not null)
 						{
-							public AdornmentsForHandler2(global::MockTests.ClassTestCreateExpectations.Handler2 handler)
-								: base(handler) { }
+							var @handler = this.Expectations.handlers2.First;
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
+							return @result!;
 						}
-						public sealed class AdornmentsForHandler3
-							: global::Rocks.Adornments<AdornmentsForHandler3, global::MockTests.ClassTestCreateExpectations.Handler3, global::System.Action>, IAdornmentsForClassTest<AdornmentsForHandler3>
+						else
 						{
-							public AdornmentsForHandler3(global::MockTests.ClassTestCreateExpectations.Handler3 handler)
-								: base(handler) { }
+							return base.ToString();
 						}
+					}
+					
+					[global::Rocks.MemberIdentifier(3)]
+					public override void Foo()
+					{
+						if (this.Expectations.handlers3 is not null)
+						{
+							var @handler = this.Expectations.handlers3.First;
+							@handler.CallCount++;
+							@handler.Callback?.Invoke();
+						}
+						else
+						{
+							base.Foo();
+						}
+					}
+					
+					private global::MockTests.ClassTestCreateExpectations Expectations { get; }
+				}
+				
+				public ClassTestCreateExpectations() => this.setups = new(this);
+				
+				internal global::MockTests.ClassTest Instance()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						this.WasInstanceInvoked = true;
+						var @mock = new Mock(this);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForClassTest<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForClassTest<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.ClassTestCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForClassTest<AdornmentsForHandler0>
+					{
+						public AdornmentsForHandler0(global::MockTests.ClassTestCreateExpectations.Handler0 handler)
+							: base(handler) { }
+					}
+					
+					public sealed class AdornmentsForHandler1
+						: global::Rocks.Adornments<AdornmentsForHandler1, global::MockTests.ClassTestCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForClassTest<AdornmentsForHandler1>
+					{
+						public AdornmentsForHandler1(global::MockTests.ClassTestCreateExpectations.Handler1 handler)
+							: base(handler) { }
+					}
+					
+					public sealed class AdornmentsForHandler2
+						: global::Rocks.Adornments<AdornmentsForHandler2, global::MockTests.ClassTestCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForClassTest<AdornmentsForHandler2>
+					{
+						public AdornmentsForHandler2(global::MockTests.ClassTestCreateExpectations.Handler2 handler)
+							: base(handler) { }
+					}
+					
+					public sealed class AdornmentsForHandler3
+						: global::Rocks.Adornments<AdornmentsForHandler3, global::MockTests.ClassTestCreateExpectations.Handler3, global::System.Action>, IAdornmentsForClassTest<AdornmentsForHandler3>
+					{
+						public AdornmentsForHandler3(global::MockTests.ClassTestCreateExpectations.Handler3 handler)
+							: base(handler) { }
 					}
 				}
 			}
@@ -286,7 +292,7 @@ public static class ClassGeneratorTests
 			"""";
 
 		var makeGeneratedCode =
-			"""
+			""""
 			// <auto-generated/>
 			
 			#pragma warning disable CS8618
@@ -317,14 +323,17 @@ public static class ClassGeneratorTests
 						{
 							return default!;
 						}
+						
 						public override int GetHashCode()
 						{
 							return default!;
 						}
+						
 						public override string? ToString()
 						{
 							return default!;
 						}
+						
 						public override void Foo()
 						{
 						}
@@ -337,7 +346,7 @@ public static class ClassGeneratorTests
 			#pragma warning restore CS8714
 			#pragma warning restore CS8775
 			
-			""";
+			"""";
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[ 
