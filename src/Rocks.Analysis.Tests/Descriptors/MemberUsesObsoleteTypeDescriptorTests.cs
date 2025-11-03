@@ -13,8 +13,8 @@ public static class MemberUsesObsoleteTypeDescriptorTests
 	{
 		var descriptor = MemberUsesObsoleteTypeDescriptor.Create();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(descriptor.Id, Is.EqualTo(MemberUsesObsoleteTypeDescriptor.Id));
 			Assert.That(descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(MemberUsesObsoleteTypeDescriptor.Title));
 			Assert.That(descriptor.MessageFormat.ToString(CultureInfo.CurrentCulture), Is.EqualTo(MemberUsesObsoleteTypeDescriptor.Message));
@@ -22,6 +22,6 @@ public static class MemberUsesObsoleteTypeDescriptorTests
 			Assert.That(descriptor.Category, Is.EqualTo(DiagnosticConstants.Usage));
 			Assert.That(descriptor.HelpLinkUri, Is.EqualTo(HelpUrlBuilder.Build(
 				MemberUsesObsoleteTypeDescriptor.Id, MemberUsesObsoleteTypeDescriptor.Title)));
-		});
+		}
 	}
 }

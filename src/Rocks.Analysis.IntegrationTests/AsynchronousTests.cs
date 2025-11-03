@@ -23,7 +23,7 @@ public interface IAmAsynchronous
 	ValueTask<int> ValueFooReturnAsync();
 }
 
-public static class AsynchronousTests
+internal static class AsynchronousTests
 {
 	[Test]
 	public static async Task CreateAsyncInteratorAsync()

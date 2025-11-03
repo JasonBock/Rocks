@@ -50,10 +50,10 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 			""";
 		var (symbol, compilation) = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -68,10 +68,10 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 			""";
 		var (symbol, compilation) = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -95,10 +95,10 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 		var containingCompilation = CSharpCompilation.Create(ContainingAssembly, [containingSyntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(symbol.CanBeSeenByContainingAssembly(containingCompilation.Assembly, containingCompilation), Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -118,10 +118,10 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 		var containingCompilation = CSharpCompilation.Create(ContainingAssembly, [containingSyntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(symbol.CanBeSeenByContainingAssembly(containingCompilation.Assembly, containingCompilation), Is.False);
-		});
+		}
 	}
 
 	[Test]
@@ -137,10 +137,10 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 			""";
 		var (symbol, compilation) = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -164,10 +164,10 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 		var containingCompilation = CSharpCompilation.Create(ContainingAssembly, [containingSyntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(symbol.CanBeSeenByContainingAssembly(containingCompilation.Assembly, containingCompilation), Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -187,10 +187,10 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 		var containingCompilation = CSharpCompilation.Create(ContainingAssembly, [containingSyntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(symbol.CanBeSeenByContainingAssembly(containingCompilation.Assembly, containingCompilation), Is.False);
-		});
+		}
 	}
 
 	private static (ISymbol, Compilation) GetSymbol(string source)

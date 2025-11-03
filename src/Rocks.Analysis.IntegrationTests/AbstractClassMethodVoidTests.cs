@@ -10,12 +10,12 @@ public abstract class AbstractMethodVoidTests
 	public abstract void MultipleParameters(int a, string b);
 }
 
-public static class AbstractClassMethodVoidTests
+internal static class AbstractClassMethodVoidTests
 {
 	[Test]
 	public static void CreateWithNoParameters()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<AbstractMethodVoidTestsCreateExpectations>();
 		expectations.Setups.NoParameters();
 
@@ -34,7 +34,7 @@ public static class AbstractClassMethodVoidTests
 	[Test]
 	public static void CreateWithNoParametersMultipleCalls()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<AbstractMethodVoidTestsCreateExpectations>();
 		expectations.Setups.NoParameters().ExpectedCallCount(2);
 
@@ -60,7 +60,7 @@ public static class AbstractClassMethodVoidTests
 	{
 		var wasCallbackInvoked = false;
 
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<AbstractMethodVoidTestsCreateExpectations>();
 		expectations.Setups.NoParameters().Callback(() => wasCallbackInvoked = true);
 
@@ -94,7 +94,7 @@ public static class AbstractClassMethodVoidTests
 	[Test]
 	public static void CreateWithOneParameter()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<AbstractMethodVoidTestsCreateExpectations>();
 		expectations.Setups.OneParameter(3);
 
@@ -114,7 +114,7 @@ public static class AbstractClassMethodVoidTests
 	public static void CreateWithOneParameterWithCallback()
 	{
 		var aValue = 0;
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<AbstractMethodVoidTestsCreateExpectations>();
 		expectations.Setups.OneParameter(3).Callback(a => aValue = a);
 
@@ -138,7 +138,7 @@ public static class AbstractClassMethodVoidTests
 	[Test]
 	public static void CreateWithMultipleParameters()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<AbstractMethodVoidTestsCreateExpectations>();
 		expectations.Setups.MultipleParameters(3, "b");
 
@@ -159,15 +159,15 @@ public static class AbstractClassMethodVoidTests
 	{
 		var aValue = 0;
 		var bValue = string.Empty;
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<AbstractMethodVoidTestsCreateExpectations>();
 		expectations.Setups.MultipleParameters(3, "b").Callback((a, b) => (aValue, bValue) = (a, b));
 
 		var mock = expectations.Instance();
 		mock.MultipleParameters(3, "b");
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(aValue, Is.EqualTo(3));
 			Assert.That(bValue, Is.EqualTo("b"));
 		}

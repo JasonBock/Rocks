@@ -25,8 +25,8 @@ public static class PropertyModelTests
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
 			 PropertyAccessor.GetAndSet, memberIdentifier);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model.Accessors, Is.EqualTo(PropertyAccessor.GetAndSet));
 			Assert.That(model.AllAttributesDescription, Is.Empty);
 			Assert.That(model.AttributesDescription, Is.Empty);
@@ -50,7 +50,7 @@ public static class PropertyModelTests
 			Assert.That(model.SetCanBeSeenByContainingAssembly, Is.True);
 			Assert.That(model.SetMethod, Is.Not.Null);
 			Assert.That(model.Type.FullyQualifiedName, Is.EqualTo("string"));
-		});
+		}
 	}
 
 	[Test]
@@ -70,14 +70,14 @@ public static class PropertyModelTests
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
 			 PropertyAccessor.Get, memberIdentifier);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model.GetCanBeSeenByContainingAssembly, Is.True);
 			Assert.That(model.GetMethod, Is.Not.Null);
 			Assert.That(model.InitCanBeSeenByContainingAssembly, Is.False);
 			Assert.That(model.SetCanBeSeenByContainingAssembly, Is.False);
 			Assert.That(model.SetMethod, Is.Null);
-		});
+		}
 	}
 
 	[Test]
@@ -97,14 +97,14 @@ public static class PropertyModelTests
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
 			 PropertyAccessor.Init, memberIdentifier);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model.GetCanBeSeenByContainingAssembly, Is.False);
 			Assert.That(model.GetMethod, Is.Null);
 			Assert.That(model.InitCanBeSeenByContainingAssembly, Is.True);
 			Assert.That(model.SetCanBeSeenByContainingAssembly, Is.False);
 			Assert.That(model.SetMethod, Is.Not.Null);
-		});
+		}
 	}
 
 	[Test]
@@ -124,14 +124,14 @@ public static class PropertyModelTests
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
 			 PropertyAccessor.Set, memberIdentifier);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model.GetCanBeSeenByContainingAssembly, Is.False);
 			Assert.That(model.GetMethod, Is.Null);
 			Assert.That(model.InitCanBeSeenByContainingAssembly, Is.False);
 			Assert.That(model.SetCanBeSeenByContainingAssembly, Is.True);
 			Assert.That(model.SetMethod, Is.Not.Null);
-		});
+		}
 	}
 
 	[Test]
@@ -191,12 +191,12 @@ public static class PropertyModelTests
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
 			 PropertyAccessor.Get, memberIdentifier);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model.IsIndexer, Is.True);
 			Assert.That(model.Parameters, Has.Length.EqualTo(1));
 			Assert.That(model.Parameters[0].Name, Is.EqualTo("data"));
-		});
+		}
 	}
 
 	[Test]
@@ -301,11 +301,11 @@ public static class PropertyModelTests
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
 			 PropertyAccessor.GetAndSet, memberIdentifier);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model.AttributesDescription, Is.EqualTo("[global::System.CLSCompliantAttribute(true), global::System.Diagnostics.CodeAnalysis.AllowNullAttribute]"));
 			Assert.That(model.AllAttributesDescription, Is.EqualTo("[global::System.CLSCompliantAttribute(true), global::System.Diagnostics.CodeAnalysis.AllowNullAttribute]"));
-		});
+		}
 	}
 
 	private static (IPropertySymbol, ITypeSymbol, ModelContext) GetSymbolsCompilation(string code)

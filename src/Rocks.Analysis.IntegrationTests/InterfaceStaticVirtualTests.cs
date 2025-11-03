@@ -13,7 +13,7 @@ public interface IHaveStaticVirtuals
 	public static virtual string? StaticPush { get; set; }
 }
 
-public static class InterfaceStaticVirtualTests
+internal static class InterfaceStaticVirtualTests
 {
 	[Test]
 	public static void Create()
@@ -27,8 +27,8 @@ public static class InterfaceStaticVirtualTests
 		var mock = expectations.Instance();
 		mock.InstancePush = "c";
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(mock.InstancePush, Is.EqualTo("b"));
 			Assert.That(mock.InstanceLift(), Is.EqualTo("a"));
 		}
@@ -39,8 +39,8 @@ public static class InterfaceStaticVirtualTests
 	{
 		var mock = new IHaveStaticVirtualsMakeExpectations().Instance();
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			mock.InstancePush = "a";
 			Assert.That(mock.InstanceLift(), Is.Null);
 			Assert.That(mock.InstancePush, Is.Null);

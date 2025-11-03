@@ -12,7 +12,7 @@ public abstract class HasProtectedMember
 	protected abstract void DoSomething(int data);
 }
 
-public static class NonPublicMemberTests
+internal static class NonPublicMemberTests
 {
 	[Test]
 	public static void ThrowExpectedException()
@@ -21,7 +21,7 @@ public static class NonPublicMemberTests
 
 		var protectedMember = protectedMemberExpectations.Instance();
 
-		Assert.That(protectedMember.CallsDoSomething, 
+		Assert.That(protectedMember.CallsDoSomething,
 			Throws.TypeOf<ExpectationException>()
 				.With.Message.EqualTo(
 					"""

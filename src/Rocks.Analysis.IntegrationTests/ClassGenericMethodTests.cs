@@ -14,12 +14,12 @@ public class ClassGenericMethod<T>
 	public virtual TData? NullableValues<TData>(TData? data) => default!;
 }
 
-public static class ClassGenericMethodTests
+internal static class ClassGenericMethodTests
 {
 	[Test]
 	public static void CreateUsingGenericType()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<ClassGenericMethodCreateExpectations<int>>();
 		expectations.Setups.Foo(Arg.Any<List<string>>());
 
@@ -38,7 +38,7 @@ public static class ClassGenericMethodTests
 	[Test]
 	public static void CreateWithGenericTypeParameter()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<ClassGenericMethodCreateExpectations<int>>();
 		expectations.Setups.Quux(Arg.Any<int>());
 
@@ -57,7 +57,7 @@ public static class ClassGenericMethodTests
 	[Test]
 	public static void CreateWithGenericParameterType()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<ClassGenericMethodCreateExpectations<int>>();
 		expectations.Setups.Bar(Arg.Any<int>());
 
@@ -88,7 +88,7 @@ public static class ClassGenericMethodTests
 	public static void CreateUsingGenericTypeAsReturn()
 	{
 		var returnValue = new List<string>();
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<ClassGenericMethodCreateExpectations<int>>();
 		expectations.Setups.FooReturn().ReturnValue(returnValue);
 
@@ -111,7 +111,7 @@ public static class ClassGenericMethodTests
 	public static void CreateWithGenericTypeParameterAsReturn()
 	{
 		var returnValue = 3;
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<ClassGenericMethodCreateExpectations<int>>();
 		expectations.Setups.QuuxReturn().ReturnValue(returnValue);
 
@@ -134,7 +134,7 @@ public static class ClassGenericMethodTests
 	public static void CreateWithGenericParameterTypeAsReturn()
 	{
 		var returnValue = 3;
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<ClassGenericMethodCreateExpectations<int>>();
 		expectations.Setups.BarReturn<int>().ReturnValue(returnValue);
 
@@ -169,7 +169,7 @@ public static class ClassGenericMethodTests
 	public static void CreateWithNullableGenericParameterTypes()
 	{
 		var returnValue = "c";
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<ClassGenericMethodCreateExpectations<int>>();
 		expectations.Setups.NullableValues<string>("b").ReturnValue(returnValue);
 

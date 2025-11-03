@@ -34,7 +34,7 @@ public interface IHaveIn
 	int this[in int a] { get; }
 }
 
-public static class MethodMemberTests
+internal static class MethodMemberTests
 {
 	[Test]
 	public static void CreateWithLotsOfParameters()
@@ -208,8 +208,8 @@ public static class MethodMemberTests
 		var mock = new IHaveInMakeExpectations().Instance();
 		var value = mock[4];
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(value, Is.Default);
 			Assert.That(() => mock.InArgument(3), Throws.Nothing);
 		}
@@ -262,8 +262,8 @@ public static class MethodMemberTests
 		var mock = expectations.Instance();
 		mock.OutArgumentsWithGenerics<int, string>(3, out var value);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(value, Is.Null);
 		}
 	}
@@ -312,8 +312,8 @@ public static class MethodMemberTests
 		var mock = new IHaveRefAndOutMakeExpectations().Instance();
 		var value = 3;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(() => mock.RefArgument(ref value), Throws.Nothing);
 		}
 	}
@@ -352,8 +352,8 @@ public static class MethodMemberTests
 		var mock = new IHaveRefAndOutMakeExpectations().Instance();
 		var value = "b";
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(() => mock.RefArgumentsWithGenerics(3, ref value), Throws.Nothing);
 		}
 	}

@@ -45,7 +45,7 @@ public class ClassRequiredConstructor
 	public virtual void DoRequired() { }
 }
 
-public static class ClassConstructorTests
+internal static class ClassConstructorTests
 {
 	[Test]
 	public static void CreateRequiredConstructor()

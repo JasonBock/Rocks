@@ -22,8 +22,8 @@ public static class ParameterModelTests
 		(var parameter, var modelContext) = ParameterModelTests.GetSymbolsCompilation(code);
 		var model = new ParameterModel(parameter, modelContext);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model.AttributesDescription, Is.Empty);
 			Assert.That(model.ExplicitDefaultValue, Is.Null);
 			Assert.That(model.HasExplicitDefaultValue, Is.False);
@@ -32,7 +32,7 @@ public static class ParameterModelTests
 			Assert.That(model.RefKind, Is.EqualTo(RefKind.None));
 			Assert.That(model.RequiresNullableAnnotation, Is.False);
 			Assert.That(model.Type.FullyQualifiedName, Is.EqualTo("string"));
-		});
+		}
 	}
 
 	[Test]
@@ -70,11 +70,11 @@ public static class ParameterModelTests
 		(var parameter, var modelContext) = ParameterModelTests.GetSymbolsCompilation(code);
 		var model = new ParameterModel(parameter, modelContext);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model.ExplicitDefaultValue, Is.EqualTo("\"data\""));
 			Assert.That(model.HasExplicitDefaultValue, Is.True);
-		});
+		}
 	}
 
 	[Test]

@@ -17,7 +17,7 @@ public class ClassGenericEvents<T>
 #pragma warning restore CA1070 // Do not declare event fields as virtual
 }
 
-public static class ClassGenericEventsTests
+internal static class ClassGenericEventsTests
 {
 	[Test]
 	public static void CreateUsingGenericType()

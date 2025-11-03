@@ -46,12 +46,12 @@ public interface IIterable<out T>
 	new IIterator<T> GetIterator();
 }
 
-public static class ExplicitInterfaceImplementationTests
+internal static class ExplicitInterfaceImplementationTests
 {
 	[Test]
 	public static void CreateDifferByReturnTypeOnly()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<IIterableCreateExpectations<string>>();
 		expectations.Setups.GetIterator();
 		expectations.Setups.ExplicitForIIterable.GetIterator();
@@ -64,7 +64,7 @@ public static class ExplicitInterfaceImplementationTests
 	[Test]
 	public static void CreateMethod()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<IExplicitInterfaceImplementationCreateExpectations>();
 		expectations.Setups.ExplicitForIExplicitInterfaceImplementationOne.A();
 		expectations.Setups.ExplicitForIExplicitInterfaceImplementationTwo.A();
@@ -79,8 +79,8 @@ public static class ExplicitInterfaceImplementationTests
 	{
 		var mock = new IExplicitInterfaceImplementationMakeExpectations().Instance();
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(() => ((IExplicitInterfaceImplementationOne)mock).A(), Throws.Nothing);
 			Assert.That(() => ((IExplicitInterfaceImplementationTwo)mock).A(), Throws.Nothing);
 		}
@@ -89,7 +89,7 @@ public static class ExplicitInterfaceImplementationTests
 	[Test]
 	public static void CreateProperty()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<IExplicitInterfaceImplementationCreateExpectations>();
 		expectations.Setups.ExplicitForIExplicitInterfaceImplementationOne.B.Gets();
 		expectations.Setups.ExplicitForIExplicitInterfaceImplementationOne.B.Sets(Arg.Any<int>());
@@ -106,7 +106,7 @@ public static class ExplicitInterfaceImplementationTests
 	[Test]
 	public static void CreatePropertyWithInit()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<IExplicitInterfaceImplementationCreateExpectations>();
 		expectations.Setups.ExplicitForIExplicitInterfaceImplementationOne.D.Gets();
 		expectations.Setups.ExplicitForIExplicitInterfaceImplementationTwo.D.Gets();
@@ -123,8 +123,8 @@ public static class ExplicitInterfaceImplementationTests
 		var oneValue = ((IExplicitInterfaceImplementationOne)mock).B;
 		var twoValue = ((IExplicitInterfaceImplementationTwo)mock).B;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(oneValue, Is.Default);
 			Assert.That(twoValue, Is.Default);
 			Assert.That(() => ((IExplicitInterfaceImplementationOne)mock).B = oneValue, Throws.Nothing);
@@ -139,8 +139,8 @@ public static class ExplicitInterfaceImplementationTests
 		var oneValue = ((IExplicitInterfaceImplementationOne)mock).D;
 		var twoValue = ((IExplicitInterfaceImplementationTwo)mock).D;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(oneValue, Is.Default);
 			Assert.That(twoValue, Is.Default);
 		}
@@ -149,7 +149,7 @@ public static class ExplicitInterfaceImplementationTests
 	[Test]
 	public static void CreateIndexer()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<IExplicitInterfaceImplementationCreateExpectations>();
 		expectations.Setups.ExplicitForIExplicitInterfaceImplementationOne[Arg.Any<int>()].Gets();
 		expectations.Setups.ExplicitForIExplicitInterfaceImplementationOne[Arg.Any<int>()].Sets(Arg.Any<int>());
@@ -170,8 +170,8 @@ public static class ExplicitInterfaceImplementationTests
 		var oneValue = ((IExplicitInterfaceImplementationOne)mock)[3];
 		var twoValue = ((IExplicitInterfaceImplementationTwo)mock)[3];
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(oneValue, Is.Default);
 			Assert.That(twoValue, Is.Default);
 			Assert.That(() => ((IExplicitInterfaceImplementationOne)mock)[3] = oneValue, Throws.Nothing);

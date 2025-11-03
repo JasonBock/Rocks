@@ -61,8 +61,8 @@ public static class IMethodSymbolExtensionsGetNamespacesTests
 			}
 			""";
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			var method = IMethodSymbolExtensionsGetNamespacesTests.GetMethod(code);
 			var namespaces = method.GetNamespaces();
 
@@ -72,7 +72,7 @@ public static class IMethodSymbolExtensionsGetNamespacesTests
 			Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == returnAttribute), Is.True);
 			Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == parameterTypeNamespace), Is.True);
 			Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == parameterAttributeNamespace), Is.True);
-		});
+		}
 	}
 
 	private static IMethodSymbol GetMethod(string source)

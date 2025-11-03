@@ -25,12 +25,12 @@ public static class CannotMockSealedTypeDiagnosticTests
 		
 		var descriptor = CannotMockSealedTypeDiagnostic.Create(invocation, model.GetDeclaredSymbol(typeSyntax)!);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(descriptor.GetMessage(CultureInfo.InvariantCulture), Is.EqualTo("The type X is sealed and cannot be mocked"));
 			Assert.That(descriptor.Descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(CannotMockSealedTypeDescriptor.Title));
 			Assert.That(descriptor.Id, Is.EqualTo(CannotMockSealedTypeDescriptor.Id));
 			Assert.That(descriptor.Severity, Is.EqualTo(DiagnosticSeverity.Error));
-		});
+		}
 	}
 }

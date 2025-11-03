@@ -48,7 +48,7 @@ public class PropertyPolygon
 	public virtual double Perimeter => this.SideLength * this.NumberOfSides;
 }
 
-public static class VirtualsWithImplementationsTests
+internal static class VirtualsWithImplementationsTests
 {
 	[Test]
 	public static void CallVirtualIndexerOnInterfaceWithNoExpectation()

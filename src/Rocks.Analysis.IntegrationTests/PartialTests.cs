@@ -24,7 +24,7 @@ public sealed partial class GenericPartialCreateExpectations<T>;
 [RockPartial(typeof(IGenericTargetPartial<>), BuildType.Make)]
 public sealed partial class GenericPartialMakeExpectations<T>;
 
-public static class PartialTests
+internal static class PartialTests
 {
 	[Test]
 	public static void Create()

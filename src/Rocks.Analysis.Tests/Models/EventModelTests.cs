@@ -23,8 +23,8 @@ public static class EventModelTests
 		var model = new EventModel(@event, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model.ArgsType, Is.EqualTo("global::System.EventArgs"));
 			Assert.That(model.AttributesDescription, Is.Empty);
 			Assert.That(model.ContainingType.FullyQualifiedName, Is.EqualTo("global::Target"));
@@ -33,7 +33,7 @@ public static class EventModelTests
 			Assert.That(model.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 			Assert.That(model.RequiresOverride, Is.EqualTo(RequiresOverride.No));
 			Assert.That(model.Type.FullyQualifiedName, Is.EqualTo("EventHandler?"));
-		});
+		}
 	}
 
 	[Test]
@@ -51,11 +51,11 @@ public static class EventModelTests
 		var model = new EventModel(@event, modelContext,
 			 RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model.OverridingCodeValue, Is.Null);
 			Assert.That(model.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.Yes));
-		});
+		}
 	}
 
 	[Test]

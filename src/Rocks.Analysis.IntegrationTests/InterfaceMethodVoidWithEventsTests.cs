@@ -8,7 +8,7 @@ public interface IInterfaceMethodVoidWithEvents
 	event EventHandler MyEvent;
 }
 
-public static class InterfaceMethodVoidWithEventsTests
+internal static class InterfaceMethodVoidWithEventsTests
 {
 	[Test]
 	public static void CreateEvent()
@@ -41,8 +41,8 @@ public static class InterfaceMethodVoidWithEventsTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		mock.NoParameters();
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(wasEventRaised, Is.True);
 			Assert.That(wasCallbackInvoked, Is.True);
 		}
@@ -83,8 +83,8 @@ public static class InterfaceMethodVoidWithEventsTests
 		mock.NoParameters();
 		mock.NoParameters();
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(eventRaisedCount, Is.EqualTo(2));
 			Assert.That(callbackInvokedCount, Is.EqualTo(2));
 		}

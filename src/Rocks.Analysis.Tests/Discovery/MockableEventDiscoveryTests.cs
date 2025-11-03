@@ -26,8 +26,8 @@ public static class MockableEventDiscoveryTests
 		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var events = result.Results;
 			Assert.That(events, Has.Length.EqualTo(1));
@@ -35,7 +35,7 @@ public static class MockableEventDiscoveryTests
 			var testEvent = events.Single(_ => _.Value.Name == "Test");
 			Assert.That(testEvent.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 			Assert.That(testEvent.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
-		});
+		}
 	}
 
 	[Test]
@@ -56,8 +56,8 @@ public static class MockableEventDiscoveryTests
 		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var events = result.Results;
 			Assert.That(events, Has.Length.EqualTo(1));
@@ -65,7 +65,7 @@ public static class MockableEventDiscoveryTests
 			var testEvent = events.Single(_ => _.Value.Name == "Test");
 			Assert.That(testEvent.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 			Assert.That(testEvent.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
-		});
+		}
 	}
 
 	[Test]
@@ -88,8 +88,8 @@ public static class MockableEventDiscoveryTests
 		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var events = result.Results;
 			Assert.That(events, Has.Length.EqualTo(1));
@@ -97,7 +97,7 @@ public static class MockableEventDiscoveryTests
 			var testEvent = events.Single(_ => _.Value.Name == "Test");
 			Assert.That(testEvent.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 			Assert.That(testEvent.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
-		});
+		}
 	}
 
 	[Test]
@@ -118,8 +118,8 @@ public static class MockableEventDiscoveryTests
 		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var events = result.Results;
 			Assert.That(events, Has.Length.EqualTo(1));
@@ -127,7 +127,7 @@ public static class MockableEventDiscoveryTests
 			var testEvent = events.Single(_ => _.Value.Name == "Test");
 			Assert.That(testEvent.RequiresOverride, Is.EqualTo(RequiresOverride.No));
 			Assert.That(testEvent.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
-		});
+		}
 	}
 
 	[Test]
@@ -149,8 +149,8 @@ public static class MockableEventDiscoveryTests
 		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var events = result.Results;
 			Assert.That(events, Has.Length.EqualTo(1));
@@ -158,7 +158,7 @@ public static class MockableEventDiscoveryTests
 			var testEvent = events.Single(_ => _.Value.Name == "Test");
 			Assert.That(testEvent.RequiresOverride, Is.EqualTo(RequiresOverride.No));
 			Assert.That(testEvent.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
-		});
+		}
 	}
 
 	[Test]
@@ -185,8 +185,8 @@ public static class MockableEventDiscoveryTests
 		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var events = result.Results;
 			Assert.That(events, Has.Length.EqualTo(2));
@@ -198,7 +198,7 @@ public static class MockableEventDiscoveryTests
 			var testEvent = events.Single(_ => _.Value.Name == "Test");
 			Assert.That(testEvent.RequiresOverride, Is.EqualTo(RequiresOverride.No));
 			Assert.That(testEvent.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
-		});
+		}
 	}
 
 	[Test]
@@ -230,8 +230,8 @@ public static class MockableEventDiscoveryTests
 		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var events = result.Results;
 			Assert.That(events, Has.Length.EqualTo(3));
@@ -247,7 +247,7 @@ public static class MockableEventDiscoveryTests
 			var testEvent = events.Single(_ => _.Value.Name == "Test");
 			Assert.That(testEvent.RequiresOverride, Is.EqualTo(RequiresOverride.No));
 			Assert.That(testEvent.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
-		});
+		}
 	}
 
 	private static (ITypeSymbol, Compilation) GetTypeSymbol(string source, string targetTypeName)

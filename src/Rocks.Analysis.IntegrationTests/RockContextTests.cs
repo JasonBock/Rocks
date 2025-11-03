@@ -9,7 +9,7 @@ public interface IContextural
 	void DoOtherStuff();
 }
 
-public static class RockContextTests
+internal static class RockContextTests
 {
 	[Test]
 	public static void CauseExpectationAndVerificationExceptions() =>

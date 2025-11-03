@@ -39,12 +39,12 @@ public interface ISourceUpdater<TObject, TKey>
 	void Refresh(IEnumerable<TObject> items);
 }
 
-public static class GenericTests
+internal static class GenericTests
 {
 	[Test]
 	public static void CreateWithOverloadUsingDifferentTypeParameter()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<ISourceUpdaterCreateExpectations<string, Guid>>();
 		expectations.Setups.Refresh(Arg.Any<IEnumerable<string>>());
 		expectations.Setups.Refresh(Arg.Any<IEnumerable<Guid>>());
@@ -60,14 +60,14 @@ public static class GenericTests
 		var referencedContainerOne = new ReferencedContainer<ReferenceTypeOne>();
 		var referencedContainerTwo = new ReferencedContainer<ReferenceTypeTwo>();
 
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<GenericContainerCreateExpectations>();
 		expectations.Setups.SetThings<ReferenceTypeOne>().ReturnValue(referencedContainerOne);
 		expectations.Setups.SetThings<ReferenceTypeTwo>().ReturnValue(referencedContainerTwo);
 
 		var mock = expectations.Instance();
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(mock.SetThings<ReferenceTypeOne>(), Is.SameAs(referencedContainerOne));
 			Assert.That(mock.SetThings<ReferenceTypeTwo>(), Is.EqualTo(referencedContainerTwo));
 		}
@@ -78,14 +78,14 @@ public static class GenericTests
 	{
 		var guidReturn = Guid.NewGuid();
 
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<GenericContainerCreateExpectations>();
 		expectations.Setups.Run<int>().ReturnValue(4);
 		expectations.Setups.Run<Guid>().ReturnValue(guidReturn);
 
 		var mock = expectations.Instance();
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(mock.Run<int>(), Is.EqualTo(4));
 			Assert.That(mock.Run<Guid>(), Is.EqualTo(guidReturn));
 		}
@@ -96,14 +96,14 @@ public static class GenericTests
 	{
 		var guidReturn = Guid.NewGuid();
 
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<IGenericContainerCreateExpectations>();
 		expectations.Setups.Run<int>().ReturnValue(4);
 		expectations.Setups.Run<Guid>().ReturnValue(guidReturn);
 
 		var mock = expectations.Instance();
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(mock.Run<int>(), Is.EqualTo(4));
 			Assert.That(mock.Run<Guid>(), Is.EqualTo(guidReturn));
 		}
@@ -115,14 +115,14 @@ public static class GenericTests
 		var guidReturn = Guid.NewGuid();
 		var guidArgument = Guid.NewGuid();
 
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<IGenericContainerCreateExpectations>();
 		expectations.Setups.Run<int, Guid>(4).ReturnValue(guidReturn);
 		expectations.Setups.Run<Guid, int>(guidArgument).ReturnValue(5);
 
 		var mock = expectations.Instance();
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(mock.Run<int, Guid>(4), Is.EqualTo(guidReturn));
 			Assert.That(mock.Run<Guid, int>(guidArgument), Is.EqualTo(5));
 		}

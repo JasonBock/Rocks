@@ -26,8 +26,8 @@ public static class MethodModelTests
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model.AttributesDescription, Is.Empty);
 			Assert.That(model.Constraints, Is.Empty);
 			Assert.That(model.ContainingType.FullyQualifiedName, Is.EqualTo("global::Target"));
@@ -60,7 +60,7 @@ public static class MethodModelTests
 			Assert.That(model.ReturnsByRefReadOnly, Is.False);
 			Assert.That(model.ShouldThrowDoesNotReturnException, Is.False);
 			Assert.That(model.ReturnTypeTypeArguments, Is.Empty);
-		});
+		}
 	}
 
 	[Test]
@@ -131,11 +131,11 @@ public static class MethodModelTests
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model.ReturnTypeTypeArguments, Has.Length.EqualTo(1));
 			Assert.That(model.ReturnTypeTypeArguments[0].FullyQualifiedName, Is.EqualTo("T"));
-		});
+		}
 	}
 
 	[Test]
@@ -177,14 +177,14 @@ public static class MethodModelTests
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model.Constraints, Has.Length.EqualTo(1));
 			Assert.That(model.Constraints[0].ToString(), Is.EqualTo("where T : class"));
 			Assert.That(model.DefaultConstraints, Has.Length.EqualTo(1));
 			Assert.That(model.DefaultConstraints[0].ToString(), Is.EqualTo("where T : class"));
 			Assert.That(model.IsGenericMethod, Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -456,11 +456,11 @@ public static class MethodModelTests
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model.IsMarkedWithDoesNotReturn, Is.True);
 			Assert.That(model.ShouldThrowDoesNotReturnException, Is.True);
-		});
+		}
 	}
 
 	[Test]

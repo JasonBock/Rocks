@@ -32,7 +32,7 @@ public abstract class AbstractClassIndexerSetter
 	public abstract event EventHandler MyEvent;
 }
 
-public static class AbstractClassIndexerTests
+internal static class AbstractClassIndexerTests
 {
 	[Test]
 	public static void CreateWithOneParameterGetterAndSetter()

@@ -27,15 +27,15 @@ public static class MockablePropertyDiscoveryTests
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier, compilation).Properties;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var properties = result.Results;
 			Assert.That(properties, Has.Length.EqualTo(1));
 
 			var dataProperty = properties.Single(_ => _.Value.Name == "Data");
 			Assert.That(dataProperty.Accessors, Is.EqualTo(PropertyAccessor.GetAndInit));
-		});
+		}
 	}
 
 	[Test]
@@ -57,8 +57,8 @@ public static class MockablePropertyDiscoveryTests
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier, compilation).Properties;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var properties = result.Results;
 			Assert.That(properties, Has.Length.EqualTo(2));
@@ -68,7 +68,7 @@ public static class MockablePropertyDiscoveryTests
 
 			var initProperty = properties.Single(_ => _.Value.Name == "Init");
 			Assert.That(initProperty.Accessors, Is.EqualTo(PropertyAccessor.Init));
-		});
+		}
 	}
 
 	[Test]
@@ -91,8 +91,8 @@ public static class MockablePropertyDiscoveryTests
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier, compilation).Properties;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var properties = result.Results;
 			Assert.That(properties, Has.Length.EqualTo(3));
@@ -110,7 +110,7 @@ public static class MockablePropertyDiscoveryTests
 			var thisIntStringProperty = properties.Single(_ => _.Value.Parameters.Length == 2);
 			Assert.That(thisIntStringProperty.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 			Assert.That(thisIntStringProperty.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
-		});
+		}
 	}
 
 	[Test]
@@ -144,8 +144,8 @@ public static class MockablePropertyDiscoveryTests
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier, compilation).Properties;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var properties = result.Results;
 			Assert.That(properties, Has.Length.EqualTo(1));
@@ -153,7 +153,7 @@ public static class MockablePropertyDiscoveryTests
 			var dataProperty = properties.Single(_ => _.Value.Name == targetPropertyName);
 			Assert.That(dataProperty.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 			Assert.That(dataProperty.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
-		});
+		}
 	}
 
 	[Test]
@@ -187,8 +187,8 @@ public static class MockablePropertyDiscoveryTests
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier, compilation).Properties;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var properties = result.Results;
 			Assert.That(properties, Has.Length.EqualTo(1));
@@ -196,7 +196,7 @@ public static class MockablePropertyDiscoveryTests
 			var dataProperty = properties.Single(_ => _.Value.Name == targetPropertyName);
 			Assert.That(dataProperty.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 			Assert.That(dataProperty.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
-		});
+		}
 	}
 
 	private static (ITypeSymbol, Compilation) GetTypeSymbol(string source, string targetTypeName)

@@ -16,7 +16,7 @@ public unsafe interface IHavePointers
 	int* PointerReturn();
 }
 
-public static unsafe class PointerTests
+internal static unsafe class PointerTests
 {
 	[Test]
 	public static void CreateWithPointerTypeParameters()
@@ -232,8 +232,8 @@ public static unsafe class PointerTests
 		var mock = expectations.Instance();
 		var value = mock.DelegatePointerReturn();
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(wasCalled, Is.True);
 		}
 	}

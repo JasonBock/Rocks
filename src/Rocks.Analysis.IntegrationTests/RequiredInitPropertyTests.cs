@@ -24,7 +24,7 @@ public class Inits
 	public string? NullableReferenceType { get; init; }
 }
 
-public static class RequiredInitPropertyTests
+internal static class RequiredInitPropertyTests
 {
 	[Test]
 	public static void InitPropertiesWithCreate()

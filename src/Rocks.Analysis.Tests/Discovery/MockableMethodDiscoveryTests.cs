@@ -39,8 +39,8 @@ public static class MockableMethodDiscoveryTests
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(4));
@@ -53,7 +53,7 @@ public static class MockableMethodDiscoveryTests
 			var dataMethod = methods.Single(_ => _.Value.Name == targetMethodName);
 			Assert.That(dataMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 			Assert.That(dataMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
-		});
+		}
 	}
 
 	[Test]
@@ -87,8 +87,8 @@ public static class MockableMethodDiscoveryTests
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(4));
@@ -101,7 +101,7 @@ public static class MockableMethodDiscoveryTests
 			var dataMethod = methods.Single(_ => _.Value.Name == targetMethodName);
 			Assert.That(dataMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 			Assert.That(dataMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
-		});
+		}
 	}
 
 	[Test]
@@ -123,14 +123,14 @@ public static class MockableMethodDiscoveryTests
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(1));
 			var fooMethod = methods.Single(_ => _.Value.Name == targetMethodName);
 			Assert.That(fooMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
-		});
+		}
 	}
 
 	[Test]
@@ -154,14 +154,14 @@ public static class MockableMethodDiscoveryTests
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(1));
 			var fooMethod = methods.Single(_ => _.Value.Name == targetMethodName);
 			Assert.That(fooMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
-		});
+		}
 	}
 
 	[Test]
@@ -189,8 +189,8 @@ public static class MockableMethodDiscoveryTests
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(2));
@@ -198,7 +198,7 @@ public static class MockableMethodDiscoveryTests
 			Assert.That(baseMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
 			var targetMethod = methods.Single(_ => _.Value.Name == targetMethodName);
 			Assert.That(targetMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
-		});
+		}
 	}
 
 	[Test]
@@ -226,14 +226,14 @@ public static class MockableMethodDiscoveryTests
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(1));
 			var targetMethod = methods.Single(_ => _.Value.Name == targetMethodName && _.Value.ContainingType.Name == targetTypeName);
 			Assert.That(targetMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
-		});
+		}
 	}
 
 	[Test]
@@ -269,8 +269,8 @@ public static class MockableMethodDiscoveryTests
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(3));
@@ -283,7 +283,7 @@ public static class MockableMethodDiscoveryTests
 			var targetMethod = methods.Single(_ => _.Value.Name == targetMethodName);
 			Assert.That(targetMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
 			Assert.That(targetMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
-		});
+		}
 	}
 
 	[Test]
@@ -316,8 +316,8 @@ public static class MockableMethodDiscoveryTests
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(2));
@@ -327,7 +327,7 @@ public static class MockableMethodDiscoveryTests
 			var baseTwoMethod = methods.Single(_ => _.Value.Name == baseMethodName && _.Value.ContainingType.Name == baseTwoTypeName);
 			Assert.That(baseTwoMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
 			Assert.That(baseTwoMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.Yes));
-		});
+		}
 	}
 
 	[Test]
@@ -349,8 +349,8 @@ public static class MockableMethodDiscoveryTests
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(4));
@@ -362,7 +362,7 @@ public static class MockableMethodDiscoveryTests
 			Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 			var fooMethod = methods.Single(_ => _.Value.Name == targetMethodName);
 			Assert.That(fooMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
-		});
+		}
 	}
 
 	[Test]
@@ -377,8 +377,8 @@ public static class MockableMethodDiscoveryTests
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(3));
@@ -388,7 +388,7 @@ public static class MockableMethodDiscoveryTests
 			Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 			var toStringMethod = methods.Single(_ => _.Value.Name == nameof(ToString));
 			Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
-		});
+		}
 	}
 
 	private static (ITypeSymbol, Compilation) GetTypeSymbol(string source, string targetTypeName)

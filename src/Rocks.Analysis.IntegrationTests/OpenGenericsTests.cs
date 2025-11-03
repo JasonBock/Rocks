@@ -7,7 +7,7 @@ public interface IService<T, TReturn>
 	TReturn Service(T data);
 }
 
-public static class OpenGenericsTests
+internal static class OpenGenericsTests
 {
 	[Test]
 	public static void CreateWithIntAndString()

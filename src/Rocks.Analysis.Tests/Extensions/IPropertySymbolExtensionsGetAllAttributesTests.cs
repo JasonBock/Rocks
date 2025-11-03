@@ -29,11 +29,11 @@ public static class IPropertySymbolExtensionsGetAllAttributesTests
 		var propertySymbol = IPropertySymbolExtensionsGetAllAttributesTests.GetPropertySymbol(code);
 		var attributes = propertySymbol.GetAllAttributes();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(attributes, Has.Length.EqualTo(1));
 			Assert.That(attributes[0].AttributeClass!.Name, Is.EqualTo(nameof(AllowNullAttribute)));
-		});
+		}
 	}
 
 	[Test]
@@ -57,11 +57,11 @@ public static class IPropertySymbolExtensionsGetAllAttributesTests
 		var propertySymbol = IPropertySymbolExtensionsGetAllAttributesTests.GetPropertySymbol(code);
 		var attributes = propertySymbol.GetAllAttributes();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(attributes, Has.Length.EqualTo(1));
 			Assert.That(attributes[0].AttributeClass!.Name, Is.EqualTo(nameof(AllowNullAttribute)));
-		});
+		}
 	}
 
 	private static IPropertySymbol GetPropertySymbol(string source)

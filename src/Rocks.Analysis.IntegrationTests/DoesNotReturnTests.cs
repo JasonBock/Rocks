@@ -13,12 +13,12 @@ public class UsesDoesNotReturn
 	public virtual int IntMethod() => throw new NotSupportedException();
 }
 
-public static class DoesNotReturnTests
+internal static class DoesNotReturnTests
 {
 	[Test]
 	public static void CreateWithVoidCallThatHasHandler()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<UsesDoesNotReturnCreateExpectations>();
 		expectations.Setups.VoidMethod().Callback(() => throw new NotImplementedException());
 
@@ -30,7 +30,7 @@ public static class DoesNotReturnTests
 	[Test]
 	public static void CreateWithVoidCallThatDoesNotHaveHandler()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<UsesDoesNotReturnCreateExpectations>();
 		expectations.Setups.VoidMethod();
 
@@ -42,7 +42,7 @@ public static class DoesNotReturnTests
 	[Test]
 	public static void CreateWithVoidCallThatDoesNotHaveExpectation()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<UsesDoesNotReturnCreateExpectations>();
 		var mock = expectations.Instance();
 
@@ -52,7 +52,7 @@ public static class DoesNotReturnTests
 	[Test]
 	public static void CreateWithIntCallThatHasHandler()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<UsesDoesNotReturnCreateExpectations>();
 		expectations.Setups.IntMethod().Callback(() => throw new NotImplementedException());
 
@@ -64,7 +64,7 @@ public static class DoesNotReturnTests
 	[Test]
 	public static void CreateWithIntCallThatDoesNotHaveHandler()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<UsesDoesNotReturnCreateExpectations>();
 		expectations.Setups.IntMethod().ReturnValue(1);
 
@@ -76,7 +76,7 @@ public static class DoesNotReturnTests
 	[Test]
 	public static void CreateWithIntCallThatDoesNotHaveExpectation()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<UsesDoesNotReturnCreateExpectations>();
 		var mock = expectations.Instance();
 

@@ -10,7 +10,7 @@ public interface IInterfaceMethodVoid
 	void MultipleParameters(int a, string b);
 }
 
-public static class InterfaceMethodVoidTests
+internal static class InterfaceMethodVoidTests
 {
 	[Test]
 	public static void CreateWithNoParameters()
@@ -166,8 +166,8 @@ public static class InterfaceMethodVoidTests
 		var mock = expectations.Instance();
 		mock.MultipleParameters(3, "b");
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(aValue, Is.EqualTo(3));
 			Assert.That(bValue, Is.EqualTo("b"));
 		}

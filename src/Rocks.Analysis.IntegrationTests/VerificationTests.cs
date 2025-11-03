@@ -10,7 +10,7 @@ public interface IData
 	string Value { get; set; }
 }
 
-public static class VerificationTests
+internal static class VerificationTests
 {
 	[Test]
 	public static void VerifyWhenExpectationsWereMadeButInstanceWasNeverCreated() =>

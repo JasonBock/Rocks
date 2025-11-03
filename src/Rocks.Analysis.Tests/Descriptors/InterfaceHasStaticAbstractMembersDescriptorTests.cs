@@ -13,8 +13,8 @@ public static class InterfaceHasStaticAbstractMembersDescriptorTests
 	{
 		var descriptor = InterfaceHasStaticAbstractMembersDescriptor.Create();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(descriptor.Id, Is.EqualTo(InterfaceHasStaticAbstractMembersDescriptor.Id));
 			Assert.That(descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(InterfaceHasStaticAbstractMembersDescriptor.Title));
 			Assert.That(descriptor.MessageFormat.ToString(CultureInfo.CurrentCulture), Is.EqualTo(InterfaceHasStaticAbstractMembersDescriptor.Message));
@@ -22,6 +22,6 @@ public static class InterfaceHasStaticAbstractMembersDescriptorTests
 			Assert.That(descriptor.Category, Is.EqualTo(DiagnosticConstants.Usage));
 			Assert.That(descriptor.HelpLinkUri, Is.EqualTo(HelpUrlBuilder.Build(
 				InterfaceHasStaticAbstractMembersDescriptor.Id, InterfaceHasStaticAbstractMembersDescriptor.Title)));
-		});
+		}
 	}
 }

@@ -14,7 +14,7 @@ public abstract class AbstractClassGenericMethod<T>
 	public abstract TData? NullableValues<TData>(TData? data);
 }
 
-public static class AbstractClassGenericMethodTests
+internal static class AbstractClassGenericMethodTests
 {
 	[Test]
 	public static void CreateUsingGenericType()

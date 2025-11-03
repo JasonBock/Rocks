@@ -9,7 +9,7 @@ public interface IHaveArgument
 	string this[int a] { get; set; }
 }
 
-public static class ArgTests
+internal static class ArgTests
 {
 	[Test]
 	public static void DeclareArgumentFromIndexerWithNull()
@@ -34,7 +34,7 @@ public static class ArgTests
 	[Test]
 	public static void DeclareArgumentWithValue()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<IHaveArgumentCreateExpectations>();
 		expectations.Setups.Foo(3);
 
@@ -45,7 +45,7 @@ public static class ArgTests
 	[Test]
 	public static void DeclareArgumentWithIs()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<IHaveArgumentCreateExpectations>();
 		expectations.Setups.Foo(Arg.Is(3));
 
@@ -56,7 +56,7 @@ public static class ArgTests
 	[Test]
 	public static void DeclareArgumentWithAny()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<IHaveArgumentCreateExpectations>();
 		expectations.Setups.Foo(Arg.Any<int>());
 
@@ -67,7 +67,7 @@ public static class ArgTests
 	[Test]
 	public static void DeclareArgumentWithValidate()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<IHaveArgumentCreateExpectations>();
 		expectations.Setups.Foo(Arg.Validate<int>(_ => _ is > 20 and < 30));
 
@@ -78,7 +78,7 @@ public static class ArgTests
 	[Test]
 	public static void DeclareArgumentWithDefault()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<IHaveArgumentCreateExpectations>();
 		expectations.Setups.Bar(Arg.IsDefault<int>());
 

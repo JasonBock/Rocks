@@ -32,7 +32,7 @@ public class ConventionDispatcher
 	public virtual void AssertNoScope() { }
 }
 
-public static class AttributeTests
+internal static class AttributeTests
 {
 	[Test]
 	public static void CreateWithMemberNotNullWhen()

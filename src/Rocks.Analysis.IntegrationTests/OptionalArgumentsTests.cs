@@ -8,7 +8,7 @@ public class NeedNullableAnnotation
 {
 	public NeedNullableAnnotation(object initializationData = null) { }
 
-	public virtual int IntReturn(object initializationData = null) => 
+	public virtual int IntReturn(object initializationData = null) =>
 		initializationData is null ? 1 : 0;
 	public virtual void VoidReturn(object initializationData = null) =>
 		this.VoidReturnData = initializationData;
@@ -30,7 +30,7 @@ public interface IHaveOptionalStructDefaultArgument
 
 public struct OptionalDefault { }
 
-public static class OptionalArgumentsTests
+internal static class OptionalArgumentsTests
 {
 	[Test]
 	public static void CreateForcedNullableAnnotation()
@@ -86,8 +86,8 @@ public static class OptionalArgumentsTests
 		var mock = new IHaveOptionalArgumentsMakeExpectations().Instance();
 		var value = mock[1];
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(value, Is.Default);
 			Assert.That(() => mock.Foo(1), Throws.Nothing);
 		}

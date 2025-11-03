@@ -225,8 +225,8 @@ internal global::Autofac.Core.IActivatedEventArgsPartialTarget<T>.ServicePropert
         * Constructor(s)
         * Adornments
 * Testing strategy
-    * Run code gen tests
-    * Update and run integration tests
+    * DONE - Run code gen tests
+    * DONE - Update and run integration tests
         * Last file updated: ClassGenericIndexerTests.cs
         * Change any `Assert.Multiple()`
     * Update and run unit tests

@@ -17,11 +17,11 @@ public static class VariableNamingContextTests
 		var variable = namingContext["expectations"];
 		var reretrieveVariable = namingContext["expectations"];
 
-		Assert.Multiple(() =>
+		using (Assert.EnterMultipleScope())
 		{
 			Assert.That(variable, Is.EqualTo("expectations1"), nameof(variable));
 			Assert.That(reretrieveVariable, Is.EqualTo("expectations1"), nameof(reretrieveVariable));
-		});
+		}
 	}
 
 	[Test]

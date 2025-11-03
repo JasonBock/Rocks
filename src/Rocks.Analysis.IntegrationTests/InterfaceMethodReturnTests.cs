@@ -10,7 +10,7 @@ public interface IInterfaceMethodReturn
 	int MultipleParameters(int a, string b);
 }
 
-public static class InterfaceMethodReturnTests
+internal static class InterfaceMethodReturnTests
 {
 	[Test]
 	public static void CreateWithNoParameters()

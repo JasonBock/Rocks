@@ -13,8 +13,8 @@ public static class CannotMockObsoleteTypeDescriptorTests
 	{
 		var descriptor = CannotMockObsoleteTypeDescriptor.Create();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(descriptor.Id, Is.EqualTo(CannotMockObsoleteTypeDescriptor.Id));
 			Assert.That(descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(CannotMockObsoleteTypeDescriptor.Title));
 			Assert.That(descriptor.MessageFormat.ToString(CultureInfo.CurrentCulture), Is.EqualTo(CannotMockObsoleteTypeDescriptor.Message));
@@ -22,6 +22,6 @@ public static class CannotMockObsoleteTypeDescriptorTests
 			Assert.That(descriptor.Category, Is.EqualTo(DiagnosticConstants.Usage));
 			Assert.That(descriptor.HelpLinkUri, Is.EqualTo(HelpUrlBuilder.Build(
 				CannotMockObsoleteTypeDescriptor.Id, CannotMockObsoleteTypeDescriptor.Title)));
-		});
+		}
 	}
 }

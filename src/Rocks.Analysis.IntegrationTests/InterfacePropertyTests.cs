@@ -16,7 +16,7 @@ public interface IInterfaceProperty
 	event EventHandler MyEvent;
 }
 
-public static class InterfacePropertyTests
+internal static class InterfacePropertyTests
 {
 	[Test]
 	public static void CreateGet()

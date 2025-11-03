@@ -13,8 +13,8 @@ public static class TypeHasNoMockableMembersDescriptorTests
 	{
 		var descriptor = TypeHasNoMockableMembersDescriptor.Create();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(descriptor.Id, Is.EqualTo(TypeHasNoMockableMembersDescriptor.Id));
 			Assert.That(descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeHasNoMockableMembersDescriptor.Title));
 			Assert.That(descriptor.MessageFormat.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeHasNoMockableMembersDescriptor.Message));
@@ -22,6 +22,6 @@ public static class TypeHasNoMockableMembersDescriptorTests
 			Assert.That(descriptor.Category, Is.EqualTo(DiagnosticConstants.Usage));
 			Assert.That(descriptor.HelpLinkUri, Is.EqualTo(HelpUrlBuilder.Build(
 				TypeHasNoMockableMembersDescriptor.Id, TypeHasNoMockableMembersDescriptor.Title)));
-		});
+		}
 	}
 }

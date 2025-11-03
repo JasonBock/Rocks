@@ -27,20 +27,20 @@ public interface IHaveScoped
 	Span<int> Foo(scoped Span<int> values);
 }
 
-public static class RefStructTests
+internal static class RefStructTests
 {
 	[Test]
 	public static void CreateScoped()
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveScopedCreateExpectations>();
-	  expectations.Setups.Foo(new()).ReturnValue(() => new[] { 1, 2 }.AsSpan());
+		expectations.Setups.Foo(new()).ReturnValue(() => new[] { 1, 2 }.AsSpan());
 
-	  var mock = expectations.Instance();
+		var mock = expectations.Instance();
 		var buffer = new int[] { 3 };
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			var data = mock.Foo(new Span<int>(buffer));
 			Assert.That(data.Length, Is.EqualTo(2));
 			Assert.That(data[0], Is.EqualTo(1));
@@ -53,8 +53,8 @@ public static class RefStructTests
 	{
 		var mock = new IHaveScopedMakeExpectations().Instance();
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			var buffer = new int[] { 3 };
 			Assert.That(mock.Foo(new Span<int>(buffer)).IsEmpty, Is.True);
 		}
@@ -70,8 +70,8 @@ public static class RefStructTests
 
 		var mock = expectations.Instance();
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			var data = mock.Foo(default);
 			Assert.That(data.Length, Is.EqualTo(2));
 			Assert.That(data[0], Is.EqualTo(1));
@@ -88,8 +88,8 @@ public static class RefStructTests
 	public static void MakeInAndOut()
 	{
 		var mock = new IHaveInAndOutSpanMakeExpectations().Instance();
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(mock.Foo(default).IsEmpty, Is.True);
 			Assert.That(mock.Values.IsEmpty, Is.True);
 		}
@@ -105,8 +105,8 @@ public static class RefStructTests
 
 		var mock = expectations.Instance();
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			var data = mock.GetRandomData();
 			Assert.That(data.Length, Is.EqualTo(2));
 			Assert.That(data[0], Is.EqualTo(1));
@@ -123,8 +123,8 @@ public static class RefStructTests
 	public static void MakeWithReturnValues()
 	{
 		var mock = new IReturnSpanMakeExpectations().Instance();
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(mock.GetRandomData().IsEmpty, Is.True);
 			Assert.That(mock.Values.IsEmpty, Is.True);
 		}

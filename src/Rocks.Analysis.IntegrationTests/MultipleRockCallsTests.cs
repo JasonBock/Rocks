@@ -13,7 +13,7 @@ public interface IMultipleRockCalls
 /// which would cause an error because the hint names were the same,
 /// and I want to prevent a regression of that ever happening.
 /// </summary>
-public static class MultipleRockCallsTests
+internal static class MultipleRockCallsTests
 {
 	[Test]
 	public static void CreateMocks()

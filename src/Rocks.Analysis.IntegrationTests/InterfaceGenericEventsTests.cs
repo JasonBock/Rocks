@@ -13,13 +13,13 @@ public interface IInterfaceGenericEvents<T>
 	event EventHandler<T> MyEvent;
 }
 
-public static class InterfaceGenericEventsTests
+internal static class InterfaceGenericEventsTests
 {
 	[Test]
 	public static void CreateUsingGenericType()
 	{
 		var returnValue = new List<string>();
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<IInterfaceGenericEventsCreateExpectations<InterfaceEventArgs>>();
 		expectations.Setups.Foo().AddRaiseEvent(new("MyEvent", new InterfaceEventArgs()));
 

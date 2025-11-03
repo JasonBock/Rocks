@@ -20,8 +20,8 @@ public static class TypeReferenceModelTests
 		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolAndCompilation(code);
 		var model = modelContext.CreateTypeReference(type);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model.AttributesDescription, Is.Empty);
 			Assert.That(model.FlattenedName, Is.EqualTo("Target"));
 			Assert.That(model.FullyQualifiedName, Is.EqualTo("global::TargetNamespace.Target"));
@@ -33,7 +33,7 @@ public static class TypeReferenceModelTests
 			Assert.That(model.Namespace, Is.EqualTo("TargetNamespace"));
 			Assert.That(model.NullableAnnotation, Is.EqualTo(NullableAnnotation.None));
 			Assert.That(model.TypeKind, Is.EqualTo(TypeKind.Class));
-		});
+		}
 	}
 
 	[Test]
@@ -84,10 +84,10 @@ public static class TypeReferenceModelTests
 		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolAndCompilation(code);
 		var model = modelContext.CreateTypeReference(type);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model.FlattenedName, Is.EqualTo("Target"));
-		});
+		}
 	}
 
 	[Test]
@@ -105,11 +105,11 @@ public static class TypeReferenceModelTests
 		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
 		var model = modelContext.CreateTypeReference(type);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model.IsBasedOnTypeParameter, Is.True);
 			Assert.That(model.RequiresProjectedArgument, Is.False);
-		});
+		}
 	}
 
 	[Test]
@@ -129,11 +129,11 @@ public static class TypeReferenceModelTests
 		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
 		var model = modelContext.CreateTypeReference(type);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model.NullableAnnotation, Is.EqualTo(NullableAnnotation.Annotated));
 			Assert.That(model.RequiresProjectedArgument, Is.False);
-		});
+		}
 	}
 
 	[Test]
@@ -169,11 +169,11 @@ public static class TypeReferenceModelTests
 		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
 		var model = modelContext.CreateTypeReference(type);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model.RequiresProjectedArgument, Is.True);
 			Assert.That(model.IsPointer, Is.True);
-		});
+		}
 	}
 
 	public static void CreateWithArgIterator()
@@ -250,11 +250,11 @@ public static class TypeReferenceModelTests
 		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
 		var model = modelContext.CreateTypeReference(type);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model.RequiresProjectedArgument, Is.False);
 			Assert.That(model.IsRefLikeType, Is.True);
-		});
+		}
 	}
 
 	[Test]

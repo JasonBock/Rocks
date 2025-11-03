@@ -13,8 +13,8 @@ public static class TypeHasNoAccessibleConstructorsDescriptorTests
 	{
 		var descriptor = TypeHasNoAccessibleConstructorsDescriptor.Create();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(descriptor.Id, Is.EqualTo(TypeHasNoAccessibleConstructorsDescriptor.Id));
 			Assert.That(descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeHasNoAccessibleConstructorsDescriptor.Title));
 			Assert.That(descriptor.MessageFormat.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeHasNoAccessibleConstructorsDescriptor.Message));
@@ -22,6 +22,6 @@ public static class TypeHasNoAccessibleConstructorsDescriptorTests
 			Assert.That(descriptor.Category, Is.EqualTo(DiagnosticConstants.Usage));
 			Assert.That(descriptor.HelpLinkUri, Is.EqualTo(HelpUrlBuilder.Build(
 				TypeHasNoAccessibleConstructorsDescriptor.Id, TypeHasNoAccessibleConstructorsDescriptor.Title)));
-		});
+		}
 	}
 }

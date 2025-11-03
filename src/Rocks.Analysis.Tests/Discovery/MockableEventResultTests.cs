@@ -23,11 +23,11 @@ public static class MockableEventResultTests
 
 		var result = new MockableEventResult(eventSymbol, RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.Yes);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(result.Value, Is.SameAs(eventSymbol));
 			Assert.That(result.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.Yes));
 			Assert.That(result.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
-		});
+		}
 	}
 }

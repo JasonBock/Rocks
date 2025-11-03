@@ -22,11 +22,11 @@ public static class ITypeSymbolExtensionsGetNamespacesTests
 		var typeSymbol = ITypeSymbolExtensionsGetNamespacesTests.GetTypeSymbol(code, "Target");
 		var namespaces = typeSymbol.GetNamespaces();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(namespaces, Has.Count.EqualTo(1));
 			Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == @namespace), Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -72,13 +72,13 @@ public static class ITypeSymbolExtensionsGetNamespacesTests
 		var propertySymbol = typeSymbol.GetMembers().Single(_ => _.Name == theField) as IPropertySymbol;
 		var namespaces = propertySymbol!.Type.GetNamespaces();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(namespaces, Has.Count.EqualTo(3));
 			Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == outerNamespace), Is.True);
 			Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == middleNamespace), Is.True);
 			Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == innerNamespace), Is.True);
-		});
+		}
 	}
 
 	private static ITypeSymbol GetTypeSymbol(string source, string typeName)

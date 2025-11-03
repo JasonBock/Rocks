@@ -14,7 +14,7 @@ public abstract class AbstractClassGenericEvents<T>
 	public abstract event EventHandler<T> MyEvent;
 }
 
-public static class AbstractClassGenericEventsTests
+internal static class AbstractClassGenericEventsTests
 {
 	[Test]
 	public static void CreateUsingGenericType()

@@ -16,13 +16,13 @@ public abstract class AbstractClassGenericIndexerGetAndInit<T>
 	public abstract T this[string a] { get; init; }
 }
 
-public static class AbstractClassGenericIndexerTests
+internal static class AbstractClassGenericIndexerTests
 {
 	[Test]
 	public static void CreateUsingGenericType()
 	{
 		var returnValue = new List<string>();
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<AbstractClassGenericIndexerCreateExpectations<int>>();
 		expectations.Setups[4].Gets().ReturnValue(returnValue);
 
@@ -36,7 +36,7 @@ public static class AbstractClassGenericIndexerTests
 	public static void CreateUsingGenericTypeWithInit()
 	{
 		var returnValue = new List<string>();
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<AbstractClassGenericIndexerGetAndInitCreateExpectations<int>>();
 		expectations.Setups[4].Gets().ReturnValue(returnValue);
 
@@ -68,7 +68,7 @@ public static class AbstractClassGenericIndexerTests
 	public static void CreateUsingGenericTypeParameter()
 	{
 		var returnValue = 3;
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<AbstractClassGenericIndexerCreateExpectations<int>>();
 		expectations.Setups[4, 5].Gets().ReturnValue(returnValue);
 
@@ -82,7 +82,7 @@ public static class AbstractClassGenericIndexerTests
 	public static void CreateUsingGenericTypeParameterWithInit()
 	{
 		var returnValue = 3;
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<AbstractClassGenericIndexerGetAndInitCreateExpectations<int>>();
 		expectations.Setups[4, 5].Gets().ReturnValue(returnValue);
 
@@ -114,7 +114,7 @@ public static class AbstractClassGenericIndexerTests
 	public static void CreateUsingGenericTypeParameterAsReturn()
 	{
 		var returnValue = 3;
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<AbstractClassGenericIndexerCreateExpectations<int>>();
 		expectations.Setups["b"].Gets().ReturnValue(returnValue);
 
@@ -128,7 +128,7 @@ public static class AbstractClassGenericIndexerTests
 	public static void CreateUsingGenericTypeParameterAsReturnWithInit()
 	{
 		var returnValue = 3;
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<AbstractClassGenericIndexerGetAndInitCreateExpectations<int>>();
 		expectations.Setups["b"].Gets().ReturnValue(returnValue);
 

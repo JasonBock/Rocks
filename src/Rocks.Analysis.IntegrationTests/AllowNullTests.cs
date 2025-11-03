@@ -15,12 +15,12 @@ public class Allow
 	public virtual string NewLine { get; set; }
 }
 
-public static class AllowNullTests
+internal static class AllowNullTests
 {
 	[Test]
 	public static void CreateWithAbstract()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<IAllowCreateExpectations>();
 		expectations.Setups.NewLine.Sets(Arg.Is<string>(null!));
 
@@ -38,7 +38,7 @@ public static class AllowNullTests
 	[Test]
 	public static void CreateWithNonAbstract()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<AllowCreateExpectations>();
 		expectations.Setups.NewLine.Sets(Arg.Is<string>(null!));
 

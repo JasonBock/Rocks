@@ -13,7 +13,7 @@ public interface IAuditTrail<T>
 	void Perform() { }
 }
 
-public static class ShimTests
+internal static class ShimTests
 {
 	[Test]
 	public static void Create()

@@ -22,8 +22,8 @@ public static class ConstructorPropertyModelTests
 		(var property, var modelContext) = ConstructorPropertyModelTests.GetSymbolsCompilation(code);
 		var model = new ConstructorPropertyModel(property, modelContext);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model.Type.FullyQualifiedName, Is.EqualTo("string"));
 			Assert.That(model.Name, Is.EqualTo("Value"));
 			Assert.That(model.IsRequired, Is.False);
@@ -33,7 +33,7 @@ public static class ConstructorPropertyModelTests
 			Assert.That(model.Parameters, Is.Empty);
 			Assert.That(model.NullableAnnotation, Is.EqualTo(NullableAnnotation.None));
 			Assert.That(model.IsReferenceType, Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -67,12 +67,12 @@ public static class ConstructorPropertyModelTests
 		(var property, var modelContext) = ConstructorPropertyModelTests.GetSymbolsCompilationWithIndexer(code);
 		var model = new ConstructorPropertyModel(property, modelContext);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model.IsIndexer, Is.True);
 			Assert.That(model.Parameters, Has.Length.EqualTo(1));
 			Assert.That(model.Parameters[0].Name, Is.EqualTo("data"));
-		});
+		}
 	}
 
 	[Test]

@@ -11,13 +11,13 @@ public static class ValueTestInReturnValueDescriptorTests
 	{
 		var descriptor = ValueTaskInReturnValueDescriptor.Create();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(descriptor.Id, Is.EqualTo(ValueTaskInReturnValueDescriptor.Id));
 			Assert.That(descriptor.Justification.ToString(CultureInfo.InvariantCulture), 
 				Is.EqualTo(ValueTaskInReturnValueDescriptor.Description));
 			Assert.That(descriptor.SuppressedDiagnosticId,
 				Is.EqualTo(ValueTaskInReturnValueDescriptor.SuppressedId));
-		});
+		}
 	}
 }

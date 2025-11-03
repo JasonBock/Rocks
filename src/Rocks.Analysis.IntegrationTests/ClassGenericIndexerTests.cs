@@ -16,7 +16,7 @@ public class ClassGenericIndexerGetAndInit<T>
 	public virtual T? this[string a] { get => default; init { } }
 }
 
-public static class ClassGenericIndexerTests
+internal static class ClassGenericIndexerTests
 {
 	[Test]
 	public static void CreateUsingGenericType()

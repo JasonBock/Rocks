@@ -3,7 +3,7 @@ using Rocks.Analysis.IntegrationTests.Referenced;
 
 namespace Rocks.Analysis.IntegrationTests.VisibilityTestTypes;
 
-public static class VisibilityTests
+internal static class VisibilityTests
 {
 	[Test]
 	public static void CreateUsingInternalStuff()

@@ -14,13 +14,13 @@ public class ClassGenericPropertyGetAndInit<T>
 	public virtual T Data { get => default!; init { } }
 }
 
-public static class ClassGenericPropertyTests
+internal static class ClassGenericPropertyTests
 {
 	[Test]
 	public static void CreateUsingGenericType()
 	{
 		var returnValue = new List<string>();
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<ClassGenericPropertyCreateExpectations<int>>();
 		expectations.Setups.Values.Gets().ReturnValue(returnValue);
 
@@ -34,7 +34,7 @@ public static class ClassGenericPropertyTests
 	public static void CreateUsingGenericTypeWithInit()
 	{
 		var returnValue = new List<string>();
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<ClassGenericPropertyGetAndInitCreateExpectations<int>>();
 		expectations.Setups.Values.Gets().ReturnValue(returnValue);
 
@@ -66,7 +66,7 @@ public static class ClassGenericPropertyTests
 	public static void CreateUsingGenericTypeParameter()
 	{
 		var returnValue = 3;
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<ClassGenericPropertyCreateExpectations<int>>();
 		expectations.Setups.Data.Gets().ReturnValue(returnValue);
 
@@ -80,7 +80,7 @@ public static class ClassGenericPropertyTests
 	public static void CreateUsingGenericTypeParameterWithInit()
 	{
 		var returnValue = 3;
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<ClassGenericPropertyGetAndInitCreateExpectations<int>>();
 		expectations.Setups.Data.Gets().ReturnValue(returnValue);
 

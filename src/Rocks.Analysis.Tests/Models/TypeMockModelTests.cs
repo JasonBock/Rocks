@@ -24,12 +24,12 @@ public static class TypeMockModelTests
 		var mockModel = MockModel.Create(node, type, null, model, BuildType.Create, false);
 		var typeModel = mockModel.Information!.Type;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(typeModel.MemberCount.MethodCount, Is.EqualTo(0));
 			Assert.That(typeModel.MemberCount.PropertyCount, Is.EqualTo(2));
 			Assert.That(typeModel.MemberCount.TotalCount, Is.EqualTo(2));
-		});
+		}
 	}
 
 	[Test]
@@ -48,12 +48,12 @@ public static class TypeMockModelTests
 		var mockModel = MockModel.Create(node, type, null, model, BuildType.Create, false);
 		var typeModel = mockModel.Information!.Type;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(typeModel.MemberCount.MethodCount, Is.EqualTo(1));
 			Assert.That(typeModel.MemberCount.PropertyCount, Is.EqualTo(0));
 			Assert.That(typeModel.MemberCount.TotalCount, Is.EqualTo(1));
-		});
+		}
 	}
 
 	[Test]
@@ -78,12 +78,12 @@ public static class TypeMockModelTests
 		var mockModel = MockModel.Create(node, type, null, modelContext, BuildType.Create, false);
 		var typeModel = mockModel.Information!.Type;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(typeModel.MemberCount.MethodCount, Is.EqualTo(3));
 			Assert.That(typeModel.MemberCount.PropertyCount, Is.EqualTo(4));
 			Assert.That(typeModel.MemberCount.TotalCount, Is.EqualTo(7));
-		});
+		}
 	}
 
 	private static (SyntaxNode, ITypeSymbol, ModelContext) GetInformation(string code)

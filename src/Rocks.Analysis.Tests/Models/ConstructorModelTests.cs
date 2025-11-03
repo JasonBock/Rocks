@@ -23,12 +23,12 @@ public static class ConstructorModelTests
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new ConstructorModel(constructor, modelContext);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model.RequiresSetsRequiredMembersAttribute, Is.False);
 			Assert.That(model.Parameters, Has.Length.EqualTo(1));
 			Assert.That(model.Parameters[0].Name, Is.EqualTo("value"));
-		});
+		}
 	}
 
 	[Test]
@@ -49,12 +49,12 @@ public static class ConstructorModelTests
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new ConstructorModel(constructor, modelContext);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model.RequiresSetsRequiredMembersAttribute, Is.True);
 			Assert.That(model.Parameters, Has.Length.EqualTo(1));
 			Assert.That(model.Parameters[0].Name, Is.EqualTo("value"));
-		});
+		}
 	}
 
 	private static (ITypeSymbol, IMethodSymbol, ModelContext) GetSymbolsCompilation(string code)

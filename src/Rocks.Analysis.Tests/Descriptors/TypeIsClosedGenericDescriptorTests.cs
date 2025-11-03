@@ -13,8 +13,8 @@ public static class TypeIsClosedGenericDescriptorTests
 	{
 		var descriptor = TypeIsClosedGenericDescriptor.Create();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(descriptor.Id, Is.EqualTo(TypeIsClosedGenericDescriptor.Id));
 			Assert.That(descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeIsClosedGenericDescriptor.Title));
 			Assert.That(descriptor.MessageFormat.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeIsClosedGenericDescriptor.Message));
@@ -22,6 +22,6 @@ public static class TypeIsClosedGenericDescriptorTests
 			Assert.That(descriptor.Category, Is.EqualTo(DiagnosticConstants.Usage));
 			Assert.That(descriptor.HelpLinkUri, Is.EqualTo(HelpUrlBuilder.Build(
 				TypeIsClosedGenericDescriptor.Id, TypeIsClosedGenericDescriptor.Title)));
-		});
+		}
 	}
 }

@@ -24,14 +24,14 @@ public static class PropertyMockableResultTests
 		var result = new MockablePropertyResult(propertySymbol, propertySymbol.ContainingType,
 			RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.Yes, 3);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(result.Value, Is.SameAs(propertySymbol));
 			Assert.That(result.MockType, Is.SameAs(propertySymbol.ContainingType));
 			Assert.That(result.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.Yes));
 			Assert.That(result.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 			Assert.That(result.Accessors, Is.EqualTo(PropertyAccessor.GetAndSet));
 			Assert.That(result.MemberIdentifier, Is.EqualTo(3));
-		});
+		}
 	}
 }

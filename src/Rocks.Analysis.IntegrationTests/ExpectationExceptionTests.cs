@@ -11,7 +11,7 @@ public interface ISetAfterMock
 	int this[string Index] { get; set; }
 }
 
-public static class ExpectationExceptionTests
+internal static class ExpectationExceptionTests
 {
 	[Test]
 	public static void GetExceptionMessage()
@@ -20,7 +20,7 @@ public static class ExpectationExceptionTests
 		expectations.Setups.WorkWithData("a", 2, new[] { 'c', 'd' });
 
 		var mock = expectations.Instance();
-		Assert.That(() => mock.WorkWithData("b", 3, ['e', 'f', 'g']), 
+		Assert.That(() => mock.WorkWithData("b", 3, ['e', 'f', 'g']),
 			Throws.TypeOf<ExpectationException>()
 				.With.Message.EqualTo(
 					"""

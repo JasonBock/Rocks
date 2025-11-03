@@ -7,7 +7,7 @@ public record MyRecord
 	public virtual void Foo() { }
 }
 
-public static class RecordTests
+internal static class RecordTests
 {
 	[Test]
 	public static void Create()

@@ -43,8 +43,8 @@ public static class IEventSymbolGetNamespacesExtensionsTests
 			}
 			""";
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			var @event = IEventSymbolGetNamespacesExtensionsTests.GetEvent(code, typeName);
 			var namespaces = @event.GetNamespaces();
 
@@ -52,7 +52,7 @@ public static class IEventSymbolGetNamespacesExtensionsTests
 			Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == typeof(EventHandler).Namespace), Is.True);
 			Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == attributeNamespace), Is.True);
 			Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == customEventArgNamespace), Is.True);
-		});
+		}
 	}
 
 	private static IEventSymbol GetEvent(string source, string typeName)

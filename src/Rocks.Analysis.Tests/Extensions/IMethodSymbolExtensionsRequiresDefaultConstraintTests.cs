@@ -30,11 +30,11 @@ public static class IMethodSymbolExtensionsRequiresDefaultConstraintTests
 		var methodSymbol = IMethodSymbolExtensionsRequiresDefaultConstraintTests.GetMethodSymbol(code);
 		var requiresDefaultConstraints = methodSymbol.GetDefaultConstraints();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(requiresDefaultConstraints, Has.Length.EqualTo(1));
 			Assert.That(requiresDefaultConstraints[0].ToString(), Is.EqualTo(expectedValue));
-		});
+		}
 	}
 
 	[TestCaseSource(nameof(GetDefaultConstraintsWhenNoneExist))]

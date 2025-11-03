@@ -12,14 +12,14 @@ public interface IHaveParams
 	void ParamsFoo(int a, params ReadOnlySpan<string> b);
 }
 
-public static class ParamsTests
+internal static class ParamsTests
 {
 	[Test]
 	public static void CreateMembersWithReadOnlySpanParamsArgumentsSpecified()
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveParamsCreateExpectations>();
-		expectations.Setups.ParamsFoo(1, 
+		expectations.Setups.ParamsFoo(1,
 			new(_ => _.Length == 2 && _[0] == "b" && _[1] == "c"));
 
 		var mock = expectations.Instance();
@@ -55,8 +55,8 @@ public static class ParamsTests
 		var mock = new IHaveParamsMakeExpectations().Instance();
 		var value = mock[1, "b"];
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(value, Is.Default);
 			Assert.That(() => mock.Foo(1, "b"), Throws.Nothing);
 		}
@@ -84,8 +84,8 @@ public static class ParamsTests
 		var mock = new IHaveParamsMakeExpectations().Instance();
 		var value = mock[1];
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(value, Is.Default);
 			Assert.That(() => mock.Foo(1), Throws.Nothing);
 		}

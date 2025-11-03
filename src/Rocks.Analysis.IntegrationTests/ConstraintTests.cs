@@ -8,16 +8,16 @@ public abstract class BaseForConstraintCase<T>
 	: BaseForConstraintCase where T : class
 {
 #pragma warning disable CA1716 // Identifiers should not match keywords
-   public abstract BaseForConstraintCase<TTarget> As<TTarget>() where TTarget : class;
+	public abstract BaseForConstraintCase<TTarget> As<TTarget>() where TTarget : class;
 #pragma warning restore CA1716 // Identifiers should not match keywords
 }
 
-public static class ConstraintTests
+internal static class ConstraintTests
 {
 	[Test]
 	public static void Create()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<BaseForConstraintCaseCreateExpectations<string>>();
 		expectations.Setups.As<string>();
 

@@ -324,14 +324,14 @@ public static class MockModelTests
 			""";
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model!.Diagnostics, Is.Empty);
 			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(0));
 			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(1));
 			Assert.That(model.Information.Type.Properties, Has.Length.EqualTo(0));
 			Assert.That(model.Information.Type.Events, Has.Length.EqualTo(0));
-		});
+		}
 	}
 
 	[Test]
@@ -349,14 +349,14 @@ public static class MockModelTests
 			""";
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model!.Diagnostics, Is.Empty);
 			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(0));
 			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(0));
 			Assert.That(model.Information.Type.Properties, Has.Length.EqualTo(1));
 			Assert.That(model.Information.Type.Events, Has.Length.EqualTo(0));
-		});
+		}
 	}
 
 	[Test]
@@ -375,14 +375,14 @@ public static class MockModelTests
 			""";
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model!.Diagnostics, Is.Empty);
 			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(0));
 			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(1));
 			Assert.That(model.Information.Type.Properties, Has.Length.EqualTo(0));
 			Assert.That(model.Information.Type.Events, Has.Length.EqualTo(1));
-		});
+		}
 	}
 
 	[Test]
@@ -406,14 +406,14 @@ public static class MockModelTests
 			""";
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model!.Diagnostics, Is.Empty);
 			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(0));
 			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(0));
 			Assert.That(model.Information.Type.Properties, Has.Length.EqualTo(2));
 			Assert.That(model.Information.Type.Events, Has.Length.EqualTo(0));
-		});
+		}
 	}
 
 	[Test]
@@ -433,8 +433,8 @@ public static class MockModelTests
 			""";
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model!.Diagnostics, Is.Empty);
 			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(1));
 			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(4));
@@ -453,7 +453,7 @@ public static class MockModelTests
 
 			Assert.That(model.Information.Type.Properties, Has.Length.EqualTo(0));
 			Assert.That(model.Information.Type.Events, Has.Length.EqualTo(0));
-		});
+		}
 	}
 
 	[Test]
@@ -471,8 +471,8 @@ public static class MockModelTests
 			""";
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(1));
 			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(3));
 
@@ -487,7 +487,7 @@ public static class MockModelTests
 
 			Assert.That(model.Information.Type.Properties, Has.Length.EqualTo(1));
 			Assert.That(model.Information.Type.Events, Has.Length.EqualTo(0));
-		});
+		}
 	}
 
 	[Test]
@@ -506,8 +506,8 @@ public static class MockModelTests
 			""";
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(1));
 			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(3));
 
@@ -522,7 +522,7 @@ public static class MockModelTests
 
 			Assert.That(model.Information.Type.Properties, Is.Empty);
 			Assert.That(model.Information.Type.Events, Has.Length.EqualTo(1));
-		});
+		}
 	}
 
 	[Test]
@@ -544,8 +544,8 @@ public static class MockModelTests
 			""";
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(2));
 			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(3));
 
@@ -560,7 +560,7 @@ public static class MockModelTests
 
 			Assert.That(model.Information.Type.Properties, Is.Empty);
 			Assert.That(model.Information.Type.Events, Has.Length.EqualTo(1));
-		});
+		}
 	}
 
 	private static (InvocationExpressionSyntax, ITypeSymbol, ModelContext) GetType(string source, string targetTypeName,

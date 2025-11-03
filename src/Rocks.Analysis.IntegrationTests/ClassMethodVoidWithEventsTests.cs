@@ -13,12 +13,12 @@ public class ClassMethodVoidWithEvents
 #pragma warning restore CA1070 // Do not declare event fields as virtual
 }
 
-public static class ClassMethodVoidWithEventsTests
+internal static class ClassMethodVoidWithEventsTests
 {
 	[Test]
 	public static void CreateEvent()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<ClassMethodVoidWithEventsCreateExpectations>();
 		expectations.Setups.NoParameters().RaiseMyEvent(EventArgs.Empty);
 
@@ -34,7 +34,7 @@ public static class ClassMethodVoidWithEventsTests
 	public static void CreateEventWithCallback()
 	{
 		var wasCallbackInvoked = false;
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<ClassMethodVoidWithEventsCreateExpectations>();
 		expectations.Setups.NoParameters()
 			.Callback(() => wasCallbackInvoked = true)
@@ -45,8 +45,8 @@ public static class ClassMethodVoidWithEventsTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		mock.NoParameters();
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(wasEventRaised, Is.True);
 			Assert.That(wasCallbackInvoked, Is.True);
 		}
@@ -55,7 +55,7 @@ public static class ClassMethodVoidWithEventsTests
 	[Test]
 	public static void CreateEventWithMultipleCalls()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<ClassMethodVoidWithEventsCreateExpectations>();
 		expectations.Setups.NoParameters()
 			.ExpectedCallCount(2)
@@ -74,7 +74,7 @@ public static class ClassMethodVoidWithEventsTests
 	public static void CreateEventWithMultipleCallsWithCallback()
 	{
 		var callbackInvokedCount = 0;
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<ClassMethodVoidWithEventsCreateExpectations>();
 		expectations.Setups.NoParameters()
 			.ExpectedCallCount(2)
@@ -87,8 +87,8 @@ public static class ClassMethodVoidWithEventsTests
 		mock.NoParameters();
 		mock.NoParameters();
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(eventRaisedCount, Is.EqualTo(2));
 			Assert.That(callbackInvokedCount, Is.EqualTo(2));
 		}

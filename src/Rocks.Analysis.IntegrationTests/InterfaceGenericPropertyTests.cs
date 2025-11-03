@@ -14,13 +14,13 @@ public interface IInterfaceGenericPropertyGetAndInit<T>
 	T Data { get; init; }
 }
 
-public static class InterfaceGenericPropertyTests
+internal static class InterfaceGenericPropertyTests
 {
 	[Test]
 	public static void CreateUsingGenericType()
 	{
 		var returnValue = new List<string>();
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<IInterfaceGenericPropertyCreateExpectations<int>>();
 		expectations.Setups.Values.Gets().ReturnValue(returnValue);
 
@@ -34,7 +34,7 @@ public static class InterfaceGenericPropertyTests
 	public static void CreateUsingGenericTypeWithInit()
 	{
 		var returnValue = new List<string>();
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<IInterfaceGenericPropertyGetAndInitCreateExpectations<int>>();
 		expectations.Setups.Values.Gets().ReturnValue(returnValue);
 
@@ -66,7 +66,7 @@ public static class InterfaceGenericPropertyTests
 	public static void CreateUsingGenericTypeParameter()
 	{
 		var returnValue = 3;
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<IInterfaceGenericPropertyCreateExpectations<int>>();
 		expectations.Setups.Data.Gets().ReturnValue(returnValue);
 
@@ -80,7 +80,7 @@ public static class InterfaceGenericPropertyTests
 	public static void CreateUsingGenericTypeParameterWithInit()
 	{
 		var returnValue = 3;
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<IInterfaceGenericPropertyGetAndInitCreateExpectations<int>>();
 		expectations.Setups.Data.Gets().ReturnValue(returnValue);
 

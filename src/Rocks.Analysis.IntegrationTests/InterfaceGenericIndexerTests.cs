@@ -16,13 +16,13 @@ public interface IInterfaceGenericIndexerGetAndInit<T>
 	T this[string a] { get; init; }
 }
 
-public static class InterfaceGenericIndexerTests
+internal static class InterfaceGenericIndexerTests
 {
 	[Test]
 	public static void CreateUsingGenericType()
 	{
 		var returnValue = new List<string>();
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<IInterfaceGenericIndexerCreateExpectations<int>>();
 		expectations.Setups[4].Gets().ReturnValue(returnValue);
 
@@ -36,7 +36,7 @@ public static class InterfaceGenericIndexerTests
 	public static void CreateUsingGenericTypeWithInit()
 	{
 		var returnValue = new List<string>();
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<IInterfaceGenericIndexerGetAndInitCreateExpectations<int>>();
 		expectations.Setups[4].Gets().ReturnValue(returnValue);
 
@@ -68,7 +68,7 @@ public static class InterfaceGenericIndexerTests
 	public static void CreateUsingGenericTypeParameter()
 	{
 		var returnValue = 3;
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<IInterfaceGenericIndexerCreateExpectations<int>>();
 		expectations.Setups[4, 5].Gets().ReturnValue(returnValue);
 
@@ -82,7 +82,7 @@ public static class InterfaceGenericIndexerTests
 	public static void CreateUsingGenericTypeParameterWithInit()
 	{
 		var returnValue = 3;
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<IInterfaceGenericIndexerGetAndInitCreateExpectations<int>>();
 		expectations.Setups[4, 5].Gets().ReturnValue(returnValue);
 
@@ -114,7 +114,7 @@ public static class InterfaceGenericIndexerTests
 	public static void CreateUsingGenericTypeParameterAsReturn()
 	{
 		var returnValue = 3;
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<IInterfaceGenericIndexerCreateExpectations<int>>();
 		expectations.Setups["b"].Gets().ReturnValue(returnValue);
 
@@ -128,7 +128,7 @@ public static class InterfaceGenericIndexerTests
 	public static void CreateUsingGenericTypeParameterAsReturnWithInit()
 	{
 		var returnValue = 3;
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<IInterfaceGenericIndexerGetAndInitCreateExpectations<int>>();
 		expectations.Setups["b"].Gets().ReturnValue(returnValue);
 
