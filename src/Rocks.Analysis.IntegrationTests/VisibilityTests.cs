@@ -10,7 +10,7 @@ public static class VisibilityTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IDoInternalStuffCreateExpectations>();
-		expectations.Methods.Perform(Arg.Any<InternalDataStuff>());
+		expectations.Setups.Perform(Arg.Any<InternalDataStuff>());
 
 		var mock = expectations.Instance();
 		mock.Perform(new());
@@ -21,7 +21,7 @@ public static class VisibilityTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IDoPublicStuffCreateExpectations>();
-		expectations.Methods.Perform(Arg.Any<PublicDataStuff>());
+		expectations.Setups.Perform(Arg.Any<PublicDataStuff>());
 
 		var mock = expectations.Instance();
 		mock.Perform(new());

@@ -15,19 +15,20 @@ public static class ArgTests
 	public static void DeclareArgumentFromIndexerWithNull()
 	{
 		var expectations = new IHaveArgumentCreateExpectations();
-		Assert.Multiple(() =>
+
+		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(() => expectations.Indexers.Getters.This(null!), Throws.TypeOf<ArgumentNullException>());
-			Assert.That(() => expectations.Indexers.Setters.This("value", null!), Throws.TypeOf<ArgumentNullException>());
-			Assert.That(() => expectations.Indexers.Setters.This(null!, 1), Throws.TypeOf<ArgumentNullException>());
-		});
+			Assert.That(() => expectations.Setups[null!].Gets(), Throws.TypeOf<ArgumentNullException>());
+			Assert.That(() => expectations.Setups[null!].Sets("value"), Throws.TypeOf<ArgumentNullException>());
+			Assert.That(() => expectations.Setups[1].Sets(null!), Throws.TypeOf<ArgumentNullException>());
+		};
 	}
 
 	[Test]
 	public static void DeclareArgumentFromMethodWithNull()
 	{
 		var expectations = new IHaveArgumentCreateExpectations();
-		Assert.That(() => expectations.Methods.Foo(null!), Throws.TypeOf<ArgumentNullException>());
+		Assert.That(() => expectations.Setups.Foo(null!), Throws.TypeOf<ArgumentNullException>());
 	}
 
 	[Test]
@@ -35,7 +36,7 @@ public static class ArgTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<IHaveArgumentCreateExpectations>();
-		expectations.Methods.Foo(3);
+		expectations.Setups.Foo(3);
 
 		var mock = expectations.Instance();
 		mock.Foo(3);
@@ -46,7 +47,7 @@ public static class ArgTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<IHaveArgumentCreateExpectations>();
-		expectations.Methods.Foo(Arg.Is(3));
+		expectations.Setups.Foo(Arg.Is(3));
 
 		var mock = expectations.Instance();
 		mock.Foo(3);
@@ -57,7 +58,7 @@ public static class ArgTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<IHaveArgumentCreateExpectations>();
-		expectations.Methods.Foo(Arg.Any<int>());
+		expectations.Setups.Foo(Arg.Any<int>());
 
 		var mock = expectations.Instance();
 		mock.Foo(3);
@@ -68,7 +69,7 @@ public static class ArgTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<IHaveArgumentCreateExpectations>();
-		expectations.Methods.Foo(Arg.Validate<int>(_ => _ is > 20 and < 30));
+		expectations.Setups.Foo(Arg.Validate<int>(_ => _ is > 20 and < 30));
 
 		var mock = expectations.Instance();
 		mock.Foo(25);
@@ -79,7 +80,7 @@ public static class ArgTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<IHaveArgumentCreateExpectations>();
-		expectations.Methods.Bar(Arg.IsDefault<int>());
+		expectations.Setups.Bar(Arg.IsDefault<int>());
 
 		var mock = expectations.Instance();
 		mock.Bar(3);

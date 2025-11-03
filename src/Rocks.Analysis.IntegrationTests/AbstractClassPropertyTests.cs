@@ -22,7 +22,7 @@ public static class AbstractClassPropertyTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<AbstractClassPropertyCreateExpectations>();
-		expectations.Properties.Getters.GetData();
+		expectations.Setups.GetData.Gets();
 
 		var mock = expectations.Instance(null);
 		var value = mock.GetData;
@@ -44,18 +44,18 @@ public static class AbstractClassPropertyTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<AbstractClassPropertyCreateExpectations>();
-		expectations.Properties.Getters.GetData().RaiseMyEvent(EventArgs.Empty);
+		expectations.Setups.GetData.Gets().RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance(null);
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		var value = mock.GetData;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(value, Is.Default);
 			Assert.That(wasEventRaised, Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -64,7 +64,7 @@ public static class AbstractClassPropertyTests
 		var wasCallbackInvoked = false;
 		using var context = new RockContext(); 
 		var expectations = context.Create<AbstractClassPropertyCreateExpectations>();
-		expectations.Properties.Getters.GetData().Callback(() =>
+		expectations.Setups.GetData.Gets().Callback(() =>
 		{
 			wasCallbackInvoked = true;
 			return 3;
@@ -73,11 +73,11 @@ public static class AbstractClassPropertyTests
 		var mock = expectations.Instance(null);
 		var value = mock.GetData;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(value, Is.EqualTo(3));
 			Assert.That(wasCallbackInvoked, Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -86,7 +86,7 @@ public static class AbstractClassPropertyTests
 		var wasCallbackInvoked = false;
 		using var context = new RockContext(); 
 		var expectations = context.Create<AbstractClassPropertyCreateExpectations>();
-		expectations.Properties.Getters.GetData().Callback(() =>
+		expectations.Setups.GetData.Gets().Callback(() =>
 		{
 			wasCallbackInvoked = true;
 			return 3;
@@ -98,12 +98,12 @@ public static class AbstractClassPropertyTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		var value = mock.GetData;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(value, Is.EqualTo(3));
 			Assert.That(wasEventRaised, Is.True);
 			Assert.That(wasCallbackInvoked, Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -111,7 +111,7 @@ public static class AbstractClassPropertyTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<AbstractClassPropertyCreateExpectations>();
-		expectations.Properties.Setters.SetData(Arg.Any<int>());
+		expectations.Setups.SetData.Sets(Arg.Any<int>());
 
 		var mock = expectations.Instance(null);
 		mock.SetData = 1;
@@ -130,7 +130,7 @@ public static class AbstractClassPropertyTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<AbstractClassPropertyCreateExpectations>();
-		expectations.Properties.Setters.SetData(Arg.Any<int>())
+		expectations.Setups.SetData.Sets(Arg.Any<int>())
 			.RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
@@ -147,7 +147,7 @@ public static class AbstractClassPropertyTests
 		var wasCallbackInvoked = false;
 		using var context = new RockContext(); 
 		var expectations = context.Create<AbstractClassPropertyCreateExpectations>();
-		expectations.Properties.Setters.SetData(Arg.Any<int>())
+		expectations.Setups.SetData.Sets(Arg.Any<int>())
 			.Callback(_ => wasCallbackInvoked = true);
 
 		var mock = expectations.Instance(null);
@@ -162,7 +162,7 @@ public static class AbstractClassPropertyTests
 		var wasCallbackInvoked = false;
 		using var context = new RockContext(); 
 		var expectations = context.Create<AbstractClassPropertyCreateExpectations>();
-		expectations.Properties.Setters.SetData(Arg.Any<int>())
+		expectations.Setups.SetData.Sets(Arg.Any<int>())
 			.RaiseMyEvent(EventArgs.Empty)
 			.Callback(_ => wasCallbackInvoked = true);
 
@@ -171,11 +171,11 @@ public static class AbstractClassPropertyTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		mock.SetData = 1;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(wasEventRaised, Is.True);
 			Assert.That(wasCallbackInvoked, Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -183,7 +183,7 @@ public static class AbstractClassPropertyTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<AbstractClassPropertyCreateExpectations>();
-		expectations.Properties.Getters.GetAndInitData();
+		expectations.Setups.GetAndInitData.Gets();
 
 		var mock = expectations.Instance(null);
 		var value = mock.GetAndInitData;
@@ -196,8 +196,8 @@ public static class AbstractClassPropertyTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<AbstractClassPropertyCreateExpectations>();
-		expectations.Properties.Getters.GetAndSetData();
-		expectations.Properties.Setters.GetAndSetData(Arg.Any<int>());
+		expectations.Setups.GetAndSetData.Gets();
+		expectations.Setups.GetAndSetData.Sets(Arg.Any<int>());
 
 		var mock = expectations.Instance(null);
 		var value = mock.GetAndSetData;
@@ -212,10 +212,10 @@ public static class AbstractClassPropertyTests
 		var mock = new AbstractClassPropertyMakeExpectations().Instance(null);
 		var value = mock.GetAndInitData;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(value, Is.Default);
-		});
+		}
 	}
 
 	[Test]
@@ -224,10 +224,10 @@ public static class AbstractClassPropertyTests
 		var mock = new AbstractClassPropertyMakeExpectations().Instance(null);
 		var value = mock.GetAndSetData;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(value, Is.Default);
 			Assert.That(() => mock.GetAndSetData = value, Throws.Nothing);
-		});
+		}
 	}
 }

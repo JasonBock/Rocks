@@ -22,7 +22,7 @@ public static class EventTests
 
 		using var context = new RockContext(); 
 		var expectations = context.Create<IUseNotEventArgsCreateExpectations>();
-		expectations.Methods.A().RaiseNotEvent(eventArgs);
+		expectations.Setups.A().RaiseNotEvent(eventArgs);
 
 		var mock = expectations.Instance();
 		mock.NotEvent += (sender, args) => mockEventArgs = args;

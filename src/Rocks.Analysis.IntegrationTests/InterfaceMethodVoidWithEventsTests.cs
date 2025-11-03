@@ -15,7 +15,7 @@ public static class InterfaceMethodVoidWithEventsTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IInterfaceMethodVoidWithEventsCreateExpectations>();
-		expectations.Methods.NoParameters()
+		expectations.Setups.NoParameters()
 			.RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
@@ -32,7 +32,7 @@ public static class InterfaceMethodVoidWithEventsTests
 		var wasCallbackInvoked = false;
 		using var context = new RockContext();
 		var expectations = context.Create<IInterfaceMethodVoidWithEventsCreateExpectations>();
-		expectations.Methods.NoParameters()
+		expectations.Setups.NoParameters()
 			.Callback(() => wasCallbackInvoked = true)
 			.RaiseMyEvent(EventArgs.Empty);
 
@@ -41,11 +41,11 @@ public static class InterfaceMethodVoidWithEventsTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		mock.NoParameters();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(wasEventRaised, Is.True);
 			Assert.That(wasCallbackInvoked, Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -53,7 +53,7 @@ public static class InterfaceMethodVoidWithEventsTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IInterfaceMethodVoidWithEventsCreateExpectations>();
-		expectations.Methods.NoParameters()
+		expectations.Setups.NoParameters()
 			.ExpectedCallCount(2)
 			.RaiseMyEvent(EventArgs.Empty);
 
@@ -72,7 +72,7 @@ public static class InterfaceMethodVoidWithEventsTests
 		var callbackInvokedCount = 0;
 		using var context = new RockContext();
 		var expectations = context.Create<IInterfaceMethodVoidWithEventsCreateExpectations>();
-		expectations.Methods.NoParameters()
+		expectations.Setups.NoParameters()
 			.ExpectedCallCount(2)
 			.Callback(() => callbackInvokedCount++)
 			.RaiseMyEvent(EventArgs.Empty);
@@ -83,10 +83,10 @@ public static class InterfaceMethodVoidWithEventsTests
 		mock.NoParameters();
 		mock.NoParameters();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(eventRaisedCount, Is.EqualTo(2));
 			Assert.That(callbackInvokedCount, Is.EqualTo(2));
-		});
+		}
 	}
 }

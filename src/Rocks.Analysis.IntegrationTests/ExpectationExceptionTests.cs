@@ -17,7 +17,7 @@ public static class ExpectationExceptionTests
 	public static void GetExceptionMessage()
 	{
 		var expectations = new ISetAfterMockCreateExpectations();
-		expectations.Methods.WorkWithData("a", 2, new[] { 'c', 'd' });
+		expectations.Setups.WorkWithData("a", 2, new[] { 'c', 'd' });
 
 		var mock = expectations.Instance();
 		Assert.That(() => mock.WorkWithData("b", 3, ['e', 'f', 'g']), 
@@ -35,11 +35,11 @@ public static class ExpectationExceptionTests
 	public static void SetMethodExpectationAfterMockIsCreate()
 	{
 		var expectations = new ISetAfterMockCreateExpectations();
-		expectations.Methods.Work();
+		expectations.Setups.Work();
 
 		var mock = expectations.Instance();
 
-		Assert.That(expectations.Methods.Work, Throws.TypeOf<ExpectationException>());
+		Assert.That(expectations.Setups.Work, Throws.TypeOf<ExpectationException>());
 	}
 
 	[Test]

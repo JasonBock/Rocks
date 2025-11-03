@@ -15,18 +15,18 @@ public static class AbstractClassMethodReturnWithEventsTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<AbstractClassMethodReturnWithEventsCreateExpectations>();
-		expectations.Methods.NoParameters().RaiseMyEvent(EventArgs.Empty);
+		expectations.Setups.NoParameters().RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		var value = mock.NoParameters();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(wasEventRaised, Is.True);
 			Assert.That(value, Is.Default);
-		});
+		}
 	}
 
 	[Test]
@@ -35,7 +35,7 @@ public static class AbstractClassMethodReturnWithEventsTests
 		var wasCallbackInvoked = false;
 		using var context = new RockContext(); 
 		var expectations = context.Create<AbstractClassMethodReturnWithEventsCreateExpectations>();
-		expectations.Methods.NoParameters()
+		expectations.Setups.NoParameters()
 			.RaiseMyEvent(EventArgs.Empty)
 			.Callback(() =>
 			{
@@ -48,12 +48,12 @@ public static class AbstractClassMethodReturnWithEventsTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		var value = mock.NoParameters();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(wasEventRaised, Is.True);
 			Assert.That(wasCallbackInvoked, Is.True);
 			Assert.That(value, Is.EqualTo(3));
-		});
+		}
 	}
 
 	[Test]
@@ -61,7 +61,7 @@ public static class AbstractClassMethodReturnWithEventsTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<AbstractClassMethodReturnWithEventsCreateExpectations>();
-		expectations.Methods.NoParameters()
+		expectations.Setups.NoParameters()
 			.ExpectedCallCount(2)
 			.RaiseMyEvent(EventArgs.Empty);
 
@@ -71,12 +71,12 @@ public static class AbstractClassMethodReturnWithEventsTests
 		var valueOne = mock.NoParameters();
 		var valueTwo = mock.NoParameters();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(eventRaisedCount, Is.EqualTo(2));
 			Assert.That(valueOne, Is.Default);
 			Assert.That(valueTwo, Is.Default);
-		});
+		}
 	}
 
 	[Test]
@@ -85,7 +85,7 @@ public static class AbstractClassMethodReturnWithEventsTests
 		var callbackInvokedCount = 0;
 		using var context = new RockContext(); 
 		var expectations = context.Create<AbstractClassMethodReturnWithEventsCreateExpectations>();
-		expectations.Methods.NoParameters()
+		expectations.Setups.NoParameters()
 			.ExpectedCallCount(2)
 			.Callback(() =>
 			{
@@ -100,12 +100,12 @@ public static class AbstractClassMethodReturnWithEventsTests
 		var valueOne = mock.NoParameters();
 		var valueTwo = mock.NoParameters();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(eventRaisedCount, Is.EqualTo(2));
 			Assert.That(callbackInvokedCount, Is.EqualTo(2));
 			Assert.That(valueOne, Is.EqualTo(3));
 			Assert.That(valueTwo, Is.EqualTo(3));
-		});
+		}
 	}
 }

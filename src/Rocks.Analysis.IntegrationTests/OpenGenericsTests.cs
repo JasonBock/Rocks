@@ -14,7 +14,7 @@ public static class OpenGenericsTests
 	{
 		using var context = new RockContext();
 		var intStringExpectations = context.Create<IServiceCreateExpectations<int, string>>();
-		intStringExpectations.Methods.Service(3).ReturnValue("three");
+		intStringexpectations.Setups.Service(3).ReturnValue("three");
 
 		var intStringMock = intStringExpectations.Instance();
 		Assert.That(intStringMock.Service(3), Is.EqualTo("three"));
@@ -25,7 +25,7 @@ public static class OpenGenericsTests
 	{
 		using var context = new RockContext();
 		var stringIntExpectations = context.Create<IServiceCreateExpectations<string, int>>();
-		stringIntExpectations.Methods.Service("four").ReturnValue(4);
+		stringIntexpectations.Setups.Service("four").ReturnValue(4);
 
 		var stringIntMock = stringIntExpectations.Instance();
 		Assert.That(stringIntMock.Service("four"), Is.EqualTo(4));
@@ -42,6 +42,6 @@ public static class OpenGenericsTests
 	public static void MakeWithStringAndInt()
 	{
 		var intStringMake = new IServiceMakeExpectations<string, int>().Instance();
-		Assert.That(intStringMake.Service("four"), Is.EqualTo(0));
+		Assert.That(intStringMake.Service("four"), Is.Zero);
 	}
 }

@@ -34,18 +34,18 @@ public static class RefStructTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveScopedCreateExpectations>();
-	  expectations.Methods.Foo(new()).ReturnValue(() => new[] { 1, 2 }.AsSpan());
+	  expectations.Setups.Foo(new()).ReturnValue(() => new[] { 1, 2 }.AsSpan());
 
 	  var mock = expectations.Instance();
 		var buffer = new int[] { 3 };
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			var data = mock.Foo(new Span<int>(buffer));
 			Assert.That(data.Length, Is.EqualTo(2));
 			Assert.That(data[0], Is.EqualTo(1));
 			Assert.That(data[1], Is.EqualTo(2));
-		});
+		}
 	}
 
 	[Test]
@@ -53,11 +53,11 @@ public static class RefStructTests
 	{
 		var mock = new IHaveScopedMakeExpectations().Instance();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			var buffer = new int[] { 3 };
 			Assert.That(mock.Foo(new Span<int>(buffer)).IsEmpty, Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -65,13 +65,13 @@ public static class RefStructTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveInAndOutSpanCreateExpectations>();
-		expectations.Methods.Foo(new()).ReturnValue(() => new[] { 1, 2 }.AsSpan());
+		expectations.Setups.Foo(new()).ReturnValue(() => new[] { 1, 2 }.AsSpan());
 		expectations.Properties.Getters.Values().ReturnValue(() => new byte[] { 3, 4, 5 }.AsSpan());
 
 		var mock = expectations.Instance();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			var data = mock.Foo(default);
 			Assert.That(data.Length, Is.EqualTo(2));
 			Assert.That(data[0], Is.EqualTo(1));
@@ -81,18 +81,18 @@ public static class RefStructTests
 			Assert.That(values[0], Is.EqualTo(3));
 			Assert.That(values[1], Is.EqualTo(4));
 			Assert.That(values[2], Is.EqualTo(5));
-		});
+		}
 	}
 
 	[Test]
 	public static void MakeInAndOut()
 	{
 		var mock = new IHaveInAndOutSpanMakeExpectations().Instance();
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(mock.Foo(default).IsEmpty, Is.True);
 			Assert.That(mock.Values.IsEmpty, Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -100,13 +100,13 @@ public static class RefStructTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IReturnSpanCreateExpectations>();
-		expectations.Methods.GetRandomData().ReturnValue(() => new[] { 1, 2 }.AsSpan());
+		expectations.Setups.GetRandomData().ReturnValue(() => new[] { 1, 2 }.AsSpan());
 		expectations.Properties.Getters.Values().ReturnValue(() => new byte[] { 3, 4, 5 }.AsSpan());
 
 		var mock = expectations.Instance();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			var data = mock.GetRandomData();
 			Assert.That(data.Length, Is.EqualTo(2));
 			Assert.That(data[0], Is.EqualTo(1));
@@ -116,18 +116,18 @@ public static class RefStructTests
 			Assert.That(values[0], Is.EqualTo(3));
 			Assert.That(values[1], Is.EqualTo(4));
 			Assert.That(values[2], Is.EqualTo(5));
-		});
+		}
 	}
 
 	[Test]
 	public static void MakeWithReturnValues()
 	{
 		var mock = new IReturnSpanMakeExpectations().Instance();
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(mock.GetRandomData().IsEmpty, Is.True);
 			Assert.That(mock.Values.IsEmpty, Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -135,7 +135,7 @@ public static class RefStructTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveSpanCreateExpectations>();
-		expectations.Methods.Foo(new());
+		expectations.Setups.Foo(new());
 
 		var mock = expectations.Instance();
 		var buffer = new int[] { 3 };
@@ -159,7 +159,7 @@ public static class RefStructTests
 
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveSpanCreateExpectations>();
-		expectations.Methods.Foo(new(FooEvaluation));
+		expectations.Setups.Foo(new(FooEvaluation));
 
 		var mock = expectations.Instance();
 		var buffer = new int[] { 3 };
@@ -172,7 +172,7 @@ public static class RefStructTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveSpanCreateExpectations>();
-		expectations.Methods.Bar<int>(new());
+		expectations.Setups.Bar<int>(new());
 
 		var mock = expectations.Instance();
 		var buffer = new int[] { 3 };
@@ -196,7 +196,7 @@ public static class RefStructTests
 
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveSpanCreateExpectations>();
-		expectations.Methods.Bar<int>(new(BarEvaluation));
+		expectations.Setups.Bar<int>(new(BarEvaluation));
 
 		var mock = expectations.Instance();
 		var buffer = new int[] { 3 };

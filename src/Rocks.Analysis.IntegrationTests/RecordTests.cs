@@ -14,7 +14,7 @@ public static class RecordTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<MyRecordCreateExpectations>();
-		expectations.Methods.Foo();
+		expectations.Setups.Foo();
 
 		var mock = expectations.Instance();
 		mock.Foo();

@@ -37,8 +37,8 @@ public static class OptionalArgumentsTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<NeedNullableAnnotationCreateExpectations>();
-		expectations.Methods.IntReturn(Arg.Is<object?>(null));
-		expectations.Methods.VoidReturn(Arg.Is<object?>(null));
+		expectations.Setups.IntReturn(Arg.Is<object?>(null));
+		expectations.Setups.VoidReturn(Arg.Is<object?>(null));
 
 		var mock = expectations.Instance(Arg.Is<object?>(null));
 		_ = mock.IntReturn();
@@ -58,7 +58,7 @@ public static class OptionalArgumentsTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveOptionalStructDefaultArgumentCreateExpectations>();
-		expectations.Methods.Foo(Arg.IsDefault<OptionalDefault>());
+		expectations.Setups.Foo(Arg.IsDefault<OptionalDefault>());
 
 		var mock = expectations.Instance();
 		mock.Foo();
@@ -70,7 +70,7 @@ public static class OptionalArgumentsTests
 		var returnValue = 3;
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveOptionalArgumentsCreateExpectations>();
-		expectations.Methods.Foo(1, "b", 3.2);
+		expectations.Setups.Foo(1, "b", 3.2);
 		expectations.Indexers.Getters.This(1, "b").ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
@@ -86,11 +86,11 @@ public static class OptionalArgumentsTests
 		var mock = new IHaveOptionalArgumentsMakeExpectations().Instance();
 		var value = mock[1];
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(value, Is.Default);
 			Assert.That(() => mock.Foo(1), Throws.Nothing);
-		});
+		}
 	}
 
 	[Test]
@@ -99,7 +99,7 @@ public static class OptionalArgumentsTests
 		var returnValue = 3;
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveOptionalArgumentsCreateExpectations>();
-		expectations.Methods.Foo(1, Arg.IsDefault<string>(), Arg.IsDefault<double>());
+		expectations.Setups.Foo(1, Arg.IsDefault<string>(), Arg.IsDefault<double>());
 		expectations.Indexers.Getters.This(1, Arg.IsDefault<string>()).ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
@@ -115,7 +115,7 @@ public static class OptionalArgumentsTests
 		var returnValue = 3;
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveOptionalArgumentsCreateExpectations>();
-		expectations.Methods.Foo(1);
+		expectations.Setups.Foo(1);
 		expectations.Indexers.Getters.This(2).ReturnValue(returnValue);
 		expectations.Indexers.Setters.This(52, 3);
 

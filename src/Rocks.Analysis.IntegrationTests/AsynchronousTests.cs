@@ -36,9 +36,9 @@ public static class AsynchronousTests
 			yield return "x";
 		}
 
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<AsyncEnumerationCreateExpectations>();
-		expectations.Methods.GetRecordsAsync(Arg.IsDefault<CancellationToken>()).ReturnValue(ReturnsAsyncIterator());
+		expectations.Setups.GetRecordsAsync(Arg.IsDefault<CancellationToken>()).ReturnValue(ReturnsAsyncIterator());
 		var mock = expectations.Instance();
 
 		var values = new List<string>();
@@ -48,23 +48,23 @@ public static class AsynchronousTests
 			values.Add(value);
 		}
 
-		Assert.Multiple(() =>
+		using (Assert.EnterMultipleScope())
 		{
 			Assert.That(values, Has.Count.EqualTo(1));
 			Assert.That(values[0], Is.EqualTo("x"));
-		});
+		}
 	}
 
 	[Test]
 	public static async Task CreateAsynchronousMethodsAsync()
 	{
 		const int returnValue = 3;
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<IAmAsynchronousCreateExpectations>();
-		expectations.Methods.FooAsync().ReturnValue(Task.CompletedTask);
-		expectations.Methods.FooReturnAsync().ReturnValue(Task.FromResult(returnValue));
-		expectations.Methods.ValueFooAsync().ReturnValue(new ValueTask());
-		expectations.Methods.ValueFooReturnAsync().ReturnValue(new ValueTask<int>(returnValue));
+		expectations.Setups.FooAsync().ReturnValue(Task.CompletedTask);
+		expectations.Setups.FooReturnAsync().ReturnValue(Task.FromResult(returnValue));
+		expectations.Setups.ValueFooAsync().ReturnValue(new ValueTask());
+		expectations.Setups.ValueFooReturnAsync().ReturnValue(new ValueTask<int>(returnValue));
 
 		var mock = expectations.Instance();
 		await mock.FooAsync().ConfigureAwait(false);
@@ -72,20 +72,20 @@ public static class AsynchronousTests
 		await mock.ValueFooAsync().ConfigureAwait(false);
 		var valueValue = await mock.ValueFooReturnAsync().ConfigureAwait(false);
 
-		Assert.Multiple(() =>
+		using (Assert.EnterMultipleScope())
 		{
 			Assert.That(value, Is.EqualTo(returnValue));
 			Assert.That(valueValue, Is.EqualTo(returnValue));
-		});
+		}
 	}
 
 	[Test]
 	public static async Task CreateAsynchronousMethodsWithAsyncCallbackAsync()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<IAmAsynchronousCreateExpectations>();
-		expectations.Methods.FooAsync().Callback(async () => await Task.Delay(10).ConfigureAwait(false));
-		expectations.Methods.FooReturnAsync().Callback(async () =>
+		expectations.Setups.FooAsync().Callback(async () => await Task.Delay(10).ConfigureAwait(false));
+		expectations.Setups.FooReturnAsync().Callback(async () =>
 		{
 			await Task.Delay(10).ConfigureAwait(false);
 			return 3;
@@ -107,10 +107,10 @@ public static class AsynchronousTests
 		await mock.ValueFooAsync().ConfigureAwait(false);
 		var valueValue = await mock.ValueFooReturnAsync().ConfigureAwait(false);
 
-		Assert.Multiple(() =>
+		using (Assert.EnterMultipleScope())
 		{
 			Assert.That(value, Is.Default);
 			Assert.That(valueValue, Is.Default);
-		});
+		}
 	}
 }

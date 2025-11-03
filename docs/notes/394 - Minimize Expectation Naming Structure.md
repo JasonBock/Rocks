@@ -219,6 +219,7 @@ internal global::Autofac.Core.IActivatedEventArgsPartialTarget<T>.ServicePropert
 * Testing strategy
     * Run code gen tests
     * Update and run integration tests
+        * Last file updated: ClassGenericIndexerTests.cs
     * Update and run unit tests
     * Add unit and integeration tests for
         * Ref returns
@@ -226,4 +227,16 @@ internal global::Autofac.Core.IActivatedEventArgsPartialTarget<T>.ServicePropert
     * I think I can get rid of `PropertyExpectationTypeName`
 * Update all documentation such that it reflects the new syntax.
     * Consider writing an "upgrade" doc that provides assistance on how test code should be changes from the old to the new style.
-* Release a new alpha
+* Release a new alpha, 10.0.0-alpha.2
+
+
+To update code to the new format, follow these steps:
+
+* Methods
+    * Replace `.Methods` with `.Setups`
+* Properties
+    * Replace `.Properties().Getters().Target()` with `.Setups.Target.Gets()`
+    * Replace `.Properties().Setters().Target(...)` with `.Setups.Target.Sets(...)`
+* Indexers
+    * Replace `.Indexers().Getters().This(...)` with `.Setups[...].Gets()`
+    * Replace `.Indexers().Setters().This(value, ...)` with `.Setups[...].Sets(value)`

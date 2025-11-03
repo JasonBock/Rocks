@@ -22,7 +22,7 @@ public static class AbstractClassGenericPropertyTests
 		var returnValue = new List<string>();
 		using var context = new RockContext(); 
 		var expectations = context.Create<AbstractClassGenericPropertyCreateExpectations<int>>();
-		expectations.Properties.Getters.Values().ReturnValue(returnValue);
+		expectations.Setups.Values.Gets().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		var value = mock.Values;
@@ -36,7 +36,7 @@ public static class AbstractClassGenericPropertyTests
 		var returnValue = new List<string>();
 		using var context = new RockContext(); 
 		var expectations = context.Create<AbstractClassGenericPropertyGetAndInitCreateExpectations<int>>();
-		expectations.Properties.Getters.Values().ReturnValue(returnValue);
+		expectations.Setups.Values.Gets().ReturnValue(returnValue);
 
 		var mock = expectations.Instance(null);
 		var value = mock.Values;
@@ -50,7 +50,7 @@ public static class AbstractClassGenericPropertyTests
 		var mock = new AbstractClassGenericPropertyMakeExpectations<int>().Instance();
 		var value = mock.Values;
 
-		Assert.That(value, Is.EqualTo(default(List<string>)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -59,7 +59,7 @@ public static class AbstractClassGenericPropertyTests
 		var mock = new AbstractClassGenericPropertyGetAndInitMakeExpectations<int>().Instance(null);
 		var value = mock.Values;
 
-		Assert.That(value, Is.EqualTo(default(List<string>)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -68,7 +68,7 @@ public static class AbstractClassGenericPropertyTests
 		var returnValue = 3;
 		using var context = new RockContext(); 
 		var expectations = context.Create<AbstractClassGenericPropertyCreateExpectations<int>>();
-		expectations.Properties.Getters.Data().ReturnValue(returnValue);
+		expectations.Setups.Data.Gets().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		var value = mock.Data;
@@ -82,7 +82,7 @@ public static class AbstractClassGenericPropertyTests
 		var returnValue = 3;
 		using var context = new RockContext(); 
 		var expectations = context.Create<AbstractClassGenericPropertyGetAndInitCreateExpectations<int>>();
-		expectations.Properties.Getters.Data().ReturnValue(returnValue);
+		expectations.Setups.Data.Gets().ReturnValue(returnValue);
 
 		var mock = expectations.Instance(null);
 		var value = mock.Data;

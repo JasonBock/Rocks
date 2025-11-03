@@ -20,18 +20,18 @@ public static class InterfaceStaticVirtualTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveStaticVirtualsCreateExpectations>();
-		expectations.Methods.InstanceLift().ReturnValue("a");
+		expectations.Setups.InstanceLift().ReturnValue("a");
 		expectations.Properties.Getters.InstancePush().ReturnValue("b");
 		expectations.Properties.Setters.InstancePush("c");
 
 		var mock = expectations.Instance();
 		mock.InstancePush = "c";
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(mock.InstancePush, Is.EqualTo("b"));
 			Assert.That(mock.InstanceLift(), Is.EqualTo("a"));
-		});
+		}
 	}
 
 	[Test]
@@ -39,11 +39,11 @@ public static class InterfaceStaticVirtualTests
 	{
 		var mock = new IHaveStaticVirtualsMakeExpectations().Instance();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			mock.InstancePush = "a";
 			Assert.That(mock.InstanceLift(), Is.Null);
 			Assert.That(mock.InstancePush, Is.Null);
-		});
+		}
 	}
 }

@@ -15,7 +15,7 @@ public static class AbstractClassMethodVoidWithEventsTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<AbstractClassMethodVoidWithEventsCreateExpectations>();
-		expectations.Methods.NoParameters().RaiseMyEvent(EventArgs.Empty);
+		expectations.Setups.NoParameters().RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
@@ -31,7 +31,7 @@ public static class AbstractClassMethodVoidWithEventsTests
 		var wasCallbackInvoked = false;
 		using var context = new RockContext(); 
 		var expectations = context.Create<AbstractClassMethodVoidWithEventsCreateExpectations>();
-		expectations.Methods.NoParameters()
+		expectations.Setups.NoParameters()
 			.Callback(() => wasCallbackInvoked = true)
 			.RaiseMyEvent(EventArgs.Empty);
 
@@ -40,11 +40,11 @@ public static class AbstractClassMethodVoidWithEventsTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		mock.NoParameters();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(wasEventRaised, Is.True);
 			Assert.That(wasCallbackInvoked, Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -52,7 +52,7 @@ public static class AbstractClassMethodVoidWithEventsTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<AbstractClassMethodVoidWithEventsCreateExpectations>();
-		expectations.Methods.NoParameters()
+		expectations.Setups.NoParameters()
 			.ExpectedCallCount(2)
 			.RaiseMyEvent(EventArgs.Empty);
 
@@ -71,7 +71,7 @@ public static class AbstractClassMethodVoidWithEventsTests
 		var callbackInvokedCount = 0;
 		using var context = new RockContext(); 
 		var expectations = context.Create<AbstractClassMethodVoidWithEventsCreateExpectations>();
-		expectations.Methods.NoParameters()
+		expectations.Setups.NoParameters()
 			.ExpectedCallCount(2)
 			.Callback(() => callbackInvokedCount++)
 			.RaiseMyEvent(EventArgs.Empty);
@@ -82,10 +82,10 @@ public static class AbstractClassMethodVoidWithEventsTests
 		mock.NoParameters();
 		mock.NoParameters();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(eventRaisedCount, Is.EqualTo(2));
 			Assert.That(callbackInvokedCount, Is.EqualTo(2));
-		});
+		}
 	}
 }

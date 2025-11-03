@@ -16,7 +16,7 @@ public static class HttpMessageHandlerTests
 		using var context = new RockContext();
 		var expectations = context.Create<HttpMessageHandlerCreateExpectations>();
 #pragma warning disable CA2025 // Do not pass 'IDisposable' instances into unawaited tasks
-		expectations.Methods.SendAsync(Arg.Any<HttpRequestMessage>(), Arg.Any<CancellationToken>())
+		expectations.Setups.SendAsync(Arg.Any<HttpRequestMessage>(), Arg.Any<CancellationToken>())
 			 .ReturnValue(Task.FromResult(response));
 #pragma warning restore CA2025 // Do not pass 'IDisposable' instances into unawaited tasks
 
@@ -24,10 +24,10 @@ public static class HttpMessageHandlerTests
 		using var client = new HttpClient(mock);
 		var getResponse = await client.GetAsync(new Uri("https://localhost.com")).ConfigureAwait(false);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(getResponse.StatusCode, Is.EqualTo(response.StatusCode));
 			Assert.That(getResponse.Content, Is.EqualTo(response.Content));
-		});
+		}
 	}
 }

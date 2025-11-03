@@ -31,7 +31,7 @@ public static class PartialTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<PartialCreateExpectations>();
-		expectations.Methods.Work();
+		expectations.Setups.Work();
 
 		var mock = expectations.Instance();
 		mock.Work();
@@ -42,7 +42,7 @@ public static class PartialTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<GenericPartialCreateExpectations<int>>();
-		expectations.Methods.Work().ReturnValue(3);
+		expectations.Setups.Work().ReturnValue(3);
 
 		var mock = expectations.Instance();
 		Assert.That(mock.Work(), Is.EqualTo(3));

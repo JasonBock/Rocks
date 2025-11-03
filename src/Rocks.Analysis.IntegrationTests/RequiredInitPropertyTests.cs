@@ -31,19 +31,19 @@ public static class RequiredInitPropertyTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<InitsCreateExpectations>();
-		expectations.Methods.Foo();
+		expectations.Setups.Foo();
 
 		var mock = expectations.Instance(
 			new() { NonNullableValueType = 3, NullableValueType = 2, NonNullableReferenceType = "3", NullableReferenceType = "2" });
 		mock.Foo();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(mock.NonNullableValueType, Is.EqualTo(3));
 			Assert.That(mock.NullableValueType, Is.EqualTo(2));
 			Assert.That(mock.NonNullableReferenceType, Is.EqualTo("3"));
 			Assert.That(mock.NullableReferenceType, Is.EqualTo("2"));
-		});
+		}
 	}
 
 	[Test]
@@ -53,13 +53,13 @@ public static class RequiredInitPropertyTests
 			new() { NonNullableValueType = 3, NullableValueType = 2, NonNullableReferenceType = "3", NullableReferenceType = "2" });
 		mock.Foo();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(mock.NonNullableValueType, Is.EqualTo(3));
 			Assert.That(mock.NullableValueType, Is.EqualTo(2));
 			Assert.That(mock.NonNullableReferenceType, Is.EqualTo("3"));
 			Assert.That(mock.NullableReferenceType, Is.EqualTo("2"));
-		});
+		}
 	}
 
 	[Test]
@@ -67,18 +67,18 @@ public static class RequiredInitPropertyTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<InitsCreateExpectations>();
-		expectations.Methods.Foo();
+		expectations.Setups.Foo();
 
 		var mock = expectations.Instance(null);
 		mock.Foo();
 
-		Assert.Multiple(() =>
-		{
-			Assert.That(mock.NonNullableValueType, Is.EqualTo(0));
+	  using (Assert.EnterMultipleScope())
+	  {
+			Assert.That(mock.NonNullableValueType, Is.Zero);
 			Assert.That(mock.NullableValueType, Is.Null);
 			Assert.That(mock.NonNullableReferenceType, Is.Null);
 			Assert.That(mock.NullableReferenceType, Is.Null);
-		});
+		}
 	}
 
 	[Test]
@@ -87,13 +87,13 @@ public static class RequiredInitPropertyTests
 		var mock = new InitsMakeExpectations().Instance(null);
 		mock.Foo();
 
-		Assert.Multiple(() =>
-		{
-			Assert.That(mock.NonNullableValueType, Is.EqualTo(0));
+	  using (Assert.EnterMultipleScope())
+	  {
+			Assert.That(mock.NonNullableValueType, Is.Zero);
 			Assert.That(mock.NullableValueType, Is.Null);
 			Assert.That(mock.NonNullableReferenceType, Is.Null);
 			Assert.That(mock.NullableReferenceType, Is.Null);
-		});
+		}
 	}
 
 	[Test]
@@ -101,19 +101,19 @@ public static class RequiredInitPropertyTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<RequiredsCreateExpectations>();
-		expectations.Methods.Foo();
+		expectations.Setups.Foo();
 
 		var mock = expectations.Instance(
 			new() { NonNullableValueType = 3, NullableValueType = 2, NonNullableReferenceType = "3", NullableReferenceType = "2" });
 		mock.Foo();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(mock.NonNullableValueType, Is.EqualTo(3));
 			Assert.That(mock.NullableValueType, Is.EqualTo(2));
 			Assert.That(mock.NonNullableReferenceType, Is.EqualTo("3"));
 			Assert.That(mock.NullableReferenceType, Is.EqualTo("2"));
-		});
+		}
 	}
 
 	[Test]
@@ -123,20 +123,20 @@ public static class RequiredInitPropertyTests
 			new() { NonNullableValueType = 3, NullableValueType = 2, NonNullableReferenceType = "3", NullableReferenceType = "2" });
 		mock.Foo();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(mock.NonNullableValueType, Is.EqualTo(3));
 			Assert.That(mock.NullableValueType, Is.EqualTo(2));
 			Assert.That(mock.NonNullableReferenceType, Is.EqualTo("3"));
 			Assert.That(mock.NullableReferenceType, Is.EqualTo("2"));
-		});
+		}
 	}
 
 	[Test]
 	public static void RequiredPropertiesWithNullWithCreate()
 	{
 		var expectations = new RequiredsCreateExpectations();
-		expectations.Methods.Foo();
+		expectations.Setups.Foo();
 
 		Assert.That(() => expectations.Instance(null!), Throws.TypeOf<ArgumentNullException>());
 	}

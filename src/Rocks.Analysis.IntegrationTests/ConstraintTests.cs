@@ -19,7 +19,7 @@ public static class ConstraintTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<BaseForConstraintCaseCreateExpectations<string>>();
-		expectations.Methods.As<string>();
+		expectations.Setups.As<string>();
 
 		var mock = expectations.Instance();
 		mock.As<string>();

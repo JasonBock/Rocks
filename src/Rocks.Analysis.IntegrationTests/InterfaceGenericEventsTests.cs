@@ -21,7 +21,7 @@ public static class InterfaceGenericEventsTests
 		var returnValue = new List<string>();
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceGenericEventsCreateExpectations<InterfaceEventArgs>>();
-		expectations.Methods.Foo().AddRaiseEvent(new("MyEvent", new InterfaceEventArgs()));
+		expectations.Setups.Foo().AddRaiseEvent(new("MyEvent", new InterfaceEventArgs()));
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();

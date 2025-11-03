@@ -55,11 +55,11 @@ public static class ClassPropertyTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		var value = mock.GetData;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(value, Is.Default);
 			Assert.That(wasEventRaised, Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -77,11 +77,11 @@ public static class ClassPropertyTests
 		var mock = expectations.Instance(null);
 		var value = mock.GetData;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(value, Is.EqualTo(3));
 			Assert.That(wasCallbackInvoked, Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -102,12 +102,12 @@ public static class ClassPropertyTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		var value = mock.GetData;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(value, Is.EqualTo(3));
 			Assert.That(wasEventRaised, Is.True);
 			Assert.That(wasCallbackInvoked, Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -175,11 +175,11 @@ public static class ClassPropertyTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		mock.SetData = 1;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(wasEventRaised, Is.True);
 			Assert.That(wasCallbackInvoked, Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -225,10 +225,10 @@ public static class ClassPropertyTests
 		var mock = new ClassPropertyMakeExpectations().Instance(null);
 		var value = mock.GetAndSetData;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(value, Is.Default);
 			Assert.That(() => mock.GetAndSetData = value, Throws.Nothing);
-		});
+		}
 	}
 }

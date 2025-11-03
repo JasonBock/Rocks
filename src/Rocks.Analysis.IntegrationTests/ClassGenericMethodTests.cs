@@ -21,7 +21,7 @@ public static class ClassGenericMethodTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<ClassGenericMethodCreateExpectations<int>>();
-		expectations.Methods.Foo(Arg.Any<List<string>>());
+		expectations.Setups.Foo(Arg.Any<List<string>>());
 
 		var mock = expectations.Instance();
 		mock.Foo([]);
@@ -40,7 +40,7 @@ public static class ClassGenericMethodTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<ClassGenericMethodCreateExpectations<int>>();
-		expectations.Methods.Quux(Arg.Any<int>());
+		expectations.Setups.Quux(Arg.Any<int>());
 
 		var mock = expectations.Instance();
 		mock.Quux(3);
@@ -59,7 +59,7 @@ public static class ClassGenericMethodTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<ClassGenericMethodCreateExpectations<int>>();
-		expectations.Methods.Bar(Arg.Any<int>());
+		expectations.Setups.Bar(Arg.Any<int>());
 
 		var mock = expectations.Instance();
 		mock.Bar(3);
@@ -77,7 +77,7 @@ public static class ClassGenericMethodTests
 	public static void CreateWithGenericParameterTypeThatDoesNotMatch()
 	{
 		var expectations = new ClassGenericMethodCreateExpectations<int>();
-		expectations.Methods.Bar(Arg.Any<int>());
+		expectations.Setups.Bar(Arg.Any<int>());
 
 		var mock = expectations.Instance();
 
@@ -90,7 +90,7 @@ public static class ClassGenericMethodTests
 		var returnValue = new List<string>();
 		using var context = new RockContext(); 
 		var expectations = context.Create<ClassGenericMethodCreateExpectations<int>>();
-		expectations.Methods.FooReturn().ReturnValue(returnValue);
+		expectations.Setups.FooReturn().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		var value = mock.FooReturn();
@@ -113,7 +113,7 @@ public static class ClassGenericMethodTests
 		var returnValue = 3;
 		using var context = new RockContext(); 
 		var expectations = context.Create<ClassGenericMethodCreateExpectations<int>>();
-		expectations.Methods.QuuxReturn().ReturnValue(returnValue);
+		expectations.Setups.QuuxReturn().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		var value = mock.QuuxReturn();
@@ -136,7 +136,7 @@ public static class ClassGenericMethodTests
 		var returnValue = 3;
 		using var context = new RockContext(); 
 		var expectations = context.Create<ClassGenericMethodCreateExpectations<int>>();
-		expectations.Methods.BarReturn<int>().ReturnValue(returnValue);
+		expectations.Setups.BarReturn<int>().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		var value = mock.BarReturn<int>();
@@ -158,7 +158,7 @@ public static class ClassGenericMethodTests
 	{
 		var returnValue = 3;
 		var expectations = new ClassGenericMethodCreateExpectations<int>();
-		expectations.Methods.BarReturn<int>().ReturnValue(returnValue);
+		expectations.Setups.BarReturn<int>().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 
@@ -171,7 +171,7 @@ public static class ClassGenericMethodTests
 		var returnValue = "c";
 		using var context = new RockContext(); 
 		var expectations = context.Create<ClassGenericMethodCreateExpectations<int>>();
-		expectations.Methods.NullableValues<string>("b").ReturnValue(returnValue);
+		expectations.Setups.NullableValues<string>("b").ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		var value = mock.NullableValues("b");

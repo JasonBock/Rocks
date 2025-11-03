@@ -17,7 +17,7 @@ public static class RockContextTests
 		{
 			using var context = new RockContext();
 			var expectations = context.Create<IContexturalCreateExpectations>();
-			expectations.Methods.DoOtherStuff();
+			expectations.Setups.DoOtherStuff();
 
 			var mock = expectations.Instance();
 			mock.DoStuff();
@@ -29,8 +29,8 @@ public static class RockContextTests
 		{
 			using var context = new RockContext();
 			var expectations = context.Create<IContexturalCreateExpectations>();
-			expectations.Methods.DoStuff();
-			expectations.Methods.DoOtherStuff();
+			expectations.Setups.DoStuff();
+			expectations.Setups.DoOtherStuff();
 
 			var mock = expectations.Instance();
 			mock.DoStuff();
@@ -42,7 +42,7 @@ public static class RockContextTests
 		{
 			using var context = new RockContext();
 			var expectations = context.Create<IContexturalCreateExpectations>();
-			expectations.Methods.DoStuff()
+			expectations.Setups.DoStuff()
 				.Callback(() => throw new NotImplementedException());
 
 			var mock = expectations.Instance();
@@ -55,9 +55,9 @@ public static class RockContextTests
 		{
 			using var context = new RockContext();
 			var expectations = context.Create<IContexturalCreateExpectations>();
-			expectations.Methods.DoStuff()
+			expectations.Setups.DoStuff()
 				.Callback(() => throw new NotImplementedException());
-			expectations.Methods.DoOtherStuff();
+			expectations.Setups.DoOtherStuff();
 
 			var mock = expectations.Instance();
 			mock.DoStuff();

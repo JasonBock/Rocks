@@ -39,9 +39,9 @@ public class ClassConstructor
 
 public class ClassRequiredConstructor
 {
-	[SetsRequiredMembers] 
+	[SetsRequiredMembers]
 	public ClassRequiredConstructor() { }
-	
+
 	public virtual void DoRequired() { }
 }
 
@@ -50,9 +50,9 @@ public static class ClassConstructorTests
 	[Test]
 	public static void CreateRequiredConstructor()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<ClassRequiredConstructorCreateExpectations>();
-		expectations.Methods.DoRequired();
+		expectations.Setups.DoRequired();
 
 		var mock = expectations.Instance();
 		mock.DoRequired();
@@ -65,21 +65,21 @@ public static class ClassConstructorTests
 		var d1Value = "d1";
 		var d2Value = "d2";
 
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<ClassConstructorWithSpecialParametersCreateExpectations>();
-		expectations.Methods.Foo();
+		expectations.Setups.Foo();
 
 		var mock = expectations.Instance(2, ref bValue, out var cValue, d1Value, d2Value);
 		mock.Foo();
 
-		Assert.Multiple(() =>
+		using (Assert.EnterMultipleScope())
 		{
 			Assert.That(mock.A, Is.EqualTo(2));
 			Assert.That(mock.B, Is.EqualTo("b"));
 			Assert.That(mock.C, Is.EqualTo("42"));
 			Assert.That(cValue, Is.EqualTo("42"));
 			Assert.That(mock.D, Is.EquivalentTo([d1Value, d2Value]));
-		});
+		}
 	}
 
 	[Test]
@@ -91,31 +91,31 @@ public static class ClassConstructorTests
 
 		var mock = new ClassConstructorWithSpecialParametersMakeExpectations().Instance(2, ref bValue, out var cValue, d1Value, d2Value);
 
-		Assert.Multiple(() =>
+		using (Assert.EnterMultipleScope())
 		{
 			Assert.That(mock.A, Is.EqualTo(2));
 			Assert.That(mock.B, Is.EqualTo("b"));
 			Assert.That(mock.C, Is.EqualTo("42"));
 			Assert.That(cValue, Is.EqualTo("42"));
 			Assert.That(mock.D, Is.EquivalentTo([d1Value, d2Value]));
-		});
+		}
 	}
 
 	[Test]
 	public static void CreateWithNoParametersAndPublicConstructor()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<ClassConstructorCreateExpectations>();
-		expectations.Methods.NoParameters();
+		expectations.Setups.NoParameters();
 
 		var mock = expectations.Instance(3);
 		var value = mock.NoParameters();
 
-		Assert.Multiple(() =>
+		using (Assert.EnterMultipleScope())
 		{
 			Assert.That(mock.IntData, Is.EqualTo(3));
 			Assert.That(mock.StringData, Is.Null);
-		});
+		}
 	}
 
 	[Test]
@@ -130,18 +130,18 @@ public static class ClassConstructorTests
 	[Test]
 	public static void CreateWithNoParametersAndProtectedConstructor()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<ClassConstructorCreateExpectations>();
-		expectations.Methods.NoParameters();
+		expectations.Setups.NoParameters();
 
 		var mock = expectations.Instance("b");
 		var value = mock.NoParameters();
 
-		Assert.Multiple(() =>
+		using (Assert.EnterMultipleScope())
 		{
 			Assert.That(mock.IntData, Is.Default);
 			Assert.That(mock.StringData, Is.EqualTo("b"));
-		});
+		}
 	}
 
 	[Test]

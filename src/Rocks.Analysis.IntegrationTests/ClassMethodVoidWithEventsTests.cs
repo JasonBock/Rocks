@@ -20,7 +20,7 @@ public static class ClassMethodVoidWithEventsTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<ClassMethodVoidWithEventsCreateExpectations>();
-		expectations.Methods.NoParameters().RaiseMyEvent(EventArgs.Empty);
+		expectations.Setups.NoParameters().RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
@@ -36,7 +36,7 @@ public static class ClassMethodVoidWithEventsTests
 		var wasCallbackInvoked = false;
 		using var context = new RockContext(); 
 		var expectations = context.Create<ClassMethodVoidWithEventsCreateExpectations>();
-		expectations.Methods.NoParameters()
+		expectations.Setups.NoParameters()
 			.Callback(() => wasCallbackInvoked = true)
 			.RaiseMyEvent(EventArgs.Empty);
 
@@ -45,11 +45,11 @@ public static class ClassMethodVoidWithEventsTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		mock.NoParameters();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(wasEventRaised, Is.True);
 			Assert.That(wasCallbackInvoked, Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -57,7 +57,7 @@ public static class ClassMethodVoidWithEventsTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<ClassMethodVoidWithEventsCreateExpectations>();
-		expectations.Methods.NoParameters()
+		expectations.Setups.NoParameters()
 			.ExpectedCallCount(2)
 			.RaiseMyEvent(EventArgs.Empty);
 
@@ -76,7 +76,7 @@ public static class ClassMethodVoidWithEventsTests
 		var callbackInvokedCount = 0;
 		using var context = new RockContext(); 
 		var expectations = context.Create<ClassMethodVoidWithEventsCreateExpectations>();
-		expectations.Methods.NoParameters()
+		expectations.Setups.NoParameters()
 			.ExpectedCallCount(2)
 			.Callback(() => callbackInvokedCount++)
 			.RaiseMyEvent(EventArgs.Empty);
@@ -87,10 +87,10 @@ public static class ClassMethodVoidWithEventsTests
 		mock.NoParameters();
 		mock.NoParameters();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(eventRaisedCount, Is.EqualTo(2));
 			Assert.That(callbackInvokedCount, Is.EqualTo(2));
-		});
+		}
 	}
 }

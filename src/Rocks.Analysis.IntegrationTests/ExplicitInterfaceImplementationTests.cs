@@ -53,7 +53,7 @@ public static class ExplicitInterfaceImplementationTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<IIterableCreateExpectations<string>>();
-		expectations.Methods.GetIterator();
+		expectations.Setups.GetIterator();
 		expectations.ExplicitMethodsForIIterable.GetIterator();
 
 		var mock = expectations.Instance();
@@ -79,11 +79,11 @@ public static class ExplicitInterfaceImplementationTests
 	{
 		var mock = new IExplicitInterfaceImplementationMakeExpectations().Instance();
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(() => ((IExplicitInterfaceImplementationOne)mock).A(), Throws.Nothing);
 			Assert.That(() => ((IExplicitInterfaceImplementationTwo)mock).A(), Throws.Nothing);
-		});
+		}
 	}
 
 	[Test]
@@ -123,13 +123,13 @@ public static class ExplicitInterfaceImplementationTests
 		var oneValue = ((IExplicitInterfaceImplementationOne)mock).B;
 		var twoValue = ((IExplicitInterfaceImplementationTwo)mock).B;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(oneValue, Is.Default);
 			Assert.That(twoValue, Is.Default);
 			Assert.That(() => ((IExplicitInterfaceImplementationOne)mock).B = oneValue, Throws.Nothing);
 			Assert.That(() => ((IExplicitInterfaceImplementationTwo)mock).B = twoValue, Throws.Nothing);
-		});
+		}
 	}
 
 	[Test]
@@ -139,11 +139,11 @@ public static class ExplicitInterfaceImplementationTests
 		var oneValue = ((IExplicitInterfaceImplementationOne)mock).D;
 		var twoValue = ((IExplicitInterfaceImplementationTwo)mock).D;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(oneValue, Is.Default);
 			Assert.That(twoValue, Is.Default);
-		});
+		}
 	}
 
 	[Test]
@@ -170,12 +170,12 @@ public static class ExplicitInterfaceImplementationTests
 		var oneValue = ((IExplicitInterfaceImplementationOne)mock)[3];
 		var twoValue = ((IExplicitInterfaceImplementationTwo)mock)[3];
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(oneValue, Is.Default);
 			Assert.That(twoValue, Is.Default);
 			Assert.That(() => ((IExplicitInterfaceImplementationOne)mock)[3] = oneValue, Throws.Nothing);
 			Assert.That(() => ((IExplicitInterfaceImplementationTwo)mock)[3] = twoValue, Throws.Nothing);
-		});
+		}
 	}
 }

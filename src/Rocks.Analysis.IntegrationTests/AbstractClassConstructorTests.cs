@@ -6,7 +6,7 @@ namespace Rocks.Analysis.IntegrationTests.AbstractClassConstructorTestTypes;
 public abstract class AbstractClassConstructor
 #pragma warning restore CA1012 // Abstract types should not have public constructors
 {
-   protected AbstractClassConstructor(string stringData) =>
+	protected AbstractClassConstructor(string stringData) =>
 		this.StringData = stringData;
 	public AbstractClassConstructor(int intData) =>
 		this.IntData = intData;
@@ -24,16 +24,16 @@ public static class AbstractClassConstructorTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<AbstractClassConstructorCreateExpectations>();
-		expectations.Methods.NoParameters();
+		expectations.Setups.NoParameters();
 
 		var mock = expectations.Instance(3);
 		var value = mock.NoParameters();
 
-		Assert.Multiple(() =>
+		using (Assert.EnterMultipleScope())
 		{
 			Assert.That(mock.IntData, Is.EqualTo(3));
 			Assert.That(mock.StringData, Is.Null);
-		});
+		}
 	}
 
 	[Test]
@@ -48,18 +48,18 @@ public static class AbstractClassConstructorTests
 	[Test]
 	public static void CreateWithNoParametersAndProtectedConstructor()
 	{
-		using var context = new RockContext(); 
+		using var context = new RockContext();
 		var expectations = context.Create<AbstractClassConstructorCreateExpectations>();
-		expectations.Methods.NoParameters();
+		expectations.Setups.NoParameters();
 
 		var mock = expectations.Instance("b");
 		var value = mock.NoParameters();
 
-		Assert.Multiple(() =>
+		using (Assert.EnterMultipleScope())
 		{
 			Assert.That(mock.IntData, Is.Default);
 			Assert.That(mock.StringData, Is.EqualTo("b"));
-		});
+		}
 	}
 
 	[Test]

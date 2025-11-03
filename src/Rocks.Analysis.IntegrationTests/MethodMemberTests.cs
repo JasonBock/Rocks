@@ -41,7 +41,7 @@ public static class MethodMemberTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveLotsOfParametersCreateExpectations>();
-		expectations.Methods.CallThis(
+		expectations.Setups.CallThis(
 			0, 1, 2, 3, 4,
 			5, 6, 7, 8, 9,
 			10, 11, 12, 13, 14,
@@ -60,7 +60,7 @@ public static class MethodMemberTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveRefReturnCreateExpectations>();
-		expectations.Methods.MethodRefReturn().ReturnValue(3);
+		expectations.Setups.MethodRefReturn().ReturnValue(3);
 
 		var mock = expectations.Instance();
 		ref var value = ref mock.MethodRefReturn();
@@ -126,7 +126,7 @@ public static class MethodMemberTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveRefReturnCreateExpectations>();
-		expectations.Methods.MethodRefReadonlyReturn().ReturnValue(3);
+		expectations.Setups.MethodRefReadonlyReturn().ReturnValue(3);
 
 		var mock = expectations.Instance();
 		var value = mock.MethodRefReadonlyReturn();
@@ -192,7 +192,7 @@ public static class MethodMemberTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveInCreateExpectations>();
-		expectations.Methods.InArgument(3);
+		expectations.Setups.InArgument(3);
 		expectations.Indexers.Getters.This(4).ReturnValue(5);
 
 		var mock = expectations.Instance();
@@ -208,11 +208,11 @@ public static class MethodMemberTests
 		var mock = new IHaveInMakeExpectations().Instance();
 		var value = mock[4];
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(value, Is.Default);
 			Assert.That(() => mock.InArgument(3), Throws.Nothing);
-		});
+		}
 	}
 
 	[Test]
@@ -220,12 +220,12 @@ public static class MethodMemberTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveRefAndOutCreateExpectations>();
-		expectations.Methods.OutArgument(3);
+		expectations.Setups.OutArgument(3);
 
 		var mock = expectations.Instance();
 		mock.OutArgument(out var value);
 
-		Assert.That(value, Is.EqualTo(0));
+		Assert.That(value, Is.Zero);
 	}
 
 	[Test]
@@ -244,7 +244,7 @@ public static class MethodMemberTests
 
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveRefAndOutCreateExpectations>();
-		expectations.Methods.OutArgument(3).Callback(OutArgumentCallback);
+		expectations.Setups.OutArgument(3).Callback(OutArgumentCallback);
 
 		var mock = expectations.Instance();
 		mock.OutArgument(out var value);
@@ -257,15 +257,15 @@ public static class MethodMemberTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveRefAndOutCreateExpectations>();
-		expectations.Methods.OutArgumentsWithGenerics<int, string>(3, "b");
+		expectations.Setups.OutArgumentsWithGenerics<int, string>(3, "b");
 
 		var mock = expectations.Instance();
 		mock.OutArgumentsWithGenerics<int, string>(3, out var value);
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(value, Is.Null);
-		});
+		}
 	}
 
 	[Test]
@@ -285,7 +285,7 @@ public static class MethodMemberTests
 
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveRefAndOutCreateExpectations>();
-		expectations.Methods.OutArgumentsWithGenerics<int, string>(3, "b")
+		expectations.Setups.OutArgumentsWithGenerics<int, string>(3, "b")
 			.Callback(OutArgumentsWithGenericsCallback);
 
 		var mock = expectations.Instance();
@@ -299,7 +299,7 @@ public static class MethodMemberTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveRefAndOutCreateExpectations>();
-		expectations.Methods.RefArgument(3);
+		expectations.Setups.RefArgument(3);
 
 		var mock = expectations.Instance();
 		var value = 3;
@@ -312,10 +312,10 @@ public static class MethodMemberTests
 		var mock = new IHaveRefAndOutMakeExpectations().Instance();
 		var value = 3;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(() => mock.RefArgument(ref value), Throws.Nothing);
-		});
+		}
 	}
 
 	[Test]
@@ -325,7 +325,7 @@ public static class MethodMemberTests
 
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveRefAndOutCreateExpectations>();
-		expectations.Methods.RefArgument(3).Callback(RefArgumentCallback);
+		expectations.Setups.RefArgument(3).Callback(RefArgumentCallback);
 
 		var mock = expectations.Instance();
 		var value = 3;
@@ -339,7 +339,7 @@ public static class MethodMemberTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveRefAndOutCreateExpectations>();
-		expectations.Methods.RefArgumentsWithGenerics<int, string>(3, "b");
+		expectations.Setups.RefArgumentsWithGenerics<int, string>(3, "b");
 
 		var mock = expectations.Instance();
 		var value = "b";
@@ -352,10 +352,10 @@ public static class MethodMemberTests
 		var mock = new IHaveRefAndOutMakeExpectations().Instance();
 		var value = "b";
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(() => mock.RefArgumentsWithGenerics(3, ref value), Throws.Nothing);
-		});
+		}
 	}
 
 	[Test]
@@ -366,7 +366,7 @@ public static class MethodMemberTests
 
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveRefAndOutCreateExpectations>();
-		expectations.Methods.RefArgumentsWithGenerics<int, string>(3, "b").Callback(RefArgumentsWithGenericsCallback);
+		expectations.Setups.RefArgumentsWithGenerics<int, string>(3, "b").Callback(RefArgumentsWithGenericsCallback);
 
 		var mock = expectations.Instance();
 		var value = "b";

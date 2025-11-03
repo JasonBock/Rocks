@@ -52,7 +52,7 @@ public static class InterfaceGenericIndexerTests
 		var mock = new IInterfaceGenericIndexerMakeExpectations<int>().Instance();
 		var value = mock[4];
 
-		Assert.That(value, Is.EqualTo(default(List<string>)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]
@@ -61,7 +61,7 @@ public static class InterfaceGenericIndexerTests
 		var mock = new IInterfaceGenericIndexerGetAndInitMakeExpectations<int>().Instance(null);
 		var value = mock[4];
 
-		Assert.That(value, Is.EqualTo(default(List<string>)));
+		Assert.That(value, Is.Default);
 	}
 
 	[Test]

@@ -22,7 +22,7 @@ public static class AllowNullTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<IAllowCreateExpectations>();
-		expectations.Properties.Setters.NewLine(Arg.Is<string>(null!));
+		expectations.Setups.NewLine.Sets(Arg.Is<string>(null!));
 
 		var mock = expectations.Instance();
 		mock.NewLine = null;
@@ -40,7 +40,7 @@ public static class AllowNullTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<AllowCreateExpectations>();
-		expectations.Properties.Setters.NewLine(Arg.Is<string>(null!));
+		expectations.Setups.NewLine.Sets(Arg.Is<string>(null!));
 
 		var chunk = expectations.Instance();
 		chunk.NewLine = null;

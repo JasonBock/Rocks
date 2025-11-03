@@ -65,11 +65,11 @@ public static class InterfacePropertyTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		var value = mock.GetData;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(value, Is.Default);
 			Assert.That(wasEventRaised, Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -87,11 +87,11 @@ public static class InterfacePropertyTests
 		var mock = expectations.Instance();
 		var value = mock.GetData;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(value, Is.EqualTo(3));
 			Assert.That(wasCallbackInvoked, Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -112,12 +112,12 @@ public static class InterfacePropertyTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		var value = mock.GetData;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(value, Is.EqualTo(3));
 			Assert.That(wasEventRaised, Is.True);
 			Assert.That(wasCallbackInvoked, Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -185,11 +185,11 @@ public static class InterfacePropertyTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		mock.SetData = 1;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(wasEventRaised, Is.True);
 			Assert.That(wasCallbackInvoked, Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -235,10 +235,10 @@ public static class InterfacePropertyTests
 		var mock = new IInterfacePropertyMakeExpectations().Instance();
 		var value = mock.GetAndSetData;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(value, Is.Default);
 			Assert.That(() => mock.GetAndSetData = value, Throws.Nothing);
-		});
+		}
 	}
 }

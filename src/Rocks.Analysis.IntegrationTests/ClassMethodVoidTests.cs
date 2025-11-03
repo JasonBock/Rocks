@@ -17,7 +17,7 @@ public static class ClassMethodVoidTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<MethodVoidTestsCreateExpectations>();
-		expectations.Methods.NoParameters();
+		expectations.Setups.NoParameters();
 
 		var mock = expectations.Instance();
 		mock.NoParameters();
@@ -36,7 +36,7 @@ public static class ClassMethodVoidTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<MethodVoidTestsCreateExpectations>();
-		expectations.Methods.NoParameters().ExpectedCallCount(2);
+		expectations.Setups.NoParameters().ExpectedCallCount(2);
 
 		var mock = expectations.Instance();
 		mock.NoParameters();
@@ -47,7 +47,7 @@ public static class ClassMethodVoidTests
 	public static void CreateWithNoParametersMultipleCallsNotMet()
 	{
 		var expectations = new MethodVoidTestsCreateExpectations();
-		expectations.Methods.NoParameters().ExpectedCallCount(2);
+		expectations.Setups.NoParameters().ExpectedCallCount(2);
 
 		var mock = expectations.Instance();
 		mock.NoParameters();
@@ -62,7 +62,7 @@ public static class ClassMethodVoidTests
 
 		using var context = new RockContext(); 
 		var expectations = context.Create<MethodVoidTestsCreateExpectations>();
-		expectations.Methods.NoParameters().Callback(() => wasCallbackInvoked = true);
+		expectations.Setups.NoParameters().Callback(() => wasCallbackInvoked = true);
 
 		var mock = expectations.Instance();
 		mock.NoParameters();
@@ -84,7 +84,7 @@ public static class ClassMethodVoidTests
 	public static void CreateWithNoParametersExpectationsNotMet()
 	{
 		var expectations = new MethodVoidTestsCreateExpectations();
-		expectations.Methods.NoParameters();
+		expectations.Setups.NoParameters();
 
 		_ = expectations.Instance();
 
@@ -96,7 +96,7 @@ public static class ClassMethodVoidTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<MethodVoidTestsCreateExpectations>();
-		expectations.Methods.OneParameter(3);
+		expectations.Setups.OneParameter(3);
 
 		var mock = expectations.Instance();
 		mock.OneParameter(3);
@@ -116,7 +116,7 @@ public static class ClassMethodVoidTests
 		var aValue = 0;
 		using var context = new RockContext(); 
 		var expectations = context.Create<MethodVoidTestsCreateExpectations>();
-		expectations.Methods.OneParameter(3).Callback(a => aValue = a);
+		expectations.Setups.OneParameter(3).Callback(a => aValue = a);
 
 		var mock = expectations.Instance();
 		mock.OneParameter(3);
@@ -128,7 +128,7 @@ public static class ClassMethodVoidTests
 	public static void CreateWithOneParameterArgExpectationNotMet()
 	{
 		var expectations = new MethodVoidTestsCreateExpectations();
-		expectations.Methods.OneParameter(3);
+		expectations.Setups.OneParameter(3);
 
 		var mock = expectations.Instance();
 
@@ -140,7 +140,7 @@ public static class ClassMethodVoidTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<MethodVoidTestsCreateExpectations>();
-		expectations.Methods.MultipleParameters(3, "b");
+		expectations.Setups.MultipleParameters(3, "b");
 
 		var mock = expectations.Instance();
 		mock.MultipleParameters(3, "b");
@@ -161,23 +161,23 @@ public static class ClassMethodVoidTests
 		var bValue = string.Empty;
 		using var context = new RockContext(); 
 		var expectations = context.Create<MethodVoidTestsCreateExpectations>();
-		expectations.Methods.MultipleParameters(3, "b").Callback((a, b) => (aValue, bValue) = (a, b));
+		expectations.Setups.MultipleParameters(3, "b").Callback((a, b) => (aValue, bValue) = (a, b));
 
 		var mock = expectations.Instance();
 		mock.MultipleParameters(3, "b");
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(aValue, Is.EqualTo(3));
 			Assert.That(bValue, Is.EqualTo("b"));
-		});
+		}
 	}
 
 	[Test]
 	public static void CreateWithMultipleParametersArgExpectationNotMet()
 	{
 		var expectations = new MethodVoidTestsCreateExpectations();
-		expectations.Methods.MultipleParameters(3, "b");
+		expectations.Setups.MultipleParameters(3, "b");
 
 		var mock = expectations.Instance();
 

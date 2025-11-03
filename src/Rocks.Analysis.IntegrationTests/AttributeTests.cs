@@ -39,7 +39,7 @@ public static class AttributeTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<UsingMemberNotNullWhenCreateExpectations>();
-		expectations.Properties.Getters.IsConnectionProvided().ReturnValue(true);
+		expectations.Setups.IsConnectionProvided.Gets().ReturnValue(true);
 
 		var mock = expectations.Instance();
 		_ = mock.IsConnectionProvided;
@@ -57,7 +57,7 @@ public static class AttributeTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<ITenseCreateExpectations>();
-		expectations.Properties.Getters.Lengths().ReturnValue(() => []);
+		expectations.Setups.Lengths.Gets().ReturnValue(() => []);
 
 		var mock = expectations.Instance();
 		_ = mock.Lengths;
@@ -78,7 +78,7 @@ public static class AttributeTests
 
 		using var context = new RockContext();
 		var expectations = context.Create<NotNullIfNotCasesCreateExpectations>();
-		expectations.Methods.VisitMethod(node).ReturnValue(result);
+		expectations.Setups.VisitMethod(node).ReturnValue(result);
 
 		var mock = expectations.Instance();
 		var mockResult = mock.VisitMethod(node);
@@ -91,7 +91,7 @@ public static class AttributeTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<ConventionDispatcherCreateExpectations>();
-		expectations.Methods.AssertNoScope();
+		expectations.Setups.AssertNoScope();
 
 		var mock = expectations.Instance();
 		mock.AssertNoScope();

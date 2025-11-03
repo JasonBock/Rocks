@@ -87,11 +87,11 @@ public static class InterfaceIndexerTests
 		var mock = new IInterfaceIndexerGetterSetterMakeExpectations().Instance();
 		var value = mock[3];
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(value, Is.Default);
 			Assert.That(() => mock[3] = 4, Throws.Nothing);
-		});
+		}
 	}
 
 	[Test]
@@ -128,11 +128,11 @@ public static class InterfaceIndexerTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		var value = mock[3];
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(value, Is.Default);
 			Assert.That(wasEventRaised, Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -150,11 +150,11 @@ public static class InterfaceIndexerTests
 		var mock = expectations.Instance();
 		var value = mock[3];
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(value, Is.EqualTo(3));
 			Assert.That(wasCallbackInvoked, Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -176,12 +176,12 @@ public static class InterfaceIndexerTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		var value = mock[3];
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(value, Is.EqualTo(3));
 			Assert.That(wasEventRaised, Is.True);
 			Assert.That(wasCallbackInvoked, Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -268,11 +268,11 @@ public static class InterfaceIndexerTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		mock[3] = 4;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(wasEventRaised, Is.True);
 			Assert.That(wasCallbackInvoked, Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -308,11 +308,11 @@ public static class InterfaceIndexerTests
 		var mock = new IInterfaceIndexerGetterSetterMakeExpectations().Instance();
 		var value = mock[3, "b"];
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(value, Is.Default);
 			Assert.That(() => mock[3, "b"] = 4, Throws.Nothing);
-		});
+		}
 	}
 
 	[Test]
@@ -350,11 +350,11 @@ public static class InterfaceIndexerTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		var value = mock[3, "b"];
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(value, Is.Default);
 			Assert.That(wasEventRaised, Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -372,11 +372,11 @@ public static class InterfaceIndexerTests
 		var mock = expectations.Instance();
 		var value = mock[3, "b"];
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(value, Is.EqualTo(3));
 			Assert.That(wasCallbackInvoked, Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -398,12 +398,12 @@ public static class InterfaceIndexerTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		var value = mock[3, "b"];
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(value, Is.EqualTo(3));
 			Assert.That(wasEventRaised, Is.True);
 			Assert.That(wasCallbackInvoked, Is.True);
-		});
+		}
 	}
 
 	[Test]
@@ -484,11 +484,11 @@ public static class InterfaceIndexerTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		mock[3, "b"] = 4;
 
-		Assert.Multiple(() =>
-		{
+	  using (Assert.EnterMultipleScope())
+	  {
 			Assert.That(wasEventRaised, Is.True);
 			Assert.That(wasCallbackInvoked, Is.True);
-		});
+		}
 	}
 
 	[Test]

@@ -18,7 +18,7 @@ public static class VerificationTests
 		{
 			using var context = new RockContext();
 			var expectations = context.Create<IDataCreateExpectations>();
-			expectations.Methods.Calculate().Callback(() => throw new NotSupportedException());
+			expectations.Setups.Calculate().Callback(() => throw new NotSupportedException());
 		}, Throws.TypeOf<VerificationException>());
 
    [Test]
@@ -26,7 +26,7 @@ public static class VerificationTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IDataCreateExpectations>();
-		expectations.Methods.Calculate().Callback(() => throw new NotSupportedException());
+		expectations.Setups.Calculate().Callback(() => throw new NotSupportedException());
 
 		var data = expectations.Instance();
 		Assert.That(data.Calculate, Throws.TypeOf<NotSupportedException>());
@@ -37,7 +37,7 @@ public static class VerificationTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IDataCreateExpectations>();
-		expectations.Methods.CalculateValue().Callback(() => throw new NotSupportedException());
+		expectations.Setups.CalculateValue().Callback(() => throw new NotSupportedException());
 
 		var data = expectations.Instance();
 		Assert.That(data.CalculateValue, Throws.TypeOf<NotSupportedException>());

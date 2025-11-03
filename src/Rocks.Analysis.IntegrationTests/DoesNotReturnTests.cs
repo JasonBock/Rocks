@@ -20,7 +20,7 @@ public static class DoesNotReturnTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<UsesDoesNotReturnCreateExpectations>();
-		expectations.Methods.VoidMethod().Callback(() => throw new NotImplementedException());
+		expectations.Setups.VoidMethod().Callback(() => throw new NotImplementedException());
 
 		var mock = expectations.Instance();
 
@@ -32,7 +32,7 @@ public static class DoesNotReturnTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<UsesDoesNotReturnCreateExpectations>();
-		expectations.Methods.VoidMethod();
+		expectations.Setups.VoidMethod();
 
 		var mock = expectations.Instance();
 
@@ -54,7 +54,7 @@ public static class DoesNotReturnTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<UsesDoesNotReturnCreateExpectations>();
-		expectations.Methods.IntMethod().Callback(() => throw new NotImplementedException());
+		expectations.Setups.IntMethod().Callback(() => throw new NotImplementedException());
 
 		var mock = expectations.Instance();
 
@@ -66,7 +66,7 @@ public static class DoesNotReturnTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<UsesDoesNotReturnCreateExpectations>();
-		expectations.Methods.IntMethod().ReturnValue(1);
+		expectations.Setups.IntMethod().ReturnValue(1);
 
 		var mock = expectations.Instance();
 
