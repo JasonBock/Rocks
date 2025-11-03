@@ -216,10 +216,19 @@ internal global::Autofac.Core.IActivatedEventArgsPartialTarget<T>.ServicePropert
     * Make
         * DONE - Between all gen'd members
 * Add XML comments for all generated code to help/assist the user. See explicit implementation for an example.
+    * `Expectations`-based type
+        * `.Setups`
+            * Method
+            * Property
+            * Indexer
+        * Handlers
+        * Constructor(s)
+        * Adornments
 * Testing strategy
     * Run code gen tests
     * Update and run integration tests
         * Last file updated: ClassGenericIndexerTests.cs
+        * Change any `Assert.Multiple()`
     * Update and run unit tests
     * Add unit and integeration tests for
         * Ref returns

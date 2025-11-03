@@ -37,8 +37,8 @@ public static class RequiredInitPropertyTests
 			new() { NonNullableValueType = 3, NullableValueType = 2, NonNullableReferenceType = "3", NullableReferenceType = "2" });
 		mock.Foo();
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(mock.NonNullableValueType, Is.EqualTo(3));
 			Assert.That(mock.NullableValueType, Is.EqualTo(2));
 			Assert.That(mock.NonNullableReferenceType, Is.EqualTo("3"));
@@ -53,8 +53,8 @@ public static class RequiredInitPropertyTests
 			new() { NonNullableValueType = 3, NullableValueType = 2, NonNullableReferenceType = "3", NullableReferenceType = "2" });
 		mock.Foo();
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(mock.NonNullableValueType, Is.EqualTo(3));
 			Assert.That(mock.NullableValueType, Is.EqualTo(2));
 			Assert.That(mock.NonNullableReferenceType, Is.EqualTo("3"));
@@ -72,8 +72,8 @@ public static class RequiredInitPropertyTests
 		var mock = expectations.Instance(null);
 		mock.Foo();
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(mock.NonNullableValueType, Is.Zero);
 			Assert.That(mock.NullableValueType, Is.Null);
 			Assert.That(mock.NonNullableReferenceType, Is.Null);
@@ -87,8 +87,8 @@ public static class RequiredInitPropertyTests
 		var mock = new InitsMakeExpectations().Instance(null);
 		mock.Foo();
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(mock.NonNullableValueType, Is.Zero);
 			Assert.That(mock.NullableValueType, Is.Null);
 			Assert.That(mock.NonNullableReferenceType, Is.Null);
@@ -107,8 +107,8 @@ public static class RequiredInitPropertyTests
 			new() { NonNullableValueType = 3, NullableValueType = 2, NonNullableReferenceType = "3", NullableReferenceType = "2" });
 		mock.Foo();
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(mock.NonNullableValueType, Is.EqualTo(3));
 			Assert.That(mock.NullableValueType, Is.EqualTo(2));
 			Assert.That(mock.NonNullableReferenceType, Is.EqualTo("3"));
@@ -123,8 +123,8 @@ public static class RequiredInitPropertyTests
 			new() { NonNullableValueType = 3, NullableValueType = 2, NonNullableReferenceType = "3", NullableReferenceType = "2" });
 		mock.Foo();
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(mock.NonNullableValueType, Is.EqualTo(3));
 			Assert.That(mock.NullableValueType, Is.EqualTo(2));
 			Assert.That(mock.NonNullableReferenceType, Is.EqualTo("3"));
@@ -142,6 +142,6 @@ public static class RequiredInitPropertyTests
 	}
 
 	[Test]
-	public static void RequiredPropertiesWithNullWithMake() => 
+	public static void RequiredPropertiesWithNullWithMake() =>
 		Assert.That(() => new RequiredsMakeExpectations().Instance(null!), Throws.TypeOf<ArgumentNullException>());
 }

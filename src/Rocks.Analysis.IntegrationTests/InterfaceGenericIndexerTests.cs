@@ -24,7 +24,7 @@ public static class InterfaceGenericIndexerTests
 		var returnValue = new List<string>();
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceGenericIndexerCreateExpectations<int>>();
-		expectations.Indexers.Getters.This(4).ReturnValue(returnValue);
+		expectations.Setups[4].Gets().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		var value = mock[4];
@@ -38,7 +38,7 @@ public static class InterfaceGenericIndexerTests
 		var returnValue = new List<string>();
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceGenericIndexerGetAndInitCreateExpectations<int>>();
-		expectations.Indexers.Getters.This(4).ReturnValue(returnValue);
+		expectations.Setups[4].Gets().ReturnValue(returnValue);
 
 		var mock = expectations.Instance(null);
 		var value = mock[4];
@@ -70,7 +70,7 @@ public static class InterfaceGenericIndexerTests
 		var returnValue = 3;
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceGenericIndexerCreateExpectations<int>>();
-		expectations.Indexers.Getters.This(4, 5).ReturnValue(returnValue);
+		expectations.Setups[4, 5].Gets().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		var value = mock[4, 5];
@@ -84,7 +84,7 @@ public static class InterfaceGenericIndexerTests
 		var returnValue = 3;
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceGenericIndexerGetAndInitCreateExpectations<int>>();
-		expectations.Indexers.Getters.This(4, 5).ReturnValue(returnValue);
+		expectations.Setups[4, 5].Gets().ReturnValue(returnValue);
 
 		var mock = expectations.Instance(null);
 		var value = mock[4, 5];
@@ -116,7 +116,7 @@ public static class InterfaceGenericIndexerTests
 		var returnValue = 3;
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceGenericIndexerCreateExpectations<int>>();
-		expectations.Indexers.Getters.This("b").ReturnValue(returnValue);
+		expectations.Setups["b"].Gets().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		var value = mock["b"];
@@ -130,7 +130,7 @@ public static class InterfaceGenericIndexerTests
 		var returnValue = 3;
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceGenericIndexerGetAndInitCreateExpectations<int>>();
-		expectations.Indexers.Getters.This("b").ReturnValue(returnValue);
+		expectations.Setups["b"].Gets().ReturnValue(returnValue);
 
 		var mock = expectations.Instance(null);
 		var value = mock["b"];

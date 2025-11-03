@@ -22,8 +22,8 @@ public static class MultipleRockCallsTests
 		var expectations1 = context.Create<IMultipleRockCallsCreateExpectations>();
 		var expectations2 = context.Create<IMultipleRockCallsCreateExpectations>();
 
-		expectations1.Methods.Foo();
-		expectations2.Methods.Foo();
+		expectations1.Setups.Foo();
+		expectations2.Setups.Foo();
 
 		var mock1 = expectations1.Instance();
 		var mock2 = expectations2.Instance();

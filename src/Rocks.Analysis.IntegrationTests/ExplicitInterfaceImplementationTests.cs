@@ -54,7 +54,7 @@ public static class ExplicitInterfaceImplementationTests
 		using var context = new RockContext(); 
 		var expectations = context.Create<IIterableCreateExpectations<string>>();
 		expectations.Setups.GetIterator();
-		expectations.ExplicitMethodsForIIterable.GetIterator();
+		expectations.Setups.ExplicitForIIterable.GetIterator();
 
 		var mock = expectations.Instance();
 		mock.GetIterator();
@@ -66,8 +66,8 @@ public static class ExplicitInterfaceImplementationTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<IExplicitInterfaceImplementationCreateExpectations>();
-		expectations.ExplicitMethodsForIExplicitInterfaceImplementationOne.A();
-		expectations.ExplicitMethodsForIExplicitInterfaceImplementationTwo.A();
+		expectations.Setups.ExplicitForIExplicitInterfaceImplementationOne.A();
+		expectations.Setups.ExplicitForIExplicitInterfaceImplementationTwo.A();
 
 		var mock = expectations.Instance();
 		((IExplicitInterfaceImplementationOne)mock).A();
@@ -91,10 +91,10 @@ public static class ExplicitInterfaceImplementationTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<IExplicitInterfaceImplementationCreateExpectations>();
-		expectations.ExplicitPropertiesForIExplicitInterfaceImplementationOne.Getters.B();
-		expectations.ExplicitPropertiesForIExplicitInterfaceImplementationOne.Setters.B(Arg.Any<int>());
-		expectations.ExplicitPropertiesForIExplicitInterfaceImplementationTwo.Getters.B();
-		expectations.ExplicitPropertiesForIExplicitInterfaceImplementationTwo.Setters.B(Arg.Any<int>());
+		expectations.Setups.ExplicitForIExplicitInterfaceImplementationOne.B.Gets();
+		expectations.Setups.ExplicitForIExplicitInterfaceImplementationOne.B.Sets(Arg.Any<int>());
+		expectations.Setups.ExplicitForIExplicitInterfaceImplementationTwo.B.Gets();
+		expectations.Setups.ExplicitForIExplicitInterfaceImplementationTwo.B.Sets(Arg.Any<int>());
 
 		var mock = expectations.Instance();
 		var oneValue = ((IExplicitInterfaceImplementationOne)mock).B;
@@ -108,8 +108,8 @@ public static class ExplicitInterfaceImplementationTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<IExplicitInterfaceImplementationCreateExpectations>();
-		expectations.ExplicitPropertiesForIExplicitInterfaceImplementationOne.Getters.D();
-		expectations.ExplicitPropertiesForIExplicitInterfaceImplementationTwo.Getters.D();
+		expectations.Setups.ExplicitForIExplicitInterfaceImplementationOne.D.Gets();
+		expectations.Setups.ExplicitForIExplicitInterfaceImplementationTwo.D.Gets();
 
 		var mock = expectations.Instance();
 		_ = ((IExplicitInterfaceImplementationOne)mock).D;
@@ -151,10 +151,10 @@ public static class ExplicitInterfaceImplementationTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<IExplicitInterfaceImplementationCreateExpectations>();
-		expectations.ExplicitIndexersForIExplicitInterfaceImplementationOne.Getters.This(Arg.Any<int>());
-		expectations.ExplicitIndexersForIExplicitInterfaceImplementationOne.Setters.This(Arg.Any<int>(), Arg.Any<int>());
-		expectations.ExplicitIndexersForIExplicitInterfaceImplementationTwo.Getters.This(Arg.Any<int>());
-		expectations.ExplicitIndexersForIExplicitInterfaceImplementationTwo.Setters.This(Arg.Any<int>(), Arg.Any<int>());
+		expectations.Setups.ExplicitForIExplicitInterfaceImplementationOne[Arg.Any<int>()].Gets();
+		expectations.Setups.ExplicitForIExplicitInterfaceImplementationOne[Arg.Any<int>()].Sets(Arg.Any<int>());
+		expectations.Setups.ExplicitForIExplicitInterfaceImplementationTwo[Arg.Any<int>()].Gets();
+		expectations.Setups.ExplicitForIExplicitInterfaceImplementationTwo[Arg.Any<int>()].Sets(Arg.Any<int>());
 
 		var mock = expectations.Instance();
 		var oneValue = ((IExplicitInterfaceImplementationOne)mock)[3];

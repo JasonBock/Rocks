@@ -55,7 +55,7 @@ public static class VirtualsWithImplementationsTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IIndexerPolygonCreateExpectations>();
-		expectations.Properties.Getters.SideLength().ReturnValue(3);
+		expectations.Setups.SideLength.Gets().ReturnValue(3);
 
 		var mock = expectations.Instance();
 		Assert.That(mock[5], Is.EqualTo(15));
@@ -66,8 +66,8 @@ public static class VirtualsWithImplementationsTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IMethodPolygonCreateExpectations>();
-		expectations.Properties.Getters.SideLength().ReturnValue(3);
-		expectations.Properties.Getters.NumberOfSides().ReturnValue(5);
+		expectations.Setups.SideLength.Gets().ReturnValue(3);
+		expectations.Setups.NumberOfSides.Gets().ReturnValue(5);
 
 		var mock = expectations.Instance();
 		Assert.That(mock.GetPerimeter(), Is.EqualTo(15));
@@ -78,8 +78,8 @@ public static class VirtualsWithImplementationsTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IPropertyPolygonCreateExpectations>();
-		expectations.Properties.Getters.SideLength().ReturnValue(3);
-		expectations.Properties.Getters.NumberOfSides().ReturnValue(5);
+		expectations.Setups.SideLength.Gets().ReturnValue(3);
+		expectations.Setups.NumberOfSides.Gets().ReturnValue(5);
 
 		var mock = expectations.Instance();
 		Assert.That(mock.Perimeter, Is.EqualTo(15));
@@ -90,7 +90,7 @@ public static class VirtualsWithImplementationsTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IndexerPolygonCreateExpectations>();
-		expectations.Properties.Getters.SideLength().ReturnValue(3);
+		expectations.Setups.SideLength.Gets().ReturnValue(3);
 
 		var mock = expectations.Instance();
 		Assert.That(mock[5], Is.EqualTo(15));
@@ -101,8 +101,8 @@ public static class VirtualsWithImplementationsTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<MethodPolygonCreateExpectations>();
-		expectations.Properties.Getters.SideLength().ReturnValue(3);
-		expectations.Properties.Getters.NumberOfSides().ReturnValue(5);
+		expectations.Setups.SideLength.Gets().ReturnValue(3);
+		expectations.Setups.NumberOfSides.Gets().ReturnValue(5);
 
 		var mock = expectations.Instance();
 		Assert.That(mock.GetPerimeter(), Is.EqualTo(15));
@@ -113,8 +113,8 @@ public static class VirtualsWithImplementationsTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<PropertyPolygonCreateExpectations>();
-		expectations.Properties.Getters.SideLength().ReturnValue(3);
-		expectations.Properties.Getters.NumberOfSides().ReturnValue(5);
+		expectations.Setups.SideLength.Gets().ReturnValue(3);
+		expectations.Setups.NumberOfSides.Gets().ReturnValue(5);
 
 		var mock = expectations.Instance();
 		Assert.That(mock.Perimeter, Is.EqualTo(15));

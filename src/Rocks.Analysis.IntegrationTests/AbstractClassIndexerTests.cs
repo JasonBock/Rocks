@@ -215,7 +215,7 @@ public static class AbstractClassIndexerTests
 		var wasCallbackInvoked = false;
 		using var context = new RockContext();
 		var expectations = context.Create<AbstractClassIndexerSetterCreateExpectations>();
-		expectations.Setups[4].Sets(3).Callback((a, value) => wasCallbackInvoked = true);
+		expectations.Setups[3].Sets(4).Callback((a, value) => wasCallbackInvoked = true);
 
 		var mock = expectations.Instance();
 		mock[3] = 4;

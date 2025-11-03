@@ -23,7 +23,7 @@ public static class InterfacePropertyTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IInterfacePropertyCreateExpectations>();
-		expectations.Properties.Getters.GetData();
+		expectations.Setups.GetData.Gets();
 
 		var mock = expectations.Instance();
 		var value = mock.GetData;
@@ -37,7 +37,7 @@ public static class InterfacePropertyTests
 		{
 			using var context = new RockContext();
 			var expectations = context.Create<IInterfacePropertyCreateExpectations>();
-			expectations.Properties.Setters.SetData(3);
+			expectations.Setups.SetData.Sets(3);
 
 			var mock = expectations.Instance();
 			mock.SetData = 4;
@@ -57,7 +57,7 @@ public static class InterfacePropertyTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IInterfacePropertyCreateExpectations>();
-		expectations.Properties.Getters.GetData()
+		expectations.Setups.GetData.Gets()
 			.RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
@@ -65,8 +65,8 @@ public static class InterfacePropertyTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		var value = mock.GetData;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(value, Is.Default);
 			Assert.That(wasEventRaised, Is.True);
 		}
@@ -78,7 +78,7 @@ public static class InterfacePropertyTests
 		var wasCallbackInvoked = false;
 		using var context = new RockContext();
 		var expectations = context.Create<IInterfacePropertyCreateExpectations>();
-		expectations.Properties.Getters.GetData().Callback(() =>
+		expectations.Setups.GetData.Gets().Callback(() =>
 		{
 			wasCallbackInvoked = true;
 			return 3;
@@ -87,8 +87,8 @@ public static class InterfacePropertyTests
 		var mock = expectations.Instance();
 		var value = mock.GetData;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(value, Is.EqualTo(3));
 			Assert.That(wasCallbackInvoked, Is.True);
 		}
@@ -100,7 +100,7 @@ public static class InterfacePropertyTests
 		var wasCallbackInvoked = false;
 		using var context = new RockContext();
 		var expectations = context.Create<IInterfacePropertyCreateExpectations>();
-		expectations.Properties.Getters.GetData().Callback(() =>
+		expectations.Setups.GetData.Gets().Callback(() =>
 		{
 			wasCallbackInvoked = true;
 			return 3;
@@ -112,8 +112,8 @@ public static class InterfacePropertyTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		var value = mock.GetData;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(value, Is.EqualTo(3));
 			Assert.That(wasEventRaised, Is.True);
 			Assert.That(wasCallbackInvoked, Is.True);
@@ -125,7 +125,7 @@ public static class InterfacePropertyTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IInterfacePropertyCreateExpectations>();
-		expectations.Properties.Setters.SetData(Arg.Any<int>());
+		expectations.Setups.SetData.Sets(Arg.Any<int>());
 
 		var mock = expectations.Instance();
 		mock.SetData = 1;
@@ -144,7 +144,7 @@ public static class InterfacePropertyTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IInterfacePropertyCreateExpectations>();
-		expectations.Properties.Setters.SetData(Arg.Any<int>())
+		expectations.Setups.SetData.Sets(Arg.Any<int>())
 			.RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
@@ -161,7 +161,7 @@ public static class InterfacePropertyTests
 		var wasCallbackInvoked = false;
 		using var context = new RockContext();
 		var expectations = context.Create<IInterfacePropertyCreateExpectations>();
-		expectations.Properties.Setters.SetData(Arg.Any<int>())
+		expectations.Setups.SetData.Sets(Arg.Any<int>())
 			.Callback(_ => wasCallbackInvoked = true);
 
 		var mock = expectations.Instance();
@@ -176,7 +176,7 @@ public static class InterfacePropertyTests
 		var wasCallbackInvoked = false;
 		using var context = new RockContext();
 		var expectations = context.Create<IInterfacePropertyCreateExpectations>();
-		expectations.Properties.Setters.SetData(Arg.Any<int>())
+		expectations.Setups.SetData.Sets(Arg.Any<int>())
 			.RaiseMyEvent(EventArgs.Empty)
 			.Callback(_ => wasCallbackInvoked = true);
 
@@ -185,8 +185,8 @@ public static class InterfacePropertyTests
 		mock.MyEvent += (s, e) => wasEventRaised = true;
 		mock.SetData = 1;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(wasEventRaised, Is.True);
 			Assert.That(wasCallbackInvoked, Is.True);
 		}
@@ -197,7 +197,7 @@ public static class InterfacePropertyTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IInterfacePropertyCreateExpectations>();
-		expectations.Properties.Getters.GetAndInitData();
+		expectations.Setups.GetAndInitData.Gets();
 
 		var mock = expectations.Instance();
 		var value = mock.GetAndInitData;
@@ -210,8 +210,8 @@ public static class InterfacePropertyTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IInterfacePropertyCreateExpectations>();
-		expectations.Properties.Getters.GetAndSetData();
-		expectations.Properties.Setters.GetAndSetData(Arg.Any<int>());
+		expectations.Setups.GetAndSetData.Gets();
+		expectations.Setups.GetAndSetData.Sets(Arg.Any<int>());
 
 		var mock = expectations.Instance();
 		var value = mock.GetAndSetData;
@@ -235,8 +235,8 @@ public static class InterfacePropertyTests
 		var mock = new IInterfacePropertyMakeExpectations().Instance();
 		var value = mock.GetAndSetData;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(value, Is.Default);
 			Assert.That(() => mock.GetAndSetData = value, Throws.Nothing);
 		}

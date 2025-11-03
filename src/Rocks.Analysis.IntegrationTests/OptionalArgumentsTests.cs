@@ -71,7 +71,7 @@ public static class OptionalArgumentsTests
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveOptionalArgumentsCreateExpectations>();
 		expectations.Setups.Foo(1, "b", 3.2);
-		expectations.Indexers.Getters.This(1, "b").ReturnValue(returnValue);
+		expectations.Setups[1, "b"].Gets().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		mock.Foo(1);
@@ -100,7 +100,7 @@ public static class OptionalArgumentsTests
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveOptionalArgumentsCreateExpectations>();
 		expectations.Setups.Foo(1, Arg.IsDefault<string>(), Arg.IsDefault<double>());
-		expectations.Indexers.Getters.This(1, Arg.IsDefault<string>()).ReturnValue(returnValue);
+		expectations.Setups[1, Arg.IsDefault<string>()].Gets().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		mock.Foo(1);
@@ -116,8 +116,8 @@ public static class OptionalArgumentsTests
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveOptionalArgumentsCreateExpectations>();
 		expectations.Setups.Foo(1);
-		expectations.Indexers.Getters.This(2).ReturnValue(returnValue);
-		expectations.Indexers.Setters.This(52, 3);
+		expectations.Setups[2].Gets().ReturnValue(returnValue);
+		expectations.Setups[3].Sets(52);
 
 		var mock = expectations.Instance();
 		mock.Foo(1);

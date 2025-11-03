@@ -21,8 +21,8 @@ public static class InterfaceStaticVirtualTests
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveStaticVirtualsCreateExpectations>();
 		expectations.Setups.InstanceLift().ReturnValue("a");
-		expectations.Properties.Getters.InstancePush().ReturnValue("b");
-		expectations.Properties.Setters.InstancePush("c");
+		expectations.Setups.InstancePush.Gets().ReturnValue("b");
+		expectations.Setups.InstancePush.Sets("c");
 
 		var mock = expectations.Instance();
 		mock.InstancePush = "c";

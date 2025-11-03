@@ -39,50 +39,50 @@ public static class ExpectationExceptionTests
 
 		var mock = expectations.Instance();
 
-		Assert.That(expectations.Setups.Work, Throws.TypeOf<ExpectationException>());
+		Assert.That(() => expectations.Setups.Work(), Throws.TypeOf<ExpectationException>());
 	}
 
 	[Test]
 	public static void SetPropertyGetterExpectationAfterMockIsCreate()
 	{
 		var expectations = new ISetAfterMockCreateExpectations();
-		expectations.Properties.Getters.Data();
+		expectations.Setups.Data.Gets();
 
 		var mock = expectations.Instance();
 
-		Assert.That(expectations.Properties.Getters.Data, Throws.TypeOf<ExpectationException>());
+		Assert.That(() => expectations.Setups.Data.Gets(), Throws.TypeOf<ExpectationException>());
 	}
 
 	[Test]
 	public static void SetPropertySetterExpectationAfterMockIsCreate()
 	{
 		var expectations = new ISetAfterMockCreateExpectations();
-		expectations.Properties.Setters.Data("a");
+		expectations.Setups.Data.Sets("a");
 
 		var mock = expectations.Instance();
 
-		Assert.That(() => expectations.Properties.Setters.Data("a"), Throws.TypeOf<ExpectationException>());
+		Assert.That(() => expectations.Setups.Data.Sets("a"), Throws.TypeOf<ExpectationException>());
 	}
 
 	[Test]
 	public static void SetIndexerGetterExpectationAfterMockIsCreate()
 	{
 		var expectations = new ISetAfterMockCreateExpectations();
-		expectations.Indexers.Getters.This("a");
+		expectations.Setups["a"].Gets();
 
 		var mock = expectations.Instance();
 
-		Assert.That(() => expectations.Indexers.Getters.This("a"), Throws.TypeOf<ExpectationException>());
+		Assert.That(() => expectations.Setups["a"].Gets(), Throws.TypeOf<ExpectationException>());
 	}
 
 	[Test]
 	public static void SetIndexerSetterExpectationAfterMockIsCreate()
 	{
 		var expectations = new ISetAfterMockCreateExpectations();
-		expectations.Indexers.Setters.This(1, "a");
+		expectations.Setups["a"].Sets(1);
 
 		var mock = expectations.Instance();
 
-		Assert.That(() => expectations.Indexers.Setters.This(1, "a"), Throws.TypeOf<ExpectationException>());
+		Assert.That(() => expectations.Setups["a"].Sets(1), Throws.TypeOf<ExpectationException>());
 	}
 }

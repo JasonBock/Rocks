@@ -40,7 +40,7 @@ public static class ParamsTests
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveParamsCreateExpectations>();
 		expectations.Setups.Foo(1, new[] { "b" });
-		expectations.Indexers.Getters.This(1, new[] { "b" }).ReturnValue(returnValue);
+		expectations.Setups[1, new[] { "b" }].Gets().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		mock.Foo(1, "b");
@@ -69,7 +69,7 @@ public static class ParamsTests
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveParamsCreateExpectations>();
 		expectations.Setups.Foo(1, Array.Empty<string>());
-		expectations.Indexers.Getters.This(1, Array.Empty<string>()).ReturnValue(returnValue);
+		expectations.Setups[1, Array.Empty<string>()].Gets().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		mock.Foo(1);

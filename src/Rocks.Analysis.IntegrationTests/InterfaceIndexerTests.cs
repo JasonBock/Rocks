@@ -49,7 +49,7 @@ public static class InterfaceIndexerTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceIndexerGetterInitCreateExpectations>();
-		expectations.Indexers.Getters.This(3);
+		expectations.Setups[3].Gets();
 
 		var mock = expectations.Instance(null);
 		var value = mock[3];
@@ -62,8 +62,8 @@ public static class InterfaceIndexerTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceIndexerGetterSetterCreateExpectations>();
-		expectations.Indexers.Getters.This(3);
-		expectations.Indexers.Setters.This(4, 3);
+		expectations.Setups[3].Gets();
+		expectations.Setups[3].Sets(4);
 
 		var mock = expectations.Instance();
 		var value = mock[3];
@@ -99,7 +99,7 @@ public static class InterfaceIndexerTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceIndexerGetterCreateExpectations>();
-		expectations.Indexers.Getters.This(3);
+		expectations.Setups[3].Gets();
 
 		var mock = expectations.Instance();
 		var value = mock[3];
@@ -121,7 +121,7 @@ public static class InterfaceIndexerTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceIndexerGetterCreateExpectations>();
-		expectations.Indexers.Getters.This(3).RaiseMyEvent(EventArgs.Empty);
+		expectations.Setups[3].Gets().RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
@@ -141,7 +141,7 @@ public static class InterfaceIndexerTests
 		var wasCallbackInvoked = false;
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceIndexerGetterCreateExpectations>();
-		expectations.Indexers.Getters.This(3).Callback(_ =>
+		expectations.Setups[3].Gets().Callback(_ =>
 		{
 			wasCallbackInvoked = true;
 			return _;
@@ -163,7 +163,7 @@ public static class InterfaceIndexerTests
 		var wasCallbackInvoked = false;
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceIndexerGetterCreateExpectations>();
-		expectations.Indexers.Getters.This(3)
+		expectations.Setups[3].Gets()
 			.RaiseMyEvent(EventArgs.Empty)
 			.Callback(_ =>
 			{
@@ -189,7 +189,7 @@ public static class InterfaceIndexerTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceIndexerGetterCreateExpectations>();
-		expectations.Indexers.Getters.This(3).ExpectedCallCount(2);
+		expectations.Setups[3].Gets().ExpectedCallCount(2);
 
 		var mock = expectations.Instance();
 		_ = mock[3];
@@ -210,7 +210,7 @@ public static class InterfaceIndexerTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceIndexerSetterCreateExpectations>();
-		expectations.Indexers.Setters.This(4, 3);
+		expectations.Setups[3].Sets(4);
 
 		var mock = expectations.Instance();
 		mock[3] = 4;
@@ -229,7 +229,7 @@ public static class InterfaceIndexerTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceIndexerSetterCreateExpectations>();
-		expectations.Indexers.Setters.This(4, 3).RaiseMyEvent(EventArgs.Empty);
+		expectations.Setups[3].Sets(4).RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
@@ -245,7 +245,7 @@ public static class InterfaceIndexerTests
 		var wasCallbackInvoked = false;
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceIndexerSetterCreateExpectations>();
-		expectations.Indexers.Setters.This(4, 3).Callback((a, value) => wasCallbackInvoked = true);
+		expectations.Setups[3].Sets(4).Callback((a, value) => wasCallbackInvoked = true);
 
 		var mock = expectations.Instance();
 		mock[3] = 4;
@@ -259,7 +259,7 @@ public static class InterfaceIndexerTests
 		var wasCallbackInvoked = false;
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceIndexerSetterCreateExpectations>();
-		expectations.Indexers.Setters.This(4, 3)
+		expectations.Setups[3].Sets(4)
 			.RaiseMyEvent(EventArgs.Empty)
 			.Callback((a, value) => wasCallbackInvoked = true);
 
@@ -280,7 +280,7 @@ public static class InterfaceIndexerTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceIndexerSetterCreateExpectations>();
-		expectations.Indexers.Setters.This(4, 3).ExpectedCallCount(2);
+		expectations.Setups[3].Sets(4).ExpectedCallCount(2);
 
 		var mock = expectations.Instance();
 		mock[3] = 4;
@@ -292,8 +292,8 @@ public static class InterfaceIndexerTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceIndexerGetterSetterCreateExpectations>();
-		expectations.Indexers.Getters.This(3, "b");
-		expectations.Indexers.Setters.This(4, 3, "b");
+		expectations.Setups[3, "b"].Gets();
+		expectations.Setups[3, "b"].Sets(4);
 
 		var mock = expectations.Instance();
 		var value = mock[3, "b"];
@@ -320,7 +320,7 @@ public static class InterfaceIndexerTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceIndexerGetterCreateExpectations>();
-		expectations.Indexers.Getters.This(3, "b");
+		expectations.Setups[3, "b"].Gets();
 
 		var mock = expectations.Instance();
 		var value = mock[3, "b"];
@@ -342,7 +342,7 @@ public static class InterfaceIndexerTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceIndexerGetterCreateExpectations>();
-		expectations.Indexers.Getters.This(3, "b")
+		expectations.Setups[3, "b"].Gets()
 			.RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
@@ -363,7 +363,7 @@ public static class InterfaceIndexerTests
 		var wasCallbackInvoked = false;
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceIndexerGetterCreateExpectations>();
-		expectations.Indexers.Getters.This(3, "b").Callback((a, b) =>
+		expectations.Setups[3, "b"].Gets().Callback((a, b) =>
 		{
 			wasCallbackInvoked = true;
 			return a;
@@ -385,7 +385,7 @@ public static class InterfaceIndexerTests
 		var wasCallbackInvoked = false;
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceIndexerGetterCreateExpectations>();
-		expectations.Indexers.Getters.This(3, "b")
+		expectations.Setups[3, "b"].Gets()
 			.RaiseMyEvent(EventArgs.Empty)
 			.Callback((a, b) =>
 			{
@@ -411,7 +411,7 @@ public static class InterfaceIndexerTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceIndexerGetterCreateExpectations>();
-		expectations.Indexers.Getters.This(3, "b").ExpectedCallCount(2);
+		expectations.Setups[3, "b"].Gets().ExpectedCallCount(2);
 
 		var mock = expectations.Instance();
 		_ = mock[3, "b"];
@@ -425,7 +425,7 @@ public static class InterfaceIndexerTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceIndexerSetterCreateExpectations>();
-		expectations.Indexers.Setters.This(4, 3, "b");
+		expectations.Setups[3, "b"].Sets(4);
 
 		var mock = expectations.Instance();
 		mock[3, "b"] = 4;
@@ -444,7 +444,7 @@ public static class InterfaceIndexerTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceIndexerSetterCreateExpectations>();
-		expectations.Indexers.Setters.This(4, 3, "b")
+		expectations.Setups[3, "b"].Sets(4)
 			.RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
@@ -461,7 +461,7 @@ public static class InterfaceIndexerTests
 		var wasCallbackInvoked = false;
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceIndexerSetterCreateExpectations>();
-		expectations.Indexers.Setters.This(4, 3, "b").Callback((a, b, value) => wasCallbackInvoked = true);
+		expectations.Setups[3, "b"].Sets(4).Callback((a, b, value) => wasCallbackInvoked = true);
 
 		var mock = expectations.Instance();
 		mock[3, "b"] = 4;
@@ -475,7 +475,7 @@ public static class InterfaceIndexerTests
 		var wasCallbackInvoked = false;
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceIndexerSetterCreateExpectations>();
-		expectations.Indexers.Setters.This(4, 3, "b")
+		expectations.Setups[3, "b"].Sets(4)
 			.RaiseMyEvent(EventArgs.Empty)
 			.Callback((a, b, value) => wasCallbackInvoked = true);
 
@@ -496,7 +496,7 @@ public static class InterfaceIndexerTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<IInterfaceIndexerSetterCreateExpectations>();
-		expectations.Indexers.Setters.This(4, 3, "b").ExpectedCallCount(2);
+		expectations.Setups[3, "b"].Sets(4).ExpectedCallCount(2);
 
 		var mock = expectations.Instance();
 		mock[3, "b"] = 4;

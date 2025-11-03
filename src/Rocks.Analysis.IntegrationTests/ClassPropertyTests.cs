@@ -26,7 +26,7 @@ public static class ClassPropertyTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<ClassPropertyCreateExpectations>();
-		expectations.Properties.Getters.GetData();
+		expectations.Setups.GetData.Gets();
 
 		var mock = expectations.Instance(null);
 		var value = mock.GetData;
@@ -48,7 +48,7 @@ public static class ClassPropertyTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<ClassPropertyCreateExpectations>();
-		expectations.Properties.Getters.GetData().RaiseMyEvent(EventArgs.Empty);
+		expectations.Setups.GetData.Gets().RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance(null);
@@ -68,7 +68,7 @@ public static class ClassPropertyTests
 		var wasCallbackInvoked = false;
 		using var context = new RockContext(); 
 		var expectations = context.Create<ClassPropertyCreateExpectations>();
-		expectations.Properties.Getters.GetData().Callback(() =>
+		expectations.Setups.GetData.Gets().Callback(() =>
 		{
 			wasCallbackInvoked = true;
 			return 3;
@@ -90,7 +90,7 @@ public static class ClassPropertyTests
 		var wasCallbackInvoked = false;
 		using var context = new RockContext(); 
 		var expectations = context.Create<ClassPropertyCreateExpectations>();
-		expectations.Properties.Getters.GetData().Callback(() =>
+		expectations.Setups.GetData.Gets().Callback(() =>
 		{
 			wasCallbackInvoked = true;
 			return 3;
@@ -115,7 +115,7 @@ public static class ClassPropertyTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<ClassPropertyCreateExpectations>();
-		expectations.Properties.Setters.SetData(Arg.Any<int>());
+		expectations.Setups.SetData.Sets(Arg.Any<int>());
 
 		var mock = expectations.Instance(null);
 		mock.SetData = 1;
@@ -134,7 +134,7 @@ public static class ClassPropertyTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<ClassPropertyCreateExpectations>();
-		expectations.Properties.Setters.SetData(Arg.Any<int>())
+		expectations.Setups.SetData.Sets(Arg.Any<int>())
 			.RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
@@ -151,7 +151,7 @@ public static class ClassPropertyTests
 		var wasCallbackInvoked = false;
 		using var context = new RockContext(); 
 		var expectations = context.Create<ClassPropertyCreateExpectations>();
-		expectations.Properties.Setters.SetData(Arg.Any<int>())
+		expectations.Setups.SetData.Sets(Arg.Any<int>())
 			.Callback(_ => wasCallbackInvoked = true);
 
 		var mock = expectations.Instance(null);
@@ -166,7 +166,7 @@ public static class ClassPropertyTests
 		var wasCallbackInvoked = false;
 		using var context = new RockContext(); 
 		var expectations = context.Create<ClassPropertyCreateExpectations>();
-		expectations.Properties.Setters.SetData(Arg.Any<int>())
+		expectations.Setups.SetData.Sets(Arg.Any<int>())
 			.RaiseMyEvent(EventArgs.Empty)
 			.Callback(_ => wasCallbackInvoked = true);
 
@@ -187,7 +187,7 @@ public static class ClassPropertyTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<ClassPropertyCreateExpectations>();
-		expectations.Properties.Getters.GetAndInitData();
+		expectations.Setups.GetAndInitData.Gets();
 
 		var mock = expectations.Instance(null);
 		var value = mock.GetAndInitData;
@@ -200,8 +200,8 @@ public static class ClassPropertyTests
 	{
 		using var context = new RockContext(); 
 		var expectations = context.Create<ClassPropertyCreateExpectations>();
-		expectations.Properties.Getters.GetAndSetData();
-		expectations.Properties.Setters.GetAndSetData(Arg.Any<int>());
+		expectations.Setups.GetAndSetData.Gets();
+		expectations.Setups.GetAndSetData.Sets(Arg.Any<int>());
 
 		var mock = expectations.Instance(null);
 		var value = mock.GetAndSetData;

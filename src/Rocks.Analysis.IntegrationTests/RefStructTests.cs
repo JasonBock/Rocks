@@ -66,7 +66,7 @@ public static class RefStructTests
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveInAndOutSpanCreateExpectations>();
 		expectations.Setups.Foo(new()).ReturnValue(() => new[] { 1, 2 }.AsSpan());
-		expectations.Properties.Getters.Values().ReturnValue(() => new byte[] { 3, 4, 5 }.AsSpan());
+		expectations.Setups.Values.Gets().ReturnValue(() => new byte[] { 3, 4, 5 }.AsSpan());
 
 		var mock = expectations.Instance();
 
@@ -101,7 +101,7 @@ public static class RefStructTests
 		using var context = new RockContext();
 		var expectations = context.Create<IReturnSpanCreateExpectations>();
 		expectations.Setups.GetRandomData().ReturnValue(() => new[] { 1, 2 }.AsSpan());
-		expectations.Properties.Getters.Values().ReturnValue(() => new byte[] { 3, 4, 5 }.AsSpan());
+		expectations.Setups.Values.Gets().ReturnValue(() => new byte[] { 3, 4, 5 }.AsSpan());
 
 		var mock = expectations.Instance();
 

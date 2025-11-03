@@ -82,7 +82,7 @@ public static class MethodMemberTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveRefReturnCreateExpectations>();
-		expectations.Properties.Getters.PropertyRefReturn().ReturnValue(3);
+		expectations.Setups.PropertyRefReturn.Gets().ReturnValue(3);
 
 		var mock = expectations.Instance();
 		ref var value = ref mock.PropertyRefReturn;
@@ -104,7 +104,7 @@ public static class MethodMemberTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveRefReturnCreateExpectations>();
-		expectations.Indexers.Getters.This(3).ReturnValue(4);
+		expectations.Setups[3].Gets().ReturnValue(4);
 
 		var mock = expectations.Instance();
 		ref var value = ref mock[3];
@@ -148,7 +148,7 @@ public static class MethodMemberTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveRefReturnCreateExpectations>();
-		expectations.Properties.Getters.PropertyRefReadonlyReturn().ReturnValue(3);
+		expectations.Setups.PropertyRefReadonlyReturn.Gets().ReturnValue(3);
 
 		var mock = expectations.Instance();
 		var value = mock.PropertyRefReadonlyReturn;
@@ -170,7 +170,7 @@ public static class MethodMemberTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveRefReturnCreateExpectations>();
-		expectations.Indexers.Getters.This("b").ReturnValue(4);
+		expectations.Setups["b"].Gets().ReturnValue(4);
 
 		var mock = expectations.Instance();
 		var value = mock["b"];
@@ -193,7 +193,7 @@ public static class MethodMemberTests
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveInCreateExpectations>();
 		expectations.Setups.InArgument(3);
-		expectations.Indexers.Getters.This(4).ReturnValue(5);
+		expectations.Setups[4].Gets().ReturnValue(5);
 
 		var mock = expectations.Instance();
 		mock.InArgument(3);

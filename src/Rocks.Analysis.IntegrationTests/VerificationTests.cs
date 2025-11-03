@@ -12,8 +12,8 @@ public interface IData
 
 public static class VerificationTests
 {
-   [Test]
-   public static void VerifyWhenExpectationsWereMadeButInstanceWasNeverCreated() => 
+	[Test]
+	public static void VerifyWhenExpectationsWereMadeButInstanceWasNeverCreated() =>
 		Assert.That(() =>
 		{
 			using var context = new RockContext();
@@ -21,7 +21,7 @@ public static class VerificationTests
 			expectations.Setups.Calculate().Callback(() => throw new NotSupportedException());
 		}, Throws.TypeOf<VerificationException>());
 
-   [Test]
+	[Test]
 	public static void VerifyWhenVoidCallbackThrowsException()
 	{
 		using var context = new RockContext();
@@ -48,7 +48,7 @@ public static class VerificationTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IDataCreateExpectations>();
-		expectations.Properties.Getters.Value().Callback(() => throw new NotSupportedException());
+		expectations.Setups.Value.Gets().Callback(() => throw new NotSupportedException());
 
 		var data = expectations.Instance();
 		Assert.That(() => data.Value, Throws.TypeOf<NotSupportedException>());
@@ -59,7 +59,7 @@ public static class VerificationTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IDataCreateExpectations>();
-		expectations.Properties.Setters.Value("x").Callback(_ => throw new NotSupportedException());
+		expectations.Setups.Value.Sets("x").Callback(_ => throw new NotSupportedException());
 
 		var data = expectations.Instance();
 		Assert.That(() => data.Value = "x", Throws.TypeOf<NotSupportedException>());
@@ -69,11 +69,11 @@ public static class VerificationTests
 	public static void VerifyWhenPropertyExpectationIsNotMet()
 	{
 		var expectations = new IDataCreateExpectations();
-		expectations.Properties.Setters.Value("3");
+		expectations.Setups.Value.Sets("3");
 
 		_ = expectations.Instance();
 
-		Assert.That(expectations.Verify, 
+		Assert.That(expectations.Verify,
 			Throws.TypeOf<VerificationException>()
 				.And.Message.EqualTo(
 					"The following verification failure(s) occurred: Mock type: Rocks.Analysis.IntegrationTests.VerificationTestTypes.IDataCreateExpectations+Mock, member: Void set_Value(System.String), message: The expected call count is incorrect. Expected: 1, received: 0."));
