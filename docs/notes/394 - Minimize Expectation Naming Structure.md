@@ -224,10 +224,10 @@ internal global::Autofac.Core.IActivatedEventArgsPartialTarget<T>.ServicePropert
     * DONE - Update and run unit tests
     * DONE - Add unit and integeration tests for
         * Ref returns
-* Clean up builders
+* DONE (future task) Clean up builders
     * I think I can get rid of `PropertyExpectationTypeName`
-* Update all documentation such that it reflects the new syntax.
-    * Consider writing an "upgrade" doc that provides assistance on how test code should be changes from the old to the new style.
+* DONE - Update all documentation such that it reflects the new syntax.
+    * DONE - Consider writing an "upgrade" doc that provides assistance on how test code should be changes from the old to the new style.
 * Release a new alpha, 10.0.0-alpha.2
 
 
