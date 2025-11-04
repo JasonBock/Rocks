@@ -4,7 +4,7 @@ using Rocks;
 [assembly: Rock(typeof(IUseData), BuildType.Create | BuildType.Make)]
 
 var expectations = new IUseDataCreateExpectations();
-expectations.Methods.Use(new()).ReturnValue(() => new Data { Value = 3 });
+expectations.Setups.Use(new()).ReturnValue(() => new Data { Value = 3 });
 
 var mock = expectations.Instance();
 var result = mock.Use(new Data { Value = 2 });

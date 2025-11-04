@@ -28,6 +28,7 @@ internal static class TestGenerator
 	* EF "future" warnings (EF9100)
 	* Aspire evaluation warnings (ASPIREPUBLISHERS001, ASPIRECOMPUTE001, ASPIREINTERACTION001, ASPIREPROBES001)
 	* StackExchange.Redis evaluation warnings (SER001)
+	* OpenTelemetry (OTEL1001)
 
 	These are warnings, and they should not cause errors. A user can decide to treat them
 	as errors, but Rocks should still be able to create code that cause these warnings.
@@ -55,7 +56,8 @@ internal static class TestGenerator
 		{ "ASPIRECOMPUTE001", ReportDiagnostic.Suppress },
 		{ "ASPIREINTERACTION001", ReportDiagnostic.Suppress },
 		{ "ASPIREPROBES001", ReportDiagnostic.Suppress },
-		{ "SER001", ReportDiagnostic.Suppress }
+		{ "SER001", ReportDiagnostic.Suppress },
+		{ "OTEL1001", ReportDiagnostic.Suppress }
 	};
 
 	internal static ImmutableArray<Type> GetTargets(HashSet<Assembly> targetAssemblies, ImmutableArray<Type> typesToIgnore,

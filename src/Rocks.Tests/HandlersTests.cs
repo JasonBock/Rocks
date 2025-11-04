@@ -27,7 +27,7 @@ public static class HandlersTests
 			new() { input = 2 },
 		};
 
-		Assert.Multiple(() =>
+		using (Assert.EnterMultipleScope())
 		{
 			var index = 1;
 
@@ -38,7 +38,7 @@ public static class HandlersTests
 			}
 
 			Assert.That(index, Is.EqualTo(3));
-		});
+		}
 	}
 
 	[Test]
@@ -50,7 +50,7 @@ public static class HandlersTests
 			new() { input = 3 },
 		};
 
-		Assert.Multiple(() =>
+		using (Assert.EnterMultipleScope())
 		{
 			var index = 1;
 
@@ -61,6 +61,6 @@ public static class HandlersTests
 			}
 
 			Assert.That(index, Is.EqualTo(4));
-		});
+		}
 	}
 }

@@ -19,9 +19,13 @@ public class Identifiers
    [MemberIdentifier(3)]
 	public static Guid Foo<TName, TValue>(TName name, ImmutableArray<TValue> values) => Guid.NewGuid();
 
-	[MemberIdentifier(4, PropertyAccessor.Get)]
-	[MemberIdentifier(5, PropertyAccessor.Set)]
-	public static string? Data { get; set; }
+	public static string? Data 
+	{
+		[MemberIdentifier(4)]
+		get;
+		[MemberIdentifier(5)]
+		set; 
+	}
 
 	[MemberIdentifier(6)]
 	public static Guid Foo(ref int name) => Guid.NewGuid();

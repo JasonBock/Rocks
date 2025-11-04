@@ -17,11 +17,11 @@ public static class ArgumentTests
 	{
 		var arg = Arg.Is(3);
 
-		Assert.Multiple(() =>
+		using (Assert.EnterMultipleScope())
 		{
 			Assert.That(arg.IsValid(3), Is.True);
 			Assert.That(arg.IsValid(5), Is.False);
-		});
+		}
 	}
 
 	[Test]
@@ -29,11 +29,11 @@ public static class ArgumentTests
 	{
 		var arg = Arg.Validate<int>(_ => _ % 2 == 0);
 
-		Assert.Multiple(() =>
+		using (Assert.EnterMultipleScope())
 		{
 			Assert.That(arg.IsValid(2), Is.True);
 			Assert.That(arg.IsValid(3), Is.False);
-		});
+		}
 	}
 
 	[Test]
@@ -50,12 +50,12 @@ public static class ArgumentTests
 		var arg = Arg.IsDefault<int>();
 		var transformedArg = arg.Transform(2);
 
-		Assert.Multiple(() =>
+		using (Assert.EnterMultipleScope())
 		{
 			Assert.That(arg, Is.Not.SameAs(transformedArg));
 			Assert.That(() => transformedArg.IsValid(2), Is.True);
 			Assert.That(() => transformedArg.IsValid(3), Is.False);
-		});
+		}
 	}
 
 	[Test]
@@ -64,11 +64,11 @@ public static class ArgumentTests
 		var arg = Arg.Is(3);
 		var transformedArg = arg.Transform(2);
 
-		Assert.Multiple(() =>
+		using (Assert.EnterMultipleScope())
 		{
 			Assert.That(arg, Is.SameAs(transformedArg));
 			Assert.That(() => transformedArg.IsValid(2), Is.False);
 			Assert.That(() => transformedArg.IsValid(3), Is.True);
-		});
+		}
 	}
 }

@@ -12,10 +12,10 @@ public static class RockAttributeTests
 
 		var attribute = new RockAttribute(mockType, buildType);
 
-		Assert.Multiple(() =>
+		using (Assert.EnterMultipleScope())
 		{
 			Assert.That(attribute.MockType, Is.EqualTo(mockType));
 			Assert.That(attribute.BuildType.HasFlag(BuildType.Create), Is.True);
-		});
+		}
 	}
 }

@@ -13,10 +13,10 @@ public static class RockPartialAttributeTests
 
 		var attribute = new RockPartialAttribute(mockType, buildType);
 
-		Assert.Multiple(() =>
+		using (Assert.EnterMultipleScope())
 		{
 			Assert.That(attribute.MockType, Is.EqualTo(mockType));
 			Assert.That(attribute.BuildType, Is.EqualTo(expectedBuildType));
-		});
+		}
 	}
 }
