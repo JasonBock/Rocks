@@ -17,7 +17,7 @@ internal static class TestAssistants
 		var test = new CodeRefactoringTest<TCodeRefactoring>
 		{
 			CodeActionIndex = codeActionIndex,
-			ReferenceAssemblies = TestAssistants.GetNet10(),
+			ReferenceAssemblies = TestAssistants.net10ReferenceAssemblies.Value,
 		};
 
 		foreach (var source in sources)
@@ -49,7 +49,7 @@ internal static class TestAssistants
 		await test.RunAsync();
 	}
 
-	private static ReferenceAssemblies GetNet10()
+	private static readonly Lazy<ReferenceAssemblies> net10ReferenceAssemblies = new(() =>
 	{
 		// Always look here for the latest version of a particular runtime:
 		// https://www.nuget.org/packages/Microsoft.NETCore.App.Ref
@@ -65,5 +65,5 @@ internal static class TestAssistants
 				  "Microsoft.NETCore.App.Ref",
 				  "10.0.0-rc.1.25451.107"),
 			 Path.Combine("ref", "net10.0"));
-	}
+	}, LazyThreadSafetyMode.ExecutionAndPublication);
 }

@@ -11,7 +11,7 @@ internal static class HasInitAndRequiredTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<HasInitAndRequiredCreateExpectations>();
-		expectations.Methods.ProvideDenominator().ReturnValue(2);
+		expectations.Setups.ProvideDenominator().ReturnValue(2);
 
 		var mock = expectations.Instance(new() { InitValue = 5, RequiredValue = 3 });
 		Assert.That(mock.Calculate(), Is.EqualTo(4));

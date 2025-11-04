@@ -15,7 +15,7 @@ internal static class CombinesValuesTests
 
 		using var context = new RockContext();
 		var expectations = context.Create<CombinesValuesCreateExpectations>();
-		expectations.Methods.Compute().ReturnValue(computeValue);
+		expectations.Setups.Compute().ReturnValue(computeValue);
 
 		var mock = expectations.Instance(identifier, number);
 

@@ -14,7 +14,7 @@ internal static unsafe class IHavePointersTests
 
 		using var context = new RockContext();
 		var expectations = context.Create<IHavePointersCreateExpectations>();
-		expectations.Methods.PointerParameter(new(pValue));
+		expectations.Setups.PointerParameter(new(pValue));
 
 		var mock = expectations.Instance();
 		mock.PointerParameter(pValue);

@@ -11,7 +11,7 @@ internal static class UsesDefaultInterfaceMemberTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveDefaultInterfaceMemberCreateExpectations>();
-		expectations.Methods.Work().ReturnValue(3);
+		expectations.Setups.Work().ReturnValue(3);
 
 		var uses = new UsesDefaultInterfaceMember(expectations.Instance());
 		Assert.That(uses.Execute(), Is.EqualTo(5));
@@ -22,8 +22,8 @@ internal static class UsesDefaultInterfaceMemberTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveDefaultInterfaceMemberCreateExpectations>();
-		expectations.Methods.Work().ReturnValue(3);
-		expectations.Methods.DefaultWork().ReturnValue(3);
+		expectations.Setups.Work().ReturnValue(3);
+		expectations.Setups.DefaultWork().ReturnValue(3);
 
 		var uses = new UsesDefaultInterfaceMember(expectations.Instance());
 		Assert.That(uses.Execute(), Is.EqualTo(6));

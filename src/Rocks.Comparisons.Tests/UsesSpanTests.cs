@@ -10,7 +10,7 @@ internal static class UsesSpanTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveSpanCreateExpectations>();
-		expectations.Methods.Process(new()).ReturnValue(3);
+		expectations.Setups.Process(new()).ReturnValue(3);
 
 		var uses = new UsesSpan(expectations.Instance());
 		var buffer = new int[] { 3 };

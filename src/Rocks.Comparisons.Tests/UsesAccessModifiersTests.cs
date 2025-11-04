@@ -13,7 +13,7 @@ internal static class UsesAccessModifiersTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<AccessModifiersCreateExpectations>();
-		expectations.Methods.InternalWork().ReturnValue(3);
+		expectations.Setups.InternalWork().ReturnValue(3);
 
 		var uses = new UsesAccessModifiers(expectations.Instance());
 		Assert.That(uses.Execute(), Is.EqualTo(3));
@@ -24,7 +24,7 @@ internal static class UsesAccessModifiersTests
 	{
 		using var context = new RockContext();
 		var expectations = context.Create<AccessModifiersCreateExpectations>();
-		expectations.Methods.ProtectedWork().ReturnValue(3);
+		expectations.Setups.ProtectedWork().ReturnValue(3);
 
 		var uses = new UsesAccessModifiers(expectations.Instance());
 		Assert.That(uses.Execute(), Is.EqualTo(3));
