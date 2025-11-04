@@ -16,7 +16,7 @@ Reference the `Rocks` [NuGet package](https://www.nuget.org/packages/Rocks) - th
 
 ### Prerequisites
 
-The Rocks package targets .NET Standard 2.0 for host flexibility. That said, Rocks (as of `9.0.0`) will generate code that requires .NET 9.
+The Rocks package targets .NET Standard 2.0 for host flexibility. That said, Rocks (as of `10.0.0`) will generate code that requires .NET 10.
 
 ## Usage
 
@@ -35,7 +35,7 @@ and you use Rocks to create a mock with expectations, along with verifying its u
 [assembly: Rock(typeof(IAmSimple), BuildType.Create)]
 
 var expectations = new IAmSimpleCreateExpectations();
-expectations.Methods.TargetAction();
+expectations.Setups.TargetAction();
 
 var mock = expectations.Instance();
 mock.TargetAction();

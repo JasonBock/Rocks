@@ -216,13 +216,13 @@ internal global::Autofac.Core.IActivatedEventArgsPartialTarget<T>.ServicePropert
     * Make
         * DONE - Between all gen'd members
 * In the implementations for methods that have parameters and indexers, `@handler` is used, but otherwise it's `handler`. Should make that consistent.
-* Testing strategy
+* DONE - Testing strategy
     * DONE - Run code gen tests
     * DONE - Update and run integration tests
         * Last file updated: ClassGenericIndexerTests.cs
         * Change any `Assert.Multiple()`
-    * Update and run unit tests
-    * Add unit and integeration tests for
+    * DONE - Update and run unit tests
+    * DONE - Add unit and integeration tests for
         * Ref returns
 * Clean up builders
     * I think I can get rid of `PropertyExpectationTypeName`
