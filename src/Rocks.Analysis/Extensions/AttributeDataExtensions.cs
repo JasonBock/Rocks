@@ -8,40 +8,6 @@ namespace Rocks.Analysis.Extensions;
 
 internal static class AttributeDataExtensions
 {
-	internal static ImmutableHashSet<INamespaceSymbol> GetNamespaces(this AttributeData self)
-	{
-		static IEnumerable<INamespaceSymbol> GetNamespacesForValue(TypedConstant value)
-		{
-			if (value.Kind == TypedConstantKind.Primitive || value.Kind == TypedConstantKind.Enum)
-			{
-				yield return value.Type!.ContainingNamespace;
-			}
-			else if (value.Kind == TypedConstantKind.Type)
-			{
-				yield return ((INamedTypeSymbol)value.Value!).ContainingNamespace;
-			}
-			else if (value.Kind == TypedConstantKind.Array)
-			{
-				yield return value.Type!.ContainingNamespace;
-
-				foreach (var arrayValue in value.Values)
-				{
-					foreach (var arrayValueNamespace in GetNamespacesForValue(arrayValue))
-					{
-						yield return arrayValueNamespace;
-					}
-				}
-			}
-		}
-
-		return
-		[
-			self.AttributeClass!.ContainingNamespace,
-			.. self.ConstructorArguments.SelectMany(_ => GetNamespacesForValue(_)),
-			.. self.NamedArguments.SelectMany(_ => GetNamespacesForValue(_.Value)),
-		];
-	}
-
 	internal static string GetDescription(this AttributeData self, Compilation compilation)
 	{
 		static string GetTypedConstantValue(TypedConstant value, Compilation compilation) =>

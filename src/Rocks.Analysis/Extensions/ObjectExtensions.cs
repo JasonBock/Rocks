@@ -8,39 +8,6 @@ namespace Rocks.Analysis.Extensions;
 /// </summary>
 public static class ObjectExtensions
 {
-	// TODO: If I could project this code like I do for RefStructArgument,
-	// I might be able to do a FormatValue<T>(this T self) where T : allows ref struct.
-
-	/// <summary>
-	/// This gets a stringified version of a value
-	/// that will be put into the call site of an emitted method.
-	/// </summary>
-	public static string FormatValue(this object? self)
-	{
-		if (self is Enum)
-		{
-			var selfType = self.GetType();
-			var selfName = Enum.GetName(selfType, self);
-			var selfValue = selfName is not null ?
-				$"{selfType.FullName}.{selfName}" :
-				$"({selfType.FullName}){self}";
-
-			return selfValue;
-		}
-		else if (self is ICollection c)
-		{
-			return $"{c}, Count = {c.Count}";
-		}
-		else if (self is null)
-		{
-			return "null";
-		}
-		else
-		{
-			return self.ToString();
-		}
-	}
-
 	/// <summary>
 	/// This should only be used to get a stringified version of a default value
 	/// that will be put into the call site of an emitted method.

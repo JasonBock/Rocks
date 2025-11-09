@@ -32,34 +32,6 @@ internal static class IPropertySymbolExtensions
 		return [.. attributes];
 	}
 
-	internal static ImmutableHashSet<INamespaceSymbol> GetNamespaces(this IPropertySymbol self)
-	{
-		static IEnumerable<INamespaceSymbol> GetParameterNamespaces(IParameterSymbol parameter)
-		{
-			foreach (var parameterTypeNamespaces in parameter.Type.GetNamespaces())
-			{
-				yield return parameterTypeNamespaces;
-			}
-
-			foreach (var attributeNamespace in parameter.GetAttributes().SelectMany(_ => _.GetNamespaces()))
-			{
-				yield return attributeNamespace;
-			}
-		}
-
-		var namespaces = new HashSet<INamespaceSymbol>();
-
-		namespaces.AddRange(self.GetAllAttributes().SelectMany(_ => _.GetNamespaces()));
-		namespaces.AddRange(self.Type.GetNamespaces());
-
-		if (self.IsIndexer)
-		{
-			namespaces.AddRange(self.Parameters.SelectMany(_ => GetParameterNamespaces(_)));
-		}
-
-		return [.. namespaces];
-	}
-
 	internal static bool IsUnsafe(this IPropertySymbol self) =>
 		self.IsIndexer ? (self.Parameters.Any(_ => _.Type.IsPointer()) || self.Type.IsPointer()) : self.Type.IsPointer();
 
