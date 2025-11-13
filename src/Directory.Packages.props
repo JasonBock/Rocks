@@ -74,14 +74,14 @@
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.CodeRefactoring.Testing" Version="1.1.2" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing" Version="1.1.2" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="5.0.0-2.final" />
-    <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.100-rc.2.25502.107" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.100" />
     <PackageVersion Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="5.0.0-2.final" />
     <PackageVersion Include="Microsoft.Data.SqlClient" Version="5.1.2" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="10.0.0-rc.2.25502.107" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0-rc.2.25502.107" />
-    <PackageVersion Include="Microsoft.Extensions.Logging" Version="10.0.0-rc.2.25502.107" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="10.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Resilience" Version="8.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="9.5.2" />
+    <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="10.0.0" />
     <PackageVersion Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.13.1" />
     <PackageVersion Include="Microsoft.Garnet" Version="1.0.87" />
     <PackageVersion Include="Microsoft.Identity.Client" Version="4.78.1-preview1" />
@@ -91,7 +91,7 @@
     <PackageVersion Include="Microsoft.Quantum.Standard" Version="0.28.302812" />
     <PackageVersion Include="Microsoft.SemanticKernel" Version="1.7.1" />
     <PackageVersion Include="Microsoft.SemanticKernel.Abstractions" Version="1.7.1" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
     <PackageVersion Include="Mono.Cecil" Version="0.11.6" />
     <PackageVersion Include="Moq" Version="4.20.72" />
     <PackageVersion Include="Mscc.GenerativeAI" Version="2.8.24" />
