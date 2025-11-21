@@ -15,6 +15,6 @@
 		<TargetFramework>net10.0</TargetFramework>
 		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
 		<UseArtifactsOutput>true</UseArtifactsOutput>
-		<Version>10.0.0-alpha.2</Version>
+		<Version>10.0.0</Version>
 	</PropertyGroup>
 </Project>

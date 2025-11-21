@@ -96,6 +96,7 @@
 		<PackageReference Include="OpenTelemetry" />
 		<PackageReference Include="Oqtane.Shared" />
 		<PackageReference Include="Paramore.Brighter" />
+		<PackageReference Include="Pragmastat" />
 		<PackageReference Include="prometheus-net" />
 		<PackageReference Include="Proto.Actor" />
 		<PackageReference Include="Pulumi" />

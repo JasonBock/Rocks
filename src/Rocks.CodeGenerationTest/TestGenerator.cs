@@ -26,7 +26,7 @@ internal static class TestGenerator
 	* UTF7 encoding (SYSLIB0001)
 	* Code access security (SYSLIB0003)
 	* EF "future" warnings (EF9100)
-	* Aspire evaluation warnings (ASPIREPUBLISHERS001, ASPIRECOMPUTE001, ASPIREINTERACTION001, ASPIREPROBES001)
+	* Aspire evaluation warnings (ASPIRE*)
 	* StackExchange.Redis evaluation warnings (SER001)
 	* OpenTelemetry (OTEL1001)
 
@@ -56,6 +56,12 @@ internal static class TestGenerator
 		{ "ASPIRECOMPUTE001", ReportDiagnostic.Suppress },
 		{ "ASPIREINTERACTION001", ReportDiagnostic.Suppress },
 		{ "ASPIREPROBES001", ReportDiagnostic.Suppress },
+		{ "ASPIRECERTIFICATES001", ReportDiagnostic.Suppress },
+		{ "ASPIREPIPELINES001", ReportDiagnostic.Suppress },
+		{ "ASPIREPIPELINES002", ReportDiagnostic.Suppress },
+		{ "ASPIREPIPELINES003", ReportDiagnostic.Suppress },
+		{ "ASPIREPIPELINES004", ReportDiagnostic.Suppress },
+		{ "ASPIREDOCKERFILEBUILDER001", ReportDiagnostic.Suppress },
 		{ "SER001", ReportDiagnostic.Suppress },
 		{ "OTEL1001", ReportDiagnostic.Suppress }
 	};

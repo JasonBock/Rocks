@@ -258,6 +258,7 @@ static void TestWithTypes()
 		typeof(System.Reflection.ConstructorInfo),
 		typeof(System.Xml.Linq.SaveOptions),
 		typeof(Azure.Core.Amqp.AmqpAnnotatedMessage),
+		typeof(Pragmastat.Sample)
 	}.ToImmutableArray();
 
 	Console.WriteLine($"Getting mapped types...");
