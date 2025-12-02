@@ -1,24 +1,24 @@
 <Project>
   <ItemGroup>
-    <PackageVersion Include="Alba" Version="8.3.0" />
+    <PackageVersion Include="Alba" Version="8.4.0" />
     <PackageVersion Include="AngleSharp" Version="1.4.0" />
     <PackageVersion Include="Arch" Version="2.1.0" />
     <PackageVersion Include="Ardalis.GuardClauses" Version="5.0.0" />
-    <PackageVersion Include="AsmResolver" Version="6.0.0-beta.4" />
-    <PackageVersion Include="Aspire.Hosting" Version="13.0.0" />
+    <PackageVersion Include="AsmResolver" Version="6.0.0-beta.5" />
+    <PackageVersion Include="Aspire.Hosting" Version="13.0.1" />
     <PackageVersion Include="Aspose.Email" Version="25.11.0" />
     <PackageVersion Include="Autofac" Version="9.0.0" />
     <PackageVersion Include="AutoFixture" Version="5.0.0-preview0012" />
     <PackageVersion Include="AutoMapper" Version="15.1.0" />
     <PackageVersion Include="Avalonia" Version="11.3.9" />
-    <PackageVersion Include="AWSSDK.Core" Version="4.0.3.2" />
+    <PackageVersion Include="AWSSDK.Core" Version="4.0.3.3" />
     <PackageVersion Include="Azure.Core" Version="1.50.0" />
     <PackageVersion Include="Azure.Core.Amqp" Version="1.3.1" />
     <PackageVersion Include="Azure.Messaging.ServiceBus" Version="7.20.1" />
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.26.0" />
     <PackageVersion Include="Azure.Storage.Queues" Version="12.24.0" />
     <PackageVersion Include="Ben.Demystifier" Version="0.4.1" />
-    <PackageVersion Include="BenchmarkDotNet" Version="0.15.6" />
+    <PackageVersion Include="BenchmarkDotNet" Version="0.15.8" />
     <PackageVersion Include="Blazored.LocalStorage" Version="4.5.0" />
     <PackageVersion Include="Blazored.Video" Version="1.0.1" />
     <PackageVersion Include="Bogus" Version="35.6.5" />
@@ -27,7 +27,7 @@
     <PackageVersion Include="Confluent.Kafka" Version="2.12.0" />
     <PackageVersion Include="Coravel" Version="6.0.2" />
     <PackageVersion Include="CoreWCF.Primitives" Version="1.8.0" />
-    <PackageVersion Include="Csla" Version="10.0.0-alpha-0008-g370995653f" />
+    <PackageVersion Include="Csla" Version="10.0.0-beta-0011-gc72d4fb04f" />
     <PackageVersion Include="CsvHelper" Version="33.1.0" />
     <PackageVersion Include="Cursively" Version="1.2.0" />
     <PackageVersion Include="Dapper" Version="2.1.66" />
@@ -39,11 +39,11 @@
     <PackageVersion Include="DotNext.Threading" Version="5.26.1" />
     <PackageVersion Include="DotNext.Unsafe" Version="5.21.0" />
     <PackageVersion Include="DryIoc" Version="5.4.3" />
-    <PackageVersion Include="DSharpPlus" Version="5.0.0-nightly-02556" />
-    <PackageVersion Include="Duende.IdentityModel" Version="8.0.0-preview.1" />
+    <PackageVersion Include="DSharpPlus" Version="5.0.0-nightly-02561" />
+    <PackageVersion Include="Duende.IdentityModel" Version="8.0.0" />
     <PackageVersion Include="DynamicData" Version="9.4.1" />
     <PackageVersion Include="EfficientDynamoDb" Version="0.9.18" />
-    <PackageVersion Include="Elastic.Clients.Elasticsearch" Version="9.2.1" />
+    <PackageVersion Include="Elastic.Clients.Elasticsearch" Version="9.2.2" />
     <PackageVersion Include="Elasticsearch.Net" Version="7.17.5" />
     <PackageVersion Include="EntityFrameworkCore.Exceptions.Common" Version="8.1.3" />
     <PackageVersion Include="FluentValidation" Version="12.1.0" />
@@ -55,13 +55,13 @@
     <PackageVersion Include="Grpc.Core.Api" Version="2.71.0" />
     <PackageVersion Include="Handlebars.Net" Version="2.1.6" />
     <PackageVersion Include="Hangfire" Version="1.8.18" />
-    <PackageVersion Include="HtmlSanitizer" Version="9.1.887-beta" />
+    <PackageVersion Include="HtmlSanitizer" Version="9.1.891-beta" />
     <PackageVersion Include="Humanizer" Version="3.0.1" />
     <PackageVersion Include="IdentityModel" Version="7.0.0" />
     <PackageVersion Include="ILGPU" Version="1.4.0" />
-    <PackageVersion Include="LanguageExt.Core" Version="5.0.0-beta-54" />
+    <PackageVersion Include="LanguageExt.Core" Version="5.0.0-beta-57" />
     <PackageVersion Include="Lib.Harmony" Version="2.4.2" />
-    <PackageVersion Include="Lifti.Core" Version="7.0.0-CI-20250226-201059" />
+    <PackageVersion Include="Lifti.Core" Version="7.0.1" />
     <PackageVersion Include="LLVMSharp" Version="20.1.2" />
     <PackageVersion Include="MassTransit" Version="8.5.5" />
     <PackageVersion Include="MathNet.Numerics" Version="6.0.0-beta2" />
@@ -82,7 +82,7 @@
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="10.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Resilience" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="10.0.0" />
-    <PackageVersion Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.13.1" />
+    <PackageVersion Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.13.2" />
     <PackageVersion Include="Microsoft.Garnet" Version="1.0.89" />
     <PackageVersion Include="Microsoft.Identity.Client" Version="4.79.2" />
     <PackageVersion Include="Microsoft.Kiota.Abstractions" Version="1.21.0" />
@@ -103,11 +103,11 @@
     <PackageVersion Include="Npgsql" Version="7.0.4" />
     <PackageVersion Include="NServiceBus" Version="8.1.1" />
     <PackageVersion Include="NSubstitute" Version="5.3.0" />
-    <PackageVersion Include="NuGet.Common" Version="7.0.0" />
+    <PackageVersion Include="NuGet.Common" Version="7.0.1" />
     <PackageVersion Include="NuGet.Frameworks" Version="6.14.0" />
     <PackageVersion Include="NUnit" Version="4.4.0" />
     <PackageVersion Include="NUnit.Analyzers" Version="4.11.2" />
-    <PackageVersion Include="NUnit3TestAdapter" Version="6.0.0-beta.2.1" />
+    <PackageVersion Include="NUnit3TestAdapter" Version="6.0.0-beta.3" />
     <PackageVersion Include="Octokit" Version="14.0.0" />
     <PackageVersion Include="OpenTelemetry" Version="1.14.0" />
     <PackageVersion Include="Oqtane.Framework" Version="5.2.3" />
@@ -122,10 +122,10 @@
     <PackageVersion Include="R3" Version="1.3.0" />
     <PackageVersion Include="RabbitMQ.Client" Version="7.2.0" />
     <PackageVersion Include="RecordParser" Version="2.3.0" />
-    <PackageVersion Include="Refit" Version="8.0.0" />
-    <PackageVersion Include="RestSharp" Version="112.1.1-alpha.0.4" />
+    <PackageVersion Include="Refit" Version="9.0.2" />
+    <PackageVersion Include="RestSharp" Version="113.0.1-alpha.0.1" />
     <PackageVersion Include="Sep" Version="0.12.0" />
-    <PackageVersion Include="Serilog" Version="4.3.1-dev-02390" />
+    <PackageVersion Include="Serilog" Version="4.3.1-dev-02395" />
     <PackageVersion Include="ServiceStack" Version="8.10.0" />
     <PackageVersion Include="SharpZipLib" Version="1.4.2" />
     <PackageVersion Include="Shouldly" Version="4.2.1" />
@@ -140,16 +140,16 @@
     <PackageVersion Include="Stripe.net" Version="50.0.0" />
     <PackageVersion Include="Sylvan.Data.Csv" Version="1.4.3" />
     <PackageVersion Include="System.Interactive.Async" Version="6.0.1" />
-    <PackageVersion Include="System.IO.Abstractions" Version="22.0.16" />
+    <PackageVersion Include="System.IO.Abstractions" Version="22.1.0" />
     <PackageVersion Include="System.Memory.Data" Version="8.0.0" />
     <PackageVersion Include="System.Numerics.Tensors" Version="10.0.0" />
     <PackageVersion Include="System.Reactive" Version="6.1.0" />
     <PackageVersion Include="TerraFX.Interop.D3D12MemoryAllocator" Version="3.0.1" />
     <PackageVersion Include="TerraFX.Interop.Windows" Version="10.0.26100.5" />
-    <PackageVersion Include="Testcontainers" Version="4.8.1" />
+    <PackageVersion Include="Testcontainers" Version="4.9.0" />
     <PackageVersion Include="Topshelf" Version="4.3.1-develop.253" />
     <PackageVersion Include="Twilio" Version="7.13.7" />
-    <PackageVersion Include="Verify" Version="31.7.2" />
+    <PackageVersion Include="Verify" Version="31.7.3" />
     <PackageVersion Include="Wasmtime" Version="34.0.2" />
     <PackageVersion Include="WireMock.Net" Version="1.16.0" />
     <PackageVersion Include="Wisp" Version="0.2.1-preview.0.51" />
