@@ -50,3 +50,19 @@ setups.Target.Sets("target");
 setups[42].Gets().ReturnValue("value");
 setups[42].Sets("value");
 ```
+
+Note that in this example, the `Setups` property is captures as a reference in the `setups` local variable. This is not required - you could have done this:
+
+```c#
+[assembly: Rock(typeof(ITarget), BuildType.Create)]
+
+using var context = new RockContext();
+var expectations = context.Create<ITargetCreateExpectations>();
+expectations.Setups.Process(Arg.Any<Guid>()).ReturnValue(3);
+expectations.Setups.Target.Gets().ReturnValue("target");
+expectations.Setups.Target.Sets("target");
+expectations.Setups[42].Gets().ReturnValue("value");
+expectations.Setups[42].Sets("value");
+```
+
+For mocking scenarios that require multiple expectation setups on one mock instance, it may be somewhat easier to use the "capture" technique. It really comes down to personal preference.
