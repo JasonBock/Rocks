@@ -66,7 +66,7 @@ internal static class TestGenerator
 		{ "OTEL1001", ReportDiagnostic.Suppress }
 	};
 
-	internal static ImmutableArray<Type> GetTargets(HashSet<Assembly> targetAssemblies, ImmutableArray<Type> typesToIgnore,
+	internal static async Task<ImmutableArray<Type>> GetTargetsAsync(HashSet<Assembly> targetAssemblies, ImmutableArray<Type> typesToIgnore,
 		 ImmutableArray<Type> typesToLoadAssembliesFrom, string[] aliases)
 	{
 		var initialTypes = targetAssemblies.SelectMany(_ =>
@@ -77,10 +77,10 @@ internal static class TestGenerator
 				&& !_.IsSealed
 				&& !typesToIgnore.Contains(_)))
 			.ToImmutableArray();
-		return TestGenerator.GetMockableTypes(initialTypes, true, typesToLoadAssembliesFrom, aliases);
+		return await TestGenerator.GetMockableTypesAsync(initialTypes, true, typesToLoadAssembliesFrom, aliases);
 	}
 
-	private static ImmutableArray<Type> GetMockableTypes(
+	private static async Task<ImmutableArray<Type>> GetMockableTypesAsync(
 		ImmutableArray<Type> types, bool isCreate, ImmutableArray<Type> typesToLoadAssembliesFrom, string[] aliases)
 	{
 		static string GetValidationCode(ImmutableArray<Type> types, string[] aliases)
@@ -150,8 +150,8 @@ internal static class TestGenerator
 
 		var validTypes = new List<Type>();
 
-		foreach (var methodNode in syntaxTree.GetRoot().DescendantNodes(_ => true)
-			 .OfType<MethodDeclarationSyntax>())
+		foreach (var methodNode in (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
+			.OfType<MethodDeclarationSyntax>())
 		{
 			var methodSymbol = model.GetDeclaredSymbol(methodNode)!;
 			var typeSymbol = methodSymbol.Parameters[0].Type.OriginalDefinition;

@@ -18,7 +18,7 @@ var stopwatch = Stopwatch.StartNew();
 //TestWithCode();
 //TestWithType();
 //TestWithTypeNoEmit();
-TestWithTypes();
+await TestWithTypesAsync();
 //TestTypesIndividually();
 
 stopwatch.Stop();
@@ -29,7 +29,7 @@ Console.WriteLine($"Total time: {stopwatch.Elapsed}");
 static void TestTypeValidity() =>
 	Console.WriteLine(
 		typeof(SixLabors.ImageSharp.ImageFormatException)
-			.IsValidTarget([]));
+			.IsValidTargetAsync([]));
 
 static void TestWithCode()
 {
@@ -103,7 +103,7 @@ static void TestWithTypeNoEmit()
 	}
 }
 
-static void TestWithTypes()
+static async Task TestWithTypesAsync()
 {
 	Console.WriteLine($"Creating type alias mappings...");
 
@@ -275,12 +275,12 @@ static void TestWithTypes()
 
 	Console.WriteLine($"Generator task count: {maximumGeneratorTasksCount}");
 
-	static GeneratorResults Generate(
+	static async Task<GeneratorResults> Generate(
 		TypeAliasesMapping typeAliasesMapping, ImmutableArray<Type> typesToLoadAssembliesFrom)
 	{
 		var targetAssemblySet = new HashSet<Assembly> { typeAliasesMapping.type.Assembly };
 
-		var discoveredTypes = TestGenerator.GetTargets(
+		var discoveredTypes = await TestGenerator.GetTargetsAsync(
 			targetAssemblySet, [], typesToLoadAssembliesFrom, typeAliasesMapping.aliases);
 
 		(var createIssues, _) = TestGenerator.Generate(
@@ -302,8 +302,10 @@ static void TestWithTypes()
 
 		if (generatorTasks.Count >= maximumGeneratorTasksCount)
 		{
+#pragma warning disable CA1849 // Call async methods when in an async method
 			var finishedTaskIndex = Task.WaitAny([.. generatorTasks]);
 			var finishedTask = generatorTasks[finishedTaskIndex].Result;
+#pragma warning restore CA1849 // Call async methods when in an async method
 
 			Console.WriteLine($"Finished {finishedTask.AssemblyName}");
 			totalDiscoveredTypeCount += finishedTask.DiscoveredTypesCount;
@@ -320,8 +322,10 @@ static void TestWithTypes()
 
 	while (generatorTasks.Count > 0)
 	{
+#pragma warning disable CA1849 // Call async methods when in an async method
 		var finishedTaskIndex = Task.WaitAny([.. generatorTasks]);
 		var finishedTask = generatorTasks[finishedTaskIndex].Result;
+#pragma warning restore CA1849 // Call async methods when in an async method
 
 		Console.WriteLine($"Finished {finishedTask.AssemblyName}");
 		totalDiscoveredTypeCount += finishedTask.DiscoveredTypesCount;
@@ -341,7 +345,7 @@ static void TestWithTypes()
 	PrintIssues([.. issues]);
 }
 
-static void TestTypesIndividually()
+static async Task TestTypesIndividuallyAsync()
 {
 	var targetMappings = new TypeAliasesMapping[]
 	{
@@ -377,7 +381,7 @@ static void TestTypesIndividually()
 			Console.WriteLine($"Getting target types for {targetMapping.type.Assembly.GetName().Name}");
 			var targetAssemblySet = new HashSet<Assembly> { targetMapping.type.Assembly };
 
-			var discoveredTypes = TestGenerator.GetTargets(
+			var discoveredTypes = await TestGenerator.GetTargetsAsync(
 				targetAssemblySet, [], typesToLoadAssembliesFrom, targetMapping.aliases);
 
 			foreach (var discoveredType in discoveredTypes)

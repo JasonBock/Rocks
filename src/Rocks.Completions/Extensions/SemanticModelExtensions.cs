@@ -6,9 +6,9 @@ namespace Rocks.Completions.Extensions;
 
 internal static class SemanticModelExtensions
 {
-	internal static bool HasRockAttributeDefinition(this SemanticModel self, INamedTypeSymbol mockTypeSymbol)
+	internal static async Task<bool> HasRockAttributeDefinitionAsync(this SemanticModel self, INamedTypeSymbol mockTypeSymbol)
 	{
-		var assemblyAttributeListSyntaxNodes = self.SyntaxTree.GetRoot()
+		var assemblyAttributeListSyntaxNodes = (await self.SyntaxTree.GetRootAsync())
 			.DescendantNodes(_ => true)
 			.OfType<AttributeListSyntax>()
 			.Where(_ => _.DescendantTokens(_ => true)

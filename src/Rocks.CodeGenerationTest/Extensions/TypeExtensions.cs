@@ -40,7 +40,7 @@ internal static class TypeExtensions
 		}
 	}
 
-	internal static bool IsValidTarget(this Type self, string[] aliases)
+	internal static async Task<bool> IsValidTargetAsync(this Type self, string[] aliases)
 	{
 		if (self.GetCustomAttribute<RequiresPreviewFeaturesAttribute>() is null)
 		{
@@ -64,7 +64,7 @@ internal static class TypeExtensions
 					specificDiagnosticOptions: TestGenerator.SpecificDiagnostics));
 			var model = compilation.GetSemanticModel(syntaxTree, true);
 
-			var propertySyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+			var propertySyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 				.OfType<PropertyDeclarationSyntax>().Single();
 			var symbol = model.GetDeclaredSymbol(propertySyntax)!.Type;
 			var invocation = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("public static void Foo() { }"));
