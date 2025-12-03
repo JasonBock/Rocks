@@ -13,8 +13,8 @@ public static class CannotMockSpecialTypesDescriptorTests
 	{
 		var descriptor = CannotMockSpecialTypesDescriptor.Create();
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(descriptor.Id, Is.EqualTo(CannotMockSpecialTypesDescriptor.Id));
 			Assert.That(descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(CannotMockSpecialTypesDescriptor.Title));
 			Assert.That(descriptor.MessageFormat.ToString(CultureInfo.CurrentCulture), Is.EqualTo(CannotMockSpecialTypesDescriptor.Message));

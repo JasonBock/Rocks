@@ -21,12 +21,12 @@ public static class CannotMockSealedTypeDiagnosticTests
 		var typeSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single();
 
-		var invocation = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("public static void Foo() { }")); 
-		
+		var invocation = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("public static void Foo() { }"));
+
 		var descriptor = CannotMockSealedTypeDiagnostic.Create(invocation, model.GetDeclaredSymbol(typeSyntax)!);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(descriptor.GetMessage(CultureInfo.InvariantCulture), Is.EqualTo("The type X is sealed and cannot be mocked"));
 			Assert.That(descriptor.Descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(CannotMockSealedTypeDescriptor.Title));
 			Assert.That(descriptor.Id, Is.EqualTo(CannotMockSealedTypeDescriptor.Id));

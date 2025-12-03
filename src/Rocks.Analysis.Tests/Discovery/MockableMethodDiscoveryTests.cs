@@ -39,8 +39,8 @@ public static class MockableMethodDiscoveryTests
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(4));
@@ -87,8 +87,8 @@ public static class MockableMethodDiscoveryTests
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(4));
@@ -123,8 +123,8 @@ public static class MockableMethodDiscoveryTests
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(1));
@@ -154,8 +154,8 @@ public static class MockableMethodDiscoveryTests
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(1));
@@ -189,8 +189,8 @@ public static class MockableMethodDiscoveryTests
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(2));
@@ -226,8 +226,8 @@ public static class MockableMethodDiscoveryTests
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(1));
@@ -269,8 +269,8 @@ public static class MockableMethodDiscoveryTests
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(3));
@@ -316,8 +316,8 @@ public static class MockableMethodDiscoveryTests
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(2));
@@ -349,8 +349,8 @@ public static class MockableMethodDiscoveryTests
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(4));
@@ -377,8 +377,8 @@ public static class MockableMethodDiscoveryTests
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(3));
@@ -391,7 +391,7 @@ public static class MockableMethodDiscoveryTests
 		}
 	}
 
-	private static async Task <(ITypeSymbol, Compilation)> GetTypeSymbolAsync(string source, string targetTypeName)
+	private static async Task<(ITypeSymbol, Compilation)> GetTypeSymbolAsync(string source, string targetTypeName)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],

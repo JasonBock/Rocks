@@ -13,8 +13,8 @@ public static class TypeIsClosedGenericDescriptorTests
 	{
 		var descriptor = TypeIsClosedGenericDescriptor.Create();
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(descriptor.Id, Is.EqualTo(TypeIsClosedGenericDescriptor.Id));
 			Assert.That(descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeIsClosedGenericDescriptor.Title));
 			Assert.That(descriptor.MessageFormat.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeIsClosedGenericDescriptor.Message));

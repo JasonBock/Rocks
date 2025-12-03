@@ -25,8 +25,8 @@ public static class TypeIsClosedGenericDiagnosticTests
 
 		var descriptor = TypeIsClosedGenericDiagnostic.Create(invocation, model.GetDeclaredSymbol(typeSyntax)!);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(descriptor.GetMessage(CultureInfo.InvariantCulture), Is.EqualTo("The type X is a closed generic"));
 			Assert.That(descriptor.Descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeIsClosedGenericDescriptor.Title));
 			Assert.That(descriptor.Id, Is.EqualTo(TypeIsClosedGenericDescriptor.Id));

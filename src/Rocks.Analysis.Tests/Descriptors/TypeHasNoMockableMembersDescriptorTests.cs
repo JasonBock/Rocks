@@ -13,8 +13,8 @@ public static class TypeHasNoMockableMembersDescriptorTests
 	{
 		var descriptor = TypeHasNoMockableMembersDescriptor.Create();
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(descriptor.Id, Is.EqualTo(TypeHasNoMockableMembersDescriptor.Id));
 			Assert.That(descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeHasNoMockableMembersDescriptor.Title));
 			Assert.That(descriptor.MessageFormat.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeHasNoMockableMembersDescriptor.Message));

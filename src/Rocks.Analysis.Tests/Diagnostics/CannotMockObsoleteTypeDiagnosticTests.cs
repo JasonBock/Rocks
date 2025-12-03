@@ -21,12 +21,12 @@ public static class CannotMockObsoleteTypeDiagnosticTests
 		var typeSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single();
 
-		var invocation = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("public static void Foo() { }")); 
-		
+		var invocation = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("public static void Foo() { }"));
+
 		var descriptor = CannotMockObsoleteTypeDiagnostic.Create(invocation, model.GetDeclaredSymbol(typeSyntax)!);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(descriptor.GetMessage(CultureInfo.InvariantCulture), Is.EqualTo("The type X is obsolete and cannot be mocked"));
 			Assert.That(descriptor.Descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(CannotMockObsoleteTypeDescriptor.Title));
 			Assert.That(descriptor.Id, Is.EqualTo(CannotMockObsoleteTypeDescriptor.Id));

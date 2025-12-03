@@ -13,8 +13,8 @@ public static class MemberUsesObsoleteTypeDescriptorTests
 	{
 		var descriptor = MemberUsesObsoleteTypeDescriptor.Create();
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(descriptor.Id, Is.EqualTo(MemberUsesObsoleteTypeDescriptor.Id));
 			Assert.That(descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(MemberUsesObsoleteTypeDescriptor.Title));
 			Assert.That(descriptor.MessageFormat.ToString(CultureInfo.CurrentCulture), Is.EqualTo(MemberUsesObsoleteTypeDescriptor.Message));

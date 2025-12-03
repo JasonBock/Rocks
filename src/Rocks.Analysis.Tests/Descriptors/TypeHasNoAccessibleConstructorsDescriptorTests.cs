@@ -13,8 +13,8 @@ public static class TypeHasNoAccessibleConstructorsDescriptorTests
 	{
 		var descriptor = TypeHasNoAccessibleConstructorsDescriptor.Create();
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(descriptor.Id, Is.EqualTo(TypeHasNoAccessibleConstructorsDescriptor.Id));
 			Assert.That(descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeHasNoAccessibleConstructorsDescriptor.Title));
 			Assert.That(descriptor.MessageFormat.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeHasNoAccessibleConstructorsDescriptor.Message));

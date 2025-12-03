@@ -25,8 +25,8 @@ public static class TypeHasNoAccessibleConstructorsDiagnosticTests
 
 		var descriptor = TypeHasNoAccessibleConstructorsDiagnostic.Create(invocation, model.GetDeclaredSymbol(typeSyntax)!);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(descriptor.GetMessage(CultureInfo.InvariantCulture), Is.EqualTo("The type X has no constructors that are accessible"));
 			Assert.That(descriptor.Descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeHasNoAccessibleConstructorsDescriptor.Title));
 			Assert.That(descriptor.Id, Is.EqualTo(TypeHasNoAccessibleConstructorsDescriptor.Id));

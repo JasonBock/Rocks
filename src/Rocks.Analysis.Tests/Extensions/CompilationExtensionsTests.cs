@@ -33,8 +33,8 @@ public static class CompilationExtensionsTests
 	{
 		var compilation = CompilationExtensionsTests.GetCompilation("test", ["first"], ["second"]);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			var aliases = compilation.GetAliases();
 			Assert.That(aliases, Has.Length.EqualTo(2));
 			Assert.That(aliases[0], Is.EqualTo("first"));
@@ -47,8 +47,8 @@ public static class CompilationExtensionsTests
 	{
 		var compilation = CompilationExtensionsTests.GetCompilation("test", ["first", "third"], ["second", "fourth"]);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			var aliases = compilation.GetAliases();
 			Assert.That(aliases, Has.Length.EqualTo(2));
 			Assert.That(aliases[0], Is.EqualTo("first"));
@@ -61,8 +61,8 @@ public static class CompilationExtensionsTests
 	{
 		var compilation = CompilationExtensionsTests.GetCompilation("test", ["first"], ["first"]);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			var aliases = compilation.GetAliases();
 			Assert.That(aliases, Has.Length.EqualTo(1));
 			Assert.That(aliases[0], Is.EqualTo("first"));
@@ -74,8 +74,8 @@ public static class CompilationExtensionsTests
 	{
 		var compilation = CompilationExtensionsTests.GetCompilation("test", ["second"], ["first"]);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			var aliases = compilation.GetAliases();
 			Assert.That(aliases, Has.Length.EqualTo(2));
 			Assert.That(aliases[0], Is.EqualTo("first"));
@@ -102,7 +102,7 @@ public static class CompilationExtensionsTests
 			[
 				firstCompilation.ToMetadataReference().WithAliases(firstAliases),
 				secondCompilation.ToMetadataReference().WithAliases(secondAliases)
-			],			
+			],
 			options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 	}
 }

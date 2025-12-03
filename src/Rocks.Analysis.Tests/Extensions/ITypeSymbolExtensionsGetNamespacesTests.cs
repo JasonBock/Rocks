@@ -22,8 +22,8 @@ public static class ITypeSymbolExtensionsGetNamespacesTests
 		var typeSymbol = await ITypeSymbolExtensionsGetNamespacesTests.GetTypeSymbolAsync(code, "Target");
 		var namespaces = typeSymbol.GetNamespaces();
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(namespaces, Has.Count.EqualTo(1));
 			Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == @namespace), Is.True);
 		}
@@ -72,8 +72,8 @@ public static class ITypeSymbolExtensionsGetNamespacesTests
 		var propertySymbol = typeSymbol.GetMembers().Single(_ => _.Name == theField) as IPropertySymbol;
 		var namespaces = propertySymbol!.Type.GetNamespaces();
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(namespaces, Has.Count.EqualTo(3));
 			Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == outerNamespace), Is.True);
 			Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == middleNamespace), Is.True);

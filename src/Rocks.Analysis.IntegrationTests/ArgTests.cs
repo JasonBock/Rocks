@@ -21,7 +21,7 @@ internal static class ArgTests
 			Assert.That(() => expectations.Setups[null!].Gets(), Throws.TypeOf<ArgumentNullException>());
 			Assert.That(() => expectations.Setups[null!].Sets("value"), Throws.TypeOf<ArgumentNullException>());
 			Assert.That(() => expectations.Setups[1].Sets(null!), Throws.TypeOf<ArgumentNullException>());
-		};
+		}
 	}
 
 	[Test]
