@@ -24,21 +24,21 @@ public static class IMethodSymbolExtensionsRequiresProjectedDelegateTests
 				int i15, int i16, int i17, int i18, int i19) { } 
 		}
 		""", true)]
-	public static void RequiresProjectedDelegate(string code, bool expectedValue)
+	public static async Task RequiresProjectedDelegateAsync(string code, bool expectedValue)
 	{
-		var (typeSymbol, compilation) = IMethodSymbolExtensionsRequiresProjectedDelegateTests.GetMethodSymbol(code);
+		var (typeSymbol, compilation) = await IMethodSymbolExtensionsRequiresProjectedDelegateTests.GetMethodSymbolAsync(code);
 
 		Assert.That(typeSymbol.RequiresProjectedDelegate(compilation), Is.EqualTo(expectedValue));
 	}
 
-	private static (IMethodSymbol, Compilation) GetMethodSymbol(string source)
+	private static async Task<(IMethodSymbol, Compilation)> GetMethodSymbolAsync(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var methodSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single(_ => _.Identifier.Text == "Foo");
 		return (model.GetDeclaredSymbol(methodSyntax)!, compilation);
 	}

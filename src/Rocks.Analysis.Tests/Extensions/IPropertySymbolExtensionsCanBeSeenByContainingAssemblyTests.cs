@@ -9,7 +9,7 @@ namespace Rocks.Analysis.Tests.Extensions;
 public static class IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests
 {
 	[Test]
-	public static void CallWhenPropertyCanBeSeen()
+	public static async Task CallWhenPropertyCanBeSeenAsync()
 	{
 		var code =
 			"""
@@ -18,13 +18,13 @@ public static class IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests
 				public string Data { get; }
 			}
 			""";
-		var (symbol, compilation) = IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol<PropertyDeclarationSyntax>(code);
+		var (symbol, compilation) = await IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync<PropertyDeclarationSyntax>(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 	}
 
 	[Test]
-	public static void CallWhenPropertyCannotSeen()
+	public static async Task CallWhenPropertyCannotSeenAsync()
 	{
 		var code =
 			"""
@@ -33,13 +33,13 @@ public static class IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests
 				private string Data { get; }
 			}
 			""";
-		var (symbol, compilation) = IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol<PropertyDeclarationSyntax>(code);
+		var (symbol, compilation) = await IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync<PropertyDeclarationSyntax>(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.False);
 	}
 
 	[Test]
-	public static void CallWhenPropertyTypeCanBeSeen()
+	public static async Task CallWhenPropertyTypeCanBeSeenAsync()
 	{
 		var code =
 			"""
@@ -50,13 +50,13 @@ public static class IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests
 				public Section Data { get; }
 			}
 			""";
-		var (symbol, compilation) = IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol<PropertyDeclarationSyntax>(code);
+		var (symbol, compilation) = await IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync<PropertyDeclarationSyntax>(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 	}
 
 	[Test]
-	public static void CallWhenPropertyTypeCannotSeen()
+	public static async Task CallWhenPropertyTypeCannotSeenAsync()
 	{
 		var code =
 			"""
@@ -67,13 +67,13 @@ public static class IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests
 				protected class Section { }
 			}
 			""";
-		var (symbol, compilation) = IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol<PropertyDeclarationSyntax>(code);
+		var (symbol, compilation) = await IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync<PropertyDeclarationSyntax>(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.False);
 	}
 
 	[Test]
-	public static void CallWhenIndexerParameterCanBeSeen()
+	public static async Task CallWhenIndexerParameterCanBeSeenAsync()
 	{
 		var code =
 			"""
@@ -84,13 +84,13 @@ public static class IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests
 				public string this[Section section] { get; }
 			}
 			""";
-		var (symbol, compilation) = IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol<IndexerDeclarationSyntax>(code);
+		var (symbol, compilation) = await IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync<IndexerDeclarationSyntax>(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 	}
 
 	[Test]
-	public static void CallWhenIndexerParameterCannotSeen()
+	public static async Task CallWhenIndexerParameterCannotSeenAsync()
 	{
 		var code =
 			"""
@@ -101,12 +101,12 @@ public static class IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests
 				protected class Section { }
 			}
 			""";
-		var (symbol, compilation) = IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol<IndexerDeclarationSyntax>(code);
+		var (symbol, compilation) = await IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync<IndexerDeclarationSyntax>(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.False);
 	}
 
-	private static (IPropertySymbol, Compilation) GetSymbol<TSyntax>(string source)
+	private static async Task<(IPropertySymbol, Compilation)> GetSymbolAsync<TSyntax>(string source)
 		where TSyntax : SyntaxNode
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
@@ -114,7 +114,7 @@ public static class IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		var propertySyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var propertySyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<TSyntax>().Single();
 		return ((IPropertySymbol)model.GetDeclaredSymbol(propertySyntax)!, compilation);
 	}

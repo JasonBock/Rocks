@@ -3,13 +3,14 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 using Rocks.Analysis.Models;
+using System.Threading.Tasks;
 
 namespace Rocks.Analysis.Tests.Models;
 
 public static class MethodModelTests
 {
 	[Test]
-	public static void Create()
+	public static async Task CreateAsync()
 	{
 		var code =
 			"""
@@ -21,13 +22,13 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(model.AttributesDescription, Is.Empty);
 			Assert.That(model.Constraints, Is.Empty);
 			Assert.That(model.ContainingType.FullyQualifiedName, Is.EqualTo("global::Target"));
@@ -64,7 +65,7 @@ public static class MethodModelTests
 	}
 
 	[Test]
-	public static void CreateWithAttributes()
+	public static async Task CreateWithAttributesAsync()
 	{
 		var code =
 			"""
@@ -79,7 +80,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -88,7 +89,7 @@ public static class MethodModelTests
 	}
 
 	[Test]
-	public static void CreateWithReturnTypeAttributes()
+	public static async Task CreateWithReturnTypeAttributesAsync()
 	{
 		var code =
 			"""
@@ -103,7 +104,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -112,7 +113,7 @@ public static class MethodModelTests
 	}
 
 	[Test]
-	public static void CreateWithReturnTypeWithTypeArguments()
+	public static async Task CreateWithReturnTypeWithTypeArgumentsAsync()
 	{
 		var code =
 			"""
@@ -126,20 +127,20 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(model.ReturnTypeTypeArguments, Has.Length.EqualTo(1));
 			Assert.That(model.ReturnTypeTypeArguments[0].FullyQualifiedName, Is.EqualTo("T"));
 		}
 	}
 
 	[Test]
-	public static void CreateWithExplicitInterfaceImplementation()
+	public static async Task CreateWithExplicitInterfaceImplementationAsync()
 	{
 		var code =
 			"""
@@ -151,7 +152,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -160,7 +161,7 @@ public static class MethodModelTests
 	}
 
 	[Test]
-	public static void CreateWithGenerics()
+	public static async Task CreateWithGenericsAsync()
 	{
 		var code =
 			"""
@@ -172,13 +173,13 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(model.Constraints, Has.Length.EqualTo(1));
 			Assert.That(model.Constraints[0].ToString(), Is.EqualTo("where T : class"));
 			Assert.That(model.DefaultConstraints, Has.Length.EqualTo(1));
@@ -188,7 +189,7 @@ public static class MethodModelTests
 	}
 
 	[Test]
-	public static void CreateWithAbstract()
+	public static async Task CreateWithAbstractAsync()
 	{
 		var code =
 			"""
@@ -200,7 +201,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -209,7 +210,7 @@ public static class MethodModelTests
 	}
 
 	[Test]
-	public static void CreateWithVoidReturn()
+	public static async Task CreateWithVoidReturnAsync()
 	{
 		var code =
 			"""
@@ -221,7 +222,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -230,7 +231,7 @@ public static class MethodModelTests
 	}
 
 	[Test]
-	public static void CreateWithRefReturn()
+	public static async Task CreateWithRefReturnAsync()
 	{
 		var code =
 			"""
@@ -244,7 +245,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -253,7 +254,7 @@ public static class MethodModelTests
 	}
 
 	[Test]
-	public static void CreateWithRefReadOnlyReturn()
+	public static async Task CreateWithRefReadOnlyReturnAsync()
 	{
 		var code =
 			"""
@@ -267,7 +268,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -276,7 +277,7 @@ public static class MethodModelTests
 	}
 
 	[Test]
-	public static void CreateWithTaskReturn()
+	public static async Task CreateWithTaskReturnAsync()
 	{
 		var code =
 			"""
@@ -290,7 +291,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -299,7 +300,7 @@ public static class MethodModelTests
 	}
 
 	[Test]
-	public static void CreateWithTaskOfTReturn()
+	public static async Task CreateWithTaskOfTReturnAsync()
 	{
 		var code =
 			"""
@@ -313,7 +314,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -322,7 +323,7 @@ public static class MethodModelTests
 	}
 
 	[Test]
-	public static void CreateWithTaskOfTAndIsNullForgivingReturn()
+	public static async Task CreateWithTaskOfTAndIsNullForgivingReturnAsync()
 	{
 		var code =
 			"""
@@ -336,7 +337,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -345,7 +346,7 @@ public static class MethodModelTests
 	}
 
 	[Test]
-	public static void CreateWithValueTaskReturn()
+	public static async Task CreateWithValueTaskReturnAsync()
 	{
 		var code =
 			"""
@@ -359,7 +360,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -368,7 +369,7 @@ public static class MethodModelTests
 	}
 
 	[Test]
-	public static void CreateWithValueTaskOfTReturn()
+	public static async Task CreateWithValueTaskOfTReturnAsync()
 	{
 		var code =
 			"""
@@ -382,7 +383,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -391,7 +392,7 @@ public static class MethodModelTests
 	}
 
 	[Test]
-	public static void CreateWithValueTaskOfTAndIsNullForgivingReturn()
+	public static async Task CreateWithValueTaskOfTAndIsNullForgivingReturnAsync()
 	{
 		var code =
 			"""
@@ -405,7 +406,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -414,7 +415,7 @@ public static class MethodModelTests
 	}
 
 	[Test]
-	public static void CreateWithVirtual()
+	public static async Task CreateWithVirtualAsync()
 	{
 		var code =
 			"""
@@ -426,7 +427,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -435,7 +436,7 @@ public static class MethodModelTests
 	}
 
 	[Test]
-	public static void CreateWithDoesNotReturn()
+	public static async Task CreateWithDoesNotReturnAsync()
 	{
 		var code =
 			"""
@@ -451,20 +452,20 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(model.IsMarkedWithDoesNotReturn, Is.True);
 			Assert.That(model.ShouldThrowDoesNotReturnException, Is.True);
 		}
 	}
 
 	[Test]
-	public static void CreateWithUnsafe()
+	public static async Task CreateWithUnsafeAsync()
 	{
 		var code =
 			"""
@@ -476,7 +477,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = MethodModelTests.GetSymbolsCompilation(code);
+		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -484,16 +485,16 @@ public static class MethodModelTests
 		Assert.That(model.IsUnsafe, Is.True);
 	}
 
-	private static (IMethodSymbol, ITypeSymbol, ModelContext) GetSymbolsCompilation(string code)
+	private static async Task<(IMethodSymbol, ITypeSymbol, ModelContext)> GetSymbolsCompilationAsync(string code)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
-
-		var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var root = await syntaxTree.GetRootAsync();
+		var typeSyntax = root.DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single();
-		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var methodSyntax = root.DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single();
 		return (model.GetDeclaredSymbol(methodSyntax)!, model.GetDeclaredSymbol(typeSyntax)!, new(model));
 	}

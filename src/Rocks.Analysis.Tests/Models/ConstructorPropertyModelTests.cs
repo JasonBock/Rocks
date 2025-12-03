@@ -3,13 +3,14 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 using Rocks.Analysis.Models;
+using System.Threading.Tasks;
 
 namespace Rocks.Analysis.Tests.Models;
 
 public static class ConstructorPropertyModelTests
 {
 	[Test]
-	public static void Create()
+	public static async Task CreateAsync()
 	{
 		var code =
 			"""
@@ -19,11 +20,11 @@ public static class ConstructorPropertyModelTests
 			}
 			""";
 
-		(var property, var modelContext) = ConstructorPropertyModelTests.GetSymbolsCompilation(code);
+		(var property, var modelContext) = await ConstructorPropertyModelTests.GetSymbolsCompilationAsync(code);
 		var model = new ConstructorPropertyModel(property, modelContext);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(model.Type.FullyQualifiedName, Is.EqualTo("string"));
 			Assert.That(model.Name, Is.EqualTo("Value"));
 			Assert.That(model.IsRequired, Is.False);
@@ -37,7 +38,7 @@ public static class ConstructorPropertyModelTests
 	}
 
 	[Test]
-	public static void CreateWithRequired()
+	public static async Task CreateWithRequiredAsync()
 	{
 		var code =
 			"""
@@ -47,14 +48,14 @@ public static class ConstructorPropertyModelTests
 			}
 			""";
 
-		(var property, var modelContext) = ConstructorPropertyModelTests.GetSymbolsCompilation(code);
+		(var property, var modelContext) = await ConstructorPropertyModelTests.GetSymbolsCompilationAsync(code);
 		var model = new ConstructorPropertyModel(property, modelContext);
 
 		Assert.That(model.IsRequired, Is.True);
 	}
 
 	[Test]
-	public static void CreateWithIndexer()
+	public static async Task CreateWithIndexerAsync()
 	{
 		var code =
 			"""
@@ -64,11 +65,11 @@ public static class ConstructorPropertyModelTests
 			}
 			""";
 
-		(var property, var modelContext) = ConstructorPropertyModelTests.GetSymbolsCompilationWithIndexer(code);
+		(var property, var modelContext) = await ConstructorPropertyModelTests.GetSymbolsCompilationWithIndexerAsync(code);
 		var model = new ConstructorPropertyModel(property, modelContext);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(model.IsIndexer, Is.True);
 			Assert.That(model.Parameters, Has.Length.EqualTo(1));
 			Assert.That(model.Parameters[0].Name, Is.EqualTo("data"));
@@ -76,7 +77,7 @@ public static class ConstructorPropertyModelTests
 	}
 
 	[Test]
-	public static void CreateWithNullableAnnotation()
+	public static async Task CreateWithNullableAnnotationAsync()
 	{
 		var code =
 			"""
@@ -86,14 +87,14 @@ public static class ConstructorPropertyModelTests
 			}
 			""";
 
-		(var property, var modelContext) = ConstructorPropertyModelTests.GetSymbolsCompilation(code);
+		(var property, var modelContext) = await ConstructorPropertyModelTests.GetSymbolsCompilationAsync(code);
 		var model = new ConstructorPropertyModel(property, modelContext);
 
 		Assert.That(model.NullableAnnotation, Is.EqualTo(NullableAnnotation.Annotated));
 	}
 
 	[Test]
-	public static void CreateWithValueType()
+	public static async Task CreateWithValueTypeAsync()
 	{
 		var code =
 			"""
@@ -103,36 +104,36 @@ public static class ConstructorPropertyModelTests
 			}
 			""";
 
-		(var property, var modelContext) = ConstructorPropertyModelTests.GetSymbolsCompilation(code);
+		(var property, var modelContext) = await ConstructorPropertyModelTests.GetSymbolsCompilationAsync(code);
 		var model = new ConstructorPropertyModel(property, modelContext);
 
 		Assert.That(model.IsReferenceType, Is.False);
 	}
 
-	private static (IPropertySymbol, ModelContext) GetSymbolsCompilation(string code)
+	private static async Task<(IPropertySymbol, ModelContext)> GetSymbolsCompilationAsync(string code)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
-
-		var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var root = await syntaxTree.GetRootAsync();
+		var typeSyntax = root.DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single();
-		var propertySyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var propertySyntax = root.DescendantNodes(_ => true)
 			.OfType<PropertyDeclarationSyntax>().Single();
 		return (model.GetDeclaredSymbol(propertySyntax)!, new(model));
 	}
 
-	private static (IPropertySymbol, ModelContext) GetSymbolsCompilationWithIndexer(string code)
+	private static async Task<(IPropertySymbol, ModelContext)> GetSymbolsCompilationWithIndexerAsync(string code)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
-
-		var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var root = await syntaxTree.GetRootAsync();
+		var typeSyntax = root.DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single();
-		var propertySyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var propertySyntax = root.DescendantNodes(_ => true)
 			.OfType<IndexerDeclarationSyntax>().Single();
 		return (model.GetDeclaredSymbol(propertySyntax)!, new(model));
 	}

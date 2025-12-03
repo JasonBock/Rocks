@@ -9,7 +9,7 @@ namespace Rocks.Analysis.Tests.Extensions;
 public static class IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests
 {
 	[Test]
-	public static void CallWhenMethodCanBeSeen()
+	public static async Task CallWhenMethodCanBeSeenAsync()
 	{
 		var code =
 			"""
@@ -18,13 +18,13 @@ public static class IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests
 				public void Foo() { }
 			}
 			""";
-		var (symbol, compilation) = IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
+		var (symbol, compilation) = await IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 	}
 
 	[Test]
-	public static void CallWhenMethodCannotBeSeen()
+	public static async Task CallWhenMethodCannotBeSeenAsync()
 	{
 		var code =
 			"""
@@ -33,13 +33,13 @@ public static class IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests
 				private void Foo() { }
 			}
 			""";
-		var (symbol, compilation) = IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
+		var (symbol, compilation) = await IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.False);
 	}
 
 	[Test]
-	public static void CallWhenMethodParameterTypeCanBeSeen()
+	public static async Task CallWhenMethodParameterTypeCanBeSeenAsync()
 	{
 		var code =
 			"""
@@ -50,13 +50,13 @@ public static class IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests
 				public void Foo(Section section) { }
 			}
 			""";
-		var (symbol, compilation) = IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
+		var (symbol, compilation) = await IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 	}
 
 	[Test]
-	public static void CallWhenMethodParameterTypeCannotBeSeen()
+	public static async Task CallWhenMethodParameterTypeCannotBeSeenAsync()
 	{
 		var code =
 			"""
@@ -67,13 +67,13 @@ public static class IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests
 				protected class Section { }
 			}
 			""";
-		var (symbol, compilation) = IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
+		var (symbol, compilation) = await IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.False);
 	}
 
 	[Test]
-	public static void CallWhenMethodReturnTypeCanBeSeen()
+	public static async Task CallWhenMethodReturnTypeCanBeSeenAsync()
 	{
 		var code =
 			"""
@@ -84,13 +84,13 @@ public static class IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests
 				public Section Foo() => default;
 			}
 			""";
-		var (symbol, compilation) = IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
+		var (symbol, compilation) = await IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 	}
 
 	[Test]
-	public static void CallWhenMethodReturnTypeCannotBeSeen()
+	public static async Task CallWhenMethodReturnTypeCannotBeSeenAsync()
 	{
 		var code =
 			"""
@@ -101,19 +101,19 @@ public static class IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests
 				protected class Section { }
 			}
 			""";
-		var (symbol, compilation) = IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
+		var (symbol, compilation) = await IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.False);
 	}
 
-	private static (IMethodSymbol, Compilation) GetSymbol(string source)
+	private static async Task<(IMethodSymbol, Compilation)> GetSymbolAsync(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var methodSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single();
 		return (model.GetDeclaredSymbol(methodSyntax)!, compilation);
 	}

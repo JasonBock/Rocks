@@ -3,13 +3,14 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 using Rocks.Analysis.Models;
+using System.Threading.Tasks;
 
 namespace Rocks.Analysis.Tests.Models;
 
 public static class ParameterModelTests
 {
 	[Test]
-	public static void Create()
+	public static async Task CreateAsync()
 	{
 		var code =
 			"""
@@ -19,11 +20,11 @@ public static class ParameterModelTests
 			}
 			""";
 
-		(var parameter, var modelContext) = ParameterModelTests.GetSymbolsCompilation(code);
+		(var parameter, var modelContext) = await ParameterModelTests.GetSymbolsCompilationAsync(code);
 		var model = new ParameterModel(parameter, modelContext);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(model.AttributesDescription, Is.Empty);
 			Assert.That(model.ExplicitDefaultValue, Is.Null);
 			Assert.That(model.HasExplicitDefaultValue, Is.False);
@@ -36,7 +37,7 @@ public static class ParameterModelTests
 	}
 
 	[Test]
-	public static void CreateWithAttributes()
+	public static async Task CreateWithAttributesAsync()
 	{
 		var code =
 			"""
@@ -48,14 +49,14 @@ public static class ParameterModelTests
 			}
 			""";
 
-		(var parameter, var modelContext) = ParameterModelTests.GetSymbolsCompilation(code);
+		(var parameter, var modelContext) = await ParameterModelTests.GetSymbolsCompilationAsync(code);
 		var model = new ParameterModel(parameter, modelContext);
 
 		Assert.That(model.AttributesDescription, Is.EqualTo("[global::System.Runtime.InteropServices.InAttribute]"));
 	}
 
 	[Test]
-	public static void CreateWithDefaultValues()
+	public static async Task CreateWithDefaultValuesAsync()
 	{
 		var code =
 			"""
@@ -67,18 +68,18 @@ public static class ParameterModelTests
 			}
 			""";
 
-		(var parameter, var modelContext) = ParameterModelTests.GetSymbolsCompilation(code);
+		(var parameter, var modelContext) = await ParameterModelTests.GetSymbolsCompilationAsync(code);
 		var model = new ParameterModel(parameter, modelContext);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(model.ExplicitDefaultValue, Is.EqualTo("\"data\""));
 			Assert.That(model.HasExplicitDefaultValue, Is.True);
 		}
 	}
 
 	[Test]
-	public static void CreateWithParams()
+	public static async Task CreateWithParamsAsync()
 	{
 		var code =
 			"""
@@ -90,14 +91,14 @@ public static class ParameterModelTests
 			}
 			""";
 
-		(var parameter, var modelContext) = ParameterModelTests.GetSymbolsCompilation(code);
+		(var parameter, var modelContext) = await ParameterModelTests.GetSymbolsCompilationAsync(code);
 		var model = new ParameterModel(parameter, modelContext);
 
 		Assert.That(model.IsParams, Is.True);
 	}
 
 	[Test]
-	public static void CreateWithRequiresNullableAnnotation()
+	public static async Task CreateWithRequiresNullableAnnotationAsync()
 	{
 		var code =
 			"""
@@ -109,22 +110,22 @@ public static class ParameterModelTests
 			}
 			""";
 
-		(var parameter, var modelContext) = ParameterModelTests.GetSymbolsCompilation(code);
+		(var parameter, var modelContext) = await ParameterModelTests.GetSymbolsCompilationAsync(code);
 		var model = new ParameterModel(parameter, modelContext);
 
 		Assert.That(model.RequiresNullableAnnotation, Is.True);
 	}
 
-	private static (IParameterSymbol, ModelContext) GetSymbolsCompilation(string code)
+	private static async Task<(IParameterSymbol, ModelContext)> GetSymbolsCompilationAsync(string code)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
-
-		var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var root = await syntaxTree.GetRootAsync();
+		var typeSyntax = root.DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single();
-		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var methodSyntax = root.DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single();
 		return (model.GetDeclaredSymbol(methodSyntax)!.Parameters[0], new(model));
 	}

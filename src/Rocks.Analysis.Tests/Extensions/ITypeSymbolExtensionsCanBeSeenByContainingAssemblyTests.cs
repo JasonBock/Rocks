@@ -9,7 +9,7 @@ namespace Rocks.Analysis.Tests.Extensions;
 public static class ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests
 {
 	[Test]
-	public static void CallWhenTypeCanBeSeen()
+	public static async Task CallWhenTypeCanBeSeenAsync()
 	{
 		var code =
 			"""
@@ -20,13 +20,13 @@ public static class ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests
 				public void Foo(Section section) { }
 			}
 			""";
-		var (symbol, compilation) = ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
+		var (symbol, compilation) = await ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 	}
 
 	[Test]
-	public static void CallWhenTypeCannotBeSeen()
+	public static async Task CallWhenTypeCannotBeSeenAsync()
 	{
 		var code =
 			"""
@@ -37,13 +37,13 @@ public static class ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests
 				protected class Section { }
 			}
 			""";
-		var (symbol, compilation) = ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
+		var (symbol, compilation) = await ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.False);
 	}
 
 	[Test]
-	public static void CallWhenGenericTypeCanBeSeen()
+	public static async Task CallWhenGenericTypeCanBeSeenAsync()
 	{
 		var code =
 			"""
@@ -56,13 +56,13 @@ public static class ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests
 				public void Foo(List<Section> sections) { }
 			}
 			""";
-		var (symbol, compilation) = ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
+		var (symbol, compilation) = await ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 	}
 
 	[Test]
-	public static void CallWhenGenericTypeCannotBeSeen()
+	public static async Task CallWhenGenericTypeCannotBeSeenAsync()
 	{
 		var code =
 			"""
@@ -75,19 +75,19 @@ public static class ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests
 				protected class Section { }
 			}
 			""";
-		var (symbol, compilation) = ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
+		var (symbol, compilation) = await ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.False);
 	}
 
-	private static (ITypeSymbol, Compilation) GetSymbol(string source)
+	private static async Task<(ITypeSymbol, Compilation)> GetSymbolAsync(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var methodSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single();
 		return (model.GetDeclaredSymbol(methodSyntax)!.Parameters[0].Type, compilation);
 	}

@@ -68,20 +68,20 @@ public static class ObjectExtensionsTests
 	[TestCase("public class Test { public void Foo(decimal value = decimal.One) { } }", "decimal.One")]
 	[TestCase("public class Test { public void Foo(decimal value = decimal.Zero) { } }", "decimal.Zero")]
 	[TestCase("public class Test { public void Foo(decimal value = 22) { } }", "22")]
-	public static void GetDefaultValue(string code, string expectedResult)
+	public static async Task GetDefaultValueAsync(string code, string expectedResult)
 	{
-		var (parameter, compilation) = ObjectExtensionsTests.GetParameterSymbol(code);
+		var (parameter, compilation) = await ObjectExtensionsTests.GetParameterSymbolAsync(code);
 		Assert.That(parameter.ExplicitDefaultValue.GetDefaultValue(parameter.Type, compilation), Is.EqualTo(expectedResult));
 	}
 
-	private static (IParameterSymbol, Compilation) GetParameterSymbol(string source)
+	private static async Task<(IParameterSymbol, Compilation)> GetParameterSymbolAsync(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var methodSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single();
 		return (model.GetDeclaredSymbol(methodSyntax)!.Parameters[0], compilation);
 	}

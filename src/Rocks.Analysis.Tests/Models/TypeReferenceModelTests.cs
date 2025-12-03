@@ -9,19 +9,19 @@ namespace Rocks.Analysis.Tests.Models;
 public static class TypeReferenceModelTests
 {
 	[Test]
-	public static void Create()
+	public static async Task CreateAsync()
 	{
-		var code = 
+		var code =
 			"""
 			namespace TargetNamespace; 
 			
 			public class Target { }
 			""";
-		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolAndCompilation(code);
+		(var type, var modelContext) = await TypeReferenceModelTests.GetSymbolAndCompilationAsync(code);
 		var model = modelContext.CreateTypeReference(type);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(model.AttributesDescription, Is.Empty);
 			Assert.That(model.FlattenedName, Is.EqualTo("Target"));
 			Assert.That(model.FullyQualifiedName, Is.EqualTo("global::TargetNamespace.Target"));
@@ -37,7 +37,7 @@ public static class TypeReferenceModelTests
 	}
 
 	[Test]
-	public static void CreateWithAttributesNotObsolete()
+	public static async Task CreateWithAttributesNotObsoleteAsync()
 	{
 		var code =
 			"""
@@ -48,14 +48,14 @@ public static class TypeReferenceModelTests
 			[Serializable]
 			public class Target { }
 			""";
-		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolAndCompilation(code);
+		(var type, var modelContext) = await TypeReferenceModelTests.GetSymbolAndCompilationAsync(code);
 		var model = modelContext.CreateTypeReference(type);
 
 		Assert.That(model.AttributesDescription, Is.Empty);
 	}
 
 	[Test]
-	public static void CreateWithObsoleteAttributes()
+	public static async Task CreateWithObsoleteAttributesAsync()
 	{
 		var code =
 			"""
@@ -66,14 +66,14 @@ public static class TypeReferenceModelTests
 			[Obsolete("old")]
 			public class Target { }
 			""";
-		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolAndCompilation(code);
+		(var type, var modelContext) = await TypeReferenceModelTests.GetSymbolAndCompilationAsync(code);
 		var model = modelContext.CreateTypeReference(type);
 
 		Assert.That(model.AttributesDescription, Is.EqualTo("""[type: global::System.ObsoleteAttribute("old")]"""));
 	}
 
 	[Test]
-	public static void CreateWithGenerics()
+	public static async Task CreateWithGenericsAsync()
 	{
 		var code =
 			"""
@@ -81,17 +81,17 @@ public static class TypeReferenceModelTests
 			
 			public class Target<T> { }
 			""";
-		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolAndCompilation(code);
+		(var type, var modelContext) = await TypeReferenceModelTests.GetSymbolAndCompilationAsync(code);
 		var model = modelContext.CreateTypeReference(type);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(model.FlattenedName, Is.EqualTo("Target"));
 		}
 	}
 
 	[Test]
-	public static void CreateBasedOnTypeParameter()
+	public static async Task CreateBasedOnTypeParameterAsync()
 	{
 		var code =
 			"""
@@ -102,18 +102,18 @@ public static class TypeReferenceModelTests
 				public void Go<T>(T target) { }
 			}
 			""";
-		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
+		(var type, var modelContext) = await TypeReferenceModelTests.GetSymbolReferenceAndCompilationAsync(code);
 		var model = modelContext.CreateTypeReference(type);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(model.IsBasedOnTypeParameter, Is.True);
 			Assert.That(model.RequiresProjectedArgument, Is.False);
 		}
 	}
 
 	[Test]
-	public static void CreateWithNullableAnnotations()
+	public static async Task CreateWithNullableAnnotationsAsync()
 	{
 		var code =
 			"""
@@ -126,18 +126,18 @@ public static class TypeReferenceModelTests
 				public void Go(Target? target) { }
 			}
 			""";
-		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
+		(var type, var modelContext) = await TypeReferenceModelTests.GetSymbolReferenceAndCompilationAsync(code);
 		var model = modelContext.CreateTypeReference(type);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(model.NullableAnnotation, Is.EqualTo(NullableAnnotation.Annotated));
 			Assert.That(model.RequiresProjectedArgument, Is.False);
 		}
 	}
 
 	[Test]
-	public static void CreateWithTypeThatDoesNotNeedProjection()
+	public static async Task CreateWithTypeThatDoesNotNeedProjectionAsync()
 	{
 		var code =
 			"""
@@ -148,14 +148,14 @@ public static class TypeReferenceModelTests
 				public unsafe void Go(string target) { }
 			}
 			""";
-		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
+		(var type, var modelContext) = await TypeReferenceModelTests.GetSymbolReferenceAndCompilationAsync(code);
 		var model = modelContext.CreateTypeReference(type);
 
 		Assert.That(model.RequiresProjectedArgument, Is.False);
 	}
 
 	[Test]
-	public static void CreateWithPointer()
+	public static async Task CreateWithPointerAsync()
 	{
 		var code =
 			"""
@@ -166,17 +166,17 @@ public static class TypeReferenceModelTests
 				public unsafe void Go(int* target) { }
 			}
 			""";
-		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
+		(var type, var modelContext) = await TypeReferenceModelTests.GetSymbolReferenceAndCompilationAsync(code);
 		var model = modelContext.CreateTypeReference(type);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(model.RequiresProjectedArgument, Is.True);
 			Assert.That(model.IsPointer, Is.True);
 		}
 	}
 
-	public static void CreateWithArgIterator()
+	public static async Task CreateWithArgIteratorAsync()
 	{
 		var code =
 			"""
@@ -189,13 +189,13 @@ public static class TypeReferenceModelTests
 				public void Go(ArgIterator target) { }
 			}
 			""";
-		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
+		(var type, var modelContext) = await TypeReferenceModelTests.GetSymbolReferenceAndCompilationAsync(code);
 		var model = modelContext.CreateTypeReference(type);
 
 		Assert.That(model.RequiresProjectedArgument, Is.True);
 	}
 
-	public static void CreateWithRuntimeArgumentHandle()
+	public static async Task CreateWithRuntimeArgumentHandleAsync()
 	{
 		var code =
 			"""
@@ -208,13 +208,13 @@ public static class TypeReferenceModelTests
 				public void Go(RuntimeArgumentHandle target) { }
 			}
 			""";
-		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
+		(var type, var modelContext) = await TypeReferenceModelTests.GetSymbolReferenceAndCompilationAsync(code);
 		var model = modelContext.CreateTypeReference(type);
 
 		Assert.That(model.RequiresProjectedArgument, Is.True);
 	}
 
-	public static void CreateWithTypedReference()
+	public static async Task CreateWithTypedReferenceAsync()
 	{
 		var code =
 			"""
@@ -227,14 +227,14 @@ public static class TypeReferenceModelTests
 				public void Go(TypedReference target) { }
 			}
 			""";
-		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
+		(var type, var modelContext) = await TypeReferenceModelTests.GetSymbolReferenceAndCompilationAsync(code);
 		var model = modelContext.CreateTypeReference(type);
 
 		Assert.That(model.RequiresProjectedArgument, Is.True);
 	}
 
 	[Test]
-	public static void CreateWithRefLikeType()
+	public static async Task CreateWithRefLikeTypeAsync()
 	{
 		var code =
 			"""
@@ -247,49 +247,49 @@ public static class TypeReferenceModelTests
 				public void Go(Span<int> target) { }
 			}
 			""";
-		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
+		(var type, var modelContext) = await TypeReferenceModelTests.GetSymbolReferenceAndCompilationAsync(code);
 		var model = modelContext.CreateTypeReference(type);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(model.RequiresProjectedArgument, Is.False);
 			Assert.That(model.IsRefLikeType, Is.True);
 		}
 	}
 
 	[Test]
-	public static void CreateWithRecord()
+	public static async Task CreateWithRecordAsync()
 	{
 		var code =
 			"""
 			public record Target;
 			""";
-		(var type, var modelContext) = TypeReferenceModelTests.GetSymbolAndCompilation(code);
+		(var type, var modelContext) = await TypeReferenceModelTests.GetSymbolAndCompilationAsync(code);
 		var model = modelContext.CreateTypeReference(type);
 
 		Assert.That(model.IsRecord, Is.True);
 	}
 
-	private static (ITypeSymbol, ModelContext) GetSymbolAndCompilation(string code)
+	private static async Task<(ITypeSymbol, ModelContext)> GetSymbolAndCompilationAsync(string code)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var typeSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single();
 		return (model.GetDeclaredSymbol(typeSyntax)!, new(model));
 	}
 
-	private static (ITypeSymbol, ModelContext) GetSymbolReferenceAndCompilation(string code)
+	private static async Task<(ITypeSymbol, ModelContext)> GetSymbolReferenceAndCompilationAsync(string code)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var methodSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single();
 		return (model.GetDeclaredSymbol(methodSyntax)!.Parameters[0].Type, new(model));
 	}

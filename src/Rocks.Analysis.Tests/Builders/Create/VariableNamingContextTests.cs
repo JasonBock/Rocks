@@ -49,9 +49,9 @@ public static class VariableNamingContextTests
 	}
 
 	[Test]
-	public static void AddWhenThereAreNoParameters()
+	public static async Task AddWhenThereAreNoParametersAsync()
 	{
-		(var method, var modelContext) = VariableNamingContextTests.GetMethod("public class Method { public void Foo() { } }");
+		(var method, var modelContext) = await VariableNamingContextTests.GetMethodAsync("public class Method { public void Foo() { } }");
 		var model = new MethodModel(method, modelContext.CreateTypeReference(method.ContainingType), modelContext,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
@@ -61,9 +61,9 @@ public static class VariableNamingContextTests
 	}
 
 	[Test]
-	public static void AddWhenThereIsNoMatchInParametersOrVariables()
+	public static async Task AddWhenThereIsNoMatchInParametersOrVariablesAsync()
 	{
-		(var method, var modelContext) = VariableNamingContextTests.GetMethod("public class Method { public void Foo(int a) { } }");
+		(var method, var modelContext) = await VariableNamingContextTests.GetMethodAsync("public class Method { public void Foo(int a) { } }");
 		var model = new MethodModel(method, modelContext.CreateTypeReference(method.ContainingType), modelContext,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
@@ -73,9 +73,9 @@ public static class VariableNamingContextTests
 	}
 
 	[Test]
-	public static void AddWhenThereIsMatchInParameters()
+	public static async Task AddWhenThereIsMatchInParametersAsync()
 	{
-		(var method, var modelContext) = VariableNamingContextTests.GetMethod("public class Method { public void Foo(int a) { } }");
+		(var method, var modelContext) = await VariableNamingContextTests.GetMethodAsync("public class Method { public void Foo(int a) { } }");
 		var model = new MethodModel(method, modelContext.CreateTypeReference(method.ContainingType), modelContext,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
@@ -85,9 +85,9 @@ public static class VariableNamingContextTests
 	}
 
 	[Test]
-	public static void AddWhenVariableCurrentlyExists()
+	public static async Task AddWhenVariableCurrentlyExistsAsync()
 	{
-		(var method, var modelContext) = VariableNamingContextTests.GetMethod("public class Method { public void Foo(int a) { } }");
+		(var method, var modelContext) = await VariableNamingContextTests.GetMethodAsync("public class Method { public void Foo(int a) { } }");
 		var model = new MethodModel(method, modelContext.CreateTypeReference(method.ContainingType), modelContext,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
@@ -98,9 +98,9 @@ public static class VariableNamingContextTests
 	}
 
 	[Test]
-	public static void AddWhenThereAreMultipleMatchesInParameters()
+	public static async Task AddWhenThereAreMultipleMatchesInParametersAsync()
 	{
-		(var method, var modelContext) = VariableNamingContextTests.GetMethod("public class Method { public void Foo(int a, int a1) { } }");
+		(var method, var modelContext) = await VariableNamingContextTests.GetMethodAsync("public class Method { public void Foo(int a, int a1) { } }");
 		var model = new MethodModel(method, modelContext.CreateTypeReference(method.ContainingType), modelContext,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
@@ -110,9 +110,9 @@ public static class VariableNamingContextTests
 	}
 
 	[Test]
-	public static void AddWhenThereAreMultipleMatchesInParametersAndVariables()
+	public static async Task AddWhenThereAreMultipleMatchesInParametersAndVariablesAsync()
 	{
-		(var method, var modelContext) = VariableNamingContextTests.GetMethod("public class Method { public void Foo(int a, int a1) { } }");
+		(var method, var modelContext) = await VariableNamingContextTests.GetMethodAsync("public class Method { public void Foo(int a, int a1) { } }");
 		var model = new MethodModel(method, modelContext.CreateTypeReference(method.ContainingType), modelContext,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
@@ -123,14 +123,14 @@ public static class VariableNamingContextTests
 		Assert.That(variable, Is.EqualTo("a4"));
 	}
 
-	private static (IMethodSymbol, ModelContext) GetMethod(string source)
+	private static async Task<(IMethodSymbol, ModelContext)> GetMethodAsync(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		return (model.GetDeclaredSymbol(syntaxTree.GetRoot().DescendantNodes(_ => true)
+		return (model.GetDeclaredSymbol((await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single())!, new(model));
 	}
 }

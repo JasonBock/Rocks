@@ -14,9 +14,9 @@ public static class MockModelTests
 	[TestCase("using System; [Obsolete(\"Old\", error: true)]public class DoNotUse { } public class UsesObsolete { public virtual DoNotUse ObsoleteProperty { get; } }")]
 	[TestCase("using System; [Obsolete(\"Old\", error: true)]public class DoNotUse { } public class UsesObsolete { public virtual DoNotUse ObsoleteProperty { get; } }")]
 	[TestCase("using System; [Obsolete(\"Old\", error: true)]public class DoNotUse { } public class UsesObsolete { public virtual int this[DoNotUse value] { get; } }")]
-	public static void CreateWhenMemberUsesObsoleteType(string code)
+	public static async Task CreateWhenMemberUsesObsoleteTypeAsync(string code)
 	{
-		var model = MockModelTests.GetModel(code, "UsesObsolete", BuildType.Create);
+		var model = await MockModelTests.GetModelAsync(code, "UsesObsolete", BuildType.Create);
 		Assert.That(model.Information, Is.Null);
 	}
 
@@ -40,10 +40,10 @@ public static class MockModelTests
 	[TestCase("public interface InternalTargets { void VisibleWork(); internal void Work() { } }", (int)BuildType.Make, true)]
 	[TestCase("public abstract class InternalTargets { public abstract string VisibleWork { get; } internal virtual string Work { get; } }", (int)BuildType.Make, false)]
 	[TestCase("using System; public abstract class InternalTargets { public abstract event EventHandler VisibleWork; internal virtual event EventHandler Work; }", (int)BuildType.Make, false)]
-	public static void CreateWhenTargetHasInternalAbstractMembers(string code, int buildType, bool isMockNull)
+	public static async Task CreateWhenTargetHasInternalAbstractMembersAsync(string code, int buildType, bool isMockNull)
 	{
 		const string targetTypeName = "InternalTargets";
-		var (invocation, internalSymbol, internalModel) = MockModelTests.GetType(code, targetTypeName);
+		var (invocation, internalSymbol, internalModel) = await MockModelTests.GetTypeAsync(code, targetTypeName);
 
 		var syntaxTree = CSharpSyntaxTree.ParseText(
 			$"public class Target {{ public void Test({targetTypeName} a) {{ }} }}");
@@ -60,7 +60,7 @@ public static class MockModelTests
 			references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var compilationModel = compilation.GetSemanticModel(syntaxTree, true);
 		var parameterSymbol = compilationModel.GetDeclaredSymbol(
-			syntaxTree.GetRoot().DescendantNodes(_ => true).OfType<ParameterSyntax>().Single());
+			(await syntaxTree.GetRootAsync()).DescendantNodes(_ => true).OfType<ParameterSyntax>().Single());
 
 		var model = MockModel.Create(invocation, parameterSymbol!.Type, null, new(compilationModel), (BuildType)buildType, true);
 
@@ -68,7 +68,7 @@ public static class MockModelTests
 	}
 
 	[Test]
-	public static void CreateWhenInterfaceHasStaticAbstractMethod()
+	public static async Task CreateWhenInterfaceHasStaticAbstractMethodAsync()
 	{
 		const string targetTypeName = "IHaveStaticAbstractMethod";
 		var code =
@@ -78,65 +78,65 @@ public static class MockModelTests
 				static abstract void Foo();
 			}
 			""";
-		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
+		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		Assert.That(model.Information, Is.Null);
 	}
 
 	[Test]
-	public static void CreateWhenClassDerivesFromEnum()
+	public static async Task CreateWhenClassDerivesFromEnumAsync()
 	{
 		const string targetTypeName = "EnumType";
 		var code = $"public enum {targetTypeName} {{ }}";
-		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
+		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		Assert.That(model.Information, Is.Null);
 	}
 
 	[Test]
-	public static void CreateWhenClassIsEnum()
+	public static async Task CreateWhenClassIsEnumAsync()
 	{
 		const string targetTypeName = "EnumType";
 		var code = $"public enum {targetTypeName} {{ }}";
-		var (invocation, type, semanticModel) = MockModelTests.GetType(code, targetTypeName);
+		var (invocation, type, semanticModel) = await MockModelTests.GetTypeAsync(code, targetTypeName);
 		var model = MockModel.Create(invocation, type.BaseType!, null, semanticModel, BuildType.Create, true);
 
 		Assert.That(model.Information, Is.Null);
 	}
 
 	[Test]
-	public static void CreateWhenClassIsValueType()
+	public static async Task CreateWhenClassIsValueTypeAsync()
 	{
 		const string targetTypeName = "ValueTypeType";
 		var code = $"public struct {targetTypeName} {{ }}";
-		var (invocation, type, semanticModel) = MockModelTests.GetType(code, targetTypeName);
+		var (invocation, type, semanticModel) = await MockModelTests.GetTypeAsync(code, targetTypeName);
 		var model = MockModel.Create(invocation, type.BaseType!, null, semanticModel, BuildType.Create, true);
 
 		Assert.That(model.Information, Is.Null);
 	}
 
 	[Test]
-	public static void CreateWhenClassDerivesFromValueType()
+	public static async Task CreateWhenClassDerivesFromValueTypeAsync()
 	{
 		const string targetTypeName = "StructType";
 		var code = $"public struct {targetTypeName} {{ }}";
-		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
+		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		Assert.That(model.Information, Is.Null);
 	}
 
 	[Test]
-	public static void CreateWhenClassIsSealed()
+	public static async Task CreateWhenClassIsSealedAsync()
 	{
 		const string targetTypeName = "SealedType";
 		var code = $"public sealed class {targetTypeName} {{ }}";
-		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
+		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		Assert.That(model.Information, Is.Null);
 	}
 
 	[Test]
-	public static void CreateWhenTypeIsObsoleteAndErrorIsTrue()
+	public static async Task CreateWhenTypeIsObsoleteAndErrorIsTrueAsync()
 	{
 		const string targetTypeName = "ObsoleteType";
 		var code =
@@ -147,13 +147,13 @@ public static class MockModelTests
 			public class {{targetTypeName}} { }
 			""";
 
-		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
+		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		Assert.That(model.Information, Is.Null);
 	}
 
 	[Test]
-	public static void CreateWhenTypeIsObsoleteAndErrorIsSetToFalseAndTreatWarningsAsErrorsAsTrue()
+	public static async Task CreateWhenTypeIsObsoleteAndErrorIsSetToFalseAndTreatWarningsAsErrorsAsTrueAsync()
 	{
 		const string targetTypeName = "ObsoleteType";
 		var code =
@@ -164,13 +164,13 @@ public static class MockModelTests
 			public class {{targetTypeName}} { }
 			""";
 
-		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
+		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		Assert.That(model.Information, Is.Not.Null);
 	}
 
 	[Test]
-	public static void CreateWhenTypeIsObsoleteAndErrorIsSetToFalseAndTreatWarningsAsErrorsAsFalse()
+	public static async Task CreateWhenTypeIsObsoleteAndErrorIsSetToFalseAndTreatWarningsAsErrorsAsFalseAsync()
 	{
 		const string targetTypeName = "ObsoleteType";
 		var code =
@@ -184,27 +184,27 @@ public static class MockModelTests
 			}
 			""";
 
-		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create, ReportDiagnostic.Default);
+		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create, ReportDiagnostic.Default);
 
 		Assert.That(model.Information, Is.Not.Null);
 	}
 
 	[Test]
-	public static void CreateWhenClassDerivesFromDelegate()
+	public static async Task CreateWhenClassDerivesFromDelegateAsync()
 	{
 		const string targetTypeName = "MySpecialMethod";
 		var code = $"public delegate void {targetTypeName}();";
-		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
+		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		Assert.That(model.Information, Is.Null);
 	}
 
 	[Test]
-	public static void CreateWhenClassIsMulticastDelegate()
+	public static async Task CreateWhenClassIsMulticastDelegateAsync()
 	{
 		const string targetTypeName = "MySpecialMethod";
 		var code = $"public delegate void {targetTypeName}();";
-		var (invocation, type, semanticModel) = MockModelTests.GetType(code, targetTypeName);
+		var (invocation, type, semanticModel) = await MockModelTests.GetTypeAsync(code, targetTypeName);
 
 		while (type is not null && type.SpecialType != SpecialType.System_MulticastDelegate)
 		{
@@ -217,11 +217,11 @@ public static class MockModelTests
 	}
 
 	[Test]
-	public static void CreateWhenClassIsDelegate()
+	public static async Task CreateWhenClassIsDelegateAsync()
 	{
 		const string targetTypeName = "MySpecialMethod";
 		var code = $"public delegate void {targetTypeName}();";
-		var (invocation, type, semanticModel) = MockModelTests.GetType(code, targetTypeName);
+		var (invocation, type, semanticModel) = await MockModelTests.GetTypeAsync(code, targetTypeName);
 
 		while (type is not null && type.SpecialType != SpecialType.System_Delegate)
 		{
@@ -234,7 +234,7 @@ public static class MockModelTests
 	}
 
 	[Test]
-	public static void CreateWhenClassHasNoMockableMembers()
+	public static async Task CreateWhenClassHasNoMockableMembersAsync()
 	{
 		const string targetTypeName = "NoMockables";
 		var code =
@@ -247,13 +247,13 @@ public static class MockModelTests
 			}
 			""";
 
-		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
+		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		Assert.That(model.Information, Is.Null);
 	}
 
 	[Test]
-	public static void CreateWhenClassHasNoMockableMembersAndBuildTypeIsMake()
+	public static async Task CreateWhenClassHasNoMockableMembersAndBuildTypeIsMakeAsync()
 	{
 		const string targetTypeName = "NoMockables";
 		var code =
@@ -266,35 +266,35 @@ public static class MockModelTests
 			}
 			""";
 
-		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Make);
+		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Make);
 
 		Assert.That(model.Information, Is.Not.Null);
 	}
 
 	[Test]
-	public static void CreateWhenInterfaceHasNoMockableMembers()
+	public static async Task CreateWhenInterfaceHasNoMockableMembersAsync()
 	{
 		const string targetTypeName = "NoMockables";
 		var code = $"public interface {targetTypeName} {{ }}";
 
-		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
+		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		Assert.That(model.Information, Is.Null);
 	}
 
 	[Test]
-	public static void CreateWhenInterfaceHasNoMockableMembersAndBuildTypeIsMake()
+	public static async Task CreateWhenInterfaceHasNoMockableMembersAndBuildTypeIsMakeAsync()
 	{
 		const string targetTypeName = "NoMockables";
 		var code = $"public interface {targetTypeName} {{ }}";
 
-		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Make);
+		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Make);
 
 		Assert.That(model.Information, Is.Not.Null);
 	}
 
 	[Test]
-	public static void CreateWhenClassHasNoAccessibleConstructors()
+	public static async Task CreateWhenClassHasNoAccessibleConstructorsAsync()
 	{
 		const string targetTypeName = "SealedType";
 		var code =
@@ -304,13 +304,13 @@ public static class MockModelTests
 				private {{targetTypeName}}() { }
 			}
 			""";
-		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
+		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		Assert.That(model.Information, Is.Null);
 	}
 
 	[Test]
-	public static void CreateWhenInterfaceHasMethods()
+	public static async Task CreateWhenInterfaceHasMethodsAsync()
 	{
 		const string targetTypeName = "InterfaceWithMembers";
 		var code =
@@ -322,10 +322,10 @@ public static class MockModelTests
 				void Foo();
 			}
 			""";
-		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
+		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(model!.Diagnostics, Is.Empty);
 			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(0));
 			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(1));
@@ -335,7 +335,7 @@ public static class MockModelTests
 	}
 
 	[Test]
-	public static void CreateWhenInterfaceHasProperties()
+	public static async Task CreateWhenInterfaceHasPropertiesAsync()
 	{
 		const string targetTypeName = "InterfaceWithMembers";
 		var code =
@@ -347,10 +347,10 @@ public static class MockModelTests
 				string Data { get; set; }
 			}
 			""";
-		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
+		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(model!.Diagnostics, Is.Empty);
 			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(0));
 			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(0));
@@ -360,7 +360,7 @@ public static class MockModelTests
 	}
 
 	[Test]
-	public static void CreateWhenInterfaceHasEvents()
+	public static async Task CreateWhenInterfaceHasEventsAsync()
 	{
 		const string targetTypeName = "InterfaceWithMembers";
 		var code =
@@ -373,10 +373,10 @@ public static class MockModelTests
 				event EventHandler TargetEvent;
 			}
 			""";
-		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
+		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(model!.Diagnostics, Is.Empty);
 			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(0));
 			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(1));
@@ -386,7 +386,7 @@ public static class MockModelTests
 	}
 
 	[Test]
-	public static void CreateWhenInterfaceAndBaseInterfaceHasIndexers()
+	public static async Task CreateWhenInterfaceAndBaseInterfaceHasIndexersAsync()
 	{
 		const string targetTypeName = "InterfaceWithMembers";
 		var code =
@@ -404,10 +404,10 @@ public static class MockModelTests
 				int this[string key, int value] { get; }
 			}
 			""";
-		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
+		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(model!.Diagnostics, Is.Empty);
 			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(0));
 			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(0));
@@ -417,7 +417,7 @@ public static class MockModelTests
 	}
 
 	[Test]
-	public static void CreateWhenClassHasMethods()
+	public static async Task CreateWhenClassHasMethodsAsync()
 	{
 		const string targetTypeName = "ClassWithMembers";
 		const string fooMethodName = "Foo";
@@ -431,10 +431,10 @@ public static class MockModelTests
 				public virtual void {{fooMethodName}}() { }
 			}
 			""";
-		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
+		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(model!.Diagnostics, Is.Empty);
 			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(1));
 			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(4));
@@ -457,7 +457,7 @@ public static class MockModelTests
 	}
 
 	[Test]
-	public static void CreateWhenClassHasProperties()
+	public static async Task CreateWhenClassHasPropertiesAsync()
 	{
 		const string targetTypeName = "ClassWithMembers";
 		var code =
@@ -469,10 +469,10 @@ public static class MockModelTests
 				public virtual string Data { get; set; }
 			}
 			""";
-		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
+		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(1));
 			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(3));
 
@@ -491,7 +491,7 @@ public static class MockModelTests
 	}
 
 	[Test]
-	public static void CreateWhenClassHasEvents()
+	public static async Task CreateWhenClassHasEventsAsync()
 	{
 		const string targetTypeName = "ClassWithMembers";
 
@@ -504,10 +504,10 @@ public static class MockModelTests
 				public virtual event EventHandler TargetEvent;
 			}
 			""";
-		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
+		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(1));
 			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(3));
 
@@ -526,7 +526,7 @@ public static class MockModelTests
 	}
 
 	[Test]
-	public static void CreateWhenClassHasConstructors()
+	public static async Task CreateWhenClassHasConstructorsAsync()
 	{
 		const string targetTypeName = "ClassWithMembers";
 		var code =
@@ -542,10 +542,10 @@ public static class MockModelTests
 				public virtual event EventHandler TargetEvent;
 			}
 			""";
-		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
+		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(2));
 			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(3));
 
@@ -563,7 +563,7 @@ public static class MockModelTests
 		}
 	}
 
-	private static (InvocationExpressionSyntax, ITypeSymbol, ModelContext) GetType(string source, string targetTypeName,
+	private static async Task<(InvocationExpressionSyntax, ITypeSymbol, ModelContext)> GetTypeAsync(string source, string targetTypeName,
 		ReportDiagnostic generalDiagnosticOption = ReportDiagnostic.Error)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
@@ -573,7 +573,7 @@ public static class MockModelTests
 			references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, generalDiagnosticOption: generalDiagnosticOption));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		var descendantNodes = syntaxTree.GetRoot().DescendantNodes(_ => true);
+		var descendantNodes = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true);
 
 #pragma warning disable CA1851 // Possible multiple enumerations of 'IEnumerable' collection
 		if (descendantNodes.OfType<BaseTypeDeclarationSyntax>()
@@ -589,11 +589,11 @@ public static class MockModelTests
 		return (invocation, (model.GetDeclaredSymbol(typeSyntax)! as ITypeSymbol)!, new(model));
 	}
 
-	private static MockModel GetModel(string source, string targetTypeName,
+	private static async Task<MockModel> GetModelAsync(string source, string targetTypeName,
 		BuildType buildType, ReportDiagnostic generalDiagnosticOption = ReportDiagnostic.Error)
 	{
-		var (invocation, typeSymbol, modelContext) = 
-			MockModelTests.GetType(source, targetTypeName, generalDiagnosticOption);
+		var (invocation, typeSymbol, modelContext) =
+			await MockModelTests.GetTypeAsync(source, targetTypeName, generalDiagnosticOption);
 		return MockModel.Create(invocation, typeSymbol!, null, modelContext, buildType, true);
 	}
 }

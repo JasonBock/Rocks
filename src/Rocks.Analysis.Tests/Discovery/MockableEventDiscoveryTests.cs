@@ -9,7 +9,7 @@ namespace Rocks.Analysis.Tests.Discovery;
 public static class MockableEventDiscoveryTests
 {
 	[Test]
-	public static void GetMockableEventsFromAbstractClass()
+	public static async Task GetMockableEventsFromAbstractClassAsync()
 	{
 		const string targetTypeName = "TestClass";
 
@@ -23,11 +23,11 @@ public static class MockableEventDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = await MockableEventDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var events = result.Results;
 			Assert.That(events, Has.Length.EqualTo(1));
@@ -39,7 +39,7 @@ public static class MockableEventDiscoveryTests
 	}
 
 	[Test]
-	public static void GetMockableEventsFromClassWithVirtualEvent()
+	public static async Task GetMockableEventsFromClassWithVirtualEventAsync()
 	{
 		const string targetTypeName = "TestClass";
 
@@ -53,11 +53,11 @@ public static class MockableEventDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = await MockableEventDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var events = result.Results;
 			Assert.That(events, Has.Length.EqualTo(1));
@@ -69,7 +69,7 @@ public static class MockableEventDiscoveryTests
 	}
 
 	[Test]
-	public static void GetMockableEventsFromClassWithNonVirtualAndStaticEvents()
+	public static async Task GetMockableEventsFromClassWithNonVirtualAndStaticEventsAsync()
 	{
 		const string targetTypeName = "TestClass";
 
@@ -85,11 +85,11 @@ public static class MockableEventDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = await MockableEventDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var events = result.Results;
 			Assert.That(events, Has.Length.EqualTo(1));
@@ -101,7 +101,7 @@ public static class MockableEventDiscoveryTests
 	}
 
 	[Test]
-	public static void GetMockableEventsFromInterface()
+	public static async Task GetMockableEventsFromInterfaceAsync()
 	{
 		const string targetTypeName = "ITest";
 
@@ -115,11 +115,11 @@ public static class MockableEventDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = await MockableEventDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var events = result.Results;
 			Assert.That(events, Has.Length.EqualTo(1));
@@ -131,7 +131,7 @@ public static class MockableEventDiscoveryTests
 	}
 
 	[Test]
-	public static void GetMockableEventsFromInterfaceWithStaticMember()
+	public static async Task GetMockableEventsFromInterfaceWithStaticMemberAsync()
 	{
 		const string targetTypeName = "ITest";
 
@@ -146,11 +146,11 @@ public static class MockableEventDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = await MockableEventDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var events = result.Results;
 			Assert.That(events, Has.Length.EqualTo(1));
@@ -162,7 +162,7 @@ public static class MockableEventDiscoveryTests
 	}
 
 	[Test]
-	public static void GetMockableEventsFromInterfaceWithBaseInterface()
+	public static async Task GetMockableEventsFromInterfaceWithBaseInterfaceAsync()
 	{
 		const string targetTypeName = "ITest";
 
@@ -182,11 +182,11 @@ public static class MockableEventDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = await MockableEventDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var events = result.Results;
 			Assert.That(events, Has.Length.EqualTo(2));
@@ -202,7 +202,7 @@ public static class MockableEventDiscoveryTests
 	}
 
 	[Test]
-	public static void GetMockableEventsFromInterfaceWithBaseInterfacesThatDuplicateNames()
+	public static async Task GetMockableEventsFromInterfaceWithBaseInterfacesThatDuplicateNamesAsync()
 	{
 		const string targetTypeName = "ITest";
 
@@ -227,11 +227,11 @@ public static class MockableEventDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = await MockableEventDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var events = result.Results;
 			Assert.That(events, Has.Length.EqualTo(3));
@@ -250,14 +250,14 @@ public static class MockableEventDiscoveryTests
 		}
 	}
 
-	private static (ITypeSymbol, Compilation) GetTypeSymbol(string source, string targetTypeName)
+	private static async Task<(ITypeSymbol, Compilation)> GetTypeSymbolAsync(string source, string targetTypeName)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var typeSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single(_ => _.Identifier.Text == targetTypeName);
 		return (model.GetDeclaredSymbol(typeSyntax)!, compilation);
 	}

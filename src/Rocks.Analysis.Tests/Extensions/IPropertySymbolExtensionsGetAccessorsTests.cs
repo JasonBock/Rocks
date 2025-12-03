@@ -12,21 +12,21 @@ internal static class IPropertySymbolExtensionsGetAccessorsTests
 	[TestCase("public class Target { public int Foo { get; init; } }", PropertyAccessor.GetAndInit)]
 	[TestCase("public class Target { public int Foo { set; } }", PropertyAccessor.Set)]
 	[TestCase("public class Target { public int Foo { init; } }", PropertyAccessor.Init)]
-	public static void IsUnsafe(string code, PropertyAccessor expectedValue)
+	public static async Task IsUnsafeAsync(string code, PropertyAccessor expectedValue)
 	{
-		var propertySymbol = IPropertySymbolExtensionsGetAccessorsTests.GetPropertySymbol(code);
+		var propertySymbol = await IPropertySymbolExtensionsGetAccessorsTests.GetPropertySymbolAsync(code);
 
 		Assert.That(propertySymbol.GetAccessors(), Is.EqualTo(expectedValue));
 	}
 
-	private static IPropertySymbol GetPropertySymbol(string source)
+	private static async Task<IPropertySymbol> GetPropertySymbolAsync(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		var propertySyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var propertySyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.Single(_ => _.IsKind(SyntaxKind.IndexerDeclaration) || _.IsKind(SyntaxKind.PropertyDeclaration));
 		return (model.GetDeclaredSymbol(propertySyntax) as IPropertySymbol)!;
 	}

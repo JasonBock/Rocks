@@ -9,7 +9,7 @@ namespace Rocks.Analysis.Tests.Discovery;
 public static class MockableConstructorDiscoveryTests
 {
 	[Test]
-	public static void GetMockableConstructorsForClass()
+	public static async Task GetMockableConstructorsForClassAsync()
 	{
 		var code =
 			"""
@@ -18,14 +18,14 @@ public static class MockableConstructorDiscoveryTests
 				public Target() { }
 			}
 			""";
-		var (typeSymbol, obsoleteAttribute, compilation) = GetTypeSymbol(code);
+		var (typeSymbol, obsoleteAttribute, compilation) = await MockableConstructorDiscoveryTests.GetTypeSymbolAsync(code);
 		var constructors = new MockableConstructorDiscovery(typeSymbol, typeSymbol.ContainingAssembly, obsoleteAttribute, compilation).Constructors;
 
 		Assert.That(constructors, Has.Length.EqualTo(1));
 	}
 
 	[Test]
-	public static void GetMockableConstructorsForClassWhereConstructorCannotBeSeenByInvocationAssembly()
+	public static async Task GetMockableConstructorsForClassWhereConstructorCannotBeSeenByInvocationAssemblyAsync()
 	{
 		var code =
 			"""
@@ -34,7 +34,7 @@ public static class MockableConstructorDiscoveryTests
 				internal Target() { }
 			}
 			""";
-		var (typeSymbol, obsoleteAttribute, compilation) = GetTypeSymbol(code);
+		var (typeSymbol, obsoleteAttribute, compilation) = await MockableConstructorDiscoveryTests.GetTypeSymbolAsync(code);
 
 		var containingSyntaxTree = CSharpSyntaxTree.ParseText("public class Containing { }");
 		var containingCompilation = CSharpCompilation.Create("InvocationAssembly", [containingSyntaxTree],
@@ -46,23 +46,23 @@ public static class MockableConstructorDiscoveryTests
 	}
 
 	[Test]
-	public static void GetMockableConstructorsForInterface()
+	public static async Task GetMockableConstructorsForInterfaceAsync()
 	{
 		var code = "public interface Target { }";
-		var (typeSymbol, obsoleteAttribute, compilation) = GetTypeSymbol(code);
+		var (typeSymbol, obsoleteAttribute, compilation) = await MockableConstructorDiscoveryTests.GetTypeSymbolAsync(code);
 		var constructors = new MockableConstructorDiscovery(typeSymbol, typeSymbol.ContainingAssembly, obsoleteAttribute, compilation).Constructors;
 
 		Assert.That(constructors, Has.Length.EqualTo(0));
 	}
 
-	private static (ITypeSymbol, INamedTypeSymbol, Compilation) GetTypeSymbol(string source)
+	private static async Task<(ITypeSymbol, INamedTypeSymbol, Compilation)> GetTypeSymbolAsync(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var typeSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single();
 		var obsoleteAttribute = model.Compilation.GetTypeByMetadataName(typeof(ObsoleteAttribute).FullName!)!;
 		return (model.GetDeclaredSymbol(typeSyntax)!, obsoleteAttribute, compilation);

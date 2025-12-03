@@ -15,12 +15,12 @@ public static class ISymbolExtensionsTests
 	[TestCase("public class Target { protected internal void Foo() { } }", true, "protected internal")]
 	[TestCase("public class Target { protected internal void Foo() { } }", false, "protected")]
 	[TestCase("public class Target { private protected void Foo() { } }", true, "private protected")]
-	public static void GetOverridingCodeValueTest(string source, bool areAssembliesIdentical, string codeValue)
+	public static async Task GetOverridingCodeValueTestAsync(string source, bool areAssembliesIdentical, string codeValue)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
-		var method = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var method = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single();
 		var symbol = compilation.GetSemanticModel(syntaxTree, true).GetDeclaredSymbol(method)!;
 

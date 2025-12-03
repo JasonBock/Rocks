@@ -23,9 +23,9 @@ internal static class ITypeSymbolExtensionsGetNameTests
 	[TestCase("using System.Collections.Generic; public static class Target { public static void Foo(List<string> a) { } }", "global::System.Collections.Generic.List<string>")]
 	[TestCase("using System.Collections.Generic; using Stuff; namespace Stuff { public class Thing { } } public static class Target { public static void Foo(List<Thing> a) { } }", "global::System.Collections.Generic.List<global::Stuff.Thing>")]
 	[TestCase("using System.Collections.Generic; using Stuff; namespace Stuff { public class Thing { } } public static class Target { public static void Foo(List<Thing?> a) { } }", "global::System.Collections.Generic.List<global::Stuff.Thing?>")]
-	public static void GetFullyQualifiedName(string code, string expectedName)
+	public static async Task GetFullyQualifiedNameAsync(string code, string expectedName)
 	{
-		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetNameTests.GetTypeSymbolFromParameter(code);
+		var (typeSymbol, compilation) = await ITypeSymbolExtensionsGetNameTests.GetTypeSymbolFromParameterAsync(code);
 		var name = typeSymbol.GetFullyQualifiedName(compilation);
 
 		Assert.That(name, Is.EqualTo(expectedName));
@@ -47,9 +47,9 @@ internal static class ITypeSymbolExtensionsGetNameTests
 	[TestCase("using System.Collections.Generic; public static class Target { public static void Foo(List<string> a) { } }", "global::System.Collections.Generic.List")]
 	[TestCase("using System.Collections.Generic; using Stuff; namespace Stuff { public class Thing { } } public static class Target { public static void Foo(List<Thing> a) { } }", "global::System.Collections.Generic.List")]
 	[TestCase("using System.Collections.Generic; using Stuff; namespace Stuff { public class Thing { } } public static class Target { public static void Foo(List<Thing?> a) { } }", "global::System.Collections.Generic.List")]
-	public static void GetFullyQualifiedNameNoGenetrics(string code, string expectedName)
+	public static async Task GetFullyQualifiedNameNoGenetricsAsync(string code, string expectedName)
 	{
-		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetNameTests.GetTypeSymbolFromParameter(code);
+		var (typeSymbol, compilation) = await ITypeSymbolExtensionsGetNameTests.GetTypeSymbolFromParameterAsync(code);
 		var name = typeSymbol.GetFullyQualifiedName(compilation, false);
 
 		Assert.That(name, Is.EqualTo(expectedName));
@@ -64,9 +64,9 @@ internal static class ITypeSymbolExtensionsGetNameTests
 	[TestCase("public class Target { public unsafe void Foo(delegate* unmanaged[Stdcall, SuppressGCTransition]<int, int> a) { } }", TypeNameOption.NoGenerics, "delegate* unmanaged[Stdcall, SuppressGCTransition]<int, int>")]
 	[TestCase("public class Target { public unsafe void Foo(delegate* unmanaged[Stdcall, SuppressGCTransition]<int, int> a) { } }", TypeNameOption.IncludeGenerics, "delegate* unmanaged[Stdcall, SuppressGCTransition]<int, int>")]
 	[TestCase("public class Target { public unsafe void Foo(delegate* unmanaged[Stdcall, SuppressGCTransition]<int, int> a) { } }", TypeNameOption.Flatten, "delegatePointer_unmanaged_Stdcall__SuppressGCTransition_Ofint__int")]
-	public static void GetNameForEsotericType(string code, TypeNameOption option, string expectedName)
+	public static async Task GetNameForEsotericTypeAsync(string code, TypeNameOption option, string expectedName)
 	{
-		var (typeSymbol, _) = ITypeSymbolExtensionsGetNameTests.GetTypeSymbolFromParameter(code);
+		var (typeSymbol, _) = await ITypeSymbolExtensionsGetNameTests.GetTypeSymbolFromParameterAsync(code);
 		var name = typeSymbol.GetName(option);
 
 		Assert.That(name, Is.EqualTo(expectedName));
@@ -78,9 +78,9 @@ internal static class ITypeSymbolExtensionsGetNameTests
 	[TestCase("public class Target<T, T2, TSomething> { }", TypeNameOption.IncludeGenerics, "Target<T, T2, TSomething>")]
 	[TestCase("public class Target { }", TypeNameOption.Flatten, "Target")]
 	[TestCase("public class Target<T, T2, TSomething> : Base", TypeNameOption.Flatten, "Target")]
-	public static void GetName(string code, TypeNameOption option, string expectedName)
+	public static async Task GetNameAsync(string code, TypeNameOption option, string expectedName)
 	{
-		var typeSymbol = ITypeSymbolExtensionsGetNameTests.GetTypeSymbol(code);
+		var typeSymbol = await ITypeSymbolExtensionsGetNameTests.GetTypeSymbolAsync(code);
 		var name = typeSymbol.GetName(option);
 
 		Assert.That(name, Is.EqualTo(expectedName));
@@ -104,46 +104,46 @@ internal static class ITypeSymbolExtensionsGetNameTests
 		TypeNameOption.Flatten, "BaseOfint_string_Guid")]
 	[TestCase("public class Base<T, T2, TSomething> { } public class Target<T, TSomething> { Base<T, string, TSomething> Data { get; } }",
 		TypeNameOption.Flatten, "Base")]
-	public static void GetNameFromDeclaredType(string code, TypeNameOption option, string expectedName)
+	public static async Task GetNameFromDeclaredTypeAsync(string code, TypeNameOption option, string expectedName)
 	{
-		var parameterSymbol = ITypeSymbolExtensionsGetNameTests.GetDeclaredTypeSymbol(code);
+		var parameterSymbol = await ITypeSymbolExtensionsGetNameTests.GetDeclaredTypeSymbolAsync(code);
 		var name = parameterSymbol.Type.GetName(option);
 
 		Assert.That(name, Is.EqualTo(expectedName));
 	}
 
-	private static IPropertySymbol GetDeclaredTypeSymbol(string source)
+	private static async Task<IPropertySymbol> GetDeclaredTypeSymbolAsync(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		var propertySyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var propertySyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<PropertyDeclarationSyntax>().Single(_ => _.Identifier.Text == "Data");
 		return model.GetDeclaredSymbol(propertySyntax)!;
 	}
 
-	private static ITypeSymbol GetTypeSymbol(string source)
+	private static async Task<ITypeSymbol> GetTypeSymbolAsync(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var typeSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single(_ => _.Identifier.Text == "Target");
 		return model.GetDeclaredSymbol(typeSyntax)!;
 	}
 
-	private static (ITypeSymbol, Compilation) GetTypeSymbolFromParameter(string source)
+	private static async Task<(ITypeSymbol, Compilation)> GetTypeSymbolFromParameterAsync(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var methodSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single();
 		return (model.GetDeclaredSymbol(methodSyntax)!.Parameters[0].Type, compilation);
 	}

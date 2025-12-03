@@ -14,14 +14,14 @@ public static class ITypeSymbolExtensionsIsObsoleteTests
 	[TestCase("public class GenericTarget<T> { } public class Usage { public void Foo(GenericTarget<string> t) { } }", false)]
 	[TestCase("[System.Obsolete(\"obsolete\")] public class Target { } public class SubTarget { } public class GenericTarget<T> where T : Target { } public class Usage { public void Foo(GenericTarget<SubTarget> t) { } }", false)]
 	[TestCase("[System.Obsolete(\"obsolete\", true)] public class Target { } public class SubTarget { } public class GenericTarget<T> where T : Target { } public class Usage { public void Foo(GenericTarget<SubTarget> t) { } }", true)]
-	public static void IsTypeObsolete(string code, bool expectedValue)
+	public static async Task IsTypeObsoleteAsync(string code, bool expectedValue)
 	{
-		(var type, var obsoleteAttribute) = ITypeSymbolExtensionsIsObsoleteTests.GetSymbol(code);
+		(var type, var obsoleteAttribute) = await ITypeSymbolExtensionsIsObsoleteTests.GetSymbolAsync(code);
 
 		Assert.That(type.IsObsolete(obsoleteAttribute), Is.EqualTo(expectedValue));
 	}
 
-	private static (ITypeSymbol type, INamedTypeSymbol obsoleteAttribute) GetSymbol(string source)
+	private static async Task<(ITypeSymbol type, INamedTypeSymbol obsoleteAttribute)> GetSymbolAsync(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
@@ -30,7 +30,7 @@ public static class ITypeSymbolExtensionsIsObsoleteTests
 
 		var obsoleteAttribute = model.Compilation.GetTypeByMetadataName(typeof(ObsoleteAttribute).FullName!)!;
 
-		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var methodSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single();
 		return (model.GetDeclaredSymbol(methodSyntax)!.Parameters[0].Type, obsoleteAttribute);
 	}

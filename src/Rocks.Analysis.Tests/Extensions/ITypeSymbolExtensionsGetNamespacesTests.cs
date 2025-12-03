@@ -9,7 +9,7 @@ namespace Rocks.Analysis.Tests.Extensions;
 public static class ITypeSymbolExtensionsGetNamespacesTests
 {
 	[Test]
-	public static void GetNamespacesForNonGenericType()
+	public static async Task GetNamespacesForNonGenericTypeAsync()
 	{
 		var @namespace = "TargetNamespace";
 		var code =
@@ -19,7 +19,7 @@ public static class ITypeSymbolExtensionsGetNamespacesTests
 				public class Target { }
 			}
 			""";
-		var typeSymbol = ITypeSymbolExtensionsGetNamespacesTests.GetTypeSymbol(code, "Target");
+		var typeSymbol = await ITypeSymbolExtensionsGetNamespacesTests.GetTypeSymbolAsync(code, "Target");
 		var namespaces = typeSymbol.GetNamespaces();
 
 	  using (Assert.EnterMultipleScope())
@@ -30,7 +30,7 @@ public static class ITypeSymbolExtensionsGetNamespacesTests
 	}
 
 	[Test]
-	public static void GetNamespacesForGenericType()
+	public static async Task GetNamespacesForGenericTypeAsync()
 	{
 		var @namespace = "TargetNamespace";
 		var innerNamespace = "Inner";
@@ -68,7 +68,7 @@ public static class ITypeSymbolExtensionsGetNamespacesTests
 				}
 			}
 			""";
-		var typeSymbol = ITypeSymbolExtensionsGetNamespacesTests.GetTypeSymbol(code, targetType);
+		var typeSymbol = await ITypeSymbolExtensionsGetNamespacesTests.GetTypeSymbolAsync(code, targetType);
 		var propertySymbol = typeSymbol.GetMembers().Single(_ => _.Name == theField) as IPropertySymbol;
 		var namespaces = propertySymbol!.Type.GetNamespaces();
 
@@ -81,14 +81,14 @@ public static class ITypeSymbolExtensionsGetNamespacesTests
 		}
 	}
 
-	private static ITypeSymbol GetTypeSymbol(string source, string typeName)
+	private static async Task<ITypeSymbol> GetTypeSymbolAsync(string source, string typeName)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var typeSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single(_ => _.Identifier.Text == typeName);
 		return model.GetDeclaredSymbol(typeSyntax)!;
 	}

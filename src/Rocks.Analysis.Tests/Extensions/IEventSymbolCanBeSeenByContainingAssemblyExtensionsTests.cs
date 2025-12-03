@@ -9,7 +9,7 @@ namespace Rocks.Analysis.Tests.Extensions;
 public static class IEventSymbolCanBeSeenByContainingAssemblyExtensionsTests
 {
 	[Test]
-	public static void CallWhenEventCanBeSeen()
+	public static async Task CallWhenEventCanBeSeenAsync()
 	{
 		var code =
 			"""
@@ -20,13 +20,13 @@ public static class IEventSymbolCanBeSeenByContainingAssemblyExtensionsTests
 				public event EventHandler CustomEvent;
 			}
 			""";
-		var (symbol, compilation) = IEventSymbolCanBeSeenByContainingAssemblyExtensionsTests.GetSymbol(code);
+		var (symbol, compilation) = await IEventSymbolCanBeSeenByContainingAssemblyExtensionsTests.GetSymbolAsync(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 	}
 
 	[Test]
-	public static void CallWhenEventCannotSeen()
+	public static async Task CallWhenEventCannotSeenAsync()
 	{
 		var code =
 			"""
@@ -37,19 +37,19 @@ public static class IEventSymbolCanBeSeenByContainingAssemblyExtensionsTests
 				private event EventHandler CustomEvent;
 			}
 			""";
-		var (symbol, compilation) = IEventSymbolCanBeSeenByContainingAssemblyExtensionsTests.GetSymbol(code);
+		var (symbol, compilation) = await IEventSymbolCanBeSeenByContainingAssemblyExtensionsTests.GetSymbolAsync(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.False);
 	}
 
-	private static (IEventSymbol, Compilation) GetSymbol(string source)
+	private static async Task<(IEventSymbol, Compilation)> GetSymbolAsync(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var typeSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single();
 		var typeSymbol = (ITypeSymbol)model.GetDeclaredSymbol(typeSyntax)!;
 

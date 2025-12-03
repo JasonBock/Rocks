@@ -14,7 +14,7 @@ public static class IMethodSymbolExtensionsMatchTests
 	private const string MethodTwo = nameof(IMethodSymbolExtensionsMatchTests.MethodTwo);
 
 	[Test]
-	public static void MatchWhenMethodsDifferByGenericParameterName()
+	public static async Task MatchWhenMethodsDifferByGenericParameterNameAsync()
 	{
 		var code =
 			$$"""
@@ -31,12 +31,12 @@ public static class IMethodSymbolExtensionsMatchTests
 			}
 			""";
 
-		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
+		Assert.That(await IMethodSymbolExtensionsMatchTests.MatchMethodsAsync(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.Exact));
 	}
 
 	[Test]
-	public static void MatchWhenMethodsDifferByGenericParameterNameRecursive()
+	public static async Task MatchWhenMethodsDifferByGenericParameterNameRecursiveAsync()
 	{
 		var code =
 			$$"""
@@ -53,12 +53,12 @@ public static class IMethodSymbolExtensionsMatchTests
 			}
 			""";
 
-		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
+		Assert.That(await IMethodSymbolExtensionsMatchTests.MatchMethodsAsync(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.Exact));
 	}
 
 	[Test]
-	public static void MatchWhenMethodsDifferByParameterPointerTypeNullability()
+	public static async Task MatchWhenMethodsDifferByParameterPointerTypeNullabilityAsync()
 	{
 		var code =
 			$$"""
@@ -73,12 +73,12 @@ public static class IMethodSymbolExtensionsMatchTests
 			}
 			""";
 
-		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
+		Assert.That(await IMethodSymbolExtensionsMatchTests.MatchMethodsAsync(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.None));
 	}
 
 	[Test]
-	public static void MatchWhenMethodsDifferByParameterArrayTypeNullability()
+	public static async Task MatchWhenMethodsDifferByParameterArrayTypeNullabilityAsync()
 	{
 		var code =
 			$$"""
@@ -93,12 +93,12 @@ public static class IMethodSymbolExtensionsMatchTests
 			}
 			""";
 
-		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
+		Assert.That(await IMethodSymbolExtensionsMatchTests.MatchMethodsAsync(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.Exact));
 	}
 
 	[Test]
-	public static void MatchWhenMethodsDifferByParameterArrayDimensionsNullability()
+	public static async Task MatchWhenMethodsDifferByParameterArrayDimensionsNullabilityAsync()
 	{
 		var code =
 			$$"""
@@ -113,12 +113,12 @@ public static class IMethodSymbolExtensionsMatchTests
 			}
 			""";
 
-		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
+		Assert.That(await IMethodSymbolExtensionsMatchTests.MatchMethodsAsync(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.None));
 	}
 
 	[Test]
-	public static void MatchWhenMethodsDifferByParameterTypeNullability()
+	public static async Task MatchWhenMethodsDifferByParameterTypeNullabilityAsync()
 	{
 		var code =
 			$$"""
@@ -133,12 +133,12 @@ public static class IMethodSymbolExtensionsMatchTests
 			}
 			""";
 
-		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
+		Assert.That(await IMethodSymbolExtensionsMatchTests.MatchMethodsAsync(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.Exact));
 	}
 
 	[Test]
-	public static void MatchWhenMethodsDifferByReturnTypeNullability()
+	public static async Task MatchWhenMethodsDifferByReturnTypeNullabilityAsync()
 	{
 		var code =
 			$$"""
@@ -153,12 +153,12 @@ public static class IMethodSymbolExtensionsMatchTests
 			}
 			""";
 
-		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
+		Assert.That(await IMethodSymbolExtensionsMatchTests.MatchMethodsAsync(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.Exact));
 	}
 
 	[Test]
-	public static void MatchWhenMethodsDifferByTypeParameterCountOnly()
+	public static async Task MatchWhenMethodsDifferByTypeParameterCountOnlyAsync()
 	{
 		var code =
 			$$"""
@@ -173,12 +173,12 @@ public static class IMethodSymbolExtensionsMatchTests
 			}
 			""";
 
-		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
+		Assert.That(await IMethodSymbolExtensionsMatchTests.MatchMethodsAsync(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.None));
 	}
 
 	[Test]
-	public static void MatchWhenMethodsAreExactWithTypeParametersInReturnType()
+	public static async Task MatchWhenMethodsAreExactWithTypeParametersInReturnTypeAsync()
 	{
 		var code =
 			$$"""
@@ -195,12 +195,12 @@ public static class IMethodSymbolExtensionsMatchTests
 			}
 			""";
 
-		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
+		Assert.That(await IMethodSymbolExtensionsMatchTests.MatchMethodsAsync(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.Exact));
 	}
 
 	[Test]
-	public static void MatchWhenMethodsAreExactNoParameters()
+	public static async Task MatchWhenMethodsAreExactNoParametersAsync()
 	{
 		var code =
 			$$"""
@@ -215,12 +215,12 @@ public static class IMethodSymbolExtensionsMatchTests
 			}
 			""";
 
-		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
+		Assert.That(await IMethodSymbolExtensionsMatchTests.MatchMethodsAsync(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.Exact));
 	}
 
 	[Test]
-	public static void MatchWhenMethodsAreExactWithParameters()
+	public static async Task MatchWhenMethodsAreExactWithParametersAsync()
 	{
 		var code =
 			$$"""
@@ -235,12 +235,12 @@ public static class IMethodSymbolExtensionsMatchTests
 			}
 			""";
 
-		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
+		Assert.That(await IMethodSymbolExtensionsMatchTests.MatchMethodsAsync(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.Exact));
 	}
 
 	[Test]
-	public static void MatchWhenMethodsAreExactWithParamsParameter()
+	public static async Task MatchWhenMethodsAreExactWithParamsParameterAsync()
 	{
 		var code =
 			$$"""
@@ -255,12 +255,12 @@ public static class IMethodSymbolExtensionsMatchTests
 			}
 			""";
 
-		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
+		Assert.That(await IMethodSymbolExtensionsMatchTests.MatchMethodsAsync(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.Exact));
 	}
 
 	[Test]
-	public static void MatchWhenMethodsAreExactWithSameModifiers()
+	public static async Task MatchWhenMethodsAreExactWithSameModifiersAsync()
 	{
 		var code =
 			$$"""
@@ -275,12 +275,12 @@ public static class IMethodSymbolExtensionsMatchTests
 			}
 			""";
 
-		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
+		Assert.That(await IMethodSymbolExtensionsMatchTests.MatchMethodsAsync(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.Exact));
 	}
 
 	[Test]
-	public static void MatchWhenMethodsAreExactWithRefAndOutModifiers()
+	public static async Task MatchWhenMethodsAreExactWithRefAndOutModifiersAsync()
 	{
 		var code =
 			$$"""
@@ -295,12 +295,12 @@ public static class IMethodSymbolExtensionsMatchTests
 			}
 			""";
 
-		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
+		Assert.That(await IMethodSymbolExtensionsMatchTests.MatchMethodsAsync(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.Exact));
 	}
 
 	[Test]
-	public static void MatchWhenMethodsDifferByReturnType()
+	public static async Task MatchWhenMethodsDifferByReturnTypeAsync()
 	{
 		var code =
 			$$"""
@@ -315,12 +315,12 @@ public static class IMethodSymbolExtensionsMatchTests
 			}
 			""";
 
-		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
+		Assert.That(await IMethodSymbolExtensionsMatchTests.MatchMethodsAsync(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.DifferByReturnTypeOrConstraintOnly));
 	}
 
 	[Test]
-	public static void MatchWhenMethodsDoNotMatchByName()
+	public static async Task MatchWhenMethodsDoNotMatchByNameAsync()
 	{
 		var code =
 			$$"""
@@ -335,12 +335,12 @@ public static class IMethodSymbolExtensionsMatchTests
 			}
 			""";
 
-		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodTwo),
+		Assert.That(await IMethodSymbolExtensionsMatchTests.MatchMethodsAsync(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodTwo),
 			Is.EqualTo(MethodMatch.None));
 	}
 
 	[Test]
-	public static void MatchWhenMethodsDoNotMatchByParameterCount()
+	public static async Task MatchWhenMethodsDoNotMatchByParameterCountAsync()
 	{
 		var code =
 			$$"""
@@ -355,12 +355,12 @@ public static class IMethodSymbolExtensionsMatchTests
 			}
 			""";
 
-		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
+		Assert.That(await IMethodSymbolExtensionsMatchTests.MatchMethodsAsync(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.None));
 	}
 
 	[Test]
-	public static void MatchWhenMethodsDoNotMatchByParameterType()
+	public static async Task MatchWhenMethodsDoNotMatchByParameterTypeAsync()
 	{
 		var code =
 			$$"""
@@ -375,12 +375,12 @@ public static class IMethodSymbolExtensionsMatchTests
 			}
 			""";
 
-		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
+		Assert.That(await IMethodSymbolExtensionsMatchTests.MatchMethodsAsync(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.None));
 	}
 
 	[Test]
-	public static void MatchWhenMethodsDoNotMatchByParameterModifier()
+	public static async Task MatchWhenMethodsDoNotMatchByParameterModifierAsync()
 	{
 		var code =
 			$$"""
@@ -398,23 +398,23 @@ public static class IMethodSymbolExtensionsMatchTests
 			}
 			""";
 
-		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
+		Assert.That(await IMethodSymbolExtensionsMatchTests.MatchMethodsAsync(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.None));
 	}
 
-	private static MethodMatch MatchMethods(string source, string methodOneName, string methodTwoName)
+	private static async Task<MethodMatch> MatchMethodsAsync(string source, string methodOneName, string methodTwoName)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		var methodOneSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var methodOneSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single(
 				_ => _.Identifier.Text == IMethodSymbolExtensionsMatchTests.ClassOne).DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single(
 				_ => _.Identifier.Text == methodOneName);
-		var methodTwoSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var methodTwoSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single(
 				_ => _.Identifier.Text == IMethodSymbolExtensionsMatchTests.ClassTwo).DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single(

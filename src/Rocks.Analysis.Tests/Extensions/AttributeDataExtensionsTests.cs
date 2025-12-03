@@ -31,9 +31,9 @@ namespace Rocks.Analysis.Tests.Extensions
 {
 	public enum MyValue
 	{
-		ThisNegativeOne = -1, 
-		ThisOne = 0, 
-		ThatOne = 1, 
+		ThisNegativeOne = -1,
+		ThisOne = 0,
+		ThatOne = 1,
 		AnotherOne = 2
 	}
 
@@ -59,9 +59,9 @@ namespace Rocks.Analysis.Tests.Extensions
 	public static class AttributeDataExtensionsTests
 	{
 		[Test]
-		public static void GetDescriptionWithSpecialCharactersInString()
+		public static async Task GetDescriptionWithSpecialCharactersInStringAsync()
 		{
-			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
+			var (attributes, compilation) = await AttributeDataExtensionsTests.GetAttributesAsync(
 				"""
 				using Rocks.Analysis.Tests.Extensions;
 				using System;
@@ -83,14 +83,14 @@ namespace Rocks.Analysis.Tests.Extensions
 				}
 				""");
 
-			Assert.That(attributes[0].GetDescription(compilation), 
+			Assert.That(attributes[0].GetDescription(compilation),
 				Is.EqualTo("""global::MessageAttribute("a \' a \" a \a a \b a \f a \n a \r a \t a \b")"""));
 		}
 
 		[Test]
-		public static void GetDescription()
+		public static async Task GetDescriptionAsync()
 		{
-			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
+			var (attributes, compilation) = await AttributeDataExtensionsTests.GetAttributesAsync(
 				"""
 				using Rocks.Analysis.Tests.Extensions;
 				using System;
@@ -102,14 +102,14 @@ namespace Rocks.Analysis.Tests.Extensions
 				}
 				""");
 
-			Assert.That(attributes[0].GetDescription(compilation), 
+			Assert.That(attributes[0].GetDescription(compilation),
 				Is.EqualTo("""global::Rocks.Analysis.Tests.Extensions.MyTestAttribute("a value", 12.34, 22, 44, typeof(global::System.Guid), new[] { 6, 7 }, (global::Rocks.Analysis.Tests.Extensions.MyValue)(0), NamedA = 44)"""));
 		}
 
 		[Test]
-		public static void GetDescriptionWithNegativeEnumValue()
+		public static async Task GetDescriptionWithNegativeEnumValueAsync()
 		{
-			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
+			var (attributes, compilation) = await AttributeDataExtensionsTests.GetAttributesAsync(
 				"""
 				using Rocks.Analysis.Tests.Extensions;
 				using System;
@@ -126,9 +126,9 @@ namespace Rocks.Analysis.Tests.Extensions
 		}
 
 		[Test]
-		public static void GetDescriptionWithOpenGeneric()
+		public static async Task GetDescriptionWithOpenGenericAsync()
 		{
-			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
+			var (attributes, compilation) = await AttributeDataExtensionsTests.GetAttributesAsync(
 				"""
 				using ADETTypes;
 				using Rocks.Analysis.Tests.Extensions;
@@ -141,14 +141,14 @@ namespace Rocks.Analysis.Tests.Extensions
 				}
 				""");
 
-			Assert.That(attributes[0].GetDescription(compilation), 
+			Assert.That(attributes[0].GetDescription(compilation),
 				Is.EqualTo("""global::Rocks.Analysis.Tests.Extensions.MyTestAttribute("a value", 12.34, 22, 44, typeof(global::ADETTypes.OpenGeneric<,>), new[] { 6, 7 }, (global::Rocks.Analysis.Tests.Extensions.MyValue)(0), NamedA = 44)"""));
 		}
 
 		[Test]
-		public static void GetDescriptionForArrayOfAttributes()
+		public static async Task GetDescriptionForArrayOfAttributesAsync()
 		{
-			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
+			var (attributes, compilation) = await AttributeDataExtensionsTests.GetAttributesAsync(
 				"""
 				using Rocks.Analysis.Tests.Extensions;
 				using System;
@@ -161,14 +161,14 @@ namespace Rocks.Analysis.Tests.Extensions
 				}
 				""");
 
-			Assert.That(attributes.GetDescription(compilation), 
+			Assert.That(attributes.GetDescription(compilation),
 				Is.EqualTo("""[global::Rocks.Analysis.Tests.Extensions.MyTestAttribute("a value", 12.34, 22, 44, typeof(global::System.Guid), new[] { 6, 7 }, (global::Rocks.Analysis.Tests.Extensions.MyValue)(0)), global::Rocks.Analysis.Tests.Extensions.MyTestAttribute("b value", 22.34, 33, 55, typeof(string), new[] { 8, 9 }, (global::Rocks.Analysis.Tests.Extensions.MyValue)(1))]"""));
 		}
 
 		[Test]
-		public static void GetDescriptionForArrayWithTarget()
+		public static async Task GetDescriptionForArrayWithTargetAsync()
 		{
-			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
+			var (attributes, compilation) = await AttributeDataExtensionsTests.GetAttributesAsync(
 				"""
 				using Rocks.Analysis.Tests.Extensions;
 				using System;
@@ -181,14 +181,14 @@ namespace Rocks.Analysis.Tests.Extensions
 				}
 				""");
 
-			Assert.That(attributes.GetDescription(compilation, AttributeTargets.Method), 
+			Assert.That(attributes.GetDescription(compilation, AttributeTargets.Method),
 				Is.EqualTo("""[method: global::Rocks.Analysis.Tests.Extensions.MyTestAttribute("a value", 12.34, 22, 44, typeof(global::System.Guid), new[] { 6, 7 }, (global::Rocks.Analysis.Tests.Extensions.MyValue)(0)), global::Rocks.Analysis.Tests.Extensions.MyTestAttribute("b value", 22.34, 33, 55, typeof(string), new[] { 8, 9 }, (global::Rocks.Analysis.Tests.Extensions.MyValue)(1))]"""));
 		}
 
 		[Test]
-		public static void GetDescriptionWhenDynamicAttributeIsPresent()
+		public static async Task GetDescriptionWhenDynamicAttributeIsPresentAsync()
 		{
-			var (attributes, compilation) = AttributeDataExtensionsTests.GetReturnAttributes(
+			var (attributes, compilation) = await AttributeDataExtensionsTests.GetReturnAttributesAsync(
 				"""
 				using System;
 				using System.Runtime.CompilerServices;
@@ -204,9 +204,9 @@ namespace Rocks.Analysis.Tests.Extensions
 		}
 
 		[Test]
-		public static void GetDescriptionWhenCompilerGeneratedAttributeIsPresent()
+		public static async Task GetDescriptionWhenCompilerGeneratedAttributeIsPresentAsync()
 		{
-			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
+			var (attributes, compilation) = await AttributeDataExtensionsTests.GetAttributesAsync(
 				"""
 				using System;
 				using System.Runtime.CompilerServices;
@@ -222,9 +222,9 @@ namespace Rocks.Analysis.Tests.Extensions
 		}
 
 		[Test]
-		public static void GetDescriptionWhenIteratorStateMachineAttributeIsPresent()
+		public static async Task GetDescriptionWhenIteratorStateMachineAttributeIsPresentAsync()
 		{
-			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
+			var (attributes, compilation) = await AttributeDataExtensionsTests.GetAttributesAsync(
 				"""
 				using System;
 				using System.Runtime.CompilerServices;
@@ -240,9 +240,9 @@ namespace Rocks.Analysis.Tests.Extensions
 		}
 
 		[Test]
-		public static void GetDescriptionWhenAsyncIteratorStateMachineAttributeIsPresent()
+		public static async Task GetDescriptionWhenAsyncIteratorStateMachineAttributeIsPresentAsync()
 		{
-			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
+			var (attributes, compilation) = await AttributeDataExtensionsTests.GetAttributesAsync(
 				"""
 				using System;
 				using System.Runtime.CompilerServices;
@@ -258,9 +258,9 @@ namespace Rocks.Analysis.Tests.Extensions
 		}
 
 		[Test]
-		public static void GetDescriptionWhenAsyncStateMachineAttributeIsPresent()
+		public static async Task GetDescriptionWhenAsyncStateMachineAttributeIsPresentAsync()
 		{
-			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
+			var (attributes, compilation) = await AttributeDataExtensionsTests.GetAttributesAsync(
 				"""
 				using System;
 				using System.Runtime.CompilerServices;
@@ -276,7 +276,7 @@ namespace Rocks.Analysis.Tests.Extensions
 		}
 
 		[Test]
-		public static void GetDescriptionWhenAttributeCannotBeSeen()
+		public static async Task GetDescriptionWhenAttributeCannotBeSeenAsync()
 		{
 			var internalCode =
 				"""
@@ -311,35 +311,35 @@ namespace Rocks.Analysis.Tests.Extensions
 
 			var externalModel = externalCompilation.GetSemanticModel(externalSyntaxTree, true);
 
-			var internalInvocation = externalSyntaxTree.GetRoot().DescendantNodes(_ => true)
+			var internalInvocation = (await externalSyntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 				.OfType<InvocationExpressionSyntax>().Single();
 			var internalMethodSymbol = externalModel.GetSymbolInfo(internalInvocation).Symbol!;
 
 			Assert.That(internalMethodSymbol.GetAttributes().GetDescription(externalCompilation), Is.EqualTo(string.Empty));
 		}
 
-		private static (ImmutableArray<AttributeData>, Compilation) GetAttributes(string source)
+		private static async Task<(ImmutableArray<AttributeData>, Compilation)> GetAttributesAsync(string source)
 		{
 			var syntaxTree = CSharpSyntaxTree.ParseText(source);
 			var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 				Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 			var model = compilation.GetSemanticModel(syntaxTree, true);
 
-			var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+			var methodSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 				.OfType<MethodDeclarationSyntax>().Single();
 			var methodSymbol = model.GetDeclaredSymbol(methodSyntax)!;
 
 			return (methodSymbol.GetAttributes(), compilation);
 		}
 
-		private static (ImmutableArray<AttributeData>, Compilation) GetReturnAttributes(string source)
+		private static async Task<(ImmutableArray<AttributeData>, Compilation)> GetReturnAttributesAsync(string source)
 		{
 			var syntaxTree = CSharpSyntaxTree.ParseText(source);
 			var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 				Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 			var model = compilation.GetSemanticModel(syntaxTree, true);
 
-			var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+			var methodSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 				.OfType<MethodDeclarationSyntax>().Single();
 			var methodSymbol = model.GetDeclaredSymbol(methodSyntax)!;
 

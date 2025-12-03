@@ -25,35 +25,35 @@ public static class IMethodSymbolExtensionsRequiresDefaultConstraintTests
 	}
 
 	[TestCaseSource(nameof(GetDefaultConstraints))]
-	public static void RequiresDefaultConstraint(string code, string expectedValue)
+	public static async Task RequiresDefaultConstraintAsync(string code, string expectedValue)
 	{
-		var methodSymbol = IMethodSymbolExtensionsRequiresDefaultConstraintTests.GetMethodSymbol(code);
+		var methodSymbol = await IMethodSymbolExtensionsRequiresDefaultConstraintTests.GetMethodSymbolAsync(code);
 		var requiresDefaultConstraints = methodSymbol.GetDefaultConstraints();
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(requiresDefaultConstraints, Has.Length.EqualTo(1));
 			Assert.That(requiresDefaultConstraints[0].ToString(), Is.EqualTo(expectedValue));
 		}
 	}
 
 	[TestCaseSource(nameof(GetDefaultConstraintsWhenNoneExist))]
-	public static void NoDefaultConstraint(string code)
+	public static async Task NoDefaultConstraintAsync(string code)
 	{
-		var methodSymbol = IMethodSymbolExtensionsRequiresDefaultConstraintTests.GetMethodSymbol(code);
+		var methodSymbol = await IMethodSymbolExtensionsRequiresDefaultConstraintTests.GetMethodSymbolAsync(code);
 		var requiresDefaultConstraints = methodSymbol.GetDefaultConstraints();
 
 		Assert.That(requiresDefaultConstraints, Is.Empty);
 	}
 
-	private static IMethodSymbol GetMethodSymbol(string source)
+	private static async Task<IMethodSymbol> GetMethodSymbolAsync(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var methodSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single(_ => _.Identifier.Text == "Foo");
 		return model.GetDeclaredSymbol(methodSyntax)!;
 	}

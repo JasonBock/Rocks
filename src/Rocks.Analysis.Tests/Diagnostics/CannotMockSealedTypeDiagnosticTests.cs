@@ -11,14 +11,14 @@ namespace Rocks.Analysis.Tests.Diagnostics;
 public static class CannotMockSealedTypeDiagnosticTests
 {
 	[Test]
-	public static void Create()
+	public static async Task CreateAsync()
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText("public class X { }");
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var typeSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single();
 
 		var invocation = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("public static void Foo() { }")); 

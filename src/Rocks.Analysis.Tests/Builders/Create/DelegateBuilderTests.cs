@@ -15,22 +15,22 @@ public static class DelegateBuilderTests
 	[TestCase("public class Test { public int Foo() { } }", "global::System.Func<int>")]
 	[TestCase("public class Test { public int Foo(int a) { } }", "global::System.Func<int, int>")]
 	[TestCase("public class Test { public int Foo(string a = null) { } }", "global::System.Func<string?, int>")]
-	public static void Build(string code, string expectedValue)
+	public static async Task BuildAsync(string code, string expectedValue)
 	{
-		(var method, var modelContext) = DelegateBuilderTests.GetMethod(code);
+		(var method, var modelContext) = await DelegateBuilderTests.GetMethodAsync(code);
 		var methodModel = new MethodModel(method, modelContext.CreateTypeReference(method.ContainingType), 
 			modelContext, RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 0u);
 		Assert.That(DelegateBuilder.Build(methodModel), Is.EqualTo(expectedValue));
 	}
 
-	private static (IMethodSymbol, ModelContext) GetMethod(string source)
+	private static async Task<(IMethodSymbol, ModelContext)> GetMethodAsync(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		return (model.GetDeclaredSymbol(syntaxTree.GetRoot().DescendantNodes(_ => true)
+		return (model.GetDeclaredSymbol((await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single())!, new(model));
 	}
 }

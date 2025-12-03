@@ -9,7 +9,7 @@ namespace Rocks.Analysis.Tests.Discovery;
 public static class MockablePropertyDiscoveryTests
 {
 	[Test]
-	public static void GetMockablePropertiesFromInterfaceWithStaticNonVirtualProperties()
+	public static async Task GetMockablePropertiesFromInterfaceWithStaticNonVirtualPropertiesAsync()
 	{
 		const string targetTypeName = "ITest";
 
@@ -22,13 +22,13 @@ public static class MockablePropertyDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = await MockablePropertyDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier, compilation).Properties;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var properties = result.Results;
 			Assert.That(properties, Has.Length.EqualTo(1));
@@ -39,7 +39,7 @@ public static class MockablePropertyDiscoveryTests
 	}
 
 	[Test]
-	public static void GetMockablePropertiesWithInit()
+	public static async Task GetMockablePropertiesWithInitAsync()
 	{
 		const string targetTypeName = "Test";
 
@@ -52,13 +52,13 @@ public static class MockablePropertyDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = await MockablePropertyDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier, compilation).Properties;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var properties = result.Results;
 			Assert.That(properties, Has.Length.EqualTo(2));
@@ -72,7 +72,7 @@ public static class MockablePropertyDiscoveryTests
 	}
 
 	[Test]
-	public static void GetMockablePropertiesWithMultipleIndexers()
+	public static async Task GetMockablePropertiesWithMultipleIndexersAsync()
 	{
 		const string targetTypeName = "Test";
 
@@ -86,13 +86,13 @@ public static class MockablePropertyDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = await MockablePropertyDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier, compilation).Properties;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var properties = result.Results;
 			Assert.That(properties, Has.Length.EqualTo(3));
@@ -114,7 +114,7 @@ public static class MockablePropertyDiscoveryTests
 	}
 
 	[Test]
-	public static void GetMockablePropertiesWithNewAbstractPropertyWithOverride()
+	public static async Task GetMockablePropertiesWithNewAbstractPropertyWithOverrideAsync()
 	{
 		const string targetPropertyName = "Data";
 		const string targetTypeName = "Test";
@@ -139,13 +139,13 @@ public static class MockablePropertyDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = await MockablePropertyDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier, compilation).Properties;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var properties = result.Results;
 			Assert.That(properties, Has.Length.EqualTo(1));
@@ -157,7 +157,7 @@ public static class MockablePropertyDiscoveryTests
 	}
 
 	[Test]
-	public static void GetMockablePropertiesWithMultipleAbstractPropertiesWithOverride()
+	public static async Task GetMockablePropertiesWithMultipleAbstractPropertiesWithOverrideAsync()
 	{
 		const string targetPropertyName = "Data";
 		const string targetTypeName = "Test";
@@ -182,13 +182,13 @@ public static class MockablePropertyDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = await MockablePropertyDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier, compilation).Properties;
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var properties = result.Results;
 			Assert.That(properties, Has.Length.EqualTo(1));
@@ -199,14 +199,14 @@ public static class MockablePropertyDiscoveryTests
 		}
 	}
 
-	private static (ITypeSymbol, Compilation) GetTypeSymbol(string source, string targetTypeName)
+	private static async Task<(ITypeSymbol, Compilation)> GetTypeSymbolAsync(string source, string targetTypeName)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var typeSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single(_ => _.Identifier.Text == targetTypeName);
 		return (model.GetDeclaredSymbol(typeSyntax)!, compilation);
 	}

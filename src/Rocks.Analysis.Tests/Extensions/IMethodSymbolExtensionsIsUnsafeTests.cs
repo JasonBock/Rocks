@@ -13,21 +13,21 @@ public static class IMethodSymbolExtensionsIsUnsafeTests
 	[TestCase("public class Target { public unsafe void Foo(int* a) { } }", true)]
 	[TestCase("public class Target { public int Foo() => default; }", false)]
 	[TestCase("public class Target { public unsafe int* Foo() => default; }", true)]
-	public static void IsUnsafe(string code, bool expectedValue)
+	public static async Task IsUnsafeAsync(string code, bool expectedValue)
 	{
-		var methodSymbol = IMethodSymbolExtensionsIsUnsafeTests.GetMethodSymbol(code);
+		var methodSymbol = await IMethodSymbolExtensionsIsUnsafeTests.GetMethodSymbolAsync(code);
 
 		Assert.That(methodSymbol.IsUnsafe(), Is.EqualTo(expectedValue));
 	}
 
-	private static IMethodSymbol GetMethodSymbol(string source)
+	private static async Task<IMethodSymbol> GetMethodSymbolAsync(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var methodSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single(_ => _.Identifier.Text == "Foo");
 		return model.GetDeclaredSymbol(methodSyntax)!;
 	}

@@ -9,7 +9,7 @@ namespace Rocks.Analysis.Tests.Extensions;
 public static class IPropertySymbolExtensionsGetAllAttributesTests
 {
 	[Test]
-	public static void GetAllAttributesOnAbstractProperty()
+	public static async Task GetAllAttributesOnAbstractPropertyAsync()
 	{
 		var code =
 			"""
@@ -26,18 +26,18 @@ public static class IPropertySymbolExtensionsGetAllAttributesTests
 			}
 			""";
 
-		var propertySymbol = IPropertySymbolExtensionsGetAllAttributesTests.GetPropertySymbol(code);
+		var propertySymbol = await IPropertySymbolExtensionsGetAllAttributesTests.GetPropertySymbolAsync(code);
 		var attributes = propertySymbol.GetAllAttributes();
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(attributes, Has.Length.EqualTo(1));
 			Assert.That(attributes[0].AttributeClass!.Name, Is.EqualTo(nameof(AllowNullAttribute)));
 		}
 	}
 
 	[Test]
-	public static void GetAllAttributesOnNonAbstractProperty()
+	public static async Task GetAllAttributesOnNonAbstractPropertyAsync()
 	{
 		var code =
 			"""
@@ -54,24 +54,24 @@ public static class IPropertySymbolExtensionsGetAllAttributesTests
 			}
 			""";
 
-		var propertySymbol = IPropertySymbolExtensionsGetAllAttributesTests.GetPropertySymbol(code);
+		var propertySymbol = await IPropertySymbolExtensionsGetAllAttributesTests.GetPropertySymbolAsync(code);
 		var attributes = propertySymbol.GetAllAttributes();
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(attributes, Has.Length.EqualTo(1));
 			Assert.That(attributes[0].AttributeClass!.Name, Is.EqualTo(nameof(AllowNullAttribute)));
 		}
 	}
 
-	private static IPropertySymbol GetPropertySymbol(string source)
+	private static async Task<IPropertySymbol> GetPropertySymbolAsync(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		var propertySyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var propertySyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.Single(_ => _.IsKind(SyntaxKind.IndexerDeclaration) || _.IsKind(SyntaxKind.PropertyDeclaration));
 		return (model.GetDeclaredSymbol(propertySyntax) as IPropertySymbol)!;
 	}

@@ -20,32 +20,32 @@ public static class ITypeParameterSymbolExtensionsTests
 	[TestCase("public class Target<T> where T : struct { }", "where T : struct")]
 	[TestCase("public interface IThing { } public class Target<T> where T : struct, IThing { }", "where T : struct, global::IThing")]
 	[TestCase("public class Thing { } public interface IThing { } public class Target<T> where T : Thing, IThing { }", "where T : global::Thing, global::IThing")]
-	public static void GetConstraints(string code, string expectedConstraints)
+	public static async Task GetConstraintsAsync(string code, string expectedConstraints)
 	{
-		var (type, compilation) = ITypeParameterSymbolExtensionsTests.GetTypeParameterSymbol(code);
+		var (type, compilation) = await ITypeParameterSymbolExtensionsTests.GetTypeParameterSymbolAsync(code);
 		var constraint = type.GetConstraints(compilation);
 
 		Assert.That(constraint!.ToString(), Is.EqualTo(expectedConstraints));
 	}
 
 	[Test]
-	public static void GetConstraintsWhenNoConstraintsExist()
+	public static async Task GetConstraintsWhenNoConstraintsExistAsync()
 	{
 		var code = "public class Target<T> { }";
-		var (type, compilation) = ITypeParameterSymbolExtensionsTests.GetTypeParameterSymbol(code);
+		var (type, compilation) = await ITypeParameterSymbolExtensionsTests.GetTypeParameterSymbolAsync(code);
 		var constraint = type.GetConstraints(compilation);
 
 		Assert.That(constraint, Is.Null);
 	}
 
-	private static (ITypeParameterSymbol, Compilation) GetTypeParameterSymbol(string source)
+	private static async Task<(ITypeParameterSymbol, Compilation)> GetTypeParameterSymbolAsync(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var typeSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single(_ => _.Identifier.Text == "Target");
 		return (model.GetDeclaredSymbol(typeSyntax)!.TypeParameters[0], compilation);
 	}

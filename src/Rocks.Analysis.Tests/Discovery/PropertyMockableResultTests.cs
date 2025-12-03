@@ -9,7 +9,7 @@ namespace Rocks.Analysis.Tests.Discovery;
 public static class PropertyMockableResultTests
 {
 	[Test]
-	public static void GetResult()
+	public static async Task GetResultAsync()
 	{
 		var code = "public class Target { public int Foo { get; set; } }";
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
@@ -17,15 +17,15 @@ public static class PropertyMockableResultTests
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		var propertySyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var propertySyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<PropertyDeclarationSyntax>().Single();
 		var propertySymbol = model.GetDeclaredSymbol(propertySyntax)!;
 
 		var result = new MockablePropertyResult(propertySymbol, propertySymbol.ContainingType,
 			RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.Yes, 3);
 
-	  using (Assert.EnterMultipleScope())
-	  {
+		using (Assert.EnterMultipleScope())
+		{
 			Assert.That(result.Value, Is.SameAs(propertySymbol));
 			Assert.That(result.MockType, Is.SameAs(propertySymbol.ContainingType));
 			Assert.That(result.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.Yes));

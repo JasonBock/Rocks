@@ -9,7 +9,7 @@ namespace Rocks.Analysis.Tests.Extensions;
 public static class IMethodSymbolExtensionsMarkedWithDoesNotReturnTests
 {
 	[Test]
-	public static void GetResultWhenMethodHasDoesNotReturnAttribute()
+	public static async Task GetResultWhenMethodHasDoesNotReturnAttributeAsync()
 	{
 		var code =
 			"""
@@ -22,12 +22,12 @@ public static class IMethodSymbolExtensionsMarkedWithDoesNotReturnTests
 			}
 			""";
 
-		var (method, compilation) = IMethodSymbolExtensionsMarkedWithDoesNotReturnTests.GetMethodSymbol(code);
+		var (method, compilation) = await IMethodSymbolExtensionsMarkedWithDoesNotReturnTests.GetMethodSymbolAsync(code);
 		Assert.That(method.IsMarkedWithDoesNotReturn(compilation), Is.True);
 	}
 
 	[Test]
-	public static void GetResultWhenMethodDoesNotHaveDoesNotReturnAttribute()
+	public static async Task GetResultWhenMethodDoesNotHaveDoesNotReturnAttributeAsync()
 	{
 		var code =
 			"""
@@ -37,18 +37,18 @@ public static class IMethodSymbolExtensionsMarkedWithDoesNotReturnTests
 			}
 			""";
 
-		var (method, compilation) = IMethodSymbolExtensionsMarkedWithDoesNotReturnTests.GetMethodSymbol(code);
+		var (method, compilation) = await IMethodSymbolExtensionsMarkedWithDoesNotReturnTests.GetMethodSymbolAsync(code);
 		Assert.That(method.IsMarkedWithDoesNotReturn(compilation), Is.False);
 	}
 
-	private static (IMethodSymbol, Compilation) GetMethodSymbol(string source)
+	private static async Task<(IMethodSymbol, Compilation)> GetMethodSymbolAsync(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+		var methodSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single(_ => _.Identifier.Text == "Foo");
 		return (model.GetDeclaredSymbol(methodSyntax)!, compilation);
 	}
