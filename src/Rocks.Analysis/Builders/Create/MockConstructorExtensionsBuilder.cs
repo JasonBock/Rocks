@@ -115,14 +115,14 @@ internal static class MockConstructorExtensionsBuilder
 		{
 			foreach (var constructor in mockType.Constructors)
 			{
-				MockConstructorExtensionsBuilder.Build(writer, mockType,
+			Build(writer, mockType,
 					constructor.Parameters, requiredInitProperties.Length > 0 || requiredInitIndexers.Length > 0, hasRequiredProperties,
 					expectationsFullyQualifiedName);
 			}
 		}
 		else
 		{
-			MockConstructorExtensionsBuilder.Build(writer, mockType,
+		 Build(writer, mockType,
 				ImmutableArray<ParameterModel>.Empty, requiredInitProperties.Length > 0 || requiredInitIndexers.Length > 0, hasRequiredProperties,
 				expectationsFullyQualifiedName);
 		}

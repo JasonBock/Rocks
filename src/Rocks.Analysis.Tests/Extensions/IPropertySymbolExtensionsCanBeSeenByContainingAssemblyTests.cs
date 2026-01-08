@@ -18,7 +18,7 @@ public static class IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests
 				public string Data { get; }
 			}
 			""";
-		var (symbol, compilation) = await IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync<PropertyDeclarationSyntax>(code);
+		var (symbol, compilation) = await GetSymbolAsync<PropertyDeclarationSyntax>(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 	}
@@ -33,7 +33,7 @@ public static class IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests
 				private string Data { get; }
 			}
 			""";
-		var (symbol, compilation) = await IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync<PropertyDeclarationSyntax>(code);
+		var (symbol, compilation) = await GetSymbolAsync<PropertyDeclarationSyntax>(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.False);
 	}
@@ -50,7 +50,7 @@ public static class IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests
 				public Section Data { get; }
 			}
 			""";
-		var (symbol, compilation) = await IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync<PropertyDeclarationSyntax>(code);
+		var (symbol, compilation) = await GetSymbolAsync<PropertyDeclarationSyntax>(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 	}
@@ -67,7 +67,7 @@ public static class IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests
 				protected class Section { }
 			}
 			""";
-		var (symbol, compilation) = await IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync<PropertyDeclarationSyntax>(code);
+		var (symbol, compilation) = await GetSymbolAsync<PropertyDeclarationSyntax>(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.False);
 	}
@@ -84,7 +84,7 @@ public static class IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests
 				public string this[Section section] { get; }
 			}
 			""";
-		var (symbol, compilation) = await IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync<IndexerDeclarationSyntax>(code);
+		var (symbol, compilation) = await GetSymbolAsync<IndexerDeclarationSyntax>(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 	}
@@ -101,7 +101,7 @@ public static class IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests
 				protected class Section { }
 			}
 			""";
-		var (symbol, compilation) = await IPropertySymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync<IndexerDeclarationSyntax>(code);
+		var (symbol, compilation) = await GetSymbolAsync<IndexerDeclarationSyntax>(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.False);
 	}

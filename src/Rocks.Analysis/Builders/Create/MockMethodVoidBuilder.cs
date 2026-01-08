@@ -100,14 +100,14 @@ internal static class MockMethodVoidBuilder
 
 		if (method.Parameters.Length > 0)
 		{
-			MockMethodVoidBuilder.BuildMethodValidationHandlerWithParameters(
+		 BuildMethodValidationHandlerWithParameters(
 				writer, type, method, namingContext, typeArgumentsNamingContext,
 				raiseEvents, shouldThrowDoesNotReturnException,
 				expectationsFullyQualifiedName);
 		}
 		else
 		{
-			MockMethodVoidBuilder.BuildMethodValidationHandlerNoParameters(
+		 BuildMethodValidationHandlerNoParameters(
 				writer, type, method, namingContext, typeArgumentsNamingContext,
 				raiseEvents, shouldThrowDoesNotReturnException,
 				expectationsFullyQualifiedName);
@@ -185,7 +185,7 @@ internal static class MockMethodVoidBuilder
 			writer.Indent++;
 		}
 
-		MockMethodVoidBuilder.BuildMethodHandler(writer, method, namingContext, raiseEvents);
+	  BuildMethodHandler(writer, method, namingContext, raiseEvents);
 
 		if (method.IsGenericMethod)
 		{
@@ -269,7 +269,7 @@ internal static class MockMethodVoidBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 		writer.WriteLine($"@{namingContext["foundMatch"]} = true;");
-		MockMethodVoidBuilder.BuildMethodHandler(writer, method, namingContext, raiseEvents);
+	  BuildMethodHandler(writer, method, namingContext, raiseEvents);
 		writer.WriteLine("break;");
 		writer.Indent--;
 		writer.WriteLine("}");

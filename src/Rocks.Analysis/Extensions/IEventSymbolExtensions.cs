@@ -1,6 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Analysis.Diagnostics;
-using System.Collections.Immutable;
 
 namespace Rocks.Analysis.Extensions;
 

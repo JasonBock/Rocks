@@ -121,7 +121,7 @@ internal sealed class ModelContext
 					{
 						// I don't like this either. I have the feeling there's a hidden bug with nested types and type parameter names
 						// that will pop up in the future.
-						return $"{current.FullyQualifiedNameNoGenerics}<{string.Join(", ", current.TypeArguments.Select(_ => TypeReferenceModel.BuildName(_, parentNamingContext)))}>{(current.NullableAnnotation == NullableAnnotation.Annotated ? "?" : string.Empty)}";
+						return $"{current.FullyQualifiedNameNoGenerics}<{string.Join(", ", current.TypeArguments.Select(_ => BuildName(_, parentNamingContext)))}>{(current.NullableAnnotation == NullableAnnotation.Annotated ? "?" : string.Empty)}";
 					}
 				}
 			}
@@ -150,13 +150,13 @@ internal sealed class ModelContext
 			else
 			{
 				return current.IsTupleType ?
-					$"({string.Join(", ", current.TypeArguments.Select(_ => TypeReferenceModel.BuildName(_, parentNamingContext)))})" :
+					$"({string.Join(", ", current.TypeArguments.Select(_ => BuildName(_, parentNamingContext)))})" :
 					GetNameForGeneric(current, parentNamingContext);
 			}
 		}
 
 		public string BuildName(TypeArgumentsNamingContext parentNamingContext) =>
-			TypeReferenceModel.BuildName(this, parentNamingContext);
+			BuildName(this, parentNamingContext);
 
 		public override string ToString() => this.FullyQualifiedName;
 

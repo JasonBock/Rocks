@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace Rocks;
+﻿namespace Rocks;
 
 /// <summary>
 /// Defines the base type for an argument expectation.

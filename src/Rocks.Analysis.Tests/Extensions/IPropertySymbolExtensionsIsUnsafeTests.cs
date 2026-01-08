@@ -14,7 +14,7 @@ public static class IPropertySymbolExtensionsIsUnsafeTests
 	[TestCase("public class Target { public unsafe int* this[int value] { get; } }", true)]
 	public static async Task IsUnsafeAsync(string code, bool expectedValue)
 	{
-		var propertySymbol = await IPropertySymbolExtensionsIsUnsafeTests.GetPropertySymbolAsync(code);
+		var propertySymbol = await GetPropertySymbolAsync(code);
 
 		Assert.That(propertySymbol.IsUnsafe(), Is.EqualTo(expectedValue));
 	}

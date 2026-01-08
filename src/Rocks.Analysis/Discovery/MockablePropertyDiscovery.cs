@@ -9,9 +9,9 @@ internal sealed class MockablePropertyDiscovery
 		HashSet<ITypeSymbol> shims, ref uint memberIdentifier, Compilation compilation) =>
 			this.Properties =
 				mockType.TypeKind == TypeKind.Interface ?
-					MockablePropertyDiscovery.GetPropertiesForInterface(mockType, containingAssemblyOfInvocationSymbol,
+					GetPropertiesForInterface(mockType, containingAssemblyOfInvocationSymbol,
 						shims, ref memberIdentifier, compilation) :
-					MockablePropertyDiscovery.GetPropertiesForClass(mockType, containingAssemblyOfInvocationSymbol,
+					GetPropertiesForClass(mockType, containingAssemblyOfInvocationSymbol,
 						shims, ref memberIdentifier, compilation);
 
 	private static MockableProperties GetPropertiesForClass(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol,

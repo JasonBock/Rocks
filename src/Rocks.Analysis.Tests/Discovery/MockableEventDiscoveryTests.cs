@@ -23,7 +23,7 @@ public static class MockableEventDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await MockableEventDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
 		using (Assert.EnterMultipleScope())
@@ -53,7 +53,7 @@ public static class MockableEventDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await MockableEventDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
 		using (Assert.EnterMultipleScope())
@@ -85,7 +85,7 @@ public static class MockableEventDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await MockableEventDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
 		using (Assert.EnterMultipleScope())
@@ -115,7 +115,7 @@ public static class MockableEventDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await MockableEventDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
 		using (Assert.EnterMultipleScope())
@@ -146,7 +146,7 @@ public static class MockableEventDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await MockableEventDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
 		using (Assert.EnterMultipleScope())
@@ -182,7 +182,7 @@ public static class MockableEventDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await MockableEventDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
 		using (Assert.EnterMultipleScope())
@@ -227,7 +227,7 @@ public static class MockableEventDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await MockableEventDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
 		using (Assert.EnterMultipleScope())

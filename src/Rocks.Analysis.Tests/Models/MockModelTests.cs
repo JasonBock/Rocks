@@ -16,7 +16,7 @@ public static class MockModelTests
 	[TestCase("using System; [Obsolete(\"Old\", error: true)]public class DoNotUse { } public class UsesObsolete { public virtual int this[DoNotUse value] { get; } }")]
 	public static async Task CreateWhenMemberUsesObsoleteTypeAsync(string code)
 	{
-		var model = await MockModelTests.GetModelAsync(code, "UsesObsolete", BuildType.Create);
+		var model = await GetModelAsync(code, "UsesObsolete", BuildType.Create);
 		Assert.That(model.Information, Is.Null);
 	}
 
@@ -43,7 +43,7 @@ public static class MockModelTests
 	public static async Task CreateWhenTargetHasInternalAbstractMembersAsync(string code, int buildType, bool isMockNull)
 	{
 		const string targetTypeName = "InternalTargets";
-		var (invocation, internalSymbol, internalModel) = await MockModelTests.GetTypeAsync(code, targetTypeName);
+		var (invocation, internalSymbol, internalModel) = await GetTypeAsync(code, targetTypeName);
 
 		var syntaxTree = CSharpSyntaxTree.ParseText(
 			$"public class Target {{ public void Test({targetTypeName} a) {{ }} }}");
@@ -78,7 +78,7 @@ public static class MockModelTests
 				static abstract void Foo();
 			}
 			""";
-		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
+		var model = await GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		Assert.That(model.Information, Is.Null);
 	}
@@ -88,7 +88,7 @@ public static class MockModelTests
 	{
 		const string targetTypeName = "EnumType";
 		var code = $"public enum {targetTypeName} {{ }}";
-		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
+		var model = await GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		Assert.That(model.Information, Is.Null);
 	}
@@ -98,7 +98,7 @@ public static class MockModelTests
 	{
 		const string targetTypeName = "EnumType";
 		var code = $"public enum {targetTypeName} {{ }}";
-		var (invocation, type, semanticModel) = await MockModelTests.GetTypeAsync(code, targetTypeName);
+		var (invocation, type, semanticModel) = await GetTypeAsync(code, targetTypeName);
 		var model = MockModel.Create(invocation, type.BaseType!, null, semanticModel, BuildType.Create, true);
 
 		Assert.That(model.Information, Is.Null);
@@ -109,7 +109,7 @@ public static class MockModelTests
 	{
 		const string targetTypeName = "ValueTypeType";
 		var code = $"public struct {targetTypeName} {{ }}";
-		var (invocation, type, semanticModel) = await MockModelTests.GetTypeAsync(code, targetTypeName);
+		var (invocation, type, semanticModel) = await GetTypeAsync(code, targetTypeName);
 		var model = MockModel.Create(invocation, type.BaseType!, null, semanticModel, BuildType.Create, true);
 
 		Assert.That(model.Information, Is.Null);
@@ -120,7 +120,7 @@ public static class MockModelTests
 	{
 		const string targetTypeName = "StructType";
 		var code = $"public struct {targetTypeName} {{ }}";
-		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
+		var model = await GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		Assert.That(model.Information, Is.Null);
 	}
@@ -130,7 +130,7 @@ public static class MockModelTests
 	{
 		const string targetTypeName = "SealedType";
 		var code = $"public sealed class {targetTypeName} {{ }}";
-		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
+		var model = await GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		Assert.That(model.Information, Is.Null);
 	}
@@ -147,7 +147,7 @@ public static class MockModelTests
 			public class {{targetTypeName}} { }
 			""";
 
-		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
+		var model = await GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		Assert.That(model.Information, Is.Null);
 	}
@@ -164,7 +164,7 @@ public static class MockModelTests
 			public class {{targetTypeName}} { }
 			""";
 
-		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
+		var model = await GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		Assert.That(model.Information, Is.Not.Null);
 	}
@@ -184,7 +184,7 @@ public static class MockModelTests
 			}
 			""";
 
-		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create, ReportDiagnostic.Default);
+		var model = await GetModelAsync(code, targetTypeName, BuildType.Create, ReportDiagnostic.Default);
 
 		Assert.That(model.Information, Is.Not.Null);
 	}
@@ -194,7 +194,7 @@ public static class MockModelTests
 	{
 		const string targetTypeName = "MySpecialMethod";
 		var code = $"public delegate void {targetTypeName}();";
-		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
+		var model = await GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		Assert.That(model.Information, Is.Null);
 	}
@@ -204,7 +204,7 @@ public static class MockModelTests
 	{
 		const string targetTypeName = "MySpecialMethod";
 		var code = $"public delegate void {targetTypeName}();";
-		var (invocation, type, semanticModel) = await MockModelTests.GetTypeAsync(code, targetTypeName);
+		var (invocation, type, semanticModel) = await GetTypeAsync(code, targetTypeName);
 
 		while (type is not null && type.SpecialType != SpecialType.System_MulticastDelegate)
 		{
@@ -221,7 +221,7 @@ public static class MockModelTests
 	{
 		const string targetTypeName = "MySpecialMethod";
 		var code = $"public delegate void {targetTypeName}();";
-		var (invocation, type, semanticModel) = await MockModelTests.GetTypeAsync(code, targetTypeName);
+		var (invocation, type, semanticModel) = await GetTypeAsync(code, targetTypeName);
 
 		while (type is not null && type.SpecialType != SpecialType.System_Delegate)
 		{
@@ -247,7 +247,7 @@ public static class MockModelTests
 			}
 			""";
 
-		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
+		var model = await GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		Assert.That(model.Information, Is.Null);
 	}
@@ -266,7 +266,7 @@ public static class MockModelTests
 			}
 			""";
 
-		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Make);
+		var model = await GetModelAsync(code, targetTypeName, BuildType.Make);
 
 		Assert.That(model.Information, Is.Not.Null);
 	}
@@ -277,7 +277,7 @@ public static class MockModelTests
 		const string targetTypeName = "NoMockables";
 		var code = $"public interface {targetTypeName} {{ }}";
 
-		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
+		var model = await GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		Assert.That(model.Information, Is.Null);
 	}
@@ -288,7 +288,7 @@ public static class MockModelTests
 		const string targetTypeName = "NoMockables";
 		var code = $"public interface {targetTypeName} {{ }}";
 
-		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Make);
+		var model = await GetModelAsync(code, targetTypeName, BuildType.Make);
 
 		Assert.That(model.Information, Is.Not.Null);
 	}
@@ -304,7 +304,7 @@ public static class MockModelTests
 				private {{targetTypeName}}() { }
 			}
 			""";
-		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
+		var model = await GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		Assert.That(model.Information, Is.Null);
 	}
@@ -322,7 +322,7 @@ public static class MockModelTests
 				void Foo();
 			}
 			""";
-		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
+		var model = await GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		using (Assert.EnterMultipleScope())
 		{
@@ -347,7 +347,7 @@ public static class MockModelTests
 				string Data { get; set; }
 			}
 			""";
-		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
+		var model = await GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		using (Assert.EnterMultipleScope())
 		{
@@ -373,7 +373,7 @@ public static class MockModelTests
 				event EventHandler TargetEvent;
 			}
 			""";
-		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
+		var model = await GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		using (Assert.EnterMultipleScope())
 		{
@@ -404,7 +404,7 @@ public static class MockModelTests
 				int this[string key, int value] { get; }
 			}
 			""";
-		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
+		var model = await GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		using (Assert.EnterMultipleScope())
 		{
@@ -431,7 +431,7 @@ public static class MockModelTests
 				public virtual void {{fooMethodName}}() { }
 			}
 			""";
-		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
+		var model = await GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		using (Assert.EnterMultipleScope())
 		{
@@ -442,13 +442,13 @@ public static class MockModelTests
 			var fooMethod = model.Information.Type.Methods.Single(_ => _.Name == fooMethodName);
 			Assert.That(fooMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
-			var getHashCodeMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(object.GetHashCode));
+			var getHashCodeMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(GetHashCode));
 			Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
-			var equalsMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(object.Equals));
+			var equalsMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(Equals));
 			Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
-			var toStringMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(object.ToString));
+			var toStringMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(ToString));
 			Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
 			Assert.That(model.Information.Type.Properties, Has.Length.EqualTo(0));
@@ -469,20 +469,20 @@ public static class MockModelTests
 				public virtual string Data { get; set; }
 			}
 			""";
-		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
+		var model = await GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		using (Assert.EnterMultipleScope())
 		{
 			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(1));
 			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(3));
 
-			var getHashCodeMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(object.GetHashCode));
+			var getHashCodeMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(GetHashCode));
 			Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
-			var equalsMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(object.Equals));
+			var equalsMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(Equals));
 			Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
-			var toStringMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(object.ToString));
+			var toStringMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(ToString));
 			Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
 			Assert.That(model.Information.Type.Properties, Has.Length.EqualTo(1));
@@ -504,20 +504,20 @@ public static class MockModelTests
 				public virtual event EventHandler TargetEvent;
 			}
 			""";
-		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
+		var model = await GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		using (Assert.EnterMultipleScope())
 		{
 			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(1));
 			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(3));
 
-			var getHashCodeMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(object.GetHashCode));
+			var getHashCodeMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(GetHashCode));
 			Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
-			var equalsMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(object.Equals));
+			var equalsMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(Equals));
 			Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
-			var toStringMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(object.ToString));
+			var toStringMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(ToString));
 			Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
 			Assert.That(model.Information.Type.Properties, Is.Empty);
@@ -542,20 +542,20 @@ public static class MockModelTests
 				public virtual event EventHandler TargetEvent;
 			}
 			""";
-		var model = await MockModelTests.GetModelAsync(code, targetTypeName, BuildType.Create);
+		var model = await GetModelAsync(code, targetTypeName, BuildType.Create);
 
 		using (Assert.EnterMultipleScope())
 		{
 			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(2));
 			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(3));
 
-			var getHashCodeMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(object.GetHashCode));
+			var getHashCodeMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(GetHashCode));
 			Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
-			var equalsMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(object.Equals));
+			var equalsMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(Equals));
 			Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
-			var toStringMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(object.ToString));
+			var toStringMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(ToString));
 			Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
 			Assert.That(model.Information.Type.Properties, Is.Empty);
@@ -593,7 +593,7 @@ public static class MockModelTests
 		BuildType buildType, ReportDiagnostic generalDiagnosticOption = ReportDiagnostic.Error)
 	{
 		var (invocation, typeSymbol, modelContext) =
-			await MockModelTests.GetTypeAsync(source, targetTypeName, generalDiagnosticOption);
+			await GetTypeAsync(source, targetTypeName, generalDiagnosticOption);
 		return MockModel.Create(invocation, typeSymbol!, null, modelContext, buildType, true);
 	}
 }

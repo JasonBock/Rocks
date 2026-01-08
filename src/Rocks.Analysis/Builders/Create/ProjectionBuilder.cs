@@ -45,22 +45,22 @@ internal static class ProjectionBuilder
 	{
 		if (projectedModel.TypeKind == TypeKind.FunctionPointer)
 		{
-			ProjectionBuilder.BuildFunctionPointerArgument(writer, projectedModel);
+		 BuildFunctionPointerArgument(writer, projectedModel);
 		}
 		else if (projectedModel.PointedAtCount > 0)
 		{
 			if (projectedModel.PointedAt!.SpecialType == SpecialType.System_Void)
 			{
-				ProjectionBuilder.BuildVoidPointerArgument(writer, projectedModel);
+			BuildVoidPointerArgument(writer, projectedModel);
 			}
 			else
 			{
-				ProjectionBuilder.BuildPointerArgument(writer, projectedModel);
+			BuildPointerArgument(writer, projectedModel);
 			}
 		}
 		else
 		{
-			ProjectionBuilder.BuildSpecialArgument(writer, projectedModel);
+		 BuildSpecialArgument(writer, projectedModel);
 		}
 	}
 

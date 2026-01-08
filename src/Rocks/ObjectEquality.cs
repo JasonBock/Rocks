@@ -26,7 +26,7 @@ internal static class ObjectEquality
 
 				for (var i = 0; i < array1.Length; i++)
 				{
-					if (!ObjectEquality.AreEqual(array1.GetValue(i), array2.GetValue(i)))
+					if (!AreEqual(array1.GetValue(i), array2.GetValue(i)))
 					{
 						return false;
 					}

@@ -13,7 +13,7 @@ public static class IParameterSymbolExtensionsTests
 	[TestCase("using System; public class Test { public void Foo(scoped Span<int> a) { } }", true)]
 	public static async Task IsScopedAsync(string code, bool expectedValue)
 	{
-		var symbol = await IParameterSymbolExtensionsTests.GetParameterSymbolAsync(code);
+		var symbol = await GetParameterSymbolAsync(code);
 		Assert.That(symbol.IsScoped(), Is.EqualTo(expectedValue));
 	}
 
@@ -23,7 +23,7 @@ public static class IParameterSymbolExtensionsTests
 	[TestCase("public class Test { public void Foo(string? a = null) { } }", false)]
 	public static async Task RequiresForcedNullableAnnotationAsync(string code, bool expectedValue)
 	{
-		var symbol = await IParameterSymbolExtensionsTests.GetParameterSymbolAsync(code);
+		var symbol = await GetParameterSymbolAsync(code);
 		Assert.That(symbol.RequiresForcedNullableAnnotation(), Is.EqualTo(expectedValue));
 	}
 

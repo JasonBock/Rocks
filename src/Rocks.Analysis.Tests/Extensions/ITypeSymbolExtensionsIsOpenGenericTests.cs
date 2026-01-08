@@ -13,7 +13,7 @@ public static class ITypeSymbolExtensionsIsOpenGenericTests
 	[TestCase("public class A<T1, T2, T3> { } public class Target { public void Foo(A<string, int, int> a) { } }", false)]
 	public static async Task IsOpenGenericAsync(string code, bool expectedValue)
 	{
-		var typeSymbol = await ITypeSymbolExtensionsIsOpenGenericTests.GetTypeSymbolAsync(code);
+		var typeSymbol = await GetTypeSymbolAsync(code);
 
 		Assert.That(typeSymbol.IsOpenGeneric(), Is.EqualTo(expectedValue));
 	}

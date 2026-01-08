@@ -284,7 +284,7 @@ internal static class IndexerExpectationsIndexerBuilder
 		if ((property.Accessors == PropertyAccessor.Get || property.Accessors == PropertyAccessor.GetAndSet || property.Accessors == PropertyAccessor.GetAndInit) &&
 			property.GetCanBeSeenByContainingAssembly)
 		{
-			constructorValues = IndexerExpectationsIndexerBuilder.BuildGetter(writer, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+			constructorValues = BuildGetter(writer, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 			wasGetGenerated = true;
 		}
 
@@ -301,7 +301,7 @@ internal static class IndexerExpectationsIndexerBuilder
 				memberIdentifier++;
 			}
 
-			constructorValues = IndexerExpectationsIndexerBuilder.BuildSetter(writer, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+			constructorValues = BuildSetter(writer, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 		}
 
 		return constructorValues;

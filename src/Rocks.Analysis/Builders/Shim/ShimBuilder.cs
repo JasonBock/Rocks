@@ -20,7 +20,7 @@ internal static class ShimBuilder
 
 	internal static void Build(IndentedTextWriter writer, TypeMockModel shimType)
 	{
-		var shimName = ShimBuilder.GetShimName(shimType.Type);
+		var shimName = GetShimName(shimType.Type);
 
 		writer.WriteLines(
 			$$"""

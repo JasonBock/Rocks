@@ -18,7 +18,7 @@ public static class MockableConstructorDiscoveryTests
 				public Target() { }
 			}
 			""";
-		var (typeSymbol, obsoleteAttribute, compilation) = await MockableConstructorDiscoveryTests.GetTypeSymbolAsync(code);
+		var (typeSymbol, obsoleteAttribute, compilation) = await GetTypeSymbolAsync(code);
 		var constructors = new MockableConstructorDiscovery(typeSymbol, typeSymbol.ContainingAssembly, obsoleteAttribute, compilation).Constructors;
 
 		Assert.That(constructors, Has.Length.EqualTo(1));
@@ -34,7 +34,7 @@ public static class MockableConstructorDiscoveryTests
 				internal Target() { }
 			}
 			""";
-		var (typeSymbol, obsoleteAttribute, compilation) = await MockableConstructorDiscoveryTests.GetTypeSymbolAsync(code);
+		var (typeSymbol, obsoleteAttribute, compilation) = await GetTypeSymbolAsync(code);
 
 		var containingSyntaxTree = CSharpSyntaxTree.ParseText("public class Containing { }");
 		var containingCompilation = CSharpCompilation.Create("InvocationAssembly", [containingSyntaxTree],
@@ -49,7 +49,7 @@ public static class MockableConstructorDiscoveryTests
 	public static async Task GetMockableConstructorsForInterfaceAsync()
 	{
 		var code = "public interface Target { }";
-		var (typeSymbol, obsoleteAttribute, compilation) = await MockableConstructorDiscoveryTests.GetTypeSymbolAsync(code);
+		var (typeSymbol, obsoleteAttribute, compilation) = await GetTypeSymbolAsync(code);
 		var constructors = new MockableConstructorDiscovery(typeSymbol, typeSymbol.ContainingAssembly, obsoleteAttribute, compilation).Constructors;
 
 		Assert.That(constructors, Has.Length.EqualTo(0));

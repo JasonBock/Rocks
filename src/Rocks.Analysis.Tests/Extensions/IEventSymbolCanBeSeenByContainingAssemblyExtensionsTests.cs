@@ -20,7 +20,7 @@ public static class IEventSymbolCanBeSeenByContainingAssemblyExtensionsTests
 				public event EventHandler CustomEvent;
 			}
 			""";
-		var (symbol, compilation) = await IEventSymbolCanBeSeenByContainingAssemblyExtensionsTests.GetSymbolAsync(code);
+		var (symbol, compilation) = await GetSymbolAsync(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 	}
@@ -37,7 +37,7 @@ public static class IEventSymbolCanBeSeenByContainingAssemblyExtensionsTests
 				private event EventHandler CustomEvent;
 			}
 			""";
-		var (symbol, compilation) = await IEventSymbolCanBeSeenByContainingAssemblyExtensionsTests.GetSymbolAsync(code);
+		var (symbol, compilation) = await GetSymbolAsync(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.False);
 	}

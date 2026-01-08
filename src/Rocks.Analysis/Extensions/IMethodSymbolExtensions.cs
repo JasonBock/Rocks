@@ -26,7 +26,7 @@ internal static class IMethodSymbolExtensions
 
 	internal static bool IsMarkedWithDoesNotReturn(this IMethodSymbol self, Compilation compilation) =>
 		self.GetAttributes().Any(
-			_ => _.AttributeClass?.GetFullyQualifiedName(compilation).EndsWith(IMethodSymbolExtensions.DoesNotReturnAttributeName) ?? false);
+			_ => _.AttributeClass?.GetFullyQualifiedName(compilation).EndsWith(DoesNotReturnAttributeName) ?? false);
 
 	internal static bool RequiresProjectedDelegate(this IMethodSymbol self, Compilation compilation) =>
 		self.Parameters.Length > 16 ||

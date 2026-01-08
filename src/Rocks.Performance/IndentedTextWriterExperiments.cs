@@ -38,7 +38,7 @@ public class IndentedTextWriterExperiments
 		using var writer = new StringWriter();
 		using var indentWriter = new IndentedTextWriter(writer, "\t");
 
-		IndentedTextWriterExperiments.WriteText(indentWriter);
+	  WriteText(indentWriter);
 
 		return writer.ToString();
 	}
@@ -60,7 +60,7 @@ public class IndentedTextWriterExperiments
 		using var writer = new StringWriter(builder);
 		using var indentWriter = new IndentedTextWriter(writer, "\t");
 
-		IndentedTextWriterExperiments.WriteText(indentWriter);
+	  WriteText(indentWriter);
 
 		return builder.ToString();
 	}

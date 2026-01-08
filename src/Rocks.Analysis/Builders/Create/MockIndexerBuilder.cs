@@ -253,7 +253,7 @@ internal static class MockIndexerBuilder
 
 		var memberIdentifierAttribute = indexer.MemberIdentifier;
 		var includeOptionalParameterValues = indexer.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No;
-		var signature = MockIndexerBuilder.GetSignature(indexer.Parameters, includeOptionalParameterValues);
+		var signature = GetSignature(indexer.Parameters, includeOptionalParameterValues);
 
 		if (indexer.Accessors == PropertyAccessor.Get || indexer.Accessors == PropertyAccessor.GetAndSet ||
 			indexer.Accessors == PropertyAccessor.GetAndInit)
@@ -281,13 +281,13 @@ internal static class MockIndexerBuilder
 
 		if (isGetterVisible)
 		{
-			MockIndexerBuilder.BuildGetter(writer, type, indexer, visibility, memberIdentifier, raiseEvents);
+		 BuildGetter(writer, type, indexer, visibility, memberIdentifier, raiseEvents);
 			memberIdentifier++;
 		}
 
 		if (isSetterVisible)
 		{
-			MockIndexerBuilder.BuildSetter(writer, type, indexer, visibility, memberIdentifier, raiseEvents);
+		 BuildSetter(writer, type, indexer, visibility, memberIdentifier, raiseEvents);
 		}
 
 		writer.Indent--;

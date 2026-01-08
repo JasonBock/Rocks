@@ -13,7 +13,7 @@ public static class ITypeSymbolExtensionsIsPointerTests
 	[TestCase("public class Target { public unsafe void Foo(delegate*<int, void> a) { } }", true)]
 	[TestCase("using System; public class Target { public void Foo(Span<int> a) { } }", false)]
 	public static async Task IsPointerAsync(string code, bool expectedResult) =>
-		Assert.That((await ITypeSymbolExtensionsIsPointerTests.GetTypeSymbolAsync(code)).IsPointer(), Is.EqualTo(expectedResult));
+		Assert.That((await GetTypeSymbolAsync(code)).IsPointer(), Is.EqualTo(expectedResult));
 
 	private static async Task<ITypeSymbol> GetTypeSymbolAsync(string source)
 	{

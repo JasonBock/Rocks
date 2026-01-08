@@ -16,7 +16,7 @@ public static class ITypeSymbolExtensionsIsObsoleteTests
 	[TestCase("[System.Obsolete(\"obsolete\", true)] public class Target { } public class SubTarget { } public class GenericTarget<T> where T : Target { } public class Usage { public void Foo(GenericTarget<SubTarget> t) { } }", true)]
 	public static async Task IsTypeObsoleteAsync(string code, bool expectedValue)
 	{
-		(var type, var obsoleteAttribute) = await ITypeSymbolExtensionsIsObsoleteTests.GetSymbolAsync(code);
+		(var type, var obsoleteAttribute) = await GetSymbolAsync(code);
 
 		Assert.That(type.IsObsolete(obsoleteAttribute), Is.EqualTo(expectedValue));
 	}

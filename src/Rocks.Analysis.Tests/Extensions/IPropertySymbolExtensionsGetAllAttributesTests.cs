@@ -26,7 +26,7 @@ public static class IPropertySymbolExtensionsGetAllAttributesTests
 			}
 			""";
 
-		var propertySymbol = await IPropertySymbolExtensionsGetAllAttributesTests.GetPropertySymbolAsync(code);
+		var propertySymbol = await GetPropertySymbolAsync(code);
 		var attributes = propertySymbol.GetAllAttributes();
 
 		using (Assert.EnterMultipleScope())
@@ -54,7 +54,7 @@ public static class IPropertySymbolExtensionsGetAllAttributesTests
 			}
 			""";
 
-		var propertySymbol = await IPropertySymbolExtensionsGetAllAttributesTests.GetPropertySymbolAsync(code);
+		var propertySymbol = await GetPropertySymbolAsync(code);
 		var attributes = propertySymbol.GetAllAttributes();
 
 		using (Assert.EnterMultipleScope())

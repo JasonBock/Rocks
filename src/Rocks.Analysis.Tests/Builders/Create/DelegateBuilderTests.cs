@@ -17,7 +17,7 @@ public static class DelegateBuilderTests
 	[TestCase("public class Test { public int Foo(string a = null) { } }", "global::System.Func<string?, int>")]
 	public static async Task BuildAsync(string code, string expectedValue)
 	{
-		(var method, var modelContext) = await DelegateBuilderTests.GetMethodAsync(code);
+		(var method, var modelContext) = await GetMethodAsync(code);
 		var methodModel = new MethodModel(method, modelContext.CreateTypeReference(method.ContainingType), 
 			modelContext, RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 0u);
 		Assert.That(DelegateBuilder.Build(methodModel), Is.EqualTo(expectedValue));

@@ -44,7 +44,7 @@ public static class RockAnalyzerInaccessibleAbstractMembersTests
 				public virtual void See() { }
 			}
 			""";
-		var internalCompilation = RockAnalyzerInaccessibleAbstractMembersTests.GetInternalCompilation(internalCode);
+		var internalCompilation = GetInternalCompilation(internalCode);
 
 		var code =
 			"""

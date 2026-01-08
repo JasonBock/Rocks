@@ -60,7 +60,7 @@ internal static class MockConstructorBuilder
 			writer.Indent--;
 			writer.WriteLine("{");
 			writer.Indent++;
-			MockConstructorBuilder.BuildFieldSetters(writer, namingContext, requiredInitPropertiesAndIndexers, hasRequiredProperties);
+		 BuildFieldSetters(writer, namingContext, requiredInitPropertiesAndIndexers, hasRequiredProperties);
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
@@ -69,7 +69,7 @@ internal static class MockConstructorBuilder
 			writer.WriteLine($"public Mock({instanceParameters})");
 			writer.WriteLine("{");
 			writer.Indent++;
-			MockConstructorBuilder.BuildFieldSetters(writer, namingContext, requiredInitPropertiesAndIndexers, hasRequiredProperties);
+		 BuildFieldSetters(writer, namingContext, requiredInitPropertiesAndIndexers, hasRequiredProperties);
 			writer.Indent--;
 			writer.WriteLine("}");
 		}

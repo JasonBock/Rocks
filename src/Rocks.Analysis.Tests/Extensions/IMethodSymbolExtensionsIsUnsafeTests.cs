@@ -15,7 +15,7 @@ public static class IMethodSymbolExtensionsIsUnsafeTests
 	[TestCase("public class Target { public unsafe int* Foo() => default; }", true)]
 	public static async Task IsUnsafeAsync(string code, bool expectedValue)
 	{
-		var methodSymbol = await IMethodSymbolExtensionsIsUnsafeTests.GetMethodSymbolAsync(code);
+		var methodSymbol = await GetMethodSymbolAsync(code);
 
 		Assert.That(methodSymbol.IsUnsafe(), Is.EqualTo(expectedValue));
 	}

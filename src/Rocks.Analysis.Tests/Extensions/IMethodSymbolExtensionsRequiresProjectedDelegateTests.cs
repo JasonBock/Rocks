@@ -26,7 +26,7 @@ public static class IMethodSymbolExtensionsRequiresProjectedDelegateTests
 		""", true)]
 	public static async Task RequiresProjectedDelegateAsync(string code, bool expectedValue)
 	{
-		var (typeSymbol, compilation) = await IMethodSymbolExtensionsRequiresProjectedDelegateTests.GetMethodSymbolAsync(code);
+		var (typeSymbol, compilation) = await GetMethodSymbolAsync(code);
 
 		Assert.That(typeSymbol.RequiresProjectedDelegate(compilation), Is.EqualTo(expectedValue));
 	}

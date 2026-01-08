@@ -3,7 +3,6 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 using Rocks.Analysis.Models;
-using System.Threading.Tasks;
 
 namespace Rocks.Analysis.Tests.Models;
 
@@ -20,7 +19,7 @@ public static class ParameterModelTests
 			}
 			""";
 
-		(var parameter, var modelContext) = await ParameterModelTests.GetSymbolsCompilationAsync(code);
+		(var parameter, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var model = new ParameterModel(parameter, modelContext);
 
 		using (Assert.EnterMultipleScope())
@@ -49,7 +48,7 @@ public static class ParameterModelTests
 			}
 			""";
 
-		(var parameter, var modelContext) = await ParameterModelTests.GetSymbolsCompilationAsync(code);
+		(var parameter, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var model = new ParameterModel(parameter, modelContext);
 
 		Assert.That(model.AttributesDescription, Is.EqualTo("[global::System.Runtime.InteropServices.InAttribute]"));
@@ -68,7 +67,7 @@ public static class ParameterModelTests
 			}
 			""";
 
-		(var parameter, var modelContext) = await ParameterModelTests.GetSymbolsCompilationAsync(code);
+		(var parameter, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var model = new ParameterModel(parameter, modelContext);
 
 		using (Assert.EnterMultipleScope())
@@ -91,7 +90,7 @@ public static class ParameterModelTests
 			}
 			""";
 
-		(var parameter, var modelContext) = await ParameterModelTests.GetSymbolsCompilationAsync(code);
+		(var parameter, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var model = new ParameterModel(parameter, modelContext);
 
 		Assert.That(model.IsParams, Is.True);
@@ -110,7 +109,7 @@ public static class ParameterModelTests
 			}
 			""";
 
-		(var parameter, var modelContext) = await ParameterModelTests.GetSymbolsCompilationAsync(code);
+		(var parameter, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var model = new ParameterModel(parameter, modelContext);
 
 		Assert.That(model.RequiresNullableAnnotation, Is.True);

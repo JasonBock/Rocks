@@ -39,9 +39,9 @@ public sealed class RockAnalyzer
 
 			compilationContext.RegisterOperationAction(operationContext =>
 			{
-				RockAnalyzer.AnalyzeAttribute(
+			   AnalyzeAttribute(
 					operationContext, rockAttributeSymbol);
-				RockAnalyzer.AnalyzeAttribute(
+			   AnalyzeAttribute(
 					operationContext, rockPartialAttributeSymbol);
 			}, OperationKind.Attribute);
 		});

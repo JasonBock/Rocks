@@ -19,7 +19,7 @@ public static class EventModelTests
 			}
 			""";
 
-		(var @event, var modelContext) = await EventModelTests.GetSymbolsCompilationAsync(code);
+		(var @event, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var model = new EventModel(@event, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No);
 
@@ -47,7 +47,7 @@ public static class EventModelTests
 			}
 			""";
 
-		(var @event, var modelContext) = await EventModelTests.GetSymbolsCompilationAsync(code);
+		(var @event, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var model = new EventModel(@event, modelContext,
 			 RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No);
 
@@ -72,7 +72,7 @@ public static class EventModelTests
 			}
 			""";
 
-		(var @event, var modelContext) = await EventModelTests.GetSymbolsCompilationAsync(code);
+		(var @event, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var model = new EventModel(@event, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No);
 
@@ -95,7 +95,7 @@ public static class EventModelTests
 			}			
 			""";
 
-		(var @event, var modelContext) = await EventModelTests.GetSymbolsCompilationAsync(code);
+		(var @event, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var model = new EventModel(@event, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No);
 

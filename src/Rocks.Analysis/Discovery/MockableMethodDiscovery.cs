@@ -26,9 +26,9 @@ internal sealed class MockableMethodDiscovery
 
 		this.Methods =
 			mockType.TypeKind == TypeKind.Interface ?
-				MockableMethodDiscovery.GetMethodsForInterface(
+				GetMethodsForInterface(
 					mockType, containingAssemblyOfInvocationSymbol, shims, objectMethods, ref memberIdentifier, compilation) :
-				MockableMethodDiscovery.GetMethodsForClass(
+				GetMethodsForClass(
 					mockType, containingAssemblyOfInvocationSymbol, shims, objectMethods, ref memberIdentifier, compilation);
 	}
 

@@ -19,7 +19,7 @@ internal static class TestAssistants
 	{
 		var test = new AnalyzerTest<TAnalyzer>()
 		{
-			ReferenceAssemblies = TestAssistants.net10ReferenceAssemblies.Value,
+			ReferenceAssemblies = net10ReferenceAssemblies.Value,
 			TestState =
 			{
 				Sources = { code },
@@ -48,7 +48,7 @@ internal static class TestAssistants
 	{
 		var test = new DiagnosticSuppressorVerifier<TDiagnosticSuppressor, TDiagnosticAnalyzer>()
 		{
-			ReferenceAssemblies = TestAssistants.net10ReferenceAssemblies.Value,
+			ReferenceAssemblies = net10ReferenceAssemblies.Value,
 			TestState =
 			{
 				Sources = { code },
@@ -108,7 +108,7 @@ internal static class TestAssistants
 	{
 		var test = new IncrementalGeneratorTest<TGenerator>(generalDiagnosticOption)
 		{
-			ReferenceAssemblies = TestAssistants.net10ReferenceAssemblies.Value,
+			ReferenceAssemblies = net10ReferenceAssemblies.Value,
 			TestState =
 			{
 				Sources = { code },

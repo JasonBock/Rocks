@@ -17,7 +17,7 @@ public static class RockAnalyzerInternalAbstractMemberTests
 	[TestCase("public abstract class InternalTargets { public abstract string VisibleWork { get; } internal virtual string Work { get; } }", false)]
 	public static async Task AnalyzeCreateAsync(string internalCode, bool hasDiagnostic)
 	{
-		var internalCompilation = RockAnalyzerInternalAbstractMemberTests.GetInternalCompilation(internalCode);
+		var internalCompilation = GetInternalCompilation(internalCode);
 
 		var code =
 			$$"""
@@ -45,7 +45,7 @@ public static class RockAnalyzerInternalAbstractMemberTests
 	[TestCase("using System; public abstract class InternalTargets { public abstract event EventHandler VisibleWork; internal abstract event EventHandler Work; }", true)]
 	public static async Task AnalyzeCreateMultipleDiagnosticAsync(string internalCode, bool hasDiagnostic)
 	{
-		var internalCompilation = RockAnalyzerInternalAbstractMemberTests.GetInternalCompilation(internalCode);
+		var internalCompilation = GetInternalCompilation(internalCode);
 
 		var code =
 			$$"""
@@ -82,7 +82,7 @@ public static class RockAnalyzerInternalAbstractMemberTests
 	[TestCase("using System; public abstract class InternalTargets { public abstract event EventHandler VisibleWork; internal virtual event EventHandler Work; }", true)]
 	public static async Task AnalyzeMakeAsync(string internalCode, bool hasDiagnostic)
 	{
-		var internalCompilation = RockAnalyzerInternalAbstractMemberTests.GetInternalCompilation(internalCode);
+		var internalCompilation = GetInternalCompilation(internalCode);
 
 		var code =
 			$$"""
@@ -116,7 +116,7 @@ public static class RockAnalyzerInternalAbstractMemberTests
 				internal void Work(); 
 			}
 			""";
-		var internalCompilation = RockAnalyzerInternalAbstractMemberTests.GetInternalCompilation(internalCode);
+		var internalCompilation = GetInternalCompilation(internalCode);
 
 		var code =
 			"""

@@ -22,7 +22,7 @@ public static class MockablePropertyDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await MockablePropertyDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier, compilation).Properties;
@@ -52,7 +52,7 @@ public static class MockablePropertyDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await MockablePropertyDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier, compilation).Properties;
@@ -86,7 +86,7 @@ public static class MockablePropertyDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await MockablePropertyDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier, compilation).Properties;
@@ -139,7 +139,7 @@ public static class MockablePropertyDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await MockablePropertyDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier, compilation).Properties;
@@ -182,7 +182,7 @@ public static class MockablePropertyDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await MockablePropertyDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier, compilation).Properties;

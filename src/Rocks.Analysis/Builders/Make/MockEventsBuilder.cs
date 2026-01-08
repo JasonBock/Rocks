@@ -49,11 +49,11 @@ internal static class MockEventsBuilder
 
 			if (@event.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 			{
-				MockEventsBuilder.BuildImplementation(writer, @event);
+			BuildImplementation(writer, @event);
 			}
 			else
 			{
-				MockEventsBuilder.BuildExplicitImplementation(writer, @event);
+			BuildExplicitImplementation(writer, @event);
 			}
 		}
 

@@ -18,7 +18,7 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 				public void Foo() { }
 			}
 			""";
-		var (symbol, compilation) = await ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync(code);
+		var (symbol, compilation) = await GetSymbolAsync(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 	}
@@ -33,7 +33,7 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 				protected void Foo() { }
 			}
 			""";
-		var (symbol, compilation) = await ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync(code);
+		var (symbol, compilation) = await GetSymbolAsync(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 	}
@@ -48,7 +48,7 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 				protected internal void Foo() { }
 			}
 			""";
-		var (symbol, compilation) = await ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync(code);
+		var (symbol, compilation) = await GetSymbolAsync(code);
 
 		using (Assert.EnterMultipleScope())
 		{
@@ -66,7 +66,7 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 				internal void Foo() { }
 			}
 			""";
-		var (symbol, compilation) = await ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync(code);
+		var (symbol, compilation) = await GetSymbolAsync(code);
 
 		using (Assert.EnterMultipleScope())
 		{
@@ -89,7 +89,7 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 				internal void Foo() { }
 			}
 			""";
-		var (symbol, _) = await ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync(code);
+		var (symbol, _) = await GetSymbolAsync(code);
 
 		var containingSyntaxTree = CSharpSyntaxTree.ParseText("public class Containing { }");
 		var containingCompilation = CSharpCompilation.Create(ContainingAssembly, [containingSyntaxTree],
@@ -112,7 +112,7 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 				internal void Foo() { }
 			}
 			""";
-		var (symbol, _) = await ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync(code);
+		var (symbol, _) = await GetSymbolAsync(code);
 
 		var containingSyntaxTree = CSharpSyntaxTree.ParseText("public class Containing { }");
 		var containingCompilation = CSharpCompilation.Create(ContainingAssembly, [containingSyntaxTree],
@@ -135,7 +135,7 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 				private protected void Foo() { }
 			}
 			""";
-		var (symbol, compilation) = await ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync(code);
+		var (symbol, compilation) = await GetSymbolAsync(code);
 
 		using (Assert.EnterMultipleScope())
 		{
@@ -158,7 +158,7 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 				private protected void Foo() { }
 			}
 			""";
-		var (symbol, _) = await ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync(code);
+		var (symbol, _) = await GetSymbolAsync(code);
 
 		var containingSyntaxTree = CSharpSyntaxTree.ParseText("public class Containing { }");
 		var containingCompilation = CSharpCompilation.Create(ContainingAssembly, [containingSyntaxTree],
@@ -181,7 +181,7 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 				private protected void Foo() { }
 			}
 			""";
-		var (symbol, _) = await ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync(code);
+		var (symbol, _) = await GetSymbolAsync(code);
 
 		var containingSyntaxTree = CSharpSyntaxTree.ParseText("public class Containing { }");
 		var containingCompilation = CSharpCompilation.Create(ContainingAssembly, [containingSyntaxTree],

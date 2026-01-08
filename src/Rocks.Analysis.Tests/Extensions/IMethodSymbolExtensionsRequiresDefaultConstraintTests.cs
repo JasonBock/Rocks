@@ -27,7 +27,7 @@ public static class IMethodSymbolExtensionsRequiresDefaultConstraintTests
 	[TestCaseSource(nameof(GetDefaultConstraints))]
 	public static async Task RequiresDefaultConstraintAsync(string code, string expectedValue)
 	{
-		var methodSymbol = await IMethodSymbolExtensionsRequiresDefaultConstraintTests.GetMethodSymbolAsync(code);
+		var methodSymbol = await GetMethodSymbolAsync(code);
 		var requiresDefaultConstraints = methodSymbol.GetDefaultConstraints();
 
 		using (Assert.EnterMultipleScope())
@@ -40,7 +40,7 @@ public static class IMethodSymbolExtensionsRequiresDefaultConstraintTests
 	[TestCaseSource(nameof(GetDefaultConstraintsWhenNoneExist))]
 	public static async Task NoDefaultConstraintAsync(string code)
 	{
-		var methodSymbol = await IMethodSymbolExtensionsRequiresDefaultConstraintTests.GetMethodSymbolAsync(code);
+		var methodSymbol = await GetMethodSymbolAsync(code);
 		var requiresDefaultConstraints = methodSymbol.GetDefaultConstraints();
 
 		Assert.That(requiresDefaultConstraints, Is.Empty);

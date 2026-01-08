@@ -34,7 +34,7 @@ public static class MockableMethodDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await MockableMethodDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
@@ -82,7 +82,7 @@ public static class MockableMethodDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await MockableMethodDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
@@ -118,7 +118,7 @@ public static class MockableMethodDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await MockableMethodDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
@@ -149,7 +149,7 @@ public static class MockableMethodDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await MockableMethodDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
@@ -184,7 +184,7 @@ public static class MockableMethodDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await MockableMethodDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
@@ -221,7 +221,7 @@ public static class MockableMethodDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await MockableMethodDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
@@ -264,7 +264,7 @@ public static class MockableMethodDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await MockableMethodDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
@@ -311,7 +311,7 @@ public static class MockableMethodDiscoveryTests
 			{ }
 			""";
 
-		var (typeSymbol, compilation) = await MockableMethodDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
@@ -344,7 +344,7 @@ public static class MockableMethodDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await MockableMethodDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
@@ -372,7 +372,7 @@ public static class MockableMethodDiscoveryTests
 
 		var code = $"public class {targetTypeName} {{ }}";
 
-		var (typeSymbol, compilation) = await MockableMethodDiscoveryTests.GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;

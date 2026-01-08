@@ -14,8 +14,8 @@ internal static class PropertyExpectationsBuilder
 	{
 		if (properties.Count > 0)
 		{
-			PropertyExpectationsBuilder.BuildProperties(writer, mockType, properties, expectationsFullyQualifiedName, propertyExpectationsFullyQualifiedName, adornmentsFQNsPipeline);
-			PropertyExpectationsBuilder.BuildIndexers(writer, mockType, properties, expectationsFullyQualifiedName, propertyExpectationsFullyQualifiedName, adornmentsFQNsPipeline);
+		 BuildProperties(writer, mockType, properties, expectationsFullyQualifiedName, propertyExpectationsFullyQualifiedName, adornmentsFQNsPipeline);
+		 BuildIndexers(writer, mockType, properties, expectationsFullyQualifiedName, propertyExpectationsFullyQualifiedName, adornmentsFQNsPipeline);
 		}
 	}
 

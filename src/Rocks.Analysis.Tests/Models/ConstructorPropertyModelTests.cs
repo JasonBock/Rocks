@@ -3,7 +3,6 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 using Rocks.Analysis.Models;
-using System.Threading.Tasks;
 
 namespace Rocks.Analysis.Tests.Models;
 
@@ -20,7 +19,7 @@ public static class ConstructorPropertyModelTests
 			}
 			""";
 
-		(var property, var modelContext) = await ConstructorPropertyModelTests.GetSymbolsCompilationAsync(code);
+		(var property, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var model = new ConstructorPropertyModel(property, modelContext);
 
 		using (Assert.EnterMultipleScope())
@@ -48,7 +47,7 @@ public static class ConstructorPropertyModelTests
 			}
 			""";
 
-		(var property, var modelContext) = await ConstructorPropertyModelTests.GetSymbolsCompilationAsync(code);
+		(var property, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var model = new ConstructorPropertyModel(property, modelContext);
 
 		Assert.That(model.IsRequired, Is.True);
@@ -65,7 +64,7 @@ public static class ConstructorPropertyModelTests
 			}
 			""";
 
-		(var property, var modelContext) = await ConstructorPropertyModelTests.GetSymbolsCompilationWithIndexerAsync(code);
+		(var property, var modelContext) = await GetSymbolsCompilationWithIndexerAsync(code);
 		var model = new ConstructorPropertyModel(property, modelContext);
 
 		using (Assert.EnterMultipleScope())
@@ -87,7 +86,7 @@ public static class ConstructorPropertyModelTests
 			}
 			""";
 
-		(var property, var modelContext) = await ConstructorPropertyModelTests.GetSymbolsCompilationAsync(code);
+		(var property, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var model = new ConstructorPropertyModel(property, modelContext);
 
 		Assert.That(model.NullableAnnotation, Is.EqualTo(NullableAnnotation.Annotated));
@@ -104,7 +103,7 @@ public static class ConstructorPropertyModelTests
 			}
 			""";
 
-		(var property, var modelContext) = await ConstructorPropertyModelTests.GetSymbolsCompilationAsync(code);
+		(var property, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var model = new ConstructorPropertyModel(property, modelContext);
 
 		Assert.That(model.IsReferenceType, Is.False);

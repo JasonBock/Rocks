@@ -1,5 +1,4 @@
 ﻿using Microsoft.CodeAnalysis;
-using System.Collections;
 
 namespace Rocks.Analysis.Extensions;
 

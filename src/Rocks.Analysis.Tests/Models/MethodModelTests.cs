@@ -3,7 +3,6 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 using Rocks.Analysis.Models;
-using System.Threading.Tasks;
 
 namespace Rocks.Analysis.Tests.Models;
 
@@ -22,7 +21,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
+		(var method, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -80,7 +79,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
+		(var method, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -104,7 +103,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
+		(var method, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -127,7 +126,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
+		(var method, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -152,7 +151,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
+		(var method, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -173,7 +172,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
+		(var method, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -201,7 +200,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
+		(var method, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -222,7 +221,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
+		(var method, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -245,7 +244,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
+		(var method, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -268,7 +267,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
+		(var method, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -291,7 +290,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
+		(var method, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -314,7 +313,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
+		(var method, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -337,7 +336,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
+		(var method, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -360,7 +359,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
+		(var method, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -383,7 +382,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
+		(var method, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -406,7 +405,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
+		(var method, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -427,7 +426,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
+		(var method, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -452,7 +451,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
+		(var method, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
@@ -477,7 +476,7 @@ public static class MethodModelTests
 
 		const uint memberIdentifier = 1;
 
-		(var method, var type, var modelContext) = await MethodModelTests.GetSymbolsCompilationAsync(code);
+		(var method, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new MethodModel(method, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, memberIdentifier);

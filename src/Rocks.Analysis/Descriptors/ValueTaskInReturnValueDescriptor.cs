@@ -6,9 +6,9 @@ internal static class ValueTaskInReturnValueDescriptor
 {
 	internal static SuppressionDescriptor Create() =>
 		new(
-			ValueTaskInReturnValueDescriptor.Id, 
-			ValueTaskInReturnValueDescriptor.SuppressedId,
-			ValueTaskInReturnValueDescriptor.Description);
+			Id,
+			SuppressedId,
+			Description);
 
 	internal const string Description = "Suppress CA2012 on ReturnValue() invocations when parameter type is either ValueTask or ValueTask<>";
 	internal const string Id = "ROCK15";

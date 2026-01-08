@@ -6,11 +6,11 @@ namespace Rocks.Analysis.Descriptors;
 internal static class TypeHasNoMockableMembersDescriptor
 {
 	internal static DiagnosticDescriptor Create() =>
-		new(TypeHasNoMockableMembersDescriptor.Id, TypeHasNoMockableMembersDescriptor.Title,
-			TypeHasNoMockableMembersDescriptor.Message,
+		new(Id, Title,
+			Message,
 			DiagnosticConstants.Usage, DiagnosticSeverity.Error, true,
 			helpLinkUri: HelpUrlBuilder.Build(
-				TypeHasNoMockableMembersDescriptor.Id, TypeHasNoMockableMembersDescriptor.Title));
+				Id, Title));
 
 	internal const string Id = "ROCK3";
 	internal const string Message = "The type {0} has no members that can be overriden";

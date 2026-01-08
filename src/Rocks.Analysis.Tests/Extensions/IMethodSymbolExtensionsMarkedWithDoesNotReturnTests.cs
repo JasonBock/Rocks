@@ -22,7 +22,7 @@ public static class IMethodSymbolExtensionsMarkedWithDoesNotReturnTests
 			}
 			""";
 
-		var (method, compilation) = await IMethodSymbolExtensionsMarkedWithDoesNotReturnTests.GetMethodSymbolAsync(code);
+		var (method, compilation) = await GetMethodSymbolAsync(code);
 		Assert.That(method.IsMarkedWithDoesNotReturn(compilation), Is.True);
 	}
 
@@ -37,7 +37,7 @@ public static class IMethodSymbolExtensionsMarkedWithDoesNotReturnTests
 			}
 			""";
 
-		var (method, compilation) = await IMethodSymbolExtensionsMarkedWithDoesNotReturnTests.GetMethodSymbolAsync(code);
+		var (method, compilation) = await GetMethodSymbolAsync(code);
 		Assert.That(method.IsMarkedWithDoesNotReturn(compilation), Is.False);
 	}
 

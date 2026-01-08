@@ -18,7 +18,7 @@ public static class IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests
 				public void Foo() { }
 			}
 			""";
-		var (symbol, compilation) = await IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync(code);
+		var (symbol, compilation) = await GetSymbolAsync(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 	}
@@ -33,7 +33,7 @@ public static class IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests
 				private void Foo() { }
 			}
 			""";
-		var (symbol, compilation) = await IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync(code);
+		var (symbol, compilation) = await GetSymbolAsync(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.False);
 	}
@@ -50,7 +50,7 @@ public static class IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests
 				public void Foo(Section section) { }
 			}
 			""";
-		var (symbol, compilation) = await IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync(code);
+		var (symbol, compilation) = await GetSymbolAsync(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 	}
@@ -67,7 +67,7 @@ public static class IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests
 				protected class Section { }
 			}
 			""";
-		var (symbol, compilation) = await IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync(code);
+		var (symbol, compilation) = await GetSymbolAsync(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.False);
 	}
@@ -84,7 +84,7 @@ public static class IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests
 				public Section Foo() => default;
 			}
 			""";
-		var (symbol, compilation) = await IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync(code);
+		var (symbol, compilation) = await GetSymbolAsync(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.True);
 	}
@@ -101,7 +101,7 @@ public static class IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests
 				protected class Section { }
 			}
 			""";
-		var (symbol, compilation) = await IMethodSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbolAsync(code);
+		var (symbol, compilation) = await GetSymbolAsync(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly, compilation), Is.False);
 	}

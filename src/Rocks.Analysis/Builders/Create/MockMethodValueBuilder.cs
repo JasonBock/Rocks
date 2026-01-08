@@ -110,14 +110,14 @@ internal static class MockMethodValueBuilder
 
 		if (method.Parameters.Length > 0 || method.IsGenericMethod)
 		{
-			MockMethodValueBuilder.BuildMethodValidationHandlerWithParameters(
+		 BuildMethodValidationHandlerWithParameters(
 				writer, type, method, namingContext, typeArgumentsNamingContext,
 				raiseEvents, shouldThrowDoesNotReturnException, method.MemberIdentifier,
 				expectationsFullyQualifiedName);
 		}
 		else
 		{
-			MockMethodValueBuilder.BuildMethodValidationHandlerNoParameters(
+		 BuildMethodValidationHandlerNoParameters(
 				writer, type, method, namingContext, typeArgumentsNamingContext,
 				raiseEvents, shouldThrowDoesNotReturnException, method.MemberIdentifier,
 				expectationsFullyQualifiedName);
@@ -298,7 +298,7 @@ internal static class MockMethodValueBuilder
 
 		writer.WriteLine("{");
 		writer.Indent++;
-		MockMethodValueBuilder.BuildMethodHandler(
+	  BuildMethodHandler(
 			writer, method, namingContext, raiseEvents, shouldThrowDoesNotReturnException, memberIdentifier);
 		writer.Indent--;
 		writer.WriteLine("}");
@@ -331,7 +331,7 @@ internal static class MockMethodValueBuilder
 			writer.Indent++;
 		}
 
-		MockMethodValueBuilder.BuildMethodHandler(
+	  BuildMethodHandler(
 			writer, method, namingContext, raiseEvents, shouldThrowDoesNotReturnException, memberIdentifier);
 
 		if (method.IsGenericMethod)

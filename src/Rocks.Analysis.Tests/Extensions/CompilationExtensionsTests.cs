@@ -10,28 +10,28 @@ public static class CompilationExtensionsTests
 	[Test]
 	public static void GetAliasesWhenNoneExist()
 	{
-		var compilation = CompilationExtensionsTests.GetCompilation("test", [], []);
+		var compilation = GetCompilation("test", [], []);
 		Assert.That(compilation.GetAliases(), Is.Empty);
 	}
 
 	[Test]
 	public static void GetAliasesWhenOneExistsOnOneReference()
 	{
-		var compilation = CompilationExtensionsTests.GetCompilation("test", ["first"], []);
+		var compilation = GetCompilation("test", ["first"], []);
 		Assert.That(compilation.GetAliases(), Has.Length.EqualTo(1));
 	}
 
 	[Test]
 	public static void GetAliasesWhenMultipleExistOnOneReference()
 	{
-		var compilation = CompilationExtensionsTests.GetCompilation("test", ["first", "second"], []);
+		var compilation = GetCompilation("test", ["first", "second"], []);
 		Assert.That(compilation.GetAliases(), Has.Length.EqualTo(1));
 	}
 
 	[Test]
 	public static void GetAliasesWhenOneExistsOnTwoReferences()
 	{
-		var compilation = CompilationExtensionsTests.GetCompilation("test", ["first"], ["second"]);
+		var compilation = GetCompilation("test", ["first"], ["second"]);
 
 		using (Assert.EnterMultipleScope())
 		{
@@ -45,7 +45,7 @@ public static class CompilationExtensionsTests
 	[Test]
 	public static void GetAliasesWhenMultipleExistsOnTwoReferences()
 	{
-		var compilation = CompilationExtensionsTests.GetCompilation("test", ["first", "third"], ["second", "fourth"]);
+		var compilation = GetCompilation("test", ["first", "third"], ["second", "fourth"]);
 
 		using (Assert.EnterMultipleScope())
 		{
@@ -59,7 +59,7 @@ public static class CompilationExtensionsTests
 	[Test]
 	public static void GetAliasesWhenOneDuplicateExistsOnTwoReferences()
 	{
-		var compilation = CompilationExtensionsTests.GetCompilation("test", ["first"], ["first"]);
+		var compilation = GetCompilation("test", ["first"], ["first"]);
 
 		using (Assert.EnterMultipleScope())
 		{
@@ -72,7 +72,7 @@ public static class CompilationExtensionsTests
 	[Test]
 	public static void GetAliasesWhenOneExistsOnTwoReferencesReordered()
 	{
-		var compilation = CompilationExtensionsTests.GetCompilation("test", ["second"], ["first"]);
+		var compilation = GetCompilation("test", ["second"], ["first"]);
 
 		using (Assert.EnterMultipleScope())
 		{

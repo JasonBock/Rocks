@@ -17,7 +17,7 @@ public static class TypeReferenceModelTests
 			
 			public class Target { }
 			""";
-		(var type, var modelContext) = await TypeReferenceModelTests.GetSymbolAndCompilationAsync(code);
+		(var type, var modelContext) = await GetSymbolAndCompilationAsync(code);
 		var model = modelContext.CreateTypeReference(type);
 
 		using (Assert.EnterMultipleScope())
@@ -48,7 +48,7 @@ public static class TypeReferenceModelTests
 			[Serializable]
 			public class Target { }
 			""";
-		(var type, var modelContext) = await TypeReferenceModelTests.GetSymbolAndCompilationAsync(code);
+		(var type, var modelContext) = await GetSymbolAndCompilationAsync(code);
 		var model = modelContext.CreateTypeReference(type);
 
 		Assert.That(model.AttributesDescription, Is.Empty);
@@ -66,7 +66,7 @@ public static class TypeReferenceModelTests
 			[Obsolete("old")]
 			public class Target { }
 			""";
-		(var type, var modelContext) = await TypeReferenceModelTests.GetSymbolAndCompilationAsync(code);
+		(var type, var modelContext) = await GetSymbolAndCompilationAsync(code);
 		var model = modelContext.CreateTypeReference(type);
 
 		Assert.That(model.AttributesDescription, Is.EqualTo("""[type: global::System.ObsoleteAttribute("old")]"""));
@@ -81,7 +81,7 @@ public static class TypeReferenceModelTests
 			
 			public class Target<T> { }
 			""";
-		(var type, var modelContext) = await TypeReferenceModelTests.GetSymbolAndCompilationAsync(code);
+		(var type, var modelContext) = await GetSymbolAndCompilationAsync(code);
 		var model = modelContext.CreateTypeReference(type);
 
 		using (Assert.EnterMultipleScope())
@@ -102,7 +102,7 @@ public static class TypeReferenceModelTests
 				public void Go<T>(T target) { }
 			}
 			""";
-		(var type, var modelContext) = await TypeReferenceModelTests.GetSymbolReferenceAndCompilationAsync(code);
+		(var type, var modelContext) = await GetSymbolReferenceAndCompilationAsync(code);
 		var model = modelContext.CreateTypeReference(type);
 
 		using (Assert.EnterMultipleScope())
@@ -126,7 +126,7 @@ public static class TypeReferenceModelTests
 				public void Go(Target? target) { }
 			}
 			""";
-		(var type, var modelContext) = await TypeReferenceModelTests.GetSymbolReferenceAndCompilationAsync(code);
+		(var type, var modelContext) = await GetSymbolReferenceAndCompilationAsync(code);
 		var model = modelContext.CreateTypeReference(type);
 
 		using (Assert.EnterMultipleScope())
@@ -148,7 +148,7 @@ public static class TypeReferenceModelTests
 				public unsafe void Go(string target) { }
 			}
 			""";
-		(var type, var modelContext) = await TypeReferenceModelTests.GetSymbolReferenceAndCompilationAsync(code);
+		(var type, var modelContext) = await GetSymbolReferenceAndCompilationAsync(code);
 		var model = modelContext.CreateTypeReference(type);
 
 		Assert.That(model.RequiresProjectedArgument, Is.False);
@@ -166,7 +166,7 @@ public static class TypeReferenceModelTests
 				public unsafe void Go(int* target) { }
 			}
 			""";
-		(var type, var modelContext) = await TypeReferenceModelTests.GetSymbolReferenceAndCompilationAsync(code);
+		(var type, var modelContext) = await GetSymbolReferenceAndCompilationAsync(code);
 		var model = modelContext.CreateTypeReference(type);
 
 		using (Assert.EnterMultipleScope())
@@ -189,7 +189,7 @@ public static class TypeReferenceModelTests
 				public void Go(ArgIterator target) { }
 			}
 			""";
-		(var type, var modelContext) = await TypeReferenceModelTests.GetSymbolReferenceAndCompilationAsync(code);
+		(var type, var modelContext) = await GetSymbolReferenceAndCompilationAsync(code);
 		var model = modelContext.CreateTypeReference(type);
 
 		Assert.That(model.RequiresProjectedArgument, Is.True);
@@ -208,7 +208,7 @@ public static class TypeReferenceModelTests
 				public void Go(RuntimeArgumentHandle target) { }
 			}
 			""";
-		(var type, var modelContext) = await TypeReferenceModelTests.GetSymbolReferenceAndCompilationAsync(code);
+		(var type, var modelContext) = await GetSymbolReferenceAndCompilationAsync(code);
 		var model = modelContext.CreateTypeReference(type);
 
 		Assert.That(model.RequiresProjectedArgument, Is.True);
@@ -227,7 +227,7 @@ public static class TypeReferenceModelTests
 				public void Go(TypedReference target) { }
 			}
 			""";
-		(var type, var modelContext) = await TypeReferenceModelTests.GetSymbolReferenceAndCompilationAsync(code);
+		(var type, var modelContext) = await GetSymbolReferenceAndCompilationAsync(code);
 		var model = modelContext.CreateTypeReference(type);
 
 		Assert.That(model.RequiresProjectedArgument, Is.True);
@@ -247,7 +247,7 @@ public static class TypeReferenceModelTests
 				public void Go(Span<int> target) { }
 			}
 			""";
-		(var type, var modelContext) = await TypeReferenceModelTests.GetSymbolReferenceAndCompilationAsync(code);
+		(var type, var modelContext) = await GetSymbolReferenceAndCompilationAsync(code);
 		var model = modelContext.CreateTypeReference(type);
 
 		using (Assert.EnterMultipleScope())
@@ -264,7 +264,7 @@ public static class TypeReferenceModelTests
 			"""
 			public record Target;
 			""";
-		(var type, var modelContext) = await TypeReferenceModelTests.GetSymbolAndCompilationAsync(code);
+		(var type, var modelContext) = await GetSymbolAndCompilationAsync(code);
 		var model = modelContext.CreateTypeReference(type);
 
 		Assert.That(model.IsRecord, Is.True);

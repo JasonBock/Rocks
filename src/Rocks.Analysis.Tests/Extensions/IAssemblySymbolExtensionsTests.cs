@@ -17,7 +17,7 @@ public static class IAssemblySymbolExtensionsTests
 			[assembly: InternalsVisibleTo("TargetAssembly")]
 			""";
 
-		IAssemblySymbolExtensionsTests.CheckExposesInternalsTo(sourceCode, true);
+	  CheckExposesInternalsTo(sourceCode, true);
 	}
 
 	[Test]
@@ -31,7 +31,7 @@ public static class IAssemblySymbolExtensionsTests
 			[assembly: InternalsVisibleTo("NotTargetAssembly")]
 			""";
 
-		IAssemblySymbolExtensionsTests.CheckExposesInternalsTo(sourceCode, true);
+	  CheckExposesInternalsTo(sourceCode, true);
 	}
 
 	[Test]
@@ -44,7 +44,7 @@ public static class IAssemblySymbolExtensionsTests
 			[assembly: InternalsVisibleTo("DifferentTargetAssembly")]
 			""";
 
-		IAssemblySymbolExtensionsTests.CheckExposesInternalsTo(sourceCode, false);
+	  CheckExposesInternalsTo(sourceCode, false);
 	}
 
 	[Test]
@@ -58,12 +58,12 @@ public static class IAssemblySymbolExtensionsTests
 			[assembly: InternalsVisibleTo("NotTargetAssembly")]
 			""";
 
-		IAssemblySymbolExtensionsTests.CheckExposesInternalsTo(sourceCode, false);
+	  CheckExposesInternalsTo(sourceCode, false);
 	}
 
 	[Test]
-	public static void CheckExposureWhenSourceAssemblyDoesNotHaveInternalsVisibleTo() => 
-		IAssemblySymbolExtensionsTests.CheckExposesInternalsTo("public class Source { }", false);
+	public static void CheckExposureWhenSourceAssemblyDoesNotHaveInternalsVisibleTo() =>
+		CheckExposesInternalsTo("public class Source { }", false);
 
 	private static void CheckExposesInternalsTo(string sourceCode, bool expectedResult)
 	{

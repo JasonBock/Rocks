@@ -3,7 +3,6 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
 using Rocks.Analysis.Models;
-using System.Threading.Tasks;
 
 namespace Rocks.Analysis.Tests.Models;
 
@@ -19,7 +18,7 @@ public static class PropertyModelTests
 				public string Value { get; set; }
 			}
 			""";
-		(var property, var type, var modelContext) = await PropertyModelTests.GetSymbolsCompilationAsync(code);
+		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
 		var model = new PropertyModel(property, mockType, modelContext,
@@ -64,7 +63,7 @@ public static class PropertyModelTests
 				public string Value { get; }
 			}
 			""";
-		(var property, var type, var modelContext) = await PropertyModelTests.GetSymbolsCompilationAsync(code);
+		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
 		var model = new PropertyModel(property, mockType, modelContext,
@@ -91,7 +90,7 @@ public static class PropertyModelTests
 				public string Value { init; }
 			}
 			""";
-		(var property, var type, var modelContext) = await PropertyModelTests.GetSymbolsCompilationAsync(code);
+		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
 		var model = new PropertyModel(property, mockType, modelContext,
@@ -118,7 +117,7 @@ public static class PropertyModelTests
 				public string Value { set; }
 			}
 			""";
-		(var property, var type, var modelContext) = await PropertyModelTests.GetSymbolsCompilationAsync(code);
+		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
 		var model = new PropertyModel(property, mockType, modelContext,
@@ -145,7 +144,7 @@ public static class PropertyModelTests
 				public virtual string Value { get; }
 			}
 			""";
-		(var property, var type, var modelContext) = await PropertyModelTests.GetSymbolsCompilationAsync(code);
+		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
 		var model = new PropertyModel(property, mockType, modelContext,
@@ -165,7 +164,7 @@ public static class PropertyModelTests
 				public abstract string Value { get; }
 			}
 			""";
-		(var property, var type, var modelContext) = await PropertyModelTests.GetSymbolsCompilationAsync(code);
+		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
 		var model = new PropertyModel(property, mockType, modelContext,
@@ -185,7 +184,7 @@ public static class PropertyModelTests
 				public abstract string this[string data] { get; }
 			}
 			""";
-		(var indexer, var type, var modelContext) = await PropertyModelTests.GetSymbolsForIndexerCompilationAsync(code);
+		(var indexer, var type, var modelContext) = await GetSymbolsForIndexerCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
 		var model = new PropertyModel(indexer, mockType, modelContext,
@@ -210,7 +209,7 @@ public static class PropertyModelTests
 				public unsafe int* Value { get; }
 			}
 			""";
-		(var property, var type, var modelContext) = await PropertyModelTests.GetSymbolsCompilationAsync(code);
+		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
 		var model = new PropertyModel(property, mockType, modelContext,
@@ -230,7 +229,7 @@ public static class PropertyModelTests
 				public ref int Value { get; }
 			}
 			""";
-		(var property, var type, var modelContext) = await PropertyModelTests.GetSymbolsCompilationAsync(code);
+		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
 		var model = new PropertyModel(property, mockType, modelContext,
@@ -250,7 +249,7 @@ public static class PropertyModelTests
 				public ref readonly int Value { get; }
 			}
 			""";
-		(var property, var type, var modelContext) = await PropertyModelTests.GetSymbolsCompilationAsync(code);
+		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
 		var model = new PropertyModel(property, mockType, modelContext,
@@ -270,7 +269,7 @@ public static class PropertyModelTests
 				public int Value { get; }
 			}
 			""";
-		(var property, var type, var modelContext) = await PropertyModelTests.GetSymbolsCompilationAsync(code);
+		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
 		var model = new PropertyModel(property, mockType, modelContext,
@@ -295,7 +294,7 @@ public static class PropertyModelTests
 				public string Value { get; set; }
 			}
 			""";
-		(var property, var type, var modelContext) = await PropertyModelTests.GetSymbolsCompilationAsync(code);
+		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
 		var model = new PropertyModel(property, mockType, modelContext,

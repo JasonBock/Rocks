@@ -17,7 +17,7 @@ internal static class TestAssistants
 		var test = new CodeRefactoringTest<TCodeRefactoring>
 		{
 			CodeActionIndex = codeActionIndex,
-			ReferenceAssemblies = TestAssistants.net10ReferenceAssemblies.Value,
+			ReferenceAssemblies = net10ReferenceAssemblies.Value,
 		};
 
 		foreach (var source in sources)

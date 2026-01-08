@@ -15,7 +15,7 @@ public static class INamedTypeSymbolExtensionsIsHasOpenGenericTests
 	[TestCase("public class A<T1, T2, T3> { } public class Target { public void Foo<T3>(A<string, int, A<string, T3, int>> a) { } }", true)]
 	public static async Task HasOpenGenericsAsync(string code, bool expectedValue)
 	{
-		var typeSymbol = await INamedTypeSymbolExtensionsIsHasOpenGenericTests.GetNamedTypeSymbolAsync(code);
+		var typeSymbol = await GetNamedTypeSymbolAsync(code);
 
 		Assert.That(typeSymbol.HasOpenGenerics(), Is.EqualTo(expectedValue));
 	}

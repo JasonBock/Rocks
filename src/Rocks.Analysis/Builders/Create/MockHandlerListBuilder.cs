@@ -9,8 +9,8 @@ internal static class MockHandlerListBuilder
 {
 	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName)
 	{
-		MockHandlerListBuilder.BuildMethodHandlerTypes(writer, mockType, expectationsFullyQualifiedName);
-		MockHandlerListBuilder.BuildPropertyHandlerTypes(writer, mockType, expectationsFullyQualifiedName);
+	  BuildMethodHandlerTypes(writer, mockType, expectationsFullyQualifiedName);
+	  BuildPropertyHandlerTypes(writer, mockType, expectationsFullyQualifiedName);
 	}
 
 	private static void BuildHandler(IndentedTextWriter writer, MethodModel method, uint memberIdentifier, string expectationsFullyQualifiedName)
@@ -104,7 +104,7 @@ internal static class MockHandlerListBuilder
 	{
 		foreach (var method in mockType.Methods)
 		{
-			MockHandlerListBuilder.BuildHandler(writer, method, method.MemberIdentifier, expectationsFullyQualifiedName);
+		 BuildHandler(writer, method, method.MemberIdentifier, expectationsFullyQualifiedName);
 		}
 	}
 
@@ -115,7 +115,7 @@ internal static class MockHandlerListBuilder
 			if (property.Accessors == PropertyAccessor.Get || property.Accessors == PropertyAccessor.Set || property.Accessors == PropertyAccessor.Init)
 			{
 				var method = property.Accessors == PropertyAccessor.Get ? property.GetMethod! : property.SetMethod!;
-				MockHandlerListBuilder.BuildHandler(writer, method, property.MemberIdentifier, expectationsFullyQualifiedName);
+			BuildHandler(writer, method, property.MemberIdentifier, expectationsFullyQualifiedName);
 			}
 			else
 			{
@@ -123,13 +123,13 @@ internal static class MockHandlerListBuilder
 
 				if (property.GetCanBeSeenByContainingAssembly)
 				{
-					MockHandlerListBuilder.BuildHandler(writer, property.GetMethod!, memberIdentifier, expectationsFullyQualifiedName);
+			   BuildHandler(writer, property.GetMethod!, memberIdentifier, expectationsFullyQualifiedName);
 					memberIdentifier++;
 				}
 
 				if (property.SetCanBeSeenByContainingAssembly || property.InitCanBeSeenByContainingAssembly)
 				{
-					MockHandlerListBuilder.BuildHandler(writer, property.SetMethod!, memberIdentifier, expectationsFullyQualifiedName);
+			   BuildHandler(writer, property.SetMethod!, memberIdentifier, expectationsFullyQualifiedName);
 				}
 			}
 		}

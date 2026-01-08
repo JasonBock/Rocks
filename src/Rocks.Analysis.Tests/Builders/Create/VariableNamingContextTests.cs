@@ -51,7 +51,7 @@ public static class VariableNamingContextTests
 	[Test]
 	public static async Task AddWhenThereAreNoParametersAsync()
 	{
-		(var method, var modelContext) = await VariableNamingContextTests.GetMethodAsync("public class Method { public void Foo() { } }");
+		(var method, var modelContext) = await GetMethodAsync("public class Method { public void Foo() { } }");
 		var model = new MethodModel(method, modelContext.CreateTypeReference(method.ContainingType), modelContext,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
@@ -63,7 +63,7 @@ public static class VariableNamingContextTests
 	[Test]
 	public static async Task AddWhenThereIsNoMatchInParametersOrVariablesAsync()
 	{
-		(var method, var modelContext) = await VariableNamingContextTests.GetMethodAsync("public class Method { public void Foo(int a) { } }");
+		(var method, var modelContext) = await GetMethodAsync("public class Method { public void Foo(int a) { } }");
 		var model = new MethodModel(method, modelContext.CreateTypeReference(method.ContainingType), modelContext,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
@@ -75,7 +75,7 @@ public static class VariableNamingContextTests
 	[Test]
 	public static async Task AddWhenThereIsMatchInParametersAsync()
 	{
-		(var method, var modelContext) = await VariableNamingContextTests.GetMethodAsync("public class Method { public void Foo(int a) { } }");
+		(var method, var modelContext) = await GetMethodAsync("public class Method { public void Foo(int a) { } }");
 		var model = new MethodModel(method, modelContext.CreateTypeReference(method.ContainingType), modelContext,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
@@ -87,7 +87,7 @@ public static class VariableNamingContextTests
 	[Test]
 	public static async Task AddWhenVariableCurrentlyExistsAsync()
 	{
-		(var method, var modelContext) = await VariableNamingContextTests.GetMethodAsync("public class Method { public void Foo(int a) { } }");
+		(var method, var modelContext) = await GetMethodAsync("public class Method { public void Foo(int a) { } }");
 		var model = new MethodModel(method, modelContext.CreateTypeReference(method.ContainingType), modelContext,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
@@ -100,7 +100,7 @@ public static class VariableNamingContextTests
 	[Test]
 	public static async Task AddWhenThereAreMultipleMatchesInParametersAsync()
 	{
-		(var method, var modelContext) = await VariableNamingContextTests.GetMethodAsync("public class Method { public void Foo(int a, int a1) { } }");
+		(var method, var modelContext) = await GetMethodAsync("public class Method { public void Foo(int a, int a1) { } }");
 		var model = new MethodModel(method, modelContext.CreateTypeReference(method.ContainingType), modelContext,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
@@ -112,7 +112,7 @@ public static class VariableNamingContextTests
 	[Test]
 	public static async Task AddWhenThereAreMultipleMatchesInParametersAndVariablesAsync()
 	{
-		(var method, var modelContext) = await VariableNamingContextTests.GetMethodAsync("public class Method { public void Foo(int a, int a1) { } }");
+		(var method, var modelContext) = await GetMethodAsync("public class Method { public void Foo(int a, int a1) { } }");
 		var model = new MethodModel(method, modelContext.CreateTypeReference(method.ContainingType), modelContext,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 

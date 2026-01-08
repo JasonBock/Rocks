@@ -70,7 +70,7 @@ public static class ObjectExtensionsTests
 	[TestCase("public class Test { public void Foo(decimal value = 22) { } }", "22")]
 	public static async Task GetDefaultValueAsync(string code, string expectedResult)
 	{
-		var (parameter, compilation) = await ObjectExtensionsTests.GetParameterSymbolAsync(code);
+		var (parameter, compilation) = await GetParameterSymbolAsync(code);
 		Assert.That(parameter.ExplicitDefaultValue.GetDefaultValue(parameter.Type, compilation), Is.EqualTo(expectedResult));
 	}
 

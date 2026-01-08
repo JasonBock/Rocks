@@ -24,7 +24,7 @@ public sealed class ValueTaskInReturnValueSuppressor
 	/// containing all suppressed diagnostic IDs.
 	/// </summary>
 	public override ImmutableArray<SuppressionDescriptor> SupportedSuppressions =>
-		[ValueTaskInReturnValueSuppressor.descriptor];
+		[descriptor];
 
 	/// <summary>
 	/// Reports targeted CA2012 suppressions
@@ -74,7 +74,7 @@ public sealed class ValueTaskInReturnValueSuppressor
 										context.Compilation.GetTypeByMetadataName("System.Threading.Tasks.ValueTask`1"))))
 								{
 									var suppression = Suppression.Create(
-										ValueTaskInReturnValueSuppressor.descriptor, diagnostic);
+										descriptor, diagnostic);
 									context.ReportSuppression(suppression);
 								}
 							}

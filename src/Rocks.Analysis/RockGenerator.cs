@@ -140,7 +140,7 @@ internal sealed class RockGenerator
 		var combinedCollected = mockTypesCollected.Combine(partialMockTypesCollected);
 
 		context.RegisterSourceOutput(combinedCollected,
-			(context, source) => RockGenerator.CreateCombinedOutput(source, context));
+			(context, source) => CreateCombinedOutput(source, context));
 	}
 
 	private static void CreateCombinedOutput((ImmutableArray<MockModelInformation> leftMocks, ImmutableArray<MockModelInformation> rightMocks) mocks, SourceProductionContext context)

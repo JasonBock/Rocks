@@ -10,7 +10,7 @@ public abstract class UsingMemberNotNullWhen
 {
 	protected string? Connection { get; set; }
 
-	[MemberNotNullWhen(true, nameof(UsingMemberNotNullWhen.Connection))]
+	[MemberNotNullWhen(true, nameof(Connection))]
 	public virtual bool IsConnectionProvided => this.Connection is not null;
 }
 

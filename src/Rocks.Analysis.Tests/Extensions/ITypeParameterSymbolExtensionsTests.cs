@@ -22,7 +22,7 @@ public static class ITypeParameterSymbolExtensionsTests
 	[TestCase("public class Thing { } public interface IThing { } public class Target<T> where T : Thing, IThing { }", "where T : global::Thing, global::IThing")]
 	public static async Task GetConstraintsAsync(string code, string expectedConstraints)
 	{
-		var (type, compilation) = await ITypeParameterSymbolExtensionsTests.GetTypeParameterSymbolAsync(code);
+		var (type, compilation) = await GetTypeParameterSymbolAsync(code);
 		var constraint = type.GetConstraints(compilation);
 
 		Assert.That(constraint!.ToString(), Is.EqualTo(expectedConstraints));
@@ -32,7 +32,7 @@ public static class ITypeParameterSymbolExtensionsTests
 	public static async Task GetConstraintsWhenNoConstraintsExistAsync()
 	{
 		var code = "public class Target<T> { }";
-		var (type, compilation) = await ITypeParameterSymbolExtensionsTests.GetTypeParameterSymbolAsync(code);
+		var (type, compilation) = await GetTypeParameterSymbolAsync(code);
 		var constraint = type.GetConstraints(compilation);
 
 		Assert.That(constraint, Is.Null);

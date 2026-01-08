@@ -25,7 +25,7 @@ internal static class ITypeSymbolExtensionsGetNameTests
 	[TestCase("using System.Collections.Generic; using Stuff; namespace Stuff { public class Thing { } } public static class Target { public static void Foo(List<Thing?> a) { } }", "global::System.Collections.Generic.List<global::Stuff.Thing?>")]
 	public static async Task GetFullyQualifiedNameAsync(string code, string expectedName)
 	{
-		var (typeSymbol, compilation) = await ITypeSymbolExtensionsGetNameTests.GetTypeSymbolFromParameterAsync(code);
+		var (typeSymbol, compilation) = await GetTypeSymbolFromParameterAsync(code);
 		var name = typeSymbol.GetFullyQualifiedName(compilation);
 
 		Assert.That(name, Is.EqualTo(expectedName));
@@ -49,7 +49,7 @@ internal static class ITypeSymbolExtensionsGetNameTests
 	[TestCase("using System.Collections.Generic; using Stuff; namespace Stuff { public class Thing { } } public static class Target { public static void Foo(List<Thing?> a) { } }", "global::System.Collections.Generic.List")]
 	public static async Task GetFullyQualifiedNameNoGenetricsAsync(string code, string expectedName)
 	{
-		var (typeSymbol, compilation) = await ITypeSymbolExtensionsGetNameTests.GetTypeSymbolFromParameterAsync(code);
+		var (typeSymbol, compilation) = await GetTypeSymbolFromParameterAsync(code);
 		var name = typeSymbol.GetFullyQualifiedName(compilation, false);
 
 		Assert.That(name, Is.EqualTo(expectedName));
@@ -66,7 +66,7 @@ internal static class ITypeSymbolExtensionsGetNameTests
 	[TestCase("public class Target { public unsafe void Foo(delegate* unmanaged[Stdcall, SuppressGCTransition]<int, int> a) { } }", TypeNameOption.Flatten, "delegatePointer_unmanaged_Stdcall__SuppressGCTransition_Ofint__int")]
 	public static async Task GetNameForEsotericTypeAsync(string code, TypeNameOption option, string expectedName)
 	{
-		var (typeSymbol, _) = await ITypeSymbolExtensionsGetNameTests.GetTypeSymbolFromParameterAsync(code);
+		var (typeSymbol, _) = await GetTypeSymbolFromParameterAsync(code);
 		var name = typeSymbol.GetName(option);
 
 		Assert.That(name, Is.EqualTo(expectedName));
@@ -80,7 +80,7 @@ internal static class ITypeSymbolExtensionsGetNameTests
 	[TestCase("public class Target<T, T2, TSomething> : Base", TypeNameOption.Flatten, "Target")]
 	public static async Task GetNameAsync(string code, TypeNameOption option, string expectedName)
 	{
-		var typeSymbol = await ITypeSymbolExtensionsGetNameTests.GetTypeSymbolAsync(code);
+		var typeSymbol = await GetTypeSymbolAsync(code);
 		var name = typeSymbol.GetName(option);
 
 		Assert.That(name, Is.EqualTo(expectedName));
@@ -106,7 +106,7 @@ internal static class ITypeSymbolExtensionsGetNameTests
 		TypeNameOption.Flatten, "Base")]
 	public static async Task GetNameFromDeclaredTypeAsync(string code, TypeNameOption option, string expectedName)
 	{
-		var parameterSymbol = await ITypeSymbolExtensionsGetNameTests.GetDeclaredTypeSymbolAsync(code);
+		var parameterSymbol = await GetDeclaredTypeSymbolAsync(code);
 		var name = parameterSymbol.Type.GetName(option);
 
 		Assert.That(name, Is.EqualTo(expectedName));

@@ -19,7 +19,7 @@ public static class ConstructorModelTests
 			}
 			""";
 
-		(var type, var constructor, var modelContext) = await ConstructorModelTests.GetSymbolsCompilationAsync(code);
+		(var type, var constructor, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new ConstructorModel(constructor, modelContext);
 
@@ -45,7 +45,7 @@ public static class ConstructorModelTests
 			}
 			""";
 
-		(var type, var constructor, var modelContext) = await ConstructorModelTests.GetSymbolsCompilationAsync(code);
+		(var type, var constructor, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var mockType = modelContext.CreateTypeReference(type);
 		var model = new ConstructorModel(constructor, modelContext);
 

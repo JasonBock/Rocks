@@ -19,7 +19,7 @@ public static class ITypeSymbolExtensionsGetNamespacesTests
 				public class Target { }
 			}
 			""";
-		var typeSymbol = await ITypeSymbolExtensionsGetNamespacesTests.GetTypeSymbolAsync(code, "Target");
+		var typeSymbol = await GetTypeSymbolAsync(code, "Target");
 		var namespaces = typeSymbol.GetNamespaces();
 
 		using (Assert.EnterMultipleScope())
@@ -68,7 +68,7 @@ public static class ITypeSymbolExtensionsGetNamespacesTests
 				}
 			}
 			""";
-		var typeSymbol = await ITypeSymbolExtensionsGetNamespacesTests.GetTypeSymbolAsync(code, targetType);
+		var typeSymbol = await GetTypeSymbolAsync(code, targetType);
 		var propertySymbol = typeSymbol.GetMembers().Single(_ => _.Name == theField) as IPropertySymbol;
 		var namespaces = propertySymbol!.Type.GetNamespaces();
 

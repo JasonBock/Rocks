@@ -22,7 +22,7 @@ internal static class MockIndexerBuilder
 		var isUnsafe = indexer.IsUnsafe ? "unsafe " : string.Empty;
 		var isOverriden = indexer.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty;
 		var includeOptionalParameterValues = indexer.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No;
-		var indexerSignature = $"{explicitTypeName}{MockIndexerBuilder.GetSignature(indexer.Parameters, includeOptionalParameterValues)}";
+		var indexerSignature = $"{explicitTypeName}{GetSignature(indexer.Parameters, includeOptionalParameterValues)}";
 
 		var returnByRef = indexer.ReturnsByRef ? "ref " : indexer.ReturnsByRefReadOnly ? "ref readonly " : string.Empty;
 		writer.WriteLine($"{visibility}{isUnsafe}{isOverriden}{returnByRef}{indexer.Type.FullyQualifiedName} {indexerSignature}");

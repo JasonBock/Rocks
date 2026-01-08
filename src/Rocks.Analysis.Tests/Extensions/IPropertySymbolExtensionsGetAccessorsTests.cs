@@ -14,7 +14,7 @@ internal static class IPropertySymbolExtensionsGetAccessorsTests
 	[TestCase("public class Target { public int Foo { init; } }", PropertyAccessor.Init)]
 	public static async Task IsUnsafeAsync(string code, PropertyAccessor expectedValue)
 	{
-		var propertySymbol = await IPropertySymbolExtensionsGetAccessorsTests.GetPropertySymbolAsync(code);
+		var propertySymbol = await GetPropertySymbolAsync(code);
 
 		Assert.That(propertySymbol.GetAccessors(), Is.EqualTo(expectedValue));
 	}

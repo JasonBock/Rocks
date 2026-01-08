@@ -11,7 +11,7 @@ public static class TypeMockModelTests
 	[Test]
 	public static async Task VerifyMemberCountWhenNoMethodsExistAsync()
 	{
-		(var node, var type, var model) = await TypeMockModelTests.GetInformationAsync(
+		(var node, var type, var model) = await GetInformationAsync(
 			"""
 			using System;
 			
@@ -35,7 +35,7 @@ public static class TypeMockModelTests
 	[Test]
 	public static async Task VerifyMemberCountWhenNoPropertiesExistAsync()
 	{
-		(var node, var type, var model) = await TypeMockModelTests.GetInformationAsync(
+		(var node, var type, var model) = await GetInformationAsync(
 			"""
 			using System;
 			
@@ -59,7 +59,7 @@ public static class TypeMockModelTests
 	[Test]
 	public static async Task VerifyMemberCountWithMethodPropertyMixAsync()
 	{
-		(var node, var type, var modelContext) = await TypeMockModelTests.GetInformationAsync(
+		(var node, var type, var modelContext) = await GetInformationAsync(
 			"""
 			using System;
 			

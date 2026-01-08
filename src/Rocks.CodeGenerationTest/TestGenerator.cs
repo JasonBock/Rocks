@@ -75,12 +75,14 @@ internal static class TestGenerator
 		var initialTypes = targetAssemblies.SelectMany(_ =>
 			_.GetTypes().Where(
 				_ => _.IsPublic &&
-				!_.IsSubclassOf(typeof(Delegate))
-				&& !_.IsValueType
-				&& !_.IsSealed
-				&& !typesToIgnore.Contains(_)))
+				!_.IsSubclassOf(typeof(Delegate)) && 
+				!_.IsValueType && 
+				!_.IsSealed &&
+				_.FullName is not null &&
+				!typesToIgnore.Contains(_)))
+			.DistinctBy(_ => _.FullName!.ToUpperInvariant())
 			.ToImmutableArray();
-		return await TestGenerator.GetMockableTypesAsync(initialTypes, true, typesToLoadAssembliesFrom, aliases);
+		return await GetMockableTypesAsync(initialTypes, true, typesToLoadAssembliesFrom, aliases);
 	}
 
 	private static async Task<ImmutableArray<Type>> GetMockableTypesAsync(
@@ -124,7 +126,7 @@ internal static class TestGenerator
 
 		var code = GetValidationCode(types, aliases);
 		var assemblies = types.Select(_ => _.Assembly).ToHashSet();
-		var syntaxTree = CSharpSyntaxTree.ParseText(code, options: new CSharpParseOptions(languageVersion: TestGenerator.LanguageVersionOption));
+		var syntaxTree = CSharpSyntaxTree.ParseText(code, options: new CSharpParseOptions(languageVersion: LanguageVersionOption));
 		var references = AppDomain.CurrentDomain.GetAssemblies()
 			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
 			.Select(_ => MetadataReference.CreateFromFile(_.Location))
@@ -148,7 +150,7 @@ internal static class TestGenerator
 			 references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary,
 				  allowUnsafe: true,
 				  generalDiagnosticOption: ReportDiagnostic.Error,
-				  specificDiagnosticOptions: TestGenerator.SpecificDiagnostics));
+				  specificDiagnosticOptions: SpecificDiagnostics));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
 		var validTypes = new List<Type>();
@@ -176,9 +178,9 @@ internal static class TestGenerator
 	{
 		var issues = new List<Issue>();
 		var assemblies = targetTypes.Select(_ => _.Assembly).ToHashSet();
-		var code = TestGenerator.GetCode(targetTypes, buildType, aliases);
+		var code = GetCode(targetTypes, buildType, aliases);
 
-		var parseOptions = new CSharpParseOptions(languageVersion: TestGenerator.LanguageVersionOption);
+		var parseOptions = new CSharpParseOptions(languageVersion: LanguageVersionOption);
 		var syntaxTree = CSharpSyntaxTree.ParseText(code, options: parseOptions);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
 			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
@@ -203,7 +205,7 @@ internal static class TestGenerator
 				OutputKind.DynamicallyLinkedLibrary,
 				allowUnsafe: true,
 				generalDiagnosticOption: ReportDiagnostic.Error,
-				specificDiagnosticOptions: TestGenerator.SpecificDiagnostics));
+				specificDiagnosticOptions: SpecificDiagnostics));
 
 		var driver = CSharpGeneratorDriver.Create(
 			generator).WithUpdatedParseOptions(parseOptions);
@@ -249,7 +251,7 @@ internal static class TestGenerator
 		var assemblies = targetTypes.Select(_ => _.Assembly).ToHashSet();
 		var code = GetCode(targetTypes, buildType, aliases);
 
-		var syntaxTree = CSharpSyntaxTree.ParseText(code, options: new CSharpParseOptions(languageVersion: TestGenerator.LanguageVersionOption));
+		var syntaxTree = CSharpSyntaxTree.ParseText(code, options: new CSharpParseOptions(languageVersion: LanguageVersionOption));
 		var references = AppDomain.CurrentDomain.GetAssemblies()
 			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
 			.Select(_ => MetadataReference.CreateFromFile(_.Location))
@@ -272,7 +274,7 @@ internal static class TestGenerator
 			 references, new(OutputKind.DynamicallyLinkedLibrary,
 				  allowUnsafe: true,
 				  generalDiagnosticOption: ReportDiagnostic.Error,
-				  specificDiagnosticOptions: TestGenerator.SpecificDiagnostics));
+				  specificDiagnosticOptions: SpecificDiagnostics));
 
 		var driver = CSharpGeneratorDriver.Create(generator);
 		var generatorWatch = Stopwatch.StartNew();
@@ -294,7 +296,7 @@ internal static class TestGenerator
 
 	internal static void Generate(IIncrementalGenerator generator, string code, Type[] typesToLoadAssembliesFrom)
 	{
-		var parseOptions = new CSharpParseOptions(languageVersion: TestGenerator.LanguageVersionOption);
+		var parseOptions = new CSharpParseOptions(languageVersion: LanguageVersionOption);
 		var syntaxTree = CSharpSyntaxTree.ParseText(code, options: parseOptions);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
 			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
@@ -317,7 +319,7 @@ internal static class TestGenerator
 			references, new(OutputKind.DynamicallyLinkedLibrary,
 			allowUnsafe: true,
 			generalDiagnosticOption: ReportDiagnostic.Error,
-			specificDiagnosticOptions: TestGenerator.SpecificDiagnostics));
+			specificDiagnosticOptions: SpecificDiagnostics));
 
 		var driver = CSharpGeneratorDriver.Create(generator)
 			.WithUpdatedParseOptions(parseOptions);
