@@ -5,19 +5,18 @@ namespace Rocks.Analysis.Tests.Generators;
 public static class ParamsGeneratorTests
 {
 	[Test]
-	public static async Task GenerateWhenParamsIsRefStructAsync()
+	public static async Task GenerateWhenParamsInMethodIsRefStructAsync()
 	{
 		var code =
 			"""
 			using Rocks;
 			using System;
 
-			[assembly: Rock(typeof(ParamMethods), BuildType.Create | BuildType.Make)]
+			[assembly: Rock(typeof(IParamsMethods), BuildType.Create | BuildType.Make)]
 
-			public class ParamMethods
+			public interface IParamsMethods
 			{
-			  public virtual void Do(params string[] args) { }
-			  public virtual void DoSpan(params ReadOnlySpan<string> args) { }
+				void Do(params ReadOnlySpan<string> args);
 			}
 			""";
 
@@ -35,26 +34,26 @@ public static class ParamsGeneratorTests
 			using Rocks.Extensions;
 			
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-			internal sealed class ParamMethodsCreateExpectations
+			internal sealed class IParamsMethodsCreateExpectations
 				: global::Rocks.Expectations
 			{
-				private readonly global::ParamMethodsCreateExpectations.SetupsExpectations setups;
+				private readonly global::IParamsMethodsCreateExpectations.SetupsExpectations setups;
 				
 				internal sealed class SetupsExpectations
 				{
-					private readonly global::ParamMethodsCreateExpectations parent;
+					private readonly global::IParamsMethodsCreateExpectations parent;
 				
-					internal SetupsExpectations(global::ParamMethodsCreateExpectations parent) =>
+					internal SetupsExpectations(global::IParamsMethodsCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal global::ParamMethodsCreateExpectations.Adornments.AdornmentsForHandler0 Equals(global::Rocks.Argument<object?> @obj)
+					internal global::IParamsMethodsCreateExpectations.Adornments.AdornmentsForHandler0 Do(global::Rocks.RefStructArgument<global::System.ReadOnlySpan<string>> @args)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
-						global::System.ArgumentNullException.ThrowIfNull(@obj);
+						global::System.ArgumentNullException.ThrowIfNull(@args);
 						
-						var @handler = new global::ParamMethodsCreateExpectations.Handler0
+						var @handler = new global::IParamsMethodsCreateExpectations.Handler0
 						{
-							@obj = @obj,
+							@args = @args,
 						};
 						
 						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
@@ -62,103 +61,30 @@ public static class ParamsGeneratorTests
 						return new(@handler);
 					}
 					
-					internal new global::ParamMethodsCreateExpectations.Adornments.AdornmentsForHandler1 GetHashCode()
-					{
-						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
-						var handler = new global::ParamMethodsCreateExpectations.Handler1();
-						if (this.parent.handlers1 is null) { this.parent.handlers1 = new(handler); }
-						else { this.parent.handlers1.Add(handler); }
-						return new(handler);
-					}
-					
-					internal new global::ParamMethodsCreateExpectations.Adornments.AdornmentsForHandler2 ToString()
-					{
-						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
-						var handler = new global::ParamMethodsCreateExpectations.Handler2();
-						if (this.parent.handlers2 is null) { this.parent.handlers2 = new(handler); }
-						else { this.parent.handlers2.Add(handler); }
-						return new(handler);
-					}
-					
-					internal global::ParamMethodsCreateExpectations.Adornments.AdornmentsForHandler3 Do(global::Rocks.Argument<string[]> @args)
-					{
-						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
-						global::System.ArgumentNullException.ThrowIfNull(@args);
-						
-						var @handler = new global::ParamMethodsCreateExpectations.Handler3
-						{
-							@args = @args,
-						};
-						
-						if (this.parent.handlers3 is null) { this.parent.handlers3 = new(@handler); }
-						else { this.parent.handlers3.Add(@handler); }
-						return new(@handler);
-					}
-					
-					internal global::ParamMethodsCreateExpectations.Adornments.AdornmentsForHandler4 DoSpan(global::Rocks.RefStructArgument<global::System.ReadOnlySpan<string>> @args)
-					{
-						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
-						global::System.ArgumentNullException.ThrowIfNull(@args);
-						
-						var @handler = new global::ParamMethodsCreateExpectations.Handler4
-						{
-							@args = @args,
-						};
-						
-						if (this.parent.handlers4 is null) { this.parent.handlers4 = new(@handler); }
-						else { this.parent.handlers4.Add(@handler); }
-						return new(@handler);
-					}
+					internal global::IParamsMethodsCreateExpectations.Adornments.AdornmentsForHandler0 Do(params global::System.ReadOnlySpan<string> @args) =>
+						this.Do(new global::Rocks.RefStructArgument<global::System.ReadOnlySpan<string>>());
 				}
 				
-				internal global::ParamMethodsCreateExpectations.SetupsExpectations Setups => this.setups;
+				internal global::IParamsMethodsCreateExpectations.SetupsExpectations Setups => this.setups;
 				
 				internal sealed class Handler0
-					: global::Rocks.Handler<global::System.Func<object?, bool>, bool>
-				{
-					public global::Rocks.Argument<object?> @obj { get; set; }
-				}
-				private global::Rocks.Handlers<global::ParamMethodsCreateExpectations.Handler0>? @handlers0;
-				
-				internal sealed class Handler1
-					: global::Rocks.Handler<global::System.Func<int>, int>
-				{ }
-				private global::Rocks.Handlers<global::ParamMethodsCreateExpectations.Handler1>? @handlers1;
-				
-				internal sealed class Handler2
-					: global::Rocks.Handler<global::System.Func<string?>, string?>
-				{ }
-				private global::Rocks.Handlers<global::ParamMethodsCreateExpectations.Handler2>? @handlers2;
-				
-				internal sealed class Handler3
-					: global::Rocks.Handler<global::System.Action<string[]>>
-				{
-					public global::Rocks.Argument<string[]> @args { get; set; }
-				}
-				private global::Rocks.Handlers<global::ParamMethodsCreateExpectations.Handler3>? @handlers3;
-				
-				internal sealed class Handler4
 					: global::Rocks.Handler<global::System.Action<global::System.ReadOnlySpan<string>>>
 				{
 					public global::Rocks.RefStructArgument<global::System.ReadOnlySpan<string>> @args { get; set; }
 				}
-				private global::Rocks.Handlers<global::ParamMethodsCreateExpectations.Handler4>? @handlers4;
+				private global::Rocks.Handlers<global::IParamsMethodsCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
 					{
-						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::ParamMethodsCreateExpectations was never made."]);
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::IParamsMethodsCreateExpectations was never made."]);
 					}
 					else if (!this.WasExceptionThrown)
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
 						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-						if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
-						if (this.handlers2 is not null) { failures.AddRange(this.Verify(this.handlers2, 2)); }
-						if (this.handlers3 is not null) { failures.AddRange(this.Verify(this.handlers3, 3)); }
-						if (this.handlers4 is not null) { failures.AddRange(this.Verify(this.handlers4, 4)); }
 				
 						if (failures.Count > 0)
 						{
@@ -168,85 +94,22 @@ public static class ParamsGeneratorTests
 				}
 				
 				private sealed class Mock
-					: global::ParamMethods
+					: global::IParamsMethods
 				{
-					public Mock(global::ParamMethodsCreateExpectations @expectations)
+					public Mock(global::IParamsMethodsCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
 					
 					[global::Rocks.MemberIdentifier(0)]
-					public override bool Equals(object? @obj)
+					public void Do(params global::System.ReadOnlySpan<string> @args)
 					{
 						if (this.Expectations.handlers0 is not null)
 						{
+							var @foundMatch = false;
+							
 							foreach (var @handler in this.Expectations.handlers0)
 							{
-								if (@handler.@obj.IsValid(@obj!))
-								{
-									@handler.CallCount++;
-									var @result = @handler.Callback is not null ?
-										@handler.Callback(@obj!) : @handler.ReturnValue;
-									return @result!;
-								}
-							}
-							
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {this.GetType().GetMemberDescription(0)}
-									obj: {@obj.FormatValue()}
-								""");
-						}
-						else
-						{
-							return base.Equals(@obj: @obj!);
-						}
-					}
-					
-					[global::Rocks.MemberIdentifier(1)]
-					public override int GetHashCode()
-					{
-						if (this.Expectations.handlers1 is not null)
-						{
-							var @handler = this.Expectations.handlers1.First;
-							@handler.CallCount++;
-							var @result = @handler.Callback is not null ?
-								@handler.Callback() : @handler.ReturnValue;
-							return @result!;
-						}
-						else
-						{
-							return base.GetHashCode();
-						}
-					}
-					
-					[global::Rocks.MemberIdentifier(2)]
-					public override string? ToString()
-					{
-						if (this.Expectations.handlers2 is not null)
-						{
-							var @handler = this.Expectations.handlers2.First;
-							@handler.CallCount++;
-							var @result = @handler.Callback is not null ?
-								@handler.Callback() : @handler.ReturnValue;
-							return @result!;
-						}
-						else
-						{
-							return base.ToString();
-						}
-					}
-					
-					[global::Rocks.MemberIdentifier(3)]
-					public override void Do(params string[] @args)
-					{
-						if (this.Expectations.handlers3 is not null)
-						{
-							var @foundMatch = false;
-							
-							foreach (var @handler in this.Expectations.handlers3)
-							{
 								if (@handler.@args.IsValid(@args!))
 								{
 									@foundMatch = true;
@@ -261,57 +124,28 @@ public static class ParamsGeneratorTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(3)}
-										args: {@args.FormatValue()}
-									""");
-							}
-						}
-						else
-						{
-							base.Do(@args: @args!);
-						}
-					}
-					
-					[global::Rocks.MemberIdentifier(4)]
-					public override void DoSpan(params global::System.ReadOnlySpan<string> @args)
-					{
-						if (this.Expectations.handlers4 is not null)
-						{
-							var @foundMatch = false;
-							
-							foreach (var @handler in this.Expectations.handlers4)
-							{
-								if (@handler.@args.IsValid(@args!))
-								{
-									@foundMatch = true;
-									@handler.CallCount++;
-									@handler.Callback?.Invoke(@args!);
-									break;
-								}
-							}
-							
-							if (!@foundMatch)
-							{
-								this.Expectations.WasExceptionThrown = true;
-								throw new global::Rocks.Exceptions.ExpectationException(
-									$"""
-									No handlers match for {this.GetType().GetMemberDescription(4)}
+									No handlers match for {this.GetType().GetMemberDescription(0)}
 										args: <Not formattable>
 									""");
 							}
 						}
 						else
 						{
-							base.DoSpan(@args: @args!);
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+									args: <Not formattable>
+								""");
 						}
 					}
 					
-					private global::ParamMethodsCreateExpectations Expectations { get; }
+					private global::IParamsMethodsCreateExpectations Expectations { get; }
 				}
 				
-				public ParamMethodsCreateExpectations() => this.setups = new(this);
+				public IParamsMethodsCreateExpectations() => this.setups = new(this);
 				
-				internal global::ParamMethods Instance()
+				internal global::IParamsMethods Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
@@ -328,43 +162,15 @@ public static class ParamsGeneratorTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForParamMethods<TAdornments>
+					public interface IAdornmentsForIParamsMethods<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
-						where TAdornments : IAdornmentsForParamMethods<TAdornments>
+						where TAdornments : IAdornmentsForIParamsMethods<TAdornments>
 					{ }
 					
 					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::ParamMethodsCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForParamMethods<AdornmentsForHandler0>
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParamsMethodsCreateExpectations.Handler0, global::System.Action<global::System.ReadOnlySpan<string>>>, IAdornmentsForIParamsMethods<AdornmentsForHandler0>
 					{
-						public AdornmentsForHandler0(global::ParamMethodsCreateExpectations.Handler0 handler)
-							: base(handler) { }
-					}
-					
-					public sealed class AdornmentsForHandler1
-						: global::Rocks.Adornments<AdornmentsForHandler1, global::ParamMethodsCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForParamMethods<AdornmentsForHandler1>
-					{
-						public AdornmentsForHandler1(global::ParamMethodsCreateExpectations.Handler1 handler)
-							: base(handler) { }
-					}
-					
-					public sealed class AdornmentsForHandler2
-						: global::Rocks.Adornments<AdornmentsForHandler2, global::ParamMethodsCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForParamMethods<AdornmentsForHandler2>
-					{
-						public AdornmentsForHandler2(global::ParamMethodsCreateExpectations.Handler2 handler)
-							: base(handler) { }
-					}
-					
-					public sealed class AdornmentsForHandler3
-						: global::Rocks.Adornments<AdornmentsForHandler3, global::ParamMethodsCreateExpectations.Handler3, global::System.Action<string[]>>, IAdornmentsForParamMethods<AdornmentsForHandler3>
-					{
-						public AdornmentsForHandler3(global::ParamMethodsCreateExpectations.Handler3 handler)
-							: base(handler) { }
-					}
-					
-					public sealed class AdornmentsForHandler4
-						: global::Rocks.Adornments<AdornmentsForHandler4, global::ParamMethodsCreateExpectations.Handler4, global::System.Action<global::System.ReadOnlySpan<string>>>, IAdornmentsForParamMethods<AdornmentsForHandler4>
-					{
-						public AdornmentsForHandler4(global::ParamMethodsCreateExpectations.Handler4 handler)
+						public AdornmentsForHandler0(global::IParamsMethodsCreateExpectations.Handler0 handler)
 							: base(handler) { }
 					}
 				}
@@ -388,40 +194,21 @@ public static class ParamsGeneratorTests
 			#nullable enable
 			
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-			internal sealed class ParamMethodsMakeExpectations
+			internal sealed class IParamsMethodsMakeExpectations
 			{
-				internal global::ParamMethods Instance()
+				internal global::IParamsMethods Instance()
 				{
 					return new Mock();
 				}
 				
 				private sealed class Mock
-					: global::ParamMethods
+					: global::IParamsMethods
 				{
 					public Mock()
 					{
 					}
 					
-					public override bool Equals(object? @obj)
-					{
-						return default!;
-					}
-					
-					public override int GetHashCode()
-					{
-						return default!;
-					}
-					
-					public override string? ToString()
-					{
-						return default!;
-					}
-					
-					public override void Do(params string[] @args)
-					{
-					}
-					
-					public override void DoSpan(params global::System.ReadOnlySpan<string> @args)
+					public void Do(params global::System.ReadOnlySpan<string> @args)
 					{
 					}
 				}
@@ -436,8 +223,837 @@ public static class ParamsGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
-				("ParamMethods_Rock_Create.g.cs", createGeneratedCode),
-				("ParamMethods_Rock_Make.g.cs", makeGeneratedCode),
+				("IParamsMethods_Rock_Create.g.cs", createGeneratedCode),
+				("IParamsMethods_Rock_Make.g.cs", makeGeneratedCode),
+			],
+			[]);
+	}
+
+	[Test]
+	public static async Task GenerateWhenParamsInMethodIsNotRefStructAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			using System;
+
+			[assembly: Rock(typeof(IParamsMethods), BuildType.Create | BuildType.Make)]
+
+			public interface IParamsMethods
+			{
+				void Do(params string[] args);
+			}
+			""";
+
+		var createGeneratedCode =
+			""""
+			// <auto-generated/>
+			
+			#pragma warning disable CS8618
+			#pragma warning disable CS8633
+			#pragma warning disable CS8714
+			#pragma warning disable CS8775
+			
+			#nullable enable
+			
+			using Rocks.Extensions;
+			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+			internal sealed class IParamsMethodsCreateExpectations
+				: global::Rocks.Expectations
+			{
+				private readonly global::IParamsMethodsCreateExpectations.SetupsExpectations setups;
+				
+				internal sealed class SetupsExpectations
+				{
+					private readonly global::IParamsMethodsCreateExpectations parent;
+				
+					internal SetupsExpectations(global::IParamsMethodsCreateExpectations parent) =>
+						this.parent = parent;
+				
+					internal global::IParamsMethodsCreateExpectations.Adornments.AdornmentsForHandler0 Do(global::Rocks.Argument<string[]> @args)
+					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+						global::System.ArgumentNullException.ThrowIfNull(@args);
+						
+						var @handler = new global::IParamsMethodsCreateExpectations.Handler0
+						{
+							@args = @args,
+						};
+						
+						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
+						else { this.parent.handlers0.Add(@handler); }
+						return new(@handler);
+					}
+					
+					internal global::IParamsMethodsCreateExpectations.Adornments.AdornmentsForHandler0 Do(params string[] @args) =>
+						this.Do(global::Rocks.Arg.Is(@args));
+				}
+				
+				internal global::IParamsMethodsCreateExpectations.SetupsExpectations Setups => this.setups;
+				
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Action<string[]>>
+				{
+					public global::Rocks.Argument<string[]> @args { get; set; }
+				}
+				private global::Rocks.Handlers<global::IParamsMethodsCreateExpectations.Handler0>? @handlers0;
+				
+				public override void Verify()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::IParamsMethodsCreateExpectations was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
+					{
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+				
+						if (failures.Count > 0)
+						{
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
+					}
+				}
+				
+				private sealed class Mock
+					: global::IParamsMethods
+				{
+					public Mock(global::IParamsMethodsCreateExpectations @expectations)
+					{
+						this.Expectations = @expectations;
+					}
+					
+					[global::Rocks.MemberIdentifier(0)]
+					public void Do(params string[] @args)
+					{
+						if (this.Expectations.handlers0 is not null)
+						{
+							var @foundMatch = false;
+							
+							foreach (var @handler in this.Expectations.handlers0)
+							{
+								if (@handler.@args.IsValid(@args!))
+								{
+									@foundMatch = true;
+									@handler.CallCount++;
+									@handler.Callback?.Invoke(@args!);
+									break;
+								}
+							}
+							
+							if (!@foundMatch)
+							{
+								this.Expectations.WasExceptionThrown = true;
+								throw new global::Rocks.Exceptions.ExpectationException(
+									$"""
+									No handlers match for {this.GetType().GetMemberDescription(0)}
+										args: {@args.FormatValue()}
+									""");
+							}
+						}
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+									args: {@args.FormatValue()}
+								""");
+						}
+					}
+					
+					private global::IParamsMethodsCreateExpectations Expectations { get; }
+				}
+				
+				public IParamsMethodsCreateExpectations() => this.setups = new(this);
+				
+				internal global::IParamsMethods Instance()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						this.WasInstanceInvoked = true;
+						var @mock = new Mock(this);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForIParamsMethods<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForIParamsMethods<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParamsMethodsCreateExpectations.Handler0, global::System.Action<string[]>>, IAdornmentsForIParamsMethods<AdornmentsForHandler0>
+					{
+						public AdornmentsForHandler0(global::IParamsMethodsCreateExpectations.Handler0 handler)
+							: base(handler) { }
+					}
+				}
+			}
+			
+			#pragma warning restore CS8618
+			#pragma warning restore CS8633
+			#pragma warning restore CS8714
+			#pragma warning restore CS8775
+			"""";
+
+		var makeGeneratedCode =
+			""""
+			// <auto-generated/>
+			
+			#pragma warning disable CS8618
+			#pragma warning disable CS8633
+			#pragma warning disable CS8714
+			#pragma warning disable CS8775
+			
+			#nullable enable
+			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+			internal sealed class IParamsMethodsMakeExpectations
+			{
+				internal global::IParamsMethods Instance()
+				{
+					return new Mock();
+				}
+				
+				private sealed class Mock
+					: global::IParamsMethods
+				{
+					public Mock()
+					{
+					}
+					
+					public void Do(params string[] @args)
+					{
+					}
+				}
+			}
+			
+			#pragma warning restore CS8618
+			#pragma warning restore CS8633
+			#pragma warning restore CS8714
+			#pragma warning restore CS8775
+			
+			"""";
+
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[
+				("IParamsMethods_Rock_Create.g.cs", createGeneratedCode),
+				("IParamsMethods_Rock_Make.g.cs", makeGeneratedCode),
+			],
+			[]);
+	}
+
+	[Test]
+	public static async Task GenerateWhenParamsInIndexerIsRefStructAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			using System;
+
+			[assembly: Rock(typeof(IParamsIndexer), BuildType.Create | BuildType.Make)]
+
+			public interface IParamsIndexer
+			{
+				string this[params ReadOnlySpan<string> args] { get; set; }
+			}
+			""";
+
+		var createGeneratedCode =
+			""""
+			// <auto-generated/>
+			
+			#pragma warning disable CS8618
+			#pragma warning disable CS8633
+			#pragma warning disable CS8714
+			#pragma warning disable CS8775
+			
+			#nullable enable
+			
+			using Rocks.Extensions;
+			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+			internal sealed class IParamsIndexerCreateExpectations
+				: global::Rocks.Expectations
+			{
+				private readonly global::IParamsIndexerCreateExpectations.SetupsExpectations setups;
+				
+				internal sealed class SetupsExpectations
+				{
+					private readonly global::IParamsIndexerCreateExpectations parent;
+				
+					internal SetupsExpectations(global::IParamsIndexerCreateExpectations parent) =>
+						this.parent = parent;
+				
+					internal sealed class Indexer0Expectations
+					{
+						private readonly global::IParamsIndexerCreateExpectations @parent;
+						private readonly global::Rocks.RefStructArgument<global::System.ReadOnlySpan<string>> @args;
+						
+						internal Indexer0Expectations(global::IParamsIndexerCreateExpectations @parent, global::Rocks.RefStructArgument<global::System.ReadOnlySpan<string>> @args)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@args);
+							this.@parent = @parent;
+							this.@args = @args;
+						}
+						
+						internal global::IParamsIndexerCreateExpectations.Adornments.AdornmentsForHandler0 Gets()
+						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+							
+							var @handler = new global::IParamsIndexerCreateExpectations.Handler0
+							{
+								@args = this.@args,
+							};
+							
+							if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
+							else { this.parent.handlers0.Add(@handler); }
+							return new(@handler);
+						}
+						
+						internal global::IParamsIndexerCreateExpectations.Adornments.AdornmentsForHandler1 Sets(global::Rocks.Argument<string> @value)
+						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+							global::System.ArgumentNullException.ThrowIfNull(@value);
+							
+							var @handler = new global::IParamsIndexerCreateExpectations.Handler1
+							{
+								@args = this.@args,
+								@value = @value,
+							};
+							
+							if (this.parent.handlers1 is null) { this.parent.handlers1 = new(@handler); }
+							else { this.parent.handlers1.Add(@handler); }
+							return new(@handler);
+						}
+					}
+					
+					internal global::IParamsIndexerCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.RefStructArgument<global::System.ReadOnlySpan<string>> @args] => new(this.parent, @args);
+					
+					internal global::IParamsIndexerCreateExpectations.SetupsExpectations.Indexer0Expectations this[params global::System.ReadOnlySpan<string> @args] => new(this.parent, new global::Rocks.RefStructArgument<global::System.ReadOnlySpan<string>>());
+					
+				}
+				
+				internal global::IParamsIndexerCreateExpectations.SetupsExpectations Setups => this.setups;
+				
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Func<global::System.ReadOnlySpan<string>, string>, string>
+				{
+					public global::Rocks.RefStructArgument<global::System.ReadOnlySpan<string>> @args { get; set; }
+				}
+				private global::Rocks.Handlers<global::IParamsIndexerCreateExpectations.Handler0>? @handlers0;
+				
+				internal sealed class Handler1
+					: global::Rocks.Handler<global::System.Action<global::System.ReadOnlySpan<string>, string>>
+				{
+					public global::Rocks.RefStructArgument<global::System.ReadOnlySpan<string>> @args { get; set; }
+					public global::Rocks.Argument<string> @value { get; set; }
+				}
+				private global::Rocks.Handlers<global::IParamsIndexerCreateExpectations.Handler1>? @handlers1;
+				
+				public override void Verify()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::IParamsIndexerCreateExpectations was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
+					{
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+				
+						if (failures.Count > 0)
+						{
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
+					}
+				}
+				
+				private sealed class Mock
+					: global::IParamsIndexer
+				{
+					public Mock(global::IParamsIndexerCreateExpectations @expectations)
+					{
+						this.Expectations = @expectations;
+					}
+					
+					public string this[params global::System.ReadOnlySpan<string> @args]
+					{
+						[global::Rocks.MemberIdentifier(0)]
+						get
+						{
+							if (this.Expectations.handlers0 is not null)
+							{
+								foreach (var @handler in this.Expectations.handlers0)
+								{
+									if (@handler.@args.IsValid(@args!))
+									{
+										@handler.CallCount++;
+										var @result = @handler.Callback is not null ?
+											@handler.Callback(@args!) : @handler.ReturnValue;
+										return @result!;
+									}
+								}
+								
+								this.Expectations.WasExceptionThrown = true;
+								throw new global::Rocks.Exceptions.ExpectationException(
+									$"""
+									No handlers match for {this.GetType().GetMemberDescription(0)}
+										args: <Not formattable>
+									""");
+							}
+							
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+									args: <Not formattable>
+								""");
+						}
+						[global::Rocks.MemberIdentifier(1)]
+						set
+						{
+							if (this.Expectations.handlers1 is not null)
+							{
+								foreach (var @handler in this.Expectations.handlers1)
+								{
+									if (@handler.@args.IsValid(@args!) &&
+										@handler.@value.IsValid(@value!))
+									{
+										@handler.CallCount++;
+										@handler.Callback?.Invoke(@args!, @value!);
+										return;
+									}
+								}
+								
+								this.Expectations.WasExceptionThrown = true;
+								throw new global::Rocks.Exceptions.ExpectationException(
+									$"""
+									No handlers match for {this.GetType().GetMemberDescription(1)}
+										args: <Not formattable>
+										value: {@value.FormatValue()}
+									""");
+							}
+							
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(1)}
+									args: <Not formattable>
+									value: {@value.FormatValue()}
+								""");
+						}
+					}
+					
+					private global::IParamsIndexerCreateExpectations Expectations { get; }
+				}
+				
+				public IParamsIndexerCreateExpectations() => this.setups = new(this);
+				
+				internal global::IParamsIndexer Instance()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						this.WasInstanceInvoked = true;
+						var @mock = new Mock(this);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForIParamsIndexer<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForIParamsIndexer<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParamsIndexerCreateExpectations.Handler0, global::System.Func<global::System.ReadOnlySpan<string>, string>, string>, IAdornmentsForIParamsIndexer<AdornmentsForHandler0>
+					{
+						public AdornmentsForHandler0(global::IParamsIndexerCreateExpectations.Handler0 handler)
+							: base(handler) { }
+					}
+					
+					public sealed class AdornmentsForHandler1
+						: global::Rocks.Adornments<AdornmentsForHandler1, global::IParamsIndexerCreateExpectations.Handler1, global::System.Action<global::System.ReadOnlySpan<string>, string>>, IAdornmentsForIParamsIndexer<AdornmentsForHandler1>
+					{
+						public AdornmentsForHandler1(global::IParamsIndexerCreateExpectations.Handler1 handler)
+							: base(handler) { }
+					}
+				}
+			}
+			
+			#pragma warning restore CS8618
+			#pragma warning restore CS8633
+			#pragma warning restore CS8714
+			#pragma warning restore CS8775
+			"""";
+
+		var makeGeneratedCode =
+			""""
+			// <auto-generated/>
+			
+			#pragma warning disable CS8618
+			#pragma warning disable CS8633
+			#pragma warning disable CS8714
+			#pragma warning disable CS8775
+			
+			#nullable enable
+			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+			internal sealed class IParamsIndexerMakeExpectations
+			{
+				internal global::IParamsIndexer Instance()
+				{
+					return new Mock();
+				}
+				
+				private sealed class Mock
+					: global::IParamsIndexer
+				{
+					public Mock()
+					{
+					}
+					
+					public string this[params global::System.ReadOnlySpan<string> @args]
+					{
+						get => default!;
+						set { }
+					}
+				}
+			}
+			
+			#pragma warning restore CS8618
+			#pragma warning restore CS8633
+			#pragma warning restore CS8714
+			#pragma warning restore CS8775
+			
+			"""";
+
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[
+				("IParamsIndexer_Rock_Create.g.cs", createGeneratedCode),
+				("IParamsIndexer_Rock_Make.g.cs", makeGeneratedCode),
+			],
+			[]);
+	}
+
+	[Test]
+	public static async Task GenerateWhenParamsInIndexerIsNotRefStructAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			using System;
+
+			[assembly: Rock(typeof(IParamsIndexer), BuildType.Create | BuildType.Make)]
+
+			public interface IParamsIndexer
+			{
+				string this[params string[] args] { get; set; }
+			}
+			""";
+
+		var createGeneratedCode =
+			""""
+			// <auto-generated/>
+			
+			#pragma warning disable CS8618
+			#pragma warning disable CS8633
+			#pragma warning disable CS8714
+			#pragma warning disable CS8775
+			
+			#nullable enable
+			
+			using Rocks.Extensions;
+			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+			internal sealed class IParamsIndexerCreateExpectations
+				: global::Rocks.Expectations
+			{
+				private readonly global::IParamsIndexerCreateExpectations.SetupsExpectations setups;
+				
+				internal sealed class SetupsExpectations
+				{
+					private readonly global::IParamsIndexerCreateExpectations parent;
+				
+					internal SetupsExpectations(global::IParamsIndexerCreateExpectations parent) =>
+						this.parent = parent;
+				
+					internal sealed class Indexer0Expectations
+					{
+						private readonly global::IParamsIndexerCreateExpectations @parent;
+						private readonly global::Rocks.Argument<string[]> @args;
+						
+						internal Indexer0Expectations(global::IParamsIndexerCreateExpectations @parent, global::Rocks.Argument<string[]> @args)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@args);
+							this.@parent = @parent;
+							this.@args = @args;
+						}
+						
+						internal global::IParamsIndexerCreateExpectations.Adornments.AdornmentsForHandler0 Gets()
+						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+							
+							var @handler = new global::IParamsIndexerCreateExpectations.Handler0
+							{
+								@args = this.@args,
+							};
+							
+							if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
+							else { this.parent.handlers0.Add(@handler); }
+							return new(@handler);
+						}
+						
+						internal global::IParamsIndexerCreateExpectations.Adornments.AdornmentsForHandler1 Sets(global::Rocks.Argument<string> @value)
+						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+							global::System.ArgumentNullException.ThrowIfNull(@value);
+							
+							var @handler = new global::IParamsIndexerCreateExpectations.Handler1
+							{
+								@args = this.@args,
+								@value = @value,
+							};
+							
+							if (this.parent.handlers1 is null) { this.parent.handlers1 = new(@handler); }
+							else { this.parent.handlers1.Add(@handler); }
+							return new(@handler);
+						}
+					}
+					
+					internal global::IParamsIndexerCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<string[]> @args] => new(this.parent, @args);
+					
+					internal global::IParamsIndexerCreateExpectations.SetupsExpectations.Indexer0Expectations this[params string[] @args] => new(this.parent, global::Rocks.Arg.Is(@args));
+					
+				}
+				
+				internal global::IParamsIndexerCreateExpectations.SetupsExpectations Setups => this.setups;
+				
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Func<string[], string>, string>
+				{
+					public global::Rocks.Argument<string[]> @args { get; set; }
+				}
+				private global::Rocks.Handlers<global::IParamsIndexerCreateExpectations.Handler0>? @handlers0;
+				
+				internal sealed class Handler1
+					: global::Rocks.Handler<global::System.Action<string[], string>>
+				{
+					public global::Rocks.Argument<string[]> @args { get; set; }
+					public global::Rocks.Argument<string> @value { get; set; }
+				}
+				private global::Rocks.Handlers<global::IParamsIndexerCreateExpectations.Handler1>? @handlers1;
+				
+				public override void Verify()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						throw new global::Rocks.Exceptions.VerificationException([$"An instance of global::IParamsIndexerCreateExpectations was never made."]);
+					}
+					else if (!this.WasExceptionThrown)
+					{
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+				
+						if (failures.Count > 0)
+						{
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
+					}
+				}
+				
+				private sealed class Mock
+					: global::IParamsIndexer
+				{
+					public Mock(global::IParamsIndexerCreateExpectations @expectations)
+					{
+						this.Expectations = @expectations;
+					}
+					
+					public string this[params string[] @args]
+					{
+						[global::Rocks.MemberIdentifier(0)]
+						get
+						{
+							if (this.Expectations.handlers0 is not null)
+							{
+								foreach (var @handler in this.Expectations.handlers0)
+								{
+									if (@handler.@args.IsValid(@args!))
+									{
+										@handler.CallCount++;
+										var @result = @handler.Callback is not null ?
+											@handler.Callback(@args!) : @handler.ReturnValue;
+										return @result!;
+									}
+								}
+								
+								this.Expectations.WasExceptionThrown = true;
+								throw new global::Rocks.Exceptions.ExpectationException(
+									$"""
+									No handlers match for {this.GetType().GetMemberDescription(0)}
+										args: {@args.FormatValue()}
+									""");
+							}
+							
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+									args: {@args.FormatValue()}
+								""");
+						}
+						[global::Rocks.MemberIdentifier(1)]
+						set
+						{
+							if (this.Expectations.handlers1 is not null)
+							{
+								foreach (var @handler in this.Expectations.handlers1)
+								{
+									if (@handler.@args.IsValid(@args!) &&
+										@handler.@value.IsValid(@value!))
+									{
+										@handler.CallCount++;
+										@handler.Callback?.Invoke(@args!, @value!);
+										return;
+									}
+								}
+								
+								this.Expectations.WasExceptionThrown = true;
+								throw new global::Rocks.Exceptions.ExpectationException(
+									$"""
+									No handlers match for {this.GetType().GetMemberDescription(1)}
+										args: {@args.FormatValue()}
+										value: {@value.FormatValue()}
+									""");
+							}
+							
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(1)}
+									args: {@args.FormatValue()}
+									value: {@value.FormatValue()}
+								""");
+						}
+					}
+					
+					private global::IParamsIndexerCreateExpectations Expectations { get; }
+				}
+				
+				public IParamsIndexerCreateExpectations() => this.setups = new(this);
+				
+				internal global::IParamsIndexer Instance()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						this.WasInstanceInvoked = true;
+						var @mock = new Mock(this);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				internal static class Adornments
+				{
+					public interface IAdornmentsForIParamsIndexer<TAdornments>
+						: global::Rocks.IAdornments<TAdornments>
+						where TAdornments : IAdornmentsForIParamsIndexer<TAdornments>
+					{ }
+					
+					public sealed class AdornmentsForHandler0
+						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParamsIndexerCreateExpectations.Handler0, global::System.Func<string[], string>, string>, IAdornmentsForIParamsIndexer<AdornmentsForHandler0>
+					{
+						public AdornmentsForHandler0(global::IParamsIndexerCreateExpectations.Handler0 handler)
+							: base(handler) { }
+					}
+					
+					public sealed class AdornmentsForHandler1
+						: global::Rocks.Adornments<AdornmentsForHandler1, global::IParamsIndexerCreateExpectations.Handler1, global::System.Action<string[], string>>, IAdornmentsForIParamsIndexer<AdornmentsForHandler1>
+					{
+						public AdornmentsForHandler1(global::IParamsIndexerCreateExpectations.Handler1 handler)
+							: base(handler) { }
+					}
+				}
+			}
+			
+			#pragma warning restore CS8618
+			#pragma warning restore CS8633
+			#pragma warning restore CS8714
+			#pragma warning restore CS8775
+			"""";
+
+		var makeGeneratedCode =
+			""""
+			// <auto-generated/>
+			
+			#pragma warning disable CS8618
+			#pragma warning disable CS8633
+			#pragma warning disable CS8714
+			#pragma warning disable CS8775
+			
+			#nullable enable
+			
+			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+			internal sealed class IParamsIndexerMakeExpectations
+			{
+				internal global::IParamsIndexer Instance()
+				{
+					return new Mock();
+				}
+				
+				private sealed class Mock
+					: global::IParamsIndexer
+				{
+					public Mock()
+					{
+					}
+					
+					public string this[params string[] @args]
+					{
+						get => default!;
+						set { }
+					}
+				}
+			}
+			
+			#pragma warning restore CS8618
+			#pragma warning restore CS8633
+			#pragma warning restore CS8714
+			#pragma warning restore CS8775
+			
+			"""";
+
+		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
+			[
+				("IParamsIndexer_Rock_Create.g.cs", createGeneratedCode),
+				("IParamsIndexer_Rock_Make.g.cs", makeGeneratedCode),
 			],
 			[]);
 	}

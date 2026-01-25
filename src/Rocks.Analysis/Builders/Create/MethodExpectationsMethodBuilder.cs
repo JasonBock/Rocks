@@ -7,12 +7,14 @@ namespace Rocks.Analysis.Builders.Create;
 
 internal static class MethodExpectationsMethodBuilder
 {
-	internal static void Build(IndentedTextWriter writer, TypeMockModel type, MethodModel method, 
-		string expectationsFullyQualifiedName, 
+	internal static void Build(IndentedTextWriter writer, TypeMockModel type, MethodModel method,
+		string expectationsFullyQualifiedName,
 		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
-		static void BuildImplementation(IndentedTextWriter writer, TypeMockModel type, MethodModel method, 
-			bool isGeneratedWithDefaults, string expectationsFullyQualifiedName, 
+		// isGeneratedWithDefaults really means, "do we need to generate an overload
+		// for the given method because it has optional and/or params parameters".
+		static void BuildImplementation(IndentedTextWriter writer, TypeMockModel type, MethodModel method,
+			bool isGeneratedWithDefaults, string expectationsFullyQualifiedName,
 			Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 		{
 			var needsGenerationWithDefaults = false;
@@ -21,41 +23,36 @@ internal static class MethodExpectationsMethodBuilder
 				new TypeArgumentsNamingContext();
 
 			var instanceParameters = method.Parameters.Length == 0 ? string.Empty :
-				string.Join(", ", method.Parameters.Select(_ =>
+				string.Join(", ", method.Parameters.Select(parameter =>
 				{
 					var argumentTypeName = ProjectionBuilder.BuildArgument(
-						_.Type, typeArgumentsNamingContext, _.RequiresNullableAnnotation);
+						parameter.Type, typeArgumentsNamingContext, parameter.RequiresNullableAnnotation);
 
-				   if (_.Type.IsPointer)
-				   {
-						return $"{argumentTypeName} @{_.Name}";
+					if (parameter.Type.IsPointer)
+					{
+						return $"{argumentTypeName} @{parameter.Name}";
 					}
 					else
 					{
-						var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
-						var typeName = _.Type.BuildName(typeArgumentsNamingContext);
+						var requiresNullable = parameter.RequiresNullableAnnotation ? "?" : string.Empty;
+						var typeName = parameter.Type.BuildName(typeArgumentsNamingContext);
 
 						if (isGeneratedWithDefaults)
 						{
-							if (_.HasExplicitDefaultValue)
-							{
-								return $"{typeName}{requiresNullable} @{_.Name} = {_.ExplicitDefaultValue}";
-							}
-							else
-							{
-								return _.IsParams ?
-									$"params {typeName}{requiresNullable} @{_.Name}" :
-									$"{argumentTypeName} @{_.Name}";
-							}
+							return parameter.HasExplicitDefaultValue ? 
+								$"{typeName}{requiresNullable} @{parameter.Name} = {parameter.ExplicitDefaultValue}" : 
+								parameter.IsParams ?
+									$"params {typeName}{requiresNullable} @{parameter.Name}" :
+									$"{argumentTypeName} @{parameter.Name}";
 						}
 
 						if (!isGeneratedWithDefaults)
 						{
 							// Only set this flag if we're currently not generating with defaults.
-							needsGenerationWithDefaults |= _.HasExplicitDefaultValue;
+							needsGenerationWithDefaults |= parameter.HasExplicitDefaultValue || parameter.IsParams;
 						}
 
-						return $"{argumentTypeName} @{_.Name}";
+						return $"{argumentTypeName} @{parameter.Name}";
 					}
 				}));
 
@@ -96,7 +93,12 @@ internal static class MethodExpectationsMethodBuilder
 			if (isGeneratedWithDefaults)
 			{
 				var parameterValues = string.Join(", ", method.Parameters.Select(
-					p => p.HasExplicitDefaultValue || p.IsParams ? $"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}"));
+					parameter => 
+						parameter.HasExplicitDefaultValue || parameter.IsParams ? 
+							parameter.Type.IsRefLikeType ?
+								$"new global::Rocks.RefStructArgument<{parameter.Type.FullyQualifiedName}>()" :
+								$"global::Rocks.Arg.Is(@{parameter.Name})" : 
+							$"@{parameter.Name}"));
 
 				writer.WriteLines(
 					$$"""

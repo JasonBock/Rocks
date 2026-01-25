@@ -7,12 +7,14 @@ namespace Rocks.Analysis.Builders.Create;
 
 internal static class IndexerExpectationsIndexerBuilder
 {
-	private static IndexerConstructorDefaultValues? BuildGetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, 
+	private static IndexerConstructorDefaultValues? BuildGetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier,
 		string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
-		static IndexerConstructorDefaultValues? BuildGetterImplementation(IndentedTextWriter writer, PropertyModel property, 
+		// isGeneratedWithDefaults really means, "do we need to generate an overload
+		// for the given method because it has optional and/or params parameters".
+		static IndexerConstructorDefaultValues? BuildGetterImplementation(IndentedTextWriter writer, PropertyModel property,
 			uint memberIdentifier, bool isGeneratedWithDefaults,
-			string expectationsFullyQualifiedName, Action< AdornmentsPipeline> adornmentsFQNsPipeline)
+			string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 		{
 			var propertyGetMethod = property.GetMethod!;
 			var namingContext = new VariablesNamingContext(propertyGetMethod);
@@ -42,40 +44,35 @@ internal static class IndexerExpectationsIndexerBuilder
 
 			adornmentsFQNsPipeline(new(adornmentsType, string.Empty, string.Empty, property.GetMethod!, memberIdentifier));
 
-			var instanceParameters = string.Join(", ", propertyGetMethod.Parameters.Select(_ =>
+			var instanceParameters = string.Join(", ", propertyGetMethod.Parameters.Select(parameter =>
 				{
 					var argumentTypeName = ProjectionBuilder.BuildArgument(
-						_.Type, new TypeArgumentsNamingContext(), _.RequiresNullableAnnotation);
+						parameter.Type, new TypeArgumentsNamingContext(), parameter.RequiresNullableAnnotation);
 
-					if (_.Type.IsPointer)
+					if (parameter.Type.IsPointer)
 					{
-						return $"{argumentTypeName} @{_.Name}";
+						return $"{argumentTypeName} @{parameter.Name}";
 					}
 					else
 					{
-						var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
+						var requiresNullable = parameter.RequiresNullableAnnotation ? "?" : string.Empty;
 
 						if (isGeneratedWithDefaults)
 						{
-							if (_.HasExplicitDefaultValue)
-							{
-								return $"{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name} = {_.ExplicitDefaultValue}";
-							}
-							else
-							{
-								return _.IsParams ?
-									$"params {_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}" :
-									$"{argumentTypeName} @{_.Name}";
-							}
+							return parameter.HasExplicitDefaultValue ? 
+								$"{parameter.Type.FullyQualifiedName}{requiresNullable} @{parameter.Name} = {parameter.ExplicitDefaultValue}" : 
+								parameter.IsParams ?
+									$"params {parameter.Type.FullyQualifiedName}{requiresNullable} @{parameter.Name}" :
+									$"{argumentTypeName} @{parameter.Name}";
 						}
 
 						if (!isGeneratedWithDefaults)
 						{
 							// Only set this flag if we're currently not generating with defaults.
-							needsGenerationWithDefaults |= _.HasExplicitDefaultValue;
+							needsGenerationWithDefaults |= parameter.HasExplicitDefaultValue || parameter.IsParams;
 						}
 
-						return $"{argumentTypeName} @{_.Name}";
+						return $"{argumentTypeName} @{parameter.Name}";
 					}
 				}));
 
@@ -83,8 +80,11 @@ internal static class IndexerExpectationsIndexerBuilder
 			if (isGeneratedWithDefaults)
 			{
 				var parameterValues = string.Join(", ", propertyGetMethod.Parameters.Select(
-					p => p.HasExplicitDefaultValue || p.IsParams ?
-						$"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}"));
+					parameter => parameter.HasExplicitDefaultValue || parameter.IsParams ?
+						parameter.Type.IsRefLikeType ?
+							$"new global::Rocks.RefStructArgument<{parameter.Type.FullyQualifiedName}>()" :
+							$"global::Rocks.Arg.Is(@{parameter.Name})" :
+						$"@{parameter.Name}"));
 				return new(instanceParameters, parameterValues);
 			}
 			else
@@ -165,40 +165,35 @@ internal static class IndexerExpectationsIndexerBuilder
 
 			// We need to put the value parameter immediately after "self"
 			// and then skip the value parameter by taking only the non-value parameters.
-			var instanceParameters = string.Join(", ", propertySetMethod.Parameters.Take(propertySetMethod.Parameters.Length - 1).Select(_ =>
+			var instanceParameters = string.Join(", ", propertySetMethod.Parameters.Take(propertySetMethod.Parameters.Length - 1).Select(parameter =>
 				{
 					var argumentTypeName = ProjectionBuilder.BuildArgument(
-						_.Type, new TypeArgumentsNamingContext(), _.RequiresNullableAnnotation);
+						parameter.Type, new TypeArgumentsNamingContext(), parameter.RequiresNullableAnnotation);
 
-					if (_.Type.IsPointer)
+					if (parameter.Type.IsPointer)
 					{
-						return $"{argumentTypeName} @{_.Name}";
+						return $"{argumentTypeName} @{parameter.Name}";
 					}
 					else
 					{
-						var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
+						var requiresNullable = parameter.RequiresNullableAnnotation ? "?" : string.Empty;
 
 						if (isGeneratedWithDefaults)
 						{
-							if (_.HasExplicitDefaultValue)
-							{
-								return $"{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name} = {_.ExplicitDefaultValue}";
-							}
-							else
-							{
-								return _.IsParams ?
-									$"params {_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}" :
-									$"{argumentTypeName} @{_.Name}";
-							}
+							return parameter.HasExplicitDefaultValue ?
+								$"{parameter.Type.FullyQualifiedName}{requiresNullable} @{parameter.Name} = {parameter.ExplicitDefaultValue}" :
+								parameter.IsParams ?
+									$"params {parameter.Type.FullyQualifiedName}{requiresNullable} @{parameter.Name}" :
+									$"{argumentTypeName} @{parameter.Name}";
 						}
 
 						if (!isGeneratedWithDefaults)
 						{
 							// Only set this flag if we're currently not generating with defaults.
-							needsGenerationWithDefaults |= _.HasExplicitDefaultValue;
+							needsGenerationWithDefaults |= parameter.HasExplicitDefaultValue || parameter.IsParams;
 						}
 
-						return $"{argumentTypeName} @{_.Name}";
+						return $"{argumentTypeName} @{parameter.Name}";
 					}
 				}));
 
@@ -209,8 +204,11 @@ internal static class IndexerExpectationsIndexerBuilder
 			{
 				// We need to skip the value parameter by taking only the non-value parameters.
 				var parameterValues = string.Join(", ", propertySetMethod.Parameters.Take(propertySetMethod.Parameters.Length - 1).Select(
-					p => p.HasExplicitDefaultValue || p.IsParams ?
-						$"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}"));
+					parameter => parameter.HasExplicitDefaultValue || parameter.IsParams ?
+						parameter.Type.IsRefLikeType ?
+							$"new global::Rocks.RefStructArgument<{parameter.Type.FullyQualifiedName}>()" :
+							$"global::Rocks.Arg.Is(@{parameter.Name})" :
+						$"@{parameter.Name}"));
 				return new(instanceParameters, parameterValues);
 			}
 			else
