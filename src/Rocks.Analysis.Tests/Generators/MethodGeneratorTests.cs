@@ -985,6 +985,9 @@ public static class MethodGeneratorTests
 						else { this.parent.handlers1.Add(@handler); }
 						return new(@handler);
 					}
+					
+					internal global::MockTests.IMapperCreateExpectations.Adornments.AdornmentsForHandler1<TDestination> ProjectTo<TDestination>(global::Rocks.Argument<global::System.Linq.IQueryable> @source, global::Rocks.Argument<global::System.Collections.Generic.IDictionary<string, object>> @parameters, params string[] @membersToExpand) =>
+						this.ProjectTo<TDestination>(@source, @parameters, global::Rocks.Arg.Is(@membersToExpand));
 				}
 				
 				internal global::MockTests.IMapperCreateExpectations.SetupsExpectations Setups => this.setups;

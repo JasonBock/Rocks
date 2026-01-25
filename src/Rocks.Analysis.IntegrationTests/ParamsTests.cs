@@ -20,7 +20,7 @@ internal static class ParamsTests
 		using var context = new RockContext();
 		var expectations = context.Create<IHaveParamsCreateExpectations>();
 		expectations.Setups.ParamsFoo(1,
-			new(_ => _.Length == 2 && _[0] == "b" && _[1] == "c"));
+			new RefStructArgument<ReadOnlySpan<string>>(_ => _.Length == 2 && _[0] == "b" && _[1] == "c"));
 
 		var mock = expectations.Instance();
 		mock.ParamsFoo(1, "b", "c");

@@ -99,6 +99,9 @@ public static class VirtualsWithImplementationsGeneratorTests
 						else { this.parent.handlers3.Add(@handler); }
 						return new(@handler);
 					}
+					
+					internal global::MockTests.VoidMethodWithParamsCreateExpectations.Adornments.AdornmentsForHandler3 CallMe(params string[] @values) =>
+						this.CallMe(global::Rocks.Arg.Is(@values));
 				}
 				
 				internal global::MockTests.VoidMethodWithParamsCreateExpectations.SetupsExpectations Setups => this.setups;
@@ -476,6 +479,9 @@ public static class VirtualsWithImplementationsGeneratorTests
 						else { this.parent.handlers3.Add(@handler); }
 						return new(@handler);
 					}
+					
+					internal global::MockTests.ValueMethodWithParamsCreateExpectations.Adornments.AdornmentsForHandler3 CallMe(params string[] @values) =>
+						this.CallMe(global::Rocks.Arg.Is(@values));
 				}
 				
 				internal global::MockTests.ValueMethodWithParamsCreateExpectations.SetupsExpectations Setups => this.setups;

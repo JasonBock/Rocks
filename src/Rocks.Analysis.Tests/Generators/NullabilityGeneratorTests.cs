@@ -506,6 +506,9 @@ public static class NullabilityGeneratorTests
 						else { this.parent.handlers4.Add(@handler); }
 						return new(@handler);
 					}
+					
+					internal global::SubTracerCreateExpectations.Adornments.AdornmentsForHandler4 TraceEvent(global::Rocks.Argument<string> @eventCache, global::Rocks.Argument<string> @source, global::Rocks.Argument<string> @eventType, global::Rocks.Argument<int> @id, global::Rocks.Argument<string> @format, params object[] @args) =>
+						this.TraceEvent(@eventCache, @source, @eventType, @id, @format, global::Rocks.Arg.Is(@args));
 				}
 				
 				internal global::SubTracerCreateExpectations.SetupsExpectations Setups => this.setups;
