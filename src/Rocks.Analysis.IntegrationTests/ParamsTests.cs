@@ -27,6 +27,17 @@ internal static class ParamsTests
 	}
 
 	[Test]
+	public static void CreateX()
+	{
+		using var context = new RockContext();
+		var expectations = context.Create<IHaveParamsCreateExpectations>();
+		expectations.Setups.ParamsFoo(1, "b", "c");
+
+		var mock = expectations.Instance();
+		mock.ParamsFoo(1, "b", "c");
+	}
+
+	[Test]
 	public static void MakeMembersWithReadOnlySpanParamsArgumentsSpecified()
 	{
 		var mock = new IHaveParamsMakeExpectations().Instance();

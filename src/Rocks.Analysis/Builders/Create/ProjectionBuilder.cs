@@ -9,7 +9,7 @@ internal static class ProjectionBuilder
 {
 	internal static string BuildArgument(
 		ITypeReferenceModel type, TypeArgumentsNamingContext typeArgumentsNamingContext, bool requiresNullableAnnotation)
-   {
+	{
 		string argumentTypeName;
 
 		if (type.IsPointer)
@@ -45,22 +45,22 @@ internal static class ProjectionBuilder
 	{
 		if (projectedModel.TypeKind == TypeKind.FunctionPointer)
 		{
-		 BuildFunctionPointerArgument(writer, projectedModel);
+			BuildFunctionPointerArgument(writer, projectedModel);
 		}
 		else if (projectedModel.PointedAtCount > 0)
 		{
 			if (projectedModel.PointedAt!.SpecialType == SpecialType.System_Void)
 			{
-			BuildVoidPointerArgument(writer, projectedModel);
+				BuildVoidPointerArgument(writer, projectedModel);
 			}
 			else
 			{
-			BuildPointerArgument(writer, projectedModel);
+				BuildPointerArgument(writer, projectedModel);
 			}
 		}
 		else
 		{
-		 BuildSpecialArgument(writer, projectedModel);
+			BuildSpecialArgument(writer, projectedModel);
 		}
 	}
 
