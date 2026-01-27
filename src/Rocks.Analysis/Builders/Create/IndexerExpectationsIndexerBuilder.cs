@@ -69,7 +69,8 @@ internal static class IndexerExpectationsIndexerBuilder
 						if (!isGeneratedWithDefaults)
 						{
 							// Only set this flag if we're currently not generating with defaults.
-							needsGenerationWithDefaults |= parameter.HasExplicitDefaultValue || parameter.IsParams;
+							needsGenerationWithDefaults |= parameter.HasExplicitDefaultValue ||
+								(parameter.IsParams && !parameter.Type.IsRefLikeType);
 						}
 
 						return $"{argumentTypeName} @{parameter.Name}";
@@ -82,7 +83,7 @@ internal static class IndexerExpectationsIndexerBuilder
 				var parameterValues = string.Join(", ", propertyGetMethod.Parameters.Select(
 					parameter => parameter.HasExplicitDefaultValue || parameter.IsParams ?
 						parameter.Type.IsRefLikeType ?
-							$"new global::Rocks.RefStructArgument<{parameter.Type.FullyQualifiedName}>()" :
+							$"@{parameter.Name}" :
 							$"global::Rocks.Arg.Is(@{parameter.Name})" :
 						$"@{parameter.Name}"));
 				return new(instanceParameters, parameterValues);
@@ -190,7 +191,8 @@ internal static class IndexerExpectationsIndexerBuilder
 						if (!isGeneratedWithDefaults)
 						{
 							// Only set this flag if we're currently not generating with defaults.
-							needsGenerationWithDefaults |= parameter.HasExplicitDefaultValue || parameter.IsParams;
+							needsGenerationWithDefaults |= parameter.HasExplicitDefaultValue ||
+								(parameter.IsParams && !parameter.Type.IsRefLikeType);
 						}
 
 						return $"{argumentTypeName} @{parameter.Name}";
@@ -206,7 +208,7 @@ internal static class IndexerExpectationsIndexerBuilder
 				var parameterValues = string.Join(", ", propertySetMethod.Parameters.Take(propertySetMethod.Parameters.Length - 1).Select(
 					parameter => parameter.HasExplicitDefaultValue || parameter.IsParams ?
 						parameter.Type.IsRefLikeType ?
-							$"new global::Rocks.RefStructArgument<{parameter.Type.FullyQualifiedName}>()" :
+							$"@{parameter.Name}" :
 							$"global::Rocks.Arg.Is(@{parameter.Name})" :
 						$"@{parameter.Name}"));
 				return new(instanceParameters, parameterValues);

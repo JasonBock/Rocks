@@ -42,14 +42,17 @@ internal static class MethodExpectationsMethodBuilder
 							return parameter.HasExplicitDefaultValue ? 
 								$"{typeName}{requiresNullable} @{parameter.Name} = {parameter.ExplicitDefaultValue}" : 
 								parameter.IsParams ?
-									$"params {typeName}{requiresNullable} @{parameter.Name}" :
+									parameter.Type.IsRefLikeType ?
+										$"global::Rocks.RefStructArgument<{parameter.Type.FullyQualifiedName}> @{parameter.Name}" :
+										$"params {typeName}{requiresNullable} @{parameter.Name}" :
 									$"{argumentTypeName} @{parameter.Name}";
 						}
 
 						if (!isGeneratedWithDefaults)
 						{
 							// Only set this flag if we're currently not generating with defaults.
-							needsGenerationWithDefaults |= parameter.HasExplicitDefaultValue || parameter.IsParams;
+							needsGenerationWithDefaults |= parameter.HasExplicitDefaultValue || 
+								(parameter.IsParams && !parameter.Type.IsRefLikeType);
 						}
 
 						return $"{argumentTypeName} @{parameter.Name}";
@@ -96,7 +99,7 @@ internal static class MethodExpectationsMethodBuilder
 					parameter => 
 						parameter.HasExplicitDefaultValue || parameter.IsParams ? 
 							parameter.Type.IsRefLikeType ?
-								$"new global::Rocks.RefStructArgument<{parameter.Type.FullyQualifiedName}>()" :
+								$"@{parameter.Name}" :
 								$"global::Rocks.Arg.Is(@{parameter.Name})" : 
 							$"@{parameter.Name}"));
 
