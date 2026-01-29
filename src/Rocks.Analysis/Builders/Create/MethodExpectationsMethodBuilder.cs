@@ -17,6 +17,14 @@ internal static class MethodExpectationsMethodBuilder
 			bool isGeneratedWithDefaults, string expectationsFullyQualifiedName,
 			Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 		{
+			static string GetOptionalParameter(ParameterModel parameter, ParameterModel lastParameter,
+				string typeName, string requiresNullable) =>
+					lastParameter.IsParams && lastParameter.Type.IsRefLikeType ? 
+						$"[global::System.Runtime.InteropServices.Optional, global::System.Runtime.InteropServices.DefaultParameterValue({parameter.ExplicitDefaultValue})] {typeName}{requiresNullable} @{parameter.Name}" :
+						parameter.AttributesDescription.Contains("Optional") ?
+							$"[global::System.Runtime.InteropServices.Optional, global::System.Runtime.InteropServices.DefaultParameterValue({parameter.ExplicitDefaultValue})] {typeName}{requiresNullable} @{parameter.Name}" :
+							$"{typeName}{requiresNullable} @{parameter.Name} = {parameter.ExplicitDefaultValue}";
+
 			var needsGenerationWithDefaults = false;
 			var typeArgumentsNamingContext = method.IsGenericMethod ?
 				new TypeArgumentsNamingContext(method) :
@@ -35,12 +43,14 @@ internal static class MethodExpectationsMethodBuilder
 					else
 					{
 						var requiresNullable = parameter.RequiresNullableAnnotation ? "?" : string.Empty;
+						// TODO: Why are we doing BuildName? Maybe because
+						// of the type arguments and trying to close the generic?
 						var typeName = parameter.Type.BuildName(typeArgumentsNamingContext);
 
 						if (isGeneratedWithDefaults)
 						{
-							return parameter.HasExplicitDefaultValue ? 
-								$"{typeName}{requiresNullable} @{parameter.Name} = {parameter.ExplicitDefaultValue}" : 
+							return parameter.HasExplicitDefaultValue ?
+								GetOptionalParameter(parameter, method.Parameters[method.Parameters.Length - 1], typeName, requiresNullable) :
 								parameter.IsParams ?
 									parameter.Type.IsRefLikeType ?
 										$"global::Rocks.RefStructArgument<{parameter.Type.FullyQualifiedName}> @{parameter.Name}" :
@@ -51,7 +61,7 @@ internal static class MethodExpectationsMethodBuilder
 						if (!isGeneratedWithDefaults)
 						{
 							// Only set this flag if we're currently not generating with defaults.
-							needsGenerationWithDefaults |= parameter.HasExplicitDefaultValue || 
+							needsGenerationWithDefaults |= parameter.HasExplicitDefaultValue ||
 								(parameter.IsParams && !parameter.Type.IsRefLikeType);
 						}
 
@@ -96,11 +106,11 @@ internal static class MethodExpectationsMethodBuilder
 			if (isGeneratedWithDefaults)
 			{
 				var parameterValues = string.Join(", ", method.Parameters.Select(
-					parameter => 
-						parameter.HasExplicitDefaultValue || parameter.IsParams ? 
+					parameter =>
+						parameter.HasExplicitDefaultValue || parameter.IsParams ?
 							parameter.Type.IsRefLikeType ?
 								$"@{parameter.Name}" :
-								$"global::Rocks.Arg.Is(@{parameter.Name})" : 
+								$"global::Rocks.Arg.Is(@{parameter.Name})" :
 							$"@{parameter.Name}"));
 
 				writer.WriteLines(
