@@ -50,8 +50,9 @@ public interface IStuff
 Once I go through this, then I think I'll have enough information to handle what I'm going to do with this very small corner case with optionals and ref-like params types.
 
 TODO:
-* If a parameter is optional via the attributes, then:
-    * When defining the expectations, we must include the attributes and not put the default value with the parameter - i.e. `int @value = 3`
-    * When defining the mock and/or the make, we are including the attributes, but we cannot assign the parameter to the default value.
-* If we have the case where an optional parameter comes before a ref-like `params` parameter and the optional does not use the attributes, then we **must** define the optional parameter with the 2nd pass overload with attributes.
+* DONE - If a parameter is optional via the attributes, then:
+    * DONE - When defining the expectations, we must include the attributes and not put the default value with the parameter - i.e. `int @value = 3`
+    * DONE - When defining the mock and/or the make, we are including the attributes, but we cannot assign the parameter to the default value.
+* DONE - If we have the case where an optional parameter comes before a ref-like `params` parameter and the optional does not use the attributes, then we **must** define the optional parameter with the 2nd pass overload with attributes.
 * Need unit **and** integration tests for all these scenarios, especially indexers
+* Code gen tests must pass
