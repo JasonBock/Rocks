@@ -3,6 +3,7 @@
 
 using DotNet.Testcontainers.Containers;
 using Microsoft.CodeAnalysis;
+using Microsoft.Extensions.Configuration;
 using R3;
 using Rocks.Analysis;
 using Rocks.CodeGenerationTest;
@@ -259,7 +260,8 @@ static async Task TestWithTypesAsync()
 		typeof(System.Reflection.ConstructorInfo),
 		typeof(System.Xml.Linq.SaveOptions),
 		typeof(Azure.Core.Amqp.AmqpAnnotatedMessage),
-		typeof(Pragmastat.Sample)
+		typeof(Pragmastat.Sample),
+		typeof(IConfigurationSection),
 	}.ToImmutableArray();
 
 	Console.WriteLine($"Getting mapped types...");

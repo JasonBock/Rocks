@@ -11,8 +11,8 @@
     <PackageVersion Include="AutoFixture" Version="5.0.0-preview0012" />
     <PackageVersion Include="AutoMapper" Version="16.0.0" />
     <PackageVersion Include="Avalonia" Version="11.3.11" />
-    <PackageVersion Include="AWSSDK.Core" Version="4.0.3.8" />
-    <PackageVersion Include="Azure.Core" Version="1.50.0" />
+    <PackageVersion Include="AWSSDK.Core" Version="4.0.3.12" />
+    <PackageVersion Include="Azure.Core" Version="1.51.0" />
     <PackageVersion Include="Azure.Core.Amqp" Version="1.3.1" />
     <PackageVersion Include="Azure.Messaging.ServiceBus" Version="7.20.1" />
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.27.0" />
@@ -23,11 +23,11 @@
     <PackageVersion Include="Blazored.Video" Version="1.0.1" />
     <PackageVersion Include="Bogus" Version="35.6.5" />
     <PackageVersion Include="Castle.Core" Version="5.2.1" />
-    <PackageVersion Include="ClangSharp" Version="21.1.8" />
+    <PackageVersion Include="ClangSharp" Version="21.1.8.2" />
     <PackageVersion Include="Confluent.Kafka" Version="2.13.0" />
     <PackageVersion Include="Coravel" Version="6.0.2" />
     <PackageVersion Include="CoreWCF.Primitives" Version="1.8.0" />
-    <PackageVersion Include="Csla" Version="10.0.0-beta-0011-gc72d4fb04f" />
+    <PackageVersion Include="Csla" Version="10.0.0" />
     <PackageVersion Include="CsvHelper" Version="33.1.0" />
     <PackageVersion Include="Cursively" Version="1.2.0" />
     <PackageVersion Include="Dapper" Version="2.1.66" />
@@ -43,7 +43,7 @@
     <PackageVersion Include="Duende.IdentityModel" Version="8.0.0" />
     <PackageVersion Include="DynamicData" Version="9.4.1" />
     <PackageVersion Include="EfficientDynamoDb" Version="0.9.18" />
-    <PackageVersion Include="Elastic.Clients.Elasticsearch" Version="9.2.2" />
+    <PackageVersion Include="Elastic.Clients.Elasticsearch" Version="9.2.3" />
     <PackageVersion Include="Elasticsearch.Net" Version="7.17.5" />
     <PackageVersion Include="EntityFrameworkCore.Exceptions.Common" Version="8.1.3" />
     <PackageVersion Include="FluentValidation" Version="12.1.1" />
@@ -63,7 +63,7 @@
     <PackageVersion Include="Lib.Harmony" Version="2.4.2" />
     <PackageVersion Include="Lifti.Core" Version="7.0.2" />
     <PackageVersion Include="LLVMSharp" Version="20.1.2" />
-    <PackageVersion Include="MassTransit" Version="8.5.5" />
+    <PackageVersion Include="MassTransit" Version="9.0.0" />
     <PackageVersion Include="MathNet.Numerics" Version="6.0.0-beta2" />
     <PackageVersion Include="MediatR" Version="14.0.0" />
     <PackageVersion Include="MessagePack" Version="3.1.4" />
@@ -83,11 +83,11 @@
     <PackageVersion Include="Microsoft.Extensions.Resilience" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="10.2.0" />
     <PackageVersion Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.13.2" />
-    <PackageVersion Include="Microsoft.Garnet" Version="1.0.92" />
+    <PackageVersion Include="Microsoft.Garnet" Version="1.0.94" />
     <PackageVersion Include="Microsoft.Identity.Client" Version="4.81.0" />
-    <PackageVersion Include="Microsoft.Kiota.Abstractions" Version="1.21.1" />
-    <PackageVersion Include="Microsoft.OpenApi" Version="3.1.2" />
-    <PackageVersion Include="Microsoft.Orleans.Core" Version="9.2.1" />
+    <PackageVersion Include="Microsoft.Kiota.Abstractions" Version="1.21.2" />
+    <PackageVersion Include="Microsoft.OpenApi" Version="3.3.1" />
+    <PackageVersion Include="Microsoft.Orleans.Core" Version="10.0.0" />
     <PackageVersion Include="Microsoft.Quantum.Standard" Version="0.28.302812" />
     <PackageVersion Include="Microsoft.SemanticKernel" Version="1.7.1" />
     <PackageVersion Include="Microsoft.SemanticKernel.Abstractions" Version="1.7.1" />
@@ -109,35 +109,35 @@
     <PackageVersion Include="NUnit.Analyzers" Version="4.11.2" />
     <PackageVersion Include="NUnit3TestAdapter" Version="6.1.0" />
     <PackageVersion Include="Octokit" Version="14.0.0" />
-    <PackageVersion Include="OpenTelemetry" Version="1.14.0" />
+    <PackageVersion Include="OpenTelemetry" Version="1.15.0" />
     <PackageVersion Include="Oqtane.Framework" Version="5.2.3" />
-    <PackageVersion Include="Oqtane.Shared" Version="10.0.3" />
-    <PackageVersion Include="Paramore.Brighter" Version="10.0.5" />
+    <PackageVersion Include="Oqtane.Shared" Version="10.0.4" />
+    <PackageVersion Include="Paramore.Brighter" Version="10.1.0" />
     <PackageVersion Include="Polly" Version="8.2.0" />
-    <PackageVersion Include="Pragmastat" Version="3.2.4" />
+    <PackageVersion Include="Pragmastat" Version="5.0.0" />
     <PackageVersion Include="prometheus-net" Version="8.2.1" />
     <PackageVersion Include="Proto.Actor" Version="1.8.0" />
-    <PackageVersion Include="Pulumi" Version="3.96.1" />
+    <PackageVersion Include="Pulumi" Version="3.98.0" />
     <PackageVersion Include="Quartz" Version="3.15.1" />
     <PackageVersion Include="R3" Version="1.3.0" />
     <PackageVersion Include="RabbitMQ.Client" Version="7.2.0" />
     <PackageVersion Include="RecordParser" Version="2.3.0" />
     <PackageVersion Include="Refit" Version="9.0.2" />
     <PackageVersion Include="RestSharp" Version="113.1.0" />
-    <PackageVersion Include="Sep" Version="0.12.1" />
+    <PackageVersion Include="Sep" Version="0.12.2" />
     <PackageVersion Include="Serilog" Version="4.3.1-dev-02395" />
     <PackageVersion Include="ServiceStack" Version="10.0.4" />
     <PackageVersion Include="SharpZipLib" Version="1.4.2" />
     <PackageVersion Include="Shouldly" Version="4.2.1" />
     <PackageVersion Include="Sigil" Version="5.0.0" />
-    <PackageVersion Include="Silk.NET" Version="2.22.0" />
+    <PackageVersion Include="Silk.NET" Version="2.23.0" />
     <PackageVersion Include="SimpleInjector" Version="5.5.0" />
     <PackageVersion Include="SixLabors.ImageSharp" Version="3.1.12" />
     <PackageVersion Include="SkiaSharp" Version="3.119.2-preview.1" />
     <PackageVersion Include="SSH.NET" Version="2025.1.0" />
     <PackageVersion Include="StackExchange.Redis" Version="2.10.1" />
     <PackageVersion Include="Stateless" Version="5.20.0" />
-    <PackageVersion Include="Stripe.net" Version="50.1.0" />
+    <PackageVersion Include="Stripe.net" Version="50.3.0" />
     <PackageVersion Include="Sylvan.Data.Csv" Version="1.4.3" />
     <PackageVersion Include="System.Interactive.Async" Version="6.0.1" />
     <PackageVersion Include="System.IO.Abstractions" Version="22.1.0" />
@@ -148,10 +148,10 @@
     <PackageVersion Include="TerraFX.Interop.Windows" Version="10.0.26100.6" />
     <PackageVersion Include="Testcontainers" Version="4.10.0" />
     <PackageVersion Include="Topshelf" Version="4.3.1-develop.253" />
-    <PackageVersion Include="Twilio" Version="7.14.1" />
-    <PackageVersion Include="Verify" Version="31.9.4" />
+    <PackageVersion Include="Twilio" Version="7.14.2" />
+    <PackageVersion Include="Verify" Version="31.10.0" />
     <PackageVersion Include="Wasmtime" Version="34.0.2" />
-    <PackageVersion Include="WireMock.Net" Version="1.23.0" />
+    <PackageVersion Include="WireMock.Net" Version="1.25.0" />
     <PackageVersion Include="Wisp" Version="0.2.1-preview.0.51" />
     <PackageVersion Include="ZiggyCreatures.FusionCache" Version="2.5.0" />
     <PackageVersion Include="ZLogger" Version="2.5.10" />

@@ -28,6 +28,7 @@ internal static class TestGenerator
 	* EF "future" warnings (EF9100)
 	* Aspire evaluation warnings (ASPIRE*)
 	* StackExchange.Redis evaluation warnings (SER001)
+	* Azure evaluation warnings (SCME0002)
 	* OpenTelemetry (OTEL1001)
 
 	These are warnings, and they should not cause errors. A user can decide to treat them
@@ -65,6 +66,8 @@ internal static class TestGenerator
 		{ "ASPIREPIPELINES003", ReportDiagnostic.Suppress },
 		{ "ASPIREPIPELINES004", ReportDiagnostic.Suppress },
 		{ "ASPIREPUBLISHERS001", ReportDiagnostic.Suppress },
+		{ "ASPIREUSERSECRETS001", ReportDiagnostic.Suppress },
+		{ "SCME0002", ReportDiagnostic.Suppress },
 		{ "SER001", ReportDiagnostic.Suppress },
 		{ "OTEL1001", ReportDiagnostic.Suppress }
 	};
