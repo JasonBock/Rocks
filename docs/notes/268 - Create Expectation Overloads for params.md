@@ -55,4 +55,9 @@ TODO:
     * DONE - When defining the mock and/or the make, we are including the attributes, but we cannot assign the parameter to the default value.
 * DONE - If we have the case where an optional parameter comes before a ref-like `params` parameter and the optional does not use the attributes, then we **must** define the optional parameter with the 2nd pass overload with attributes.
 * Need unit **and** integration tests for all these scenarios, especially indexers
+    * Indexer versions (probably need to update the indexer expectations getters and setters, and implementation...maybe, they may be right)
+        * DONE - GenerateWhenParamsInIndexerIsNotRefStructAndOptionalExistsWithAttributesAsync
+        * DONE - GenerateWhenParamsInIndexerIsNotRefStructAndOptionalExistsWithoutAttributesAsync
+        * DONE - GenerateWhenParamsInIndexerIsRefStructAndOptionalExistsWithAttributesAsync
+        * GenerateWhenParamsInIndexerIsRefStructAndOptionalExistsWithoutAttributesAsync
 * Code gen tests must pass

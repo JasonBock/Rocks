@@ -299,7 +299,11 @@ internal static class MockIndexerBuilder
 		var methodParameters = string.Join(", ", parameters.Select(_ =>
 		{
 			var defaultValue = includeOptionalParameterValues && _.HasExplicitDefaultValue ?
-				$" = {_.ExplicitDefaultValue}" : string.Empty;
+				_.AttributesDescription.Contains("Optional") ?
+					string.Empty :
+					$" = {_.ExplicitDefaultValue}" :
+				string.Empty;
+
 			var direction = _.RefKind switch
 			{
 				RefKind.In => "in ",
