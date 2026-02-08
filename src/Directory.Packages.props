@@ -113,6 +113,7 @@
     <PackageVersion Include="Oqtane.Framework" Version="5.2.3" />
     <PackageVersion Include="Oqtane.Shared" Version="10.0.4" />
     <PackageVersion Include="Paramore.Brighter" Version="10.1.0" />
+    <PackageVersion Include="Polars.NET" Version="0.2.1-beta1" />
     <PackageVersion Include="Polly" Version="8.2.0" />
     <PackageVersion Include="Pragmastat" Version="6.0.1" />
     <PackageVersion Include="prometheus-net" Version="8.2.1" />

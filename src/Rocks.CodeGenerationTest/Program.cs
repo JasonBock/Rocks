@@ -81,7 +81,7 @@ static void TestWithType()
 #pragma warning disable EF9100 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 #pragma warning disable CS0618 // Type or member is obsolete
    (var issues, var times) = TestGenerator.Generate(new RockGenerator(),
-		[typeof(Mscc.GenerativeAI.Types.Hyperparameters)],
+		[typeof(Polars.NET.Core.ArrowArrayContextHandle)],
 		typesToLoadAssembliesFrom,
 		[], BuildType.Create);
 #pragma warning restore CS0618 // Type or member is obsolete
@@ -201,6 +201,7 @@ static async Task TestWithTypesAsync()
 		new (typeof(OpenTelemetry.BaseProvider), []),
 		new (typeof(Oqtane.Documentation.PrivateApi), []),
 		new (typeof(Orleans.Grain), []),
+		new (typeof(Polars.NET.Core.DataFrameHandle), []),
 		new (typeof(Paramore.Brighter.Channel), []),
 		new (typeof(Prometheus.ChildBase), []),
 		new (typeof(Proto.ActorContextDecorator), []),
