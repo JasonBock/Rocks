@@ -4,6 +4,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 using Rocks.Analysis.Descriptors;
 using Rocks.Analysis.Extensions;
 using System.Collections.Immutable;
+using System.Reflection;
 
 namespace Rocks.Analysis;
 
@@ -49,34 +50,38 @@ public sealed class ValueTaskInReturnValueSuppressor
 
 					if (node is ArgumentSyntax argument)
 					{
-						var invocationExpressionNode = node.FindParent<InvocationExpressionSyntax>();
+						var semanticModel = context.GetSemanticModel(syntaxTree);
+
+						var invocationExpressionNode = node.FindParent<InvocationExpressionSyntax>(
+							node =>
+							{
+								var invocationMethod = semanticModel.GetSymbolInfo(
+									node, context.CancellationToken).Symbol as IMethodSymbol;
+
+								return invocationMethod is not null &&
+									invocationMethod.Name == "ReturnValue" &&
+										SymbolEqualityComparer.Default.Equals(
+											invocationMethod.ContainingType.ConstructedFrom,
+											context.Compilation.GetTypeByMetadataName("Rocks.Adornments`4"));
+							});
 
 						if (invocationExpressionNode is not null)
 						{
-							var semanticModel = context.GetSemanticModel(syntaxTree);
 							var invocationMethod = semanticModel.GetSymbolInfo(
 								invocationExpressionNode, context.CancellationToken).Symbol as IMethodSymbol;
+							var constructedParameterType = (invocationMethod!.Parameters[0].Type as INamedTypeSymbol)?.ConstructedFrom;
 
-							if (invocationMethod is not null &&
-								invocationMethod.Name == "ReturnValue" &&
+							if (constructedParameterType is not null &&
+								(SymbolEqualityComparer.Default.Equals(
+									constructedParameterType,
+									context.Compilation.GetTypeByMetadataName("System.Threading.Tasks.ValueTask")) ||
 								SymbolEqualityComparer.Default.Equals(
-									invocationMethod.ContainingType.ConstructedFrom,
-									context.Compilation.GetTypeByMetadataName("Rocks.Adornments`4")))
+									constructedParameterType,
+									context.Compilation.GetTypeByMetadataName("System.Threading.Tasks.ValueTask`1"))))
 							{
-								var constructedParameterType = (invocationMethod.Parameters[0].Type as INamedTypeSymbol)?.ConstructedFrom;
-
-								if (constructedParameterType is not null &&
-									(SymbolEqualityComparer.Default.Equals(
-										constructedParameterType,
-										context.Compilation.GetTypeByMetadataName("System.Threading.Tasks.ValueTask")) ||
-									SymbolEqualityComparer.Default.Equals(
-										constructedParameterType,
-										context.Compilation.GetTypeByMetadataName("System.Threading.Tasks.ValueTask`1"))))
-								{
-									var suppression = Suppression.Create(
-										descriptor, diagnostic);
-									context.ReportSuppression(suppression);
-								}
+								var suppression = Suppression.Create(
+									descriptor, diagnostic);
+								context.ReportSuppression(suppression);
 							}
 						}
 					}

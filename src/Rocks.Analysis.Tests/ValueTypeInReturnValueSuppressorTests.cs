@@ -47,4 +47,60 @@ public static class ValueTypeInReturnValueSuppressorTests
 
 		await TestAssistants.RunSuppressorAsync<ValueTaskInReturnValueSuppressor, UseValueTasksCorrectlyAnalyzer>(code, expected);
 	}
+
+	[Test]
+	public static async Task SuppressWhenValueTaskIsPassedToCallbackAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			using System;
+			using System.Threading.Tasks;
+			
+			public sealed class TestHandler
+				: Handler<Func<ValueTask<string>>, ValueTask<string>>
+			{ }
+
+			public sealed class TestAdornments
+				: Adornments<TestAdornments, TestHandler, Func<ValueTask<string>>, ValueTask<string>>
+			{
+				public TestAdornments(TestHandler handler) 
+					: base(handler) { }
+			}
+
+			public static class Tester
+			{
+				public static void Test()
+				{
+					var adornments = new TestAdornments(new());
+					adornments.Callback(() => {|#0:ValueTask.FromResult("hi")|});
+				}
+			}
+			""";
+
+		await TestAssistants.RunSuppressorAsync<ValueTaskInReturnValueSuppressor, UseValueTasksCorrectlyAnalyzer>(code, []);
+	}
+
+	[Test]
+	public static async Task SuppressWhenValueTaskIsPassedToArbitraryMethodAsync()
+	{
+		var code =
+			"""
+			using System;
+			using System.Threading.Tasks;
+			
+			public static class Tester
+			{
+				public static async ValueTask TestAsync() =>
+					{|#0:ValueTask.FromResult("hi")|};
+			}
+			""";
+
+		var expected = new[]
+		{
+			CA2012.WithLocation(0).WithIsSuppressed(false),
+		};
+
+		await TestAssistants.RunSuppressorAsync<ValueTaskInReturnValueSuppressor, UseValueTasksCorrectlyAnalyzer>(code, expected);
+	}
 }
