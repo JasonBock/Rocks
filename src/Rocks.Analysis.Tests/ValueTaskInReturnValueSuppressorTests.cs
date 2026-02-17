@@ -5,7 +5,9 @@ using NUnit.Framework;
 
 namespace Rocks.Analysis.Tests;
 
-public static class ValueTypeInReturnValueSuppressorTests
+// Analyzer class was found here:
+// https://github.com/dotnet/sdk/blob/e9d68d884cd44246e6d2d7fdb12714ff7618b90e/src/Microsoft.CodeAnalysis.NetAnalyzers/src/Microsoft.CodeAnalysis.NetAnalyzers/Microsoft.NetCore.Analyzers/Tasks/UseValueTasksCorrectly.cs#L25
+public static class ValueTaskInReturnValueSuppressorTests
 {
 	private static readonly DiagnosticResult CA2012 =
 		DiagnosticResult.CompilerWarning("CA2012").WithSeverity(DiagnosticSeverity.Info);
