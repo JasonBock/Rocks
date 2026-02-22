@@ -120,3 +120,4 @@
 [assembly: Rocks.Rock(typeof(Rocks.Analysis.IntegrationTests.ShimTestTypes.IAuditTrail<>), Rocks.BuildType.Create | Rocks.BuildType.Make)]
 [assembly: Rocks.Rock(typeof(Rocks.Analysis.IntegrationTests.RockContextTestTypes.IContextural), Rocks.BuildType.Create | Rocks.BuildType.Make)]
 [assembly: Rocks.Rock(typeof(Rocks.Analysis.IntegrationTests.SuppressCA2012TestTypes.IReturnValueTask), Rocks.BuildType.Create | Rocks.BuildType.Make)]
+[assembly: Rocks.Rock(typeof(Rocks.Analysis.IntegrationTests.SuppressCA2025TestTypes.IReturnDisposableTask), Rocks.BuildType.Create | Rocks.BuildType.Make)]
