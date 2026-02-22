@@ -372,4 +372,22 @@ internal static class ITypeSymbolExtensions
 
 		return [.. hierarchy];
 	}
+
+	internal static bool DerivesFrom(this ITypeSymbol self, ITypeSymbol other)
+	{
+		var target = self.OriginalDefinition;
+
+		while (target is not null)
+		{
+			if (SymbolEqualityComparer.Default.Equals(target, other) ||
+				target.AllInterfaces.Any(_ => _.DerivesFrom(other)))
+			{
+				return true;
+			}
+
+			target = target.BaseType?.OriginalDefinition ?? null;
+		}
+
+		return false;
+	}
 }
