@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added expectation overloads for `params` methods and indexers (issue [#268](https://github.com/JasonBock/Rocks/issues/268))
+- Added suppressors for `CA2000` and `CA2025` (issue [#396](https://github.com/JasonBock/Rocks/issues/396))
 
 ## [10.0.0] - 2025-12-01
 
