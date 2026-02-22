@@ -72,12 +72,9 @@ public sealed class ValueTaskInReturnValueSuppressor
 							var constructedParameterType = (invocationMethod!.Parameters[0].Type as INamedTypeSymbol)?.ConstructedFrom;
 
 							if (constructedParameterType is not null &&
-								(SymbolEqualityComparer.Default.Equals(
-									constructedParameterType,
-									context.Compilation.GetTypeByMetadataName("System.Threading.Tasks.ValueTask")) ||
 								SymbolEqualityComparer.Default.Equals(
 									constructedParameterType,
-									context.Compilation.GetTypeByMetadataName("System.Threading.Tasks.ValueTask`1"))))
+									context.Compilation.GetTypeByMetadataName("System.Threading.Tasks.ValueTask`1")))
 							{
 								var suppression = Suppression.Create(
 									descriptor, diagnostic);

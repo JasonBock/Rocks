@@ -133,4 +133,52 @@ public static class IDisposableInstancesIntoTasksSuppressorTests
 
 		await TestAssistants.RunSuppressorAsync<IDisposableInstancesIntoTasksSuppressor, DoNotPassDisposablesIntoUnawaitedTasksAnalyzer>(code, expected);
 	}
+
+	[Test]
+	public static async Task SuppressWhenTaskIsReturnedFromArbitraryMethodAsync()
+	{
+		var code =
+			"""
+			using System;
+			using System.Threading.Tasks;
+			
+			public sealed class Disposable
+				: IDisposable
+			{
+				private bool disposedValue;
+
+				private void Dispose(bool disposing)
+				{
+					if (!this.disposedValue)
+					{
+						if (disposing) { }
+
+						this.disposedValue = true;
+					}
+				}
+
+				public void Dispose()
+				{
+					this.Dispose(disposing: true);
+					GC.SuppressFinalize(this);
+				}
+			}
+
+			public static class Tester
+			{
+				public static Task<Disposable> TestAsync()
+				{
+					using var disposable = new Disposable();				
+					return Task.FromResult({|#0:disposable|});
+				}
+			}
+			""";
+
+		var expected = new[]
+		{
+			CA2025.WithLocation(0).WithIsSuppressed(false),
+		};
+
+		await TestAssistants.RunSuppressorAsync<IDisposableInstancesIntoTasksSuppressor, DoNotPassDisposablesIntoUnawaitedTasksAnalyzer>(code, expected);
+	}
 }
