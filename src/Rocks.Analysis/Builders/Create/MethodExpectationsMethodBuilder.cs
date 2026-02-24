@@ -19,7 +19,7 @@ internal static class MethodExpectationsMethodBuilder
 		{
 			static string GetOptionalParameter(ParameterModel parameter, ParameterModel lastParameter,
 				string typeName, string requiresNullable) =>
-					lastParameter.IsParams && lastParameter.Type.IsRefLikeType ? 
+					lastParameter.IsParams && lastParameter.Type.IsRefLikeType ?
 						$"[global::System.Runtime.InteropServices.Optional, global::System.Runtime.InteropServices.DefaultParameterValue({parameter.ExplicitDefaultValue})] {typeName}{requiresNullable} @{parameter.Name}" :
 						parameter.AttributesDescription.Contains("Optional") ?
 							$"[global::System.Runtime.InteropServices.Optional, global::System.Runtime.InteropServices.DefaultParameterValue({parameter.ExplicitDefaultValue})] {typeName}{requiresNullable} @{parameter.Name}" :
@@ -164,7 +164,14 @@ internal static class MethodExpectationsMethodBuilder
 					}
 					else if (parameter.RefKind == RefKind.Out)
 					{
-						writer.WriteLine($"@{handlerNamingContext[parameter.Name]} = global::Rocks.Arg.Any<{parameter.Type.BuildName(typeArgumentsNamingContext)}{(parameter.RequiresNullableAnnotation ? "?" : string.Empty)}>(),");
+						if (parameter.Type.IsRefLikeType)
+						{
+							writer.WriteLine($"@{handlerNamingContext[parameter.Name]} = new(),");
+						}
+						else
+						{
+							writer.WriteLine($"@{handlerNamingContext[parameter.Name]} = global::Rocks.Arg.Any<{parameter.Type.BuildName(typeArgumentsNamingContext)}{(parameter.RequiresNullableAnnotation ? "?" : string.Empty)}>(),");
+						}
 					}
 					else
 					{
