@@ -26,7 +26,7 @@ if (!span.IsEmpty)
     Console.WriteLine(span.ToString());
 }
 ```
-Not sure if this is really that much more efficient than just `Split()`, especially since we need to get the string content anyway. Perf testing will be good here.
+Not sure if this is really that much more efficient than just `Split()`, especially since we need to get the string content anyway. Perf testing will be good here. Maybe compare current implementation with this along with just doing `WriteLine()` for each line. Need to compare with interpolation and raw strings as well.
 * `NamingContext`
     * `this[]->get` - at least comment this.
 * `TypeArgumentsNamingContext` - maybe I should make one for each `ITypeReferenceModel` and `MethodModel` on construction? That way, I don't have to keep making them throughout the code. These should not vary once iterated for a type or method.
@@ -53,7 +53,9 @@ Not sure if this is really that much more efficient than just `Split()`, especia
 * `MockMembersExpectationsBuilder`
     * `Build()`
         * Change `.ToList()` to `.ToArray()` - in fact, might as well search for this everywhere because I'm guessing an array allocation will be slightly cheaper than a list. Would be kind of an odd, fun performance test to do.
-
+* `MockMethodVoidBuilder` and `MockMethodValueBuilder`
+    * `Build()`
+        * Both have code to get `methodParameters` that is almost identical except for getting `AttributesDescription`. See if this can be shared.
 
 
 * `ShimMethodBuilder`

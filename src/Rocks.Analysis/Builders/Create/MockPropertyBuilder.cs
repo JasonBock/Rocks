@@ -76,7 +76,7 @@ internal static class MockPropertyBuilder
 			// We'll call the base implementation if an expectation wasn't provided.
 			// We'll do this as well for interfaces with a DIM through a shim.
 			// If something like this is added in the future, then I'll revisit this:
-			// https://github.com/dotnet/csharplang/issues/2337
+			// https://github.com/dotnet/csharplang/discussions/8870
 			var refReturn = property.ReturnsByRef || property.ReturnsByRefReadOnly ? "ref " : string.Empty;
 			var target = property.ContainingType.TypeKind == TypeKind.Interface ?
 				$"this.shimFor{ShimBuilder.GetShimName(property.ContainingType)}" : "base";
