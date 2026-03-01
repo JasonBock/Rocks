@@ -1,34 +1,7 @@
 * Testing - In general, other than the builders which are essentially tested by the "Generators" unit tests, code should have unit tests in isolation to ensure specific parts can be tested separately.
 
 * "Remove Unnecessary Usings"
-* Why does `Verify()` take so long? https://github.com/ecoAPM/BenchmarkMockNet/blob/main/Results.md#verify. I mean, it's not that slow :), but maybe there's a way to improve it slightly.
-* `IndentedTextWriterExtensions`
-    * `WriteLines()`
-        * Is there any way to make the line `Split()` a bit better, either perf or allocation? We could use `ReadOnlySpan<char>`:
-```c#
-var text = "apple,banana,cherry,grape";
-var span = text.AsSpan();
-
-var separator = ",";
-var index = -1;
-
-while ((index = span.IndexOf(separator)) != -1)
-{
-    // Slice without allocating a new string
-    var part = span.Slice(0, index);
-    Console.WriteLine(part.ToString()); // Convert to string only if needed
-
-    // Move past the separator
-    span = span.Slice(index + 1);
-}
-
-// Print the last segment
-if (!span.IsEmpty)
-{
-    Console.WriteLine(span.ToString());
-}
-```
-Not sure if this is really that much more efficient than just `Split()`, especially since we need to get the string content anyway. Perf testing will be good here. Maybe compare current implementation with this along with just doing `WriteLine()` for each line. Need to compare with interpolation and raw strings as well. Note that `BuildFunctionPointerArgument()` is a good example of a longer-ish interpolated raw string.
+* Why does `Verify()` take so long? https://github.com/ecoAPM/BenchmarkMockNet/blob/main/Results.md#verify. I mean, it's not that slow :), but maybe there's a way to improve it slightly. Maybe change `protected List<string> Verify<THandler>(Handlers<THandler> handlers, uint memberIdentifier)` to `protected IEnumerable<string> Verify<THandler>(Handlers<THandler> handlers, uint memberIdentifier)` as we really don't need to allocate a list here because `AddRange()` on `List<>` takes an `IEnumerable<>`.
 * `Builders\Create`
     * `NamingContext`
         * `this[]->get` - at least comment this.
@@ -81,6 +54,6 @@ Not sure if this is really that much more efficient than just `Split()`, especia
 * `Extensions`
     * `ITypeParameterSymbolExtensions`
         * `GetConstraints()` - Maybe now figure out how to determine if the `default` constraint exists?
-
 * "Remove Unnecessary Usings"
 * Format every file
+* Ensure all the code in the Rocks library has the "disclaimer" XML comment at the top to discourage users from using them for anything outside of code-generated Rocks usage.
