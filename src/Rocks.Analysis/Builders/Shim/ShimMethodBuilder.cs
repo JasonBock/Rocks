@@ -15,7 +15,7 @@ internal static class ShimMethodBuilder
 			.Select(_ => _))
 		{
 			var typeArgumentsNamingContext = method.IsGenericMethod ?
-				new TypeArgumentsNamingContext(shimType.Type) :
+				new TypeArgumentsNamingContext(method) :
 				new TypeArgumentsNamingContext();
 
 			writer.WriteLine();

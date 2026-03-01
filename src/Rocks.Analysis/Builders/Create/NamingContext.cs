@@ -2,6 +2,19 @@
 
 namespace Rocks.Analysis.Builders.Create;
 
+/*
+The purpose of this type is to provide a way for
+the code generation phase to say, "I want a variable named "value"",
+and produce a name that will not collide with other named "things"
+currently in scope.
+
+For example, if you wanted a variable named "value"
+and the method parameters are called "a", "b", and "c",
+then "value" doesn't collide with any of them,
+and the indexer getter will return "value".
+However, if one of the parameters is named "value",
+then the getter will return "value2".
+*/
 internal abstract class NamingContext
 {
 	private readonly Dictionary<string, string> variables;

@@ -27,8 +27,8 @@ internal static class MockTypeBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
-	  BuildShimFields(writer, type);
-	  BuildRefReturnFields(writer, type);
+		BuildShimFields(writer, type);
+		BuildRefReturnFields(writer, type);
 
 		if (type.Constructors.Length > 0)
 		{
@@ -88,7 +88,7 @@ internal static class MockTypeBuilder
 			writer.WriteLine();
 		}
 
-	  BuildShimTypes(writer, type);
+		BuildShimTypes(writer, type);
 
 		writer.WriteLine($"private {expectationsFullyQualifiedName} {type.ExpectationsPropertyName} {{ get; }}");
 

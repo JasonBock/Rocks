@@ -8,10 +8,6 @@ internal sealed class TypeArgumentsNamingContext
 	internal TypeArgumentsNamingContext()
 		: base() { }
 
-	internal TypeArgumentsNamingContext(ITypeReferenceModel type)
-		: base([.. type.TypeArguments.Select(_ => _.FullyQualifiedName)])
-	{ }
-
 	internal TypeArgumentsNamingContext(MethodModel method)
 		: base([.. method.MockType.TypeArguments.Intersect(method.TypeArguments, new TypeReferenceModelEqualityComparer()).Select(_ => _.FullyQualifiedName)])
 	{ }

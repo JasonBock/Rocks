@@ -1,9 +1,13 @@
 * "Remove Unnecessary Usings"
-* Why does `Verify()` take so long? https://github.com/ecoAPM/BenchmarkMockNet/blob/main/Results.md#verify. I mean, it's not that slow :), but maybe there's a way to improve it slightly. Maybe change `protected List<string> Verify<THandler>(Handlers<THandler> handlers, uint memberIdentifier)` to `protected IEnumerable<string> Verify<THandler>(Handlers<THandler> handlers, uint memberIdentifier)` as we really don't need to allocate a list here because `AddRange()` on `List<>` takes an `IEnumerable<>`.
+* DONE - Why does `Verify()` take so long? https://github.com/ecoAPM/BenchmarkMockNet/blob/main/Results.md#verify. I mean, it's not that slow :), but maybe there's a way to improve it slightly. Maybe change `protected List<string> Verify<THandler>(Handlers<THandler> handlers, uint memberIdentifier)` to `protected IEnumerable<string> Verify<THandler>(Handlers<THandler> handlers, uint memberIdentifier)` as we really don't need to allocate a list here because `AddRange()` on `List<>` takes an `IEnumerable<>`.
 * `Builders\Create`
-    * `NamingContext`
-        * `this[]->get` - at least comment this.
-    * `TypeArgumentsNamingContext` - maybe I should make one for each `ITypeReferenceModel` and `MethodModel` on construction? That way, I don't have to keep making them throughout the code. These should not vary once iterated for a type or method.
+    * DONE - `NamingContext`
+        * DONE - `this[]->get` - at least comment this.
+    * `TypeArgumentsNamingContext` - maybe I should make one for each `ITypeReferenceModel` and `MethodModel` on construction? That way, I don't have to keep making them throughout the code. These should not vary once iterated for a type or method. Actually, what I landed is:
+        * Only one constructor that take a `MethodModel`
+        * Make `TypeArgumentsNamingContext` a nested type of `MethodModel`
+        * Create a `GetTypeArgumentsNamingContext()` method on `MethodModel`
+        * Could also check to see if this context is truly ever "mutated" in the code
     * There are three versions of `static string GetOptionalParameter(ParameterModel parameter, ParameterModel lastParameter, string typeName, string requiresNullable)` - should be moved into one method, probably on `ParameterModel` itself, then it would only need the 2nd parameter.
     * `ExpectationExceptionBuilder`
         * `Build()`
@@ -68,7 +72,19 @@ Current Verify
 | ManyExpectationsAllFailCurrentWay | 10,536.476 ns | 112.6329 ns | 105.3568 ns | 0.8240 |   14272 B |
 
 IEnumerable Return Verify
-
-List Capacity = 0 Verify
+| Method                            | Mean          | Error      | StdDev     | Gen0   | Allocated |
+|---------------------------------- |--------------:|-----------:|-----------:|-------:|----------:|
+| NoExpectationsCurrentWay          |      2.583 ns |  0.0707 ns |  0.0661 ns | 0.0019 |      32 B |
+| OneExpectationCurrentWay          |    125.952 ns |  1.1859 ns |  1.0513 ns | 0.0448 |     776 B |
+| OneExpectationAllFailCurrentWay   |  4,083.983 ns | 36.1109 ns | 33.7781 ns | 0.3510 |    6154 B |
+| ManyExpectationsCurrentWay        |    141.086 ns |  1.1948 ns |  1.1176 ns | 0.0448 |     776 B |
+| ManyExpectationsAllFailCurrentWay | 10,603.231 ns | 69.2586 ns | 64.7845 ns | 0.7935 |   14048 B |
 
 IEnumerable Return and List Capacity = 0 Verify
+| Method                            | Mean          | Error      | StdDev     | Gen0   | Allocated |
+|---------------------------------- |--------------:|-----------:|-----------:|-------:|----------:|
+| NoExpectationsCurrentWay          |      2.608 ns |  0.0607 ns |  0.0507 ns | 0.0019 |      32 B |
+| OneExpectationCurrentWay          |    130.197 ns |  2.3337 ns |  2.1829 ns | 0.0448 |     776 B |
+| OneExpectationAllFailCurrentWay   |  4,085.337 ns | 47.8223 ns | 44.7330 ns | 0.3510 |    6154 B |
+| ManyExpectationsCurrentWay        |    140.296 ns |  1.0288 ns |  0.9624 ns | 0.0448 |     776 B |
+| ManyExpectationsAllFailCurrentWay | 10,551.827 ns | 43.7738 ns | 40.9460 ns | 0.7935 |   14048 B |
