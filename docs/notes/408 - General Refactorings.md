@@ -1,5 +1,3 @@
-* Testing - In general, other than the builders which are essentially tested by the "Generators" unit tests, code should have unit tests in isolation to ensure specific parts can be tested separately.
-
 * "Remove Unnecessary Usings"
 * Why does `Verify()` take so long? https://github.com/ecoAPM/BenchmarkMockNet/blob/main/Results.md#verify. I mean, it's not that slow :), but maybe there's a way to improve it slightly. Maybe change `protected List<string> Verify<THandler>(Handlers<THandler> handlers, uint memberIdentifier)` to `protected IEnumerable<string> Verify<THandler>(Handlers<THandler> handlers, uint memberIdentifier)` as we really don't need to allocate a list here because `AddRange()` on `List<>` takes an `IEnumerable<>`.
 * `Builders\Create`
@@ -42,7 +40,6 @@
             * Some `WriteLine()` into one `WriteLines()`
     * `VariablesNamingContext.cs`
         * Split two classes into separate files.
-
     * `ShimMethodBuilder`
         * `Build()`
             * Why does `typeArgumentsNamingContext` use `shimType` instead of the method in question? If there's a reason, document it.
@@ -57,3 +54,21 @@
 * "Remove Unnecessary Usings"
 * Format every file
 * Ensure all the code in the Rocks library has the "disclaimer" XML comment at the top to discourage users from using them for anything outside of code-generated Rocks usage.
+* Testing - In general, other than the builders which are essentially tested by the "Generators" unit tests, code should have unit tests in isolation to ensure specific parts can be tested separately.
+* Before committing, run Rocks.Performance on the `main` branch, and then on this branch, and see what the differences are. Could also do the same for the code gen tests.
+
+
+Current Verify
+| Method                            | Mean          | Error       | StdDev      | Gen0   | Allocated |
+|---------------------------------- |--------------:|------------:|------------:|-------:|----------:|
+| NoExpectationsCurrentWay          |      2.606 ns |   0.0706 ns |   0.0725 ns | 0.0019 |      32 B |
+| OneExpectationCurrentWay          |    136.382 ns |   0.9267 ns |   0.8215 ns | 0.0505 |     872 B |
+| OneExpectationAllFailCurrentWay   |  4,121.949 ns |  17.8705 ns |  16.7161 ns | 0.3662 |    6344 B |
+| ManyExpectationsCurrentWay        |    153.611 ns |   1.3456 ns |   1.0506 ns | 0.0505 |     872 B |
+| ManyExpectationsAllFailCurrentWay | 10,536.476 ns | 112.6329 ns | 105.3568 ns | 0.8240 |   14272 B |
+
+IEnumerable Return Verify
+
+List Capacity = 0 Verify
+
+IEnumerable Return and List Capacity = 0 Verify

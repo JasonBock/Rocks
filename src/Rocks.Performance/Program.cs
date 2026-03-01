@@ -1,3 +1,6 @@
-﻿using Rocks.Performance.Baselines;
+﻿using BenchmarkDotNet.Running;
+using Rocks.Performance;
+using Rocks.Performance.Baselines;
 
-BaselineRunner.Run();
+//BaselineRunner.Run();
+BenchmarkRunner.Run<VerifyStrategies>();

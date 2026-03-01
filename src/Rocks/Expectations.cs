@@ -24,15 +24,14 @@ public abstract class Expectations
 	/// <param name="handlers">A list of handlers to verify</param>
 	/// <param name="memberIdentifier">The member identifier for the handlers</param>
 	/// <returns>A list of failed expectations</returns>
-	protected List<string> Verify<THandler>(Handlers<THandler> handlers, uint memberIdentifier)
+	protected IEnumerable<string> Verify<THandler>(Handlers<THandler> handlers, uint memberIdentifier)
 		where THandler : Handler =>
-			[.. handlers.Where(_ => _.ExpectedCallCount != _.CallCount)
+			handlers.Where(_ => _.ExpectedCallCount != _.CallCount)
 				.Select(_ =>
 				{
 					var member = this.MockType!.GetMemberDescription(memberIdentifier);
 					return $"Mock type: {this.MockType!.FullName}, member: {member}, message: The expected call count is incorrect. Expected: {_.ExpectedCallCount}, received: {_.CallCount}.";
-				})
-			];
+				});
 
 	/// <summary>
 	/// Gets or sets the mock type.
