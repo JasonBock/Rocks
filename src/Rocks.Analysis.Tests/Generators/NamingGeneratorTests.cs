@@ -230,9 +230,8 @@ public static class NamingGeneratorTests
 			public class Class1 { }
 			""";
 		var sourceReferences = Shared.References.Value
-			.Cast<MetadataReference>()
-			.ToList();
-		sourceReferences.Add(MetadataReference.CreateFromFile(typeof(RockAttribute).Assembly.Location));
+			.Cast<MetadataReference>();
+		sourceReferences = sourceReferences.Append(MetadataReference.CreateFromFile(typeof(RockAttribute).Assembly.Location));
 
 		var sourceSyntaxTree = CSharpSyntaxTree.ParseText(source);
 		var sourceCompilation = CSharpCompilation.Create("Source", [sourceSyntaxTree],
@@ -243,7 +242,6 @@ public static class NamingGeneratorTests
 
 		_ = sourceDriver.RunGeneratorsAndUpdateCompilation(sourceCompilation, out var newSourceCompilation, out _);
 		var sourceReference = newSourceCompilation.ToMetadataReference()!;
-		sourceReferences.Add(sourceReference);
 
 		var code =
 			"""
@@ -482,7 +480,7 @@ public static class NamingGeneratorTests
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[("Class1_Rock_Create.g.cs", generatedCode)],
 			[],
-			additionalReferences: sourceReferences);
+			additionalReferences: sourceReferences.Append(sourceReference));
 	}
 
 	[Test]
@@ -497,8 +495,7 @@ public static class NamingGeneratorTests
 			public class Class1 { }
 			""";
 		var sourceReferences = Shared.References.Value
-			.Cast<MetadataReference>()
-			.ToList();
+			.Cast<MetadataReference>();
 		var sourceSyntaxTree = CSharpSyntaxTree.ParseText(source);
 		var sourceCompilation = CSharpCompilation.Create("Source", [sourceSyntaxTree],
 			sourceReferences,
@@ -508,7 +505,6 @@ public static class NamingGeneratorTests
 
 		_ = sourceDriver.RunGeneratorsAndUpdateCompilation(sourceCompilation, out var newSourceCompilation, out _);
 		var sourceReference = newSourceCompilation.ToMetadataReference()!;
-		sourceReferences.Add(sourceReference);
 
 		var code =
 			"""
@@ -747,7 +743,7 @@ public static class NamingGeneratorTests
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[("Class1_Rock_Create.g.cs", generatedCode)],
 			[],
-			additionalReferences: sourceReferences);
+			additionalReferences: sourceReferences.Append(sourceReference));
 	}
 
 	public static async Task GenerateWithKeywordsInVirtualMembersAsync()
@@ -2325,8 +2321,7 @@ public static class NamingGeneratorTests
 	public static async Task GenerateWithDuplicateTypeNamesAsync()
 	{
 		var references = Shared.References.Value
-			.Cast<MetadataReference>()
-			.ToList();
+			.Cast<MetadataReference>();
 
 		var firstSource =
 			"""
@@ -2571,15 +2566,13 @@ public static class NamingGeneratorTests
 			
 			"""";
 
-		references.AddRange([firstSourceReference, secondSourceReference]);
-
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
 				("FirstIUseSameNames_Rock_Create.g.cs", createGeneratedCode),
 				("FirstIUseSameNames_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[],
-			additionalReferences: references);
+			additionalReferences: references.Concat([firstSourceReference, secondSourceReference]));
 	}
 
 	[Test]

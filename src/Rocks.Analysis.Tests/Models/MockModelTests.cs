@@ -53,8 +53,7 @@ public static class MockModelTests
 				MetadataReference.CreateFromFile(typeof(RockGenerator).Assembly.Location)
 			])
 			.Cast<MetadataReference>()
-			.ToList();
-		references.Add(internalModel.SemanticModel.Compilation.ToMetadataReference());
+			.Append(internalModel.SemanticModel.Compilation.ToMetadataReference());
 
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
 			references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));

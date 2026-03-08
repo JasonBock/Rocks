@@ -25,14 +25,12 @@ public static class InternalGeneratorTests
 			}
 			""";
 		var sourceReferences = Shared.References.Value
-			.Cast<MetadataReference>()
-			.ToList();
+			.Cast<MetadataReference>();
 		var sourceSyntaxTree = CSharpSyntaxTree.ParseText(source);
 		var sourceCompilation = CSharpCompilation.Create("Source", [sourceSyntaxTree],
 			sourceReferences,
 			new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var sourceReference = sourceCompilation.ToMetadataReference()!;
-		sourceReferences.Add(sourceReference);
 
 		var code =
 			"""
@@ -43,7 +41,7 @@ public static class InternalGeneratorTests
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[], [],
-			additionalReferences: sourceReferences);
+			additionalReferences: sourceReferences.Append(sourceReference));
 	}
 
 	[Test]
@@ -63,14 +61,12 @@ public static class InternalGeneratorTests
 			}
 			""";
 		var sourceReferences = Shared.References.Value
-			.Cast<MetadataReference>()
-			.ToList();
+			.Cast<MetadataReference>();
 		var sourceSyntaxTree = CSharpSyntaxTree.ParseText(source);
 		var sourceCompilation = CSharpCompilation.Create("Source", [sourceSyntaxTree],
 			sourceReferences,
 			new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var sourceReference = sourceCompilation.ToMetadataReference()!;
-		sourceReferences.Add(sourceReference);
 
 		var code =
 			"""
@@ -283,7 +279,7 @@ public static class InternalGeneratorTests
 				("IDoStuff_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[],
-			additionalReferences: sourceReferences);
+			additionalReferences: sourceReferences.Append(sourceReference));
 	}
 
 	[Test]
@@ -303,14 +299,12 @@ public static class InternalGeneratorTests
 			}
 			""";
 		var sourceReferences = Shared.References.Value
-			.Cast<MetadataReference>()
-			.ToList();
+			.Cast<MetadataReference>();
 		var sourceSyntaxTree = CSharpSyntaxTree.ParseText(source);
 		var sourceCompilation = CSharpCompilation.Create("Source", [sourceSyntaxTree],
 			sourceReferences,
 			new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var sourceReference = sourceCompilation.ToMetadataReference()!;
-		sourceReferences.Add(sourceReference);
 
 		var code =
 			"""
@@ -523,6 +517,6 @@ public static class InternalGeneratorTests
 				("IDoStuff_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[],
-			additionalReferences: sourceReferences);
+			additionalReferences: sourceReferences.Append(sourceReference));
 	}
 }

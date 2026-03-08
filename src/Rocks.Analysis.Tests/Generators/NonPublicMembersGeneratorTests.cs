@@ -523,14 +523,12 @@ public static class NonPublicMembersGeneratorTests
 			}
 			""";
 		var sourceReferences = Shared.References.Value
-			.Cast<MetadataReference>()
-			.ToList();
+			.Cast<MetadataReference>();
 		var sourceSyntaxTree = CSharpSyntaxTree.ParseText(source);
 		var sourceCompilation = CSharpCompilation.Create("internal", [sourceSyntaxTree],
 			sourceReferences,
 			new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var sourceReference = sourceCompilation.ToMetadataReference()!;
-		sourceReferences.Add(sourceReference);
 
 		var code =
 			"""
@@ -542,7 +540,7 @@ public static class NonPublicMembersGeneratorTests
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[],
 			[],
-			additionalReferences: sourceReferences);
+			additionalReferences: sourceReferences.Append(sourceReference));
 	}
 
 	[Test]
@@ -556,14 +554,12 @@ public static class NonPublicMembersGeneratorTests
 			}
 			""";
 		var sourceReferences = Shared.References.Value
-			.Cast<MetadataReference>()
-			.ToList();
+			.Cast<MetadataReference>();
 		var sourceSyntaxTree = CSharpSyntaxTree.ParseText(source);
 		var sourceCompilation = CSharpCompilation.Create("internal", [sourceSyntaxTree],
 			sourceReferences,
 			new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var sourceReference = sourceCompilation.ToMetadataReference()!;
-		sourceReferences.Add(sourceReference);
 
 		var code =
 			"""
@@ -974,7 +970,7 @@ public static class NonPublicMembersGeneratorTests
 				("VisibilityIssues_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[],
-			additionalReferences: sourceReferences);
+			additionalReferences: sourceReferences.Append(sourceReference));
 	}
 
 	[Test]
@@ -1005,13 +1001,10 @@ public static class NonPublicMembersGeneratorTests
 
 		var sourceSyntaxTree = CSharpSyntaxTree.ParseText(sourceCode);
 		var sourceReferences = Shared.References.Value
-			.Cast<MetadataReference>()
-			.ToList();
+			.Cast<MetadataReference>();
 		var sourceCompilation = CSharpCompilation.Create("SourceAssembly", [sourceSyntaxTree],
 			sourceReferences, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var sourceReference = sourceCompilation.ToMetadataReference()!;
-
-		sourceReferences.Add(sourceReference);
 
 		var code =
 			"""
@@ -1521,7 +1514,7 @@ public static class NonPublicMembersGeneratorTests
 				("HasInternalVirtual_Rock_Make.g.cs", makeGeneratedCode)
 			],
 			[],
-			additionalReferences: sourceReferences);
+			additionalReferences: sourceReferences.Append(sourceReference));
 	}
 
 	[Test]

@@ -29,9 +29,9 @@
     * `MockConstructorExtensionsBuilder`
         * `Build()`
             * Line 71, combine into `WriteLines()`
-    * `MockMembersExpectationsBuilder`
-        * `Build()`
-            * Change `.ToList()` to `.ToArray()` - in fact, might as well search for this everywhere because I'm guessing an array allocation will be slightly cheaper than a list. Would be kind of an odd, fun performance test to do.
+    * DONE - `MockMembersExpectationsBuilder`
+        * DONE - `Build()`
+            * DONE - Change `.ToList()` to `.ToArray()` - in fact, might as well search for this everywhere because I'm guessing an array allocation will be slightly cheaper than a list. Would be kind of an odd, fun performance test to do.
     * `MockMethodVoidBuilder` and `MockMethodValueBuilder`
         * `Build()`
             * Both have code to get `methodParameters` that is almost identical except for getting `AttributesDescription`. See if this can be shared. In fact, the methods and the method types in general are almost identical

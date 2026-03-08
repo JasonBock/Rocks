@@ -20,16 +20,21 @@ internal static class IPropertySymbolExtensions
 
 	internal static ImmutableArray<AttributeData> GetAllAttributes(this IPropertySymbol self)
 	{
-		var attributes = self.GetAttributes().ToList();
+		var attributes = self.GetAttributes();
 
 		// [AllowNull] shows up on the value parameter of the setter if the property
 		// is not abstract (and has a setter), so we need to do go deeper.
 		if (!self.IsAbstract && self.SetMethod is not null)
 		{
-			attributes.AddRange(self.SetMethod.Parameters[self.SetMethod.Parameters.Length - 1].GetAttributes());
+			var setAttributes = self.SetMethod.Parameters[self.SetMethod.Parameters.Length - 1].GetAttributes();
+
+			if (setAttributes.Length > 0)
+			{
+				attributes = attributes.AddRange(setAttributes);
+			}
 		}
 
-		return [.. attributes];
+		return attributes;
 	}
 
 	internal static bool IsUnsafe(this IPropertySymbol self) =>
