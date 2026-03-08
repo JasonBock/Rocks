@@ -1,0 +1,1 @@
+The purpose of this library is to define types that are used in Rocks.Comparisons.Tests. In that library, comparisons are made between Rocks, Moq, and NSubstitute.
