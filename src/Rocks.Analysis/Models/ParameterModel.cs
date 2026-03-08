@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Analysis.Builders.Create;
 using Rocks.Analysis.Extensions;
 
 namespace Rocks.Analysis.Models;
@@ -30,16 +31,50 @@ internal sealed record ParameterModel
 			isParameterWithOptionalValue: this.HasExplicitDefaultValue);
 	}
 
-	internal string GetOptionalParameter(ParameterModel lastParameter, string typeName)
+	internal (string expectationParameter, bool needsGenerationWithDefaults) GetExpectationParameter(
+		bool isGeneratedWithDefaults, ParameterModel lastParameter, TypeArgumentsNamingContext typeArgumentsNamingContext)
 	{
-		var requiresNullable = this.RequiresNullableAnnotation ? "?" : string.Empty;
+		var argumentTypeName = ProjectionBuilder.BuildArgument(
+			this.Type, typeArgumentsNamingContext, this.RequiresNullableAnnotation);
 
-		return lastParameter.IsParams && lastParameter.Type.IsRefLikeType ?
+		if (this.Type.IsPointer)
+		{
+			return ($"{argumentTypeName} @{this.Name}", false);
+		}
+		else
+		{
+			var requiresNullable = this.RequiresNullableAnnotation ? "?" : string.Empty;
+			var needsGenerationWithDefaults = false;
+
+			if (isGeneratedWithDefaults)
+			{
+				var generatedWithDefaultsName = this.HasExplicitDefaultValue ?
+					this.GetOptionalExpectationParameter(lastParameter, this.Type.FullyQualifiedName, requiresNullable) :
+					this.IsParams ?
+						this.Type.IsRefLikeType ?
+							$"global::Rocks.RefStructArgument<{this.Type.FullyQualifiedName}> @{this.Name}" :
+							$"params {this.Type.FullyQualifiedName}{requiresNullable} @{this.Name}" :
+						$"{argumentTypeName} @{this.Name}";
+				return (generatedWithDefaultsName, false);
+			}
+
+			if (!isGeneratedWithDefaults)
+			{
+				// Only set this flag if we're currently not generating with defaults.
+				needsGenerationWithDefaults = this.HasExplicitDefaultValue ||
+					(this.IsParams && !this.Type.IsRefLikeType);
+			}
+
+			return ($"{argumentTypeName} @{this.Name}", needsGenerationWithDefaults);
+		}
+	}
+
+	private string GetOptionalExpectationParameter(ParameterModel lastParameter, string typeName, string requiresNullable) =>
+		lastParameter.IsParams && lastParameter.Type.IsRefLikeType ?
 			$"[global::System.Runtime.InteropServices.Optional, global::System.Runtime.InteropServices.DefaultParameterValue({this.ExplicitDefaultValue})] {typeName}{requiresNullable} @{this.Name}" :
 			this.AttributesDescription.Contains("Optional") ?
 				$"[global::System.Runtime.InteropServices.Optional, global::System.Runtime.InteropServices.DefaultParameterValue({this.ExplicitDefaultValue})] {typeName}{requiresNullable} @{this.Name}" :
 				$"{typeName}{requiresNullable} @{this.Name} = {this.ExplicitDefaultValue}";
-	}
 
 	internal string AttributesDescription { get; }
 	internal string? ExplicitDefaultValue { get; }

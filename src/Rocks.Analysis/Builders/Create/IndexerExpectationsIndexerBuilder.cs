@@ -44,41 +44,13 @@ internal static class IndexerExpectationsIndexerBuilder
 
 			adornmentsFQNsPipeline(new(adornmentsType, string.Empty, string.Empty, property.GetMethod!, memberIdentifier));
 
-			var instanceParameters = string.Join(", ", propertyGetMethod.Parameters.Select(parameter =>
-				{
-					var argumentTypeName = ProjectionBuilder.BuildArgument(
-						parameter.Type, new TypeArgumentsNamingContext(), parameter.RequiresNullableAnnotation);
-
-					if (parameter.Type.IsPointer)
-					{
-						return $"{argumentTypeName} @{parameter.Name}";
-					}
-					else
-					{
-						var requiresNullable = parameter.RequiresNullableAnnotation ? "?" : string.Empty;
-
-						if (isGeneratedWithDefaults)
-						{
-							return parameter.HasExplicitDefaultValue ?
-								parameter.GetOptionalParameter(propertyGetMethod.Parameters[propertyGetMethod.Parameters.Length - 1], parameter.Type.FullyQualifiedName) :
-								parameter.IsParams ?
-									parameter.Type.IsRefLikeType ?
-										$"global::Rocks.RefStructArgument<{parameter.Type.FullyQualifiedName}> @{parameter.Name}" :
-										$"params {parameter.Type.FullyQualifiedName}{requiresNullable} @{parameter.Name}" :
-									$"{argumentTypeName} @{parameter.Name}";
-						}
-
-						if (!isGeneratedWithDefaults)
-						{
-							// Only set this flag if we're currently not generating with defaults.
-							needsGenerationWithDefaults |= parameter.HasExplicitDefaultValue ||
-								(parameter.IsParams && !parameter.Type.IsRefLikeType);
-						}
-
-						return $"{argumentTypeName} @{parameter.Name}";
-					}
-				}));
-
+			var instanceParameters = string.Join(", ", propertyGetMethod.Parameters.Take(propertyGetMethod.Parameters.Length - 1).Select(parameter =>
+			{
+				var (expectationParameter, needs) = parameter.GetExpectationParameter(
+					isGeneratedWithDefaults, propertyGetMethod.Parameters[propertyGetMethod.Parameters.Length - 1], new TypeArgumentsNamingContext());
+				needsGenerationWithDefaults |= needs;
+				return expectationParameter;
+			}));
 
 			if (isGeneratedWithDefaults)
 			{
@@ -152,10 +124,11 @@ internal static class IndexerExpectationsIndexerBuilder
 		{
 			var propertySetMethod = property.SetMethod!;
 			var namingContext = new VariablesNamingContext(propertySetMethod);
+			var typeArgumentsNamingContext = new TypeArgumentsNamingContext();
 
 			var lastParameter = propertySetMethod.Parameters[propertySetMethod.Parameters.Length - 1];
 			var valueParameterArgument = ProjectionBuilder.BuildArgument(
-				lastParameter.Type, new TypeArgumentsNamingContext(), lastParameter.RequiresNullableAnnotation);
+				lastParameter.Type, typeArgumentsNamingContext, lastParameter.RequiresNullableAnnotation);
 			var valueParameter = $"{valueParameterArgument} @{lastParameter.Name}";
 
 			var needsGenerationWithDefaults = false;
@@ -169,39 +142,12 @@ internal static class IndexerExpectationsIndexerBuilder
 			// We need to put the value parameter immediately after "self"
 			// and then skip the value parameter by taking only the non-value parameters.
 			var instanceParameters = string.Join(", ", propertySetMethod.Parameters.Take(propertySetMethod.Parameters.Length - 1).Select(parameter =>
-				{
-					var argumentTypeName = ProjectionBuilder.BuildArgument(
-						parameter.Type, new TypeArgumentsNamingContext(), parameter.RequiresNullableAnnotation);
-
-					if (parameter.Type.IsPointer)
-					{
-						return $"{argumentTypeName} @{parameter.Name}";
-					}
-					else
-					{
-						var requiresNullable = parameter.RequiresNullableAnnotation ? "?" : string.Empty;
-
-						if (isGeneratedWithDefaults)
-						{
-							return parameter.HasExplicitDefaultValue ?
-								parameter.GetOptionalParameter(propertySetMethod.Parameters[propertySetMethod.Parameters.Length - 2], parameter.Type.FullyQualifiedName) :
-								parameter.IsParams ?
-									parameter.Type.IsRefLikeType ?
-										$"global::Rocks.RefStructArgument<{parameter.Type.FullyQualifiedName}> @{parameter.Name}" :
-										$"params {parameter.Type.FullyQualifiedName}{requiresNullable} @{parameter.Name}" :
-									$"{argumentTypeName} @{parameter.Name}";
-						}
-
-						if (!isGeneratedWithDefaults)
-						{
-							// Only set this flag if we're currently not generating with defaults.
-							needsGenerationWithDefaults |= parameter.HasExplicitDefaultValue ||
-								(parameter.IsParams && !parameter.Type.IsRefLikeType);
-						}
-
-						return $"{argumentTypeName} @{parameter.Name}";
-					}
-				}));
+			{
+				var (expectationParameter, needs) = parameter.GetExpectationParameter(
+					isGeneratedWithDefaults, propertySetMethod.Parameters[propertySetMethod.Parameters.Length - 2], typeArgumentsNamingContext);
+				needsGenerationWithDefaults |= needs;
+				return expectationParameter;
+			}));
 
 			var name = property.Accessors == PropertyAccessor.Set || property.Accessors == PropertyAccessor.GetAndSet ?
 				"Sets" : "Inits";

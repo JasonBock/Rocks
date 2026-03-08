@@ -24,42 +24,12 @@ internal static class MethodExpectationsMethodBuilder
 
 			var instanceParameters = method.Parameters.Length == 0 ? string.Empty :
 				string.Join(", ", method.Parameters.Select(parameter =>
-				{
-					var argumentTypeName = ProjectionBuilder.BuildArgument(
-						parameter.Type, typeArgumentsNamingContext, parameter.RequiresNullableAnnotation);
-
-					if (parameter.Type.IsPointer)
-					{
-						return $"{argumentTypeName} @{parameter.Name}";
-					}
-					else
-					{
-						var requiresNullable = parameter.RequiresNullableAnnotation ? "?" : string.Empty;
-						// TODO: Why are we doing BuildName? Maybe because
-						// of the type arguments and trying to close the generic?
-						var typeName = parameter.Type.BuildName(typeArgumentsNamingContext);
-
-						if (isGeneratedWithDefaults)
-						{
-							return parameter.HasExplicitDefaultValue ?
-								parameter.GetOptionalParameter(method.Parameters[method.Parameters.Length - 1], typeName) :
-								parameter.IsParams ?
-									parameter.Type.IsRefLikeType ?
-										$"global::Rocks.RefStructArgument<{parameter.Type.FullyQualifiedName}> @{parameter.Name}" :
-										$"params {typeName}{requiresNullable} @{parameter.Name}" :
-									$"{argumentTypeName} @{parameter.Name}";
-						}
-
-						if (!isGeneratedWithDefaults)
-						{
-							// Only set this flag if we're currently not generating with defaults.
-							needsGenerationWithDefaults |= parameter.HasExplicitDefaultValue ||
-								(parameter.IsParams && !parameter.Type.IsRefLikeType);
-						}
-
-						return $"{argumentTypeName} @{parameter.Name}";
-					}
-				}));
+			{
+				var (expectationParameter, needs) = parameter.GetExpectationParameter(
+					isGeneratedWithDefaults, method.Parameters[method.Parameters.Length - 1], typeArgumentsNamingContext);
+				needsGenerationWithDefaults |= needs;
+				return expectationParameter;
+			}));
 
 			var typeArguments = method.IsGenericMethod ?
 				$"<{string.Join(", ", method.TypeArguments.Select(_ => _.BuildName(typeArgumentsNamingContext)))}>" : string.Empty;

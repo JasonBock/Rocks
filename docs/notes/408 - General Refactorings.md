@@ -35,8 +35,8 @@
     * `MockMethodVoidBuilder` and `MockMethodValueBuilder`
         * `Build()`
             * Both have code to get `methodParameters` that is almost identical except for getting `AttributesDescription`. See if this can be shared. In fact, the methods and the method types in general are almost identical
-    * `NamingContext`
-        * Add some comments around what this does.
+    * DONE - `NamingContext`
+        * DONE - Add some comments around what this does.
     * `RockCreateBuilder`
         * `Build()`
             * Some `WriteLine()` into one `WriteLines()`
