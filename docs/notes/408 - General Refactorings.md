@@ -3,12 +3,13 @@
 * `Builders\Create`
     * DONE - `NamingContext`
         * DONE - `this[]->get` - at least comment this.
-    * `TypeArgumentsNamingContext` - maybe I should make one for each `ITypeReferenceModel` and `MethodModel` on construction? That way, I don't have to keep making them throughout the code. These should not vary once iterated for a type or method. Actually, what I landed is:
-        * Only one constructor that take a `MethodModel`
-        * Make `TypeArgumentsNamingContext` a nested type of `MethodModel`
-        * Create a `GetTypeArgumentsNamingContext()` method on `MethodModel`
-        * Could also check to see if this context is truly ever "mutated" in the code
+    * DONE - `ShimMethodBuilder`
+        * DONE - `Build()`
+            * DONE - Why does `typeArgumentsNamingContext` use `shimType` instead of the method in question? If there's a reason, document it.
     * There are three versions of `static string GetOptionalParameter(ParameterModel parameter, ParameterModel lastParameter, string typeName, string requiresNullable)` - should be moved into one method, probably on `ParameterModel` itself, then it would only need the 2nd parameter.
+    * `MockProjectedDelegateBuilder`
+        * `GetProjectedCallbackDelegateFullyQualifiedName()`
+            * `ITypeReferenceModel typeToMock` is unused
     * `ExpectationExceptionBuilder`
         * `Build()`
             * Instead of calling the `Indent` incrementors and decrementors twice, why not `writer.Indent += 2`? Probably will make absolutely no perf difference, but it's a bit less code.
@@ -34,32 +35,37 @@
     * `MockMethodVoidBuilder` and `MockMethodValueBuilder`
         * `Build()`
             * Both have code to get `methodParameters` that is almost identical except for getting `AttributesDescription`. See if this can be shared. In fact, the methods and the method types in general are almost identical
-    * `MockProjectedDelegateBuilder`
-        * `GetProjectedCallbackDelegateFullyQualifiedName()`
-            * `ITypeReferenceModel typeToMock` is unused
     * `NamingContext`
         * Add some comments around what this does.
     * `RockCreateBuilder`
         * `Build()`
             * Some `WriteLine()` into one `WriteLines()`
-    * `VariablesNamingContext.cs`
-        * Split two classes into separate files.
-    * `ShimMethodBuilder`
-        * `Build()`
-            * Why does `typeArgumentsNamingContext` use `shimType` instead of the method in question? If there's a reason, document it.
+    * DONE - `VariablesNamingContext.cs`
+        * DONE - Split two classes into separate files.
+    * `TypeArgumentsNamingContext` - maybe I should make one for each `ITypeReferenceModel` and `MethodModel` on construction? That way, I don't have to keep making them throughout the code. These should not vary once iterated for a type or method. Actually, what I landed is:
+        * Only one constructor that take a `MethodModel`
+        * Make `TypeArgumentsNamingContext` a nested type of `MethodModel`
+        * Create a `GetTypeArgumentsNamingContext()` method on `MethodModel`
+        * Could also check to see if this context is truly ever "mutated" in the code
 * `Builders\Make`
     * `MockMethodVoidBuilder` and `MockMethodValueBuilder`
         * The methods and the method types in general are almost identical
 * `Descriptors`
     * May be helpful to have a "shared" `internal` type here to have all the IDs listed to make it somewhat easier when new ones need to be added.
-* `Extensions`
-    * `ITypeParameterSymbolExtensions`
-        * `GetConstraints()` - Maybe now figure out how to determine if the `default` constraint exists?
+* DONE - `Extensions`
+    * DONE - `ITypeParameterSymbolExtensions`
+        * DONE - `GetConstraints()` - Maybe now figure out how to determine if the `default` constraint exists?
 * "Remove Unnecessary Usings"
 * Format every file
 * Ensure all the code in the Rocks library has the "disclaimer" XML comment at the top to discourage users from using them for anything outside of code-generated Rocks usage.
 * Testing - In general, other than the builders which are essentially tested by the "Generators" unit tests, code should have unit tests in isolation to ensure specific parts can be tested separately.
 * Before committing, run Rocks.Performance on the `main` branch, and then on this branch, and see what the differences are. Could also do the same for the code gen tests.
+
+TODO:
+* Consider writing a source generator that lets you mark properties on a (partial) record with an attribute like `[Exclude]`. This would trigger the SG to create overrides of `Equals()` and `GetHashCode()` that would include all of the properties that a record **would** use, sans the "excluded" ones.
+
+
+
 
 
 Current Verify

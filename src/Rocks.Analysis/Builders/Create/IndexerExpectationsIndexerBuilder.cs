@@ -2,7 +2,6 @@
 using Rocks.Analysis.Extensions;
 using Rocks.Analysis.Models;
 using System.CodeDom.Compiler;
-using System.Reflection.Metadata;
 
 namespace Rocks.Analysis.Builders.Create;
 
@@ -17,20 +16,12 @@ internal static class IndexerExpectationsIndexerBuilder
 			uint memberIdentifier, bool isGeneratedWithDefaults,
 			string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 		{
-			static string GetOptionalParameter(ParameterModel parameter, ParameterModel lastParameter,
-				string typeName, string requiresNullable) =>
-					lastParameter.IsParams && lastParameter.Type.IsRefLikeType ?
-						$"[global::System.Runtime.InteropServices.Optional, global::System.Runtime.InteropServices.DefaultParameterValue({parameter.ExplicitDefaultValue})] {typeName}{requiresNullable} @{parameter.Name}" :
-						parameter.AttributesDescription.Contains("Optional") ?
-							$"[global::System.Runtime.InteropServices.Optional, global::System.Runtime.InteropServices.DefaultParameterValue({parameter.ExplicitDefaultValue})] {typeName}{requiresNullable} @{parameter.Name}" :
-							$"{typeName}{requiresNullable} @{parameter.Name} = {parameter.ExplicitDefaultValue}";
-
 			var propertyGetMethod = property.GetMethod!;
 			var namingContext = new VariablesNamingContext(propertyGetMethod);
 			var needsGenerationWithDefaults = false;
 
 			var callbackDelegateTypeName = propertyGetMethod.RequiresProjectedDelegate ?
-				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, property.MockType, expectationsFullyQualifiedName, memberIdentifier) :
+				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, expectationsFullyQualifiedName, memberIdentifier) :
 				DelegateBuilder.Build(propertyGetMethod);
 
 			var handlerTypeName = $"{expectationsFullyQualifiedName}.Handler{memberIdentifier}";
@@ -69,7 +60,7 @@ internal static class IndexerExpectationsIndexerBuilder
 						if (isGeneratedWithDefaults)
 						{
 							return parameter.HasExplicitDefaultValue ?
-								GetOptionalParameter(parameter, propertyGetMethod.Parameters[propertyGetMethod.Parameters.Length - 1], parameter.Type.FullyQualifiedName, requiresNullable) :
+								parameter.GetOptionalParameter(propertyGetMethod.Parameters[propertyGetMethod.Parameters.Length - 1], parameter.Type.FullyQualifiedName) :
 								parameter.IsParams ?
 									parameter.Type.IsRefLikeType ?
 										$"global::Rocks.RefStructArgument<{parameter.Type.FullyQualifiedName}> @{parameter.Name}" :
@@ -159,14 +150,6 @@ internal static class IndexerExpectationsIndexerBuilder
 		static IndexerConstructorDefaultValues? BuildSetterImplementation(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, bool isGeneratedWithDefaults,
 			string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 		{
-			static string GetOptionalParameter(ParameterModel parameter, ParameterModel lastParameter,
-				string typeName, string requiresNullable) =>
-					lastParameter.IsParams && lastParameter.Type.IsRefLikeType ?
-						$"[global::System.Runtime.InteropServices.Optional, global::System.Runtime.InteropServices.DefaultParameterValue({parameter.ExplicitDefaultValue})] {typeName}{requiresNullable} @{parameter.Name}" :
-						parameter.AttributesDescription.Contains("Optional") ?
-							$"[global::System.Runtime.InteropServices.Optional, global::System.Runtime.InteropServices.DefaultParameterValue({parameter.ExplicitDefaultValue})] {typeName}{requiresNullable} @{parameter.Name}" :
-							$"{typeName}{requiresNullable} @{parameter.Name} = {parameter.ExplicitDefaultValue}";
-
 			var propertySetMethod = property.SetMethod!;
 			var namingContext = new VariablesNamingContext(propertySetMethod);
 
@@ -178,7 +161,7 @@ internal static class IndexerExpectationsIndexerBuilder
 			var needsGenerationWithDefaults = false;
 
 			var callbackDelegateTypeName = propertySetMethod.RequiresProjectedDelegate ?
-				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, property.MockType, expectationsFullyQualifiedName, memberIdentifier) :
+				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, expectationsFullyQualifiedName, memberIdentifier) :
 				DelegateBuilder.Build(propertySetMethod);
 			var adornmentsType = $"global::Rocks.Adornments<AdornmentsForHandler{memberIdentifier}, {expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}>";
 			adornmentsFQNsPipeline(new(adornmentsType, string.Empty, string.Empty, property.SetMethod!, memberIdentifier));
@@ -201,7 +184,7 @@ internal static class IndexerExpectationsIndexerBuilder
 						if (isGeneratedWithDefaults)
 						{
 							return parameter.HasExplicitDefaultValue ?
-								GetOptionalParameter(parameter, propertySetMethod.Parameters[propertySetMethod.Parameters.Length - 2], parameter.Type.FullyQualifiedName, requiresNullable) :
+								parameter.GetOptionalParameter(propertySetMethod.Parameters[propertySetMethod.Parameters.Length - 2], parameter.Type.FullyQualifiedName) :
 								parameter.IsParams ?
 									parameter.Type.IsRefLikeType ?
 										$"global::Rocks.RefStructArgument<{parameter.Type.FullyQualifiedName}> @{parameter.Name}" :

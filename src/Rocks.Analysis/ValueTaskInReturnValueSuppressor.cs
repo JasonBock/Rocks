@@ -4,7 +4,6 @@ using Microsoft.CodeAnalysis.Diagnostics;
 using Rocks.Analysis.Descriptors;
 using Rocks.Analysis.Extensions;
 using System.Collections.Immutable;
-using System.Reflection;
 
 namespace Rocks.Analysis;
 

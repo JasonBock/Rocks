@@ -25,9 +25,9 @@ internal static class ITypeParameterSymbolExtensions
 		// According to CS0449, if any of these constraints exist: 
 		// 'class', 'struct', 'unmanaged', 'notnull', and 'default'
 		// they should not be duplicated.
-		// Side note, I don't know how to find if the 'default'
-		// constraint exists.
-
+		// Note that we don't need to "find" the default constraint.
+		// Our code handles adding 'default' if needed in overrides.
+		// See: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/unconstrained-type-parameter-annotations#default-constraint
 		if (self.HasUnmanagedTypeConstraint)
 		{
 			constraints.Add("unmanaged");

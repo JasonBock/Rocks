@@ -17,14 +17,6 @@ internal static class MethodExpectationsMethodBuilder
 			bool isGeneratedWithDefaults, string expectationsFullyQualifiedName,
 			Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 		{
-			static string GetOptionalParameter(ParameterModel parameter, ParameterModel lastParameter,
-				string typeName, string requiresNullable) =>
-					lastParameter.IsParams && lastParameter.Type.IsRefLikeType ?
-						$"[global::System.Runtime.InteropServices.Optional, global::System.Runtime.InteropServices.DefaultParameterValue({parameter.ExplicitDefaultValue})] {typeName}{requiresNullable} @{parameter.Name}" :
-						parameter.AttributesDescription.Contains("Optional") ?
-							$"[global::System.Runtime.InteropServices.Optional, global::System.Runtime.InteropServices.DefaultParameterValue({parameter.ExplicitDefaultValue})] {typeName}{requiresNullable} @{parameter.Name}" :
-							$"{typeName}{requiresNullable} @{parameter.Name} = {parameter.ExplicitDefaultValue}";
-
 			var needsGenerationWithDefaults = false;
 			var typeArgumentsNamingContext = method.IsGenericMethod ?
 				new TypeArgumentsNamingContext(method) :
@@ -50,7 +42,7 @@ internal static class MethodExpectationsMethodBuilder
 						if (isGeneratedWithDefaults)
 						{
 							return parameter.HasExplicitDefaultValue ?
-								GetOptionalParameter(parameter, method.Parameters[method.Parameters.Length - 1], typeName, requiresNullable) :
+								parameter.GetOptionalParameter(method.Parameters[method.Parameters.Length - 1], typeName) :
 								parameter.IsParams ?
 									parameter.Type.IsRefLikeType ?
 										$"global::Rocks.RefStructArgument<{parameter.Type.FullyQualifiedName}> @{parameter.Name}" :
@@ -72,7 +64,7 @@ internal static class MethodExpectationsMethodBuilder
 			var typeArguments = method.IsGenericMethod ?
 				$"<{string.Join(", ", method.TypeArguments.Select(_ => _.BuildName(typeArgumentsNamingContext)))}>" : string.Empty;
 			var callbackDelegateTypeName = method.RequiresProjectedDelegate ?
-				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, method.MockType, expectationsFullyQualifiedName, method.MemberIdentifier) :
+				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, expectationsFullyQualifiedName, method.MemberIdentifier) :
 				DelegateBuilder.Build(method);
 
 			string adornmentsType;

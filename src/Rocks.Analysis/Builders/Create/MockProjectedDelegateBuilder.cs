@@ -6,7 +6,7 @@ namespace Rocks.Analysis.Builders.Create;
 internal static class MockProjectedDelegateBuilder
 {
 	internal static string GetProjectedCallbackDelegateFullyQualifiedName(
-		MethodModel method, ITypeReferenceModel typeToMock, string expectationsFullyQualifiedName, uint memberIdentifier)
+		MethodModel method, string expectationsFullyQualifiedName, uint memberIdentifier)
 	{
 		var typeArgumentsNamingContext = method.IsGenericMethod ?
 			new TypeArgumentsNamingContext(method) :

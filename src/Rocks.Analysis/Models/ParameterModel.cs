@@ -30,6 +30,17 @@ internal sealed record ParameterModel
 			isParameterWithOptionalValue: this.HasExplicitDefaultValue);
 	}
 
+	internal string GetOptionalParameter(ParameterModel lastParameter, string typeName)
+	{
+		var requiresNullable = this.RequiresNullableAnnotation ? "?" : string.Empty;
+
+		return lastParameter.IsParams && lastParameter.Type.IsRefLikeType ?
+			$"[global::System.Runtime.InteropServices.Optional, global::System.Runtime.InteropServices.DefaultParameterValue({this.ExplicitDefaultValue})] {typeName}{requiresNullable} @{this.Name}" :
+			this.AttributesDescription.Contains("Optional") ?
+				$"[global::System.Runtime.InteropServices.Optional, global::System.Runtime.InteropServices.DefaultParameterValue({this.ExplicitDefaultValue})] {typeName}{requiresNullable} @{this.Name}" :
+				$"{typeName}{requiresNullable} @{this.Name} = {this.ExplicitDefaultValue}";
+	}
+
 	internal string AttributesDescription { get; }
 	internal string? ExplicitDefaultValue { get; }
 	internal bool HasExplicitDefaultValue { get; }
