@@ -1,4 +1,3 @@
-* "Remove Unnecessary Usings"
 * DONE - Why does `Verify()` take so long? https://github.com/ecoAPM/BenchmarkMockNet/blob/main/Results.md#verify. I mean, it's not that slow :), but maybe there's a way to improve it slightly. Maybe change `protected List<string> Verify<THandler>(Handlers<THandler> handlers, uint memberIdentifier)` to `protected IEnumerable<string> Verify<THandler>(Handlers<THandler> handlers, uint memberIdentifier)` as we really don't need to allocate a list here because `AddRange()` on `List<>` takes an `IEnumerable<>`.
 * `Builders\Create`
     * DONE - `NamingContext`
@@ -55,9 +54,8 @@
 * DONE - `Extensions`
     * DONE - `ITypeParameterSymbolExtensions`
         * DONE - `GetConstraints()` - Maybe now figure out how to determine if the `default` constraint exists?
-* "Remove Unnecessary Usings"
-* Format every file
-* Ensure all the code in the Rocks library has the "disclaimer" XML comment at the top to discourage users from using them for anything outside of code-generated Rocks usage.
+* DONE - Format every file
+* DONE - Ensure all the code in the Rocks library has the "disclaimer" XML comment at the top to discourage users from using them for anything outside of code-generated Rocks usage.
 * Testing - In general, other than the builders which are essentially tested by the "Generators" unit tests, code should have unit tests in isolation to ensure specific parts can be tested separately.
 * Before committing, run Rocks.Performance on the `main` branch, and then on this branch, and see what the differences are. Could also do the same for the code gen tests.
 
