@@ -8,20 +8,20 @@ namespace Rocks.Analysis.Builders.Create;
 internal static class PropertyExpectationsBuilder
 {
 	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType,
-		List<PropertyModel> properties,
-		string expectationsFullyQualifiedName, string propertyExpectationsFullyQualifiedName, 
+		PropertyModel[] properties,
+		string expectationsFullyQualifiedName, string propertyExpectationsFullyQualifiedName,
 		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
-		if (properties.Count > 0)
+		if (properties.Length > 0)
 		{
-		 BuildProperties(writer, mockType, properties, expectationsFullyQualifiedName, propertyExpectationsFullyQualifiedName, adornmentsFQNsPipeline);
-		 BuildIndexers(writer, mockType, properties, expectationsFullyQualifiedName, propertyExpectationsFullyQualifiedName, adornmentsFQNsPipeline);
+			BuildProperties(writer, mockType, properties, expectationsFullyQualifiedName, propertyExpectationsFullyQualifiedName, adornmentsFQNsPipeline);
+			BuildIndexers(writer, mockType, properties, expectationsFullyQualifiedName, propertyExpectationsFullyQualifiedName, adornmentsFQNsPipeline);
 		}
 	}
 
 	private static void BuildIndexers(IndentedTextWriter writer, TypeMockModel mockType,
-		List<PropertyModel> properties,
-		string expectationsFullyQualifiedName, string propertyExpectationsFullyQualifiedName, 
+		PropertyModel[] properties,
+		string expectationsFullyQualifiedName, string propertyExpectationsFullyQualifiedName,
 		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		var index = 0;
@@ -113,8 +113,8 @@ internal static class PropertyExpectationsBuilder
 	}
 
 	private static void BuildProperties(IndentedTextWriter writer, TypeMockModel mockType,
-		List<PropertyModel> properties,
-		string expectationsFullyQualifiedName, string propertyExpectationsFullyQualifiedName, 
+		PropertyModel[] properties,
+		string expectationsFullyQualifiedName, string propertyExpectationsFullyQualifiedName,
 		Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		foreach (var property in properties.Where(property => !property.IsIndexer))

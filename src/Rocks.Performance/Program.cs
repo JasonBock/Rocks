@@ -2,4 +2,4 @@
 using Rocks.Performance;
 
 //BaselineRunner.Run();
-BenchmarkRunner.Run<VerifyStrategies>();
+BenchmarkRunner.Run<ListsVsArrays>();

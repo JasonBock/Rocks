@@ -7,9 +7,9 @@
         * DONE - `Build()`
             * DONE - Why does `typeArgumentsNamingContext` use `shimType` instead of the method in question? If there's a reason, document it.
     * There are three versions of `static string GetOptionalParameter(ParameterModel parameter, ParameterModel lastParameter, string typeName, string requiresNullable)` - should be moved into one method, probably on `ParameterModel` itself, then it would only need the 2nd parameter.
-    * `MockProjectedDelegateBuilder`
-        * `GetProjectedCallbackDelegateFullyQualifiedName()`
-            * `ITypeReferenceModel typeToMock` is unused
+    * DONE - `MockProjectedDelegateBuilder`
+        * DONE - `GetProjectedCallbackDelegateFullyQualifiedName()`
+            * DONE - `ITypeReferenceModel typeToMock` is unused
     * `ExpectationExceptionBuilder`
         * `Build()`
             * Instead of calling the `Indent` incrementors and decrementors twice, why not `writer.Indent += 2`? Probably will make absolutely no perf difference, but it's a bit less code.
