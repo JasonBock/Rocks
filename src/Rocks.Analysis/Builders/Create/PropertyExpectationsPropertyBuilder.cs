@@ -6,7 +6,7 @@ namespace Rocks.Analysis.Builders.Create;
 
 internal static class PropertyExpectationsPropertyBuilder
 {
-	private static void BuildGetter(IndentedTextWriter writer, TypeMockModel type, PropertyModel property, uint memberIdentifier, 
+	private static void BuildGetter(IndentedTextWriter writer, TypeMockModel type, PropertyModel property, uint memberIdentifier,
 		string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		var propertyGetMethod = property.GetMethod!;
@@ -47,7 +47,7 @@ internal static class PropertyExpectationsPropertyBuilder
 			""");
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, TypeMockModel type, PropertyModel property, uint memberIdentifier, 
+	private static void BuildSetter(IndentedTextWriter writer, TypeMockModel type, PropertyModel property, uint memberIdentifier,
 		string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		var propertyParameterType = property.SetMethod!.Parameters[0].Type;
@@ -88,13 +88,13 @@ internal static class PropertyExpectationsPropertyBuilder
 		var memberIdentifier = property.MemberIdentifier;
 		var wasGetGenerated = false;
 
-		if ((property.Accessors == PropertyAccessor.Get || property.Accessors == PropertyAccessor.GetAndSet || property.Accessors == PropertyAccessor.GetAndInit) && 
+		if ((property.Accessors == PropertyAccessor.Get || property.Accessors == PropertyAccessor.GetAndSet || property.Accessors == PropertyAccessor.GetAndInit) &&
 			property.GetCanBeSeenByContainingAssembly)
 		{
-		 BuildGetter(writer, type, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+			BuildGetter(writer, type, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 			wasGetGenerated = true;
 		}
-	
+
 		if (((property.Accessors == PropertyAccessor.Set || property.Accessors == PropertyAccessor.GetAndSet) && property.SetCanBeSeenByContainingAssembly) ||
 			((property.Accessors == PropertyAccessor.Init || property.Accessors == PropertyAccessor.GetAndInit) && property.InitCanBeSeenByContainingAssembly))
 		{
@@ -103,7 +103,7 @@ internal static class PropertyExpectationsPropertyBuilder
 				memberIdentifier++;
 			}
 
-		 BuildSetter(writer, type, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+			BuildSetter(writer, type, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 		}
 	}
 }

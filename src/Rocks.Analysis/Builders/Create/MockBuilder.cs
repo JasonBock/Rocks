@@ -14,13 +14,13 @@ internal static class MockBuilder
 
 		var expectationsFQN = mockType.ExpectationsFullyQualifiedName;
 
-		var isUnsafe = 
+		var isUnsafe =
 			mockType.Methods.Any(
 				_ => _.ReturnType.IsPointer || _.Parameters.Any(_ => _.Type.IsPointer)) ||
 			mockType.Properties.Any(
 				_ => _.Type.IsPointer || _.Parameters.Any(_ => _.Type.IsPointer)) ?
 				"unsafe " : string.Empty;
-			
+
 		var isPartial = mockType.IsPartial ? "partial " : string.Empty;
 		var isSealed = mockType.ExpectationsIsSealed ? "sealed " : string.Empty;
 

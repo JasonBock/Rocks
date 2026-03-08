@@ -6,9 +6,9 @@ internal static class IDisposableInstancesIntoTasksDescriptor
 {
 	internal static SuppressionDescriptor Create() =>
 		new(
-			Id,
-			SuppressedId,
-			Description);
+			IDisposableInstancesIntoTasksDescriptor.Id,
+			IDisposableInstancesIntoTasksDescriptor.SuppressedId,
+			IDisposableInstancesIntoTasksDescriptor.Description);
 
 	internal const string Description = "Suppress CA2025 on ReturnValue() and Callback() invocations";
 	internal const string Id = "ROCK16";

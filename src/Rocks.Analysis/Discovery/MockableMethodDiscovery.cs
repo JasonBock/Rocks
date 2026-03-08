@@ -72,7 +72,7 @@ internal sealed class MockableMethodDiscovery
 							methods.Remove(methodToRemove);
 						}
 					}
-					
+
 					if (!hierarchyMethod.IsStatic && (!mockType.IsRecord || hierarchyMethod.Name != nameof(Equals)))
 					{
 						if (hierarchyMethod.IsAbstract || hierarchyMethod.IsOverride || hierarchyMethod.IsVirtual)

@@ -6,8 +6,8 @@ namespace Rocks.Analysis.Discovery;
 
 internal sealed class MockableConstructorDiscovery
 {
-   internal MockableConstructorDiscovery(ITypeSymbol mockType,
-	   IAssemblySymbol containingAssemblyOfInvocationSymbol, INamedTypeSymbol obsoleteAttribute,
+	internal MockableConstructorDiscovery(ITypeSymbol mockType,
+		IAssemblySymbol containingAssemblyOfInvocationSymbol, INamedTypeSymbol obsoleteAttribute,
 		Compilation compilation) =>
 			// We can't use constructors that are obsolete in error.
 			this.Constructors = mockType.TypeKind == TypeKind.Class ?
@@ -19,5 +19,5 @@ internal sealed class MockableConstructorDiscovery
 								a.ConstructorArguments.Any(_ => _.Value is bool error && error)))] :
 				[];
 
-   internal ImmutableArray<IMethodSymbol> Constructors { get; }
+	internal ImmutableArray<IMethodSymbol> Constructors { get; }
 }

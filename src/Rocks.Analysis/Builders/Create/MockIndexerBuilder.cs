@@ -281,13 +281,13 @@ internal static class MockIndexerBuilder
 
 		if (isGetterVisible)
 		{
-		 BuildGetter(writer, type, indexer, visibility, memberIdentifier, raiseEvents);
+			BuildGetter(writer, type, indexer, visibility, memberIdentifier, raiseEvents);
 			memberIdentifier++;
 		}
 
 		if (isSetterVisible)
 		{
-		 BuildSetter(writer, type, indexer, visibility, memberIdentifier, raiseEvents);
+			BuildSetter(writer, type, indexer, visibility, memberIdentifier, raiseEvents);
 		}
 
 		writer.Indent--;

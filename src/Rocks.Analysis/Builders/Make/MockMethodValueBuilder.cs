@@ -98,7 +98,7 @@ internal static class MockMethodValueBuilder
 			writer.WriteLine($"@{outParameter.Name} = default!;");
 		}
 
-		if(shouldThrowDoesNotReturnException)
+		if (shouldThrowDoesNotReturnException)
 		{
 			writer.WriteLine("throw new global::Rocks.Exceptions.DoesNotReturnException();");
 		}

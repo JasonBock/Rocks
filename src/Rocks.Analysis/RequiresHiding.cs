@@ -2,6 +2,6 @@
 
 internal enum RequiresHiding
 {
-   No,
-   Yes
+	No,
+	Yes
 }

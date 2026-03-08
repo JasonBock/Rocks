@@ -6,11 +6,11 @@ namespace Rocks.Analysis.Descriptors;
 internal static class CannotMockSpecialTypesDescriptor
 {
 	internal static DiagnosticDescriptor Create() =>
-		new(Id, Title,
-			Message,
+		new(CannotMockSpecialTypesDescriptor.Id, CannotMockSpecialTypesDescriptor.Title,
+			CannotMockSpecialTypesDescriptor.Message,
 			DiagnosticConstants.Usage, DiagnosticSeverity.Error, true,
 			helpLinkUri: HelpUrlBuilder.Build(
-				Id, Title));
+				CannotMockSpecialTypesDescriptor.Id, CannotMockSpecialTypesDescriptor.Title));
 
 	internal const string Id = "ROCK6";
 	internal const string Message = "The type {0} is a special type and cannot be mocked";

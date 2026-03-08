@@ -41,7 +41,7 @@ internal sealed class MockableEventDiscovery
 		Compilation compilation)
 	{
 		static bool IsEventToExamine(IEventSymbol @event) =>
-			!@event.IsStatic && 
+			!@event.IsStatic &&
 			(@event.IsAbstract || @event.IsVirtual) &&
 			@event.CanBeReferencedByName;
 

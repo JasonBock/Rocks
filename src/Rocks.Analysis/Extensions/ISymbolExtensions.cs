@@ -17,8 +17,7 @@ internal static class ISymbolExtensions
 			_ => throw new InvalidEnumArgumentException(nameof(self.DeclaredAccessibility), (int)self.DeclaredAccessibility, typeof(Accessibility))
 		};
 
-	internal static bool CanBeSeenByContainingAssembly(this ISymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol,
-		Compilation compilation)
+	internal static bool CanBeSeenByContainingAssembly(this ISymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol, Compilation compilation)
 	{
 		/*
 		protected internal -> ProtectedOrInternal

@@ -10,7 +10,7 @@ internal static class ShimBuilder
 	{
 		var name = $"Shim{shimType.FlattenedName}";
 
-		if(shimType.TypeParameters.Length > 0)
+		if (shimType.TypeParameters.Length > 0)
 		{
 			name = $"{name}{string.Join("", shimType.TypeParameters.Select(_ => _.Name))}";
 		}

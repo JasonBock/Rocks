@@ -219,13 +219,13 @@ internal static class MockPropertyBuilder
 
 		if (isGetterVisible)
 		{
-		 BuildGetter(writer, type, property, visibility, memberIdentifier, raiseEvents);
+			BuildGetter(writer, type, property, visibility, memberIdentifier, raiseEvents);
 			memberIdentifier++;
 		}
 
 		if (isSetterVisible)
 		{
-		 BuildSetter(writer, type, property, visibility, memberIdentifier, raiseEvents);
+			BuildSetter(writer, type, property, visibility, memberIdentifier, raiseEvents);
 		}
 
 		writer.Indent--;

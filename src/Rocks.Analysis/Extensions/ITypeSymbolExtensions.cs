@@ -130,8 +130,8 @@ internal static class ITypeSymbolExtensions
 	* Cannot be referenced by name
 	* Cannot be seen by containing assembly of mock invocation
 	*/
-	internal static bool HasInaccessibleAstractMembersWithInvalidIdentifiers(this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol,
-		Compilation compilation)
+	internal static bool HasInaccessibleAstractMembersWithInvalidIdentifiers(
+		this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol, Compilation compilation)
 	{
 		static bool HasInaccessibleMembers(ITypeSymbol type, IAssemblySymbol containingAssemblyOfInvocationSymbol,
 			Compilation compilation) =>
@@ -156,8 +156,8 @@ internal static class ITypeSymbolExtensions
 				_ => !_.Equals(self, SymbolEqualityComparer.Default) && _.ConstraintTypes.Any(
 					_ => !_.Equals(self, SymbolEqualityComparer.Default) && _.IsObsolete(obsoleteAttribute)))));
 
-	internal static bool CanBeSeenByContainingAssembly(this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol,
-		Compilation compilation)
+	internal static bool CanBeSeenByContainingAssembly(
+		this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol, Compilation compilation)
 	{
 		static bool AreTypeParametersVisible(ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol,
 			Compilation compilation) =>
@@ -347,7 +347,7 @@ internal static class ITypeSymbolExtensions
 	{
 		var namespaces = new HashSet<INamespaceSymbol>
 		{
-		   self.ContainingNamespace
+			self.ContainingNamespace
 		};
 
 		if (self is INamedTypeSymbol namedSelf)

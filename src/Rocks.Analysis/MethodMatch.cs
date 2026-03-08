@@ -2,7 +2,7 @@
 
 internal enum MethodMatch
 {
-   Exact,
-   DifferByReturnTypeOrConstraintOnly,
-   None,
+	Exact,
+	DifferByReturnTypeOrConstraintOnly,
+	None,
 }

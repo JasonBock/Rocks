@@ -6,7 +6,7 @@ namespace Rocks.Analysis.Builders.Create;
 
 internal static class ExpectationExceptionBuilder
 {
-	internal static void Build(IndentedTextWriter writer, MethodModel method, 
+	internal static void Build(IndentedTextWriter writer, MethodModel method,
 		string message, uint memberIdentifier, string expectationsPropertyName)
 	{
 		writer.WriteLines(
@@ -17,12 +17,11 @@ internal static class ExpectationExceptionBuilder
 				{{message}} {this.GetType().GetMemberDescription({{memberIdentifier}})}
 			"""");
 
-		writer.Indent++;
-		writer.Indent++;
+		writer.Indent += 2;
 
 		foreach (var parameter in method.Parameters)
 		{
-			var canFormatValue = !parameter.Type.RequiresProjectedArgument && 
+			var canFormatValue = !parameter.Type.RequiresProjectedArgument &&
 				!(parameter.Type.IsRefLikeType || parameter.Type.AllowsRefLikeType);
 
 			if (canFormatValue)
@@ -35,8 +34,7 @@ internal static class ExpectationExceptionBuilder
 			}
 		}
 
-		writer.Indent--;
-		writer.Indent--;
+		writer.Indent -= 2;
 
 		writer.WriteLines(
 			$$""""

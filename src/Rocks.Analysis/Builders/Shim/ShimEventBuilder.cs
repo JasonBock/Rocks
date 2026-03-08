@@ -51,11 +51,11 @@ internal static class ShimEventBuilder
 
 				if (@event.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 				{
-			   BuildImplementation(writer, @event);
+					BuildImplementation(writer, @event);
 				}
 				else
 				{
-			   BuildExplicitImplementation(writer, @event);
+					BuildExplicitImplementation(writer, @event);
 				}
 			}
 

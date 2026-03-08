@@ -9,15 +9,15 @@ public enum ValidationState
 	/// <summary>
 	/// Specifies that no validation occurs.
 	/// </summary>
-	None, 
+	None,
 	/// <summary>
 	/// Specifies that a method will be used for validation.
 	/// </summary>
-	Evaluation, 
+	Evaluation,
 	/// <summary>
 	/// Specifies that a value is used for exact validation.
 	/// </summary>
-	Value, 
+	Value,
 	/// <summary>
 	/// Specifies that the default value of a type is used for exact validation.
 	/// </summary>

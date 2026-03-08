@@ -18,7 +18,7 @@ internal static class MockMakeBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
-	  BuildRefReturnFields(writer, mockType);
+		BuildRefReturnFields(writer, mockType);
 
 		if (mockType.Constructors.Length > 0)
 		{

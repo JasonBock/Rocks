@@ -2,7 +2,7 @@
 
 internal enum TypeNameOption
 {
-   NoGenerics,
-   IncludeGenerics,
-   Flatten
+	NoGenerics,
+	IncludeGenerics,
+	Flatten
 }

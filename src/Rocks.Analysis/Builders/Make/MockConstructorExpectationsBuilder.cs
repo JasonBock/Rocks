@@ -112,16 +112,16 @@ internal static class MockConstructorExpectationsBuilder
 		{
 			foreach (var constructor in mockType.Constructors)
 			{
-			Build(writer, mockType.Type,
-					constructor.Parameters, constructorProperties.Length > 0, 
-					hasRequiredProperties, expectationsFullyQualifiedName);
+				Build(writer, mockType.Type,
+						constructor.Parameters, constructorProperties.Length > 0,
+						hasRequiredProperties, expectationsFullyQualifiedName);
 			}
 		}
 		else
 		{
-		 Build(writer, mockType.Type,
-				[], requiredInitProperties.Length > 0 || requiredInitIndexers.Length > 0, 
-				hasRequiredProperties, expectationsFullyQualifiedName);
+			Build(writer, mockType.Type,
+				  [], requiredInitProperties.Length > 0 || requiredInitIndexers.Length > 0,
+				  hasRequiredProperties, expectationsFullyQualifiedName);
 		}
 	}
 
@@ -133,7 +133,7 @@ internal static class MockConstructorExpectationsBuilder
 			requiredInitObjectInitialization ?
 				[$"{expectationsFullyQualifiedName}.ConstructorProperties{(!hasRequiredProperties ? "?" : string.Empty)} @{namingContext["constructorProperties"]}"] :
 				Array.Empty<string>();
-		var instanceParameters = 
+		var instanceParameters =
 			$"{string.Join(", ", constructorPropertiesParameter.Concat(parameters.Select(_ =>
 			{
 				var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;

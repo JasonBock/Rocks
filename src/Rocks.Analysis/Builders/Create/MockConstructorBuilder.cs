@@ -9,8 +9,8 @@ namespace Rocks.Analysis.Builders.Create;
 
 internal static class MockConstructorBuilder
 {
-	internal static void Build(IndentedTextWriter writer, TypeMockModel type, 
-		ConstructorModel? constructor, ImmutableArray<TypeMockModel> shims, 
+	internal static void Build(IndentedTextWriter writer, TypeMockModel type,
+		ConstructorModel? constructor, ImmutableArray<TypeMockModel> shims,
 		string expectationsFullyQualifiedName)
 	{
 		var typeToMockName = type.Type.FullyQualifiedName;
@@ -65,7 +65,7 @@ internal static class MockConstructorBuilder
 			writer.Indent--;
 			writer.WriteLine("{");
 			writer.Indent++;
-		 BuildFieldSetters(writer, type, namingContext, shims, type.ConstructorProperties, hasRequiredProperties);
+			BuildFieldSetters(writer, type, namingContext, shims, type.ConstructorProperties, hasRequiredProperties);
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
@@ -74,7 +74,7 @@ internal static class MockConstructorBuilder
 			writer.WriteLine($"public Mock({instanceParameters})");
 			writer.WriteLine("{");
 			writer.Indent++;
-		 BuildFieldSetters(writer, type, namingContext, shims, type.ConstructorProperties, hasRequiredProperties);
+			BuildFieldSetters(writer, type, namingContext, shims, type.ConstructorProperties, hasRequiredProperties);
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
@@ -110,7 +110,7 @@ internal static class MockConstructorBuilder
 					$"({string.Join(", ", _.Parameters.Select(p => $"var {p.Name}"))})").ToArray();
 			var indexerNames = initIndexers.Select(_ => string.Join(", ", _.Parameters.Select(p => p.Name))).ToArray();
 
-			if(!hasRequiredProperties)
+			if (!hasRequiredProperties)
 			{
 				writer.WriteLine($"if (@{namingContext["constructorProperties"]} is not null)");
 				writer.WriteLine("{");

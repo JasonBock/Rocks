@@ -6,42 +6,42 @@
     * DONE - `ShimMethodBuilder`
         * DONE - `Build()`
             * DONE - Why does `typeArgumentsNamingContext` use `shimType` instead of the method in question? If there's a reason, document it.
-    * There are three versions of `static string GetOptionalParameter(ParameterModel parameter, ParameterModel lastParameter, string typeName, string requiresNullable)` - should be moved into one method, probably on `ParameterModel` itself, then it would only need the 2nd parameter.
+    * DONE - There are three versions of `static string GetOptionalParameter(ParameterModel parameter, ParameterModel lastParameter, string typeName, string requiresNullable)` - should be moved into one method, probably on `ParameterModel` itself, then it would only need the 2nd parameter.
     * DONE - `MockProjectedDelegateBuilder`
         * DONE - `GetProjectedCallbackDelegateFullyQualifiedName()`
             * DONE - `ITypeReferenceModel typeToMock` is unused
-    * `ExpectationExceptionBuilder`
-        * `Build()`
-            * Instead of calling the `Indent` incrementors and decrementors twice, why not `writer.Indent += 2`? Probably will make absolutely no perf difference, but it's a bit less code.
-    * `MethodExpectationsMethodBuilder`
-        * `Build()`
-            * `foreach` at line 159, pull that out to another method
-            * Line 139 and 149, combine to `WriteLines()`
-    * `IndexerExpectationsIndexerBuilder`
-        * `BuildGetter()`
-            * Line 105 and 240, condense to `WriteLines()`
-    * `MethodExpectationsMethodBuilder`
-        * `Build()`
-            * Line 48, maybe just use `parameter.Type.FullyQualifiedName`? Or if `BuildName(...)` is the right call, change comment. Though this may mean with the `GetOptionalParameter()` refactor named above, do we always use `BuildName()` there?
-    * `MockAdornmentsBuilder`
-        * `Build()`
-            * Combine `WriteLine()` and `WriteLines()` at the beginning into one `WriteLines()`
-    * `MockConstructorExtensionsBuilder`
-        * `Build()`
-            * Line 71, combine into `WriteLines()`
+    * DONE - `MethodExpectationsMethodBuilder`
+        * DONE - `Build()`
+            * DONE - Line 48, maybe just use `parameter.Type.FullyQualifiedName`? Or if `BuildName(...)` is the right call, change comment. Though this may mean with the `GetOptionalParameter()` refactor named above, do we always use `BuildName()` there?
     * DONE - `MockMembersExpectationsBuilder`
         * DONE - `Build()`
             * DONE - Change `.ToList()` to `.ToArray()` - in fact, might as well search for this everywhere because I'm guessing an array allocation will be slightly cheaper than a list. Would be kind of an odd, fun performance test to do.
+    * DONE - `NamingContext`
+        * DONE - Add some comments around what this does.
+    * DONE - `VariablesNamingContext.cs`
+        * DONE - Split two classes into separate files.
+    * DONE - `ExpectationExceptionBuilder`
+        * DONE - `Build()`
+            * DONE - Instead of calling the `Indent` incrementors and decrementors twice, why not `writer.Indent += 2`? Probably will make absolutely no perf difference, but it's a bit less code.
+    * DONE - `MethodExpectationsMethodBuilder`
+        * DONE - `Build()`
+            * DONE - `foreach` at line 159, pull that out to another method
+            * DONE - Line 139 and 149, combine to `WriteLines()`
+    * DONE - `IndexerExpectationsIndexerBuilder`
+        * DONE - `BuildGetter()`
+            * DONE - Line 105 and 240, condense to `WriteLines()`
+    * DONE - `MockAdornmentsBuilder`
+        * DONE - `Build()`
+            * DONE - Combine `WriteLine()` and `WriteLines()` at the beginning into one `WriteLines()`
+    * DONE - `MockConstructorExtensionsBuilder`
+        * DONE - `Build()`
+            * DONE - Line 71, combine into `WriteLines()`
+    * DONE - `RockCreateBuilder`
+        * DONE - `Build()`
+            * DONE - Some `WriteLine()` into one `WriteLines()`
     * `MockMethodVoidBuilder` and `MockMethodValueBuilder`
         * `Build()`
             * Both have code to get `methodParameters` that is almost identical except for getting `AttributesDescription`. See if this can be shared. In fact, the methods and the method types in general are almost identical
-    * DONE - `NamingContext`
-        * DONE - Add some comments around what this does.
-    * `RockCreateBuilder`
-        * `Build()`
-            * Some `WriteLine()` into one `WriteLines()`
-    * DONE - `VariablesNamingContext.cs`
-        * DONE - Split two classes into separate files.
     * `TypeArgumentsNamingContext` - maybe I should make one for each `ITypeReferenceModel` and `MethodModel` on construction? That way, I don't have to keep making them throughout the code. These should not vary once iterated for a type or method. Actually, what I landed is:
         * Only one constructor that take a `MethodModel`
         * Make `TypeArgumentsNamingContext` a nested type of `MethodModel`

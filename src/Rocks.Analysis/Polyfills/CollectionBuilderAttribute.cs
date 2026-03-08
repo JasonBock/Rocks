@@ -6,12 +6,12 @@
 namespace System.Runtime.CompilerServices;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Interface, Inherited = false)]
-internal sealed class CollectionBuilderAttribute 
+internal sealed class CollectionBuilderAttribute
 	: Attribute
 {
-   public CollectionBuilderAttribute(Type builderType, string methodName) => 
+	public CollectionBuilderAttribute(Type builderType, string methodName) =>
 		(this.BuilderType, this.MethodName) = (builderType, methodName);
 
-   public Type BuilderType { get; }
+	public Type BuilderType { get; }
 	public string MethodName { get; }
 }

@@ -39,9 +39,9 @@ public sealed class RockAnalyzer
 
 			compilationContext.RegisterOperationAction(operationContext =>
 			{
-			   AnalyzeAttribute(
+				AnalyzeAttribute(
 					operationContext, rockAttributeSymbol);
-			   AnalyzeAttribute(
+				AnalyzeAttribute(
 					operationContext, rockPartialAttributeSymbol);
 			}, OperationKind.Attribute);
 		});
@@ -65,7 +65,7 @@ public sealed class RockAnalyzer
 				if (buildType.HasFlag(BuildType.Create))
 				{
 					var model = MockModel.Create(context.Operation.Syntax,
-					  mockTypeSymbol, null, new ModelContext(context.Operation.SemanticModel!), 
+					  mockTypeSymbol, null, new ModelContext(context.Operation.SemanticModel!),
 					  BuildType.Create, true);
 
 					if (model.Information is null)
@@ -80,7 +80,7 @@ public sealed class RockAnalyzer
 				if (buildType.HasFlag(BuildType.Make))
 				{
 					var model = MockModel.Create(context.Operation.Syntax,
-					  mockTypeSymbol, null, new ModelContext(context.Operation.SemanticModel!), 
+					  mockTypeSymbol, null, new ModelContext(context.Operation.SemanticModel!),
 					  BuildType.Make, true);
 
 					if (model.Information is null)

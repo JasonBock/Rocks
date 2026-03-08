@@ -98,19 +98,22 @@ internal static class MethodExpectationsMethodBuilder
 			else
 			{
 				var handlerContext = new VariablesNamingContext(method);
-				writer.WriteLine($"internal {hiding}{expectationsFullyQualifiedName}.Adornments.AdornmentsForHandler{method.MemberIdentifier}{typeArguments} {method.Name}{typeArguments}({instanceParameters}){constraints}");
-				writer.WriteLine("{");
-				writer.Indent++;
-				writer.WriteLine($"global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);");
+				writer.WriteLines(
+					$$"""
+					internal {{hiding}}{{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{method.MemberIdentifier}}{{typeArguments}} {{method.Name}}{{typeArguments}}({{instanceParameters}}){{constraints}}
+					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+					""");
 
+				writer.Indent++;
 				foreach (var parameter in method.Parameters)
 				{
 					writer.WriteLine($"global::System.ArgumentNullException.ThrowIfNull(@{parameter.Name});");
 				}
 
-				writer.WriteLine();
 				writer.WriteLines(
 					$$"""
+
 					var @{{handlerContext["handler"]}} = new {{expectationsFullyQualifiedName}}.Handler{{method.MemberIdentifier}}{{typeArguments}}
 					{
 					""");
@@ -120,25 +123,8 @@ internal static class MethodExpectationsMethodBuilder
 
 				foreach (var parameter in method.Parameters)
 				{
-					if (parameter.HasExplicitDefaultValue && method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
-					{
-						writer.WriteLine($"@{handlerNamingContext[parameter.Name]} = @{parameter.Name}.Transform({parameter.ExplicitDefaultValue}),");
-					}
-					else if (parameter.RefKind == RefKind.Out)
-					{
-						if (parameter.Type.IsRefLikeType)
-						{
-							writer.WriteLine($"@{handlerNamingContext[parameter.Name]} = new(),");
-						}
-						else
-						{
-							writer.WriteLine($"@{handlerNamingContext[parameter.Name]} = global::Rocks.Arg.Any<{parameter.Type.BuildName(typeArgumentsNamingContext)}{(parameter.RequiresNullableAnnotation ? "?" : string.Empty)}>(),");
-						}
-					}
-					else
-					{
-						writer.WriteLine($"@{handlerNamingContext[parameter.Name]} = @{parameter.Name},");
-					}
+					MethodExpectationsMethodBuilder.BuildParameterSetting(
+						writer, method, typeArgumentsNamingContext, handlerNamingContext, parameter);
 				}
 
 				writer.Indent--;
@@ -163,5 +149,30 @@ internal static class MethodExpectationsMethodBuilder
 		}
 
 		BuildImplementation(writer, type, method, false, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+	}
+
+	private static void BuildParameterSetting(
+		IndentedTextWriter writer, MethodModel method, TypeArgumentsNamingContext typeArgumentsNamingContext,
+		VariablesNamingContext handlerNamingContext, ParameterModel parameter)
+	{
+		if (parameter.HasExplicitDefaultValue && method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
+		{
+			writer.WriteLine($"@{handlerNamingContext[parameter.Name]} = @{parameter.Name}.Transform({parameter.ExplicitDefaultValue}),");
+		}
+		else if (parameter.RefKind == RefKind.Out)
+		{
+			if (parameter.Type.IsRefLikeType)
+			{
+				writer.WriteLine($"@{handlerNamingContext[parameter.Name]} = new(),");
+			}
+			else
+			{
+				writer.WriteLine($"@{handlerNamingContext[parameter.Name]} = global::Rocks.Arg.Any<{parameter.Type.BuildName(typeArgumentsNamingContext)}{(parameter.RequiresNullableAnnotation ? "?" : string.Empty)}>(),");
+			}
+		}
+		else
+		{
+			writer.WriteLine($"@{handlerNamingContext[parameter.Name]} = @{parameter.Name},");
+		}
 	}
 }

@@ -22,7 +22,7 @@ internal static class ShimIndexerBuilder
 
 			var isUnsafe = indexer.IsUnsafe ? "unsafe " : string.Empty;
 			var returnByRef = indexer.ReturnsByRef ? "ref " : indexer.ReturnsByRefReadOnly ? "ref readonly " : string.Empty;
-			var (accessibility, explicitName, includeOptionalParameterValues) = 
+			var (accessibility, explicitName, includeOptionalParameterValues) =
 				indexer.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 					("public ", string.Empty, true) : (string.Empty, $"{indexer.ContainingType.FullyQualifiedName}.", false);
 

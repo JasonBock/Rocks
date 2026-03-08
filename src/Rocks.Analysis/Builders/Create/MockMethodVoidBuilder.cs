@@ -8,7 +8,7 @@ namespace Rocks.Analysis.Builders.Create;
 
 internal static class MockMethodVoidBuilder
 {
-	internal static void Build(IndentedTextWriter writer, TypeMockModel type, MethodModel method, 
+	internal static void Build(IndentedTextWriter writer, TypeMockModel type, MethodModel method,
 		bool raiseEvents, string expectationsFullyQualifiedName)
 	{
 		var shouldThrowDoesNotReturnException = method.ShouldThrowDoesNotReturnException;
@@ -18,18 +18,18 @@ internal static class MockMethodVoidBuilder
 
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 		{
-			var requiresNullable = _.RequiresNullableAnnotation ? 
-				"?" : 
+			var requiresNullable = _.RequiresNullableAnnotation ?
+				"?" :
 				string.Empty;
 			var defaultValue = _.HasExplicitDefaultValue && method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 				_.AttributesDescription.Contains("Optional") ?
 					string.Empty :
 					$" = {_.ExplicitDefaultValue}" :
 				string.Empty;
-			var scoped = _.IsParams ? 
+			var scoped = _.IsParams ?
 				string.Empty :
-				_.IsScoped ? 
-					"scoped " : 
+				_.IsScoped ?
+					"scoped " :
 					string.Empty;
 			var direction = _.RefKind switch
 			{
@@ -108,17 +108,17 @@ internal static class MockMethodVoidBuilder
 
 		if (method.Parameters.Length > 0)
 		{
-		 BuildMethodValidationHandlerWithParameters(
-				writer, type, method, namingContext, typeArgumentsNamingContext,
-				raiseEvents, shouldThrowDoesNotReturnException,
-				expectationsFullyQualifiedName);
+			BuildMethodValidationHandlerWithParameters(
+				  writer, type, method, namingContext, typeArgumentsNamingContext,
+				  raiseEvents, shouldThrowDoesNotReturnException,
+				  expectationsFullyQualifiedName);
 		}
 		else
 		{
-		 BuildMethodValidationHandlerNoParameters(
-				writer, type, method, namingContext, typeArgumentsNamingContext,
-				raiseEvents, shouldThrowDoesNotReturnException,
-				expectationsFullyQualifiedName);
+			BuildMethodValidationHandlerNoParameters(
+				  writer, type, method, namingContext, typeArgumentsNamingContext,
+				  raiseEvents, shouldThrowDoesNotReturnException,
+				  expectationsFullyQualifiedName);
 		}
 
 		writer.Indent--;
@@ -175,7 +175,7 @@ internal static class MockMethodVoidBuilder
 		writer.WriteLine();
 	}
 
-	private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer, TypeMockModel type, MethodModel method, 
+	private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer, TypeMockModel type, MethodModel method,
 		VariablesNamingContext namingContext, TypeArgumentsNamingContext typeArgumentsNamingContext,
 		bool raiseEvents, bool shouldThrowDoesNotReturnException, string expectationsFullyQualifiedName)
 	{
@@ -193,7 +193,7 @@ internal static class MockMethodVoidBuilder
 			writer.Indent++;
 		}
 
-	  BuildMethodHandler(writer, method, namingContext, raiseEvents);
+		BuildMethodHandler(writer, method, namingContext, raiseEvents);
 
 		if (method.IsGenericMethod)
 		{
@@ -277,7 +277,7 @@ internal static class MockMethodVoidBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 		writer.WriteLine($"@{namingContext["foundMatch"]} = true;");
-	  BuildMethodHandler(writer, method, namingContext, raiseEvents);
+		BuildMethodHandler(writer, method, namingContext, raiseEvents);
 		writer.WriteLine("break;");
 		writer.Indent--;
 		writer.WriteLine("}");

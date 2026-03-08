@@ -13,7 +13,7 @@ internal sealed record ConstructorPropertyModel
 		this.IsIndexer = value.IsIndexer;
 		this.Accessors = value.GetAccessors();
 		this.CanBeSeenByContainingAssembly = value.CanBeSeenByContainingAssembly(
-			modelContext.SemanticModel.Compilation.Assembly, 
+			modelContext.SemanticModel.Compilation.Assembly,
 			modelContext.SemanticModel.Compilation);
 		this.Parameters = [.. value.Parameters.Select(_ => new ParameterModel(_, modelContext))];
 		this.NullableAnnotation = value.NullableAnnotation;

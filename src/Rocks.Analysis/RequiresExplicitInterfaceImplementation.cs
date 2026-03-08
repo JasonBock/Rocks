@@ -2,6 +2,6 @@
 
 internal enum RequiresExplicitInterfaceImplementation
 {
-   No,
-   Yes
+	No,
+	Yes
 }

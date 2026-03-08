@@ -21,18 +21,18 @@ internal static class MockMethodValueBuilder
 		var returnType = $"{returnByRef}{returnTypeValue}";
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 		{
-			var requiresNullable = _.RequiresNullableAnnotation ? 
-				"?" : 
+			var requiresNullable = _.RequiresNullableAnnotation ?
+				"?" :
 				string.Empty;
 			var defaultValue = _.HasExplicitDefaultValue && method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 				_.Type.AttributesDescription.Contains("Optional") ?
 					string.Empty :
-					$" = {_.ExplicitDefaultValue}" : 
+					$" = {_.ExplicitDefaultValue}" :
 				string.Empty;
-			var scoped = _.IsParams ? 
+			var scoped = _.IsParams ?
 				string.Empty :
-				_.IsScoped ? 
-					"scoped " : 
+				_.IsScoped ?
+					"scoped " :
 					string.Empty;
 			var direction = _.RefKind switch
 			{
@@ -118,17 +118,17 @@ internal static class MockMethodValueBuilder
 
 		if (method.Parameters.Length > 0 || method.IsGenericMethod)
 		{
-		 BuildMethodValidationHandlerWithParameters(
-				writer, type, method, namingContext, typeArgumentsNamingContext,
-				raiseEvents, shouldThrowDoesNotReturnException, method.MemberIdentifier,
-				expectationsFullyQualifiedName);
+			BuildMethodValidationHandlerWithParameters(
+				  writer, type, method, namingContext, typeArgumentsNamingContext,
+				  raiseEvents, shouldThrowDoesNotReturnException, method.MemberIdentifier,
+				  expectationsFullyQualifiedName);
 		}
 		else
 		{
-		 BuildMethodValidationHandlerNoParameters(
-				writer, type, method, namingContext, typeArgumentsNamingContext,
-				raiseEvents, shouldThrowDoesNotReturnException, method.MemberIdentifier,
-				expectationsFullyQualifiedName);
+			BuildMethodValidationHandlerNoParameters(
+				  writer, type, method, namingContext, typeArgumentsNamingContext,
+				  raiseEvents, shouldThrowDoesNotReturnException, method.MemberIdentifier,
+				  expectationsFullyQualifiedName);
 		}
 
 		if (method.Parameters.Length > 0 || method.IsGenericMethod)
@@ -306,8 +306,8 @@ internal static class MockMethodValueBuilder
 
 		writer.WriteLine("{");
 		writer.Indent++;
-	  BuildMethodHandler(
-			writer, method, namingContext, raiseEvents, shouldThrowDoesNotReturnException, memberIdentifier);
+		BuildMethodHandler(
+			 writer, method, namingContext, raiseEvents, shouldThrowDoesNotReturnException, memberIdentifier);
 		writer.Indent--;
 		writer.WriteLine("}");
 
@@ -339,8 +339,8 @@ internal static class MockMethodValueBuilder
 			writer.Indent++;
 		}
 
-	  BuildMethodHandler(
-			writer, method, namingContext, raiseEvents, shouldThrowDoesNotReturnException, memberIdentifier);
+		BuildMethodHandler(
+			 writer, method, namingContext, raiseEvents, shouldThrowDoesNotReturnException, memberIdentifier);
 
 		if (method.IsGenericMethod)
 		{

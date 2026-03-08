@@ -76,7 +76,7 @@ internal sealed class MockablePropertyDiscovery
 					}
 					else if (canBeSeen)
 					{
-						if ((hierarchyProperty.IsAbstract || hierarchyProperty.IsOverride || hierarchyProperty.IsVirtual) && 
+						if ((hierarchyProperty.IsAbstract || hierarchyProperty.IsOverride || hierarchyProperty.IsVirtual) &&
 							!hierarchyProperty.IsSealed)
 						{
 							var result = new MockablePropertyResult(
@@ -165,9 +165,9 @@ internal sealed class MockablePropertyDiscovery
 					{
 						if (!properties.Any(_ =>
 							(selfBaseProperty.IsIndexer && _.Value.IsIndexer &&
-								selfBaseProperty.GetMethod is not null && _.Value.GetMethod is not null && 
+								selfBaseProperty.GetMethod is not null && _.Value.GetMethod is not null &&
 								selfBaseProperty.GetMethod.Match(_.Value.GetMethod, compilation) == MethodMatch.Exact) ||
-							(selfBaseProperty.SetMethod is not null && _.Value.SetMethod is not null && 
+							(selfBaseProperty.SetMethod is not null && _.Value.SetMethod is not null &&
 								selfBaseProperty.SetMethod.Match(_.Value.SetMethod, compilation) == MethodMatch.Exact) ||
 							(!selfBaseProperty.IsIndexer && !_.Value.IsIndexer &&
 								_.Value.Name == selfBaseProperty.Name &&
@@ -180,9 +180,9 @@ internal sealed class MockablePropertyDiscovery
 							{
 								if (baseInterfacePropertyGroup.Any(_ =>
 									(selfBaseProperty.IsIndexer && _.IsIndexer &&
-										selfBaseProperty.GetMethod is not null && _.GetMethod is not null && 
+										selfBaseProperty.GetMethod is not null && _.GetMethod is not null &&
 										selfBaseProperty.GetMethod.Match(_.GetMethod, compilation) == MethodMatch.Exact) ||
-									(selfBaseProperty.SetMethod is not null && 
+									(selfBaseProperty.SetMethod is not null &&
 										_.SetMethod is not null && selfBaseProperty.SetMethod.Match(_.SetMethod, compilation) == MethodMatch.Exact) ||
 									(!selfBaseProperty.IsIndexer && !_.IsIndexer &&
 										_.Name == selfBaseProperty.Name &&

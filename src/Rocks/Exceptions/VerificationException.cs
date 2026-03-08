@@ -29,5 +29,5 @@ public sealed class VerificationException
 	/// <summary>
 	/// Gets the list of verification failures.
 	/// </summary>
-   public IReadOnlyList<string> Failures { get; }
+	public IReadOnlyList<string> Failures { get; }
 }

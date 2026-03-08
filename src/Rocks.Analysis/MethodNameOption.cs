@@ -2,6 +2,6 @@
 
 internal enum MethodNameOption
 {
-   NoGenerics,
-   IncludeGenerics
+	NoGenerics,
+	IncludeGenerics
 }

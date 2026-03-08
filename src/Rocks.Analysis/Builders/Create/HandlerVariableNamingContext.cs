@@ -4,8 +4,8 @@
 // so the factory method produces one for everyone.
 internal static class HandlerVariableNamingContext
 {
-   internal static readonly string[] sourceArray = ["CallCount", "ExpectedCallCount", "Callback", "ReturnValue"];
+	internal static readonly string[] sourceArray = ["CallCount", "ExpectedCallCount", "Callback", "ReturnValue"];
 
-   internal static VariablesNamingContext Create() =>
+	internal static VariablesNamingContext Create() =>
 		new([.. sourceArray]);
 }

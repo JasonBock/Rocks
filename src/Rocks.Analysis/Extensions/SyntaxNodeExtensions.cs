@@ -4,7 +4,7 @@ namespace Rocks.Analysis.Extensions;
 
 internal static class SyntaxNodeExtensions
 {
-	internal static T? FindParent<T>(this SyntaxNode self, 
+	internal static T? FindParent<T>(this SyntaxNode self,
 		Predicate<T> isTarget)
 		where T : SyntaxNode
 	{

@@ -2,6 +2,6 @@
 
 internal enum RequiresOverride
 {
-   No,
-   Yes
+	No,
+	Yes
 }

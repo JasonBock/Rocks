@@ -68,9 +68,12 @@ internal static class MockConstructorExtensionsBuilder
 						""");
 				}
 
-				writer.WriteLine();
-				writer.WriteLine($"global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator() => throw new global::System.NotImplementedException();");
-				writer.WriteLine();
+				writer.WriteLines(
+					"""
+					
+					global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator() => throw new global::System.NotImplementedException();
+					
+					""");
 
 				for (var i = 0; i < requiredInitIndexers.Length; i++)
 				{
@@ -115,16 +118,16 @@ internal static class MockConstructorExtensionsBuilder
 		{
 			foreach (var constructor in mockType.Constructors)
 			{
-			Build(writer, mockType,
-					constructor.Parameters, requiredInitProperties.Length > 0 || requiredInitIndexers.Length > 0, hasRequiredProperties,
-					expectationsFullyQualifiedName);
+				Build(writer, mockType,
+						constructor.Parameters, requiredInitProperties.Length > 0 || requiredInitIndexers.Length > 0, hasRequiredProperties,
+						expectationsFullyQualifiedName);
 			}
 		}
 		else
 		{
-		 Build(writer, mockType,
-				ImmutableArray<ParameterModel>.Empty, requiredInitProperties.Length > 0 || requiredInitIndexers.Length > 0, hasRequiredProperties,
-				expectationsFullyQualifiedName);
+			Build(writer, mockType,
+				  ImmutableArray<ParameterModel>.Empty, requiredInitProperties.Length > 0 || requiredInitIndexers.Length > 0, hasRequiredProperties,
+				  expectationsFullyQualifiedName);
 		}
 	}
 
@@ -136,7 +139,7 @@ internal static class MockConstructorExtensionsBuilder
 			requiredInitObjectInitialization ?
 				[$"{expectationsFullyQualifiedName}.ConstructorProperties{(!hasRequiredProperties ? "?" : string.Empty)} @{namingContext["constructorProperties"]}"] :
 				Array.Empty<string>();
-		var instanceParameters = 
+		var instanceParameters =
 			$"{string.Join(", ", constructorPropertiesParameter.Concat(parameters.Select(_ =>
 			{
 				var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;

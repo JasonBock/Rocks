@@ -5,8 +5,7 @@ namespace Rocks.Analysis.Extensions;
 
 internal static class ITypeParameterSymbolExtensions
 {
-	internal static bool CanBeSeenByContainingAssembly(this ITypeParameterSymbol self, IAssemblySymbol assembly,
-		Compilation compilation) =>
+	internal static bool CanBeSeenByContainingAssembly(this ITypeParameterSymbol self, IAssemblySymbol assembly, Compilation compilation) =>
 		self.ConstraintTypes.Length == 0 ||
 			self.ConstraintTypes
 				.Where(_ => _.TypeKind == TypeKind.Class || _.TypeKind == TypeKind.Interface)

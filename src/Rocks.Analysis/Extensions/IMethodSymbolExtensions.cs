@@ -17,8 +17,7 @@ internal static class IMethodSymbolExtensions
 				!self.ReturnsVoid && self.ReturnType.IsObsolete(obsoleteAttribute) ?
 				MemberUsesObsoleteTypeDiagnostic.Create(node, self) : null;
 
-	internal static bool CanBeSeenByContainingAssembly(this IMethodSymbol self, IAssemblySymbol assembly,
-		Compilation compilation) =>
+	internal static bool CanBeSeenByContainingAssembly(this IMethodSymbol self, IAssemblySymbol assembly, Compilation compilation) =>
 		((ISymbol)self).CanBeSeenByContainingAssembly(assembly, compilation) &&
 			self.Parameters.All(_ => _.Type.CanBeSeenByContainingAssembly(assembly, compilation)) &&
 			self.TypeParameters.All(_ => _.CanBeSeenByContainingAssembly(assembly, compilation)) &&

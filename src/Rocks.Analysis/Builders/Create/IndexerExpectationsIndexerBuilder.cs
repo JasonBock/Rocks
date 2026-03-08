@@ -68,10 +68,10 @@ internal static class IndexerExpectationsIndexerBuilder
 				writer.WriteLine($"internal {expectationsFullyQualifiedName}.Adornments.AdornmentsForHandler{memberIdentifier} Gets()");
 				writer.WriteLine("{");
 				writer.Indent++;
-				writer.WriteLine("global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);");
-				writer.WriteLine();
 				writer.WriteLines(
 					$$"""
+					global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+
 					var @{{handlerContext["handler"]}} = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}
 					{
 					""");
@@ -166,15 +166,18 @@ internal static class IndexerExpectationsIndexerBuilder
 			else
 			{
 				var handlerContext = new VariablesNamingContext(property.Parameters);
-				writer.WriteLine($"internal {expectationsFullyQualifiedName}.Adornments.AdornmentsForHandler{memberIdentifier} {name}({valueParameter})");
-				writer.WriteLine("{");
-				writer.Indent++;
-				writer.WriteLine("global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);");
-				writer.WriteLine($"global::System.ArgumentNullException.ThrowIfNull(@{lastParameter.Name});");
-
-				writer.WriteLine();
 				writer.WriteLines(
 					$$"""
+					internal {{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{memberIdentifier}} {{name}}({{valueParameter}})
+					{
+					""");
+				writer.Indent++;
+
+				writer.WriteLines(
+					$$"""
+					global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+					global::System.ArgumentNullException.ThrowIfNull(@{{lastParameter.Name}});
+
 					var @{{handlerContext["handler"]}} = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}
 					{
 					""");

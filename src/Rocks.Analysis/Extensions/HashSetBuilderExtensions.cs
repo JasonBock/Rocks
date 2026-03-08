@@ -6,7 +6,7 @@ internal static class HashSetBuilderExtensions
 	{
 		foreach (var value in values)
 		{
-			self.Add(value);
+			_ = self.Add(value);
 		}
 	}
 }

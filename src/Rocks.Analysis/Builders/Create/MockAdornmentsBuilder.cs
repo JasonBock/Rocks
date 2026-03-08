@@ -10,8 +10,11 @@ internal static class MockAdornmentsBuilder
 		HashSet<AdornmentsPipeline> adornmentsPipelineInformation)
 	{
 		// Create a class within, similar to Projection, like "internal static class Adornments"
-		writer.WriteLine("internal static class Adornments");
-		writer.WriteLine("{");
+		writer.WriteLines(
+			"""
+			internal static class Adornments
+			{
+			""");
 		writer.Indent++;
 
 		var adornmentsFlattenedName = mockType.AdornmentsFlattenedName;
