@@ -75,7 +75,7 @@ internal static class MockIndexerBuilder
 
 		writer.WriteLine();
 		ExpectationExceptionBuilder.Build(
-			writer, method, "No handlers match for", memberIdentifier, type.ExpectationsPropertyName);
+			writer, method, "No handlers match for", type.ExpectationsPropertyName);
 
 		writer.Indent--;
 		writer.WriteLine("}");
@@ -112,7 +112,7 @@ internal static class MockIndexerBuilder
 		{
 			writer.WriteLine();
 			ExpectationExceptionBuilder.Build(
-				writer, method, "No handlers were found for", memberIdentifier, type.ExpectationsPropertyName);
+				writer, method, "No handlers were found for", type.ExpectationsPropertyName);
 		}
 
 		writer.Indent--;
@@ -195,7 +195,7 @@ internal static class MockIndexerBuilder
 
 		writer.WriteLine();
 		ExpectationExceptionBuilder.Build(
-			writer, method, "No handlers match for", memberIdentifier, type.ExpectationsPropertyName);
+			writer, method, "No handlers match for", type.ExpectationsPropertyName);
 
 		writer.Indent--;
 		writer.WriteLine("}");
@@ -231,7 +231,7 @@ internal static class MockIndexerBuilder
 		{
 			writer.WriteLine();
 			ExpectationExceptionBuilder.Build(
-				writer, method, "No handlers were found for", memberIdentifier, type.ExpectationsPropertyName);
+				writer, method, "No handlers were found for", type.ExpectationsPropertyName);
 		}
 
 		writer.Indent--;
@@ -254,7 +254,7 @@ internal static class MockIndexerBuilder
 		var memberIdentifierAttribute = indexer.MemberIdentifier;
 		var includeOptionalParameterValues = indexer.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No;
 		var signature = GetSignature(indexer.Parameters, includeOptionalParameterValues);
-
+		
 		if (indexer.Accessors == PropertyAccessor.Get || indexer.Accessors == PropertyAccessor.GetAndSet ||
 			indexer.Accessors == PropertyAccessor.GetAndInit)
 		{

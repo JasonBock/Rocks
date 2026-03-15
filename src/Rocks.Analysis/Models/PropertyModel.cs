@@ -38,24 +38,39 @@ internal sealed record PropertyModel
 
 		if (this.Accessors == PropertyAccessor.Get || this.Accessors == PropertyAccessor.GetAndSet || this.Accessors == PropertyAccessor.GetAndInit)
 		{
-			this.GetMethod = new MethodModel(property.GetMethod!, mockType, modelContext,
-				requiresExplicitInterfaceImplementation, requiresOverride, RequiresHiding.No, memberIdentifier);
 			this.GetCanBeSeenByContainingAssembly = property.GetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly, compilation);
+
+			if (this.GetCanBeSeenByContainingAssembly)
+			{
+				this.GetMethod = new MethodModel(property.GetMethod!, mockType, modelContext,
+					requiresExplicitInterfaceImplementation, requiresOverride, RequiresHiding.No, memberIdentifier);
+			}
 		}
 
 		if (this.Accessors == PropertyAccessor.Set || this.Accessors == PropertyAccessor.GetAndSet)
 		{
-			this.SetMethod = new MethodModel(property.SetMethod!, mockType, modelContext,
-				requiresExplicitInterfaceImplementation, requiresOverride, RequiresHiding.No, memberIdentifier + 1);
 			this.SetCanBeSeenByContainingAssembly = property.SetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly, compilation);
+
+			if (this.SetCanBeSeenByContainingAssembly)
+			{
+				this.SetMethod = new MethodModel(property.SetMethod!, mockType, modelContext,
+					requiresExplicitInterfaceImplementation, requiresOverride, RequiresHiding.No,
+					this.Accessors == PropertyAccessor.Set ? memberIdentifier :
+						this.GetCanBeSeenByContainingAssembly ? memberIdentifier + 1 : memberIdentifier);
+			}
 		}
 
 		if (this.Accessors == PropertyAccessor.Init || this.Accessors == PropertyAccessor.GetAndInit)
 		{
-			this.SetMethod ??= new MethodModel(property.SetMethod!, mockType, modelContext,
-				requiresExplicitInterfaceImplementation, requiresOverride, RequiresHiding.No, memberIdentifier + 1);
-
 			this.InitCanBeSeenByContainingAssembly = property.SetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly, compilation);
+
+			if (this.InitCanBeSeenByContainingAssembly)
+			{
+				this.SetMethod = new MethodModel(property.SetMethod!, mockType, modelContext,
+					requiresExplicitInterfaceImplementation, requiresOverride, RequiresHiding.No,
+					this.Accessors == PropertyAccessor.Init ? memberIdentifier :
+						this.GetCanBeSeenByContainingAssembly ? memberIdentifier + 1 : memberIdentifier);
+			}
 		}
 	}
 
