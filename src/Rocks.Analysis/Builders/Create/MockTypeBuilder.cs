@@ -27,8 +27,8 @@ internal static class MockTypeBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		BuildShimFields(writer, type);
-		BuildRefReturnFields(writer, type);
+		MockTypeBuilder.BuildShimFields(writer, type);
+		MockTypeBuilder.BuildRefReturnFields(writer, type);
 
 		if (type.Constructors.Length > 0)
 		{
@@ -48,11 +48,15 @@ internal static class MockTypeBuilder
 		{
 			if (method.ReturnsVoid)
 			{
-				MockMethodVoidBuilder.Build(writer, type, method, canRaiseEvents, expectationsFullyQualifiedName);
+				// TODO: Method build refactor
+				//MockMethodVoidBuilder.Build(writer, type, method, canRaiseEvents, expectationsFullyQualifiedName);
+				MockMethodBuilder.Build(writer, type, method, canRaiseEvents, expectationsFullyQualifiedName);
 			}
 			else
 			{
-				MockMethodValueBuilder.Build(writer, type, method, canRaiseEvents, expectationsFullyQualifiedName);
+				// TODO: Method build refactor
+				//MockMethodValueBuilder.Build(writer, type, method, canRaiseEvents, expectationsFullyQualifiedName);
+				MockMethodBuilder.Build(writer, type, method, canRaiseEvents, expectationsFullyQualifiedName);
 			}
 		}
 

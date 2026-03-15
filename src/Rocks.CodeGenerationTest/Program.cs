@@ -81,7 +81,7 @@ static void TestWithType()
 #pragma warning disable EF9100 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 #pragma warning disable CS0618 // Type or member is obsolete
    (var issues, var times) = TestGenerator.Generate(new RockGenerator(),
-		[typeof(Polars.NET.Core.ArrowArrayContextHandle)],
+		[typeof(System.Reactive.PlatformServices.IExceptionServices)],
 		typesToLoadAssembliesFrom,
 		[], BuildType.Create);
 #pragma warning restore CS0618 // Type or member is obsolete
