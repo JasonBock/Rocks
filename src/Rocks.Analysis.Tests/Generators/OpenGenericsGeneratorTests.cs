@@ -591,13 +591,15 @@ public static class OpenGenericsGeneratorTests
 									payload: {@payload.FormatValue()}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(1)}
-								payload: {@payload.FormatValue()}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(1)}
+									payload: {@payload.FormatValue()}
+								""");
+						}
 					}
 					
 					private global::IConsumerContextCreateExpectations<T> Expectations { get; }
@@ -1073,13 +1075,15 @@ public static class OpenGenericsGeneratorTests
 									data: {@data.FormatValue()}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(0)}
-								data: {@data.FormatValue()}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+									data: {@data.FormatValue()}
+								""");
+						}
 					}
 					
 					private global::IServiceCreateExpectations<T, TReturn> Expectations { get; }
@@ -1724,13 +1728,15 @@ public static class OpenGenericsGeneratorTests
 									data: {@data.FormatValue()}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(0)}
-								data: {@data.FormatValue()}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+									data: {@data.FormatValue()}
+								""");
+						}
 					}
 					
 					private global::IServiceCreateExpectations<T, TReturn> Expectations { get; }
@@ -1962,14 +1968,16 @@ public static class OpenGenericsGeneratorTests
 									useExistingMap: {@useExistingMap.FormatValue()}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(0)}
-								expression: {@expression.FormatValue()}
-								useExistingMap: {@useExistingMap.FormatValue()}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+									expression: {@expression.FormatValue()}
+									useExistingMap: {@useExistingMap.FormatValue()}
+								""");
+						}
 					}
 					
 					private global::IHasTypeConverterOptionsCreateExpectations<TClass, TMember> Expectations { get; }
@@ -2230,12 +2238,14 @@ public static class OpenGenericsGeneratorTests
 								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(0)}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								""");
+						}
 					}
 					
 					[global::Rocks.MemberIdentifier(1)]
@@ -2264,13 +2274,15 @@ public static class OpenGenericsGeneratorTests
 									message: {@message.FormatValue()}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(1)}
-								message: {@message.FormatValue()}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(1)}
+									message: {@message.FormatValue()}
+								""");
+						}
 					}
 					
 					public global::System.Exception Exception
@@ -2559,13 +2571,15 @@ public static class OpenGenericsGeneratorTests
 									data: {@data.FormatValue()}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(0)}
-								data: {@data.FormatValue()}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+									data: {@data.FormatValue()}
+								""");
+						}
 					}
 					
 					[global::Rocks.MemberIdentifier(1)]
@@ -2595,13 +2609,15 @@ public static class OpenGenericsGeneratorTests
 									key: {@key.FormatValue()}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(1)}
-								key: {@key.FormatValue()}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(1)}
+									key: {@key.FormatValue()}
+								""");
+						}
 					}
 					
 					private global::IServiceCreateExpectations<T> Expectations { get; }
@@ -3303,14 +3319,16 @@ public static class OpenGenericsGeneratorTests
 									existingObject: {@existingObject.FormatValue()}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(0)}
-								manager: {@manager.FormatValue()}
-								existingObject: {@existingObject.FormatValue()}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+									manager: {@manager.FormatValue()}
+									existingObject: {@existingObject.FormatValue()}
+								""");
+						}
 					}
 					
 					private global::IReaderWriterCreateExpectations<TCollection, TConcreteCollection, TElement> Expectations { get; }
@@ -3524,13 +3542,15 @@ public static class OpenGenericsGeneratorTests
 									other: {@other.FormatValue()}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(0)}
-								other: {@other.FormatValue()}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+									other: {@other.FormatValue()}
+								""");
+						}
 					}
 					
 					private global::INotificationCreateExpectations<T> Expectations { get; }

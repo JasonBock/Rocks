@@ -386,12 +386,14 @@ public static class ProjectionMultiplePointerGeneratorTests
 								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(0)}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								""");
+						}
 					}
 					
 					private global::IPointerUsageCreateExpectations Expectations { get; }

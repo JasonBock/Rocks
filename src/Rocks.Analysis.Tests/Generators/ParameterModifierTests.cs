@@ -323,7 +323,7 @@ public static class ParameterModifierTests
 					[global::Rocks.MemberIdentifier(0)]
 					public void Modify(out string @value)
 					{
-						value = default!;
+						@value = default!;
 						if (this.Expectations.handlers0 is not null)
 						{
 							var @foundMatch = false;
@@ -1155,7 +1155,7 @@ public static class ParameterModifierTests
 					[global::Rocks.MemberIdentifier(2)]
 					public void OutArgument(out int @a)
 					{
-						a = default!;
+						@a = default!;
 						if (this.Expectations.handlers2 is not null)
 						{
 							var @foundMatch = false;
@@ -1195,7 +1195,7 @@ public static class ParameterModifierTests
 					[global::Rocks.MemberIdentifier(3)]
 					public void OutArgumentsWithGenerics<T1, T2>(T1 @a, out T2 @b)
 					{
-						b = default!;
+						@b = default!;
 						if (this.Expectations.handlers3 is not null)
 						{
 							var @foundMatch = false;

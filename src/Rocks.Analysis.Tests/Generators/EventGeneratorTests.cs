@@ -103,12 +103,14 @@ public static class EventGeneratorTests
 							@handler.RaiseEvents(this);
 							return @result!;
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(0)}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								""");
+						}
 					}
 					
 					#pragma warning disable CS0067
@@ -336,12 +338,14 @@ public static class EventGeneratorTests
 								No handlers match for {this.GetType().GetMemberDescription(0)}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(0)}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								""");
+						}
 					}
 					
 					#pragma warning disable CS0067
@@ -681,12 +685,14 @@ public static class EventGeneratorTests
 							@handler.RaiseEvents(this);
 							return @result!;
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(3)}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(3)}
+								""");
+						}
 					}
 					
 					#pragma warning disable CS0067

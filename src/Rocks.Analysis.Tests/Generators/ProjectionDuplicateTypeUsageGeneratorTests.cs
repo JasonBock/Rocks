@@ -133,15 +133,17 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 									value3: <Not formattable>
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(0)}
-								value1: <Not formattable>
-								value2: <Not formattable>
-								value3: <Not formattable>
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+									value1: <Not formattable>
+									value2: <Not formattable>
+									value3: <Not formattable>
+								""");
+						}
 					}
 					
 					private global::ISpecialTypesCreateExpectations Expectations { get; }

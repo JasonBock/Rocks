@@ -555,12 +555,14 @@ public static class DoesNotReturnGeneratorTests
 								@handler.Callback() : @handler.ReturnValue;
 							throw new global::Rocks.Exceptions.DoesNotReturnException();
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(1)}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(1)}
+								""");
+						}
 					}
 					
 					private global::MockTests.IInterfaceTestCreateExpectations Expectations { get; }

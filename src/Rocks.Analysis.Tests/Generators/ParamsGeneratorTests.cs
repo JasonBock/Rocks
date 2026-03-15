@@ -874,7 +874,7 @@ public static class ParamsGeneratorTests
 					}
 					
 					[global::Rocks.MemberIdentifier(0)]
-					public void Do([global::System.Runtime.InteropServices.OptionalAttribute, global::System.Runtime.InteropServices.DefaultParameterValueAttribute(3)] int @value, params global::System.ReadOnlySpan<string> @args)
+					public void Do([global::System.Runtime.InteropServices.OptionalAttribute, global::System.Runtime.InteropServices.DefaultParameterValueAttribute(3)] int @value = 3, params global::System.ReadOnlySpan<string> @args)
 					{
 						if (this.Expectations.handlers0 is not null)
 						{
@@ -1422,7 +1422,7 @@ public static class ParamsGeneratorTests
 					}
 					
 					[global::Rocks.MemberIdentifier(0)]
-					public void Do([global::System.Runtime.InteropServices.OptionalAttribute, global::System.Runtime.InteropServices.DefaultParameterValueAttribute(3)] int @value, params string[] @args)
+					public void Do([global::System.Runtime.InteropServices.OptionalAttribute, global::System.Runtime.InteropServices.DefaultParameterValueAttribute(3)] int @value = 3, params string[] @args)
 					{
 						if (this.Expectations.handlers0 is not null)
 						{

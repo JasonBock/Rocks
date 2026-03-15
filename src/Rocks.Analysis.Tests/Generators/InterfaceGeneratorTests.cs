@@ -219,12 +219,14 @@ public static class InterfaceGeneratorTests
 								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(0)}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								""");
+						}
 					}
 					
 					public string? InstancePush
@@ -1100,13 +1102,15 @@ public static class InterfaceGeneratorTests
 									value: {@value.FormatValue()}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(0)}
-								value: {@value.FormatValue()}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+									value: {@value.FormatValue()}
+								""");
+						}
 					}
 					
 					private global::MockTests.ITargetCreateExpectations Expectations { get; }

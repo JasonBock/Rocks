@@ -931,13 +931,15 @@ public static class InheritanceGeneratorTests
 									target: {@target.FormatValue()}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(5)}
-								target: {@target.FormatValue()}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(5)}
+									target: {@target.FormatValue()}
+								""");
+						}
 					}
 					
 					private global::MockTests.JsBinaryOperatorCreateExpectations Expectations { get; }

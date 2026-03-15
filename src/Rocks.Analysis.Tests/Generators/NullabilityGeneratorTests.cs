@@ -1293,18 +1293,27 @@ public static class NullabilityGeneratorTests
 					{
 						if (this.Expectations.handlers0 is not null)
 						{
-							var @genericHandler = this.Expectations.handlers0.First;
-							if (@genericHandler is global::IDestinationCreateExpectations<TDestination>.Handler0<T> @handler)
+							var @foundMatch = false;
+							
+							foreach (var @genericHandler in this.Expectations.handlers0)
 							{
-								@handler.CallCount++;
-								@handler.Callback?.Invoke();
+								if (@genericHandler is global::IDestinationCreateExpectations<TDestination>.Handler0<T> @handler)
+								{
+									{
+										@foundMatch = true;
+										@handler.CallCount++;
+										@handler.Callback?.Invoke();
+										break;
+									}
+								}
 							}
-							else
+							
+							if (!@foundMatch)
 							{
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									The provided handler does not match for {this.GetType().GetMemberDescription(0)}
+									No handlers match for {this.GetType().GetMemberDescription(0)}
 									""");
 							}
 						}

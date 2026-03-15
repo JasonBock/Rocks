@@ -549,12 +549,14 @@ public static class ConstraintsGeneratorTests
 								@handler.Callback() : @handler.ReturnValue!();
 							return @result!;
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(1)}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(1)}
+								""");
+						}
 					}
 					
 					private global::IAllowRefStructsCreateExpectations<T> Expectations { get; }
@@ -841,12 +843,14 @@ public static class ConstraintsGeneratorTests
 								No handlers match for {this.GetType().GetMemberDescription(1)}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(1)}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(1)}
+								""");
+						}
 					}
 					
 					private global::IAllowRefStructsCreateExpectations Expectations { get; }
@@ -2174,18 +2178,27 @@ public static class ConstraintsGeneratorTests
 					{
 						if (this.Expectations.handlers0 is not null)
 						{
-							var @genericHandler = this.Expectations.handlers0.First;
-							if (@genericHandler is global::ITypeConstraintsCreateExpectations.Handler0<T> @handler)
+							var @foundMatch = false;
+							
+							foreach (var @genericHandler in this.Expectations.handlers0)
 							{
-								@handler.CallCount++;
-								@handler.Callback?.Invoke();
+								if (@genericHandler is global::ITypeConstraintsCreateExpectations.Handler0<T> @handler)
+								{
+									{
+										@foundMatch = true;
+										@handler.CallCount++;
+										@handler.Callback?.Invoke();
+										break;
+									}
+								}
 							}
-							else
+							
+							if (!@foundMatch)
 							{
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									The provided handler does not match for {this.GetType().GetMemberDescription(0)}
+									No handlers match for {this.GetType().GetMemberDescription(0)}
 									""");
 							}
 						}
@@ -2205,18 +2218,27 @@ public static class ConstraintsGeneratorTests
 					{
 						if (this.Expectations.handlers1 is not null)
 						{
-							var @genericHandler = this.Expectations.handlers1.First;
-							if (@genericHandler is global::ITypeConstraintsCreateExpectations.Handler1<T> @handler)
+							var @foundMatch = false;
+							
+							foreach (var @genericHandler in this.Expectations.handlers1)
 							{
-								@handler.CallCount++;
-								@handler.Callback?.Invoke();
+								if (@genericHandler is global::ITypeConstraintsCreateExpectations.Handler1<T> @handler)
+								{
+									{
+										@foundMatch = true;
+										@handler.CallCount++;
+										@handler.Callback?.Invoke();
+										break;
+									}
+								}
 							}
-							else
+							
+							if (!@foundMatch)
 							{
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									The provided handler does not match for {this.GetType().GetMemberDescription(1)}
+									No handlers match for {this.GetType().GetMemberDescription(1)}
 									""");
 							}
 						}
@@ -2236,18 +2258,27 @@ public static class ConstraintsGeneratorTests
 					{
 						if (this.Expectations.handlers2 is not null)
 						{
-							var @genericHandler = this.Expectations.handlers2.First;
-							if (@genericHandler is global::ITypeConstraintsCreateExpectations.Handler2<T> @handler)
+							var @foundMatch = false;
+							
+							foreach (var @genericHandler in this.Expectations.handlers2)
 							{
-								@handler.CallCount++;
-								@handler.Callback?.Invoke();
+								if (@genericHandler is global::ITypeConstraintsCreateExpectations.Handler2<T> @handler)
+								{
+									{
+										@foundMatch = true;
+										@handler.CallCount++;
+										@handler.Callback?.Invoke();
+										break;
+									}
+								}
 							}
-							else
+							
+							if (!@foundMatch)
 							{
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									The provided handler does not match for {this.GetType().GetMemberDescription(2)}
+									No handlers match for {this.GetType().GetMemberDescription(2)}
 									""");
 							}
 						}
@@ -2267,18 +2298,27 @@ public static class ConstraintsGeneratorTests
 					{
 						if (this.Expectations.handlers3 is not null)
 						{
-							var @genericHandler = this.Expectations.handlers3.First;
-							if (@genericHandler is global::ITypeConstraintsCreateExpectations.Handler3<T> @handler)
+							var @foundMatch = false;
+							
+							foreach (var @genericHandler in this.Expectations.handlers3)
 							{
-								@handler.CallCount++;
-								@handler.Callback?.Invoke();
+								if (@genericHandler is global::ITypeConstraintsCreateExpectations.Handler3<T> @handler)
+								{
+									{
+										@foundMatch = true;
+										@handler.CallCount++;
+										@handler.Callback?.Invoke();
+										break;
+									}
+								}
 							}
-							else
+							
+							if (!@foundMatch)
 							{
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									The provided handler does not match for {this.GetType().GetMemberDescription(3)}
+									No handlers match for {this.GetType().GetMemberDescription(3)}
 									""");
 							}
 						}
@@ -2298,18 +2338,27 @@ public static class ConstraintsGeneratorTests
 					{
 						if (this.Expectations.handlers4 is not null)
 						{
-							var @genericHandler = this.Expectations.handlers4.First;
-							if (@genericHandler is global::ITypeConstraintsCreateExpectations.Handler4<T> @handler)
+							var @foundMatch = false;
+							
+							foreach (var @genericHandler in this.Expectations.handlers4)
 							{
-								@handler.CallCount++;
-								@handler.Callback?.Invoke();
+								if (@genericHandler is global::ITypeConstraintsCreateExpectations.Handler4<T> @handler)
+								{
+									{
+										@foundMatch = true;
+										@handler.CallCount++;
+										@handler.Callback?.Invoke();
+										break;
+									}
+								}
 							}
-							else
+							
+							if (!@foundMatch)
 							{
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									The provided handler does not match for {this.GetType().GetMemberDescription(4)}
+									No handlers match for {this.GetType().GetMemberDescription(4)}
 									""");
 							}
 						}
@@ -2329,18 +2378,27 @@ public static class ConstraintsGeneratorTests
 					{
 						if (this.Expectations.handlers5 is not null)
 						{
-							var @genericHandler = this.Expectations.handlers5.First;
-							if (@genericHandler is global::ITypeConstraintsCreateExpectations.Handler5<T> @handler)
+							var @foundMatch = false;
+							
+							foreach (var @genericHandler in this.Expectations.handlers5)
 							{
-								@handler.CallCount++;
-								@handler.Callback?.Invoke();
+								if (@genericHandler is global::ITypeConstraintsCreateExpectations.Handler5<T> @handler)
+								{
+									{
+										@foundMatch = true;
+										@handler.CallCount++;
+										@handler.Callback?.Invoke();
+										break;
+									}
+								}
 							}
-							else
+							
+							if (!@foundMatch)
 							{
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									The provided handler does not match for {this.GetType().GetMemberDescription(5)}
+									No handlers match for {this.GetType().GetMemberDescription(5)}
 									""");
 							}
 						}
@@ -2360,18 +2418,27 @@ public static class ConstraintsGeneratorTests
 					{
 						if (this.Expectations.handlers6 is not null)
 						{
-							var @genericHandler = this.Expectations.handlers6.First;
-							if (@genericHandler is global::ITypeConstraintsCreateExpectations.Handler6<T> @handler)
+							var @foundMatch = false;
+							
+							foreach (var @genericHandler in this.Expectations.handlers6)
 							{
-								@handler.CallCount++;
-								@handler.Callback?.Invoke();
+								if (@genericHandler is global::ITypeConstraintsCreateExpectations.Handler6<T> @handler)
+								{
+									{
+										@foundMatch = true;
+										@handler.CallCount++;
+										@handler.Callback?.Invoke();
+										break;
+									}
+								}
 							}
-							else
+							
+							if (!@foundMatch)
 							{
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									The provided handler does not match for {this.GetType().GetMemberDescription(6)}
+									No handlers match for {this.GetType().GetMemberDescription(6)}
 									""");
 							}
 						}
@@ -2411,13 +2478,15 @@ public static class ConstraintsGeneratorTests
 									data: {@data.FormatValue()}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(7)}
-								data: {@data.FormatValue()}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(7)}
+									data: {@data.FormatValue()}
+								""");
+						}
 					}
 					
 					private global::ITypeConstraintsCreateExpectations Expectations { get; }
@@ -2933,18 +3002,27 @@ public static class ConstraintsGeneratorTests
 					{
 						if (this.Expectations.handlers3 is not null)
 						{
-							var @genericHandler = this.Expectations.handlers3.First;
-							if (@genericHandler is global::TypeConstraintsCreateExpectations.Handler3<T> @handler)
+							var @foundMatch = false;
+							
+							foreach (var @genericHandler in this.Expectations.handlers3)
 							{
-								@handler.CallCount++;
-								@handler.Callback?.Invoke();
+								if (@genericHandler is global::TypeConstraintsCreateExpectations.Handler3<T> @handler)
+								{
+									{
+										@foundMatch = true;
+										@handler.CallCount++;
+										@handler.Callback?.Invoke();
+										break;
+									}
+								}
 							}
-							else
+							
+							if (!@foundMatch)
 							{
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									The provided handler does not match for {this.GetType().GetMemberDescription(3)}
+									No handlers match for {this.GetType().GetMemberDescription(3)}
 									""");
 							}
 						}
@@ -2959,18 +3037,27 @@ public static class ConstraintsGeneratorTests
 					{
 						if (this.Expectations.handlers4 is not null)
 						{
-							var @genericHandler = this.Expectations.handlers4.First;
-							if (@genericHandler is global::TypeConstraintsCreateExpectations.Handler4<T> @handler)
+							var @foundMatch = false;
+							
+							foreach (var @genericHandler in this.Expectations.handlers4)
 							{
-								@handler.CallCount++;
-								@handler.Callback?.Invoke();
+								if (@genericHandler is global::TypeConstraintsCreateExpectations.Handler4<T> @handler)
+								{
+									{
+										@foundMatch = true;
+										@handler.CallCount++;
+										@handler.Callback?.Invoke();
+										break;
+									}
+								}
 							}
-							else
+							
+							if (!@foundMatch)
 							{
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									The provided handler does not match for {this.GetType().GetMemberDescription(4)}
+									No handlers match for {this.GetType().GetMemberDescription(4)}
 									""");
 							}
 						}
@@ -2986,18 +3073,27 @@ public static class ConstraintsGeneratorTests
 					{
 						if (this.Expectations.handlers5 is not null)
 						{
-							var @genericHandler = this.Expectations.handlers5.First;
-							if (@genericHandler is global::TypeConstraintsCreateExpectations.Handler5<T> @handler)
+							var @foundMatch = false;
+							
+							foreach (var @genericHandler in this.Expectations.handlers5)
 							{
-								@handler.CallCount++;
-								@handler.Callback?.Invoke();
+								if (@genericHandler is global::TypeConstraintsCreateExpectations.Handler5<T> @handler)
+								{
+									{
+										@foundMatch = true;
+										@handler.CallCount++;
+										@handler.Callback?.Invoke();
+										break;
+									}
+								}
 							}
-							else
+							
+							if (!@foundMatch)
 							{
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									The provided handler does not match for {this.GetType().GetMemberDescription(5)}
+									No handlers match for {this.GetType().GetMemberDescription(5)}
 									""");
 							}
 						}
@@ -3013,18 +3109,27 @@ public static class ConstraintsGeneratorTests
 					{
 						if (this.Expectations.handlers6 is not null)
 						{
-							var @genericHandler = this.Expectations.handlers6.First;
-							if (@genericHandler is global::TypeConstraintsCreateExpectations.Handler6<T> @handler)
+							var @foundMatch = false;
+							
+							foreach (var @genericHandler in this.Expectations.handlers6)
 							{
-								@handler.CallCount++;
-								@handler.Callback?.Invoke();
+								if (@genericHandler is global::TypeConstraintsCreateExpectations.Handler6<T> @handler)
+								{
+									{
+										@foundMatch = true;
+										@handler.CallCount++;
+										@handler.Callback?.Invoke();
+										break;
+									}
+								}
 							}
-							else
+							
+							if (!@foundMatch)
 							{
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									The provided handler does not match for {this.GetType().GetMemberDescription(6)}
+									No handlers match for {this.GetType().GetMemberDescription(6)}
 									""");
 							}
 						}
@@ -3039,18 +3144,27 @@ public static class ConstraintsGeneratorTests
 					{
 						if (this.Expectations.handlers7 is not null)
 						{
-							var @genericHandler = this.Expectations.handlers7.First;
-							if (@genericHandler is global::TypeConstraintsCreateExpectations.Handler7<T> @handler)
+							var @foundMatch = false;
+							
+							foreach (var @genericHandler in this.Expectations.handlers7)
 							{
-								@handler.CallCount++;
-								@handler.Callback?.Invoke();
+								if (@genericHandler is global::TypeConstraintsCreateExpectations.Handler7<T> @handler)
+								{
+									{
+										@foundMatch = true;
+										@handler.CallCount++;
+										@handler.Callback?.Invoke();
+										break;
+									}
+								}
 							}
-							else
+							
+							if (!@foundMatch)
 							{
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									The provided handler does not match for {this.GetType().GetMemberDescription(7)}
+									No handlers match for {this.GetType().GetMemberDescription(7)}
 									""");
 							}
 						}
@@ -3065,18 +3179,27 @@ public static class ConstraintsGeneratorTests
 					{
 						if (this.Expectations.handlers8 is not null)
 						{
-							var @genericHandler = this.Expectations.handlers8.First;
-							if (@genericHandler is global::TypeConstraintsCreateExpectations.Handler8<T> @handler)
+							var @foundMatch = false;
+							
+							foreach (var @genericHandler in this.Expectations.handlers8)
 							{
-								@handler.CallCount++;
-								@handler.Callback?.Invoke();
+								if (@genericHandler is global::TypeConstraintsCreateExpectations.Handler8<T> @handler)
+								{
+									{
+										@foundMatch = true;
+										@handler.CallCount++;
+										@handler.Callback?.Invoke();
+										break;
+									}
+								}
 							}
-							else
+							
+							if (!@foundMatch)
 							{
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									The provided handler does not match for {this.GetType().GetMemberDescription(8)}
+									No handlers match for {this.GetType().GetMemberDescription(8)}
 									""");
 							}
 						}
@@ -3091,18 +3214,27 @@ public static class ConstraintsGeneratorTests
 					{
 						if (this.Expectations.handlers9 is not null)
 						{
-							var @genericHandler = this.Expectations.handlers9.First;
-							if (@genericHandler is global::TypeConstraintsCreateExpectations.Handler9<T> @handler)
+							var @foundMatch = false;
+							
+							foreach (var @genericHandler in this.Expectations.handlers9)
 							{
-								@handler.CallCount++;
-								@handler.Callback?.Invoke();
+								if (@genericHandler is global::TypeConstraintsCreateExpectations.Handler9<T> @handler)
+								{
+									{
+										@foundMatch = true;
+										@handler.CallCount++;
+										@handler.Callback?.Invoke();
+										break;
+									}
+								}
 							}
-							else
+							
+							if (!@foundMatch)
 							{
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									The provided handler does not match for {this.GetType().GetMemberDescription(9)}
+									No handlers match for {this.GetType().GetMemberDescription(9)}
 									""");
 							}
 						}
@@ -3823,12 +3955,14 @@ public static class ConstraintsGeneratorTests
 								No handlers match for {this.GetType().GetMemberDescription(3)}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(3)}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(3)}
+								""");
+						}
 					}
 					
 					private global::MockTests.ThingCreateExpectations<T> Expectations { get; }

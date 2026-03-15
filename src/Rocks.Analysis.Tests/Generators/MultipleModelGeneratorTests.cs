@@ -130,13 +130,15 @@ public static class MultipleModelGeneratorTests
 									value: {@value.FormatValue()}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(0)}
-								value: {@value.FormatValue()}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+									value: {@value.FormatValue()}
+								""");
+						}
 					}
 					
 					private global::MockTests.ITargetCreateExpectations Expectations { get; }

@@ -303,12 +303,14 @@ public static class MethodGeneratorTests
 								@handler.Callback() : @handler.ReturnValue;
 							return ref this.rr0;
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(0)}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								""");
+						}
 					}
 					
 					private global::IScoreCreateExpectations Expectations { get; }
@@ -1068,15 +1070,17 @@ public static class MethodGeneratorTests
 									membersToExpand: {@membersToExpand.FormatValue()}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(0)}
-								source: {@source.FormatValue()}
-								parameters: {@parameters.FormatValue()}
-								membersToExpand: {@membersToExpand.FormatValue()}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+									source: {@source.FormatValue()}
+									parameters: {@parameters.FormatValue()}
+									membersToExpand: {@membersToExpand.FormatValue()}
+								""");
+						}
 					}
 					
 					[global::Rocks.MemberIdentifier(1)]
@@ -1109,15 +1113,17 @@ public static class MethodGeneratorTests
 									membersToExpand: {@membersToExpand.FormatValue()}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(1)}
-								source: {@source.FormatValue()}
-								parameters: {@parameters.FormatValue()}
-								membersToExpand: {@membersToExpand.FormatValue()}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(1)}
+									source: {@source.FormatValue()}
+									parameters: {@parameters.FormatValue()}
+									membersToExpand: {@membersToExpand.FormatValue()}
+								""");
+						}
 					}
 					
 					private global::MockTests.IMapperCreateExpectations Expectations { get; }
@@ -1935,32 +1941,34 @@ public static class MethodGeneratorTests
 									i19: {@i19.FormatValue()}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(0)}
-								i0: {@i0.FormatValue()}
-								i1: {@i1.FormatValue()}
-								i2: {@i2.FormatValue()}
-								i3: {@i3.FormatValue()}
-								i4: {@i4.FormatValue()}
-								i5: {@i5.FormatValue()}
-								i6: {@i6.FormatValue()}
-								i7: {@i7.FormatValue()}
-								i8: {@i8.FormatValue()}
-								i9: {@i9.FormatValue()}
-								i10: {@i10.FormatValue()}
-								i11: {@i11.FormatValue()}
-								i12: {@i12.FormatValue()}
-								i13: {@i13.FormatValue()}
-								i14: {@i14.FormatValue()}
-								i15: {@i15.FormatValue()}
-								i16: {@i16.FormatValue()}
-								i17: {@i17.FormatValue()}
-								i18: {@i18.FormatValue()}
-								i19: {@i19.FormatValue()}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+									i0: {@i0.FormatValue()}
+									i1: {@i1.FormatValue()}
+									i2: {@i2.FormatValue()}
+									i3: {@i3.FormatValue()}
+									i4: {@i4.FormatValue()}
+									i5: {@i5.FormatValue()}
+									i6: {@i6.FormatValue()}
+									i7: {@i7.FormatValue()}
+									i8: {@i8.FormatValue()}
+									i9: {@i9.FormatValue()}
+									i10: {@i10.FormatValue()}
+									i11: {@i11.FormatValue()}
+									i12: {@i12.FormatValue()}
+									i13: {@i13.FormatValue()}
+									i14: {@i14.FormatValue()}
+									i15: {@i15.FormatValue()}
+									i16: {@i16.FormatValue()}
+									i17: {@i17.FormatValue()}
+									i18: {@i18.FormatValue()}
+									i19: {@i19.FormatValue()}
+								""");
+						}
 					}
 					
 					private global::MockTests.IHaveTooMuchCreateExpectations Expectations { get; }

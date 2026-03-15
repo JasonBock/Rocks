@@ -209,15 +209,17 @@ public static class NullableAnnotationTests
 									cancellationToken: {@cancellationToken.FormatValue()}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(1)}
-								target: {@target.FormatValue()}
-								message: {@message.FormatValue()}
-								cancellationToken: {@cancellationToken.FormatValue()}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(1)}
+									target: {@target.FormatValue()}
+									message: {@message.FormatValue()}
+									cancellationToken: {@cancellationToken.FormatValue()}
+								""");
+						}
 					}
 					
 					private global::IUseTaskDefaultCreateExpectations<T> Expectations { get; }

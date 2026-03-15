@@ -271,15 +271,17 @@ public static class CastingGeneratorTests
 									information: {@information.FormatValue()}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(1)}
-								value: {@value.FormatValue()}
-								data: {@data.FormatValue()}
-								information: {@information.FormatValue()}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(1)}
+									value: {@value.FormatValue()}
+									data: {@data.FormatValue()}
+									information: {@information.FormatValue()}
+								""");
+						}
 					}
 					
 					[global::Rocks.MemberIdentifier(2)]
@@ -349,14 +351,16 @@ public static class CastingGeneratorTests
 									data: {@data.FormatValue()}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(3)}
-								value: {@value.FormatValue()}
-								data: {@data.FormatValue()}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(3)}
+									value: {@value.FormatValue()}
+									data: {@data.FormatValue()}
+								""");
+						}
 					}
 					
 					private global::MockTests.IHaveOpenGenericsCreateExpectations<Q> Expectations { get; }

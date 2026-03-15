@@ -169,14 +169,16 @@ public static class DefaultValuesGeneratorTests
 									someStruct: {@someStruct.FormatValue()}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(0)}
-								values: {@values.FormatValue()}
-								someStruct: {@someStruct.FormatValue()}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+									values: {@values.FormatValue()}
+									someStruct: {@someStruct.FormatValue()}
+								""");
+						}
 					}
 					
 					[global::Rocks.MemberIdentifier(1)]
@@ -204,14 +206,16 @@ public static class DefaultValuesGeneratorTests
 									someStruct: {@someStruct.FormatValue()}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(1)}
-								message: {@message.FormatValue()}
-								someStruct: {@someStruct.FormatValue()}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(1)}
+									message: {@message.FormatValue()}
+									someStruct: {@someStruct.FormatValue()}
+								""");
+						}
 					}
 					
 					private global::MockTests.IRequestCreateExpectations<T> Expectations { get; }

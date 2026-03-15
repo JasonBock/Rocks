@@ -4268,17 +4268,19 @@ public static class NamingGeneratorTests
 									self: {@self.FormatValue()}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(0)}
-								methodHandlers: {@methodHandlers.FormatValue()}
-								methodHandler: {@methodHandler.FormatValue()}
-								result: {@result.FormatValue()}
-								result2: {@result2.FormatValue()}
-								self: {@self.FormatValue()}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+									methodHandlers: {@methodHandlers.FormatValue()}
+									methodHandler: {@methodHandler.FormatValue()}
+									result: {@result.FormatValue()}
+									result2: {@result2.FormatValue()}
+									self: {@self.FormatValue()}
+								""");
+						}
 					}
 					
 					private global::IHaveNamingConflictsCreateExpectations Expectations { get; }
