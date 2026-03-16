@@ -209,7 +209,7 @@ public static class RefStructGeneratorTests
 					
 					public void Perform(out global::System.ReadOnlySpan<byte> @buffer)
 					{
-						buffer = default!;
+						@buffer = default!;
 					}
 				}
 			}

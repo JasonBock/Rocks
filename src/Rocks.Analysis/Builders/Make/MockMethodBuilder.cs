@@ -5,7 +5,7 @@ using System.CodeDom.Compiler;
 
 namespace Rocks.Analysis.Builders.Make;
 
-internal static class MockMethodValueBuilder
+internal static class MockMethodBuilder
 {
 	internal static void Build(IndentedTextWriter writer, MethodModel method)
 	{
@@ -14,9 +14,19 @@ internal static class MockMethodValueBuilder
 			new TypeArgumentsNamingContext(method) :
 			new TypeArgumentsNamingContext();
 
-		var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadOnly ? "ref readonly " : string.Empty;
-		var returnTypeValue = method.ReturnType.BuildName(typeArgumentsNamingContext);
-		var returnType = $"{returnByRef}{returnTypeValue}";
+		string returnType;
+
+		if (!method.ReturnsVoid)
+		{
+			var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadOnly ? "ref readonly " : string.Empty;
+			var returnTypeValue = method.ReturnType.BuildName(typeArgumentsNamingContext);
+			returnType = $"{returnByRef}{returnTypeValue}";
+		}
+		else
+		{
+			returnType = "void";
+		}
+
 		var explicitTypeNameDescription = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
 			$"{method.ContainingType.FullyQualifiedName}." : string.Empty;
 
@@ -102,7 +112,7 @@ internal static class MockMethodValueBuilder
 		{
 			writer.WriteLine("throw new global::Rocks.Exceptions.DoesNotReturnException();");
 		}
-		else
+		else if (!method.ReturnsVoid)
 		{
 			if (method.ReturnTypeIsTaskType)
 			{
@@ -135,6 +145,7 @@ internal static class MockMethodValueBuilder
 				}
 			}
 		}
+
 		writer.Indent--;
 		writer.WriteLine("}");
 	}

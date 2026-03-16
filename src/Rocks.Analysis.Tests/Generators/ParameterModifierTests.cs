@@ -430,7 +430,7 @@ public static class ParameterModifierTests
 					
 					public void Modify(out string @value)
 					{
-						value = default!;
+						@value = default!;
 					}
 				}
 			}
@@ -1337,12 +1337,12 @@ public static class ParameterModifierTests
 					
 					public void OutArgument(out int @a)
 					{
-						a = default!;
+						@a = default!;
 					}
 					
 					public void OutArgumentsWithGenerics<T1, T2>(T1 @a, out T2 @b)
 					{
-						b = default!;
+						@b = default!;
 					}
 				}
 			}

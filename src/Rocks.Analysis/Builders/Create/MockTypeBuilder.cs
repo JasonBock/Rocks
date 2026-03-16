@@ -46,18 +46,7 @@ internal static class MockTypeBuilder
 
 		foreach (var method in type.Methods)
 		{
-			if (method.ReturnsVoid)
-			{
-				// TODO: Method build refactor
-				//MockMethodVoidBuilder.Build(writer, type, method, canRaiseEvents, expectationsFullyQualifiedName);
-				MockMethodBuilder.Build(writer, type, method, canRaiseEvents, expectationsFullyQualifiedName);
-			}
-			else
-			{
-				// TODO: Method build refactor
-				//MockMethodValueBuilder.Build(writer, type, method, canRaiseEvents, expectationsFullyQualifiedName);
-				MockMethodBuilder.Build(writer, type, method, canRaiseEvents, expectationsFullyQualifiedName);
-			}
+			MockMethodBuilder.Build(writer, type, method, canRaiseEvents, expectationsFullyQualifiedName);
 		}
 
 		var hasProperties = false;

@@ -38,17 +38,17 @@
     * DONE - `RockCreateBuilder`
         * DONE - `Build()`
             * DONE - Some `WriteLine()` into one `WriteLines()`
-    * `MockMethodVoidBuilder` and `MockMethodValueBuilder`
-        * `Build()`
-            * Both have code to get `methodParameters` that is almost identical except for getting `AttributesDescription`. See if this can be shared. In fact, the methods and the method types in general are almost identical. Well...first attempt failed miserably. There's way too much interwoven code with odd, specific handling that to tease out certain implementations is not as easy as I thought. One things I can do is pull out passing `memberIdentifier` to some of the methods. This needs more work. Maybe create a `MockMethodBuilder` that combines them first, and then replace the calls to the `Build()` and `BuildMethodHandler()` methods. Note: look for this: `// TODO: Method build refactor`
+    * DONE - `MockMethodVoidBuilder` and `MockMethodValueBuilder`
+        * DONE - `Build()`
+            * Both have code to get `methodParameters` that is almost identical except for getting `AttributesDescription`. See if this can be shared. In fact, the methods and the method types in general are almost identical. Well...first attempt failed miserably. There's way too much interwoven code with odd, specific handling that to tease out certain implementations is not as easy as I thought. One things I can do is pull out passing `memberIdentifier` to some of the methods. This needs more work. Maybe create a `MockMethodBuilder` that combines them first, and then replace the calls to the `Build()` and `BuildMethodHandler()` methods. Note: look for this: `// TODO: Method build refactor`. Remember to watch optional tests
     * `TypeArgumentsNamingContext` - maybe I should make one for each `ITypeReferenceModel` and `MethodModel` on construction? That way, I don't have to keep making them throughout the code. These should not vary once iterated for a type or method. Actually, what I landed is:
         * Only one constructor that take a `MethodModel`
         * Make `TypeArgumentsNamingContext` a nested type of `MethodModel`
         * Create a `GetTypeArgumentsNamingContext()` method on `MethodModel`
         * Could also check to see if this context is truly ever "mutated" in the code
-* `Builders\Make`
-    * `MockMethodVoidBuilder` and `MockMethodValueBuilder`
-        * The methods and the method types in general are almost identical
+* DONE - `Builders\Make`
+    * DONE - `MockMethodVoidBuilder` and `MockMethodValueBuilder`
+        * DONE - The methods and the method types in general are almost identical
 * `Descriptors`
     * May be helpful to have a "shared" `internal` type here to have all the IDs listed to make it somewhat easier when new ones need to be added.
 * DONE - `Extensions`

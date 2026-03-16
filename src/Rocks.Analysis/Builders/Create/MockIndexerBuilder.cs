@@ -64,10 +64,6 @@ internal static class MockIndexerBuilder
 
 		writer.WriteLine("{");
 		writer.Indent++;
-		// TODO: Method build refactor
-		//MockMethodValueBuilder.BuildMethodHandler(
-		//	writer, method, namingContext,
-		//	raiseEvents, shouldThrowDoesNotReturnException, indexer.MemberIdentifier);
 		MockMethodBuilder.BuildMethodHandler(
 			writer, method, namingContext,
 			raiseEvents, shouldThrowDoesNotReturnException);
@@ -181,8 +177,6 @@ internal static class MockIndexerBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		// TODO: Method build refactor
-		//MockMethodVoidBuilder.BuildMethodHandler(writer, method, namingContext, raiseEvents);
 		MockMethodBuilder.BuildMethodHandler(writer, method, namingContext, raiseEvents, shouldThrowDoesNotReturnException);
 
 		if (shouldThrowDoesNotReturnException)

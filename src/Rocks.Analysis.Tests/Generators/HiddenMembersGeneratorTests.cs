@@ -307,12 +307,12 @@ public static class HiddenMembersGeneratorTests
 					public void TryGet<T>(out T @value)
 						where T : global::IOutDerived
 					{
-						value = default!;
+						@value = default!;
 					}
 					
 					void global::IServiceBase.TryGet<T>(out T @value)
 					{
-						value = default!;
+						@value = default!;
 					}
 				}
 			}

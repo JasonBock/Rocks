@@ -38,14 +38,7 @@ internal static class MockMakeBuilder
 		{
 			var method = mockType.Methods[i];
 
-			if (method.ReturnsVoid)
-			{
-				MockMethodVoidBuilder.Build(writer, method);
-			}
-			else
-			{
-				MockMethodValueBuilder.Build(writer, method);
-			}
+			MockMethodBuilder.Build(writer, method);
 
 			if (i != mockType.Methods.Length - 1)
 			{
