@@ -135,14 +135,16 @@ public static class RockGeneratorTests
 									b: {@b.FormatValue()}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(0)}
-								a: {@a.FormatValue()}
-								b: {@b.FormatValue()}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+									a: {@a.FormatValue()}
+									b: {@b.FormatValue()}
+								""");
+						}
 					}
 					
 					private global::MockTests.IContainNullableReferencesCreateExpectations Expectations { get; }
@@ -1040,12 +1042,14 @@ public static class RockGeneratorTests
 								No handlers match for {this.GetType().GetMemberDescription(0)}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(0)}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								""");
+						}
 					}
 					
 					private global::MockTests.ITestCreateExpectations Expectations { get; }

@@ -2009,12 +2009,14 @@ public static class ShimBuilderGeneratorTests
 								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(1)}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(1)}
+								""");
+						}
 					}
 					
 					public int AmADim

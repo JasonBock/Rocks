@@ -102,7 +102,7 @@ public static class RefStructGeneratorTests
 					[global::Rocks.MemberIdentifier(0)]
 					public void Perform(out global::System.ReadOnlySpan<byte> @buffer)
 					{
-						buffer = default!;
+						@buffer = default!;
 						if (this.Expectations.handlers0 is not null)
 						{
 							var @foundMatch = false;
@@ -1113,13 +1113,15 @@ public static class RefStructGeneratorTests
 									data: <Not formattable>
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(3)}
-								data: <Not formattable>
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(3)}
+									data: <Not formattable>
+								""");
+						}
 					}
 					
 					[global::Rocks.MemberIdentifier(4)]
@@ -1184,13 +1186,15 @@ public static class RefStructGeneratorTests
 									data: {@data.FormatValue()}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(5)}
-								data: {@data.FormatValue()}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(5)}
+									data: {@data.FormatValue()}
+								""");
+						}
 					}
 					
 					private global::ScopedParameterCreateExpectations Expectations { get; }
@@ -1891,12 +1895,14 @@ public static class RefStructGeneratorTests
 								@handler.Callback() : @handler.ReturnValue!();
 							return @result!;
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(0)}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								""");
+						}
 					}
 					
 					private global::IHaveRefStructCreateExpectations Expectations { get; }

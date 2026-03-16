@@ -168,13 +168,15 @@ public static class OptionalArgumentsTests
 									propertyName: {@propertyName.FormatValue()}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(0)}
-								propertyName: {@propertyName.FormatValue()}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(0)}
+									propertyName: {@propertyName.FormatValue()}
+								""");
+						}
 					}
 					
 					[global::Rocks.MemberIdentifier(1)]
@@ -200,13 +202,15 @@ public static class OptionalArgumentsTests
 									propertyName: {@propertyName.FormatValue()}
 								""");
 						}
-						
-						this.Expectations.WasExceptionThrown = true;
-						throw new global::Rocks.Exceptions.ExpectationException(
-							$"""
-							No handlers were found for {this.GetType().GetMemberDescription(1)}
-								propertyName: {@propertyName.FormatValue()}
-							""");
+						else
+						{
+							this.Expectations.WasExceptionThrown = true;
+							throw new global::Rocks.Exceptions.ExpectationException(
+								$"""
+								No handlers were found for {this.GetType().GetMemberDescription(1)}
+									propertyName: {@propertyName.FormatValue()}
+								""");
+						}
 					}
 					
 					private global::ICallerParameterCreateExpectations Expectations { get; }

@@ -35,7 +35,7 @@ internal static class MockMethodBuilder
 				"?" :
 				string.Empty;
 			var defaultValue = _.HasExplicitDefaultValue && method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-				_.Type.AttributesDescription.Contains("Optional") ?
+				_.AttributesDescription.Contains("Optional") ?
 					string.Empty :
 					$" = {_.ExplicitDefaultValue}" :
 				string.Empty;
