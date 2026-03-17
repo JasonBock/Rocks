@@ -8,8 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [10.2.0] - Not Yet Released
 
 ### Changed
-- Performed a number of refactoring (issue [#408](https://github.com/JasonBock/Rocks/issues/408))
-	- Improved the performance of `Verify()`
+
+- Performed a number of internal refactorings, including a slight performance improvement with `Verify()` (issue [#408](https://github.com/JasonBock/Rocks/issues/408))
 
 ## [10.1.0] - 2026-02-24
 
