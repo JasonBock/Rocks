@@ -1,6 +1,6 @@
 ﻿namespace Rocks.Analysis.Extensions;
 
-internal static class HashSetBuilderExtensions
+internal static class HashSetExtensions
 {
 	internal static void AddRange<T>(this HashSet<T> self, IEnumerable<T> values)
 	{
