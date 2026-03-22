@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Performed a number of internal refactorings, including a slight performance improvement with `Verify()` (issue [#408](https://github.com/JasonBock/Rocks/issues/408))
 
+### Fixed
+
+- Addressed issue with refactoring to target generic names directly (issue [#409](https://github.com/JasonBock/Rocks/issues/409))
+
 ## [10.1.0] - 2026-02-24
 
 ### Added

@@ -7,6 +7,100 @@ namespace Rocks.Completions.Tests;
 public static class AddRockAttributeRefactoringTests
 {
 	[Test]
+	public static async Task RunWhenTargetIsClosedGenericParameterTypeAsync()
+	{
+		var source =
+			"""
+			using System;
+
+			public interface ILogger<T> 
+			{ 
+				void Log(string message);
+			}
+
+			public class TargetUsage
+			{ 
+				public TargetUsage(I[|L|]ogger<TargetUsage> logger) { }
+			}
+			""";
+
+		var fixedSource =
+			"""			
+			using System;
+			
+			[assembly: Rocks.Rock(typeof(ILogger<>), Rocks.BuildType.Create | Rocks.BuildType.Make)]
+			
+			public interface ILogger<T> 
+			{ 
+				void Log(string message);
+			}
+			
+			public class TargetUsage
+			{ 
+				public TargetUsage(ILogger<TargetUsage> logger) { }
+			}
+			""";
+
+		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
+			[("Source.cs", source)], [("Source.cs", fixedSource)], 0, false, [], []);
+	}
+
+	[Test]
+	public static async Task RunWhenTargetIsContainedClosedGenericAsync()
+	{
+		var source =
+			"""
+			using System;
+
+			public sealed class Mock<T>
+			{
+				public Mock() { }
+			}
+
+			public interface ILogger<T> 
+			{ 
+				void Log(string message);
+			}
+
+			public class TargetUsage
+			{ 
+				public void Do() 
+				{ 
+					var mock = new Mock<I[|L|]ogger<TargetUsage>>();
+				}
+			}
+			""";
+
+		var fixedSource =
+			"""			
+			using System;
+			
+			[assembly: Rocks.Rock(typeof(ILogger<>), Rocks.BuildType.Create | Rocks.BuildType.Make)]
+			
+			public sealed class Mock<T>
+			{
+				public Mock() { }
+			}
+			
+			public interface ILogger<T> 
+			{ 
+				void Log(string message);
+			}
+			
+			public class TargetUsage
+			{ 
+				public void Do() 
+				{ 
+					var mock = new Mock<ILogger<TargetUsage>>();
+				}
+			}
+			""";
+
+		await TestAssistants.RunRefactoringAsync<AddRockAttributeRefactoring>(
+			[("Source.cs", source)], [("Source.cs", fixedSource)], 0, false, [], []);
+	}
+
+	[Test]
 	public static async Task RunWhenTargetIsVariableAsync()
 	{
 		var source =

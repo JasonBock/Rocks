@@ -5,11 +5,12 @@ namespace Rocks.Completions.Extensions;
 
 internal static class SyntaxNodeExtensions
 {
-	internal static INamedTypeSymbol? FindParentSymbol(this SyntaxNode self,
+	internal static INamedTypeSymbol? FindContexturalSymbol(this SyntaxNode self,
 		SemanticModel model, CancellationToken cancellationToken)
 	{
 		Type[] syntaxNodeTypes =
 			[
+				typeof(GenericNameSyntax),
 				typeof(IdentifierNameSyntax),
 				typeof(ParameterSyntax),
 				typeof(ObjectCreationExpressionSyntax),
@@ -32,7 +33,20 @@ internal static class SyntaxNodeExtensions
 			{
 				ISymbol? parentSymbol = null;
 
-				if (parent is IdentifierNameSyntax identifierNameSyntax)
+				if (parent is GenericNameSyntax genericNameSyntax)
+				{
+					var genericNameSymbol = model.GetSymbolInfo(genericNameSyntax, cancellationToken);
+
+					if (genericNameSymbol.Symbol is not null)
+					{
+						parentSymbol = genericNameSymbol.Symbol;
+					}
+					else if (genericNameSymbol.CandidateSymbols.Length > 0)
+					{
+						parentSymbol = genericNameSymbol.CandidateSymbols[0];
+					}
+				}
+				else if (parent is IdentifierNameSyntax identifierNameSyntax)
 				{
 					var identifierNameSymbol = model.GetSymbolInfo(identifierNameSyntax, cancellationToken);
 

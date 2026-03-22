@@ -34,7 +34,7 @@ public sealed partial class AddRockAttributeRefactoring
 
 		var root = await model.SyntaxTree.GetRootAsync(cancellationToken);
 		var node = root.FindNode(span);
-		var mockTypeSymbol = node.FindParentSymbol(model, cancellationToken);
+		var mockTypeSymbol = node.FindContexturalSymbol(model, cancellationToken);
 
 		if (mockTypeSymbol is not null)
 		{
