@@ -31,7 +31,7 @@ internal void Remove(Adornment0 adornment)
 * Run integration tests, all should pass.
 * Update **all** NuGet package references
 * Run code gen tests, all should pass.
-* Update unit tests with new gen'd code, all should pass.
 * Run BenchmarkMockNet with current state, and then referncing local Rocks to see what the differences are (if any).
 * If perf is good, remove `Handlers` file as it is no longer needed.
+* Update unit tests with new gen'd code, all should pass.
 * Update docs to reflect new feature
