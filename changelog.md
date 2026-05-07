@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.3.0] - Not Yet Released
+
+### Added
+
+- Added the ability to remove adornments from an expectation, and an expectation from a context (issue [#410](https://github.com/JasonBock/Rocks/issues/410))
+
 ## [10.2.0] - 2026-05-04
 
 ### Changed

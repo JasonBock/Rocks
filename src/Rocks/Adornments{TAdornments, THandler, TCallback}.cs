@@ -53,5 +53,5 @@ public class Adornments<TAdornments, THandler, TCallback>
 	/// <summary>
 	/// Gets the handler wrapped by this adornments instance.
 	/// </summary>
-	protected THandler Handler { get; }
+	protected internal THandler Handler { get; protected set; }
 }
