@@ -4,7 +4,7 @@ TODO:
 * DONE - Add `protected void Remove(TAdornments adornments, List<THandler> handlers)` to `Expectations`. This should just call `Remove()` on `handlers` with the `Handler` property value on the given `adornments`.
 * Change the generated code:
     * Instead of using `Handlers<THandler>?`, create a `List<THandler>?`
-    * In a setup implementation, change this:
+    * In `IndexerExpectationsIndexerBuilder`, `MethodExpectationsMethodBuilder`, and `PropertyExpectationsPropertyBuilder`, change this:
 ```c#
 if (this.parent.handlers2 is null) { this.parent.handlers2 = new(@handler); }
 else { this.parent.handlers2.Add(@handler); }
@@ -16,7 +16,7 @@ if (this.parent.handlers2 is null) { this.parent.handlers2 = new(1); }
 this.parent.handlers2.Add(@handler);
 return new(@handler);
 ```
-    * For each handler, we need to add the following `Remove()` implementation:
+    * In the generated `Expectations` type, for each handler, we need to add the following `Remove()` implementation:
 ```c#
 internal void Remove(Adornment0 adornment)
 {
