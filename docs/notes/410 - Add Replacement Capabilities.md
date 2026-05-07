@@ -1,7 +1,7 @@
 TODO:
 
 * DONE - Change the `Handler` property on `Adornments<,,>` to this: `protected internal THandler Handler { get; protected set; }`
-* Add `protected void Remove(TAdornments adornments, List<THandler> handlers)` to `Expectations`. This should just call `Remove()` on `handlers` with the `Handler` property value on the given `adornments`.
+* DONE - Add `protected void Remove(TAdornments adornments, List<THandler> handlers)` to `Expectations`. This should just call `Remove()` on `handlers` with the `Handler` property value on the given `adornments`.
 * Change the generated code:
     * Instead of using `Handlers<THandler>?`, create a `List<THandler>?`
     * In a setup implementation, change this:
