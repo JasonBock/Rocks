@@ -25,7 +25,7 @@ internal static class MockPropertyBuilder
 			{
 				if (this.{{type.ExpectationsPropertyName}}.handlers{{memberIdentifier}} is not null)
 				{
-					var @handler = this.{{type.ExpectationsPropertyName}}.handlers{{memberIdentifier}}.First;
+					var @handler = this.{{type.ExpectationsPropertyName}}.handlers{{memberIdentifier}}[0];
 					@handler.CallCount++;
 			""");
 		writer.Indent += 2;

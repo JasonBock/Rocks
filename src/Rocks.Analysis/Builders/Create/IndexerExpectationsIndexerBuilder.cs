@@ -96,9 +96,9 @@ internal static class IndexerExpectationsIndexerBuilder
 					$$"""
 					};
 
-					if (this.parent.handlers{{memberIdentifier}} is null) { this.parent.handlers{{memberIdentifier}} = new(@{{handlerContext["handler"]}}); }
-					else { this.parent.handlers{{memberIdentifier}}.Add(@{{handlerContext["handler"]}}); }
-					return new(@{{handlerContext["handler"]}});
+					if (this.parent.handlers{{memberIdentifier}} is null) { this.parent.handlers{{memberIdentifier}} = new(1); }
+					this.parent.handlers{{memberIdentifier}}.Add(@{{handlerContext["handler"]}});
+					return new(@{{handlerContext["handler"]}}, this.parent);
 					""");
 
 				writer.Indent--;
@@ -206,9 +206,9 @@ internal static class IndexerExpectationsIndexerBuilder
 					$$"""
 					};
 
-					if (this.parent.handlers{{memberIdentifier}} is null) { this.parent.handlers{{memberIdentifier}} = new(@{{handlerContext["handler"]}}); }
-					else { this.parent.handlers{{memberIdentifier}}.Add(@{{handlerContext["handler"]}}); }
-					return new(@{{handlerContext["handler"]}});
+					if (this.parent.handlers{{memberIdentifier}} is null) { this.parent.handlers{{memberIdentifier}} = new(1); }
+					this.parent.handlers{{memberIdentifier}}.Add(@{{handlerContext["handler"]}});
+					return new(@{{handlerContext["handler"]}}, this.parent);
 					""");
 
 				writer.Indent--;

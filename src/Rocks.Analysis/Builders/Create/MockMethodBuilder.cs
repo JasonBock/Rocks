@@ -410,7 +410,7 @@ internal static class MockMethodBuilder
 		var foreachHandlerName = method.IsGenericMethod ?
 			namingContext["genericHandler"] : namingContext["handler"];
 
-		writer.WriteLine($"var @{foreachHandlerName} = this.{type.ExpectationsPropertyName}.handlers{method.MemberIdentifier}.First;");
+		writer.WriteLine($"var @{foreachHandlerName} = this.{type.ExpectationsPropertyName}.handlers{method.MemberIdentifier}[0];");
 
 		if (method.IsGenericMethod)
 		{

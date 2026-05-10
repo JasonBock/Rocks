@@ -30,7 +30,7 @@ public sealed class ExpectationException
 	{
 		if (wasInstanceInvoked)
 		{
-			throw new ExpectationException("Cannot add an expectations after the mock has been created.");
+			throw new ExpectationException("Cannot modify expectations after the mock has been created.");
 		}
 	}
 }

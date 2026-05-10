@@ -40,9 +40,9 @@ internal static class PropertyExpectationsPropertyBuilder
 			{
 				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 				var handler = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}();
-				if (this.parent.handlers{{memberIdentifier}} is null) { this.parent.handlers{{memberIdentifier}} = new(handler); }
-				else { this.parent.handlers{{memberIdentifier}}.Add(handler); }
-				return new(handler);
+				if (this.parent.handlers{{memberIdentifier}} is null) { this.parent.handlers{{memberIdentifier}} = new(1); }
+				this.parent.handlers{{memberIdentifier}}.Add(handler);
+				return new(handler, this.parent);
 			}
 			""");
 	}
@@ -75,9 +75,9 @@ internal static class PropertyExpectationsPropertyBuilder
 					value = @value,
 				};
 
-				if (this.parent.handlers{{memberIdentifier}} is null) { this.parent.handlers{{memberIdentifier}} = new(handler); }
-				else { this.parent.handlers{{memberIdentifier}}.Add(handler); }
-				return new(handler);
+				if (this.parent.handlers{{memberIdentifier}} is null) { this.parent.handlers{{memberIdentifier}} = new(1); }
+				this.parent.handlers{{memberIdentifier}}.Add(handler);
+				return new(handler, this.parent);
 			}
 			""");
 	}

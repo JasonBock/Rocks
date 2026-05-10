@@ -94,8 +94,8 @@ internal static class MockHandlerListBuilder
 		// If the method has open generics, we have to use the base Handler type -
 		// we'll cast it later within the method implementation.
 		var handlers = method.TypeArguments.Length == 0 ?
-			$"private global::Rocks.Handlers<{expectationsFullyQualifiedName}.Handler{memberIdentifier}>? @handlers{memberIdentifier};" :
-			$"private global::Rocks.Handlers<global::Rocks.Handler>? @handlers{memberIdentifier};";
+			$"private global::System.Collections.Generic.List<{expectationsFullyQualifiedName}.Handler{memberIdentifier}>? @handlers{memberIdentifier};" :
+			$"private global::System.Collections.Generic.List<global::Rocks.Handler>? @handlers{memberIdentifier};";
 		writer.WriteLine(handlers);
 		writer.WriteLine();
 	}

@@ -35,7 +35,7 @@ public sealed class RefStructArgument<T>
 	/// Validates a given <typeparamref name="T"/> value.
 	/// </summary>
 	/// <param name="value">The value to validate.</param>
-	/// <returns><c>true</c> if <paramref name="value"/> is valid, otherwise, <c>false</c>.</returns>
+	/// <returns><see langword="true" /> if <paramref name="value"/> is valid, otherwise, <see langword="false" />.</returns>
 	/// <exception cref="NotSupportedException">The current <see cref="ValidationState"/> value is not valid.</exception>
 	public bool IsValid(T @value) =>
 		this.validation switch

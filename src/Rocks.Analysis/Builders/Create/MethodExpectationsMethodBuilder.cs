@@ -89,9 +89,9 @@ internal static class MethodExpectationsMethodBuilder
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						var handler = new {{expectationsFullyQualifiedName}}.Handler{{method.MemberIdentifier}}{{typeArguments}}();
-						if (this.parent.handlers{{method.MemberIdentifier}} is null) { this.parent.handlers{{method.MemberIdentifier}} = new(handler); }
-						else { this.parent.handlers{{method.MemberIdentifier}}.Add(handler); }
-						return new(handler);
+						if (this.parent.handlers{{method.MemberIdentifier}} is null) { this.parent.handlers{{method.MemberIdentifier}} = new(1); }
+						this.parent.handlers{{method.MemberIdentifier}}.Add(handler);
+						return new(handler, this.parent);
 					}
 					""");
 			}
@@ -132,9 +132,9 @@ internal static class MethodExpectationsMethodBuilder
 					$$"""
 					};
 
-					if (this.parent.handlers{{method.MemberIdentifier}} is null) { this.parent.handlers{{method.MemberIdentifier}} = new(@{{handlerContext["handler"]}}); }
-					else { this.parent.handlers{{method.MemberIdentifier}}.Add(@{{handlerContext["handler"]}}); }
-					return new(@{{handlerContext["handler"]}});
+					if (this.parent.handlers{{method.MemberIdentifier}} is null) { this.parent.handlers{{method.MemberIdentifier}} = new(1); }
+					this.parent.handlers{{method.MemberIdentifier}}.Add(@{{handlerContext["handler"]}});
+					return new(@{{handlerContext["handler"]}}, this.parent);
 					""");
 
 				writer.Indent--;

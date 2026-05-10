@@ -61,7 +61,7 @@ public sealed class Argument<T>
 	/// Determines if the given value matches the expectation.
 	/// </summary>
 	/// <param name="value">The value to test.</param>
-	/// <returns><c>true</c> if validation is successful; otherwise, <c>false</c>.</returns>
+	/// <returns><see langword="true" /> if validation is successful; otherwise, <see langword="false" />.</returns>
 	/// <exception cref="NotSupportedException"></exception>
 	/// <exception cref="InvalidEnumArgumentException"></exception>
 	public bool IsValid(T value) =>

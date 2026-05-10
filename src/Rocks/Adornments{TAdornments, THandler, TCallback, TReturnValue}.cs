@@ -1,4 +1,6 @@
-﻿namespace Rocks;
+﻿using Rocks.Exceptions;
+
+namespace Rocks;
 
 /// <summary>
 /// Defines adornments for a mocked member
@@ -24,19 +26,24 @@ public class Adornments<TAdornments, THandler, TCallback, TReturnValue>
 	/// Creates a new <see cref="Adornments{THandler, TCallback, TReturnValue}"/> instance.
 	/// </summary>
 	/// <param name="handler">The handler instance.</param>
-	public Adornments(THandler handler) =>
-		this.Handler = handler;
+	/// <param name="expectations">The expectations.</param>
+	public Adornments(THandler handler, Expectations expectations) =>
+		(this.Handler, this.Expectations) = (handler, expectations);
 
 	/// <inheritdoc/>
+	/// <exception cref="ExpectationException">Thrown if the mock instance has already been made.</exception>
 	public TAdornments AddRaiseEvent(RaiseEventInformation raiseEventInformation)
 	{
+		ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 		this.Handler.AddRaiseEvent(raiseEventInformation);
 		return (TAdornments)this;
 	}
 
 	/// <inheritdoc/>
+	/// <exception cref="ExpectationException">Thrown if the mock instance has already been made.</exception>
 	public TAdornments ExpectedCallCount(uint expectedCallCount)
 	{
+		ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 		this.Handler.ExpectedCallCount = expectedCallCount;
 		return (TAdornments)this;
 	}
@@ -46,8 +53,10 @@ public class Adornments<TAdornments, THandler, TCallback, TReturnValue>
 	/// </summary>
 	/// <param name="callback">The callback.</param>
 	/// <returns>The adornments instance.</returns>
+	/// <exception cref="ExpectationException">Thrown if the mock instance has already been made.</exception>
 	public TAdornments Callback(TCallback callback)
 	{
+		ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 		this.Handler.Callback = callback;
 		return (TAdornments)this;
 	}
@@ -57,11 +66,15 @@ public class Adornments<TAdornments, THandler, TCallback, TReturnValue>
 	/// </summary>
 	/// <param name="returnValue">The return value.</param>
 	/// <returns>The adornments instance.</returns>
+	/// <exception cref="ExpectationException">Thrown if the mock instance has already been made.</exception>
 	public TAdornments ReturnValue(TReturnValue returnValue)
 	{
+		ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 		this.Handler.ReturnValue = returnValue;
 		return (TAdornments)this;
 	}
+
+	private Expectations Expectations { get; }
 
 	/// <summary>
 	/// Gets the handler wrapped by this adornments instance.

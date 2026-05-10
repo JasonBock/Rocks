@@ -39,8 +39,8 @@ internal static class MockAdornmentsBuilder
 				public sealed class AdornmentsForHandler{{adornments.MemberIdentifier}}{{adornments.TypeArguments}}
 					: {{adornments.FullyQualifiedName}}, IAdornmentsFor{{adornmentsFlattenedName}}<AdornmentsForHandler{{adornments.MemberIdentifier}}{{adornments.TypeArguments}}>{{adornments.Constraints}}
 				{
-					public AdornmentsForHandler{{adornments.MemberIdentifier}}({{expectationsFQN}}.Handler{{adornments.MemberIdentifier}}{{adornments.TypeArguments}} handler)
-						: base(handler) { }
+					public AdornmentsForHandler{{adornments.MemberIdentifier}}({{expectationsFQN}}.Handler{{adornments.MemberIdentifier}}{{adornments.TypeArguments}} handler, global::Rocks.Expectations expectations)
+						: base(handler, expectations) { }
 				""");
 
 			if (adornments.Method.ReturnType.RequiresProjectedArgument)
@@ -67,5 +67,18 @@ internal static class MockAdornmentsBuilder
 
 		writer.Indent--;
 		writer.WriteLine("}");
+
+		// Add the Remove() methods.
+		foreach (var adornments in adornmentsPipelineInformation)
+		{
+			writer.WriteLines(
+				$$"""
+				internal void Remove{{adornments.TypeArguments}}({{mockType.ExpectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{adornments.MemberIdentifier}}{{adornments.TypeArguments}} adornment){{adornments.Constraints}}
+				{
+					global::Rocks.Expectations.Remove(adornment, this.@handlers{{adornments.MemberIdentifier}});
+					if (this.@handlers{{adornments.MemberIdentifier}}.Count == 0) { this.@handlers{{adornments.MemberIdentifier}} = null; }
+				}
+				""");
+		}
 	}
 }

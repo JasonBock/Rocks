@@ -21,14 +21,13 @@ public abstract class Expectations
 	/// <typeparam name="TCallback">The callback type.</typeparam>
 	/// <param name="adornments">The adornment to get the handler from.</param>
 	/// <param name="handlers">A list of handlers.</param>
-	protected static void Remove<TAdornments, THandler, TCallback>(TAdornments adornments, List<THandler> handlers)
+	protected static void Remove<TAdornments, THandler, TCallback>(TAdornments adornments, List<THandler>? handlers)
 		where TAdornments : Adornments<TAdornments, THandler, TCallback>
 		where THandler : Handler<TCallback>
 		where TCallback : Delegate
 	{
 		ArgumentNullException.ThrowIfNull(adornments);
-		ArgumentNullException.ThrowIfNull(handlers);
-		_ = handlers.Remove(adornments.Handler);
+		_ = handlers?.Remove(adornments.Handler);
 	}
 
 	/// <summary>
@@ -42,7 +41,7 @@ public abstract class Expectations
 	/// <param name="handlers">A list of handlers to verify</param>
 	/// <param name="memberIdentifier">The member identifier for the handlers</param>
 	/// <returns>A list of failed expectations</returns>
-	protected IEnumerable<string> Verify<THandler>(Handlers<THandler> handlers, uint memberIdentifier)
+	protected IEnumerable<string> Verify<THandler>(List<THandler> handlers, uint memberIdentifier)
 		where THandler : Handler =>
 			handlers.Where(_ => _.ExpectedCallCount != _.CallCount)
 				.Select(_ =>
