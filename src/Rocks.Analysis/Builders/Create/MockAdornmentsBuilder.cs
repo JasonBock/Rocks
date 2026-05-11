@@ -68,10 +68,10 @@ internal static class MockAdornmentsBuilder
 		writer.Indent--;
 		writer.WriteLine("}");
 
-		// Add the Remove() methods.
 		foreach (var adornments in adornmentsPipelineInformation)
 		{
-			// This is the type used in the handler list.
+			// Add the correct "remove" method based on
+			// the type of the handler.
 			var removeMethodName = adornments.Method.TypeArguments.Length == 0 ?
 				"Remove" : "RemoveHandler";
 
