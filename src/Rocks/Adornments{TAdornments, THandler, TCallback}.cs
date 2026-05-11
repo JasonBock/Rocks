@@ -59,6 +59,18 @@ public class Adornments<TAdornments, THandler, TCallback>
 		return (TAdornments)this;
 	}
 
+	/// <summary>
+	/// Removes the wrapped handler from <paramref name="handlers"/>.
+	/// </summary>
+	/// <param name="handlers">A list of handlers.</param>
+	public void Remove(List<THandler>? handlers) => _ = handlers?.Remove(this.Handler);
+
+	/// <summary>
+	/// Removes the wrapped handler from <paramref name="handlers"/>.
+	/// </summary>
+	/// <param name="handlers">A list of handlers.</param>
+	public void RemoveHandler(List<Handler>? handlers) => _ = handlers?.Remove(this.Handler);
+
 	private Expectations Expectations { get; }
 
 	/// <summary>

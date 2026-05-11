@@ -48,24 +48,24 @@ public class HandlerLists
 		return count;
 	}
 
-	[Benchmark]
-	[ArgumentsSource(nameof(Sizes))]
-	public int AddHandlers(int count)
-	{
-		Handlers<HandlerInt>? handlers = null;
+	//[Benchmark]
+	//[ArgumentsSource(nameof(Sizes))]
+	//public int AddHandlers(int count)
+	//{
+	//	Handlers<HandlerInt>? handlers = null;
 
-		for (var i = 0; i < count; i++)
-		{
-			var handler = new HandlerInt { input = i };
-			// TODO: the new hotness:
-			// this.handlerListDefault ??= [];
+	//	for (var i = 0; i < count; i++)
+	//	{
+	//		var handler = new HandlerInt { input = i };
+	//		// TODO: the new hotness:
+	//		// this.handlerListDefault ??= [];
 
-			if (handlers is null) { handlers = new(handler); }
-			else { handlers.Add(@handler); }
-		}
+	//		if (handlers is null) { handlers = new(handler); }
+	//		else { handlers.Add(@handler); }
+	//	}
 
-		return count;
-	}
+	//	return count;
+	//}
 
 	[Benchmark]
 	[ArgumentsSource(nameof(Sizes))]

@@ -111,9 +111,9 @@ internal sealed class CurrentExpectations
 		{
 			ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 			var handler = new Handler0();
-			if (this.parent.handlers0 is null) { this.parent.handlers0 = new(handler); }
-			else { this.parent.handlers0.Add(handler); }
-			return new(handler);
+			if (this.parent.handlers0 is null) { this.parent.handlers0 = new(1); }
+			this.parent.handlers0.Add(handler);
+			return new(handler, this.parent);
 		}
 
 		internal Adornments.AdornmentsForHandler1 OneParameter(Argument<int> @a)
@@ -126,9 +126,9 @@ internal sealed class CurrentExpectations
 				@a = @a,
 			};
 
-			if (this.parent.handlers1 is null) { this.parent.handlers1 = new(@handler); }
-			else { this.parent.handlers1.Add(@handler); }
-			return new(@handler);
+			if (this.parent.handlers1 is null) { this.parent.handlers1 = new(1); }
+			this.parent.handlers1.Add(@handler);
+			return new(@handler, this.parent);
 		}
 
 		internal Adornments.AdornmentsForHandler2 MultipleParameters(Argument<int> @a, Argument<string> @b)
@@ -143,9 +143,9 @@ internal sealed class CurrentExpectations
 				@b = @b,
 			};
 
-			if (this.parent.handlers2 is null) { this.parent.handlers2 = new(@handler); }
-			else { this.parent.handlers2.Add(@handler); }
-			return new(@handler);
+			if (this.parent.handlers2 is null) { this.parent.handlers2 = new(1); }
+			this.parent.handlers2.Add(@handler);
+			return new(@handler, this.parent);
 		}
 	}
 
@@ -154,14 +154,14 @@ internal sealed class CurrentExpectations
 	internal sealed class Handler0
 		: Handler<Action>
 	{ }
-	private Handlers<Handler0>? @handlers0;
+	private List<Handler0>? @handlers0;
 
 	internal sealed class Handler1
 		: Handler<Action<int>>
 	{
 		public Argument<int> @a { get; set; }
 	}
-	private Handlers<Handler1>? @handlers1;
+	private List<Handler1>? @handlers1;
 
 	internal sealed class Handler2
 		: Handler<Action<int, string>>
@@ -169,7 +169,7 @@ internal sealed class CurrentExpectations
 		public Argument<int> @a { get; set; }
 		public Argument<string> @b { get; set; }
 	}
-	private Handlers<Handler2>? @handlers2;
+	private List<Handler2>? @handlers2;
 
 	// Note: Verify used to return a List<string>.
 	// These performance tests has a Verify2() that returned an IEnumerable<string>,
@@ -194,7 +194,7 @@ internal sealed class CurrentExpectations
 		{
 			if (this.Expectations.handlers0 is not null)
 			{
-				var @handler = this.Expectations.handlers0.First;
+				var @handler = this.Expectations.handlers0[0];
 				@handler.CallCount++;
 				@handler.Callback?.Invoke();
 			}
@@ -319,22 +319,22 @@ internal sealed class CurrentExpectations
 		public sealed class AdornmentsForHandler0
 			: Adornments<AdornmentsForHandler0, Handler0, Action>, IAdornmentsForIInterfaceMethodVoid<AdornmentsForHandler0>
 		{
-			public AdornmentsForHandler0(Handler0 handler)
-				: base(handler) { }
+			public AdornmentsForHandler0(Handler0 handler, Expectations expectations)
+				: base(handler, expectations) { }
 		}
 
 		public sealed class AdornmentsForHandler1
 			: Adornments<AdornmentsForHandler1, Handler1, Action<int>>, IAdornmentsForIInterfaceMethodVoid<AdornmentsForHandler1>
 		{
-			public AdornmentsForHandler1(Handler1 handler)
-				: base(handler) { }
+			public AdornmentsForHandler1(Handler1 handler, Expectations expectations)
+				: base(handler, expectations) { }
 		}
 
 		public sealed class AdornmentsForHandler2
 			: Adornments<AdornmentsForHandler2, Handler2, Action<int, string>>, IAdornmentsForIInterfaceMethodVoid<AdornmentsForHandler2>
 		{
-			public AdornmentsForHandler2(Handler2 handler)
-				: base(handler) { }
+			public AdornmentsForHandler2(Handler2 handler, Expectations expectations)
+				: base(handler, expectations) { }
 		}
 	}
 }

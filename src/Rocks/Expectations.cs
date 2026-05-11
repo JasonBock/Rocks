@@ -14,23 +14,6 @@ namespace Rocks;
 public abstract class Expectations
 {
 	/// <summary>
-	/// Removes the handler wrapped by <paramref name="adornments"/> from <paramref name="handlers"/>.
-	/// </summary>
-	/// <typeparam name="TAdornments">The adornments type.</typeparam>
-	/// <typeparam name="THandler">The handler type.</typeparam>
-	/// <typeparam name="TCallback">The callback type.</typeparam>
-	/// <param name="adornments">The adornment to get the handler from.</param>
-	/// <param name="handlers">A list of handlers.</param>
-	protected static void Remove<TAdornments, THandler, TCallback>(TAdornments adornments, List<THandler>? handlers)
-		where TAdornments : Adornments<TAdornments, THandler, TCallback>
-		where THandler : Handler<TCallback>
-		where TCallback : Delegate
-	{
-		ArgumentNullException.ThrowIfNull(adornments);
-		_ = handlers?.Remove(adornments.Handler);
-	}
-
-	/// <summary>
 	/// Verifies the expectations.
 	/// </summary>
 	public abstract void Verify();

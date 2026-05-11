@@ -33,7 +33,7 @@ internal void Remove(Adornment0 adornment)
         * DONE - `MethodExpectationsMethodBuilder`
         * DONE - `PropertyExpectationsPropertyBuilder`
         * DONE - `IndexerExpectationsIndexerBuilder`
-* Run integration tests, all should pass.
+* DONE - Run integration tests, all should pass.
     * DONE - Fix: In all `Remove()` gen'd methods, I need to add in the method generics to the `Remove()` signature if the method has its' own generics. Only needs to be done with methods.
     * DONE - Fix: In all setups, pass `this.parent`, not `this`.
         * DONE - `MethodExpectationsMethodBuilder`
@@ -41,10 +41,11 @@ internal void Remove(Adornment0 adornment)
         * DONE - `IndexerExpectationsIndexerBuilder`
     * DONE - Fix: No longer is it `.First`, it's `[0]`
     * DONE - Fix: Use `global::Rocks.Expectations.Remove(...)`, not `this.Remove(...)`
-    * Fix: For the `Remove(...)` call, we need to specify **all** generic type values. This will look ugly, but it's necessary.
+    * DONE - Fix: For the `Remove(...)` call, we need to specify **all** generic type values. This will look ugly, but it's necessary.
+* Add integration tests that test "remove" functionality.
 * Update **all** NuGet package references
 * Run code gen tests, all should pass.
 * Run BenchmarkMockNet with current state, and then referncing local Rocks to see what the differences are (if any).
-* If perf is good, remove `Handlers` file as it is no longer needed.
+* If perf is good, remove `Handlers` file as it is no longer needed. Also, look for and remove any commented code with "Handlers<" in it.
 * Update unit tests with new gen'd code, all should pass.
 * Update docs to reflect new feature

@@ -71,12 +71,16 @@ internal static class MockAdornmentsBuilder
 		// Add the Remove() methods.
 		foreach (var adornments in adornmentsPipelineInformation)
 		{
+			// This is the type used in the handler list.
+			var removeMethodName = adornments.Method.TypeArguments.Length == 0 ?
+				"Remove" : "RemoveHandler";
+
 			writer.WriteLines(
 				$$"""
 				internal void Remove{{adornments.TypeArguments}}({{mockType.ExpectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{adornments.MemberIdentifier}}{{adornments.TypeArguments}} adornment){{adornments.Constraints}}
 				{
-					global::Rocks.Expectations.Remove(adornment, this.@handlers{{adornments.MemberIdentifier}});
-					if (this.@handlers{{adornments.MemberIdentifier}}.Count == 0) { this.@handlers{{adornments.MemberIdentifier}} = null; }
+					adornment.{{removeMethodName}}(this.@handlers{{adornments.MemberIdentifier}});
+					if (this.@handlers{{adornments.MemberIdentifier}}?.Count == 0) { this.@handlers{{adornments.MemberIdentifier}} = null; }
 				}
 				""");
 		}

@@ -53,7 +53,7 @@ public class HandlerListsEnumeration
 
 	[Benchmark]
 	[ArgumentsSource(nameof(HandlerData))]
-	public int EnumerateHandlers(Handlers<HandlerInt> handlers)
+	public int EnumerateHandlers(List<HandlerInt> handlers)
 	{
 		var i = 0;
 
@@ -107,11 +107,11 @@ public class HandlerListsEnumeration
 		yield return Generate(10);
 	}
 
-	public static IEnumerable<Handlers<HandlerInt>> HandlerData()
+	public static IEnumerable<List<HandlerInt>> HandlerData()
 	{
-		static Handlers<HandlerInt> Generate(int size)
+		static List<HandlerInt> Generate(int size)
 		{
-			var handlers = new Handlers<HandlerInt>(new HandlerInt { input = 0 });
+			var handlers = new List<HandlerInt>() { new HandlerInt { input = 0 } };
 
 			for (var i = 1; i < size; i++)
 			{
