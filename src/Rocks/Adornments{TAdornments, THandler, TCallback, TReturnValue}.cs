@@ -78,12 +78,18 @@ public class Adornments<TAdornments, THandler, TCallback, TReturnValue>
 	/// Removes the wrapped handler from <paramref name="handlers"/>.
 	/// </summary>
 	/// <param name="handlers">A list of handlers.</param>
+	/// <remarks>
+	/// This call is used if the generated handler list uses <typeparamref name="THandler"/>.
+	/// </remarks>
 	public void Remove(List<THandler>? handlers) => _ = handlers?.Remove(this.Handler);
 
 	/// <summary>
 	/// Removes the wrapped handler from <paramref name="handlers"/>.
 	/// </summary>
 	/// <param name="handlers">A list of handlers.</param>
+	/// <remarks>
+	/// This call is used if the generated handler list uses <see cref="Rocks.Handler"/>.
+	/// </remarks>
 	public void RemoveHandler(List<Handler>? handlers) => _ = handlers?.Remove(this.Handler);
 
 	private Expectations Expectations { get; }
