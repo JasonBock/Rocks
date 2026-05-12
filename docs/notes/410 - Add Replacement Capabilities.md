@@ -42,10 +42,13 @@ internal void Remove(Adornment0 adornment)
     * DONE - Fix: No longer is it `.First`, it's `[0]`
     * DONE - Fix: Use `global::Rocks.Expectations.Remove(...)`, not `this.Remove(...)`
     * DONE - Fix: For the `Remove(...)` call, we need to specify **all** generic type values. This will look ugly, but it's necessary.
+* DONE - Run BenchmarkMockNet with current state, and then referncing local Rocks to see what the differences are (if any). Consider adding `CollectionsMarshal.AsSpan()` for enumeration if there's a noticeable drop-off.
 * Add integration tests that test "remove" functionality.
 * Update **all** NuGet package references
 * Run code gen tests, all should pass.
-* Run BenchmarkMockNet with current state, and then referncing local Rocks to see what the differences are (if any).
 * If perf is good, remove `Handlers` file as it is no longer needed. Also, look for and remove any commented code with "Handlers<" in it.
 * Update unit tests with new gen'd code, all should pass.
 * Update docs to reflect new feature
+
+TODO:
+* Add this in as a new separate feature: If there can only be one handler - i.e. the parameter count is 0 - there is no need to make a `List<THandler>?`. Instead, just make a `THandler?` field. In the mock implementation, change it from `[0]` to just the field itself. `Remove()` may need to use collection expressions, or we have `ShouldRemove(Handler)` methods that return a `bool` that specify if the reference should be set to `null`. Same with `Verify()`. If I do [the ordering feature](https://github.com/JasonBock/Rocks/issues/380), this may not work as I **might** end up supporting more than one handler for no-parameter methods.

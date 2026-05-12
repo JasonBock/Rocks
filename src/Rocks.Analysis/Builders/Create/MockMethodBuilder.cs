@@ -229,9 +229,9 @@ internal static class MockMethodBuilder
 			{
 				writer.WriteLines(
 					$$"""
-				this.rr{{method.MemberIdentifier}} = @{{namingContext["handler"]}}.Callback is not null ?
-					@{{namingContext["handler"]}}.Callback({{methodArguments}}) : @{{namingContext["handler"]}}{{returnValueCall}};
-				""");
+					this.rr{{method.MemberIdentifier}} = @{{namingContext["handler"]}}.Callback is not null ?
+						@{{namingContext["handler"]}}.Callback({{methodArguments}}) : @{{namingContext["handler"]}}{{returnValueCall}};
+					""");
 			}
 			else
 			{
@@ -239,17 +239,17 @@ internal static class MockMethodBuilder
 				{
 					writer.WriteLines(
 						$$"""
-					_ = @{{namingContext["handler"]}}.Callback is not null ?
-						@{{namingContext["handler"]}}.Callback({{methodArguments}}) : @{{namingContext["handler"]}}{{returnValueCall}};
-					""");
+						_ = @{{namingContext["handler"]}}.Callback is not null ?
+							@{{namingContext["handler"]}}.Callback({{methodArguments}}) : @{{namingContext["handler"]}}{{returnValueCall}};
+						""");
 				}
 				else
 				{
 					writer.WriteLines(
 						$$"""
-					var @{{namingContext["result"]}} = @{{namingContext["handler"]}}.Callback is not null ?
-						@{{namingContext["handler"]}}.Callback({{methodArguments}}) : @{{namingContext["handler"]}}{{returnValueCall}};
-					""");
+						var @{{namingContext["result"]}} = @{{namingContext["handler"]}}.Callback is not null ?
+							@{{namingContext["handler"]}}.Callback({{methodArguments}}) : @{{namingContext["handler"]}}{{returnValueCall}};
+						""");
 				}
 			}
 
@@ -304,7 +304,7 @@ internal static class MockMethodBuilder
 		var foreachHandlerName = method.IsGenericMethod ?
 			namingContext["genericHandler"] : namingContext["handler"];
 
-		writer.WriteLine($"foreach (var @{foreachHandlerName} in this.{type.ExpectationsPropertyName}.handlers{method.MemberIdentifier})");
+		writer.WriteLine($"foreach (var @{foreachHandlerName} in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.{type.ExpectationsPropertyName}.handlers{method.MemberIdentifier}))");
 		writer.WriteLine("{");
 		writer.Indent++;
 

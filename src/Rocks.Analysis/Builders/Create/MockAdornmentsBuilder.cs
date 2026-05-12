@@ -77,6 +77,7 @@ internal static class MockAdornmentsBuilder
 
 			writer.WriteLines(
 				$$"""
+
 				internal void Remove{{adornments.TypeArguments}}({{mockType.ExpectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{adornments.MemberIdentifier}}{{adornments.TypeArguments}} adornment){{adornments.Constraints}}
 				{
 					adornment.{{removeMethodName}}(this.@handlers{{adornments.MemberIdentifier}});
