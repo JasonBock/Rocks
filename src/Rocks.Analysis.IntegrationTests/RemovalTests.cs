@@ -1,8 +1,9 @@
 ﻿using NUnit.Framework;
+using System.Numerics;
 
 namespace Rocks.Analysis.IntegrationTests.RemovalTestTypes;
 
-using RetrieveAdornment = ICustomerServiceCreateExpectations.Adornments.AdornmentsForHandler0;
+using RetrieveAdornment = ICustomerServiceCreateExpectations.Adornments.RetrieveAdornments14C3B8D6;
 
 public sealed record Customer(string Name);
 
@@ -34,10 +35,20 @@ internal sealed class RemovalTests
 	}
 
 	[Test]
-	public void RetrieveDifferentCustomer()
+	public void RetrieveDifferentCustomerViaAdornmentChange()
 	{
 		this.customerExpectations.Remove(this.retrieveAdornments);
 		this.retrieveAdornments = this.customerExpectations.Setups.Retrieve(456).ReturnValue(new Customer("Joe"));
+		var customerService = this.customerExpectations.Instance();
+		Assert.That(customerService.Retrieve(456).Name, Is.EqualTo("Joe"));
+	}
+
+	[Test]
+	public void RetrieveDifferentCustomerViaExpectationsChange()
+	{
+		this.context.Remove(this.customerExpectations);
+		this.customerExpectations = this.context.Create<ICustomerServiceCreateExpectations>();
+		this.customerExpectations.Setups.Retrieve(456).ReturnValue(new Customer("Joe"));
 		var customerService = this.customerExpectations.Instance();
 		Assert.That(customerService.Retrieve(456).Name, Is.EqualTo("Joe"));
 	}
@@ -75,4 +86,23 @@ internal static class RemovalParallelTests
 		Assert.That(customerService.Retrieve(456).Name, Is.EqualTo("Joe"));
 		context.Dispose();
 	}
+}
+
+public class DelegateHolder
+	 : IEquatable<DelegateHolder>, IEqualityOperators<DelegateHolder, DelegateHolder, bool>
+{
+	private readonly Delegate @delegate;
+
+	public DelegateHolder(Delegate @delegate) =>
+		 this.@delegate = @delegate;
+
+   public override bool Equals(object? obj) => 
+		obj is DelegateHolder holder && this.Equals(holder);
+
+	public bool Equals(DelegateHolder? other) => EqualityComparer<Delegate>.Default.Equals(this.@delegate, other?.@delegate);
+
+	public override int GetHashCode() => HashCode.Combine(this.@delegate);
+
+	public static bool operator ==(DelegateHolder? left, DelegateHolder? right) => left?.Equals(right) ?? false;
+	public static bool operator !=(DelegateHolder? left, DelegateHolder? right) => !(left == right);
 }

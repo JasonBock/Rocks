@@ -1,5 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Analysis.Extensions;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Rocks.Analysis.Models;
 
@@ -82,12 +84,61 @@ internal sealed record MethodModel
 
 		this.ReturnTypeTypeArguments = method.ReturnType is INamedTypeSymbol returnType ?
 			[.. returnType.TypeArguments.Select(_ => modelContext.CreateTypeReference(_))] : [];
+		this.Hash = this.GetHash();
+	}
+
+	// This is primarily done to get a unique name
+	// for the related adornments type.
+	private string GetHash()
+	{
+		// We add the containing type name if it needs explicit implementation
+		// to prevent collisions between members on multiple interfaces.
+		// See ExplicitInterfaceImplementationTests in IntegrationTests
+		// for an example :)
+		var fingerprint = string.Concat(
+			this.Parameters.Select(parameter =>
+				{
+					var direction = parameter.RefKind == RefKind.Ref ?
+						"ref" :
+						parameter.RefKind == RefKind.Out ?
+							"out" :
+							string.Empty;
+					var name = parameter.Type.FullyQualifiedName;
+					return $"{name}{direction}";
+				}).Concat(
+					[
+						this.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
+							this.ContainingType.FullyQualifiedName :
+							""
+					]));
+
+		// Lifted from: https://andrewlock.net/why-is-string-gethashcode-different-each-time-i-run-my-program-in-net-core/
+		unchecked
+		{
+			var hash1 = (5381 << 16) + 5381;
+			var hash2 = hash1;
+
+			for (var i = 0; i < fingerprint.Length; i += 2)
+			{
+				hash1 = ((hash1 << 5) + hash1) ^ fingerprint[i];
+
+				if (i == fingerprint.Length - 1)
+				{
+					break;
+				}
+
+				hash2 = ((hash2 << 5) + hash2) ^ fingerprint[i + 1];
+			}
+
+			return (hash1 + (hash2 * 1566083941)).ToString("X8");
+		}
 	}
 
 	internal string AttributesDescription { get; }
 	internal EquatableArray<Constraints> Constraints { get; }
 	internal ITypeReferenceModel ContainingType { get; }
 	internal EquatableArray<Constraints> DefaultConstraints { get; }
+	internal string Hash { get; }
 	internal bool IsAbstract { get; }
 	internal bool IsGenericMethod { get; }
 	internal bool IsMarkedWithDoesNotReturn { get; }

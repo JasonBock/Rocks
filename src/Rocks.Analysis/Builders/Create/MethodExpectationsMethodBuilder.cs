@@ -40,10 +40,11 @@ internal static class MethodExpectationsMethodBuilder
 			string adornmentsType;
 
 			var handlerTypeName = $"{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}{typeArguments}";
+			var adornmentsTypeName = $"{method.Name}Adornments{method.Hash}";
 
 			if (method.ReturnType.IsPointer)
 			{
-				adornmentsType = $"global::Rocks.Adornments<AdornmentsForHandler{method.MemberIdentifier}{typeArguments}, {handlerTypeName}, {callbackDelegateTypeName}>";
+				adornmentsType = $"global::Rocks.Adornments<{adornmentsTypeName}{typeArguments}, {handlerTypeName}, {callbackDelegateTypeName}>";
 			}
 			else
 			{
@@ -55,15 +56,15 @@ internal static class MethodExpectationsMethodBuilder
 							method.ReturnType.BuildName(typeArgumentsNamingContext);
 
 				adornmentsType = method.ReturnsVoid ?
-					$"global::Rocks.Adornments<AdornmentsForHandler{method.MemberIdentifier}{typeArguments}, {handlerTypeName}, {callbackDelegateTypeName}>" :
-					$"global::Rocks.Adornments<AdornmentsForHandler{method.MemberIdentifier}{typeArguments}, {handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
+					$"global::Rocks.Adornments<{adornmentsTypeName}{typeArguments}, {handlerTypeName}, {callbackDelegateTypeName}>" :
+					$"global::Rocks.Adornments<{adornmentsTypeName}{typeArguments}, {handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
 			}
 
 			var constraints = method.Constraints.Length > 0 ?
 				$" {string.Join(" ", method.Constraints.Select(_ => _.ToString(typeArgumentsNamingContext, method)))}" : "";
 			var hiding = method.RequiresHiding == RequiresHiding.Yes ? "new " : string.Empty;
 
-			adornmentsFQNsPipeline(new(adornmentsType, typeArguments, constraints, method, method.MemberIdentifier));
+			adornmentsFQNsPipeline(new(adornmentsTypeName, adornmentsType, typeArguments, constraints, method, method.MemberIdentifier));
 
 			if (isGeneratedWithDefaults)
 			{
@@ -77,7 +78,7 @@ internal static class MethodExpectationsMethodBuilder
 
 				writer.WriteLines(
 					$$"""
-					internal {{hiding}}{{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{method.MemberIdentifier}}{{typeArguments}} {{method.Name}}{{typeArguments}}({{instanceParameters}}){{constraints}} =>
+					internal {{hiding}}{{expectationsFullyQualifiedName}}.Adornments.{{adornmentsTypeName}}{{typeArguments}} {{method.Name}}{{typeArguments}}({{instanceParameters}}){{constraints}} =>
 						this.{{method.Name}}{{typeArguments}}({{parameterValues}});
 					""");
 			}
@@ -85,7 +86,7 @@ internal static class MethodExpectationsMethodBuilder
 			{
 				writer.WriteLines(
 					$$"""
-					internal {{hiding}}{{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{method.MemberIdentifier}}{{typeArguments}} {{method.Name}}{{typeArguments}}({{instanceParameters}}){{constraints}}
+					internal {{hiding}}{{expectationsFullyQualifiedName}}.Adornments.{{adornmentsTypeName}}{{typeArguments}} {{method.Name}}{{typeArguments}}({{instanceParameters}}){{constraints}}
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						var handler = new {{expectationsFullyQualifiedName}}.Handler{{method.MemberIdentifier}}{{typeArguments}}();
@@ -100,7 +101,7 @@ internal static class MethodExpectationsMethodBuilder
 				var handlerContext = new VariablesNamingContext(method);
 				writer.WriteLines(
 					$$"""
-					internal {{hiding}}{{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{method.MemberIdentifier}}{{typeArguments}} {{method.Name}}{{typeArguments}}({{instanceParameters}}){{constraints}}
+					internal {{hiding}}{{expectationsFullyQualifiedName}}.Adornments.{{adornmentsTypeName}}{{typeArguments}} {{method.Name}}{{typeArguments}}({{instanceParameters}}){{constraints}}
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 					""");

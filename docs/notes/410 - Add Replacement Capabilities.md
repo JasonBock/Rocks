@@ -43,7 +43,14 @@ internal void Remove(Adornment0 adornment)
     * DONE - Fix: Use `global::Rocks.Expectations.Remove(...)`, not `this.Remove(...)`
     * DONE - Fix: For the `Remove(...)` call, we need to specify **all** generic type values. This will look ugly, but it's necessary.
 * DONE - Run BenchmarkMockNet with current state, and then referncing local Rocks to see what the differences are (if any). Consider adding `CollectionsMarshal.AsSpan()` for enumeration if there's a noticeable drop-off.
-* Add integration tests that test "remove" functionality.
+* DONE - Add integration tests that test "remove" functionality.
+* So, one thing that must change is using `memberIdentifer` as the name for adornments - i.e. `AdornmentsForHandler0`. It's not very descriptive, and if members get added to the mock type, the id value can change such that users will get compilation errors in tests even though nothing really should have broken. We need a name that is consistent no matter what other members are there, fairly descriptive, and yet won't be too long. The handler names do not need to change - they can stay as `Handler0` as this is still a name that the user should not care about. I think I should do something where I take all the parameter type names, concatenate them and get a hash value for that. Note that overloads using `ref` and `out` need to have those "directions" added in. Note that [there is a limit](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-messages/cs0015) to how big a name can get. We already have `{ExpectationsName}Adornments` to start so we should try to keep this name as small as possible. Also, I have [an issue](https://github.com/JasonBock/Rocks/issues/403) to add XML comments to generated types, so maybe I just do `{MemberName}Adornments{hash "fingerprint"}` for methods. Properties would get `Get/Set/Init` in the name. Indexers need to start with `this`. The XML comments would have the member name specified in it so that would show up in Intellisense. These types need to be updated: 
+    * DONE - `MethodModel`: Add a `string ParameterHash { get; }` property that gets a small hash of the concatenated property values (see code below)
+    * DONE - `MethodExpectationsMethodBuilder`: When referencing and constructing the adornment
+    * DONE - `PropertyExpectationsPropertyBuilder`: When referencing and constructing the adornment
+    * DONE - `IndexerExpectationsIndexerBuilder`: When referencing and constructing the adornment
+    * `MockAdornmentsBuilder`: When defining and referencing the adornment
+    * Final check: Look for the string "AdornmentsForHandler" for any stragglers that I missed.
 * Update **all** NuGet package references
 * Run code gen tests, all should pass.
 * If perf is good, remove `Handlers` file as it is no longer needed. Also, look for and remove any commented code with "Handlers<" in it.
@@ -52,3 +59,39 @@ internal void Remove(Adornment0 adornment)
 
 TODO:
 * Add this in as a new separate feature: If there can only be one handler - i.e. the parameter count is 0 - there is no need to make a `List<THandler>?`. Instead, just make a `THandler?` field. In the mock implementation, change it from `[0]` to just the field itself. `Remove()` may need to use collection expressions, or we have `ShouldRemove(Handler)` methods that return a `bool` that specify if the reference should be set to `null`. Same with `Verify()`. If I do [the ordering feature](https://github.com/JasonBock/Rocks/issues/380), this may not work as I **might** end up supporting more than one handler for no-parameter methods.
+
+Hash "fingerprint" code (came from Copilot) - may want to consider https://andrewlock.net/why-is-string-gethashcode-different-each-time-i-run-my-program-in-net-core/:
+
+```c#
+using System;
+using System.Security.Cryptography;
+using System.Text;
+
+var input = "int_string";
+
+try
+{
+    var shortHash = GetSecureShortHash(input);
+    Console.WriteLine($"Secure Short Hash: {shortHash}");
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Error: {ex.Message}");
+}
+
+/// <summary>
+/// Generates a short hash from a string using SHA256 
+/// and returns the first 12 characters from the hex string.
+/// </summary>
+static string GetSecureShortHash(string input)
+{
+    ArgumentException.ThrowIfNullOrWhiteSpace(input);
+
+    using var sha256 = SHA512.Create();
+    var bytes = Encoding.UTF8.GetBytes(input);
+    var hashBytes = sha256.ComputeHash(bytes);
+    var hex = Convert.ToHexString(hashBytes);
+
+    return hex.Substring(0, 12);
+}
+```

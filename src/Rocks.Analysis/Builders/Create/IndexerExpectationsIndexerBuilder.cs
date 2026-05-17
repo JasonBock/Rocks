@@ -25,12 +25,13 @@ internal static class IndexerExpectationsIndexerBuilder
 				DelegateBuilder.Build(propertyGetMethod);
 
 			var handlerTypeName = $"{expectationsFullyQualifiedName}.Handler{memberIdentifier}";
+			var adornmentsTypeName = $"thisGetsAdornments{propertyGetMethod.Hash}";
 
 			string adornmentsType;
 
 			if (property.Type.IsPointer)
 			{
-				adornmentsType = $"global::Rocks.Adornments<AdornmentsForHandler{memberIdentifier}, {handlerTypeName}, {callbackDelegateTypeName}>";
+				adornmentsType = $"global::Rocks.Adornments<{adornmentsTypeName}, {handlerTypeName}, {callbackDelegateTypeName}>";
 			}
 			else
 			{
@@ -39,10 +40,10 @@ internal static class IndexerExpectationsIndexerBuilder
 						$"global::System.Func<{property.Type.FullyQualifiedName}>" :
 						property.Type.FullyQualifiedName;
 
-				adornmentsType = $"global::Rocks.Adornments<AdornmentsForHandler{memberIdentifier}, {handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
+				adornmentsType = $"global::Rocks.Adornments<{adornmentsTypeName}, {handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
 			}
 
-			adornmentsFQNsPipeline(new(adornmentsType, string.Empty, string.Empty, property.GetMethod!, memberIdentifier));
+			adornmentsFQNsPipeline(new(adornmentsTypeName, adornmentsType, string.Empty, string.Empty, propertyGetMethod, memberIdentifier));
 
 			var instanceParameters = string.Join(", ", propertyGetMethod.Parameters.Take(propertyGetMethod.Parameters.Length - 1).Select(parameter =>
 			{
@@ -65,7 +66,7 @@ internal static class IndexerExpectationsIndexerBuilder
 			else
 			{
 				var handlerContext = new VariablesNamingContext(property.Parameters);
-				writer.WriteLine($"internal {expectationsFullyQualifiedName}.Adornments.AdornmentsForHandler{memberIdentifier} Gets()");
+				writer.WriteLine($"internal {expectationsFullyQualifiedName}.Adornments.{adornmentsTypeName} Gets()");
 				writer.WriteLine("{");
 				writer.Indent++;
 				writer.WriteLines(
@@ -134,10 +135,13 @@ internal static class IndexerExpectationsIndexerBuilder
 			var needsGenerationWithDefaults = false;
 
 			var callbackDelegateTypeName = propertySetMethod.RequiresProjectedDelegate ?
-				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, expectationsFullyQualifiedName, memberIdentifier) :
+				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertySetMethod, expectationsFullyQualifiedName, memberIdentifier) :
 				DelegateBuilder.Build(propertySetMethod);
-			var adornmentsType = $"global::Rocks.Adornments<AdornmentsForHandler{memberIdentifier}, {expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}>";
-			adornmentsFQNsPipeline(new(adornmentsType, string.Empty, string.Empty, property.SetMethod!, memberIdentifier));
+			var name = property.Accessors == PropertyAccessor.Set || property.Accessors == PropertyAccessor.GetAndSet ?
+				"Sets" : "Inits";
+			var adornmentsTypeName = $"this{name}Adornments{propertySetMethod.Hash}";
+			var adornmentsType = $"global::Rocks.Adornments<{adornmentsTypeName}, {expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}>";
+			adornmentsFQNsPipeline(new(adornmentsTypeName, adornmentsType, string.Empty, string.Empty, property.SetMethod!, memberIdentifier));
 
 			// We need to put the value parameter immediately after "self"
 			// and then skip the value parameter by taking only the non-value parameters.
@@ -148,9 +152,6 @@ internal static class IndexerExpectationsIndexerBuilder
 				needsGenerationWithDefaults |= needs;
 				return expectationParameter;
 			}));
-
-			var name = property.Accessors == PropertyAccessor.Set || property.Accessors == PropertyAccessor.GetAndSet ?
-				"Sets" : "Inits";
 
 			if (isGeneratedWithDefaults)
 			{
@@ -168,7 +169,7 @@ internal static class IndexerExpectationsIndexerBuilder
 				var handlerContext = new VariablesNamingContext(property.Parameters);
 				writer.WriteLines(
 					$$"""
-					internal {{expectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{memberIdentifier}} {{name}}({{valueParameter}})
+					internal {{expectationsFullyQualifiedName}}.Adornments.{{adornmentsTypeName}} {{name}}({{valueParameter}})
 					{
 					""");
 				writer.Indent++;

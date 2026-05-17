@@ -36,10 +36,10 @@ internal static class MockAdornmentsBuilder
 		{
 			writer.WriteLines(
 				$$"""
-				public sealed class AdornmentsForHandler{{adornments.MemberIdentifier}}{{adornments.TypeArguments}}
-					: {{adornments.FullyQualifiedName}}, IAdornmentsFor{{adornmentsFlattenedName}}<AdornmentsForHandler{{adornments.MemberIdentifier}}{{adornments.TypeArguments}}>{{adornments.Constraints}}
+				public sealed class {{adornments.Name}}{{adornments.TypeArguments}}
+					: {{adornments.BaseTypeName}}, IAdornmentsFor{{adornmentsFlattenedName}}<{{adornments.Name}}{{adornments.TypeArguments}}>{{adornments.Constraints}}
 				{
-					public AdornmentsForHandler{{adornments.MemberIdentifier}}({{expectationsFQN}}.Handler{{adornments.MemberIdentifier}}{{adornments.TypeArguments}} handler, global::Rocks.Expectations expectations)
+					public {{adornments.Name}}({{expectationsFQN}}.Handler{{adornments.MemberIdentifier}}{{adornments.TypeArguments}} handler, global::Rocks.Expectations expectations)
 						: base(handler, expectations) { }
 				""");
 
@@ -47,7 +47,7 @@ internal static class MockAdornmentsBuilder
 			{
 				writer.WriteLines(
 					$$"""
-						public AdornmentsForHandler{{adornments.MemberIdentifier}}{{adornments.TypeArguments}} ReturnValue({{adornments.Method.ReturnType.FullyQualifiedName}} returnValue)
+						public {{adornments.Name}}{{adornments.TypeArguments}} ReturnValue({{adornments.Method.ReturnType.FullyQualifiedName}} returnValue)
 						{
 							this.Handler.ReturnValue = returnValue;
 							return this;
@@ -78,9 +78,9 @@ internal static class MockAdornmentsBuilder
 			writer.WriteLines(
 				$$"""
 
-				internal void Remove{{adornments.TypeArguments}}({{mockType.ExpectationsFullyQualifiedName}}.Adornments.AdornmentsForHandler{{adornments.MemberIdentifier}}{{adornments.TypeArguments}} adornment){{adornments.Constraints}}
+				internal void Remove{{adornments.TypeArguments}}({{mockType.ExpectationsFullyQualifiedName}}.Adornments.{{adornments.Name}}{{adornments.TypeArguments}} adornments){{adornments.Constraints}}
 				{
-					adornment.{{removeMethodName}}(this.@handlers{{adornments.MemberIdentifier}});
+					adornments.{{removeMethodName}}(this.@handlers{{adornments.MemberIdentifier}});
 					if (this.@handlers{{adornments.MemberIdentifier}}?.Count == 0) { this.@handlers{{adornments.MemberIdentifier}} = null; }
 				}
 				""");
