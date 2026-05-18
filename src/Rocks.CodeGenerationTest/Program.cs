@@ -28,14 +28,14 @@ Console.WriteLine($"Total time: {stopwatch.Elapsed}");
 #pragma warning disable CS8321 // Local function is declared but never used
 static void TestTypeValidity() =>
 	Console.WriteLine(
-		typeof(SixLabors.ImageSharp.ImageFormatException)
+		typeof(System.NotFiniteNumberException)
 			.IsValidTargetAsync([]));
 
 static void TestWithCode()
 {
 	var typesToLoadAssembliesFrom = new Type[]
 	{
-		typeof(System.Linq.Expressions.LambdaExpression),
+		typeof(Rocks.Arg),
 	};
 
 	TestGenerator.Generate(new RockGenerator(),
@@ -45,16 +45,26 @@ static void TestWithCode()
 		using Rocks;
 		using System;
 				
-		[assembly: Rock(typeof(MonadIO<>), BuildType.Create)]
+		[assembly: Rock(typeof(IOptionMonad<>), BuildType.Create)]
 
-		public interface K<in F, A> { }
+		public readonly ref struct Variant { }
 
-		public class IO { }
-
-		public interface MonadIO<M> where M : MonadIO<M>
+		public interface IFunctional
 		{
-			static K<M, A> LiftIO<A>(K<IO, A> ma) => null!;
+		    void DynamicInvoke(scoped ref readonly Variant args, int count, scoped Variant result);
 		}
+
+		public interface ISupplier<out TResult> 
+			: IFunctional
+		    where TResult : allows ref struct
+		{
+		    TResult Invoke();
+
+			 void IFunctional.DynamicInvoke(ref readonly Variant args, int count, scoped Variant result) => Invoke();
+		}
+
+		public interface IOptionMonad<T> 
+			: ISupplier<object?> { }
 		""",
 		typesToLoadAssembliesFrom);
 }
@@ -81,7 +91,7 @@ static void TestWithType()
 #pragma warning disable EF9100 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 #pragma warning disable CS0618 // Type or member is obsolete
    (var issues, var times) = TestGenerator.Generate(new RockGenerator(),
-		[typeof(System.Reactive.PlatformServices.IExceptionServices)],
+		[typeof(MassTransit.SendHeaders)],
 		typesToLoadAssembliesFrom,
 		[], BuildType.Create);
 #pragma warning restore CS0618 // Type or member is obsolete
@@ -218,7 +228,6 @@ static async Task TestWithTypesAsync()
 		new (typeof(Sigil.CatchBlock), []),
 		new (typeof(Silk.NET.Core.Attributes.CountAttribute), []),
 		new (typeof(SimpleInjector.ActivationException), []),
-		new (typeof(SixLabors.ImageSharp.GraphicsOptions), []),
 		new (typeof(SkiaSharp.GRBackend), []),
 		new (typeof(StackExchange.Redis.Aggregate), []),
 		new (typeof(Stateless.FiringMode), []),

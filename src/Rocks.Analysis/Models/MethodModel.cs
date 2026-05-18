@@ -1,7 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Analysis.Builders.Create;
 using Rocks.Analysis.Extensions;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace Rocks.Analysis.Models;
 
@@ -91,6 +90,10 @@ internal sealed record MethodModel
 	// for the related adornments type.
 	private string GetHash()
 	{
+		var typeArgumentsNamingContext = this.IsGenericMethod ?
+			new TypeArgumentsNamingContext(this) :
+			new TypeArgumentsNamingContext();
+
 		// We add the containing type name if it needs explicit implementation
 		// to prevent collisions between members on multiple interfaces.
 		// See ExplicitInterfaceImplementationTests in IntegrationTests
@@ -106,6 +109,8 @@ internal sealed record MethodModel
 					var name = parameter.Type.FullyQualifiedName;
 					return $"{name}{direction}";
 				}).Concat(
+					this.Constraints.Select(_ => _.ToString(typeArgumentsNamingContext, this)))
+				.Concat(
 					[
 						this.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
 							this.ContainingType.FullyQualifiedName :

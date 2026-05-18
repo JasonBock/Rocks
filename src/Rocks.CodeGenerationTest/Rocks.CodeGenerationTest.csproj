@@ -114,7 +114,6 @@
 		<PackageReference Include="Sigil" />
 		<PackageReference Include="Silk.NET" />
 		<PackageReference Include="SimpleInjector" />
-		<PackageReference Include="SixLabors.ImageSharp" />
 		<PackageReference Include="SkiaSharp" />
 		<PackageReference Include="SSH.NET" />
 		<PackageReference Include="StackExchange.Redis" />
