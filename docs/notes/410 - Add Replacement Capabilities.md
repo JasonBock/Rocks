@@ -56,8 +56,8 @@ internal void Remove(Adornment0 adornment)
     * `T? Get<T>(string key, T? defaultValue = null) where T : struct;`
 * DONE - Update **all** NuGet package references
 * DONE - Run code gen tests, all should pass.
-* If perf is good, remove `Handlers` file as it is no longer needed. Also, look for and remove any commented code with "Handlers<" in it.
-* Update unit tests with new gen'd code, all should pass.
+* DONE - If perf is good, remove `Handlers` file as it is no longer needed. Also, look for and remove any commented code with "Handlers<" in it.
+* NAH (do it later) - Update unit tests with new gen'd code, all should pass.
 * Update docs to reflect new feature
 
 TODO:

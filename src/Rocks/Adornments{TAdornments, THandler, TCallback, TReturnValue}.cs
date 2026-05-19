@@ -62,6 +62,34 @@ public class Adornments<TAdornments, THandler, TCallback, TReturnValue>
 	}
 
 	/// <summary>
+	/// Sets the exception that will be thrown when the member is invoked.
+	/// </summary>
+	/// <typeparam name="TException">The type of the exception.</typeparam>
+	/// <returns>The adornments instance.</returns>
+	/// <exception cref="ExpectationException">Thrown if the mock instance has already been made.</exception>
+	public TAdornments Throws<TException>() where TException : Exception, new()
+	{
+		ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+		this.Handler.Exception = new TException();
+		return (TAdornments)this;
+	}
+
+	/// <summary>
+	/// Sets the exception that will be thrown when the member is invoked.
+	/// </summary>
+	/// <param name="exception">The exception instance to throw.</param>
+	/// <returns>The adornments instance.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="exception"/> is <see langword="null" />.</exception>
+	/// <exception cref="ExpectationException">Thrown if the mock instance has already been made.</exception>
+	public TAdornments Throws(Exception exception)
+	{
+		ArgumentNullException.ThrowIfNull(exception);
+		ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+		this.Handler.Exception = exception;
+		return (TAdornments)this;
+	}
+
+	/// <summary>
 	/// Sets the handler with a return value and returns itself.
 	/// </summary>
 	/// <param name="returnValue">The return value.</param>

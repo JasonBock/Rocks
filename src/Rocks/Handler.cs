@@ -49,4 +49,8 @@ public abstract class Handler
 	/// Gets or set the expected call count.
 	/// </summary>
 	public uint ExpectedCallCount { get; set; }
+	/// <summary>
+	/// Gets or sets the exception.
+	/// </summary>
+	public Exception? Exception { get; set; }
 }
