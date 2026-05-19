@@ -214,7 +214,11 @@ internal static class MockMethodBuilder
 	internal static void BuildMethodHandler(IndentedTextWriter writer, MethodModel method,
 		VariablesNamingContext namingContext, bool raiseEvents, bool shouldThrowDoesNotReturnException)
 	{
-		writer.WriteLine($"@{namingContext["handler"]}.CallCount++;");
+		writer.WriteLines(
+			$$"""
+			@{{namingContext["handler"]}}.CallCount++;
+			if (@{{namingContext["handler"]}}.Exception is not null) { throw @{{namingContext["handler"]}}.Exception; }
+			""");
 
 		var methodArguments = method.Parameters.Length == 0 ? string.Empty :
 			string.Join(", ", method.Parameters.Select(

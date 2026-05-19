@@ -27,6 +27,7 @@ internal static class MockPropertyBuilder
 				{
 					var @handler = this.{{type.ExpectationsPropertyName}}.handlers{{memberIdentifier}}[0];
 					@handler.CallCount++;
+					if (@handler.Exception is not null) { throw @handler.Exception; }
 			""");
 		writer.Indent += 2;
 
@@ -120,6 +121,7 @@ internal static class MockPropertyBuilder
 						if (@handler.value.IsValid(value!))
 						{
 							@handler.CallCount++;
+							if (@handler.Exception is not null) { throw @handler.Exception; }
 							@foundMatch = true;
 							@handler.Callback?.Invoke(value!);
 			""");
