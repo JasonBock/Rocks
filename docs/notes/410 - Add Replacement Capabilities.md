@@ -51,11 +51,11 @@ internal void Remove(Adornment0 adornment)
     * DONE - `IndexerExpectationsIndexerBuilder`: When referencing and constructing the adornment
     * DONE - `MockAdornmentsBuilder`: When defining and referencing the adornment
     * DONE - Final check: Look for the string "AdornmentsForHandler" for any stragglers that I missed.
-* We need more than just the parameter types and `ref/out`. We need to include constraints as well. (Note, I checked, nullability does not matter for overloading, they're considered the same). These two methods are valid overloads, but my current scheme will gen the same hash code for both, which causes all sorts of errors:
+* DONE - We need more than just the parameter types and `ref/out`. We need to include constraints as well. (Note, I checked, nullability does not matter for overloading, they're considered the same). These two methods are valid overloads, but my current scheme will gen the same hash code for both, which causes all sorts of errors:
     * `T? Get<T>(string key, T? defaultValue = null) where T : class;`
     * `T? Get<T>(string key, T? defaultValue = null) where T : struct;`
-* Update **all** NuGet package references
-* Run code gen tests, all should pass.
+* DONE - Update **all** NuGet package references
+* DONE - Run code gen tests, all should pass.
 * If perf is good, remove `Handlers` file as it is no longer needed. Also, look for and remove any commented code with "Handlers<" in it.
 * Update unit tests with new gen'd code, all should pass.
 * Update docs to reflect new feature

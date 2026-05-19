@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added the ability to remove adornments from an expectation, and an expectation from a context (issue [#410](https://github.com/JasonBock/Rocks/issues/410))
+- Added the ability to remove adornments from an expectation and an expectation from a context (issue [#410](https://github.com/JasonBock/Rocks/issues/410))
 
 ## [10.2.0] - 2026-05-04
 

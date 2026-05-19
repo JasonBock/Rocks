@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using System.Numerics;
 
 namespace Rocks.Analysis.IntegrationTests.RemovalTestTypes;
 
@@ -19,7 +18,7 @@ internal sealed class RemovalTests
 	private ICustomerServiceCreateExpectations customerExpectations;
 	private RetrieveAdornment retrieveAdornments;
 
-   [SetUp]
+	[SetUp]
 	public void SetUp()
 	{
 		this.context = new();
@@ -48,13 +47,13 @@ internal sealed class RemovalTests
 	{
 		this.context.Remove(this.customerExpectations);
 		this.customerExpectations = this.context.Create<ICustomerServiceCreateExpectations>();
-		this.customerExpectations.Setups.Retrieve(456).ReturnValue(new Customer("Joe"));
+		this.customerExpectations.Setups.Retrieve(789).ReturnValue(new Customer("John"));
 		var customerService = this.customerExpectations.Instance();
-		Assert.That(customerService.Retrieve(456).Name, Is.EqualTo("Joe"));
+		Assert.That(customerService.Retrieve(789).Name, Is.EqualTo("John"));
 	}
 
 	[TearDown]
-   public void TearDown() => this.context.Dispose();
+	public void TearDown() => this.context.Dispose();
 }
 
 internal static class RemovalParallelTests
@@ -86,23 +85,4 @@ internal static class RemovalParallelTests
 		Assert.That(customerService.Retrieve(456).Name, Is.EqualTo("Joe"));
 		context.Dispose();
 	}
-}
-
-public class DelegateHolder
-	 : IEquatable<DelegateHolder>, IEqualityOperators<DelegateHolder, DelegateHolder, bool>
-{
-	private readonly Delegate @delegate;
-
-	public DelegateHolder(Delegate @delegate) =>
-		 this.@delegate = @delegate;
-
-   public override bool Equals(object? obj) => 
-		obj is DelegateHolder holder && this.Equals(holder);
-
-	public bool Equals(DelegateHolder? other) => EqualityComparer<Delegate>.Default.Equals(this.@delegate, other?.@delegate);
-
-	public override int GetHashCode() => HashCode.Combine(this.@delegate);
-
-	public static bool operator ==(DelegateHolder? left, DelegateHolder? right) => left?.Equals(right) ?? false;
-	public static bool operator !=(DelegateHolder? left, DelegateHolder? right) => !(left == right);
 }
