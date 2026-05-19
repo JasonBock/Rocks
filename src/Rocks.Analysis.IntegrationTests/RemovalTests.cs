@@ -2,6 +2,7 @@
 
 namespace Rocks.Analysis.IntegrationTests.RemovalTestTypes;
 
+using static Rocks.Analysis.IntegrationTests.RemovalTestTypes.ICustomerServiceCreateExpectations.Adornments;
 using RetrieveAdornment = ICustomerServiceCreateExpectations.Adornments.RetrieveAdornments14C3B8D6;
 
 public sealed record Customer(string Name);
@@ -16,7 +17,7 @@ internal sealed class RemovalTests
 {
 	private RockContext context;
 	private ICustomerServiceCreateExpectations customerExpectations;
-	private RetrieveAdornment retrieveAdornments;
+	private RetrieveAdornments14C3B8D6 retrieveAdornments;
 
 	[SetUp]
 	public void SetUp()

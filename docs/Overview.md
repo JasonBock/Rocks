@@ -18,6 +18,7 @@
     - [Handling Asynchronous Code](#handling-asynchronous-code)
     - [`dynamic` Types](#dynamic-types)
     - ["Special" Types](#special-types)
+    - [Replacements](#replacements)
   - [Using Makes](#using-makes)
   - [Manually Creating Intermediary Types](#manually-creating-intermediary-types)
 - [Conclusion](#conclusion)
@@ -57,7 +58,8 @@ The following sections will clarify different aspects of this flow.
 
 Keep in mind that Rocks should let you override or implement any member on the type you are targeting if it can (e.g. the given type is not `sealed`). That is one of the core design goals of Rocks. As of `9.0.0`, the only known feature that Rocks does not support is static abstract members in interfaces, but there is an [issue](https://github.com/JasonBock/Rocks/issues/311) to track work to make this happen.
 
-> Note: if you use Rocks and you get an error akin to having a `Microsoft.CodeAnalysis` version mismatch, you may need to update the version of the .NET SDK you have installed.
+> [!NOTE]
+> If you use Rocks and you get an error akin to having a `Microsoft.CodeAnalysis` version mismatch, you may need to update the version of the .NET SDK you have installed.
 
 ### Mocking Simple Methods
 
@@ -121,7 +123,8 @@ With `RockPartialAttribute`, you can define the name of the expectations type, i
 
 Once you set your expectations, you can create an instance of the mock from the generated `Instance()` method. If the target type has multiple constructors with different parameters, `Instace()` methods will generated for each constructor - constructors will be covered in detail in [this section](#passing-constructor-arguments-to-a-mock).
 
-Note that all mocks generated with Rocks are strict. That is, if you didn't set up an expectation for the `TargetAction()` call, the `Verify()` call would fail with a `VerificationException`. This exception type provided details on why verification failed.
+> [!NOTE]
+> All mocks generated with Rocks are strict. That is, if you didn't set up an expectation for the `TargetAction()` call, the `Verify()` call would fail with a `VerificationException`. This exception type provided details on why verification failed.
 
 With 9.1.0, Rocks now includes a refactoring that makes it easier to create a `[Rock]` definition when you're in an IDE like Visual Studio or Rider. If your cursor is on an identifier name, a type definition, or other elements in your code, you can use your IDE to invoke a refactoring. The following screenshot shows you what this looks like in Visual Studio:
 
@@ -339,7 +342,8 @@ expectations.Verify();
 
 This allows for more flexibility, in that only one set of supporting types are generated for the target type.
 
-> Note: With 8.3.0, if you declare a closed generic, Rocks will create a `ROCK14` diagnostic as a warning. In 9.0.0, this becomes an error.
+> [!NOTE]
+> With 8.3.0, if you declare a closed generic, Rocks will create a `ROCK14` diagnostic as a warning. In 9.0.0, this becomes an error.
 
 ### Mocking Methods with `ref/out/in` Parameters or `ref readonly` Return Values
 
@@ -406,7 +410,7 @@ var value = mock.GetterAndSetter;
 expectations.Verify();
 ```
 
-In this case, when the getter is used for `GetterAndSetter`, it'll return the default value for a `string`. Note that you can also set up callbacks and expected call counts just like you can with methods.
+In this case, when the getter is used for `GetterAndSetter`, it'll return the default value for a `string`. You can also set up callbacks and expected call counts just like you can with methods.
 
 The `init` feature was added with C# 9, and `required` properties were added with C# 11. Starting with Rocks `7.0.0`, there's a way to set these properties when the mock is created. A type called `ConstructorProperties` is created that contains all of the `required` and `init` properties, and an instance of this type can be given as the first argument to the generated `Instance()` methods:
 
@@ -491,7 +495,7 @@ expectations.Verify();
 
 Rocks generates extension methods for every adornments object (which is returned when an expectation is set). The naming pattern is `Raise{Event name}`. There is an `AddRaiseEvent()` method you can call directly, but the extension methods makes it convenient to pass in the right event name and its' corresponding event argument value.
 
-Note that these extension methods won't be created if the mock type is generic, an open generic is requested, and there are events on the mock type. This is due to the way the extension methods are created. This situation should be relative rare, and `AddRaiseEvent()` can still be used in this case. (This limitation is being tracked with [this issue](https://github.com/JasonBock/Rocks/issues/309) - hopefully this will be resolved in the future.)
+Keep in mind that these extension methods won't be created if the mock type is generic, an open generic is requested, and there are events on the mock type. This is due to the way the extension methods are created. This situation should be relative rare, and `AddRaiseEvent()` can still be used in this case. (This limitation is being tracked with [this issue](https://github.com/JasonBock/Rocks/issues/309) - hopefully this will be resolved in the future.)
 
 ### Optional Arguments
 
@@ -613,12 +617,77 @@ mock.PointerParameter(&value);
 expectations.Verify();
 ```
 
-Note that `value` would be equal to 20 after `PointerParameter()` is called.
+In this code, `value` would be equal to 20 after `PointerParameter()` is called.
 
 > [!WARNING]
 > Unmanaged function pointers are supported, as the code generated by Rocks allows you to do pointer comparisons for verification by disabling the `CS8909` warning. However, this may not work as expected, as you may get different pointer values for the same function. Please refer to the following links for more information:
 > * https://github.com/dotnet/docs/issues/28782 (see "Comment 5")
 > * https://github.com/dotnet/roslyn/issues/48919
+
+### Replacements
+
+Most of the time, mocks are set up and used by the code under test. Sometimes, though, you may have a suite of tests where the majority of the tests use the same exact setups except for a few tests. As of 10.3.0, you can now replace individual setups or an entire expectation object from a `RockContext` instance. Here's an example using NUnit:
+
+```c#
+using RetrieveAdornment = ICustomerServiceCreateExpectations.Adornments.RetrieveAdornments14C3B8D6;
+
+public sealed record Customer(string Name);
+
+public interface ICustomerService
+{
+	Customer Retrieve(uint id);
+}
+
+[NonParallelizable]
+internal sealed class RemovalTests
+{
+	private RockContext context;
+	private ICustomerServiceCreateExpectations customerExpectations;
+	private RetrieveAdornment retrieveAdornments;
+
+	[SetUp]
+	public void SetUp()
+	{
+		this.context = new();
+		this.customerExpectations = this.context.Create<ICustomerServiceCreateExpectations>();
+		this.retrieveAdornments = this.customerExpectations.Setups.Retrieve(123).ReturnValue(new Customer("Jane"));
+	}
+
+	[Test]
+	public void RetrieveCustomer()
+	{
+		var customerService = this.customerExpectations.Instance();
+		Assert.That(customerService.Retrieve(123).Name, Is.EqualTo("Jane"));
+	}
+
+	[Test]
+	public void RetrieveDifferentCustomerViaAdornmentChange()
+	{
+		this.customerExpectations.Remove(this.retrieveAdornments);
+		this.retrieveAdornments = this.customerExpectations.Setups.Retrieve(456).ReturnValue(new Customer("Joe"));
+		var customerService = this.customerExpectations.Instance();
+		Assert.That(customerService.Retrieve(456).Name, Is.EqualTo("Joe"));
+	}
+
+	[Test]
+	public void RetrieveDifferentCustomerViaExpectationsChange()
+	{
+		this.context.Remove(this.customerExpectations);
+		this.customerExpectations = this.context.Create<ICustomerServiceCreateExpectations>();
+		this.customerExpectations.Setups.Retrieve(789).ReturnValue(new Customer("John"));
+		var customerService = this.customerExpectations.Instance();
+		Assert.That(customerService.Retrieve(789).Name, Is.EqualTo("John"));
+	}
+
+	[TearDown]
+	public void TearDown() => this.context.Dispose();
+}
+```
+
+In this case, the adornments are captured in `Setup()` so they can be removed in the `RetrieveDifferentCustomerViaAdornmentChange()` test. Note that the adornments name uses a hash code at the end to ensure the name stays the same even if the target mock type changes. `RetrieveDifferentCustomerViaExpectationsChange()` shows that an entire expectation object can be removed and replaced with a new one.
+
+> [!NOTE]
+> You have always been able to change the adornments of a setup (e.g. the `ReturnValue()`) whenever you want. In 10.3.0, a small bug was fixed to prevent the adornments from changing once the mock is made.
 
 ## Using Makes
 
@@ -664,7 +733,8 @@ var producedValue = uses.GetValue();
 // producedValue and valueMock are the same references.
 ```
 
-Note that makes do no have any expectations set up on them so they can't be verified. If you call a method on a make that returns a value, it'll return the default value of the return type - the same thing applies for getters on properties and indexers.
+> [!NOTE] 
+> Makes do no have any expectations set up on them so they can't be verified. If you call a method on a make that returns a value, it'll return the default value of the return type - the same thing applies for getters on properties and indexers.
 
 ## Manually Creating Intermediary Types
 
