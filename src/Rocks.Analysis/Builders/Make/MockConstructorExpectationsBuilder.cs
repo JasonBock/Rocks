@@ -26,7 +26,7 @@ internal static class MockConstructorExpectationsBuilder
 			// Generate the ConstructorProperties class
 			// and generate the object initialization syntax that will be used
 			// in the Instance() methods.
-			writer.WriteLine("internal sealed class ConstructorProperties");
+			writer.WriteLine($"{mockType.Accessibility} sealed class ConstructorProperties");
 
 			if (requiredInitIndexers.Length > 0)
 			{
@@ -77,7 +77,7 @@ internal static class MockConstructorExpectationsBuilder
 						$"({string.Join(", ", indexer.Parameters.Select(p => p.Name))})";
 					writer.WriteLines(
 						$$"""
-						internal {{indexer.Type.FullyQualifiedName}} this[{{string.Join(", ", indexer.Parameters.Select(p => $"{p.Type.FullyQualifiedName} {p.Name}"))}}]
+						{{mockType.Accessibility}} {{indexer.Type.FullyQualifiedName}} this[{{string.Join(", ", indexer.Parameters.Select(p => $"{p.Type.FullyQualifiedName} {p.Name}"))}}]
 						{
 							get => this.i{{i}}[{{indexerKey}}];
 							init => this.i{{i}}[{{indexerKey}}] = value;
@@ -100,7 +100,7 @@ internal static class MockConstructorExpectationsBuilder
 				var isRequired = requiredInitProperty.IsRequired ? "required " : string.Empty;
 				var propertyTypeName = requiredInitProperty.Type.FullyQualifiedName;
 				writer.WriteLine(
-					$"internal {isRequired}{propertyTypeName}{propertyNullability} {requiredInitProperty.Name} {{ get; init; }}");
+					$"{mockType.Accessibility} {isRequired}{propertyTypeName}{propertyNullability} {requiredInitProperty.Name} {{ get; init; }}");
 			}
 
 			writer.Indent--;
@@ -112,20 +112,20 @@ internal static class MockConstructorExpectationsBuilder
 		{
 			foreach (var constructor in mockType.Constructors)
 			{
-				Build(writer, mockType.Type,
-						constructor.Parameters, constructorProperties.Length > 0,
-						hasRequiredProperties, expectationsFullyQualifiedName);
+				MockConstructorExpectationsBuilder.Build(writer, mockType,
+					constructor.Parameters, constructorProperties.Length > 0,
+					hasRequiredProperties, expectationsFullyQualifiedName);
 			}
 		}
 		else
 		{
-			Build(writer, mockType.Type,
-				  [], requiredInitProperties.Length > 0 || requiredInitIndexers.Length > 0,
-				  hasRequiredProperties, expectationsFullyQualifiedName);
+			MockConstructorExpectationsBuilder.Build(writer, mockType,
+				[], requiredInitProperties.Length > 0 || requiredInitIndexers.Length > 0,
+				hasRequiredProperties, expectationsFullyQualifiedName);
 		}
 	}
 
-	private static void Build(IndentedTextWriter writer, ITypeReferenceModel type, ImmutableArray<ParameterModel> parameters,
+	private static void Build(IndentedTextWriter writer, TypeMockModel type, ImmutableArray<ParameterModel> parameters,
 		bool requiredInitObjectInitialization, bool hasRequiredProperties, string expectationsFullyQualifiedName)
 	{
 		var namingContext = new VariablesNamingContext(parameters);
@@ -165,7 +165,7 @@ internal static class MockConstructorExpectationsBuilder
 				return $"{direction}@{_.Name}{requiresNullable}";
 			})));
 
-		writer.WriteLine($"internal {(isUnsafe ? "unsafe " : string.Empty)}{type.FullyQualifiedName} Instance({instanceParameters})");
+		writer.WriteLine($"{type.Accessibility} {(isUnsafe ? "unsafe " : string.Empty)}{type.Type.FullyQualifiedName} Instance({instanceParameters})");
 		writer.WriteLine("{");
 		writer.Indent++;
 
