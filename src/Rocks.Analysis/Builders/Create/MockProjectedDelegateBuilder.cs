@@ -37,6 +37,6 @@ internal static class MockProjectedDelegateBuilder
 		}));
 		var isUnsafe = method.IsUnsafe ? "unsafe " : string.Empty;
 
-		return $"internal {isUnsafe}delegate {returnType} CallbackForHandler({methodParameters});";
+		return $"{isUnsafe}delegate {returnType} CallbackForHandler({methodParameters});";
 	}
 }

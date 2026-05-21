@@ -4,6 +4,7 @@
   - [Creating Mocks](#creating-mocks)
     - [API Generation](#api-generation)
     - [Mocking Simple Methods](#mocking-simple-methods)
+    - [Code Generation Accessibility](#gode-generation-accessibility)
     - [Parameter Verification](#parameter-verification)
     - [Method Call Counts](#method-call-counts)
     - [Implementing Handled Methods](#implementing-handled-methods)
@@ -133,6 +134,25 @@ With 9.1.0, Rocks now includes a refactoring that makes it easier to create a `[
 The target type will depend on where your cursor is in the file.
 
 You can define a `<RocksAttributeFile>` project property to specify a file that the `[Rock]` definition will be created (you'll also need to define that property name using `<CompilerVisibleProperty>`). If you don't do this, the new definition will be created in the same file where the refactoring was invoked. For an example, look at the `Rocks.Scenarios.csproj` file in the `Rocks.Scenarios` solution with the Rocks repository.
+
+### Code Generation Accessibility
+
+In 10.3.0, you can now specify the accessibility of the generated mock members. This is useful if you're building a library that's used by other testing libraries and you want to easily share the generated code that Rocks make. To do this using `RockAttribute`, you set the `codeAccessibility` parameter:
+
+```c#
+[assembly: Rock(typeof(IAmSimple), BuildType.Create, CodeAccessibility.Public)]
+```
+
+The default value is `CodeAccessibility.Internal` as that's what Rocks did before 10.3.0. Setting it to `CodeAccessibility.Public` will make **all** generated types and their members needed for mocking `public`. Setting it to `CodeAccessibility.Internal` makes them `internal`.
+
+For `RockPartialAttribute`, the accessibility of the partial type dictates the accessibility of the generated members:
+
+```c#
+[RockPartial(typeof(IAmSimple), BuildType.Create)]
+internal sealed partial class SimpleExpectations;
+```
+
+In this case, all of the generated code will have `internal` accessibility.
 
 ### Parameter Verification
 

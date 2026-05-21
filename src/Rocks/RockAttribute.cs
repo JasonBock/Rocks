@@ -12,9 +12,9 @@ public sealed class RockAttribute
 	/// </summary>
 	/// <param name="mockType">The type to mock.</param>
 	/// <param name="buildType">The type of mock to build.</param>
-	/// <param name="codeVisibility">The visibility of the mock members, defaults to <see cref="CodeAccessibility.Internal"/>.</param>
-	public RockAttribute(Type mockType, BuildType buildType, CodeAccessibility codeVisibility = CodeAccessibility.Internal) =>
-		(this.MockType, this.BuildType, this.CodeVisibility) = (mockType, buildType, codeVisibility);
+	/// <param name="codeAccessibility">The visibility of the mock members, defaults to <see cref="CodeAccessibility.Internal"/>.</param>
+	public RockAttribute(Type mockType, BuildType buildType, CodeAccessibility codeAccessibility = CodeAccessibility.Internal) =>
+		(this.MockType, this.BuildType, this.CodeAccessibility) = (mockType, buildType, codeAccessibility);
 
 	/// <summary>
 	/// Gets the kind of mock to build.
@@ -23,7 +23,7 @@ public sealed class RockAttribute
 	/// <summary>
 	/// Gets the visibility of generated members.
 	/// </summary>
-	public CodeAccessibility CodeVisibility { get; }
+	public CodeAccessibility CodeAccessibility { get; }
 	/// <summary>
 	/// Gets the type to mock.
 	/// </summary>

@@ -8,9 +8,9 @@ namespace Rocks.Analysis.Builders.Create;
 
 internal sealed class RockProjectionBuilder
 {
-	internal RockProjectionBuilder(ITypeReferenceModel projection)
+	internal RockProjectionBuilder(ITypeReferenceModel projection, string accessibility)
 	{
-		this.ProjectedType = projection;
+		(this.ProjectedType, this.Accessibility) = (projection, accessibility);
 		(this.Name, this.Text) = this.Build();
 	}
 
@@ -37,7 +37,7 @@ internal sealed class RockProjectionBuilder
 			
 			""");
 
-		ProjectionBuilder.Build(indentWriter, this.ProjectedType);
+		ProjectionBuilder.Build(indentWriter, this.ProjectedType, this.Accessibility);
 
 		indentWriter.WriteLines(
 			"""
@@ -55,7 +55,8 @@ internal sealed class RockProjectionBuilder
 		return ($"{name}_Projection.g.cs", text);
 	}
 
+	private string Accessibility { get; }
 	public string Name { get; private set; }
-	public SourceText Text { get; private set; }
 	private ITypeReferenceModel ProjectedType { get; }
+	public SourceText Text { get; private set; }
 }

@@ -64,7 +64,7 @@ internal static class MockHandlerListBuilder
 
 			if (method.RequiresProjectedDelegate)
 			{
-				writer.WriteLine(MockProjectedDelegateBuilder.GetProjectedDelegate(method));
+				writer.WriteLine($"{mockType.Accessibility} {MockProjectedDelegateBuilder.GetProjectedDelegate(method)}");
 			}
 
 			var names = HandlerVariableNamingContext.Create();

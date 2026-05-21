@@ -148,13 +148,13 @@ internal sealed class RockGenerator
 
 	private static void CreateCombinedOutput((ImmutableArray<MockModelInformation> leftMocks, ImmutableArray<MockModelInformation> rightMocks) mocks, SourceProductionContext context)
 	{
-		var projections = new HashSet<ITypeReferenceModel>();
+		var projections = new HashSet<(ITypeReferenceModel typeReferenceModel, string accessibility)>();
 
 		foreach (var mock in mocks.leftMocks)
 		{
 			foreach (var projection in mock.Type.Projections)
 			{
-				projections.Add(projection);
+				_ = projections.Add((projection, mock.Type.Accessibility));
 			}
 
 			if (mock.BuildType.HasFlag(BuildType.Create))
@@ -174,7 +174,7 @@ internal sealed class RockGenerator
 		{
 			foreach (var projection in mock.Type.Projections)
 			{
-				projections.Add(projection);
+				_ = projections.Add((projection, mock.Type.Accessibility));
 			}
 
 			if (mock.BuildType.HasFlag(BuildType.Create))
@@ -194,9 +194,9 @@ internal sealed class RockGenerator
 		{
 			var projectionFileNames = new HashSet<string>();
 
-			foreach (var projection in projections)
+			foreach (var (projection, accessibility) in projections)
 			{
-				var builder = new RockProjectionBuilder(projection);
+				var builder = new RockProjectionBuilder(projection, accessibility);
 
 				if (projectionFileNames.Add(builder.Name))
 				{
