@@ -83,8 +83,8 @@ internal static class TestGenerator
 		var initialTypes = targetAssemblies.SelectMany(_ =>
 			_.GetTypes().Where(
 				_ => _.IsPublic &&
-				!_.IsSubclassOf(typeof(Delegate)) && 
-				!_.IsValueType && 
+				!_.IsSubclassOf(typeof(Delegate)) &&
+				!_.IsValueType &&
 				!_.IsSealed &&
 				_.FullName is not null &&
 				!typesToIgnore.Contains(_)))
@@ -169,8 +169,8 @@ internal static class TestGenerator
 			var methodSymbol = model.GetDeclaredSymbol(methodNode)!;
 			var typeSymbol = methodSymbol.Parameters[0].Type.OriginalDefinition;
 
-			if (MockModel.Create(methodNode, typeSymbol, null, new(model), 
-				isCreate ? Analysis.BuildType.Create : Analysis.BuildType.Make, 
+			if (MockModel.Create(methodNode, typeSymbol, null, new(model),
+				isCreate ? Analysis.BuildType.Create : Analysis.BuildType.Make,
 				Analysis.CodeAccessibility.Public,
 				true).Information is not null)
 			{
@@ -185,11 +185,11 @@ internal static class TestGenerator
 
 	internal static (ImmutableArray<Issue> issues, Times times) Generate(
 		IIncrementalGenerator generator, ImmutableArray<Type> targetTypes, ImmutableArray<Type> typesToLoadAssembliesFrom,
-		 string[] aliases, Analysis.BuildType buildType)
+		 string[] aliases, Analysis.BuildType buildType, Analysis.CodeAccessibility codeAccessibility)
 	{
 		var issues = new List<Issue>();
 		var assemblies = targetTypes.Select(_ => _.Assembly).ToHashSet();
-		var code = GetCode(targetTypes, buildType, aliases);
+		var code = GetCode(targetTypes, buildType, codeAccessibility, aliases);
 
 		var parseOptions = new CSharpParseOptions(languageVersion: LanguageVersionOption);
 		var syntaxTree = CSharpSyntaxTree.ParseText(code, options: parseOptions);
@@ -256,11 +256,11 @@ internal static class TestGenerator
 
 	internal static (ImmutableArray<Issue> issues, Times times) GenerateNoEmit(
 		IIncrementalGenerator generator, ImmutableArray<Type> targetTypes, ImmutableArray<Type> typesToLoadAssembliesFrom,
-		 string[] aliases, Analysis.BuildType buildType)
+		string[] aliases, Analysis.BuildType buildType, Analysis.CodeAccessibility codeAccessibility)
 	{
 		var issues = new List<Issue>();
 		var assemblies = targetTypes.Select(_ => _.Assembly).ToHashSet();
-		var code = GetCode(targetTypes, buildType, aliases);
+		var code = GetCode(targetTypes, buildType, codeAccessibility, aliases);
 
 		var syntaxTree = CSharpSyntaxTree.ParseText(code, options: new CSharpParseOptions(languageVersion: LanguageVersionOption));
 		var references = AppDomain.CurrentDomain.GetAssemblies()
@@ -381,7 +381,7 @@ internal static class TestGenerator
 		}
 	}
 
-	internal static string GetCode(ImmutableArray<Type> types, Analysis.BuildType buildType, string[] aliases)
+	internal static string GetCode(ImmutableArray<Type> types, Analysis.BuildType buildType, Analysis.CodeAccessibility codeAccessibility, string[] aliases)
 	{
 		using var writer = new StringWriter();
 		using var indentWriter = new IndentedTextWriter(writer, "\t");
@@ -420,7 +420,7 @@ internal static class TestGenerator
 				buildTypes.Add("BuildType.Make");
 			}
 
-			indentWriter.WriteLine($"[assembly: Rock(typeof({type.GetTypeDefinition(aliases, false)}), {string.Join(" | ", buildTypes)})]");
+			indentWriter.WriteLine($"[assembly: Rock(typeof({type.GetTypeDefinition(aliases, false)}), {string.Join(" | ", buildTypes)}, CodeAccessibility.{codeAccessibility})]");
 		}
 
 		indentWriter.WriteLine();
@@ -448,7 +448,7 @@ internal static class TestGenerator
 			}
 
 			indentWriter.WriteLine($"[RockPartial(typeof({type.GetTypeDefinition(aliases, false)}), {string.Join(" | ", buildTypes)})]");
-			indentWriter.WriteLine($"public sealed partial class {type.Name.Split("`")[0]}PartialTarget{type.GetTypeDefinitionParameters()};");
+			indentWriter.WriteLine($"{codeAccessibility.ToString().ToLowerInvariant()} sealed partial class {type.Name.Split("`")[0]}PartialTarget{type.GetTypeDefinitionParameters()};");
 
 			if (type.Namespace is not null)
 			{

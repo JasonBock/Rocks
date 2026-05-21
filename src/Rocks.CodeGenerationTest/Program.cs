@@ -5,6 +5,7 @@ using DotNet.Testcontainers.Containers;
 using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 using R3;
+using Rocks;
 using Rocks.Analysis;
 using Rocks.CodeGenerationTest;
 using Rocks.CodeGenerationTest.Extensions;
@@ -90,15 +91,17 @@ static void TestWithType()
 #pragma warning disable EF1001 // Internal EF Core API usage.
 #pragma warning disable EF9100 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 #pragma warning disable CS0618 // Type or member is obsolete
-   (var issues, var times) = TestGenerator.Generate(new RockGenerator(),
+	(var issues, var times) = TestGenerator.Generate(new RockGenerator(),
 		[typeof(MassTransit.SendHeaders)],
 		typesToLoadAssembliesFrom,
-		[], BuildType.Create);
+		[],
+		Rocks.Analysis.BuildType.Create,
+		Rocks.Analysis.CodeAccessibility.Public);
 #pragma warning restore CS0618 // Type or member is obsolete
 #pragma warning restore EF9100 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 #pragma warning restore EF1001 // Internal EF Core API usage.
 
-   Console.WriteLine($"Generation Time: {times.GeneratorTime}, Emit Time: {times.EmitTime}");
+	Console.WriteLine($"Generation Time: {times.GeneratorTime}, Emit Time: {times.EmitTime}");
 	PrintIssues(issues);
 }
 
@@ -108,7 +111,9 @@ static void TestWithTypeNoEmit()
 	{
 		(var issues, var times) = TestGenerator.GenerateNoEmit(new RockGenerator(),
 			[typeof(AngleSharp.Svg.Dom.ISvgSvgElement)],
-			[], [], BuildType.Create);
+			[], [],
+			Rocks.Analysis.BuildType.Create,
+			Rocks.Analysis.CodeAccessibility.Public);
 
 		Console.WriteLine($"Generation Time: {times.GeneratorTime}, Emit Time: {times.EmitTime}");
 		PrintIssues(issues);
@@ -289,7 +294,7 @@ static async Task TestWithTypesAsync()
 	Console.WriteLine($"Generator task count: {maximumGeneratorTasksCount}");
 
 	static async Task<GeneratorResults> Generate(
-		TypeAliasesMapping typeAliasesMapping, ImmutableArray<Type> typesToLoadAssembliesFrom)
+		TypeAliasesMapping typeAliasesMapping, ImmutableArray<Type> typesToLoadAssembliesFrom, Rocks.Analysis.CodeAccessibility codeAccessibility)
 	{
 		var targetAssemblySet = new HashSet<Assembly> { typeAliasesMapping.type.Assembly };
 
@@ -297,9 +302,9 @@ static async Task TestWithTypesAsync()
 			targetAssemblySet, [], typesToLoadAssembliesFrom, typeAliasesMapping.aliases);
 
 		(var createIssues, _) = TestGenerator.Generate(
-			new RockGenerator(), discoveredTypes, typesToLoadAssembliesFrom, typeAliasesMapping.aliases, BuildType.Create);
+			new RockGenerator(), discoveredTypes, typesToLoadAssembliesFrom, typeAliasesMapping.aliases, Rocks.Analysis.BuildType.Create, codeAccessibility);
 		(var makeIssues, _) = TestGenerator.Generate(
-			new RockGenerator(), discoveredTypes, typesToLoadAssembliesFrom, typeAliasesMapping.aliases, BuildType.Make);
+			new RockGenerator(), discoveredTypes, typesToLoadAssembliesFrom, typeAliasesMapping.aliases, Rocks.Analysis.BuildType.Make, codeAccessibility);
 
 		return new(typeAliasesMapping.type.Assembly.GetName().Name, discoveredTypes.Length, createIssues, makeIssues);
 	}
@@ -310,7 +315,8 @@ static async Task TestWithTypesAsync()
 			generatorTasks.Count < maximumGeneratorTasksCount)
 		{
 			Console.WriteLine($"Started {targetMapping.type.Assembly.GetName().Name}");
-			generatorTasks.Add(Task.Run(() => Generate(targetMapping, typesToLoadAssembliesFrom)));
+			generatorTasks.Add(Task.Run(() => Generate(targetMapping, typesToLoadAssembliesFrom, Rocks.Analysis.CodeAccessibility.Public)));
+			generatorTasks.Add(Task.Run(() => Generate(targetMapping, typesToLoadAssembliesFrom, Rocks.Analysis.CodeAccessibility.Internal)));
 		}
 
 		if (generatorTasks.Count >= maximumGeneratorTasksCount)
@@ -401,7 +407,9 @@ static async Task TestTypesIndividuallyAsync()
 			{
 				Console.WriteLine($"Generating for type {discoveredType.FullName}...");
 				(_, var generatorElapsedTime) = TestGenerator.Generate(
-					new RockGenerator(), [discoveredType], typesToLoadAssembliesFrom, targetMapping.aliases, BuildType.Create);
+					new RockGenerator(), [discoveredType], typesToLoadAssembliesFrom, targetMapping.aliases, 
+					Rocks.Analysis.BuildType.Create,
+					Rocks.Analysis.CodeAccessibility.Public);
 				typeGenerationTimes.Add(new(discoveredType, generatorElapsedTime));
 			}
 		}

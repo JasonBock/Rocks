@@ -89,7 +89,7 @@ internal sealed class RockGenerator
 							var mockType = (attributeClass.ConstructorArguments[0].Value as ITypeSymbol)!;
 							var buildType = (BuildType)attributeClass.ConstructorArguments[1].Value!;
 							// We'll use the accessibility of the partial type.
-							var codeAccessibility = mockType.DeclaredAccessibility == Accessibility.Public ? 
+							var codeAccessibility = context.TargetSymbol.DeclaredAccessibility == Accessibility.Public ? 
 								CodeAccessibility.Public : CodeAccessibility.Internal;
 							var expectationsInformationSource = (ITypeSymbol)context.TargetSymbol;
 
