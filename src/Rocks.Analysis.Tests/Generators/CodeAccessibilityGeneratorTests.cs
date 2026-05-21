@@ -261,7 +261,7 @@ internal static class CodeAccessibilityGeneratorTests
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			public sealed partial class IDoStuffExpectations
 			{
-				internal global::IDoStuff Instance()
+				public global::IDoStuff Instance()
 				{
 					return new Mock();
 				}
@@ -405,7 +405,7 @@ internal static class CodeAccessibilityGeneratorTests
 					private global::IDoStuffExpectations Expectations { get; }
 				}
 				
-				internal IDoStuffExpectations() => this.setups = new(this);
+				public IDoStuffExpectations() => this.setups = new(this);
 				
 				internal global::IDoStuff Instance()
 				{
