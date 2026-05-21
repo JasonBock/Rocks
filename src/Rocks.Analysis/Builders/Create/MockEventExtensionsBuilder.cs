@@ -17,7 +17,7 @@ internal static class MockEventExtensionsBuilder
 			writer.WriteLines(
 				$$"""
 				
-				internal static class {{adornmentsPrefixName}}AdornmentsEventExtensions
+				{{mockType.Accessibility}} static class {{adornmentsPrefixName}}AdornmentsEventExtensions
 				{
 				""");
 			writer.Indent++;
@@ -28,7 +28,7 @@ internal static class MockEventExtensionsBuilder
 			{
 				writer.WriteLines(
 					$$"""
-					internal static TAdornments Raise{{name}}<TAdornments>(this TAdornments self, {{argsType}} args) where TAdornments : {{adornmentsIntermediateInterface}} => 
+					{{mockType.Accessibility}} static TAdornments Raise{{name}}<TAdornments>(this TAdornments self, {{argsType}} args) where TAdornments : {{adornmentsIntermediateInterface}} => 
 						self.AddRaiseEvent(new("{{name}}", args));
 					""");
 			}

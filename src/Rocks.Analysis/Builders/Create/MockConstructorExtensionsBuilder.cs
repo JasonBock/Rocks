@@ -11,6 +11,8 @@ internal static class MockConstructorExtensionsBuilder
 	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType,
 		string expectationsFullyQualifiedName)
 	{
+		// This must be public
+		// due to the constraints on RockContext.Create()
 		writer.WriteLine($"public {mockType.ExpectationsNameNoGenerics}() => this.setups = new(this);");
 		writer.WriteLine();
 
@@ -29,7 +31,7 @@ internal static class MockConstructorExtensionsBuilder
 			// Generate the ConstructorProperties class
 			// and generate the object initialization syntax that will be used
 			// in the Instance() methods.
-			writer.WriteLine("internal sealed class ConstructorProperties");
+			writer.WriteLine($"{mockType.Accessibility} sealed class ConstructorProperties");
 
 			if (requiredInitIndexers.Length > 0)
 			{
@@ -83,7 +85,7 @@ internal static class MockConstructorExtensionsBuilder
 						$"({string.Join(", ", indexer.Parameters.Select(p => p.Name))})";
 					writer.WriteLines(
 						$$"""
-						internal {{indexer.Type.FullyQualifiedName}} this[{{string.Join(", ", indexer.Parameters.Select(p => $"{p.Type.FullyQualifiedName} {p.Name}"))}}]
+						{{mockType.Accessibility}} {{indexer.Type.FullyQualifiedName}} this[{{string.Join(", ", indexer.Parameters.Select(p => $"{p.Type.FullyQualifiedName} {p.Name}"))}}]
 						{
 							get => this.i{{i}}[{{indexerKey}}];
 							init => this.i{{i}}[{{indexerKey}}] = value;
@@ -106,7 +108,7 @@ internal static class MockConstructorExtensionsBuilder
 				var isRequired = requiredInitProperty.IsRequired ? "required " : string.Empty;
 				var propertyTypeName = requiredInitProperty.Type.FullyQualifiedName;
 				writer.WriteLine(
-					$"internal {isRequired}{propertyTypeName}{propertyNullability} {requiredInitProperty.Name} {{ get; init; }}");
+					$"{mockType.Accessibility} {isRequired}{propertyTypeName}{propertyNullability} {requiredInitProperty.Name} {{ get; init; }}");
 			}
 
 			writer.Indent--;
@@ -118,16 +120,16 @@ internal static class MockConstructorExtensionsBuilder
 		{
 			foreach (var constructor in mockType.Constructors)
 			{
-				Build(writer, mockType,
-						constructor.Parameters, requiredInitProperties.Length > 0 || requiredInitIndexers.Length > 0, hasRequiredProperties,
-						expectationsFullyQualifiedName);
+				MockConstructorExtensionsBuilder.Build(writer, mockType,
+					constructor.Parameters, requiredInitProperties.Length > 0 || requiredInitIndexers.Length > 0, hasRequiredProperties,
+					expectationsFullyQualifiedName);
 			}
 		}
 		else
 		{
-			Build(writer, mockType,
-				  ImmutableArray<ParameterModel>.Empty, requiredInitProperties.Length > 0 || requiredInitIndexers.Length > 0, hasRequiredProperties,
-				  expectationsFullyQualifiedName);
+			MockConstructorExtensionsBuilder.Build(writer, mockType,
+				ImmutableArray<ParameterModel>.Empty, requiredInitProperties.Length > 0 || requiredInitIndexers.Length > 0, hasRequiredProperties,
+				expectationsFullyQualifiedName);
 		}
 	}
 
@@ -171,7 +173,7 @@ internal static class MockConstructorExtensionsBuilder
 				return $"{direction}@{_.Name}{requiresNullable}";
 			})));
 
-		writer.WriteLine($"internal {(isUnsafe ? "unsafe " : string.Empty)}{mockType.Type.FullyQualifiedName} Instance({instanceParameters})");
+		writer.WriteLine($"{mockType.Accessibility} {(isUnsafe ? "unsafe " : string.Empty)}{mockType.Type.FullyQualifiedName} Instance({instanceParameters})");
 		writer.WriteLine("{");
 		writer.Indent++;
 

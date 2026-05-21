@@ -9,11 +9,12 @@ internal static class MockHandlerListBuilder
 {
 	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName)
 	{
-		BuildMethodHandlerTypes(writer, mockType, expectationsFullyQualifiedName);
-		BuildPropertyHandlerTypes(writer, mockType, expectationsFullyQualifiedName);
+		MockHandlerListBuilder.BuildMethodHandlerTypes(writer, mockType, expectationsFullyQualifiedName);
+		MockHandlerListBuilder.BuildPropertyHandlerTypes(writer, mockType, expectationsFullyQualifiedName);
 	}
 
-	private static void BuildHandler(IndentedTextWriter writer, MethodModel method, uint memberIdentifier, string expectationsFullyQualifiedName)
+	private static void BuildHandler(IndentedTextWriter writer, TypeMockModel mockType, MethodModel method, 
+		uint memberIdentifier, string expectationsFullyQualifiedName)
 	{
 		var typeArgumentsNamingContext = method.IsGenericMethod ?
 			new TypeArgumentsNamingContext(method) :
@@ -45,7 +46,7 @@ internal static class MockHandlerListBuilder
 
 		writer.WriteLines(
 			$$"""
-			internal sealed class Handler{{memberIdentifier}}{{typeArguments}}
+			{{mockType.Accessibility}} sealed class Handler{{memberIdentifier}}{{typeArguments}}
 				: {{handlerBaseType}}
 			""");
 
@@ -74,12 +75,12 @@ internal static class MockHandlerListBuilder
 
 				var argumentTypeName = ProjectionBuilder.BuildArgument(parameter.Type, typeArgumentsNamingContext, parameter.RequiresNullableAnnotation);
 
-				writer.WriteLine($"public {argumentTypeName} @{name} {{ get; set; }}");
+				writer.WriteLine($"{mockType.Accessibility} {argumentTypeName} @{name} {{ get; set; }}");
 			}
 
 			if (method.ReturnType.RequiresProjectedArgument)
 			{
-				writer.WriteLine($"public {method.ReturnType.FullyQualifiedName} ReturnValue {{ get; set; }}");
+				writer.WriteLine($"{mockType.Accessibility} {method.ReturnType.FullyQualifiedName} ReturnValue {{ get; set; }}");
 			}
 
 			writer.Indent--;
@@ -104,7 +105,7 @@ internal static class MockHandlerListBuilder
 	{
 		foreach (var method in mockType.Methods)
 		{
-			BuildHandler(writer, method, method.MemberIdentifier, expectationsFullyQualifiedName);
+			BuildHandler(writer, mockType, method, method.MemberIdentifier, expectationsFullyQualifiedName);
 		}
 	}
 
@@ -115,7 +116,7 @@ internal static class MockHandlerListBuilder
 			if (property.Accessors == PropertyAccessor.Get || property.Accessors == PropertyAccessor.Set || property.Accessors == PropertyAccessor.Init)
 			{
 				var method = property.Accessors == PropertyAccessor.Get ? property.GetMethod! : property.SetMethod!;
-				BuildHandler(writer, method, property.MemberIdentifier, expectationsFullyQualifiedName);
+				BuildHandler(writer, mockType, method, property.MemberIdentifier, expectationsFullyQualifiedName);
 			}
 			else
 			{
@@ -123,13 +124,13 @@ internal static class MockHandlerListBuilder
 
 				if (property.GetCanBeSeenByContainingAssembly)
 				{
-					BuildHandler(writer, property.GetMethod!, memberIdentifier, expectationsFullyQualifiedName);
+					BuildHandler(writer, mockType, property.GetMethod!, memberIdentifier, expectationsFullyQualifiedName);
 					memberIdentifier++;
 				}
 
 				if (property.SetCanBeSeenByContainingAssembly || property.InitCanBeSeenByContainingAssembly)
 				{
-					BuildHandler(writer, property.SetMethod!, memberIdentifier, expectationsFullyQualifiedName);
+					BuildHandler(writer, mockType, property.SetMethod!, memberIdentifier, expectationsFullyQualifiedName);
 				}
 			}
 		}

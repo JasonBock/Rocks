@@ -3,15 +3,16 @@ Create a `public enum CodeVisibility { Public, Internal }`. For `[Rock]` add ano
 There's an `Accessibility` property on `TypeMockModel`, but it's only used in two places: to declare the accessiblity for the outer expectations class for a create and make. So let's just reuse that, and then use it for all generated types:
 * Create
     * DONE - Expectations (partial or otherwise)
-    * SetupsExpectations, constructor, all setup members, and `Setups` property
-        * Method
-        * Property
-        * Indexer
-    * Handlers
-    * Expectations constructor
-    * `Instance()` methods
-    * Adornments, interface, adornments types and their constructors
-    * `Remove()` methods
+    * DONE - SetupsExpectations, constructor, all setup members, and `Setups` property
+        * DONE - Method
+        * DONE - Property
+        * DONE - Indexer
+    * DONE - Handlers
+    * DONE - Expectations constructor
+    * DONE - `Instance()` methods
+    * DONE - Adornments, interface, adornments types and their constructors
+    * DONE - `Remove()` methods
+    * DONE - Events
 * Make
     * Expectations (partial or otherwise)
     * `Instance()` methods

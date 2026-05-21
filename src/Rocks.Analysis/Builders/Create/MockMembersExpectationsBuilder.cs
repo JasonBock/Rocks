@@ -13,11 +13,11 @@ internal static class MockMembersExpectationsBuilder
 			$$"""
 			private readonly {{expectationsFullyQualifiedName}}.SetupsExpectations setups;
 
-			internal sealed class SetupsExpectations
+			{{type.Accessibility}} sealed class SetupsExpectations
 			{
 				private readonly {{expectationsFullyQualifiedName}} parent;
 
-				internal SetupsExpectations({{expectationsFullyQualifiedName}} parent) =>
+				{{type.Accessibility}} SetupsExpectations({{expectationsFullyQualifiedName}} parent) =>
 					this.parent = parent;
 
 			""");
@@ -62,11 +62,11 @@ internal static class MockMembersExpectationsBuilder
 
 			writer.WriteLines(
 				$$"""
-				internal sealed class {{explicitExpectationName}}
+				{{type.Accessibility}} sealed class {{explicitExpectationName}}
 				{
 					private readonly {{expectationsFullyQualifiedName}} parent;
 
-					internal {{explicitExpectationName}}({{expectationsFullyQualifiedName}} parent) =>
+					{{type.Accessibility}} {{explicitExpectationName}}({{expectationsFullyQualifiedName}} parent) =>
 						this.parent = parent;
 
 				""");
@@ -92,7 +92,7 @@ internal static class MockMembersExpectationsBuilder
 				$$"""
 				}
 
-				internal {{expectationsFullyQualifiedName}}.SetupsExpectations.{{explicitExpectationName}} ExplicitFor{{explicitTypeName}} => new(this.parent);
+				{{type.Accessibility}} {{expectationsFullyQualifiedName}}.SetupsExpectations.{{explicitExpectationName}} ExplicitFor{{explicitTypeName}} => new(this.parent);
 				""");
 
 			if (i != explicitTypes.Length - 1)
@@ -106,7 +106,7 @@ internal static class MockMembersExpectationsBuilder
 			$$"""
 			}
 
-			internal {{expectationsFullyQualifiedName}}.SetupsExpectations Setups => this.setups;
+			{{type.Accessibility}} {{expectationsFullyQualifiedName}}.SetupsExpectations Setups => this.setups;
 
 			""");
 	}

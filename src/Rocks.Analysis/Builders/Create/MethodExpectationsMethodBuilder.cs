@@ -78,7 +78,7 @@ internal static class MethodExpectationsMethodBuilder
 
 				writer.WriteLines(
 					$$"""
-					internal {{hiding}}{{expectationsFullyQualifiedName}}.Adornments.{{adornmentsTypeName}}{{typeArguments}} {{method.Name}}{{typeArguments}}({{instanceParameters}}){{constraints}} =>
+					{{type.Accessibility}} {{hiding}}{{expectationsFullyQualifiedName}}.Adornments.{{adornmentsTypeName}}{{typeArguments}} {{method.Name}}{{typeArguments}}({{instanceParameters}}){{constraints}} =>
 						this.{{method.Name}}{{typeArguments}}({{parameterValues}});
 					""");
 			}
@@ -86,7 +86,7 @@ internal static class MethodExpectationsMethodBuilder
 			{
 				writer.WriteLines(
 					$$"""
-					internal {{hiding}}{{expectationsFullyQualifiedName}}.Adornments.{{adornmentsTypeName}}{{typeArguments}} {{method.Name}}{{typeArguments}}({{instanceParameters}}){{constraints}}
+					{{type.Accessibility}} {{hiding}}{{expectationsFullyQualifiedName}}.Adornments.{{adornmentsTypeName}}{{typeArguments}} {{method.Name}}{{typeArguments}}({{instanceParameters}}){{constraints}}
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						var handler = new {{expectationsFullyQualifiedName}}.Handler{{method.MemberIdentifier}}{{typeArguments}}();
@@ -101,7 +101,7 @@ internal static class MethodExpectationsMethodBuilder
 				var handlerContext = new VariablesNamingContext(method);
 				writer.WriteLines(
 					$$"""
-					internal {{hiding}}{{expectationsFullyQualifiedName}}.Adornments.{{adornmentsTypeName}}{{typeArguments}} {{method.Name}}{{typeArguments}}({{instanceParameters}}){{constraints}}
+					{{type.Accessibility}} {{hiding}}{{expectationsFullyQualifiedName}}.Adornments.{{adornmentsTypeName}}{{typeArguments}} {{method.Name}}{{typeArguments}}({{instanceParameters}}){{constraints}}
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 					""");

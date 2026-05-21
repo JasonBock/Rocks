@@ -32,7 +32,7 @@ internal static class PropertyExpectationsBuilder
 
 			writer.WriteLines(
 				$$"""
-				internal sealed class Indexer{{index}}Expectations
+				{{mockType.Accessibility}} sealed class Indexer{{index}}Expectations
 				{
 					private readonly {{expectationsFullyQualifiedName}} @{{namingContext["parent"]}};
 				""");
@@ -65,7 +65,7 @@ internal static class PropertyExpectationsBuilder
 			// Constructor
 			writer.WriteLines(
 				$$"""
-				internal Indexer{{index}}Expectations({{expectationsFullyQualifiedName}} @{{namingContext["parent"]}}, {{string.Join(", ", indexerArguments)}})
+				{{mockType.Accessibility}} Indexer{{index}}Expectations({{expectationsFullyQualifiedName}} @{{namingContext["parent"]}}, {{string.Join(", ", indexerArguments)}})
 				{
 				""");
 
@@ -88,7 +88,7 @@ internal static class PropertyExpectationsBuilder
 			writer.WriteLine();
 
 			// Gets and sets
-			var constructorValues = IndexerExpectationsIndexerBuilder.Build(writer, property, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+			var constructorValues = IndexerExpectationsIndexerBuilder.Build(writer, mockType, property, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 
 			writer.Indent--;
 
@@ -96,7 +96,7 @@ internal static class PropertyExpectationsBuilder
 				$$"""
 				}
 
-				internal {{propertyExpectationsFullyQualifiedName}}.Indexer{{index}}Expectations this[{{string.Join(", ", indexerArguments)}}] => new(this.parent, {{string.Join(", ", property.Parameters.Select(parameter => $"@{parameter.Name}"))}});
+				{{mockType.Accessibility}} {{propertyExpectationsFullyQualifiedName}}.Indexer{{index}}Expectations this[{{string.Join(", ", indexerArguments)}}] => new(this.parent, {{string.Join(", ", property.Parameters.Select(parameter => $"@{parameter.Name}"))}});
 
 				""");
 
@@ -104,7 +104,7 @@ internal static class PropertyExpectationsBuilder
 			{
 				writer.WriteLines(
 					$$"""
-					internal {{propertyExpectationsFullyQualifiedName}}.Indexer{{index}}Expectations this[{{constructorValues.ConstructorParameters}}] => new(this.parent, {{constructorValues.ThisParameters}});
+					{{mockType.Accessibility}} {{propertyExpectationsFullyQualifiedName}}.Indexer{{index}}Expectations this[{{constructorValues.ConstructorParameters}}] => new(this.parent, {{constructorValues.ThisParameters}});
 
 					""");
 			}
@@ -121,11 +121,11 @@ internal static class PropertyExpectationsBuilder
 		{
 			writer.WriteLines(
 				$$"""
-				internal sealed class {{property.Name}}PropertyExpectations
+				{{mockType.Accessibility}} sealed class {{property.Name}}PropertyExpectations
 				{
 					private readonly {{expectationsFullyQualifiedName}} parent;
 
-					internal {{property.Name}}PropertyExpectations({{expectationsFullyQualifiedName}} parent) => 
+					{{mockType.Accessibility}} {{property.Name}}PropertyExpectations({{expectationsFullyQualifiedName}} parent) => 
 						this.parent = parent;
 				
 				""");
@@ -139,7 +139,7 @@ internal static class PropertyExpectationsBuilder
 				$$"""
 				}
 
-				internal {{propertyExpectationsFullyQualifiedName}}.{{property.Name}}PropertyExpectations {{property.Name}} => new(this.parent);
+				{{mockType.Accessibility}} {{propertyExpectationsFullyQualifiedName}}.{{property.Name}}PropertyExpectations {{property.Name}} => new(this.parent);
 
 				""");
 		}

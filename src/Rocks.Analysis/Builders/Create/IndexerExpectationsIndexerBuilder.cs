@@ -7,12 +7,12 @@ namespace Rocks.Analysis.Builders.Create;
 
 internal static class IndexerExpectationsIndexerBuilder
 {
-	private static IndexerConstructorDefaultValues? BuildGetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier,
-		string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
+	private static IndexerConstructorDefaultValues? BuildGetter(IndentedTextWriter writer, TypeMockModel mockType, PropertyModel property, 
+		uint memberIdentifier, string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		// isGeneratedWithDefaults really means, "do we need to generate an overload
 		// for the given method because it has optional and/or params parameters".
-		static IndexerConstructorDefaultValues? BuildGetterImplementation(IndentedTextWriter writer, PropertyModel property,
+		static IndexerConstructorDefaultValues? BuildGetterImplementation(IndentedTextWriter writer, TypeMockModel mockType, PropertyModel property,
 			uint memberIdentifier, bool isGeneratedWithDefaults,
 			string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 		{
@@ -66,7 +66,7 @@ internal static class IndexerExpectationsIndexerBuilder
 			else
 			{
 				var handlerContext = new VariablesNamingContext(property.Parameters);
-				writer.WriteLine($"internal {expectationsFullyQualifiedName}.Adornments.{adornmentsTypeName} Gets()");
+				writer.WriteLine($"{mockType.Accessibility} {expectationsFullyQualifiedName}.Adornments.{adornmentsTypeName} Gets()");
 				writer.WriteLine("{");
 				writer.Indent++;
 				writer.WriteLines(
@@ -108,19 +108,20 @@ internal static class IndexerExpectationsIndexerBuilder
 
 			if (needsGenerationWithDefaults)
 			{
-				return BuildGetterImplementation(writer, property, memberIdentifier, true, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+				return BuildGetterImplementation(writer, mockType, property, memberIdentifier, true, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 			}
 
 			return null;
 		}
 
-		return BuildGetterImplementation(writer, property, memberIdentifier, false, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+		return BuildGetterImplementation(writer, mockType, property, memberIdentifier, false, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 	}
 
-	private static IndexerConstructorDefaultValues? BuildSetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier,
-		string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
+	private static IndexerConstructorDefaultValues? BuildSetter(IndentedTextWriter writer, TypeMockModel mockType, PropertyModel property, 
+		uint memberIdentifier, string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
-		static IndexerConstructorDefaultValues? BuildSetterImplementation(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, bool isGeneratedWithDefaults,
+		static IndexerConstructorDefaultValues? BuildSetterImplementation(IndentedTextWriter writer, TypeMockModel mockType, PropertyModel property, 
+			uint memberIdentifier, bool isGeneratedWithDefaults,
 			string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 		{
 			var propertySetMethod = property.SetMethod!;
@@ -169,7 +170,7 @@ internal static class IndexerExpectationsIndexerBuilder
 				var handlerContext = new VariablesNamingContext(property.Parameters);
 				writer.WriteLines(
 					$$"""
-					internal {{expectationsFullyQualifiedName}}.Adornments.{{adornmentsTypeName}} {{name}}({{valueParameter}})
+					{{mockType.Accessibility}} {{expectationsFullyQualifiedName}}.Adornments.{{adornmentsTypeName}} {{name}}({{valueParameter}})
 					{
 					""");
 				writer.Indent++;
@@ -218,16 +219,16 @@ internal static class IndexerExpectationsIndexerBuilder
 
 			if (needsGenerationWithDefaults)
 			{
-				return BuildSetterImplementation(writer, property, memberIdentifier, true, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+				return BuildSetterImplementation(writer, mockType, property, memberIdentifier, true, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 			}
 
 			return null;
 		}
 
-		return BuildSetterImplementation(writer, property, memberIdentifier, false, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+		return BuildSetterImplementation(writer, mockType, property, memberIdentifier, false, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 	}
 
-	internal static IndexerConstructorDefaultValues? Build(IndentedTextWriter writer, PropertyModel property,
+	internal static IndexerConstructorDefaultValues? Build(IndentedTextWriter writer, TypeMockModel mockType, PropertyModel property,
 		string expectationsFullyQualifiedName, Action<AdornmentsPipeline> adornmentsFQNsPipeline)
 	{
 		var memberIdentifier = property.MemberIdentifier;
@@ -238,7 +239,7 @@ internal static class IndexerExpectationsIndexerBuilder
 		if ((property.Accessors == PropertyAccessor.Get || property.Accessors == PropertyAccessor.GetAndSet || property.Accessors == PropertyAccessor.GetAndInit) &&
 			property.GetCanBeSeenByContainingAssembly)
 		{
-			constructorValues = BuildGetter(writer, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+			constructorValues = BuildGetter(writer, mockType, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 			wasGetGenerated = true;
 		}
 
@@ -255,7 +256,7 @@ internal static class IndexerExpectationsIndexerBuilder
 				memberIdentifier++;
 			}
 
-			constructorValues = BuildSetter(writer, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+			constructorValues = BuildSetter(writer, mockType, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 		}
 
 		return constructorValues;

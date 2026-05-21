@@ -11,8 +11,8 @@ internal static class MockAdornmentsBuilder
 	{
 		// Create a class within, similar to Projection, like "internal static class Adornments"
 		writer.WriteLines(
-			"""
-			internal static class Adornments
+			$$"""
+			{{mockType.Accessibility}} static class Adornments
 			{
 			""");
 		writer.Indent++;
@@ -22,7 +22,7 @@ internal static class MockAdornmentsBuilder
 		// Create the intermediate interface.
 		writer.WriteLines(
 			$$"""
-			public interface IAdornmentsFor{{adornmentsFlattenedName}}<TAdornments>
+			{{mockType.Accessibility}} interface IAdornmentsFor{{adornmentsFlattenedName}}<TAdornments>
 				: global::Rocks.IAdornments<TAdornments>
 				where TAdornments : IAdornmentsFor{{adornmentsFlattenedName}}<TAdornments>
 			{ }
@@ -36,10 +36,10 @@ internal static class MockAdornmentsBuilder
 		{
 			writer.WriteLines(
 				$$"""
-				public sealed class {{adornments.Name}}{{adornments.TypeArguments}}
+				{{mockType.Accessibility}} sealed class {{adornments.Name}}{{adornments.TypeArguments}}
 					: {{adornments.BaseTypeName}}, IAdornmentsFor{{adornmentsFlattenedName}}<{{adornments.Name}}{{adornments.TypeArguments}}>{{adornments.Constraints}}
 				{
-					public {{adornments.Name}}({{expectationsFQN}}.Handler{{adornments.MemberIdentifier}}{{adornments.TypeArguments}} handler, global::Rocks.Expectations expectations)
+					{{mockType.Accessibility}} {{adornments.Name}}({{expectationsFQN}}.Handler{{adornments.MemberIdentifier}}{{adornments.TypeArguments}} handler, global::Rocks.Expectations expectations)
 						: base(handler, expectations) { }
 				""");
 
@@ -47,7 +47,7 @@ internal static class MockAdornmentsBuilder
 			{
 				writer.WriteLines(
 					$$"""
-						public {{adornments.Name}}{{adornments.TypeArguments}} ReturnValue({{adornments.Method.ReturnType.FullyQualifiedName}} returnValue)
+						{{mockType.Accessibility}} {{adornments.Name}}{{adornments.TypeArguments}} ReturnValue({{adornments.Method.ReturnType.FullyQualifiedName}} returnValue)
 						{
 							this.Handler.ReturnValue = returnValue;
 							return this;
@@ -78,7 +78,7 @@ internal static class MockAdornmentsBuilder
 			writer.WriteLines(
 				$$"""
 
-				internal void Remove{{adornments.TypeArguments}}({{mockType.ExpectationsFullyQualifiedName}}.Adornments.{{adornments.Name}}{{adornments.TypeArguments}} adornments){{adornments.Constraints}}
+				{{mockType.Accessibility}} void Remove{{adornments.TypeArguments}}({{mockType.ExpectationsFullyQualifiedName}}.Adornments.{{adornments.Name}}{{adornments.TypeArguments}} adornments){{adornments.Constraints}}
 				{
 					adornments.{{removeMethodName}}(this.@handlers{{adornments.MemberIdentifier}});
 					if (this.@handlers{{adornments.MemberIdentifier}}?.Count == 0) { this.@handlers{{adornments.MemberIdentifier}} = null; }
