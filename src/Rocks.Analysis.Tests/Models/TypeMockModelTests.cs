@@ -21,12 +21,13 @@ public static class TypeMockModelTests
 			}
 
 			""");
-		var mockModel = MockModel.Create(node, type, null, model, BuildType.Create, false);
+		var mockModel = MockModel.Create(node, type, null, model, 
+			BuildType.Create, CodeAccessibility.Public, false);
 		var typeModel = mockModel.Information!.Type;
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(typeModel.MemberCount.MethodCount, Is.EqualTo(0));
+			Assert.That(typeModel.MemberCount.MethodCount, Is.Zero);
 			Assert.That(typeModel.MemberCount.PropertyCount, Is.EqualTo(2));
 			Assert.That(typeModel.MemberCount.TotalCount, Is.EqualTo(2));
 		}
@@ -45,13 +46,14 @@ public static class TypeMockModelTests
 			}
 
 			""");
-		var mockModel = MockModel.Create(node, type, null, model, BuildType.Create, false);
+		var mockModel = MockModel.Create(node, type, null, model, 
+			BuildType.Create, CodeAccessibility.Public, false);
 		var typeModel = mockModel.Information!.Type;
 
 		using (Assert.EnterMultipleScope())
 		{
 			Assert.That(typeModel.MemberCount.MethodCount, Is.EqualTo(1));
-			Assert.That(typeModel.MemberCount.PropertyCount, Is.EqualTo(0));
+			Assert.That(typeModel.MemberCount.PropertyCount, Is.Zero);
 			Assert.That(typeModel.MemberCount.TotalCount, Is.EqualTo(1));
 		}
 	}
@@ -75,7 +77,8 @@ public static class TypeMockModelTests
 			}
 
 			""");
-		var mockModel = MockModel.Create(node, type, null, modelContext, BuildType.Create, false);
+		var mockModel = MockModel.Create(node, type, null, modelContext, 
+			BuildType.Create, CodeAccessibility.Public, false);
 		var typeModel = mockModel.Information!.Type;
 
 		using (Assert.EnterMultipleScope())

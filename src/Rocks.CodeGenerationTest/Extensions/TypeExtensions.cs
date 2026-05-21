@@ -68,7 +68,8 @@ internal static class TypeExtensions
 				.OfType<PropertyDeclarationSyntax>().Single();
 			var symbol = model.GetDeclaredSymbol(propertySyntax)!.Type;
 			var invocation = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("public static void Foo() { }"));
-			var mockModel = MockModel.Create(invocation, symbol!, null, new(model), Analysis.BuildType.Create, true);
+			var mockModel = MockModel.Create(invocation, symbol!, null, new(model), 
+				Analysis.BuildType.Create, Analysis.CodeAccessibility.Public, true);
 			return mockModel.Information is not null;
 		}
 

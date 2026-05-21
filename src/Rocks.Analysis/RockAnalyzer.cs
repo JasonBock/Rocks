@@ -47,7 +47,7 @@ public sealed class RockAnalyzer
 		});
 	}
 
-	// Both [Rock] and [RockPartial] take the same number of constructor arguments,
+	// Both [Rock] and [RockPartial] take the same first 2 constructor arguments,
 	// so this works.
 	private static void AnalyzeAttribute(
 		OperationAnalysisContext context, INamedTypeSymbol rockAttributeSymbol)
@@ -62,11 +62,13 @@ public sealed class RockAnalyzer
 				var mockTypeSymbol = (attribute.Arguments[0].Value as ITypeOfOperation)!.TypeOperand.OriginalDefinition;
 				var buildType = (BuildType)attribute.Arguments[1].Value!.ConstantValue.Value!;
 
+				// Note that CodeVisibility doesn't matter in the analyzer case,
+				// so we can set it to whatever we want.
 				if (buildType.HasFlag(BuildType.Create))
 				{
 					var model = MockModel.Create(context.Operation.Syntax,
 					  mockTypeSymbol, null, new ModelContext(context.Operation.SemanticModel!),
-					  BuildType.Create, true);
+					  BuildType.Create, CodeAccessibility.Public, true);
 
 					if (model.Information is null)
 					{
@@ -81,7 +83,7 @@ public sealed class RockAnalyzer
 				{
 					var model = MockModel.Create(context.Operation.Syntax,
 					  mockTypeSymbol, null, new ModelContext(context.Operation.SemanticModel!),
-					  BuildType.Make, true);
+					  BuildType.Make, CodeAccessibility.Public, true);
 
 					if (model.Information is null)
 					{

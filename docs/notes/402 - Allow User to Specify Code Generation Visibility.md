@@ -1,0 +1,1 @@
+Create a `public enum CodeVisibility { Public, Internal }`. For `[Rock]` add another parameter that's optional and set to `Internal` (as that's the default right now). `[RockPartial]` will just assume the visibility of the partial type is what should be used for all gen'd code. Pass this value along with `TypeMockModel`, which will go into `MockModelInformation`

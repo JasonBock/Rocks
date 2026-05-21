@@ -11,7 +11,7 @@ internal sealed record TypeMockModel
 		SyntaxNode node, ITypeSymbol type, ITypeSymbol? expectationsInformationSource, ModelContext modelContext,
 		ImmutableArray<IMethodSymbol> constructors, MockableMethods methods,
 		MockableProperties properties, MockableEvents events,
-		HashSet<ITypeSymbol> shims, TypeMockModelMemberCount memberCount, bool shouldResolveShims, BuildType buildType)
+		HashSet<ITypeSymbol> shims, TypeMockModelMemberCount memberCount, bool shouldResolveShims, BuildType buildType, CodeAccessibility codeVisibility)
 	{
 		var semanticModel = modelContext.SemanticModel;
 		var compilation = semanticModel.Compilation;
@@ -24,7 +24,6 @@ internal sealed record TypeMockModel
 			(this.ExpectationsName, this.ExpectationsNameNoGenerics, this.ExpectationsFullyQualifiedName, this.ExpectationsNamespace) =
 				compilation.GetExpectationsName(expectationsInformationSourceType, buildType, true);
 			this.IsPartial = true;
-			this.Accessibility = expectationsInformationSource.GetAccessibilityValue(compilation.Assembly);
 			this.ExpectationsIsSealed = expectationsInformationSourceType.TypeKind == TypeKind.Class && expectationsInformationSource.IsSealed;
 			this.AdornmentsFlattenedName = expectationsInformationSourceType.FlattenedName;
 		}
@@ -33,11 +32,12 @@ internal sealed record TypeMockModel
 			(this.ExpectationsName, this.ExpectationsNameNoGenerics, this.ExpectationsFullyQualifiedName, this.ExpectationsNamespace) =
 				compilation.GetExpectationsName(this.Type, buildType, false);
 			this.IsPartial = false;
-			this.Accessibility = "internal";
 			this.ExpectationsIsSealed = true;
 			this.AdornmentsFlattenedName = this.Type.FlattenedName;
 		}
 
+		this.CodeVisibility = codeVisibility;
+		this.Accessibility = this.CodeVisibility.ToString().ToLowerInvariant();
 		this.MemberCount = memberCount;
 
 		// TODO: Remember to sort all array so "equatable" will work,
@@ -56,7 +56,7 @@ internal sealed record TypeMockModel
 			new EventModel(_.Value, modelContext,
 				_.RequiresExplicitInterfaceImplementation, _.RequiresOverride))];
 		this.Shims = shouldResolveShims ?
-			[.. shims.Select(_ => MockModel.Create(node, _, null, modelContext, BuildType.Create, false).Information!.Type)] :
+			[.. shims.Select(_ => MockModel.Create(node, _, null, modelContext, BuildType.Create, codeVisibility, false).Information!.Type)] :
 			[];
 
 		this.ConstructorProperties = [..type.GetMembers().OfType<IPropertySymbol>()
@@ -139,6 +139,7 @@ internal sealed record TypeMockModel
 	internal string Accessibility { get; }
 	internal string AdornmentsFlattenedName { get; }
 	internal EquatableArray<string> Aliases { get; }
+	private CodeAccessibility CodeVisibility { get; }
 	internal EquatableArray<ConstructorPropertyModel> ConstructorProperties { get; }
 	internal EquatableArray<ConstructorModel> Constructors { get; }
 	internal string ExpectationsFullyQualifiedName { get; }

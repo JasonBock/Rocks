@@ -31,6 +31,7 @@ internal sealed class RockGenerator
 							var attributeClass = context.Attributes[i];
 							var mockType = (attributeClass.ConstructorArguments[0].Value as ITypeSymbol)!;
 							var buildType = (BuildType)attributeClass.ConstructorArguments[1].Value!;
+							var codeVisibility = (CodeAccessibility)attributeClass.ConstructorArguments[2].Value!;
 
 							// We should only see an unbound generic type with the "typeof(...)" case,
 							// but using "typeof(IService)" won't give an unbound generic, so
@@ -46,7 +47,7 @@ internal sealed class RockGenerator
 								if (buildType.HasFlag(BuildType.Create) && mocks.Add((mockType, BuildType.Create)))
 								{
 									var model = MockModel.Create(attributeClass.ApplicationSyntaxReference!.GetSyntax(token),
-									  mockType, null, modelContext, BuildType.Create, true);
+									  mockType, null, modelContext, BuildType.Create, codeVisibility, true);
 
 									if (model.Information is not null)
 									{
@@ -57,7 +58,7 @@ internal sealed class RockGenerator
 								if (buildType.HasFlag(BuildType.Make) && mocks.Add((mockType, BuildType.Make)))
 								{
 									var model = MockModel.Create(attributeClass.ApplicationSyntaxReference!.GetSyntax(token),
-									  mockType, null, modelContext, BuildType.Make, true);
+									  mockType, null, modelContext, BuildType.Make, codeVisibility, true);
 
 									if (model.Information is not null)
 									{
@@ -87,7 +88,9 @@ internal sealed class RockGenerator
 							var attributeClass = context.Attributes[i];
 							var mockType = (attributeClass.ConstructorArguments[0].Value as ITypeSymbol)!;
 							var buildType = (BuildType)attributeClass.ConstructorArguments[1].Value!;
-
+							// We'll use the accessibility of the partial type.
+							var codeAccessibility = mockType.DeclaredAccessibility == Accessibility.Public ? 
+								CodeAccessibility.Public : CodeAccessibility.Internal;
 							var expectationsInformationSource = (ITypeSymbol)context.TargetSymbol;
 
 							// We should only see an unbound generic type with the "typeof(...)" case,
@@ -104,7 +107,7 @@ internal sealed class RockGenerator
 								if (buildType.HasFlag(BuildType.Create) && mocks.Add((mockType, BuildType.Create)))
 								{
 									var model = MockModel.Create(attributeClass.ApplicationSyntaxReference!.GetSyntax(token),
-									  mockType, expectationsInformationSource, modelContext, BuildType.Create, true);
+									  mockType, expectationsInformationSource, modelContext, BuildType.Create, codeAccessibility, true);
 
 									if (model.Information is not null)
 									{
@@ -115,7 +118,7 @@ internal sealed class RockGenerator
 								if (buildType.HasFlag(BuildType.Make) && mocks.Add((mockType, BuildType.Make)))
 								{
 									var model = MockModel.Create(attributeClass.ApplicationSyntaxReference!.GetSyntax(token),
-									  mockType, expectationsInformationSource, modelContext, BuildType.Make, true);
+									  mockType, expectationsInformationSource, modelContext, BuildType.Make, codeAccessibility, true);
 
 									if (model.Information is not null)
 									{
