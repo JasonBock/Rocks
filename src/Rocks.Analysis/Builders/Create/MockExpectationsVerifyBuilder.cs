@@ -26,14 +26,32 @@ internal static class MockExpectationsVerifyBuilder
 
 		foreach (var method in mockType.Methods)
 		{
-			writer.WriteLine($"if (this.handlers{method.MemberIdentifier} is not null) {{ failures.AddRange(this.Verify(this.handlers{method.MemberIdentifier}, {method.MemberIdentifier})); }}");
+			if (method.TypeParameters.Length == 0 && method.Parameters.Length == 0)
+			{
+				writer.WriteLine(
+					$"if (this.handlers{method.MemberIdentifier} is not null) {{ failures.AddRange(this.Verify([this.handlers{method.MemberIdentifier}], {method.MemberIdentifier})); }}");
+			}
+			else
+			{
+				writer.WriteLine(
+					$"if (this.handlers{method.MemberIdentifier} is not null) {{ failures.AddRange(this.Verify(this.handlers{method.MemberIdentifier}, {method.MemberIdentifier})); }}");
+			}
 		}
 
 		foreach (var property in mockType.Properties)
 		{
 			if (property.Accessors == PropertyAccessor.Get || property.Accessors == PropertyAccessor.Set || property.Accessors == PropertyAccessor.Init)
 			{
-				writer.WriteLine($"if (this.handlers{property.MemberIdentifier} is not null) {{ failures.AddRange(this.Verify(this.handlers{property.MemberIdentifier}, {property.MemberIdentifier})); }}");
+				if (!property.IsIndexer && property.Accessors == PropertyAccessor.Get)
+				{
+					writer.WriteLine(
+						$"if (this.handlers{property.MemberIdentifier} is not null) {{ failures.AddRange(this.Verify([this.handlers{property.MemberIdentifier}], {property.MemberIdentifier})); }}");
+				}
+				else
+				{
+					writer.WriteLine(
+						$"if (this.handlers{property.MemberIdentifier} is not null) {{ failures.AddRange(this.Verify(this.handlers{property.MemberIdentifier}, {property.MemberIdentifier})); }}");
+				}
 			}
 			else
 			{
@@ -41,7 +59,17 @@ internal static class MockExpectationsVerifyBuilder
 
 				if (property.GetCanBeSeenByContainingAssembly)
 				{
-					writer.WriteLine($"if (this.handlers{memberIdentifier} is not null) {{ failures.AddRange(this.Verify(this.handlers{memberIdentifier}, {memberIdentifier})); }}");
+					if (!property.IsIndexer)
+					{
+						writer.WriteLine(
+							$"if (this.handlers{memberIdentifier} is not null) {{ failures.AddRange(this.Verify([this.handlers{memberIdentifier}], {memberIdentifier})); }}");
+					}
+					else
+					{
+						writer.WriteLine(
+							$"if (this.handlers{memberIdentifier} is not null) {{ failures.AddRange(this.Verify(this.handlers{memberIdentifier}, {memberIdentifier})); }}");
+					}
+
 					memberIdentifier++;
 				}
 

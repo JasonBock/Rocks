@@ -70,20 +70,32 @@ internal static class MockAdornmentsBuilder
 
 		foreach (var adornments in adornmentsPipelineInformation)
 		{
-			// Add the correct "remove" method based on
-			// the type of the handler.
-			var removeMethodName = adornments.Method.TypeArguments.Length == 0 ?
-				"Remove" : "RemoveHandler";
+			if (adornments.Method.TypeParameters.Length == 0 && adornments.Method.Parameters.Length == 0)
+			{
+				writer.WriteLines(
+					$$"""
 
-			writer.WriteLines(
-				$$"""
+					{{mockType.Accessibility}} void Remove{{adornments.TypeArguments}}({{mockType.ExpectationsFullyQualifiedName}}.Adornments.{{adornments.Name}}{{adornments.TypeArguments}} adornments){{adornments.Constraints}} =>
+						this.@handlers{{adornments.MemberIdentifier}} = null;
+					""");
+			}
+			else
+			{
+				// Add the correct "remove" method based on
+				// the type of the handler.
+				var removeMethodName = adornments.Method.TypeArguments.Length == 0 ?
+					"Remove" : "RemoveHandler";
 
-				{{mockType.Accessibility}} void Remove{{adornments.TypeArguments}}({{mockType.ExpectationsFullyQualifiedName}}.Adornments.{{adornments.Name}}{{adornments.TypeArguments}} adornments){{adornments.Constraints}}
-				{
-					adornments.{{removeMethodName}}(this.@handlers{{adornments.MemberIdentifier}});
-					if (this.@handlers{{adornments.MemberIdentifier}}?.Count == 0) { this.@handlers{{adornments.MemberIdentifier}} = null; }
-				}
-				""");
+				writer.WriteLines(
+					$$"""
+
+					{{mockType.Accessibility}} void Remove{{adornments.TypeArguments}}({{mockType.ExpectationsFullyQualifiedName}}.Adornments.{{adornments.Name}}{{adornments.TypeArguments}} adornments){{adornments.Constraints}}
+					{
+						adornments.{{removeMethodName}}(this.@handlers{{adornments.MemberIdentifier}});
+						if (this.@handlers{{adornments.MemberIdentifier}}?.Count == 0) { this.@handlers{{adornments.MemberIdentifier}} = null; }
+					}
+					""");
+			}
 		}
 	}
 }

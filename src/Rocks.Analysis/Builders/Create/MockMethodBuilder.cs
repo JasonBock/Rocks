@@ -411,37 +411,12 @@ internal static class MockMethodBuilder
 		VariablesNamingContext namingContext, TypeArgumentsNamingContext typeArgumentsNamingContext,
 		bool raiseEvents, bool shouldThrowDoesNotReturnException, string expectationsFullyQualifiedName)
 	{
-		var foreachHandlerName = method.IsGenericMethod ?
+		var handlerName = method.IsGenericMethod ?
 			namingContext["genericHandler"] : namingContext["handler"];
 
-		writer.WriteLine($"var @{foreachHandlerName} = this.{type.ExpectationsPropertyName}.handlers{method.MemberIdentifier}[0];");
-
-		if (method.IsGenericMethod)
-		{
-			// We'll cast the handler to ensure the general handler type is of the
-			// closed generic handler type.
-			writer.WriteLine($"if (@{foreachHandlerName} is {expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}<{string.Join(", ", method.TypeArguments.Select(_ => _.BuildName(typeArgumentsNamingContext)))}> @{namingContext["handler"]})");
-			writer.WriteLine("{");
-			writer.Indent++;
-		}
+		writer.WriteLine($"var @{handlerName} = this.{type.ExpectationsPropertyName}.handlers{method.MemberIdentifier};");
 
 		MockMethodBuilder.BuildMethodHandler(
 			 writer, method, namingContext, raiseEvents, shouldThrowDoesNotReturnException);
-
-		if (method.IsGenericMethod)
-		{
-			writer.Indent--;
-			writer.WriteLines(
-				$$"""
-				}
-				else
-				{
-				""");
-
-			ExpectationExceptionBuilder.Build(
-				writer, method, "The provided handler does not match for", type.ExpectationsPropertyName);
-
-			writer.WriteLine("}");
-		}
 	}
 }

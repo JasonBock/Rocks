@@ -41,8 +41,7 @@ internal static class PropertyExpectationsPropertyBuilder
 			{
 				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 				var handler = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}();
-				if (this.parent.handlers{{memberIdentifier}} is null) { this.parent.handlers{{memberIdentifier}} = new(1); }
-				this.parent.handlers{{memberIdentifier}}.Add(handler);
+				this.parent.handlers{{memberIdentifier}} = handler;
 				return new(handler, this.parent);
 			}
 			""");

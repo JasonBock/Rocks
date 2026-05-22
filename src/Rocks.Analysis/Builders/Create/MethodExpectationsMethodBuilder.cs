@@ -82,7 +82,7 @@ internal static class MethodExpectationsMethodBuilder
 						this.{{method.Name}}{{typeArguments}}({{parameterValues}});
 					""");
 			}
-			else if (method.Parameters.Length == 0)
+			else if (method.Parameters.Length == 0 && method.TypeParameters.Length == 0)
 			{
 				writer.WriteLines(
 					$$"""
@@ -90,8 +90,7 @@ internal static class MethodExpectationsMethodBuilder
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						var handler = new {{expectationsFullyQualifiedName}}.Handler{{method.MemberIdentifier}}{{typeArguments}}();
-						if (this.parent.handlers{{method.MemberIdentifier}} is null) { this.parent.handlers{{method.MemberIdentifier}} = new(1); }
-						this.parent.handlers{{method.MemberIdentifier}}.Add(handler);
+						this.parent.handlers{{method.MemberIdentifier}} = handler;
 						return new(handler, this.parent);
 					}
 					""");

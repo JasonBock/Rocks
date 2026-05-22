@@ -25,7 +25,7 @@ internal static class MockPropertyBuilder
 			{
 				if (this.{{type.ExpectationsPropertyName}}.handlers{{memberIdentifier}} is not null)
 				{
-					var @handler = this.{{type.ExpectationsPropertyName}}.handlers{{memberIdentifier}}[0];
+					var @handler = this.{{type.ExpectationsPropertyName}}.handlers{{memberIdentifier}};
 					@handler.CallCount++;
 					if (@handler.Exception is not null) { throw @handler.Exception; }
 			""");
