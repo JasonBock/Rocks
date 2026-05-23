@@ -291,6 +291,15 @@ expectations.Setups.Target(Arg.Validate<int>(i => i > 10))
   .Callback(_ => throw new NotSupportedException());
 ```
 
+In 10.3.0, you can now use `Throws()` to specify the exception:
+
+```csharp
+expectations.Setups.Target(Arg.Validate<int>(i => i > 10))
+  .Throws<NotSupportedException>();
+```
+
+If you use `Throws()`, using `Callback()` and/or `ReturnValue()` are irrelevant and they are ignored in the mock.
+
 ### Returning Values
 
 If a method returns a value, you can use `ReturnValue()`:

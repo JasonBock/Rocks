@@ -13,10 +13,10 @@ Where do we change this?
 * DONE - In the `Remove()`
     * DONE - Change `adornments.Remove(this.@handlers0);` to `this.@handlers0 = null;` - that is, a one-liner, this isn't technically "correct" but "close enough"
 * DONE - Create an implementation test for a method with no parameters but type parameters
-* Run implementation and code gen tests to ensure we didn't break anything
+* DONE - Run implementation and code gen tests to ensure we didn't break anything
 
 TODO:
-* Should `init` properties also only be "one-shot" - that is, they're only called once during the construction of the mock instance.
+* Should `init` properties and indexers also only be "one-shot" - that is, they're only called once during the construction of the mock instance. NO, don't do this. Reason is, if the type has a constructor, it's possible the base constructor may call the property or indexer with different values. So no, we can't limit it to one call.
 
 ```c#
 public interface IThing

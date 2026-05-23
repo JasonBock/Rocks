@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added the ability to remove adornments from an expectation and an expectation from a context (issue [#410](https://github.com/JasonBock/Rocks/issues/410))
 - Added the ability to throw an exception from a mocked member using a `Throws()` adornment (issue [#413](https://github.com/JasonBock/Rocks/issues/413))
 - Added visibility configuration for generated code (issue [#402](https://github.com/JasonBock/Rocks/issues/402))
+- Allows setups for methods with type parameters not used in parameters or the return value (issue [#416](https://github.com/JasonBock/Rocks/issues/416))
 
 ## [10.2.0] - 2026-05-04
 
