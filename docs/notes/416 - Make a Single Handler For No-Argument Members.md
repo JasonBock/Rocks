@@ -12,8 +12,8 @@ Where do we change this?
 * DONE - In the mocked member implementation, change `this.Expectations.handlers0[0];` to `this.Expectations.handlers0;`
 * DONE - In the `Remove()`
     * DONE - Change `adornments.Remove(this.@handlers0);` to `this.@handlers0 = null;` - that is, a one-liner, this isn't technically "correct" but "close enough"
+* DONE - Create an implementation test for a method with no parameters but type parameters
 * Run implementation and code gen tests to ensure we didn't break anything
-* Create an implementation test for a method with no parameters but type parameters
 
 TODO:
 * Should `init` properties also only be "one-shot" - that is, they're only called once during the construction of the mock instance.

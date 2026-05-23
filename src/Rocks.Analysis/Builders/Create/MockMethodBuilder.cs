@@ -349,8 +349,11 @@ internal static class MockMethodBuilder
 			}
 		}
 
-		writer.WriteLine("{");
-		writer.Indent++;
+		if (method.Parameters.Length > 0)
+		{
+			writer.WriteLine("{");
+			writer.Indent++;
+		}
 
 		if (method.ReturnsVoid)
 		{
@@ -365,8 +368,11 @@ internal static class MockMethodBuilder
 			writer.WriteLine("break;");
 		}
 
-		writer.Indent--;
-		writer.WriteLine("}");
+		if (method.Parameters.Length > 0)
+		{
+			writer.Indent--;
+			writer.WriteLine("}");
+		}
 
 		if (method.IsGenericMethod)
 		{

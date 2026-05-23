@@ -124,3 +124,4 @@
 [assembly: Rocks.Rock(typeof(Rocks.Analysis.IntegrationTests.SuppressCA2000TestTypes.IAmDisposable), Rocks.BuildType.Create | Rocks.BuildType.Make)]
 [assembly: Rocks.Rock(typeof(Rocks.Analysis.IntegrationTests.RemovalTestTypes.ICustomerService), Rocks.BuildType.Create | Rocks.BuildType.Make)]
 [assembly: Rocks.Rock(typeof(Rocks.Analysis.IntegrationTests.ExceptionTestTypes.IThrowException), Rocks.BuildType.Create)]
+[assembly: Rocks.Rock(typeof(Rocks.Analysis.IntegrationTests.MismatchParameterCountsTestTypes.IMismatch), Rocks.BuildType.Create)]
