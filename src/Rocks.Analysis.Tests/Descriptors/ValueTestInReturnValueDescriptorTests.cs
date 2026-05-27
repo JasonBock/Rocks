@@ -13,7 +13,7 @@ public static class ValueTestInReturnValueDescriptorTests
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(descriptor.Id, Is.EqualTo(ValueTaskInReturnValueDescriptor.Id));
+			Assert.That(descriptor.Id, Is.EqualTo(DescriptorIdentifiers.ValueTaskInReturnValueId));
 			Assert.That(descriptor.Justification.ToString(CultureInfo.InvariantCulture),
 				Is.EqualTo(ValueTaskInReturnValueDescriptor.Description));
 			Assert.That(descriptor.SuppressedDiagnosticId,

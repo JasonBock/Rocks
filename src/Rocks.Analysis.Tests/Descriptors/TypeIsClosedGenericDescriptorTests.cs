@@ -15,13 +15,13 @@ public static class TypeIsClosedGenericDescriptorTests
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(descriptor.Id, Is.EqualTo(TypeIsClosedGenericDescriptor.Id));
+			Assert.That(descriptor.Id, Is.EqualTo(DescriptorIdentifiers.TypeIsClosedGenericId));
 			Assert.That(descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeIsClosedGenericDescriptor.Title));
 			Assert.That(descriptor.MessageFormat.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeIsClosedGenericDescriptor.Message));
 			Assert.That(descriptor.DefaultSeverity, Is.EqualTo(DiagnosticSeverity.Error));
 			Assert.That(descriptor.Category, Is.EqualTo(DiagnosticConstants.Usage));
 			Assert.That(descriptor.HelpLinkUri, Is.EqualTo(HelpUrlBuilder.Build(
-				TypeIsClosedGenericDescriptor.Id, TypeIsClosedGenericDescriptor.Title)));
+				DescriptorIdentifiers.TypeIsClosedGenericId, TypeIsClosedGenericDescriptor.Title)));
 		}
 	}
 }

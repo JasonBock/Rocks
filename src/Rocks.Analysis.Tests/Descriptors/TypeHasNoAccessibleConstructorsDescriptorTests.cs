@@ -15,13 +15,13 @@ public static class TypeHasNoAccessibleConstructorsDescriptorTests
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(descriptor.Id, Is.EqualTo(TypeHasNoAccessibleConstructorsDescriptor.Id));
+			Assert.That(descriptor.Id, Is.EqualTo(DescriptorIdentifiers.TypeHasNoAccessibleConstructorsId));
 			Assert.That(descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeHasNoAccessibleConstructorsDescriptor.Title));
 			Assert.That(descriptor.MessageFormat.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeHasNoAccessibleConstructorsDescriptor.Message));
 			Assert.That(descriptor.DefaultSeverity, Is.EqualTo(DiagnosticSeverity.Error));
 			Assert.That(descriptor.Category, Is.EqualTo(DiagnosticConstants.Usage));
 			Assert.That(descriptor.HelpLinkUri, Is.EqualTo(HelpUrlBuilder.Build(
-				TypeHasNoAccessibleConstructorsDescriptor.Id, TypeHasNoAccessibleConstructorsDescriptor.Title)));
+				DescriptorIdentifiers.TypeHasNoAccessibleConstructorsId, TypeHasNoAccessibleConstructorsDescriptor.Title)));
 		}
 	}
 }

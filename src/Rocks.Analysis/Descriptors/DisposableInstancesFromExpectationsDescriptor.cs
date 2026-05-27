@@ -6,11 +6,10 @@ internal static class DisposableInstancesFromExpectationsDescriptor
 {
 	internal static SuppressionDescriptor Create() =>
 		new(
-			DisposableInstancesFromExpectationsDescriptor.Id,
+			DescriptorIdentifiers.DisposableInstancesFromExpectationsId,
 			DisposableInstancesFromExpectationsDescriptor.SuppressedId,
 			DisposableInstancesFromExpectationsDescriptor.Description);
 
 	internal const string Description = "Suppress CA2000 on Instance() invocations";
-	internal const string Id = "ROCK17";
 	internal const string SuppressedId = "CA2000";
 }

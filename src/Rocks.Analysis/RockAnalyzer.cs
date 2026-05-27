@@ -111,5 +111,6 @@ public sealed class RockAnalyzer
 			TypeHasNoAccessibleConstructorsDescriptor.Create(),
 			TypeHasNoMockableMembersDescriptor.Create(),
 			TypeIsClosedGenericDescriptor.Create(),
+			InterfaceAllowsRefStructAsRefOrRefReadonlyReturnDescriptor.Create(),
 		];
 }

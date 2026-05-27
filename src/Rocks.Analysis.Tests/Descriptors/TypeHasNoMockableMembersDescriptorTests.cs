@@ -15,13 +15,13 @@ public static class TypeHasNoMockableMembersDescriptorTests
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(descriptor.Id, Is.EqualTo(TypeHasNoMockableMembersDescriptor.Id));
+			Assert.That(descriptor.Id, Is.EqualTo(DescriptorIdentifiers.TypeHasNoMockableMembersId));
 			Assert.That(descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeHasNoMockableMembersDescriptor.Title));
 			Assert.That(descriptor.MessageFormat.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeHasNoMockableMembersDescriptor.Message));
 			Assert.That(descriptor.DefaultSeverity, Is.EqualTo(DiagnosticSeverity.Error));
 			Assert.That(descriptor.Category, Is.EqualTo(DiagnosticConstants.Usage));
 			Assert.That(descriptor.HelpLinkUri, Is.EqualTo(HelpUrlBuilder.Build(
-				TypeHasNoMockableMembersDescriptor.Id, TypeHasNoMockableMembersDescriptor.Title)));
+				DescriptorIdentifiers.TypeHasNoMockableMembersId, TypeHasNoMockableMembersDescriptor.Title)));
 		}
 	}
 }

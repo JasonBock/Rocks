@@ -28,7 +28,7 @@ public static class RockAnalyzerInternalAbstractMemberTests
 
 		if (hasDiagnostic)
 		{
-			var diagnostic = new DiagnosticResult(TypeHasInaccessibleAbstractMembersDescriptor.Id, DiagnosticSeverity.Error)
+			var diagnostic = new DiagnosticResult(DescriptorIdentifiers.TypeHasInaccessibleAbstractMembersId, DiagnosticSeverity.Error)
 				.WithSpan(3, 12, 3, 59).WithArguments("InternalTargets");
 			await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic],
 				additionalReferences: [internalCompilation.ToMetadataReference()]);
@@ -56,9 +56,9 @@ public static class RockAnalyzerInternalAbstractMemberTests
 
 		if (hasDiagnostic)
 		{
-			var diagnostic = new DiagnosticResult(TypeHasInaccessibleAbstractMembersDescriptor.Id, DiagnosticSeverity.Error)
+			var diagnostic = new DiagnosticResult(DescriptorIdentifiers.TypeHasInaccessibleAbstractMembersId, DiagnosticSeverity.Error)
 				.WithSpan(3, 12, 3, 59).WithArguments("InternalTargets");
-			var noDiagnostic = new DiagnosticResult(TypeHasNoMockableMembersDescriptor.Id, DiagnosticSeverity.Error)
+			var noDiagnostic = new DiagnosticResult(DescriptorIdentifiers.TypeHasNoMockableMembersId, DiagnosticSeverity.Error)
 				.WithSpan(3, 12, 3, 59).WithArguments("InternalTargets");
 			await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, noDiagnostic],
 				additionalReferences: [internalCompilation.ToMetadataReference()]);
@@ -93,7 +93,7 @@ public static class RockAnalyzerInternalAbstractMemberTests
 
 		if (hasDiagnostic)
 		{
-			var diagnostic = new DiagnosticResult(TypeHasInaccessibleAbstractMembersDescriptor.Id, DiagnosticSeverity.Error)
+			var diagnostic = new DiagnosticResult(DescriptorIdentifiers.TypeHasInaccessibleAbstractMembersId, DiagnosticSeverity.Error)
 				.WithSpan(3, 12, 3, 57).WithArguments("InternalTargets");
 			await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic],
 				additionalReferences: [internalCompilation.ToMetadataReference()]);
@@ -125,7 +125,7 @@ public static class RockAnalyzerInternalAbstractMemberTests
 			[assembly: Rock(typeof(InternalTargets), BuildType.Create | BuildType.Make)]
 			""";
 
-		var diagnostic = new DiagnosticResult(TypeHasInaccessibleAbstractMembersDescriptor.Id, DiagnosticSeverity.Error)
+		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.TypeHasInaccessibleAbstractMembersId, DiagnosticSeverity.Error)
 			.WithSpan(3, 12, 3, 76).WithArguments("InternalTargets");
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic],
 			additionalReferences: [internalCompilation.ToMetadataReference()]);

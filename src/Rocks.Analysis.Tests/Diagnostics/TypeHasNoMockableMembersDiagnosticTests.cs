@@ -29,7 +29,7 @@ public static class TypeHasNoMockableMembersDiagnosticTests
 		{
 			Assert.That(descriptor.GetMessage(CultureInfo.InvariantCulture), Is.EqualTo("The type X has no members that can be overriden"));
 			Assert.That(descriptor.Descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeHasNoMockableMembersDescriptor.Title));
-			Assert.That(descriptor.Id, Is.EqualTo(TypeHasNoMockableMembersDescriptor.Id));
+			Assert.That(descriptor.Id, Is.EqualTo(DescriptorIdentifiers.TypeHasNoMockableMembersId));
 			Assert.That(descriptor.Severity, Is.EqualTo(DiagnosticSeverity.Error));
 		}
 	}

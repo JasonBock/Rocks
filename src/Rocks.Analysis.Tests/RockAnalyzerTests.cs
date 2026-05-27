@@ -70,7 +70,7 @@ public static class RockAnalyzerTests
 			}
 			""";
 
-		var diagnostic = new DiagnosticResult(CannotMockSealedTypeDescriptor.Id, DiagnosticSeverity.Error)
+		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.CannotMockSealedTypeId, DiagnosticSeverity.Error)
 			.WithSpan(3, 12, 3, 74);
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}
@@ -91,7 +91,7 @@ public static class RockAnalyzerTests
 			public sealed partial class SealedServiceTarget;
 			""";
 
-		var diagnostic = new DiagnosticResult(CannotMockSealedTypeDescriptor.Id, DiagnosticSeverity.Error)
+		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.CannotMockSealedTypeId, DiagnosticSeverity.Error)
 			.WithSpan(8, 2, 8, 54);
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic]);
 	}

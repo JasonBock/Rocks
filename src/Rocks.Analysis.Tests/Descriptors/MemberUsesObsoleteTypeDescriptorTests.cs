@@ -15,13 +15,13 @@ public static class MemberUsesObsoleteTypeDescriptorTests
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(descriptor.Id, Is.EqualTo(MemberUsesObsoleteTypeDescriptor.Id));
+			Assert.That(descriptor.Id, Is.EqualTo(DescriptorIdentifiers.MemberUsesObsoleteTypeId));
 			Assert.That(descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(MemberUsesObsoleteTypeDescriptor.Title));
 			Assert.That(descriptor.MessageFormat.ToString(CultureInfo.CurrentCulture), Is.EqualTo(MemberUsesObsoleteTypeDescriptor.Message));
 			Assert.That(descriptor.DefaultSeverity, Is.EqualTo(DiagnosticSeverity.Error));
 			Assert.That(descriptor.Category, Is.EqualTo(DiagnosticConstants.Usage));
 			Assert.That(descriptor.HelpLinkUri, Is.EqualTo(HelpUrlBuilder.Build(
-				MemberUsesObsoleteTypeDescriptor.Id, MemberUsesObsoleteTypeDescriptor.Title)));
+				DescriptorIdentifiers.MemberUsesObsoleteTypeId, MemberUsesObsoleteTypeDescriptor.Title)));
 		}
 	}
 }

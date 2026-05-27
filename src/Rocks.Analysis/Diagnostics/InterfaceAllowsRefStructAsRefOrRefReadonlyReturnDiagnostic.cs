@@ -7,6 +7,6 @@ namespace Rocks.Analysis.Diagnostics;
 internal static class InterfaceAllowsRefStructAsRefOrRefReadonlyReturnDiagnostic
 {
 	internal static Diagnostic Create(SyntaxNode node, ITypeSymbol type) =>
-		Diagnostic.Create(TypeHasNoAccessibleConstructorsDescriptor.Create(),
+		Diagnostic.Create(InterfaceAllowsRefStructAsRefOrRefReadonlyReturnDescriptor.Create(),
 			node.GetLocation(), type.GetName());
 }

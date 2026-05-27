@@ -17,7 +17,7 @@ public static class RockAnalyzerSpecialTypeTests
 			[assembly: Rock(typeof(System.Enum), BuildType.Create | BuildType.Make)]
 			""";
 
-		var diagnostic = new DiagnosticResult(CannotMockSpecialTypesDescriptor.Id, DiagnosticSeverity.Error)
+		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.CannotMockSpecialTypesId, DiagnosticSeverity.Error)
 			.WithSpan(3, 12, 3, 72);
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}
@@ -32,7 +32,7 @@ public static class RockAnalyzerSpecialTypeTests
 			[assembly: Rock(typeof(System.ValueType), BuildType.Create | BuildType.Make)]
 			""";
 
-		var diagnostic = new DiagnosticResult(CannotMockSpecialTypesDescriptor.Id, DiagnosticSeverity.Error)
+		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.CannotMockSpecialTypesId, DiagnosticSeverity.Error)
 			.WithSpan(3, 12, 3, 77);
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}
@@ -47,7 +47,7 @@ public static class RockAnalyzerSpecialTypeTests
 			[assembly: Rock(typeof(System.Delegate), BuildType.Create | BuildType.Make)]
 			""";
 
-		var diagnostic = new DiagnosticResult(CannotMockSpecialTypesDescriptor.Id, DiagnosticSeverity.Error)
+		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.CannotMockSpecialTypesId, DiagnosticSeverity.Error)
 			.WithSpan(3, 12, 3, 76);
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}
@@ -62,7 +62,7 @@ public static class RockAnalyzerSpecialTypeTests
 			[assembly: Rock(typeof(System.MulticastDelegate), BuildType.Create | BuildType.Make)]
 			""";
 
-		var diagnostic = new DiagnosticResult(CannotMockSpecialTypesDescriptor.Id, DiagnosticSeverity.Error)
+		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.CannotMockSpecialTypesId, DiagnosticSeverity.Error)
 			.WithSpan(3, 12, 3, 85);
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}

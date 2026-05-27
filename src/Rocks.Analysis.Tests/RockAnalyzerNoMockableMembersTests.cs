@@ -24,7 +24,7 @@ public static class RockAnalyzerNoMockableMembersTests
 			}
 			""";
 
-		var diagnostic = new DiagnosticResult(TypeHasNoMockableMembersDescriptor.Id, DiagnosticSeverity.Error)
+		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.TypeHasNoMockableMembersId, DiagnosticSeverity.Error)
 			.WithSpan(3, 12, 3, 72);
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic]);
 	}
@@ -41,7 +41,7 @@ public static class RockAnalyzerNoMockableMembersTests
 			public interface NoMockables { }
 			""";
 
-		var diagnostic = new DiagnosticResult(TypeHasNoMockableMembersDescriptor.Id, DiagnosticSeverity.Error)
+		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.TypeHasNoMockableMembersId, DiagnosticSeverity.Error)
 			.WithSpan(3, 12, 3, 72);
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic]);
 	}

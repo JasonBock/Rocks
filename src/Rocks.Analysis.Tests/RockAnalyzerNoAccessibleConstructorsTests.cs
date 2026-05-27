@@ -26,7 +26,7 @@ public static class RockAnalyzerNoAccessibleConstructorsTests
 			}
 			""";
 
-		var diagnostic = new DiagnosticResult(TypeHasNoAccessibleConstructorsDescriptor.Id, DiagnosticSeverity.Error)
+		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.TypeHasNoAccessibleConstructorsId, DiagnosticSeverity.Error)
 			.WithSpan(4, 12, 4, 74).WithArguments("Constructable");
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}
@@ -46,7 +46,7 @@ public static class RockAnalyzerNoAccessibleConstructorsTests
 			}
 			""";
 
-		var diagnostic = new DiagnosticResult(TypeHasNoAccessibleConstructorsDescriptor.Id, DiagnosticSeverity.Error)
+		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.TypeHasNoAccessibleConstructorsId, DiagnosticSeverity.Error)
 			.WithSpan(3, 12, 3, 75);
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}

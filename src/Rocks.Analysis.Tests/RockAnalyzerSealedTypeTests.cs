@@ -19,7 +19,7 @@ public static class RockAnalyzerSealedTypeTests
 			public sealed class Data { }
 			""";
 
-		var diagnostic = new DiagnosticResult(CannotMockSealedTypeDescriptor.Id, DiagnosticSeverity.Error)
+		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.CannotMockSealedTypeId, DiagnosticSeverity.Error)
 			.WithSpan(3, 12, 3, 65);
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}
@@ -36,7 +36,7 @@ public static class RockAnalyzerSealedTypeTests
 			public enum Data { }
 			""";
 
-		var diagnostic = new DiagnosticResult(CannotMockSealedTypeDescriptor.Id, DiagnosticSeverity.Error)
+		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.CannotMockSealedTypeId, DiagnosticSeverity.Error)
 			.WithSpan(3, 12, 3, 65);
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}
@@ -53,7 +53,7 @@ public static class RockAnalyzerSealedTypeTests
 			public struct StructType { }
 			""";
 
-		var diagnostic = new DiagnosticResult(CannotMockSealedTypeDescriptor.Id, DiagnosticSeverity.Error)
+		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.CannotMockSealedTypeId, DiagnosticSeverity.Error)
 			.WithSpan(3, 12, 3, 71);
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}
@@ -70,7 +70,7 @@ public static class RockAnalyzerSealedTypeTests
 			public delegate void DelegateType();
 			""";
 
-		var diagnostic = new DiagnosticResult(CannotMockSealedTypeDescriptor.Id, DiagnosticSeverity.Error)
+		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.CannotMockSealedTypeId, DiagnosticSeverity.Error)
 			.WithSpan(3, 12, 3, 73);
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}

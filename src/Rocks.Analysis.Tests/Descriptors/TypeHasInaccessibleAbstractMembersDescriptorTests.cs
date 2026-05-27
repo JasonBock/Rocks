@@ -15,13 +15,13 @@ public static class TypeHasInaccessibleAbstractMembersDescriptorTests
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(descriptor.Id, Is.EqualTo(TypeHasInaccessibleAbstractMembersDescriptor.Id));
+			Assert.That(descriptor.Id, Is.EqualTo(DescriptorIdentifiers.TypeHasInaccessibleAbstractMembersId));
 			Assert.That(descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeHasInaccessibleAbstractMembersDescriptor.Title));
 			Assert.That(descriptor.MessageFormat.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeHasInaccessibleAbstractMembersDescriptor.Message));
 			Assert.That(descriptor.DefaultSeverity, Is.EqualTo(DiagnosticSeverity.Error));
 			Assert.That(descriptor.Category, Is.EqualTo(DiagnosticConstants.Usage));
 			Assert.That(descriptor.HelpLinkUri, Is.EqualTo(HelpUrlBuilder.Build(
-				TypeHasInaccessibleAbstractMembersDescriptor.Id, TypeHasInaccessibleAbstractMembersDescriptor.Title)));
+				DescriptorIdentifiers.TypeHasInaccessibleAbstractMembersId, TypeHasInaccessibleAbstractMembersDescriptor.Title)));
 		}
 	}
 }

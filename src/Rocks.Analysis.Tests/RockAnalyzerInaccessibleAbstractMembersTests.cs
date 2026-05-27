@@ -28,7 +28,7 @@ public static class RockAnalyzerInaccessibleAbstractMembersTests
 			}
 			""";
 
-		var diagnostic = new DiagnosticResult(TypeHasInaccessibleAbstractMembersDescriptor.Id, DiagnosticSeverity.Error)
+		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.TypeHasInaccessibleAbstractMembersId, DiagnosticSeverity.Error)
 			.WithSpan(3, 12, 3, 75).WithArguments("ArgumentMapper");
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}
@@ -53,7 +53,7 @@ public static class RockAnalyzerInaccessibleAbstractMembersTests
 			[assembly: Rock(typeof(InternalAbstractMember), BuildType.Create | BuildType.Make)]
 			""";
 
-		var diagnostic = new DiagnosticResult(TypeHasInaccessibleAbstractMembersDescriptor.Id, DiagnosticSeverity.Error)
+		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.TypeHasInaccessibleAbstractMembersId, DiagnosticSeverity.Error)
 			.WithSpan(3, 12, 3, 83).WithArguments("InternalAbstractMember");
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic],
 			additionalReferences: [internalCompilation.ToMetadataReference()]);
@@ -113,7 +113,7 @@ public static class RockAnalyzerInaccessibleAbstractMembersTests
 			[assembly: Rock(typeof(InternalAbstractInvalidMember), BuildType.Create | BuildType.Make)]
 			""";
 
-		var diagnostic = new DiagnosticResult(TypeHasInaccessibleAbstractMembersDescriptor.Id, DiagnosticSeverity.Error)
+		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.TypeHasInaccessibleAbstractMembersId, DiagnosticSeverity.Error)
 			.WithSpan(3, 12, 3, 90).WithArguments("InternalAbstractInvalidMember");
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic],
 			additionalReferences: [reference]);

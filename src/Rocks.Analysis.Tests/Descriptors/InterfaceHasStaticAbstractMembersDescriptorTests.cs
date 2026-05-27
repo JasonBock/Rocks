@@ -15,13 +15,13 @@ public static class InterfaceHasStaticAbstractMembersDescriptorTests
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(descriptor.Id, Is.EqualTo(InterfaceHasStaticAbstractMembersDescriptor.Id));
+			Assert.That(descriptor.Id, Is.EqualTo(DescriptorIdentifiers.InterfaceHasStaticAbstractMembersId));
 			Assert.That(descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(InterfaceHasStaticAbstractMembersDescriptor.Title));
 			Assert.That(descriptor.MessageFormat.ToString(CultureInfo.CurrentCulture), Is.EqualTo(InterfaceHasStaticAbstractMembersDescriptor.Message));
 			Assert.That(descriptor.DefaultSeverity, Is.EqualTo(DiagnosticSeverity.Error));
 			Assert.That(descriptor.Category, Is.EqualTo(DiagnosticConstants.Usage));
 			Assert.That(descriptor.HelpLinkUri, Is.EqualTo(HelpUrlBuilder.Build(
-				InterfaceHasStaticAbstractMembersDescriptor.Id, InterfaceHasStaticAbstractMembersDescriptor.Title)));
+				DescriptorIdentifiers.InterfaceHasStaticAbstractMembersId, InterfaceHasStaticAbstractMembersDescriptor.Title)));
 		}
 	}
 }

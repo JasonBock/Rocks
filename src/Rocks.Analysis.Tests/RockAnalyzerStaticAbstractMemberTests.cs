@@ -5,7 +5,7 @@ using Rocks.Analysis.Descriptors;
 
 namespace Rocks.Analysis.Tests;
 
-public static class RockAnalyzerStaticAbstractMemberTests
+internal static class RockAnalyzerStaticAbstractMemberTests
 {
 	[Test]
 	public static async Task AnalyzeWhenMockIsCreatedWithSealedTypeAsync()
@@ -22,9 +22,9 @@ public static class RockAnalyzerStaticAbstractMemberTests
 			}
 			""";
 
-		var staticAbstractMembersDiagnostic = new DiagnosticResult(InterfaceHasStaticAbstractMembersDescriptor.Id, DiagnosticSeverity.Error)
+		var staticAbstractMembersDiagnostic = new DiagnosticResult(DescriptorIdentifiers.InterfaceHasStaticAbstractMembersId, DiagnosticSeverity.Error)
 			.WithSpan(3, 12, 3, 86).WithArguments("IHaveStaticAbstractMethod");
-		var noMembersDiagnostic = new DiagnosticResult(TypeHasNoMockableMembersDescriptor.Id, DiagnosticSeverity.Error)
+		var noMembersDiagnostic = new DiagnosticResult(DescriptorIdentifiers.TypeHasNoMockableMembersId, DiagnosticSeverity.Error)
 			.WithSpan(3, 12, 3, 86).WithArguments("IHaveStaticAbstractMethod");
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(
 			code, 

@@ -8,7 +8,7 @@ using System.Globalization;
 
 namespace Rocks.Analysis.Tests.Diagnostics;
 
-public static class CannotMockObsoleteTypeDiagnosticTests
+internal static class InterfaceAllowsRefStructAsRefOrRefReadonlyReturnDiagnosticTests
 {
 	[Test]
 	public static async Task CreateAsync()
@@ -23,13 +23,13 @@ public static class CannotMockObsoleteTypeDiagnosticTests
 
 		var invocation = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("public static void Foo() { }"));
 
-		var descriptor = CannotMockObsoleteTypeDiagnostic.Create(invocation, model.GetDeclaredSymbol(typeSyntax)!);
+		var descriptor = InterfaceAllowsRefStructAsRefOrRefReadonlyReturnDiagnostic.Create(invocation, model.GetDeclaredSymbol(typeSyntax)!);
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(descriptor.GetMessage(CultureInfo.InvariantCulture), Is.EqualTo("The type X is obsolete and cannot be mocked"));
-			Assert.That(descriptor.Descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(CannotMockObsoleteTypeDescriptor.Title));
-			Assert.That(descriptor.Id, Is.EqualTo(DescriptorIdentifiers.CannotMockObsoleteTypeId));
+			Assert.That(descriptor.GetMessage(CultureInfo.InvariantCulture), Is.EqualTo("The type X allows ref structs in type parameters that are used as ref or ref readonly return values"));
+			Assert.That(descriptor.Descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(InterfaceAllowsRefStructAsRefOrRefReadonlyReturnDescriptor.Title));
+			Assert.That(descriptor.Id, Is.EqualTo(DescriptorIdentifiers.InterfaceAllowsRefStructAsRefOrRefReadonlyReturnId));
 			Assert.That(descriptor.Severity, Is.EqualTo(DiagnosticSeverity.Error));
 		}
 	}
