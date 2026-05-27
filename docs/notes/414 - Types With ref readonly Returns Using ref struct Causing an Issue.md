@@ -30,13 +30,12 @@ Honestly, at this point, I think the better thing to do is to not handle a type 
 Here's the rule: If an interface has a type parameter constrained with `allows ref struct` and that type parameter is used as the type `ref` or `ref readonly` return value, we can't mock it. Reason is, we'd have to make the mock type a `ref struct`, and you can't pass a `ref struct` to a parameter of the interface type because of the rules around `ref struct` - it would cause boxing.
 
 TODO:
-* Detect when `allows ref struct` is on a type parameter that's used as a `ref` return value (or probably an `out` parameter as well, not sure). In this case, we create a diagnostic
+* DONE - Detect when `allows ref struct` is on a type parameter that's used as a `ref` return value (or probably an `out` parameter as well, not sure). In this case, we create a diagnostic
+* DONE - Run all integration and code gen tests
 * Add a test for this diagnostic
-* Add a test for interfaces that `allows ref struct` but just returns it as `T` (i.e. not a `ref` or `ref readonly`)
+* Add a unit test for interfaces that `allows ref struct` but just returns it as `T` (i.e. not a `ref` or `ref readonly`)
+* Change diagnostics and descriptors to use IDs defined in a static class (similar to what I did in Transpire)
 * Update docs to talk about conditions that Rocks doesn't support:
     * Types with generic parameters that are constraints with `allows ref struct` where that type is used as a `ref` or `ref return`
     * Static abstract members in interfaces
     * Sealed, non-virtuals, etc. (profiler API could be used, but would be very difficult, reference TypeMock)
-* Change `this.GetType()` to `typeof(Mock)` in all gen'd code:
-    * `ExpectationException` creation in mocked members
-    * `Instance` methods to create a mock

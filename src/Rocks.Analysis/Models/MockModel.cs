@@ -28,7 +28,9 @@ internal sealed record MockModel
 			diagnostics.Add(CannotMockSealedTypeDiagnostic.Create(node, typeToMock));
 		}
 
-		if (typeToMock is INamedTypeSymbol namedTypeToMock && namedTypeToMock.IsGenericType && !namedTypeToMock.IsOpenGeneric())
+		var namedTypeToMock = typeToMock as INamedTypeSymbol;
+
+		if (namedTypeToMock is not null && namedTypeToMock.IsGenericType && !namedTypeToMock.IsOpenGeneric())
 		{
 			diagnostics.Add(TypeIsClosedGenericDiagnostic.Create(node, typeToMock));
 		}
@@ -114,6 +116,39 @@ internal sealed record MockModel
 		if (typeToMock.TypeKind == TypeKind.Class && constructors.Length == 0)
 		{
 			diagnostics.Add(TypeHasNoAccessibleConstructorsDiagnostic.Create(node, typeToMock));
+		}
+
+		if (namedTypeToMock is not null && namedTypeToMock.TypeKind == TypeKind.Interface &&
+			namedTypeToMock.TypeParameters.Length > 0)
+		{
+			var allowsRefStructParameters = namedTypeToMock.TypeParameters.Where(
+				parameter =>
+				{
+					var constraints = parameter.GetConstraints(compilation);
+					return constraints?.Values.Any(constraint => constraint.Contains("allows ref struct")) ?? false;
+				}).ToArray();
+
+			if (allowsRefStructParameters.Length > 0)
+			{
+				foreach (var method in methods.Results)
+				{
+					if ((method.Value.ReturnsByRef || method.Value.ReturnsByRefReadonly) &&
+						allowsRefStructParameters.Any(parameter => parameter.Name == method.Value.ReturnType.Name))
+					{
+						diagnostics.Add(InterfaceAllowsRefStructAsRefOrRefReadonlyReturnDiagnostic.Create(node, typeToMock));
+					}
+				}
+
+				foreach (var property in properties.Results)
+				{
+					if (property.Value.GetMethod is not null &&
+						(property.Value.GetMethod.ReturnsByRef || property.Value.GetMethod.ReturnsByRefReadonly) &&
+						allowsRefStructParameters.Any(parameter => parameter.Name == property.Value.GetMethod.ReturnType.Name))
+					{
+						diagnostics.Add(InterfaceAllowsRefStructAsRefOrRefReadonlyReturnDiagnostic.Create(node, typeToMock));
+					}
+				}
+			}
 		}
 
 		var isMockable = !diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error);
