@@ -17,9 +17,9 @@ var stopwatch = Stopwatch.StartNew();
 
 //TestTypeValidity();
 //TestWithCode();
-//TestWithType();
+TestWithType();
 //TestWithTypeNoEmit();
-await TestWithTypesAsync();
+//await TestWithTypesAsync();
 //TestTypesIndividually();
 
 stopwatch.Stop();
@@ -92,7 +92,7 @@ static void TestWithType()
 #pragma warning disable EF9100 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 #pragma warning disable CS0618 // Type or member is obsolete
 	(var issues, var times) = TestGenerator.Generate(new RockGenerator(),
-		[typeof(MassTransit.SendHeaders)],
+		[typeof(DotNext.IOptionMonad<>)],
 		typesToLoadAssembliesFrom,
 		[],
 		Rocks.Analysis.BuildType.Create,
