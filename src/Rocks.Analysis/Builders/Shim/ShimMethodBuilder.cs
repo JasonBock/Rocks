@@ -40,16 +40,22 @@ internal static class ShimMethodBuilder
 			{
 				var defaultValue = _.HasExplicitDefaultValue && method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 					$" = {_.ExplicitDefaultValue}" : string.Empty;
+				var scoped = _.IsParams ?
+					string.Empty :
+					_.IsScoped ?
+						"scoped " :
+						string.Empty;
 				var direction = _.RefKind switch
 				{
 					RefKind.Ref => "ref ",
+					RefKind.RefReadOnlyParameter => "ref readonly ",
 					RefKind.Out => "out ",
 					RefKind.In => "in ",
 					_ => string.Empty
 				};
 				var typeName = method.IsGenericMethod && method.TypeArguments.Any(m => m.FullyQualifiedName == _.Type.FullyQualifiedName) ?
 					_.Type.BuildName(typeArgumentsNamingContext) : _.Type.FullyQualifiedName;
-				var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{typeName} @{_.Name}{defaultValue}";
+				var parameter = $"{scoped}{direction}{(_.IsParams ? "params " : string.Empty)}{typeName} @{_.Name}{defaultValue}";
 				return $"{(_.AttributesDescription.Length > 0 ? $"{_.AttributesDescription} " : string.Empty)}{parameter}";
 			}));
 
@@ -91,16 +97,13 @@ internal static class ShimMethodBuilder
 			}
 
 			var passedParameters = string.Join(", ", method.Parameters.Select(_ =>
-			{
-				var direction = _.RefKind switch
+				_.RefKind switch
 				{
-					RefKind.Ref => "ref ",
-					RefKind.Out => "out ",
-					RefKind.In => "in ",
-					_ => string.Empty
-				};
-				return $"{direction}@{_.Name}";
-			}));
+					RefKind.Ref => $"ref @{_.Name}!",
+					RefKind.RefReadOnlyParameter or RefKind.In => $"in @{_.Name}!",
+					RefKind.Out => $"out @{_.Name}!",
+					_ => $"@{_.Name}!"
+				}));
 
 			var castTypeName = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 				shimType.Type.FullyQualifiedName :

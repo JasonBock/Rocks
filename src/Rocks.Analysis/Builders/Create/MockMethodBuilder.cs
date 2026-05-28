@@ -221,8 +221,15 @@ internal static class MockMethodBuilder
 			""");
 
 		var methodArguments = method.Parameters.Length == 0 ? string.Empty :
-			string.Join(", ", method.Parameters.Select(
-				_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out ? $"{(_.RefKind == RefKind.Ref ? "ref" : "out")} @{_.Name}!" : $"@{_.Name}!"));
+			string.Join(", ", method.Parameters.Select(_ =>
+				_.RefKind switch
+				{
+					RefKind.Ref => $"ref @{_.Name}!",
+					RefKind.RefReadOnlyParameter => $"in @{_.Name}!",
+					RefKind.Out => $"out @{_.Name}!",
+					_ => $"@{_.Name}!"
+				}
+				));
 
 		if (!method.ReturnsVoid)
 		{

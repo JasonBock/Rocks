@@ -17,9 +17,9 @@ var stopwatch = Stopwatch.StartNew();
 
 //TestTypeValidity();
 //TestWithCode();
-TestWithType();
+//TestWithType();
 //TestWithTypeNoEmit();
-//await TestWithTypesAsync();
+await TestWithTypesAsync();
 //TestTypesIndividually();
 
 stopwatch.Stop();

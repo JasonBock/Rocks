@@ -189,7 +189,7 @@ public static class RefStructGeneratorTests
 				internal sealed class Handler2
 					: global::Rocks.Handler<Handler2.CallbackForHandler>
 				{
-					internal delegate void CallbackForHandler(global::Variant @args, int @count, scoped global::Variant @result);
+					internal delegate void CallbackForHandler(ref readonly global::Variant @args, int @count, scoped global::Variant @result);
 					internal global::Rocks.RefStructArgument<global::Variant> @args { get; set; }
 					internal global::Rocks.Argument<int> @count { get; set; }
 					internal global::Rocks.RefStructArgument<global::Variant> @result { get; set; }
@@ -308,7 +308,7 @@ public static class RefStructGeneratorTests
 									@foundMatch = true;
 									@handler.CallCount++;
 									if (@handler.Exception is not null) { throw @handler.Exception; }
-									@handler.Callback?.Invoke(@args!, @count!, @result!);
+									@handler.Callback?.Invoke(in @args!, @count!, @result!);
 									break;
 								}
 							}
@@ -394,8 +394,8 @@ public static class RefStructGeneratorTests
 						public object? Invoke() =>
 							((global::IOptionMonad<T>)this.mock).Invoke()!;
 						
-						public void  DynamicInvoke(global::Variant @args, int @count, global::Variant @result) =>
-							((global::IOptionMonad<T>)this.mock).DynamicInvoke(@args, @count, @result);
+						public void  DynamicInvoke(ref readonly global::Variant @args, int @count, scoped global::Variant @result) =>
+							((global::IOptionMonad<T>)this.mock).DynamicInvoke(in @args!, @count!, @result!);
 						
 						public bool HasValue
 						{
