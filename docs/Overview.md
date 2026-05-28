@@ -22,6 +22,7 @@
     - [Replacements](#replacements)
   - [Using Makes](#using-makes)
   - [Manually Creating Intermediary Types](#manually-creating-intermediary-types)
+  - [Unhandled Situations](#unhandled-situations)
 - [Conclusion](#conclusion)
   
 # Introduction
@@ -823,6 +824,23 @@ internal static class Stuff
   }
 }
 ```
+
+## Unhandled Situations
+
+There are number of cases where Rocks will not be able to mock a given type (or Rocks won't due to technical reasons). Following are brief descriptions of those situations:
+
+* Sealed Types - Types that are sealed cannot be inherited from, and Rocks must create a type that derives from the target type.
+* Obsolete Members - Members marked with `[Obsolete]` as an error cannot be mocked.
+* Obsolete Usage - Types with members that use obsolete types (e.g. as a parameter type) cannot be mocked.
+* No Mockable Members - Types that do not have any `abstract` members cannot have any members set up with expectations.
+* No Accessible Constructors - If the target type is a class that has no accessible constructor, Rocks can't create it.
+* Special Types - Enums, value types, and delegates cannot be mocked.
+* Interface With Static Abstract Members - Right now, Rocks does not handle this, but there is [an issue](https://github.com/JasonBock/Rocks/issues/311) to try and support this case.
+* No Accessible Members - If the target type has no accessible members, Rocks won't create it - there is no point.
+* Closed Generics - If a type is generic, use the open form as the type in the `[Rock]` or `[RockPartial]` attributes. Closed types are not allowed.
+* `ref struct` and `ref` or `ref readonly` Returns - If an interface has a type parameter with the `allows ref struct` constraint, and that type parameter is used as the type of a return value and it's `ref` or `ref readonly`, Rocks won't mock it.
+
+There are more details behind each of these - you're welcome to peruse to code to dive deeper if you'd like. If you think there's way to broaden Rocks' horizons, [add a discussion](https://github.com/JasonBock/Rocks/discussions) with your proposal. If it looks legitimate, an issue will be added, and if you want, you can make the PR!
 
 # Conclusion
 

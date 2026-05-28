@@ -34,10 +34,10 @@ TODO:
 * DONE - Run all integration and code gen tests
 * DONE - Add a test for this diagnostic
 * (DONE - already done in `GenerateWithAntiConstraintOnTypeParameterAsync`) Add a unit test for interfaces that `allows ref struct` but just returns it as `T` (i.e. not a `ref` or `ref readonly`)
-* Change diagnostics and descriptors to use IDs defined in a static class (similar to what I did in Transpire)
-* Add ROCK19 diagnostic Markdown doc
-* Update docs to talk about conditions that Rocks doesn't support:
-    * Types with generic parameters that are constraints with `allows ref struct` where that type is used as a `ref` or `ref return`
-    * Static abstract members in interfaces
-    * Sealed, non-virtuals, etc. (profiler API could be used, but would be very difficult, reference TypeMock)
+* DONE - Change diagnostics and descriptors to use IDs defined in a static class (similar to what I did in Transpire)
+* DONE - Add ROCK19 diagnostic Markdown doc
+* DONE - Update docs to talk about conditions that Rocks doesn't support:
+    * DONE - Types with generic parameters that are constraints with `allows ref struct` where that type is used as a `ref` or `ref return`
+    * DONE - Static abstract members in interfaces
+    * DONE - Sealed, non-virtuals, etc. (profiler API could be used, but would be very difficult, reference TypeMock)
 * Update changelog

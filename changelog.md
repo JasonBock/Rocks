@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added visibility configuration for generated code (issue [#402](https://github.com/JasonBock/Rocks/issues/402))
 - Allows setups for methods with type parameters not used in parameters or the return value (issue [#416](https://github.com/JasonBock/Rocks/issues/416))
 
+### Fixed
+
+- Interfaces with type parameters constrained with `allows ref struct` and those parameters used as `ref` or `ref return` return types are not allowed (issue [#414](https://github.com/JasonBock/Rocks/issues/414))
+
 ## [10.2.0] - 2026-05-04
 
 ### Changed
