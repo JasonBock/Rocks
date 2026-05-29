@@ -193,7 +193,7 @@ internal static class MockConstructorExtensionsBuilder
 			if (!this.WasInstanceInvoked)
 			{
 				this.WasInstanceInvoked = true;
-				var @{{namingContext["mock"]}} = new Mock({{rockInstanceParameters}});
+				var @{{namingContext["mock"]}} = new {{mockType.MockName}}({{rockInstanceParameters}});
 				this.MockType = @{{namingContext["mock"]}}.GetType();
 				return @{{namingContext["mock"]}};
 			}

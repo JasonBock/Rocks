@@ -174,7 +174,7 @@ internal static class MockConstructorExpectationsBuilder
 			writer.WriteLine($"global::System.ArgumentNullException.ThrowIfNull({namingContext["constructorProperties"]});");
 		}
 
-		writer.WriteLine($"return new Mock({rockInstanceParameters});");
+		writer.WriteLine($"return new {type.MockName}({rockInstanceParameters});");
 		writer.Indent--;
 		writer.WriteLine("}");
 	}

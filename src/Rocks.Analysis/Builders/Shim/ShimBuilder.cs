@@ -18,7 +18,7 @@ internal static class ShimBuilder
 		return name;
 	}
 
-	internal static void Build(IndentedTextWriter writer, TypeMockModel shimType)
+	internal static void Build(IndentedTextWriter writer, TypeMockModel shimType, string mockName)
 	{
 		var shimName = GetShimName(shimType.Type);
 
@@ -27,9 +27,9 @@ internal static class ShimBuilder
 			private sealed class {{shimName}}
 				: {{shimType.Type.FullyQualifiedName}}
 			{
-				private readonly Mock mock;
+				private readonly {{mockName}} mock;
 				
-				public {{shimName}}(Mock @mock) =>
+				public {{shimName}}({{mockName}} @mock) =>
 					this.mock = @mock;
 			""");
 

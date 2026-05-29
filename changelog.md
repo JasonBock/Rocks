@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Interfaces with type parameters constrained with `allows ref struct` and those parameters used as `ref` or `ref return` return types are not allowed (issue [#414](https://github.com/JasonBock/Rocks/issues/414))
 - `ref readonly` parameters are now handled correctly (issue [#415](https://github.com/JasonBock/Rocks/issues/415))
+- Target types with mockable members that have a name starting with "Mock" no longer cause an error (issue [#418](https://github.com/JasonBock/Rocks/issues/418))
 
 ## [10.2.0] - 2026-05-04
 

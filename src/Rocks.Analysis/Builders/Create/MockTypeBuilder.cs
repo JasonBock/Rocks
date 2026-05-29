@@ -16,7 +16,7 @@ internal static class MockTypeBuilder
 			writer.WriteLine(type.Type.AttributesDescription);
 		}
 
-		writer.WriteLine($"private sealed {kind} Mock");
+		writer.WriteLine($"private sealed {kind} {type.MockName}");
 		writer.Indent++;
 
 		var canRaiseEvents = type.Events.Length > 0;
@@ -81,7 +81,7 @@ internal static class MockTypeBuilder
 			writer.WriteLine();
 		}
 
-		BuildShimTypes(writer, type);
+		MockTypeBuilder.BuildShimTypes(writer, type);
 
 		writer.WriteLine($"private {expectationsFullyQualifiedName} {type.ExpectationsPropertyName} {{ get; }}");
 
@@ -93,7 +93,7 @@ internal static class MockTypeBuilder
 	{
 		foreach (var shimType in type.Shims)
 		{
-			ShimBuilder.Build(writer, shimType);
+			ShimBuilder.Build(writer, shimType, type.MockName);
 			writer.WriteLine();
 		}
 	}

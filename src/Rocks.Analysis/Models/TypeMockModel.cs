@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Analysis.Builders.Create;
 using Rocks.Analysis.Discovery;
 using Rocks.Analysis.Extensions;
 using System.Collections.Immutable;
@@ -66,6 +67,33 @@ internal sealed record TypeMockModel
 
 		this.ExpectationsPropertyName = this.GetExpectationsPropertyName();
 		this.Projections = this.GetProjections();
+		this.MockName = this.GetMockName();
+	}
+
+	private string GetMockName()
+	{
+		var mockableNames = new HashSet<string>();
+
+		// We only look for member names that start with "Mock"
+		// as that's all we could collide with, at least the start of the name.
+		// This also reduces the amount of entries in the hash set.
+		foreach (var method in this.Methods.Where(method => method.Name.StartsWith("Mock")))
+		{
+			_ = mockableNames.Add(method.Name);
+		}
+
+		foreach (var property in this.Properties.Where(property => property.Name.StartsWith("Mock")))
+		{
+			_ = mockableNames.Add(property.Name);
+		}
+
+		foreach (var @event in this.Events.Where(@event => @event.Name.StartsWith("Mock")))
+		{
+			_ = mockableNames.Add(@event.Name);
+		}
+
+		var namingContext = new VariablesNamingContext([.. mockableNames]);
+		return namingContext["Mock"];
 	}
 
 	private EquatableArray<ITypeReferenceModel> GetProjections()
@@ -152,6 +180,7 @@ internal sealed record TypeMockModel
 	internal bool IsPartial { get; }
 	internal TypeMockModelMemberCount MemberCount { get; }
 	internal EquatableArray<MethodModel> Methods { get; }
+	internal string MockName { get; }
 	internal EquatableArray<PropertyModel> Properties { get; }
 	internal EquatableArray<ITypeReferenceModel> Projections { get; }
 	internal EquatableArray<TypeMockModel> Shims { get; }
