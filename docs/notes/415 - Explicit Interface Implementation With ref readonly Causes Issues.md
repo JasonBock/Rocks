@@ -9,10 +9,10 @@ Code:
 
 Here are the current types failing:
 
-* DotNext.IOptionMonad<T>
-* DotNext.IResultMonad<T>
-* DotNext.Buffers.IGrowableBuffer<T>
-* DotNext.IO.IAsyncBinaryWriter
+* `DotNext.IOptionMonad<T>`
+* `DotNext.IResultMonad<T>`
+* `DotNext.Buffers.IGrowableBuffer<T>`
+* `DotNext.IO.IAsyncBinaryWriter`
 
 Test is passing. Dump the code from the unit test into MockCodeDump.cs and see if it succeeds or fails there.
 
@@ -59,4 +59,6 @@ TODOs:
 * DONE - Use `in` for `ref readonly` parameter forwarding (create only)
     * DONE - In mocked method
     * DONE - In shim method
-* Add a section on default interface members and shims in the Overview doc.
+* DONE - Add a bug that if someone defines has a mock that has a member named `Mock`, it'll break Rocks (or at least confirm I'm already handling this)
+* DONE - Add a section on default interface members and shims in the Overview doc.
+* DONE - There's a space in the shim member generation, fix that! (horrible)

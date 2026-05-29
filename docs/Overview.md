@@ -15,6 +15,7 @@
     - [Mocking Properties](#mocking-properties)
     - [Mocking Indexers](#mocking-indexers)
     - [Mocking Events](#mocking-events)
+    - [Default Interface Members](#default-interface-members)
     - [Optional Arguments](#optional-arguments)
     - [Handling Asynchronous Code](#handling-asynchronous-code)
     - [`dynamic` Types](#dynamic-types)
@@ -526,6 +527,149 @@ expectations.Verify();
 Rocks generates extension methods for every adornments object (which is returned when an expectation is set). The naming pattern is `Raise{Event name}`. There is an `AddRaiseEvent()` method you can call directly, but the extension methods makes it convenient to pass in the right event name and its' corresponding event argument value.
 
 Keep in mind that these extension methods won't be created if the mock type is generic, an open generic is requested, and there are events on the mock type. This is due to the way the extension methods are created. This situation should be relative rare, and `AddRaiseEvent()` can still be used in this case. (This limitation is being tracked with [this issue](https://github.com/JasonBock/Rocks/issues/309) - hopefully this will be resolved in the future.)
+
+### Default Interface Members
+
+In C# 8, a feature was added called [*default interface members*](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/interface#default-interface-members), or DIMs. This allows an author of an interface to provide an implementation of a member. A class that derives from this interface does not need to provide an implementation for that member. This makes versioning easier with interfaces as it does not force current implementations to recompile when a new member with a DIM is added.
+
+However, unlike a `virtual` method in a class, C# does not have a way to call the interface's implementation using the `base` keyword:
+
+```c#
+public interface IWork
+{
+  void NoWork();
+  void Work() => Console.WriteLine("IWork.Work");
+}
+
+public class VirtualWork
+{
+  public virtual void FakeWork() => Console.WriteLine("VirtualWork.Work");
+}
+
+public class Work
+  : VirtualWork, IWork
+{
+  public void NoWork() { }
+
+  void IWork.Work()
+  {
+    Console.WriteLine("Work.Work");
+    // This next line will not compile
+    base.Work();
+  }
+
+  public override void FakeWork()
+  {
+    Console.WriteLine("Work.FakeWork");
+    base.FakeWork();
+  }
+}
+```
+
+This is important in Rocks because virtual members do not require setups if you're fine with the target type's implementation defined in the `virtual` member. With DIMs, it becomes complicated with explicit interface implementation, casting, etc. Fortunately, Rocks handles all of this for you underneath the scenes by generating *shim types*. You can chose to either provide a setup for a DIM, or you can let Rocks call the interface's implementation for you. Here's a description of how it works - keep in mind that this is an implementation detail and it's not required for you to know these mechanics.
+
+Let's say you wanted to mock `IWork`:
+
+```c#
+[assembly: Rock(typeof(IWork), BuildType.Create)]
+```
+
+Here's what Rocks generates as the mock type for `IWork`:
+
+```c#
+private sealed class Mock
+  : global::IWork
+{
+  private readonly global::IWork shimForShimIWork;
+  
+  public Mock(global::IWorkCreateExpectations @expectations)
+  {
+    (this.Expectations, this.shimForShimIWork) = (@expectations, new ShimIWork(this));
+  }
+  
+  [global::Rocks.MemberIdentifier(0)]
+  public void NoWork()
+  {
+    if (this.Expectations.handlers0 is not null)
+    {
+      var @handler = this.Expectations.handlers0;
+      @handler.CallCount++;
+      if (@handler.Exception is not null) { throw @handler.Exception; }
+      @handler.Callback?.Invoke();
+    }
+    else
+    {
+      this.Expectations.WasExceptionThrown = true;
+      throw new global::Rocks.Exceptions.ExpectationException(
+        $"""
+        No handlers were found for {this.GetType().GetMemberDescription(0)}
+        """);
+    }
+  }
+  
+  [global::Rocks.MemberIdentifier(1)]
+  public void Work()
+  {
+    if (this.Expectations.handlers1 is not null)
+    {
+      var @handler = this.Expectations.handlers1;
+      @handler.CallCount++;
+      if (@handler.Exception is not null) { throw @handler.Exception; }
+      @handler.Callback?.Invoke();
+    }
+    else
+    {
+      this.shimForShimIWork.Work();
+    }
+  }
+  
+  private sealed class ShimIWork
+    : global::IWork
+  {
+    private readonly Mock mock;
+    
+    public ShimIWork(Mock @mock) =>
+      this.mock = @mock;
+    
+    public void NoWork() =>
+      ((global::IWork)this.mock).NoWork();
+  }
+  
+  private global::IWorkCreateExpectations Expectations { get; }
+}
+```
+
+The mock implements both `Work()` and `NoWork()`. Since `NoWork()` has no implementation, the user must provide a setup for this method invocation - otherwise an exception will be raised. However, for `Work()`, if no setup is found, Rocks routes the call to `this.shimForShimIWork.Work()`. `ShimIWork` also implements `IWork` but it does not provide an implementation for `Work()`. Therefore, what happens is that when `Work()` is invoked on an instance of the shim, the implementation on `IWork()` is invoked.
+
+This allows you to either provide a setup:
+
+```c#
+using var context = new RockContext();
+var expectations = context.Create<IWorkCreateExpectations>();
+expectations.Setups.Work();
+expectations.Setups.NoWork();
+
+var mock = expectations.Instance();
+mock.Work();
+mock.NoWork();
+```
+
+Or not:
+
+```c#
+using var context = new RockContext();
+var expectations = context.Create<IWorkCreateExpectations>();
+expectations.Setups.NoWork();
+
+var mock = expectations.Instance();
+mock.Work();
+mock.NoWork();
+```
+
+In both scenarios, no exceptions will be raised.
+
+> [!NOTE]
+> There is [a proposal](https://github.com/dotnet/csharplang/issues/406) to allow developers to call DIMs directly, potentially with syntax that looks like this: `base(IWork).Work();`. However, as of C# 14, this feature does not exist. If it's added to the language, Rocks will be updated to take advantage of this feature to remove the shim type generation and simplify calling DIMs.
 
 ### Optional Arguments
 

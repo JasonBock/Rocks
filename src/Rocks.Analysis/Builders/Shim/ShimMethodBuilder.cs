@@ -32,7 +32,7 @@ internal static class ShimMethodBuilder
 				var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadOnly ? "ref readonly " : string.Empty;
 				var returnTypeValue = method.IsGenericMethod && method.TypeArguments.Any(m => m.FullyQualifiedName == method.ReturnType.FullyQualifiedName) ?
 					method.ReturnType.BuildName(typeArgumentsNamingContext) : method.ReturnType.FullyQualifiedName;
-				returnType = $"{returnByRef}{returnTypeValue}";
+				returnType = $"{returnByRef}{returnTypeValue} ";
 				useNullForgiving = "!";
 			}
 
@@ -73,12 +73,12 @@ internal static class ShimMethodBuilder
 
 			if (constraints.Length == 0)
 			{
-				writer.WriteLine($"{accessibility}{isUnsafe}{returnType} {explicitName}{method.Name}{typeArguments}({methodParameters}) =>");
+				writer.WriteLine($"{accessibility}{isUnsafe}{returnType}{explicitName}{method.Name}{typeArguments}({methodParameters}) =>");
 				writer.Indent++;
 			}
 			else
 			{
-				writer.WriteLine($"{accessibility}{isUnsafe}{returnType} {explicitName}{method.Name}{typeArguments}({methodParameters})");
+				writer.WriteLine($"{accessibility}{isUnsafe}{returnType}{explicitName}{method.Name}{typeArguments}({methodParameters})");
 				writer.Indent++;
 
 				for (var i = 0; i < constraints.Length; i++)

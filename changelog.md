@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Interfaces with type parameters constrained with `allows ref struct` and those parameters used as `ref` or `ref return` return types are not allowed (issue [#414](https://github.com/JasonBock/Rocks/issues/414))
+- `ref readonly` parameters are now handled correctly (issue [#415](https://github.com/JasonBock/Rocks/issues/415))
 
 ## [10.2.0] - 2026-05-04
 
