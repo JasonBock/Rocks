@@ -23,20 +23,16 @@ public abstract class Expectations
 	/// </summary>
 	/// <param name="handlers">A list of handlers to verify</param>
 	/// <param name="memberIdentifier">The member identifier for the handlers</param>
+	/// <param name="mockType">The mock type</param>
 	/// <returns>A list of failed expectations</returns>
-	protected IEnumerable<string> Verify<THandler>(List<THandler> handlers, uint memberIdentifier)
+	protected static IEnumerable<string> Verify<THandler>(List<THandler> handlers, uint memberIdentifier, Type mockType)
 		where THandler : Handler =>
 			handlers.Where(_ => _.ExpectedCallCount != _.CallCount)
 				.Select(_ =>
 				{
-					var member = this.MockType!.GetMemberDescription(memberIdentifier);
-					return $"Mock type: {this.MockType!.FullName}, member: {member}, message: The expected call count is incorrect. Expected: {_.ExpectedCallCount}, received: {_.CallCount}.";
+					var member = mockType.GetMemberDescription(memberIdentifier);
+					return $"Mock type: {mockType.FullName}, member: {member}, message: The expected call count is incorrect. Expected: {_.ExpectedCallCount}, received: {_.CallCount}.";
 				});
-
-	/// <summary>
-	/// Gets or sets the mock type.
-	/// </summary>
-	protected Type? MockType { get; set; }
 
 	/// <summary>
 	/// Gets or sets the flag to determine if a mock threw an exception, like <see cref="ExpectationException"/>.

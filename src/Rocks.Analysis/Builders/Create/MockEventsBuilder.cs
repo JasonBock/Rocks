@@ -36,7 +36,7 @@ internal static class MockEventsBuilder
 			""");
 	}
 
-	internal static void Build(IndentedTextWriter writer, ImmutableArray<EventModel> events)
+	internal static void Build(IndentedTextWriter writer, ImmutableArray<EventModel> events, string mockTypeName)
 	{
 		writer.WriteLine("#pragma warning disable CS0067");
 
@@ -58,13 +58,12 @@ internal static class MockEventsBuilder
 		}
 
 		writer.WriteLines(
-			"""
+			$$"""
 			#pragma warning restore CS0067
 
 			void global::Rocks.IRaiseEvents.Raise(string @fieldName, object @args)
 			{
-				var @thisType = this.GetType();
-				var @eventDelegate = (global::System.MulticastDelegate)thisType.GetField(@fieldName, 
+				var @eventDelegate = (global::System.MulticastDelegate)typeof({{mockTypeName}}).GetField(@fieldName, 
 					global::System.Reflection.BindingFlags.Instance | global::System.Reflection.BindingFlags.NonPublic)!.GetValue(this)!;
 				
 				if (@eventDelegate is not null)

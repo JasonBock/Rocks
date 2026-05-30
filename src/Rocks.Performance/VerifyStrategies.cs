@@ -179,9 +179,9 @@ internal sealed class CurrentExpectations
 	{
 		var failures = new List<string>();
 
-		if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-		if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
-		if (this.handlers2 is not null) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+		if (this.handlers0 is not null) { failures.AddRange(Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
+		if (this.handlers1 is not null) { failures.AddRange(Expectations.Verify(this.handlers1, 1, typeof(Mock))); }
+		if (this.handlers2 is not null) { failures.AddRange(Expectations.Verify(this.handlers2, 2, typeof(Mock))); }
 	}
 
 	private sealed class Mock
@@ -299,9 +299,7 @@ internal sealed class CurrentExpectations
 		if (!this.WasInstanceInvoked)
 		{
 			this.WasInstanceInvoked = true;
-			var @mock = new Mock(this);
-			this.MockType = @mock.GetType();
-			return @mock;
+			return new Mock(this);
 		}
 		else
 		{

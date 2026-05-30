@@ -29,12 +29,12 @@ internal static class MockExpectationsVerifyBuilder
 			if (method.TypeParameters.Length == 0 && method.Parameters.Length == 0)
 			{
 				writer.WriteLine(
-					$"if (this.handlers{method.MemberIdentifier} is not null) {{ failures.AddRange(this.Verify([this.handlers{method.MemberIdentifier}], {method.MemberIdentifier})); }}");
+					$"if (this.handlers{method.MemberIdentifier} is not null) {{ failures.AddRange(global::Rocks.Expectations.Verify([this.handlers{method.MemberIdentifier}], {method.MemberIdentifier}, typeof({mockType.MockName}))); }}");
 			}
 			else
 			{
 				writer.WriteLine(
-					$"if (this.handlers{method.MemberIdentifier} is not null) {{ failures.AddRange(this.Verify(this.handlers{method.MemberIdentifier}, {method.MemberIdentifier})); }}");
+					$"if (this.handlers{method.MemberIdentifier} is not null) {{ failures.AddRange(global::Rocks.Expectations.Verify(this.handlers{method.MemberIdentifier}, {method.MemberIdentifier}, typeof({mockType.MockName}))); }}");
 			}
 		}
 
@@ -45,12 +45,12 @@ internal static class MockExpectationsVerifyBuilder
 				if (!property.IsIndexer && property.Accessors == PropertyAccessor.Get)
 				{
 					writer.WriteLine(
-						$"if (this.handlers{property.MemberIdentifier} is not null) {{ failures.AddRange(this.Verify([this.handlers{property.MemberIdentifier}], {property.MemberIdentifier})); }}");
+						$"if (this.handlers{property.MemberIdentifier} is not null) {{ failures.AddRange(global::Rocks.Expectations.Verify([this.handlers{property.MemberIdentifier}], {property.MemberIdentifier}, typeof({mockType.MockName}))); }}");
 				}
 				else
 				{
 					writer.WriteLine(
-						$"if (this.handlers{property.MemberIdentifier} is not null) {{ failures.AddRange(this.Verify(this.handlers{property.MemberIdentifier}, {property.MemberIdentifier})); }}");
+						$"if (this.handlers{property.MemberIdentifier} is not null) {{ failures.AddRange(global::Rocks.Expectations.Verify(this.handlers{property.MemberIdentifier}, {property.MemberIdentifier}, typeof({mockType.MockName}))); }}");
 				}
 			}
 			else
@@ -62,12 +62,12 @@ internal static class MockExpectationsVerifyBuilder
 					if (!property.IsIndexer)
 					{
 						writer.WriteLine(
-							$"if (this.handlers{memberIdentifier} is not null) {{ failures.AddRange(this.Verify([this.handlers{memberIdentifier}], {memberIdentifier})); }}");
+							$"if (this.handlers{memberIdentifier} is not null) {{ failures.AddRange(global::Rocks.Expectations.Verify([this.handlers{memberIdentifier}], {memberIdentifier}, typeof({mockType.MockName}))); }}");
 					}
 					else
 					{
 						writer.WriteLine(
-							$"if (this.handlers{memberIdentifier} is not null) {{ failures.AddRange(this.Verify(this.handlers{memberIdentifier}, {memberIdentifier})); }}");
+							$"if (this.handlers{memberIdentifier} is not null) {{ failures.AddRange(global::Rocks.Expectations.Verify(this.handlers{memberIdentifier}, {memberIdentifier}, typeof({mockType.MockName}))); }}");
 					}
 
 					memberIdentifier++;
@@ -75,7 +75,7 @@ internal static class MockExpectationsVerifyBuilder
 
 				if (property.SetCanBeSeenByContainingAssembly || property.InitCanBeSeenByContainingAssembly)
 				{
-					writer.WriteLine($"if (this.handlers{memberIdentifier} is not null) {{ failures.AddRange(this.Verify(this.handlers{memberIdentifier}, {memberIdentifier})); }}");
+					writer.WriteLine($"if (this.handlers{memberIdentifier} is not null) {{ failures.AddRange(global::Rocks.Expectations.Verify(this.handlers{memberIdentifier}, {memberIdentifier}, typeof({mockType.MockName}))); }}");
 				}
 			}
 		}

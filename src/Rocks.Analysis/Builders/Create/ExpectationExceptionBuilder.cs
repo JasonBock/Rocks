@@ -7,14 +7,14 @@ namespace Rocks.Analysis.Builders.Create;
 internal static class ExpectationExceptionBuilder
 {
 	internal static void Build(IndentedTextWriter writer, MethodModel method,
-		string message, string expectationsPropertyName)
+		string message, string expectationsPropertyName, string mockTypeName)
 	{
 		writer.WriteLines(
 			$$""""
 			this.{{expectationsPropertyName}}.WasExceptionThrown = true;
 			throw new global::Rocks.Exceptions.ExpectationException(
 				$"""
-				{{message}} {this.GetType().GetMemberDescription({{method.MemberIdentifier}})}
+				{{message}} {typeof({{mockTypeName}}).GetMemberDescription({{method.MemberIdentifier}})}
 			"""");
 
 		writer.Indent += 2;

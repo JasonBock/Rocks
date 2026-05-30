@@ -77,7 +77,7 @@ internal static class MockTypeBuilder
 
 		if (canRaiseEvents)
 		{
-			MockEventsBuilder.Build(writer, type.Events);
+			MockEventsBuilder.Build(writer, type.Events, type.MockName);
 			writer.WriteLine();
 		}
 
