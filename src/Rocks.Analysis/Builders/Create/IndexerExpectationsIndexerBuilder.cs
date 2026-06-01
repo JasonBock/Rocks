@@ -97,7 +97,7 @@ internal static class IndexerExpectationsIndexerBuilder
 					$$"""
 					};
 
-					if (this.parent.handlers{{memberIdentifier}} is null) { this.parent.handlers{{memberIdentifier}} = new(1); }
+					this.parent.handlers{{memberIdentifier}} ??= new(1);
 					this.parent.handlers{{memberIdentifier}}.Add(@{{handlerContext["handler"]}});
 					return new(@{{handlerContext["handler"]}}, this.parent);
 					""");
@@ -208,7 +208,7 @@ internal static class IndexerExpectationsIndexerBuilder
 					$$"""
 					};
 
-					if (this.parent.handlers{{memberIdentifier}} is null) { this.parent.handlers{{memberIdentifier}} = new(1); }
+					this.parent.handlers{{memberIdentifier}} ??= new(1);
 					this.parent.handlers{{memberIdentifier}}.Add(@{{handlerContext["handler"]}});
 					return new(@{{handlerContext["handler"]}}, this.parent);
 					""");

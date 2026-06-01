@@ -76,7 +76,7 @@ internal static class PropertyExpectationsPropertyBuilder
 					value = @value,
 				};
 
-				if (this.parent.handlers{{memberIdentifier}} is null) { this.parent.handlers{{memberIdentifier}} = new(1); }
+				this.parent.handlers{{memberIdentifier}} ??= new(1);
 				this.parent.handlers{{memberIdentifier}}.Add(handler);
 				return new(handler, this.parent);
 			}

@@ -132,7 +132,7 @@ internal static class MethodExpectationsMethodBuilder
 					$$"""
 					};
 
-					if (this.parent.handlers{{method.MemberIdentifier}} is null) { this.parent.handlers{{method.MemberIdentifier}} = new(1); }
+					this.parent.handlers{{method.MemberIdentifier}} ??= new(1);
 					this.parent.handlers{{method.MemberIdentifier}}.Add(@{{handlerContext["handler"]}});
 					return new(@{{handlerContext["handler"]}}, this.parent);
 					""");
