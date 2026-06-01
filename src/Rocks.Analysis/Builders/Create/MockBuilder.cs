@@ -26,6 +26,9 @@ internal static class MockBuilder
 
 		writer.WriteLines(
 			$$"""
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="{{mockType.Type.FullyQualifiedName.TransformForXmlComment()}}"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			{{mockType.Accessibility}} {{isUnsafe}}{{isSealed}}{{isPartial}}class {{mockType.ExpectationsName}}
 				: global::Rocks.Expectations
