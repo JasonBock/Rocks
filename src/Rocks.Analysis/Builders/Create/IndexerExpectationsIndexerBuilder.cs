@@ -77,7 +77,6 @@ internal static class IndexerExpectationsIndexerBuilder
 					/// <summary>
 					/// Sets a "get" expectation for the <see cref="{{commentTarget}}" /> property.
 					/// </summary>
-					
 					{{mockType.Accessibility}} {{expectationsFullyQualifiedName}}.Adornments.{{adornmentsTypeName}} Gets()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
@@ -193,7 +192,6 @@ internal static class IndexerExpectationsIndexerBuilder
 					/// <summary>
 					/// Sets a "{{propertyTargetComment}}" expectation for the <see cref="{{commentTarget}}" /> property.
 					/// </summary>
-					
 					{{mockType.Accessibility}} {{expectationsFullyQualifiedName}}.Adornments.{{adornmentsTypeName}} {{name}}({{valueParameter}})
 					{
 					""");

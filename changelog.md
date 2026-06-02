@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added visibility configuration for generated code (issue [#402](https://github.com/JasonBock/Rocks/issues/402))
 - Allows setups for methods with type parameters not used in parameters or the return value (issue [#416](https://github.com/JasonBock/Rocks/issues/416))
 - Made a small improvement handling mock type usage (issue [#417](https://github.com/JasonBock/Rocks/issues/417))
+- Added XML comments to generated code (issue [#403](https://github.com/JasonBock/Rocks/issues/403))
 
 ### Fixed
 

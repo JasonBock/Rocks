@@ -173,8 +173,15 @@ internal static class MockConstructorExtensionsBuilder
 				return $"{direction}@{_.Name}{requiresNullable}";
 			})));
 
-		writer.WriteLine($"{mockType.Accessibility} {(isUnsafe ? "unsafe " : string.Empty)}{mockType.Type.FullyQualifiedName} Instance({instanceParameters})");
-		writer.WriteLine("{");
+		writer.WriteLines(
+			$$"""
+			/// <summary>
+			/// Creates a new instance of a <see cref="{{mockType.Type.FullyQualifiedName.TransformForXmlComment()}}" />-based mock.
+			/// </summary>
+			/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
+			{{mockType.Accessibility}} {{(isUnsafe ? "unsafe " : string.Empty)}}{{mockType.Type.FullyQualifiedName}} Instance({{instanceParameters}})
+			{
+			""");
 		writer.Indent++;
 
 		if (hasRequiredProperties)

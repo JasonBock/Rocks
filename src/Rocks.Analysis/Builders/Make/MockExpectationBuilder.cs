@@ -13,6 +13,9 @@ internal static class MockExpectationBuilder
 
 		writer.WriteLines(
 			$"""
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="{mockType.Type.FullyQualifiedName.TransformForXmlComment()}"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			{mockType.Accessibility} {isSealed}{isPartial}class {mockType.ExpectationsName}
 			""");

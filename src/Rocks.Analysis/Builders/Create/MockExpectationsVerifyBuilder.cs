@@ -10,6 +10,9 @@ internal static class MockExpectationsVerifyBuilder
 	{
 		writer.WriteLines(
 			$$"""
+			/// <summary>
+			/// Verifies expectations set for the <see cref="{{mockType.Type.FullyQualifiedName.TransformForXmlComment()}}"/>-based mock.
+			/// </summary>
 			public override void Verify()
 			{
 				if (!this.WasInstanceInvoked)

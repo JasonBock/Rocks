@@ -165,8 +165,16 @@ internal static class MockConstructorExpectationsBuilder
 				return $"{direction}@{_.Name}{requiresNullable}";
 			})));
 
-		writer.WriteLine($"{type.Accessibility} {(isUnsafe ? "unsafe " : string.Empty)}{type.Type.FullyQualifiedName} Instance({instanceParameters})");
-		writer.WriteLine("{");
+
+		writer.WriteLines(
+			$$"""
+			/// <summary>
+			/// Creates a new "simple" instance of a <see cref="{{type.Type.FullyQualifiedName.TransformForXmlComment()}}" />-based type.
+			/// </summary>
+			{{type.Accessibility}} {{(isUnsafe ? "unsafe " : string.Empty)}}{{type.Type.FullyQualifiedName}} Instance({{instanceParameters}})
+			{
+			""");
+			
 		writer.Indent++;
 
 		if (hasRequiredProperties)

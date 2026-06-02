@@ -44,7 +44,6 @@ internal static class PropertyExpectationsPropertyBuilder
 			/// <summary>
 			/// Sets a "get" expectation for the <see cref="{{propertyComment}}" /> property.
 			/// </summary>
-
 			internal {{expectationsFullyQualifiedName}}.Adornments.{{adornmentsTypeName}} Gets()
 			{
 				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
