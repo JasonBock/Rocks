@@ -50,20 +50,32 @@ public static class AttributeGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::TransactionProvider"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class TransactionProviderCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::TransactionProviderCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::TransactionProvider"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::TransactionProviderCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::TransactionProviderCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal global::TransactionProviderCreateExpectations.Adornments.AdornmentsForHandler0 Equals(global::Rocks.Argument<object?> @obj)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::TransactionProvider.Equals(Object)"/>.
+					/// </summary>
+					internal global::TransactionProviderCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
@@ -73,27 +85,31 @@ public static class AttributeGeneratorTests
 							@obj = @obj,
 						};
 						
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
-						else { this.parent.handlers0.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers0 ??= new(1);
+						this.parent.handlers0.Add(@handler);
+						return new(@handler, this.parent);
 					}
 					
-					internal new global::TransactionProviderCreateExpectations.Adornments.AdornmentsForHandler1 GetHashCode()
+					/// <summary>
+					/// Sets an expectation for <see cref="global::TransactionProvider.GetHashCode()"/>.
+					/// </summary>
+					internal new global::TransactionProviderCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						var handler = new global::TransactionProviderCreateExpectations.Handler1();
-						if (this.parent.handlers1 is null) { this.parent.handlers1 = new(handler); }
-						else { this.parent.handlers1.Add(handler); }
-						return new(handler);
+						this.parent.handlers1 = handler;
+						return new(handler, this.parent);
 					}
 					
-					internal new global::TransactionProviderCreateExpectations.Adornments.AdornmentsForHandler2 ToString()
+					/// <summary>
+					/// Sets an expectation for <see cref="global::TransactionProvider.ToString()"/>.
+					/// </summary>
+					internal new global::TransactionProviderCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						var handler = new global::TransactionProviderCreateExpectations.Handler2();
-						if (this.parent.handlers2 is null) { this.parent.handlers2 = new(handler); }
-						else { this.parent.handlers2.Add(handler); }
-						return new(handler);
+						this.parent.handlers2 = handler;
+						return new(handler, this.parent);
 					}
 					internal sealed class HasOpenTransactionPropertyExpectations
 					{
@@ -102,16 +118,21 @@ public static class AttributeGeneratorTests
 						internal HasOpenTransactionPropertyExpectations(global::TransactionProviderCreateExpectations parent) => 
 							this.parent = parent;
 					
-						internal global::TransactionProviderCreateExpectations.Adornments.AdornmentsForHandler3 Gets()
+						/// <summary>
+						/// Sets a "get" expectation for the <see cref="global::TransactionProvider" /> property.
+						/// </summary>
+						internal global::TransactionProviderCreateExpectations.Adornments.HasOpenTransactionGetsAdornments2D2816FE Gets()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 							var handler = new global::TransactionProviderCreateExpectations.Handler3();
-							if (this.parent.handlers3 is null) { this.parent.handlers3 = new(handler); }
-							else { this.parent.handlers3.Add(handler); }
-							return new(handler);
+							this.parent.handlers3 = handler;
+							return new(handler, this.parent);
 						}
 					}
 					
+					/// <summary>
+					/// Contains expectation setups for the <see cref="global::TransactionProvider" property./>.
+					/// </summary>
 					internal global::TransactionProviderCreateExpectations.SetupsExpectations.HasOpenTransactionPropertyExpectations HasOpenTransaction => new(this.parent);
 					
 				}
@@ -121,25 +142,28 @@ public static class AttributeGeneratorTests
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Func<object?, bool>, bool>
 				{
-					public global::Rocks.Argument<object?> @obj { get; set; }
+					internal global::Rocks.Argument<object?> @obj { get; set; }
 				}
-				private global::Rocks.Handlers<global::TransactionProviderCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::TransactionProviderCreateExpectations.Handler0>? @handlers0;
 				
 				internal sealed class Handler1
 					: global::Rocks.Handler<global::System.Func<int>, int>
 				{ }
-				private global::Rocks.Handlers<global::TransactionProviderCreateExpectations.Handler1>? @handlers1;
+				private global::TransactionProviderCreateExpectations.Handler1? @handlers1;
 				
 				internal sealed class Handler2
 					: global::Rocks.Handler<global::System.Func<string?>, string?>
 				{ }
-				private global::Rocks.Handlers<global::TransactionProviderCreateExpectations.Handler2>? @handlers2;
+				private global::TransactionProviderCreateExpectations.Handler2? @handlers2;
 				
 				internal sealed class Handler3
 					: global::Rocks.Handler<global::System.Func<bool>, bool>
 				{ }
-				private global::Rocks.Handlers<global::TransactionProviderCreateExpectations.Handler3>? @handlers3;
+				private global::TransactionProviderCreateExpectations.Handler3? @handlers3;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::TransactionProvider"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -150,10 +174,10 @@ public static class AttributeGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-						if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
-						if (this.handlers2 is not null) { failures.AddRange(this.Verify(this.handlers2, 2)); }
-						if (this.handlers3 is not null) { failures.AddRange(this.Verify(this.handlers3, 3)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
+						if (this.handlers1 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers1], 1, typeof(Mock))); }
+						if (this.handlers2 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers2], 2, typeof(Mock))); }
+						if (this.handlers3 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers3], 3, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -175,11 +199,12 @@ public static class AttributeGeneratorTests
 					{
 						if (this.Expectations.handlers0 is not null)
 						{
-							foreach (var @handler in this.Expectations.handlers0)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers0))
 							{
 								if (@handler.@obj.IsValid(@obj!))
 								{
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									var @result = @handler.Callback is not null ?
 										@handler.Callback(@obj!) : @handler.ReturnValue;
 									return @result!;
@@ -189,7 +214,7 @@ public static class AttributeGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers match for {this.GetType().GetMemberDescription(0)}
+								No handlers match for {typeof(Mock).GetMemberDescription(0)}
 									obj: {@obj.FormatValue()}
 								""");
 						}
@@ -204,8 +229,9 @@ public static class AttributeGeneratorTests
 					{
 						if (this.Expectations.handlers1 is not null)
 						{
-							var @handler = this.Expectations.handlers1.First;
+							var @handler = this.Expectations.handlers1;
 							@handler.CallCount++;
+							if (@handler.Exception is not null) { throw @handler.Exception; }
 							var @result = @handler.Callback is not null ?
 								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
@@ -221,8 +247,9 @@ public static class AttributeGeneratorTests
 					{
 						if (this.Expectations.handlers2 is not null)
 						{
-							var @handler = this.Expectations.handlers2.First;
+							var @handler = this.Expectations.handlers2;
 							@handler.CallCount++;
+							if (@handler.Exception is not null) { throw @handler.Exception; }
 							var @result = @handler.Callback is not null ?
 								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
@@ -240,8 +267,9 @@ public static class AttributeGeneratorTests
 						{
 							if (this.Expectations.handlers3 is not null)
 							{
-								var @handler = this.Expectations.handlers3.First;
+								var @handler = this.Expectations.handlers3;
 								@handler.CallCount++;
+								if (@handler.Exception is not null) { throw @handler.Exception; }
 								var @result = @handler.Callback is not null ?
 									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
@@ -258,14 +286,16 @@ public static class AttributeGeneratorTests
 				
 				public TransactionProviderCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::TransactionProvider" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::TransactionProvider Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -275,39 +305,54 @@ public static class AttributeGeneratorTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForTransactionProvider<TAdornments>
+					internal interface IAdornmentsForTransactionProvider<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForTransactionProvider<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::TransactionProviderCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForTransactionProvider<AdornmentsForHandler0>
+					internal sealed class EqualsAdornmentsE60CFEEA
+						: global::Rocks.Adornments<EqualsAdornmentsE60CFEEA, global::TransactionProviderCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForTransactionProvider<EqualsAdornmentsE60CFEEA>
 					{
-						public AdornmentsForHandler0(global::TransactionProviderCreateExpectations.Handler0 handler)
-							: base(handler) { }
+						internal EqualsAdornmentsE60CFEEA(global::TransactionProviderCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler1
-						: global::Rocks.Adornments<AdornmentsForHandler1, global::TransactionProviderCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForTransactionProvider<AdornmentsForHandler1>
+					internal sealed class GetHashCodeAdornments2D2816FE
+						: global::Rocks.Adornments<GetHashCodeAdornments2D2816FE, global::TransactionProviderCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForTransactionProvider<GetHashCodeAdornments2D2816FE>
 					{
-						public AdornmentsForHandler1(global::TransactionProviderCreateExpectations.Handler1 handler)
-							: base(handler) { }
+						internal GetHashCodeAdornments2D2816FE(global::TransactionProviderCreateExpectations.Handler1 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler2
-						: global::Rocks.Adornments<AdornmentsForHandler2, global::TransactionProviderCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForTransactionProvider<AdornmentsForHandler2>
+					internal sealed class ToStringAdornments2D2816FE
+						: global::Rocks.Adornments<ToStringAdornments2D2816FE, global::TransactionProviderCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForTransactionProvider<ToStringAdornments2D2816FE>
 					{
-						public AdornmentsForHandler2(global::TransactionProviderCreateExpectations.Handler2 handler)
-							: base(handler) { }
+						internal ToStringAdornments2D2816FE(global::TransactionProviderCreateExpectations.Handler2 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler3
-						: global::Rocks.Adornments<AdornmentsForHandler3, global::TransactionProviderCreateExpectations.Handler3, global::System.Func<bool>, bool>, IAdornmentsForTransactionProvider<AdornmentsForHandler3>
+					internal sealed class HasOpenTransactionGetsAdornments2D2816FE
+						: global::Rocks.Adornments<HasOpenTransactionGetsAdornments2D2816FE, global::TransactionProviderCreateExpectations.Handler3, global::System.Func<bool>, bool>, IAdornmentsForTransactionProvider<HasOpenTransactionGetsAdornments2D2816FE>
 					{
-						public AdornmentsForHandler3(global::TransactionProviderCreateExpectations.Handler3 handler)
-							: base(handler) { }
+						internal HasOpenTransactionGetsAdornments2D2816FE(global::TransactionProviderCreateExpectations.Handler3 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 				}
+				
+				internal void Remove(global::TransactionProviderCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA adornments)
+				{
+					adornments.Remove(this.@handlers0);
+					if (this.@handlers0?.Count == 0) { this.@handlers0 = null; }
+				}
+				
+				internal void Remove(global::TransactionProviderCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE adornments) =>
+					this.@handlers1 = null;
+				
+				internal void Remove(global::TransactionProviderCreateExpectations.Adornments.ToStringAdornments2D2816FE adornments) =>
+					this.@handlers2 = null;
+				
+				internal void Remove(global::TransactionProviderCreateExpectations.Adornments.HasOpenTransactionGetsAdornments2D2816FE adornments) =>
+					this.@handlers3 = null;
 			}
 			
 			#pragma warning restore CS8618
@@ -327,9 +372,15 @@ public static class AttributeGeneratorTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::TransactionProvider"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class TransactionProviderMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::TransactionProvider" />-based type.
+				/// </summary>
 				internal global::TransactionProvider Instance()
 				{
 					return new Mock();
@@ -412,16 +463,25 @@ public static class AttributeGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::IReadOnlyTensor"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IReadOnlyTensorCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::IReadOnlyTensorCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::IReadOnlyTensor"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::IReadOnlyTensorCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::IReadOnlyTensorCreateExpectations parent) =>
 						this.parent = parent;
 				
@@ -432,16 +492,21 @@ public static class AttributeGeneratorTests
 						internal LengthsPropertyExpectations(global::IReadOnlyTensorCreateExpectations parent) => 
 							this.parent = parent;
 					
-						internal global::IReadOnlyTensorCreateExpectations.Adornments.AdornmentsForHandler0 Gets()
+						/// <summary>
+						/// Sets a "get" expectation for the <see cref="global::IReadOnlyTensor" /> property.
+						/// </summary>
+						internal global::IReadOnlyTensorCreateExpectations.Adornments.LengthsGetsAdornments2D2816FE Gets()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 							var handler = new global::IReadOnlyTensorCreateExpectations.Handler0();
-							if (this.parent.handlers0 is null) { this.parent.handlers0 = new(handler); }
-							else { this.parent.handlers0.Add(handler); }
-							return new(handler);
+							this.parent.handlers0 = handler;
+							return new(handler, this.parent);
 						}
 					}
 					
+					/// <summary>
+					/// Contains expectation setups for the <see cref="global::IReadOnlyTensor" property./>.
+					/// </summary>
 					internal global::IReadOnlyTensorCreateExpectations.SetupsExpectations.LengthsPropertyExpectations Lengths => new(this.parent);
 					
 				}
@@ -451,8 +516,11 @@ public static class AttributeGeneratorTests
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Func<global::System.ReadOnlySpan<nint>>, global::System.Func<global::System.ReadOnlySpan<nint>>>
 				{ }
-				private global::Rocks.Handlers<global::IReadOnlyTensorCreateExpectations.Handler0>? @handlers0;
+				private global::IReadOnlyTensorCreateExpectations.Handler0? @handlers0;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::IReadOnlyTensor"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -463,7 +531,7 @@ public static class AttributeGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers0], 0, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -487,8 +555,9 @@ public static class AttributeGeneratorTests
 						{
 							if (this.Expectations.handlers0 is not null)
 							{
-								var @handler = this.Expectations.handlers0.First;
+								var @handler = this.Expectations.handlers0;
 								@handler.CallCount++;
+								if (@handler.Exception is not null) { throw @handler.Exception; }
 								var @result = @handler.Callback is not null ?
 									@handler.Callback() : @handler.ReturnValue!();
 								return @result!;
@@ -497,7 +566,7 @@ public static class AttributeGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers match for {this.GetType().GetMemberDescription(0)}
+								No handlers match for {typeof(Mock).GetMemberDescription(0)}
 								""");
 						}
 					}
@@ -507,14 +576,16 @@ public static class AttributeGeneratorTests
 				
 				public IReadOnlyTensorCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::IReadOnlyTensor" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::IReadOnlyTensor Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -524,18 +595,21 @@ public static class AttributeGeneratorTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForIReadOnlyTensor<TAdornments>
+					internal interface IAdornmentsForIReadOnlyTensor<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForIReadOnlyTensor<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::IReadOnlyTensorCreateExpectations.Handler0, global::System.Func<global::System.ReadOnlySpan<nint>>, global::System.Func<global::System.ReadOnlySpan<nint>>>, IAdornmentsForIReadOnlyTensor<AdornmentsForHandler0>
+					internal sealed class LengthsGetsAdornments2D2816FE
+						: global::Rocks.Adornments<LengthsGetsAdornments2D2816FE, global::IReadOnlyTensorCreateExpectations.Handler0, global::System.Func<global::System.ReadOnlySpan<nint>>, global::System.Func<global::System.ReadOnlySpan<nint>>>, IAdornmentsForIReadOnlyTensor<LengthsGetsAdornments2D2816FE>
 					{
-						public AdornmentsForHandler0(global::IReadOnlyTensorCreateExpectations.Handler0 handler)
-							: base(handler) { }
+						internal LengthsGetsAdornments2D2816FE(global::IReadOnlyTensorCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 				}
+				
+				internal void Remove(global::IReadOnlyTensorCreateExpectations.Adornments.LengthsGetsAdornments2D2816FE adornments) =>
+					this.@handlers0 = null;
 			}
 			
 			#pragma warning restore CS8618
@@ -555,9 +629,15 @@ public static class AttributeGeneratorTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::IReadOnlyTensor"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IReadOnlyTensorMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::IReadOnlyTensor" />-based type.
+				/// </summary>
 				internal global::IReadOnlyTensor Instance()
 				{
 					return new Mock();
@@ -624,20 +704,32 @@ public static class AttributeGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::Caller"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class CallerCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::CallerCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::Caller"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::CallerCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::CallerCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal global::CallerCreateExpectations.Adornments.AdornmentsForHandler0 Equals(global::Rocks.Argument<object?> @obj)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::Caller.Equals(Object)"/>.
+					/// </summary>
+					internal global::CallerCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
@@ -647,30 +739,37 @@ public static class AttributeGeneratorTests
 							@obj = @obj,
 						};
 						
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
-						else { this.parent.handlers0.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers0 ??= new(1);
+						this.parent.handlers0.Add(@handler);
+						return new(@handler, this.parent);
 					}
 					
-					internal new global::CallerCreateExpectations.Adornments.AdornmentsForHandler1 GetHashCode()
+					/// <summary>
+					/// Sets an expectation for <see cref="global::Caller.GetHashCode()"/>.
+					/// </summary>
+					internal new global::CallerCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						var handler = new global::CallerCreateExpectations.Handler1();
-						if (this.parent.handlers1 is null) { this.parent.handlers1 = new(handler); }
-						else { this.parent.handlers1.Add(handler); }
-						return new(handler);
+						this.parent.handlers1 = handler;
+						return new(handler, this.parent);
 					}
 					
-					internal new global::CallerCreateExpectations.Adornments.AdornmentsForHandler2 ToString()
+					/// <summary>
+					/// Sets an expectation for <see cref="global::Caller.ToString()"/>.
+					/// </summary>
+					internal new global::CallerCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						var handler = new global::CallerCreateExpectations.Handler2();
-						if (this.parent.handlers2 is null) { this.parent.handlers2 = new(handler); }
-						else { this.parent.handlers2.Add(handler); }
-						return new(handler);
+						this.parent.handlers2 = handler;
+						return new(handler, this.parent);
 					}
 					
-					internal global::CallerCreateExpectations.Adornments.AdornmentsForHandler3 SetAndRaise(global::Rocks.Argument<string> @newValue, global::Rocks.Argument<string?> @propertyName)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::Caller.SetAndRaise(String,String)"/>.
+					/// </summary>
+					internal global::CallerCreateExpectations.Adornments.SetAndRaiseAdornmentsEE44D4F6 SetAndRaise(global::Rocks.Argument<string> @newValue, global::Rocks.Argument<string?> @propertyName)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@newValue);
@@ -682,12 +781,15 @@ public static class AttributeGeneratorTests
 							@propertyName = @propertyName.Transform(null),
 						};
 						
-						if (this.parent.handlers3 is null) { this.parent.handlers3 = new(@handler); }
-						else { this.parent.handlers3.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers3 ??= new(1);
+						this.parent.handlers3.Add(@handler);
+						return new(@handler, this.parent);
 					}
 					
-					internal global::CallerCreateExpectations.Adornments.AdornmentsForHandler3 SetAndRaise(global::Rocks.Argument<string> @newValue, string? @propertyName = null) =>
+					/// <summary>
+					/// Sets an expectation for <see cref="global::Caller.SetAndRaise(String,String)"/>.
+					/// </summary>
+					internal global::CallerCreateExpectations.Adornments.SetAndRaiseAdornmentsEE44D4F6 SetAndRaise(global::Rocks.Argument<string> @newValue, string? @propertyName = null) =>
 						this.SetAndRaise(@newValue, global::Rocks.Arg.Is(@propertyName));
 				}
 				
@@ -696,29 +798,32 @@ public static class AttributeGeneratorTests
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Func<object?, bool>, bool>
 				{
-					public global::Rocks.Argument<object?> @obj { get; set; }
+					internal global::Rocks.Argument<object?> @obj { get; set; }
 				}
-				private global::Rocks.Handlers<global::CallerCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::CallerCreateExpectations.Handler0>? @handlers0;
 				
 				internal sealed class Handler1
 					: global::Rocks.Handler<global::System.Func<int>, int>
 				{ }
-				private global::Rocks.Handlers<global::CallerCreateExpectations.Handler1>? @handlers1;
+				private global::CallerCreateExpectations.Handler1? @handlers1;
 				
 				internal sealed class Handler2
 					: global::Rocks.Handler<global::System.Func<string?>, string?>
 				{ }
-				private global::Rocks.Handlers<global::CallerCreateExpectations.Handler2>? @handlers2;
+				private global::CallerCreateExpectations.Handler2? @handlers2;
 				
 				internal sealed class Handler3
 					: global::Rocks.Handler<Handler3.CallbackForHandler>
 				{
 					internal delegate void CallbackForHandler(ref string @newValue, [global::System.Runtime.CompilerServices.CallerMemberNameAttribute]string? @propertyName = null);
-					public global::Rocks.Argument<string> @newValue { get; set; }
-					public global::Rocks.Argument<string?> @propertyName { get; set; }
+					internal global::Rocks.Argument<string> @newValue { get; set; }
+					internal global::Rocks.Argument<string?> @propertyName { get; set; }
 				}
-				private global::Rocks.Handlers<global::CallerCreateExpectations.Handler3>? @handlers3;
+				private global::System.Collections.Generic.List<global::CallerCreateExpectations.Handler3>? @handlers3;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::Caller"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -729,10 +834,10 @@ public static class AttributeGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-						if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
-						if (this.handlers2 is not null) { failures.AddRange(this.Verify(this.handlers2, 2)); }
-						if (this.handlers3 is not null) { failures.AddRange(this.Verify(this.handlers3, 3)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
+						if (this.handlers1 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers1], 1, typeof(Mock))); }
+						if (this.handlers2 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers2], 2, typeof(Mock))); }
+						if (this.handlers3 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers3, 3, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -754,11 +859,12 @@ public static class AttributeGeneratorTests
 					{
 						if (this.Expectations.handlers0 is not null)
 						{
-							foreach (var @handler in this.Expectations.handlers0)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers0))
 							{
 								if (@handler.@obj.IsValid(@obj!))
 								{
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									var @result = @handler.Callback is not null ?
 										@handler.Callback(@obj!) : @handler.ReturnValue;
 									return @result!;
@@ -768,7 +874,7 @@ public static class AttributeGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers match for {this.GetType().GetMemberDescription(0)}
+								No handlers match for {typeof(Mock).GetMemberDescription(0)}
 									obj: {@obj.FormatValue()}
 								""");
 						}
@@ -783,8 +889,9 @@ public static class AttributeGeneratorTests
 					{
 						if (this.Expectations.handlers1 is not null)
 						{
-							var @handler = this.Expectations.handlers1.First;
+							var @handler = this.Expectations.handlers1;
 							@handler.CallCount++;
+							if (@handler.Exception is not null) { throw @handler.Exception; }
 							var @result = @handler.Callback is not null ?
 								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
@@ -800,8 +907,9 @@ public static class AttributeGeneratorTests
 					{
 						if (this.Expectations.handlers2 is not null)
 						{
-							var @handler = this.Expectations.handlers2.First;
+							var @handler = this.Expectations.handlers2;
 							@handler.CallCount++;
+							if (@handler.Exception is not null) { throw @handler.Exception; }
 							var @result = @handler.Callback is not null ?
 								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
@@ -819,13 +927,14 @@ public static class AttributeGeneratorTests
 						{
 							var @foundMatch = false;
 							
-							foreach (var @handler in this.Expectations.handlers3)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers3))
 							{
 								if (@handler.@newValue.IsValid(@newValue!) &&
 									@handler.@propertyName.IsValid(@propertyName!))
 								{
 									@foundMatch = true;
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									@handler.Callback?.Invoke(ref @newValue!, @propertyName!);
 									break;
 								}
@@ -836,7 +945,7 @@ public static class AttributeGeneratorTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(3)}
+									No handlers match for {typeof(Mock).GetMemberDescription(3)}
 										newValue: {@newValue.FormatValue()}
 										propertyName: {@propertyName.FormatValue()}
 									""");
@@ -853,14 +962,16 @@ public static class AttributeGeneratorTests
 				
 				public CallerCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::Caller" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::Caller Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -870,38 +981,56 @@ public static class AttributeGeneratorTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForCaller<TAdornments>
+					internal interface IAdornmentsForCaller<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForCaller<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::CallerCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForCaller<AdornmentsForHandler0>
+					internal sealed class EqualsAdornmentsE60CFEEA
+						: global::Rocks.Adornments<EqualsAdornmentsE60CFEEA, global::CallerCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForCaller<EqualsAdornmentsE60CFEEA>
 					{
-						public AdornmentsForHandler0(global::CallerCreateExpectations.Handler0 handler)
-							: base(handler) { }
+						internal EqualsAdornmentsE60CFEEA(global::CallerCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler1
-						: global::Rocks.Adornments<AdornmentsForHandler1, global::CallerCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForCaller<AdornmentsForHandler1>
+					internal sealed class GetHashCodeAdornments2D2816FE
+						: global::Rocks.Adornments<GetHashCodeAdornments2D2816FE, global::CallerCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForCaller<GetHashCodeAdornments2D2816FE>
 					{
-						public AdornmentsForHandler1(global::CallerCreateExpectations.Handler1 handler)
-							: base(handler) { }
+						internal GetHashCodeAdornments2D2816FE(global::CallerCreateExpectations.Handler1 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler2
-						: global::Rocks.Adornments<AdornmentsForHandler2, global::CallerCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForCaller<AdornmentsForHandler2>
+					internal sealed class ToStringAdornments2D2816FE
+						: global::Rocks.Adornments<ToStringAdornments2D2816FE, global::CallerCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForCaller<ToStringAdornments2D2816FE>
 					{
-						public AdornmentsForHandler2(global::CallerCreateExpectations.Handler2 handler)
-							: base(handler) { }
+						internal ToStringAdornments2D2816FE(global::CallerCreateExpectations.Handler2 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler3
-						: global::Rocks.Adornments<AdornmentsForHandler3, global::CallerCreateExpectations.Handler3, global::CallerCreateExpectations.Handler3.CallbackForHandler>, IAdornmentsForCaller<AdornmentsForHandler3>
+					internal sealed class SetAndRaiseAdornmentsEE44D4F6
+						: global::Rocks.Adornments<SetAndRaiseAdornmentsEE44D4F6, global::CallerCreateExpectations.Handler3, global::CallerCreateExpectations.Handler3.CallbackForHandler>, IAdornmentsForCaller<SetAndRaiseAdornmentsEE44D4F6>
 					{
-						public AdornmentsForHandler3(global::CallerCreateExpectations.Handler3 handler)
-							: base(handler) { }
+						internal SetAndRaiseAdornmentsEE44D4F6(global::CallerCreateExpectations.Handler3 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
+				}
+				
+				internal void Remove(global::CallerCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA adornments)
+				{
+					adornments.Remove(this.@handlers0);
+					if (this.@handlers0?.Count == 0) { this.@handlers0 = null; }
+				}
+				
+				internal void Remove(global::CallerCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE adornments) =>
+					this.@handlers1 = null;
+				
+				internal void Remove(global::CallerCreateExpectations.Adornments.ToStringAdornments2D2816FE adornments) =>
+					this.@handlers2 = null;
+				
+				internal void Remove(global::CallerCreateExpectations.Adornments.SetAndRaiseAdornmentsEE44D4F6 adornments)
+				{
+					adornments.Remove(this.@handlers3);
+					if (this.@handlers3?.Count == 0) { this.@handlers3 = null; }
 				}
 			}
 			
@@ -922,9 +1051,15 @@ public static class AttributeGeneratorTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::Caller"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class CallerMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::Caller" />-based type.
+				/// </summary>
 				internal global::Caller Instance()
 				{
 					return new Mock();
@@ -1005,16 +1140,25 @@ public static class AttributeGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::INotNull"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class INotNullCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::INotNullCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::INotNull"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::INotNullCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::INotNullCreateExpectations parent) =>
 						this.parent = parent;
 				
@@ -1025,16 +1169,21 @@ public static class AttributeGeneratorTests
 						internal IsSuccessPropertyExpectations(global::INotNullCreateExpectations parent) => 
 							this.parent = parent;
 					
-						internal global::INotNullCreateExpectations.Adornments.AdornmentsForHandler0 Gets()
+						/// <summary>
+						/// Sets a "get" expectation for the <see cref="global::INotNull" /> property.
+						/// </summary>
+						internal global::INotNullCreateExpectations.Adornments.IsSuccessGetsAdornments2D2816FE Gets()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 							var handler = new global::INotNullCreateExpectations.Handler0();
-							if (this.parent.handlers0 is null) { this.parent.handlers0 = new(handler); }
-							else { this.parent.handlers0.Add(handler); }
-							return new(handler);
+							this.parent.handlers0 = handler;
+							return new(handler, this.parent);
 						}
 					}
 					
+					/// <summary>
+					/// Contains expectation setups for the <see cref="global::INotNull" property./>.
+					/// </summary>
 					internal global::INotNullCreateExpectations.SetupsExpectations.IsSuccessPropertyExpectations IsSuccess => new(this.parent);
 					
 					internal sealed class ErrorPropertyExpectations
@@ -1044,16 +1193,21 @@ public static class AttributeGeneratorTests
 						internal ErrorPropertyExpectations(global::INotNullCreateExpectations parent) => 
 							this.parent = parent;
 					
-						internal global::INotNullCreateExpectations.Adornments.AdornmentsForHandler1 Gets()
+						/// <summary>
+						/// Sets a "get" expectation for the <see cref="global::INotNull" /> property.
+						/// </summary>
+						internal global::INotNullCreateExpectations.Adornments.ErrorGetsAdornments2D2816FE Gets()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 							var handler = new global::INotNullCreateExpectations.Handler1();
-							if (this.parent.handlers1 is null) { this.parent.handlers1 = new(handler); }
-							else { this.parent.handlers1.Add(handler); }
-							return new(handler);
+							this.parent.handlers1 = handler;
+							return new(handler, this.parent);
 						}
 					}
 					
+					/// <summary>
+					/// Contains expectation setups for the <see cref="global::INotNull" property./>.
+					/// </summary>
 					internal global::INotNullCreateExpectations.SetupsExpectations.ErrorPropertyExpectations Error => new(this.parent);
 					
 				}
@@ -1063,13 +1217,16 @@ public static class AttributeGeneratorTests
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Func<bool>, bool>
 				{ }
-				private global::Rocks.Handlers<global::INotNullCreateExpectations.Handler0>? @handlers0;
+				private global::INotNullCreateExpectations.Handler0? @handlers0;
 				
 				internal sealed class Handler1
 					: global::Rocks.Handler<global::System.Func<string>, string>
 				{ }
-				private global::Rocks.Handlers<global::INotNullCreateExpectations.Handler1>? @handlers1;
+				private global::INotNullCreateExpectations.Handler1? @handlers1;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::INotNull"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -1080,8 +1237,8 @@ public static class AttributeGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-						if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers0], 0, typeof(Mock))); }
+						if (this.handlers1 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers1], 1, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -1105,8 +1262,9 @@ public static class AttributeGeneratorTests
 						{
 							if (this.Expectations.handlers0 is not null)
 							{
-								var @handler = this.Expectations.handlers0.First;
+								var @handler = this.Expectations.handlers0;
 								@handler.CallCount++;
+								if (@handler.Exception is not null) { throw @handler.Exception; }
 								var @result = @handler.Callback is not null ?
 									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
@@ -1115,7 +1273,7 @@ public static class AttributeGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers match for {this.GetType().GetMemberDescription(0)}
+								No handlers match for {typeof(Mock).GetMemberDescription(0)}
 								""");
 						}
 					}
@@ -1126,8 +1284,9 @@ public static class AttributeGeneratorTests
 						{
 							if (this.Expectations.handlers1 is not null)
 							{
-								var @handler = this.Expectations.handlers1.First;
+								var @handler = this.Expectations.handlers1;
 								@handler.CallCount++;
+								if (@handler.Exception is not null) { throw @handler.Exception; }
 								var @result = @handler.Callback is not null ?
 									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
@@ -1136,7 +1295,7 @@ public static class AttributeGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers match for {this.GetType().GetMemberDescription(1)}
+								No handlers match for {typeof(Mock).GetMemberDescription(1)}
 								""");
 						}
 					}
@@ -1146,14 +1305,16 @@ public static class AttributeGeneratorTests
 				
 				public INotNullCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::INotNull" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::INotNull Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -1163,25 +1324,31 @@ public static class AttributeGeneratorTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForINotNull<TAdornments>
+					internal interface IAdornmentsForINotNull<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForINotNull<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::INotNullCreateExpectations.Handler0, global::System.Func<bool>, bool>, IAdornmentsForINotNull<AdornmentsForHandler0>
+					internal sealed class IsSuccessGetsAdornments2D2816FE
+						: global::Rocks.Adornments<IsSuccessGetsAdornments2D2816FE, global::INotNullCreateExpectations.Handler0, global::System.Func<bool>, bool>, IAdornmentsForINotNull<IsSuccessGetsAdornments2D2816FE>
 					{
-						public AdornmentsForHandler0(global::INotNullCreateExpectations.Handler0 handler)
-							: base(handler) { }
+						internal IsSuccessGetsAdornments2D2816FE(global::INotNullCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler1
-						: global::Rocks.Adornments<AdornmentsForHandler1, global::INotNullCreateExpectations.Handler1, global::System.Func<string>, string>, IAdornmentsForINotNull<AdornmentsForHandler1>
+					internal sealed class ErrorGetsAdornments2D2816FE
+						: global::Rocks.Adornments<ErrorGetsAdornments2D2816FE, global::INotNullCreateExpectations.Handler1, global::System.Func<string>, string>, IAdornmentsForINotNull<ErrorGetsAdornments2D2816FE>
 					{
-						public AdornmentsForHandler1(global::INotNullCreateExpectations.Handler1 handler)
-							: base(handler) { }
+						internal ErrorGetsAdornments2D2816FE(global::INotNullCreateExpectations.Handler1 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 				}
+				
+				internal void Remove(global::INotNullCreateExpectations.Adornments.IsSuccessGetsAdornments2D2816FE adornments) =>
+					this.@handlers0 = null;
+				
+				internal void Remove(global::INotNullCreateExpectations.Adornments.ErrorGetsAdornments2D2816FE adornments) =>
+					this.@handlers1 = null;
 			}
 			
 			#pragma warning restore CS8618
@@ -1201,9 +1368,15 @@ public static class AttributeGeneratorTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::INotNull"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class INotNullMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::INotNull" />-based type.
+				/// </summary>
 				internal global::INotNull Instance()
 				{
 					return new Mock();
@@ -1279,16 +1452,25 @@ public static class AttributeGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::IItems"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IItemsCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::IItemsCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::IItems"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::IItemsCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::IItemsCreateExpectations parent) =>
 						this.parent = parent;
 				
@@ -1299,16 +1481,21 @@ public static class AttributeGeneratorTests
 						internal LengthPropertyExpectations(global::IItemsCreateExpectations parent) => 
 							this.parent = parent;
 					
-						internal global::IItemsCreateExpectations.Adornments.AdornmentsForHandler0 Gets()
+						/// <summary>
+						/// Sets a "get" expectation for the <see cref="global::IItems" /> property.
+						/// </summary>
+						internal global::IItemsCreateExpectations.Adornments.LengthGetsAdornments2D2816FE Gets()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 							var handler = new global::IItemsCreateExpectations.Handler0();
-							if (this.parent.handlers0 is null) { this.parent.handlers0 = new(handler); }
-							else { this.parent.handlers0.Add(handler); }
-							return new(handler);
+							this.parent.handlers0 = handler;
+							return new(handler, this.parent);
 						}
 					}
 					
+					/// <summary>
+					/// Contains expectation setups for the <see cref="global::IItems" property./>.
+					/// </summary>
 					internal global::IItemsCreateExpectations.SetupsExpectations.LengthPropertyExpectations Length => new(this.parent);
 					
 				}
@@ -1318,8 +1505,11 @@ public static class AttributeGeneratorTests
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Func<int>, int>
 				{ }
-				private global::Rocks.Handlers<global::IItemsCreateExpectations.Handler0>? @handlers0;
+				private global::IItemsCreateExpectations.Handler0? @handlers0;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::IItems"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -1330,7 +1520,7 @@ public static class AttributeGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers0], 0, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -1355,8 +1545,9 @@ public static class AttributeGeneratorTests
 						{
 							if (this.Expectations.handlers0 is not null)
 							{
-								var @handler = this.Expectations.handlers0.First;
+								var @handler = this.Expectations.handlers0;
 								@handler.CallCount++;
+								if (@handler.Exception is not null) { throw @handler.Exception; }
 								var @result = @handler.Callback is not null ?
 									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
@@ -1365,7 +1556,7 @@ public static class AttributeGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers match for {this.GetType().GetMemberDescription(0)}
+								No handlers match for {typeof(Mock).GetMemberDescription(0)}
 								""");
 						}
 					}
@@ -1375,14 +1566,16 @@ public static class AttributeGeneratorTests
 				
 				public IItemsCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::IItems" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::IItems Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -1392,18 +1585,21 @@ public static class AttributeGeneratorTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForIItems<TAdornments>
+					internal interface IAdornmentsForIItems<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForIItems<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::IItemsCreateExpectations.Handler0, global::System.Func<int>, int>, IAdornmentsForIItems<AdornmentsForHandler0>
+					internal sealed class LengthGetsAdornments2D2816FE
+						: global::Rocks.Adornments<LengthGetsAdornments2D2816FE, global::IItemsCreateExpectations.Handler0, global::System.Func<int>, int>, IAdornmentsForIItems<LengthGetsAdornments2D2816FE>
 					{
-						public AdornmentsForHandler0(global::IItemsCreateExpectations.Handler0 handler)
-							: base(handler) { }
+						internal LengthGetsAdornments2D2816FE(global::IItemsCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 				}
+				
+				internal void Remove(global::IItemsCreateExpectations.Adornments.LengthGetsAdornments2D2816FE adornments) =>
+					this.@handlers0 = null;
 			}
 			
 			#pragma warning restore CS8618
@@ -1423,9 +1619,15 @@ public static class AttributeGeneratorTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::IItems"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IItemsMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::IItems" />-based type.
+				/// </summary>
 				internal global::IItems Instance()
 				{
 					return new Mock();
@@ -1490,20 +1692,32 @@ public static class AttributeGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::ConventionDispatcher"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ConventionDispatcherCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::ConventionDispatcherCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::ConventionDispatcher"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::ConventionDispatcherCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::ConventionDispatcherCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal global::ConventionDispatcherCreateExpectations.Adornments.AdornmentsForHandler0 Equals(global::Rocks.Argument<object?> @obj)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::ConventionDispatcher.Equals(Object)"/>.
+					/// </summary>
+					internal global::ConventionDispatcherCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
@@ -1513,36 +1727,42 @@ public static class AttributeGeneratorTests
 							@obj = @obj,
 						};
 						
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
-						else { this.parent.handlers0.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers0 ??= new(1);
+						this.parent.handlers0.Add(@handler);
+						return new(@handler, this.parent);
 					}
 					
-					internal new global::ConventionDispatcherCreateExpectations.Adornments.AdornmentsForHandler1 GetHashCode()
+					/// <summary>
+					/// Sets an expectation for <see cref="global::ConventionDispatcher.GetHashCode()"/>.
+					/// </summary>
+					internal new global::ConventionDispatcherCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						var handler = new global::ConventionDispatcherCreateExpectations.Handler1();
-						if (this.parent.handlers1 is null) { this.parent.handlers1 = new(handler); }
-						else { this.parent.handlers1.Add(handler); }
-						return new(handler);
+						this.parent.handlers1 = handler;
+						return new(handler, this.parent);
 					}
 					
-					internal new global::ConventionDispatcherCreateExpectations.Adornments.AdornmentsForHandler2 ToString()
+					/// <summary>
+					/// Sets an expectation for <see cref="global::ConventionDispatcher.ToString()"/>.
+					/// </summary>
+					internal new global::ConventionDispatcherCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						var handler = new global::ConventionDispatcherCreateExpectations.Handler2();
-						if (this.parent.handlers2 is null) { this.parent.handlers2 = new(handler); }
-						else { this.parent.handlers2.Add(handler); }
-						return new(handler);
+						this.parent.handlers2 = handler;
+						return new(handler, this.parent);
 					}
 					
-					internal global::ConventionDispatcherCreateExpectations.Adornments.AdornmentsForHandler3 AssertNoScope()
+					/// <summary>
+					/// Sets an expectation for <see cref="global::ConventionDispatcher.AssertNoScope()"/>.
+					/// </summary>
+					internal global::ConventionDispatcherCreateExpectations.Adornments.AssertNoScopeAdornments2D2816FE AssertNoScope()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						var handler = new global::ConventionDispatcherCreateExpectations.Handler3();
-						if (this.parent.handlers3 is null) { this.parent.handlers3 = new(handler); }
-						else { this.parent.handlers3.Add(handler); }
-						return new(handler);
+						this.parent.handlers3 = handler;
+						return new(handler, this.parent);
 					}
 				}
 				
@@ -1551,25 +1771,28 @@ public static class AttributeGeneratorTests
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Func<object?, bool>, bool>
 				{
-					public global::Rocks.Argument<object?> @obj { get; set; }
+					internal global::Rocks.Argument<object?> @obj { get; set; }
 				}
-				private global::Rocks.Handlers<global::ConventionDispatcherCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::ConventionDispatcherCreateExpectations.Handler0>? @handlers0;
 				
 				internal sealed class Handler1
 					: global::Rocks.Handler<global::System.Func<int>, int>
 				{ }
-				private global::Rocks.Handlers<global::ConventionDispatcherCreateExpectations.Handler1>? @handlers1;
+				private global::ConventionDispatcherCreateExpectations.Handler1? @handlers1;
 				
 				internal sealed class Handler2
 					: global::Rocks.Handler<global::System.Func<string?>, string?>
 				{ }
-				private global::Rocks.Handlers<global::ConventionDispatcherCreateExpectations.Handler2>? @handlers2;
+				private global::ConventionDispatcherCreateExpectations.Handler2? @handlers2;
 				
 				internal sealed class Handler3
 					: global::Rocks.Handler<global::System.Action>
 				{ }
-				private global::Rocks.Handlers<global::ConventionDispatcherCreateExpectations.Handler3>? @handlers3;
+				private global::ConventionDispatcherCreateExpectations.Handler3? @handlers3;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::ConventionDispatcher"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -1580,10 +1803,10 @@ public static class AttributeGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-						if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
-						if (this.handlers2 is not null) { failures.AddRange(this.Verify(this.handlers2, 2)); }
-						if (this.handlers3 is not null) { failures.AddRange(this.Verify(this.handlers3, 3)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
+						if (this.handlers1 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers1], 1, typeof(Mock))); }
+						if (this.handlers2 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers2], 2, typeof(Mock))); }
+						if (this.handlers3 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers3], 3, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -1605,11 +1828,12 @@ public static class AttributeGeneratorTests
 					{
 						if (this.Expectations.handlers0 is not null)
 						{
-							foreach (var @handler in this.Expectations.handlers0)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers0))
 							{
 								if (@handler.@obj.IsValid(@obj!))
 								{
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									var @result = @handler.Callback is not null ?
 										@handler.Callback(@obj!) : @handler.ReturnValue;
 									return @result!;
@@ -1619,7 +1843,7 @@ public static class AttributeGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers match for {this.GetType().GetMemberDescription(0)}
+								No handlers match for {typeof(Mock).GetMemberDescription(0)}
 									obj: {@obj.FormatValue()}
 								""");
 						}
@@ -1634,8 +1858,9 @@ public static class AttributeGeneratorTests
 					{
 						if (this.Expectations.handlers1 is not null)
 						{
-							var @handler = this.Expectations.handlers1.First;
+							var @handler = this.Expectations.handlers1;
 							@handler.CallCount++;
+							if (@handler.Exception is not null) { throw @handler.Exception; }
 							var @result = @handler.Callback is not null ?
 								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
@@ -1651,8 +1876,9 @@ public static class AttributeGeneratorTests
 					{
 						if (this.Expectations.handlers2 is not null)
 						{
-							var @handler = this.Expectations.handlers2.First;
+							var @handler = this.Expectations.handlers2;
 							@handler.CallCount++;
+							if (@handler.Exception is not null) { throw @handler.Exception; }
 							var @result = @handler.Callback is not null ?
 								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
@@ -1668,8 +1894,9 @@ public static class AttributeGeneratorTests
 					{
 						if (this.Expectations.handlers3 is not null)
 						{
-							var @handler = this.Expectations.handlers3.First;
+							var @handler = this.Expectations.handlers3;
 							@handler.CallCount++;
+							if (@handler.Exception is not null) { throw @handler.Exception; }
 							@handler.Callback?.Invoke();
 						}
 						else
@@ -1683,14 +1910,16 @@ public static class AttributeGeneratorTests
 				
 				public ConventionDispatcherCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::ConventionDispatcher" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::ConventionDispatcher Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -1700,39 +1929,54 @@ public static class AttributeGeneratorTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForConventionDispatcher<TAdornments>
+					internal interface IAdornmentsForConventionDispatcher<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForConventionDispatcher<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::ConventionDispatcherCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForConventionDispatcher<AdornmentsForHandler0>
+					internal sealed class EqualsAdornmentsE60CFEEA
+						: global::Rocks.Adornments<EqualsAdornmentsE60CFEEA, global::ConventionDispatcherCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForConventionDispatcher<EqualsAdornmentsE60CFEEA>
 					{
-						public AdornmentsForHandler0(global::ConventionDispatcherCreateExpectations.Handler0 handler)
-							: base(handler) { }
+						internal EqualsAdornmentsE60CFEEA(global::ConventionDispatcherCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler1
-						: global::Rocks.Adornments<AdornmentsForHandler1, global::ConventionDispatcherCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForConventionDispatcher<AdornmentsForHandler1>
+					internal sealed class GetHashCodeAdornments2D2816FE
+						: global::Rocks.Adornments<GetHashCodeAdornments2D2816FE, global::ConventionDispatcherCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForConventionDispatcher<GetHashCodeAdornments2D2816FE>
 					{
-						public AdornmentsForHandler1(global::ConventionDispatcherCreateExpectations.Handler1 handler)
-							: base(handler) { }
+						internal GetHashCodeAdornments2D2816FE(global::ConventionDispatcherCreateExpectations.Handler1 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler2
-						: global::Rocks.Adornments<AdornmentsForHandler2, global::ConventionDispatcherCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForConventionDispatcher<AdornmentsForHandler2>
+					internal sealed class ToStringAdornments2D2816FE
+						: global::Rocks.Adornments<ToStringAdornments2D2816FE, global::ConventionDispatcherCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForConventionDispatcher<ToStringAdornments2D2816FE>
 					{
-						public AdornmentsForHandler2(global::ConventionDispatcherCreateExpectations.Handler2 handler)
-							: base(handler) { }
+						internal ToStringAdornments2D2816FE(global::ConventionDispatcherCreateExpectations.Handler2 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler3
-						: global::Rocks.Adornments<AdornmentsForHandler3, global::ConventionDispatcherCreateExpectations.Handler3, global::System.Action>, IAdornmentsForConventionDispatcher<AdornmentsForHandler3>
+					internal sealed class AssertNoScopeAdornments2D2816FE
+						: global::Rocks.Adornments<AssertNoScopeAdornments2D2816FE, global::ConventionDispatcherCreateExpectations.Handler3, global::System.Action>, IAdornmentsForConventionDispatcher<AssertNoScopeAdornments2D2816FE>
 					{
-						public AdornmentsForHandler3(global::ConventionDispatcherCreateExpectations.Handler3 handler)
-							: base(handler) { }
+						internal AssertNoScopeAdornments2D2816FE(global::ConventionDispatcherCreateExpectations.Handler3 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 				}
+				
+				internal void Remove(global::ConventionDispatcherCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA adornments)
+				{
+					adornments.Remove(this.@handlers0);
+					if (this.@handlers0?.Count == 0) { this.@handlers0 = null; }
+				}
+				
+				internal void Remove(global::ConventionDispatcherCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE adornments) =>
+					this.@handlers1 = null;
+				
+				internal void Remove(global::ConventionDispatcherCreateExpectations.Adornments.ToStringAdornments2D2816FE adornments) =>
+					this.@handlers2 = null;
+				
+				internal void Remove(global::ConventionDispatcherCreateExpectations.Adornments.AssertNoScopeAdornments2D2816FE adornments) =>
+					this.@handlers3 = null;
 			}
 			
 			#pragma warning restore CS8618
@@ -1752,9 +1996,15 @@ public static class AttributeGeneratorTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::ConventionDispatcher"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ConventionDispatcherMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::ConventionDispatcher" />-based type.
+				/// </summary>
 				internal global::ConventionDispatcher Instance()
 				{
 					return new Mock();
@@ -1843,20 +2093,32 @@ public static class AttributeGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::NotNullIfNotCases"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class NotNullIfNotCasesCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::NotNullIfNotCasesCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::NotNullIfNotCases"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::NotNullIfNotCasesCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::NotNullIfNotCasesCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal global::NotNullIfNotCasesCreateExpectations.Adornments.AdornmentsForHandler0 Equals(global::Rocks.Argument<object?> @obj)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::NotNullIfNotCases.Equals(Object)"/>.
+					/// </summary>
+					internal global::NotNullIfNotCasesCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
@@ -1866,30 +2128,37 @@ public static class AttributeGeneratorTests
 							@obj = @obj,
 						};
 						
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
-						else { this.parent.handlers0.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers0 ??= new(1);
+						this.parent.handlers0.Add(@handler);
+						return new(@handler, this.parent);
 					}
 					
-					internal new global::NotNullIfNotCasesCreateExpectations.Adornments.AdornmentsForHandler1 GetHashCode()
+					/// <summary>
+					/// Sets an expectation for <see cref="global::NotNullIfNotCases.GetHashCode()"/>.
+					/// </summary>
+					internal new global::NotNullIfNotCasesCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						var handler = new global::NotNullIfNotCasesCreateExpectations.Handler1();
-						if (this.parent.handlers1 is null) { this.parent.handlers1 = new(handler); }
-						else { this.parent.handlers1.Add(handler); }
-						return new(handler);
+						this.parent.handlers1 = handler;
+						return new(handler, this.parent);
 					}
 					
-					internal new global::NotNullIfNotCasesCreateExpectations.Adornments.AdornmentsForHandler2 ToString()
+					/// <summary>
+					/// Sets an expectation for <see cref="global::NotNullIfNotCases.ToString()"/>.
+					/// </summary>
+					internal new global::NotNullIfNotCasesCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						var handler = new global::NotNullIfNotCasesCreateExpectations.Handler2();
-						if (this.parent.handlers2 is null) { this.parent.handlers2 = new(handler); }
-						else { this.parent.handlers2.Add(handler); }
-						return new(handler);
+						this.parent.handlers2 = handler;
+						return new(handler, this.parent);
 					}
 					
-					internal global::NotNullIfNotCasesCreateExpectations.Adornments.AdornmentsForHandler3 VisitMethod(global::Rocks.Argument<object?> @node)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::NotNullIfNotCases.VisitMethod(Object)"/>.
+					/// </summary>
+					internal global::NotNullIfNotCasesCreateExpectations.Adornments.VisitMethodAdornmentsE60CFEEA VisitMethod(global::Rocks.Argument<object?> @node)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@node);
@@ -1899,12 +2168,15 @@ public static class AttributeGeneratorTests
 							@node = @node,
 						};
 						
-						if (this.parent.handlers3 is null) { this.parent.handlers3 = new(@handler); }
-						else { this.parent.handlers3.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers3 ??= new(1);
+						this.parent.handlers3.Add(@handler);
+						return new(@handler, this.parent);
 					}
 					
-					internal global::NotNullIfNotCasesCreateExpectations.Adornments.AdornmentsForHandler4 VisitParameter(global::Rocks.Argument<object?> @node)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::NotNullIfNotCases.VisitParameter(Object)"/>.
+					/// </summary>
+					internal global::NotNullIfNotCasesCreateExpectations.Adornments.VisitParameterAdornmentsE60CFEEA VisitParameter(global::Rocks.Argument<object?> @node)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@node);
@@ -1914,9 +2186,9 @@ public static class AttributeGeneratorTests
 							@node = @node,
 						};
 						
-						if (this.parent.handlers4 is null) { this.parent.handlers4 = new(@handler); }
-						else { this.parent.handlers4.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers4 ??= new(1);
+						this.parent.handlers4.Add(@handler);
+						return new(@handler, this.parent);
 					}
 					internal sealed class VisitPropertyPropertyExpectations
 					{
@@ -1925,15 +2197,20 @@ public static class AttributeGeneratorTests
 						internal VisitPropertyPropertyExpectations(global::NotNullIfNotCasesCreateExpectations parent) => 
 							this.parent = parent;
 					
-						internal global::NotNullIfNotCasesCreateExpectations.Adornments.AdornmentsForHandler5 Gets()
+						/// <summary>
+						/// Sets a "get" expectation for the <see cref="global::NotNullIfNotCases" /> property.
+						/// </summary>
+						internal global::NotNullIfNotCasesCreateExpectations.Adornments.VisitPropertyGetsAdornments2D2816FE Gets()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 							var handler = new global::NotNullIfNotCasesCreateExpectations.Handler5();
-							if (this.parent.handlers5 is null) { this.parent.handlers5 = new(handler); }
-							else { this.parent.handlers5.Add(handler); }
-							return new(handler);
+							this.parent.handlers5 = handler;
+							return new(handler, this.parent);
 						}
-						internal global::NotNullIfNotCasesCreateExpectations.Adornments.AdornmentsForHandler6 Sets(global::Rocks.Argument<string?> @value)
+						/// <summary>
+						/// Sets a "set" expectation for the <see cref="global::NotNullIfNotCases" /> property.
+						/// </summary>
+						internal global::NotNullIfNotCasesCreateExpectations.Adornments.VisitPropertySetsAdornments3129B210 Sets(global::Rocks.Argument<string?> @value)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -1943,12 +2220,15 @@ public static class AttributeGeneratorTests
 								value = @value,
 							};
 						
-							if (this.parent.handlers6 is null) { this.parent.handlers6 = new(handler); }
-							else { this.parent.handlers6.Add(handler); }
-							return new(handler);
+							this.parent.handlers6 ??= new(1);
+							this.parent.handlers6.Add(handler);
+							return new(handler, this.parent);
 						}
 					}
 					
+					/// <summary>
+					/// Contains expectation setups for the <see cref="global::NotNullIfNotCases" property./>.
+					/// </summary>
 					internal global::NotNullIfNotCasesCreateExpectations.SetupsExpectations.VisitPropertyPropertyExpectations VisitProperty => new(this.parent);
 					
 					internal sealed class Indexer0Expectations
@@ -1963,21 +2243,27 @@ public static class AttributeGeneratorTests
 							this.@node = @node;
 						}
 						
-						internal global::NotNullIfNotCasesCreateExpectations.Adornments.AdornmentsForHandler7 Gets()
+						/// <summary>
+						/// Sets a "get" expectation for the <see cref="global::NotNullIfNotCases.this[Object]" /> property.
+						/// </summary>
+						internal global::NotNullIfNotCasesCreateExpectations.Adornments.thisGetsAdornmentsE60CFEEA Gets()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
-							
+						
 							var @handler = new global::NotNullIfNotCasesCreateExpectations.Handler7
 							{
 								@node = this.@node,
 							};
 							
-							if (this.parent.handlers7 is null) { this.parent.handlers7 = new(@handler); }
-							else { this.parent.handlers7.Add(@handler); }
-							return new(@handler);
+							this.parent.handlers7 ??= new(1);
+							this.parent.handlers7.Add(@handler);
+							return new(@handler, this.parent);
 						}
 						
-						internal global::NotNullIfNotCasesCreateExpectations.Adornments.AdornmentsForHandler8 Sets(global::Rocks.Argument<string?> @value)
+						/// <summary>
+						/// Sets a "set" expectation for the <see cref="global::NotNullIfNotCases.this[Object]" /> property.
+						/// </summary>
+						internal global::NotNullIfNotCasesCreateExpectations.Adornments.thisSetsAdornments3F0BFBE4 Sets(global::Rocks.Argument<string?> @value)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -1988,11 +2274,15 @@ public static class AttributeGeneratorTests
 								@value = @value,
 							};
 							
-							if (this.parent.handlers8 is null) { this.parent.handlers8 = new(@handler); }
-							else { this.parent.handlers8.Add(@handler); }
-							return new(@handler);
+							this.parent.handlers8 ??= new(1);
+							this.parent.handlers8.Add(@handler);
+							return new(@handler, this.parent);
 						}
 					}
+					
+					/// <summary>
+					/// Sets an expectation for <see cref="global::NotNullIfNotCases.this[Object]"/>.
+					/// </summary>
 					
 					internal global::NotNullIfNotCasesCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<object?> @node] => new(this.parent, @node);
 					
@@ -2003,61 +2293,64 @@ public static class AttributeGeneratorTests
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Func<object?, bool>, bool>
 				{
-					public global::Rocks.Argument<object?> @obj { get; set; }
+					internal global::Rocks.Argument<object?> @obj { get; set; }
 				}
-				private global::Rocks.Handlers<global::NotNullIfNotCasesCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::NotNullIfNotCasesCreateExpectations.Handler0>? @handlers0;
 				
 				internal sealed class Handler1
 					: global::Rocks.Handler<global::System.Func<int>, int>
 				{ }
-				private global::Rocks.Handlers<global::NotNullIfNotCasesCreateExpectations.Handler1>? @handlers1;
+				private global::NotNullIfNotCasesCreateExpectations.Handler1? @handlers1;
 				
 				internal sealed class Handler2
 					: global::Rocks.Handler<global::System.Func<string?>, string?>
 				{ }
-				private global::Rocks.Handlers<global::NotNullIfNotCasesCreateExpectations.Handler2>? @handlers2;
+				private global::NotNullIfNotCasesCreateExpectations.Handler2? @handlers2;
 				
 				internal sealed class Handler3
 					: global::Rocks.Handler<global::System.Func<object?, object?>, object?>
 				{
-					public global::Rocks.Argument<object?> @node { get; set; }
+					internal global::Rocks.Argument<object?> @node { get; set; }
 				}
-				private global::Rocks.Handlers<global::NotNullIfNotCasesCreateExpectations.Handler3>? @handlers3;
+				private global::System.Collections.Generic.List<global::NotNullIfNotCasesCreateExpectations.Handler3>? @handlers3;
 				
 				internal sealed class Handler4
 					: global::Rocks.Handler<global::System.Func<object?, object?>, object?>
 				{
-					public global::Rocks.Argument<object?> @node { get; set; }
+					internal global::Rocks.Argument<object?> @node { get; set; }
 				}
-				private global::Rocks.Handlers<global::NotNullIfNotCasesCreateExpectations.Handler4>? @handlers4;
+				private global::System.Collections.Generic.List<global::NotNullIfNotCasesCreateExpectations.Handler4>? @handlers4;
 				
 				internal sealed class Handler5
 					: global::Rocks.Handler<global::System.Func<string?>, string?>
 				{ }
-				private global::Rocks.Handlers<global::NotNullIfNotCasesCreateExpectations.Handler5>? @handlers5;
+				private global::NotNullIfNotCasesCreateExpectations.Handler5? @handlers5;
 				
 				internal sealed class Handler6
 					: global::Rocks.Handler<global::System.Action<string?>>
 				{
-					public global::Rocks.Argument<string?> @value { get; set; }
+					internal global::Rocks.Argument<string?> @value { get; set; }
 				}
-				private global::Rocks.Handlers<global::NotNullIfNotCasesCreateExpectations.Handler6>? @handlers6;
+				private global::System.Collections.Generic.List<global::NotNullIfNotCasesCreateExpectations.Handler6>? @handlers6;
 				
 				internal sealed class Handler7
 					: global::Rocks.Handler<global::System.Func<object?, string?>, string?>
 				{
-					public global::Rocks.Argument<object?> @node { get; set; }
+					internal global::Rocks.Argument<object?> @node { get; set; }
 				}
-				private global::Rocks.Handlers<global::NotNullIfNotCasesCreateExpectations.Handler7>? @handlers7;
+				private global::System.Collections.Generic.List<global::NotNullIfNotCasesCreateExpectations.Handler7>? @handlers7;
 				
 				internal sealed class Handler8
 					: global::Rocks.Handler<global::System.Action<object?, string?>>
 				{
-					public global::Rocks.Argument<object?> @node { get; set; }
-					public global::Rocks.Argument<string?> @value { get; set; }
+					internal global::Rocks.Argument<object?> @node { get; set; }
+					internal global::Rocks.Argument<string?> @value { get; set; }
 				}
-				private global::Rocks.Handlers<global::NotNullIfNotCasesCreateExpectations.Handler8>? @handlers8;
+				private global::System.Collections.Generic.List<global::NotNullIfNotCasesCreateExpectations.Handler8>? @handlers8;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::NotNullIfNotCases"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -2068,15 +2361,15 @@ public static class AttributeGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-						if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
-						if (this.handlers2 is not null) { failures.AddRange(this.Verify(this.handlers2, 2)); }
-						if (this.handlers3 is not null) { failures.AddRange(this.Verify(this.handlers3, 3)); }
-						if (this.handlers4 is not null) { failures.AddRange(this.Verify(this.handlers4, 4)); }
-						if (this.handlers5 is not null) { failures.AddRange(this.Verify(this.handlers5, 5)); }
-						if (this.handlers6 is not null) { failures.AddRange(this.Verify(this.handlers6, 6)); }
-						if (this.handlers7 is not null) { failures.AddRange(this.Verify(this.handlers7, 7)); }
-						if (this.handlers8 is not null) { failures.AddRange(this.Verify(this.handlers8, 8)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
+						if (this.handlers1 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers1], 1, typeof(Mock))); }
+						if (this.handlers2 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers2], 2, typeof(Mock))); }
+						if (this.handlers3 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers3, 3, typeof(Mock))); }
+						if (this.handlers4 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers4, 4, typeof(Mock))); }
+						if (this.handlers5 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers5], 5, typeof(Mock))); }
+						if (this.handlers6 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers6, 6, typeof(Mock))); }
+						if (this.handlers7 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers7, 7, typeof(Mock))); }
+						if (this.handlers8 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers8, 8, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -2098,11 +2391,12 @@ public static class AttributeGeneratorTests
 					{
 						if (this.Expectations.handlers0 is not null)
 						{
-							foreach (var @handler in this.Expectations.handlers0)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers0))
 							{
 								if (@handler.@obj.IsValid(@obj!))
 								{
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									var @result = @handler.Callback is not null ?
 										@handler.Callback(@obj!) : @handler.ReturnValue;
 									return @result!;
@@ -2112,7 +2406,7 @@ public static class AttributeGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers match for {this.GetType().GetMemberDescription(0)}
+								No handlers match for {typeof(Mock).GetMemberDescription(0)}
 									obj: {@obj.FormatValue()}
 								""");
 						}
@@ -2127,8 +2421,9 @@ public static class AttributeGeneratorTests
 					{
 						if (this.Expectations.handlers1 is not null)
 						{
-							var @handler = this.Expectations.handlers1.First;
+							var @handler = this.Expectations.handlers1;
 							@handler.CallCount++;
+							if (@handler.Exception is not null) { throw @handler.Exception; }
 							var @result = @handler.Callback is not null ?
 								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
@@ -2144,8 +2439,9 @@ public static class AttributeGeneratorTests
 					{
 						if (this.Expectations.handlers2 is not null)
 						{
-							var @handler = this.Expectations.handlers2.First;
+							var @handler = this.Expectations.handlers2;
 							@handler.CallCount++;
+							if (@handler.Exception is not null) { throw @handler.Exception; }
 							var @result = @handler.Callback is not null ?
 								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
@@ -2162,11 +2458,12 @@ public static class AttributeGeneratorTests
 					{
 						if (this.Expectations.handlers3 is not null)
 						{
-							foreach (var @handler in this.Expectations.handlers3)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers3))
 							{
 								if (@handler.@node.IsValid(@node!))
 								{
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									var @result = @handler.Callback is not null ?
 										@handler.Callback(@node!) : @handler.ReturnValue;
 									return @result!;
@@ -2176,7 +2473,7 @@ public static class AttributeGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers match for {this.GetType().GetMemberDescription(3)}
+								No handlers match for {typeof(Mock).GetMemberDescription(3)}
 									node: {@node.FormatValue()}
 								""");
 						}
@@ -2191,11 +2488,12 @@ public static class AttributeGeneratorTests
 					{
 						if (this.Expectations.handlers4 is not null)
 						{
-							foreach (var @handler in this.Expectations.handlers4)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers4))
 							{
 								if (@handler.@node.IsValid(@node!))
 								{
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									var @result = @handler.Callback is not null ?
 										@handler.Callback(@node!) : @handler.ReturnValue;
 									return @result!;
@@ -2205,7 +2503,7 @@ public static class AttributeGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers match for {this.GetType().GetMemberDescription(4)}
+								No handlers match for {typeof(Mock).GetMemberDescription(4)}
 									node: {@node.FormatValue()}
 								""");
 						}
@@ -2223,8 +2521,9 @@ public static class AttributeGeneratorTests
 						{
 							if (this.Expectations.handlers5 is not null)
 							{
-								var @handler = this.Expectations.handlers5.First;
+								var @handler = this.Expectations.handlers5;
 								@handler.CallCount++;
+								if (@handler.Exception is not null) { throw @handler.Exception; }
 								var @result = @handler.Callback is not null ?
 									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
@@ -2245,6 +2544,7 @@ public static class AttributeGeneratorTests
 									if (@handler.value.IsValid(value!))
 									{
 										@handler.CallCount++;
+										if (@handler.Exception is not null) { throw @handler.Exception; }
 										@foundMatch = true;
 										@handler.Callback?.Invoke(value!);
 										break;
@@ -2256,7 +2556,7 @@ public static class AttributeGeneratorTests
 									this.Expectations.WasExceptionThrown = true;
 									throw new global::Rocks.Exceptions.ExpectationException(
 										$"""
-										No handlers match for {this.GetType().GetMemberDescription(6)}
+										No handlers match for {typeof(Mock).GetMemberDescription(6)}
 											value: {@value.FormatValue()}
 										""");
 								}
@@ -2281,6 +2581,7 @@ public static class AttributeGeneratorTests
 									if (@handler.@node.IsValid(@node!))
 									{
 										@handler.CallCount++;
+										if (@handler.Exception is not null) { throw @handler.Exception; }
 										var @result = @handler.Callback is not null ?
 											@handler.Callback(@node!) : @handler.ReturnValue;
 										return @result!;
@@ -2290,7 +2591,7 @@ public static class AttributeGeneratorTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(7)}
+									No handlers match for {typeof(Mock).GetMemberDescription(7)}
 										node: {@node.FormatValue()}
 									""");
 							}
@@ -2310,6 +2611,7 @@ public static class AttributeGeneratorTests
 										@handler.@value.IsValid(@value!))
 									{
 										@handler.CallCount++;
+										if (@handler.Exception is not null) { throw @handler.Exception; }
 										@handler.Callback?.Invoke(@node!, @value!);
 										return;
 									}
@@ -2318,7 +2620,7 @@ public static class AttributeGeneratorTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(8)}
+									No handlers match for {typeof(Mock).GetMemberDescription(8)}
 										node: {@node.FormatValue()}
 										value: {@value.FormatValue()}
 									""");
@@ -2335,14 +2637,16 @@ public static class AttributeGeneratorTests
 				
 				public NotNullIfNotCasesCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::NotNullIfNotCases" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::NotNullIfNotCases Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -2352,73 +2656,118 @@ public static class AttributeGeneratorTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForNotNullIfNotCases<TAdornments>
+					internal interface IAdornmentsForNotNullIfNotCases<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForNotNullIfNotCases<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::NotNullIfNotCasesCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForNotNullIfNotCases<AdornmentsForHandler0>
+					internal sealed class EqualsAdornmentsE60CFEEA
+						: global::Rocks.Adornments<EqualsAdornmentsE60CFEEA, global::NotNullIfNotCasesCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForNotNullIfNotCases<EqualsAdornmentsE60CFEEA>
 					{
-						public AdornmentsForHandler0(global::NotNullIfNotCasesCreateExpectations.Handler0 handler)
-							: base(handler) { }
+						internal EqualsAdornmentsE60CFEEA(global::NotNullIfNotCasesCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler1
-						: global::Rocks.Adornments<AdornmentsForHandler1, global::NotNullIfNotCasesCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForNotNullIfNotCases<AdornmentsForHandler1>
+					internal sealed class GetHashCodeAdornments2D2816FE
+						: global::Rocks.Adornments<GetHashCodeAdornments2D2816FE, global::NotNullIfNotCasesCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForNotNullIfNotCases<GetHashCodeAdornments2D2816FE>
 					{
-						public AdornmentsForHandler1(global::NotNullIfNotCasesCreateExpectations.Handler1 handler)
-							: base(handler) { }
+						internal GetHashCodeAdornments2D2816FE(global::NotNullIfNotCasesCreateExpectations.Handler1 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler2
-						: global::Rocks.Adornments<AdornmentsForHandler2, global::NotNullIfNotCasesCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForNotNullIfNotCases<AdornmentsForHandler2>
+					internal sealed class ToStringAdornments2D2816FE
+						: global::Rocks.Adornments<ToStringAdornments2D2816FE, global::NotNullIfNotCasesCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForNotNullIfNotCases<ToStringAdornments2D2816FE>
 					{
-						public AdornmentsForHandler2(global::NotNullIfNotCasesCreateExpectations.Handler2 handler)
-							: base(handler) { }
+						internal ToStringAdornments2D2816FE(global::NotNullIfNotCasesCreateExpectations.Handler2 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler3
-						: global::Rocks.Adornments<AdornmentsForHandler3, global::NotNullIfNotCasesCreateExpectations.Handler3, global::System.Func<object?, object?>, object?>, IAdornmentsForNotNullIfNotCases<AdornmentsForHandler3>
+					internal sealed class VisitMethodAdornmentsE60CFEEA
+						: global::Rocks.Adornments<VisitMethodAdornmentsE60CFEEA, global::NotNullIfNotCasesCreateExpectations.Handler3, global::System.Func<object?, object?>, object?>, IAdornmentsForNotNullIfNotCases<VisitMethodAdornmentsE60CFEEA>
 					{
-						public AdornmentsForHandler3(global::NotNullIfNotCasesCreateExpectations.Handler3 handler)
-							: base(handler) { }
+						internal VisitMethodAdornmentsE60CFEEA(global::NotNullIfNotCasesCreateExpectations.Handler3 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler4
-						: global::Rocks.Adornments<AdornmentsForHandler4, global::NotNullIfNotCasesCreateExpectations.Handler4, global::System.Func<object?, object?>, object?>, IAdornmentsForNotNullIfNotCases<AdornmentsForHandler4>
+					internal sealed class VisitParameterAdornmentsE60CFEEA
+						: global::Rocks.Adornments<VisitParameterAdornmentsE60CFEEA, global::NotNullIfNotCasesCreateExpectations.Handler4, global::System.Func<object?, object?>, object?>, IAdornmentsForNotNullIfNotCases<VisitParameterAdornmentsE60CFEEA>
 					{
-						public AdornmentsForHandler4(global::NotNullIfNotCasesCreateExpectations.Handler4 handler)
-							: base(handler) { }
+						internal VisitParameterAdornmentsE60CFEEA(global::NotNullIfNotCasesCreateExpectations.Handler4 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler5
-						: global::Rocks.Adornments<AdornmentsForHandler5, global::NotNullIfNotCasesCreateExpectations.Handler5, global::System.Func<string?>, string?>, IAdornmentsForNotNullIfNotCases<AdornmentsForHandler5>
+					internal sealed class VisitPropertyGetsAdornments2D2816FE
+						: global::Rocks.Adornments<VisitPropertyGetsAdornments2D2816FE, global::NotNullIfNotCasesCreateExpectations.Handler5, global::System.Func<string?>, string?>, IAdornmentsForNotNullIfNotCases<VisitPropertyGetsAdornments2D2816FE>
 					{
-						public AdornmentsForHandler5(global::NotNullIfNotCasesCreateExpectations.Handler5 handler)
-							: base(handler) { }
+						internal VisitPropertyGetsAdornments2D2816FE(global::NotNullIfNotCasesCreateExpectations.Handler5 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler6
-						: global::Rocks.Adornments<AdornmentsForHandler6, global::NotNullIfNotCasesCreateExpectations.Handler6, global::System.Action<string?>>, IAdornmentsForNotNullIfNotCases<AdornmentsForHandler6>
+					internal sealed class VisitPropertySetsAdornments3129B210
+						: global::Rocks.Adornments<VisitPropertySetsAdornments3129B210, global::NotNullIfNotCasesCreateExpectations.Handler6, global::System.Action<string?>>, IAdornmentsForNotNullIfNotCases<VisitPropertySetsAdornments3129B210>
 					{
-						public AdornmentsForHandler6(global::NotNullIfNotCasesCreateExpectations.Handler6 handler)
-							: base(handler) { }
+						internal VisitPropertySetsAdornments3129B210(global::NotNullIfNotCasesCreateExpectations.Handler6 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler7
-						: global::Rocks.Adornments<AdornmentsForHandler7, global::NotNullIfNotCasesCreateExpectations.Handler7, global::System.Func<object?, string?>, string?>, IAdornmentsForNotNullIfNotCases<AdornmentsForHandler7>
+					internal sealed class thisGetsAdornmentsE60CFEEA
+						: global::Rocks.Adornments<thisGetsAdornmentsE60CFEEA, global::NotNullIfNotCasesCreateExpectations.Handler7, global::System.Func<object?, string?>, string?>, IAdornmentsForNotNullIfNotCases<thisGetsAdornmentsE60CFEEA>
 					{
-						public AdornmentsForHandler7(global::NotNullIfNotCasesCreateExpectations.Handler7 handler)
-							: base(handler) { }
+						internal thisGetsAdornmentsE60CFEEA(global::NotNullIfNotCasesCreateExpectations.Handler7 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler8
-						: global::Rocks.Adornments<AdornmentsForHandler8, global::NotNullIfNotCasesCreateExpectations.Handler8, global::System.Action<object?, string?>>, IAdornmentsForNotNullIfNotCases<AdornmentsForHandler8>
+					internal sealed class thisSetsAdornments3F0BFBE4
+						: global::Rocks.Adornments<thisSetsAdornments3F0BFBE4, global::NotNullIfNotCasesCreateExpectations.Handler8, global::System.Action<object?, string?>>, IAdornmentsForNotNullIfNotCases<thisSetsAdornments3F0BFBE4>
 					{
-						public AdornmentsForHandler8(global::NotNullIfNotCasesCreateExpectations.Handler8 handler)
-							: base(handler) { }
+						internal thisSetsAdornments3F0BFBE4(global::NotNullIfNotCasesCreateExpectations.Handler8 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
+				}
+				
+				internal void Remove(global::NotNullIfNotCasesCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA adornments)
+				{
+					adornments.Remove(this.@handlers0);
+					if (this.@handlers0?.Count == 0) { this.@handlers0 = null; }
+				}
+				
+				internal void Remove(global::NotNullIfNotCasesCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE adornments) =>
+					this.@handlers1 = null;
+				
+				internal void Remove(global::NotNullIfNotCasesCreateExpectations.Adornments.ToStringAdornments2D2816FE adornments) =>
+					this.@handlers2 = null;
+				
+				internal void Remove(global::NotNullIfNotCasesCreateExpectations.Adornments.VisitMethodAdornmentsE60CFEEA adornments)
+				{
+					adornments.Remove(this.@handlers3);
+					if (this.@handlers3?.Count == 0) { this.@handlers3 = null; }
+				}
+				
+				internal void Remove(global::NotNullIfNotCasesCreateExpectations.Adornments.VisitParameterAdornmentsE60CFEEA adornments)
+				{
+					adornments.Remove(this.@handlers4);
+					if (this.@handlers4?.Count == 0) { this.@handlers4 = null; }
+				}
+				
+				internal void Remove(global::NotNullIfNotCasesCreateExpectations.Adornments.VisitPropertyGetsAdornments2D2816FE adornments) =>
+					this.@handlers5 = null;
+				
+				internal void Remove(global::NotNullIfNotCasesCreateExpectations.Adornments.VisitPropertySetsAdornments3129B210 adornments)
+				{
+					adornments.Remove(this.@handlers6);
+					if (this.@handlers6?.Count == 0) { this.@handlers6 = null; }
+				}
+				
+				internal void Remove(global::NotNullIfNotCasesCreateExpectations.Adornments.thisGetsAdornmentsE60CFEEA adornments)
+				{
+					adornments.Remove(this.@handlers7);
+					if (this.@handlers7?.Count == 0) { this.@handlers7 = null; }
+				}
+				
+				internal void Remove(global::NotNullIfNotCasesCreateExpectations.Adornments.thisSetsAdornments3F0BFBE4 adornments)
+				{
+					adornments.Remove(this.@handlers8);
+					if (this.@handlers8?.Count == 0) { this.@handlers8 = null; }
 				}
 			}
 			
@@ -2439,9 +2788,15 @@ public static class AttributeGeneratorTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::NotNullIfNotCases"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class NotNullIfNotCasesMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::NotNullIfNotCases" />-based type.
+				/// </summary>
 				internal global::NotNullIfNotCases Instance()
 				{
 					return new Mock();
@@ -2550,16 +2905,25 @@ public static class AttributeGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::IUseTuples"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IUseTuplesCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::IUseTuplesCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::IUseTuples"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::IUseTuplesCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::IUseTuplesCreateExpectations parent) =>
 						this.parent = parent;
 				
@@ -2570,16 +2934,21 @@ public static class AttributeGeneratorTests
 						internal X11PropertyExpectations(global::IUseTuplesCreateExpectations parent) => 
 							this.parent = parent;
 					
-						internal global::IUseTuplesCreateExpectations.Adornments.AdornmentsForHandler0 Gets()
+						/// <summary>
+						/// Sets a "get" expectation for the <see cref="global::IUseTuples" /> property.
+						/// </summary>
+						internal global::IUseTuplesCreateExpectations.Adornments.X11GetsAdornments2D2816FE Gets()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 							var handler = new global::IUseTuplesCreateExpectations.Handler0();
-							if (this.parent.handlers0 is null) { this.parent.handlers0 = new(handler); }
-							else { this.parent.handlers0.Add(handler); }
-							return new(handler);
+							this.parent.handlers0 = handler;
+							return new(handler, this.parent);
 						}
 					}
 					
+					/// <summary>
+					/// Contains expectation setups for the <see cref="global::IUseTuples" property./>.
+					/// </summary>
 					internal global::IUseTuplesCreateExpectations.SetupsExpectations.X11PropertyExpectations X11 => new(this.parent);
 					
 				}
@@ -2589,8 +2958,11 @@ public static class AttributeGeneratorTests
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Func<(nint Display, nuint Window)?>, (nint Display, nuint Window)?>
 				{ }
-				private global::Rocks.Handlers<global::IUseTuplesCreateExpectations.Handler0>? @handlers0;
+				private global::IUseTuplesCreateExpectations.Handler0? @handlers0;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::IUseTuples"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -2601,7 +2973,7 @@ public static class AttributeGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers0], 0, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -2625,8 +2997,9 @@ public static class AttributeGeneratorTests
 						{
 							if (this.Expectations.handlers0 is not null)
 							{
-								var @handler = this.Expectations.handlers0.First;
+								var @handler = this.Expectations.handlers0;
 								@handler.CallCount++;
+								if (@handler.Exception is not null) { throw @handler.Exception; }
 								var @result = @handler.Callback is not null ?
 									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
@@ -2635,7 +3008,7 @@ public static class AttributeGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers match for {this.GetType().GetMemberDescription(0)}
+								No handlers match for {typeof(Mock).GetMemberDescription(0)}
 								""");
 						}
 					}
@@ -2645,14 +3018,16 @@ public static class AttributeGeneratorTests
 				
 				public IUseTuplesCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::IUseTuples" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::IUseTuples Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -2662,18 +3037,21 @@ public static class AttributeGeneratorTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForIUseTuples<TAdornments>
+					internal interface IAdornmentsForIUseTuples<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForIUseTuples<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::IUseTuplesCreateExpectations.Handler0, global::System.Func<(nint Display, nuint Window)?>, (nint Display, nuint Window)?>, IAdornmentsForIUseTuples<AdornmentsForHandler0>
+					internal sealed class X11GetsAdornments2D2816FE
+						: global::Rocks.Adornments<X11GetsAdornments2D2816FE, global::IUseTuplesCreateExpectations.Handler0, global::System.Func<(nint Display, nuint Window)?>, (nint Display, nuint Window)?>, IAdornmentsForIUseTuples<X11GetsAdornments2D2816FE>
 					{
-						public AdornmentsForHandler0(global::IUseTuplesCreateExpectations.Handler0 handler)
-							: base(handler) { }
+						internal X11GetsAdornments2D2816FE(global::IUseTuplesCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 				}
+				
+				internal void Remove(global::IUseTuplesCreateExpectations.Adornments.X11GetsAdornments2D2816FE adornments) =>
+					this.@handlers0 = null;
 			}
 			
 			#pragma warning restore CS8618
@@ -2693,9 +3071,15 @@ public static class AttributeGeneratorTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::IUseTuples"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IUseTuplesMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::IUseTuples" />-based type.
+				/// </summary>
 				internal global::IUseTuples Instance()
 				{
 					return new Mock();
@@ -2762,20 +3146,32 @@ public static class AttributeGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::HaveDynamic"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class HaveDynamicCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::HaveDynamicCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::HaveDynamic"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::HaveDynamicCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::HaveDynamicCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal global::HaveDynamicCreateExpectations.Adornments.AdornmentsForHandler0 Equals(global::Rocks.Argument<object?> @obj)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::HaveDynamic.Equals(Object)"/>.
+					/// </summary>
+					internal global::HaveDynamicCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
@@ -2785,36 +3181,42 @@ public static class AttributeGeneratorTests
 							@obj = @obj,
 						};
 						
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
-						else { this.parent.handlers0.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers0 ??= new(1);
+						this.parent.handlers0.Add(@handler);
+						return new(@handler, this.parent);
 					}
 					
-					internal new global::HaveDynamicCreateExpectations.Adornments.AdornmentsForHandler1 GetHashCode()
+					/// <summary>
+					/// Sets an expectation for <see cref="global::HaveDynamic.GetHashCode()"/>.
+					/// </summary>
+					internal new global::HaveDynamicCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						var handler = new global::HaveDynamicCreateExpectations.Handler1();
-						if (this.parent.handlers1 is null) { this.parent.handlers1 = new(handler); }
-						else { this.parent.handlers1.Add(handler); }
-						return new(handler);
+						this.parent.handlers1 = handler;
+						return new(handler, this.parent);
 					}
 					
-					internal new global::HaveDynamicCreateExpectations.Adornments.AdornmentsForHandler2 ToString()
+					/// <summary>
+					/// Sets an expectation for <see cref="global::HaveDynamic.ToString()"/>.
+					/// </summary>
+					internal new global::HaveDynamicCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						var handler = new global::HaveDynamicCreateExpectations.Handler2();
-						if (this.parent.handlers2 is null) { this.parent.handlers2 = new(handler); }
-						else { this.parent.handlers2.Add(handler); }
-						return new(handler);
+						this.parent.handlers2 = handler;
+						return new(handler, this.parent);
 					}
 					
-					internal global::HaveDynamicCreateExpectations.Adornments.AdornmentsForHandler3 CreateDynamicRecord()
+					/// <summary>
+					/// Sets an expectation for <see cref="global::HaveDynamic.CreateDynamicRecord()"/>.
+					/// </summary>
+					internal global::HaveDynamicCreateExpectations.Adornments.CreateDynamicRecordAdornments2D2816FE CreateDynamicRecord()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						var handler = new global::HaveDynamicCreateExpectations.Handler3();
-						if (this.parent.handlers3 is null) { this.parent.handlers3 = new(handler); }
-						else { this.parent.handlers3.Add(handler); }
-						return new(handler);
+						this.parent.handlers3 = handler;
+						return new(handler, this.parent);
 					}
 				}
 				
@@ -2823,25 +3225,28 @@ public static class AttributeGeneratorTests
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Func<object?, bool>, bool>
 				{
-					public global::Rocks.Argument<object?> @obj { get; set; }
+					internal global::Rocks.Argument<object?> @obj { get; set; }
 				}
-				private global::Rocks.Handlers<global::HaveDynamicCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::HaveDynamicCreateExpectations.Handler0>? @handlers0;
 				
 				internal sealed class Handler1
 					: global::Rocks.Handler<global::System.Func<int>, int>
 				{ }
-				private global::Rocks.Handlers<global::HaveDynamicCreateExpectations.Handler1>? @handlers1;
+				private global::HaveDynamicCreateExpectations.Handler1? @handlers1;
 				
 				internal sealed class Handler2
 					: global::Rocks.Handler<global::System.Func<string?>, string?>
 				{ }
-				private global::Rocks.Handlers<global::HaveDynamicCreateExpectations.Handler2>? @handlers2;
+				private global::HaveDynamicCreateExpectations.Handler2? @handlers2;
 				
 				internal sealed class Handler3
 					: global::Rocks.Handler<global::System.Func<dynamic>, dynamic>
 				{ }
-				private global::Rocks.Handlers<global::HaveDynamicCreateExpectations.Handler3>? @handlers3;
+				private global::HaveDynamicCreateExpectations.Handler3? @handlers3;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::HaveDynamic"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -2852,10 +3257,10 @@ public static class AttributeGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-						if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
-						if (this.handlers2 is not null) { failures.AddRange(this.Verify(this.handlers2, 2)); }
-						if (this.handlers3 is not null) { failures.AddRange(this.Verify(this.handlers3, 3)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
+						if (this.handlers1 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers1], 1, typeof(Mock))); }
+						if (this.handlers2 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers2], 2, typeof(Mock))); }
+						if (this.handlers3 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers3], 3, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -2877,11 +3282,12 @@ public static class AttributeGeneratorTests
 					{
 						if (this.Expectations.handlers0 is not null)
 						{
-							foreach (var @handler in this.Expectations.handlers0)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers0))
 							{
 								if (@handler.@obj.IsValid(@obj!))
 								{
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									var @result = @handler.Callback is not null ?
 										@handler.Callback(@obj!) : @handler.ReturnValue;
 									return @result!;
@@ -2891,7 +3297,7 @@ public static class AttributeGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers match for {this.GetType().GetMemberDescription(0)}
+								No handlers match for {typeof(Mock).GetMemberDescription(0)}
 									obj: {@obj.FormatValue()}
 								""");
 						}
@@ -2906,8 +3312,9 @@ public static class AttributeGeneratorTests
 					{
 						if (this.Expectations.handlers1 is not null)
 						{
-							var @handler = this.Expectations.handlers1.First;
+							var @handler = this.Expectations.handlers1;
 							@handler.CallCount++;
+							if (@handler.Exception is not null) { throw @handler.Exception; }
 							var @result = @handler.Callback is not null ?
 								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
@@ -2923,8 +3330,9 @@ public static class AttributeGeneratorTests
 					{
 						if (this.Expectations.handlers2 is not null)
 						{
-							var @handler = this.Expectations.handlers2.First;
+							var @handler = this.Expectations.handlers2;
 							@handler.CallCount++;
+							if (@handler.Exception is not null) { throw @handler.Exception; }
 							var @result = @handler.Callback is not null ?
 								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
@@ -2940,8 +3348,9 @@ public static class AttributeGeneratorTests
 					{
 						if (this.Expectations.handlers3 is not null)
 						{
-							var @handler = this.Expectations.handlers3.First;
+							var @handler = this.Expectations.handlers3;
 							@handler.CallCount++;
+							if (@handler.Exception is not null) { throw @handler.Exception; }
 							var @result = @handler.Callback is not null ?
 								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
@@ -2957,14 +3366,16 @@ public static class AttributeGeneratorTests
 				
 				public HaveDynamicCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::HaveDynamic" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::HaveDynamic Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -2974,39 +3385,54 @@ public static class AttributeGeneratorTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForHaveDynamic<TAdornments>
+					internal interface IAdornmentsForHaveDynamic<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForHaveDynamic<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::HaveDynamicCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForHaveDynamic<AdornmentsForHandler0>
+					internal sealed class EqualsAdornmentsE60CFEEA
+						: global::Rocks.Adornments<EqualsAdornmentsE60CFEEA, global::HaveDynamicCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForHaveDynamic<EqualsAdornmentsE60CFEEA>
 					{
-						public AdornmentsForHandler0(global::HaveDynamicCreateExpectations.Handler0 handler)
-							: base(handler) { }
+						internal EqualsAdornmentsE60CFEEA(global::HaveDynamicCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler1
-						: global::Rocks.Adornments<AdornmentsForHandler1, global::HaveDynamicCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForHaveDynamic<AdornmentsForHandler1>
+					internal sealed class GetHashCodeAdornments2D2816FE
+						: global::Rocks.Adornments<GetHashCodeAdornments2D2816FE, global::HaveDynamicCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForHaveDynamic<GetHashCodeAdornments2D2816FE>
 					{
-						public AdornmentsForHandler1(global::HaveDynamicCreateExpectations.Handler1 handler)
-							: base(handler) { }
+						internal GetHashCodeAdornments2D2816FE(global::HaveDynamicCreateExpectations.Handler1 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler2
-						: global::Rocks.Adornments<AdornmentsForHandler2, global::HaveDynamicCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForHaveDynamic<AdornmentsForHandler2>
+					internal sealed class ToStringAdornments2D2816FE
+						: global::Rocks.Adornments<ToStringAdornments2D2816FE, global::HaveDynamicCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForHaveDynamic<ToStringAdornments2D2816FE>
 					{
-						public AdornmentsForHandler2(global::HaveDynamicCreateExpectations.Handler2 handler)
-							: base(handler) { }
+						internal ToStringAdornments2D2816FE(global::HaveDynamicCreateExpectations.Handler2 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler3
-						: global::Rocks.Adornments<AdornmentsForHandler3, global::HaveDynamicCreateExpectations.Handler3, global::System.Func<dynamic>, dynamic>, IAdornmentsForHaveDynamic<AdornmentsForHandler3>
+					internal sealed class CreateDynamicRecordAdornments2D2816FE
+						: global::Rocks.Adornments<CreateDynamicRecordAdornments2D2816FE, global::HaveDynamicCreateExpectations.Handler3, global::System.Func<dynamic>, dynamic>, IAdornmentsForHaveDynamic<CreateDynamicRecordAdornments2D2816FE>
 					{
-						public AdornmentsForHandler3(global::HaveDynamicCreateExpectations.Handler3 handler)
-							: base(handler) { }
+						internal CreateDynamicRecordAdornments2D2816FE(global::HaveDynamicCreateExpectations.Handler3 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 				}
+				
+				internal void Remove(global::HaveDynamicCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA adornments)
+				{
+					adornments.Remove(this.@handlers0);
+					if (this.@handlers0?.Count == 0) { this.@handlers0 = null; }
+				}
+				
+				internal void Remove(global::HaveDynamicCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE adornments) =>
+					this.@handlers1 = null;
+				
+				internal void Remove(global::HaveDynamicCreateExpectations.Adornments.ToStringAdornments2D2816FE adornments) =>
+					this.@handlers2 = null;
+				
+				internal void Remove(global::HaveDynamicCreateExpectations.Adornments.CreateDynamicRecordAdornments2D2816FE adornments) =>
+					this.@handlers3 = null;
 			}
 			
 			#pragma warning restore CS8618
@@ -3026,9 +3452,15 @@ public static class AttributeGeneratorTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::HaveDynamic"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class HaveDynamicMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::HaveDynamic" />-based type.
+				/// </summary>
 				internal global::HaveDynamic Instance()
 				{
 					return new Mock();
@@ -3121,26 +3553,37 @@ public static class AttributeGeneratorTests
 			
 			namespace MockTests;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::MockTests.IHaveGenericAttribute"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IHaveGenericAttributeCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::MockTests.IHaveGenericAttributeCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::MockTests.IHaveGenericAttribute"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::MockTests.IHaveGenericAttributeCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::MockTests.IHaveGenericAttributeCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal global::MockTests.IHaveGenericAttributeCreateExpectations.Adornments.AdornmentsForHandler0 Foo()
+					/// <summary>
+					/// Sets an expectation for <see cref="global::MockTests.IHaveGenericAttribute.Foo()"/>.
+					/// </summary>
+					internal global::MockTests.IHaveGenericAttributeCreateExpectations.Adornments.FooAdornments2D2816FE Foo()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						var handler = new global::MockTests.IHaveGenericAttributeCreateExpectations.Handler0();
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(handler); }
-						else { this.parent.handlers0.Add(handler); }
-						return new(handler);
+						this.parent.handlers0 = handler;
+						return new(handler, this.parent);
 					}
 				}
 				
@@ -3149,8 +3592,11 @@ public static class AttributeGeneratorTests
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Action>
 				{ }
-				private global::Rocks.Handlers<global::MockTests.IHaveGenericAttributeCreateExpectations.Handler0>? @handlers0;
+				private global::MockTests.IHaveGenericAttributeCreateExpectations.Handler0? @handlers0;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::MockTests.IHaveGenericAttribute"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -3161,7 +3607,7 @@ public static class AttributeGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers0], 0, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -3184,8 +3630,9 @@ public static class AttributeGeneratorTests
 					{
 						if (this.Expectations.handlers0 is not null)
 						{
-							var @handler = this.Expectations.handlers0.First;
+							var @handler = this.Expectations.handlers0;
 							@handler.CallCount++;
+							if (@handler.Exception is not null) { throw @handler.Exception; }
 							@handler.Callback?.Invoke();
 						}
 						else
@@ -3193,7 +3640,7 @@ public static class AttributeGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
 								""");
 						}
 					}
@@ -3203,14 +3650,16 @@ public static class AttributeGeneratorTests
 				
 				public IHaveGenericAttributeCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::MockTests.IHaveGenericAttribute" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::MockTests.IHaveGenericAttribute Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -3220,18 +3669,21 @@ public static class AttributeGeneratorTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForIHaveGenericAttribute<TAdornments>
+					internal interface IAdornmentsForIHaveGenericAttribute<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForIHaveGenericAttribute<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IHaveGenericAttributeCreateExpectations.Handler0, global::System.Action>, IAdornmentsForIHaveGenericAttribute<AdornmentsForHandler0>
+					internal sealed class FooAdornments2D2816FE
+						: global::Rocks.Adornments<FooAdornments2D2816FE, global::MockTests.IHaveGenericAttributeCreateExpectations.Handler0, global::System.Action>, IAdornmentsForIHaveGenericAttribute<FooAdornments2D2816FE>
 					{
-						public AdornmentsForHandler0(global::MockTests.IHaveGenericAttributeCreateExpectations.Handler0 handler)
-							: base(handler) { }
+						internal FooAdornments2D2816FE(global::MockTests.IHaveGenericAttributeCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 				}
+				
+				internal void Remove(global::MockTests.IHaveGenericAttributeCreateExpectations.Adornments.FooAdornments2D2816FE adornments) =>
+					this.@handlers0 = null;
 			}
 			
 			#pragma warning restore CS8618
@@ -3253,9 +3705,15 @@ public static class AttributeGeneratorTests
 			
 			namespace MockTests
 			{
+				/// <summary>
+				/// Contains code to create a "simple" definition of <see cref="global::MockTests.IHaveGenericAttribute"/>.
+				/// </summary>
 				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IHaveGenericAttributeMakeExpectations
 				{
+					/// <summary>
+					/// Creates a new "simple" instance of a <see cref="global::MockTests.IHaveGenericAttribute" />-based type.
+					/// </summary>
 					internal global::MockTests.IHaveGenericAttribute Instance()
 					{
 						return new Mock();
@@ -3334,20 +3792,32 @@ public static class AttributeGeneratorTests
 			
 			namespace MockTests;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::MockTests.IHaveMultipleAttributes"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IHaveMultipleAttributesCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::MockTests.IHaveMultipleAttributesCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::MockTests.IHaveMultipleAttributes"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::MockTests.IHaveMultipleAttributesCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::MockTests.IHaveMultipleAttributesCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal global::MockTests.IHaveMultipleAttributesCreateExpectations.Adornments.AdornmentsForHandler0 Foo(global::Rocks.Argument<string> @data)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::MockTests.IHaveMultipleAttributes.Foo(String)"/>.
+					/// </summary>
+					internal global::MockTests.IHaveMultipleAttributesCreateExpectations.Adornments.FooAdornments639810A5 Foo(global::Rocks.Argument<string> @data)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@data);
@@ -3357,9 +3827,9 @@ public static class AttributeGeneratorTests
 							@data = @data,
 						};
 						
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
-						else { this.parent.handlers0.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers0 ??= new(1);
+						this.parent.handlers0.Add(@handler);
+						return new(@handler, this.parent);
 					}
 				}
 				
@@ -3368,10 +3838,13 @@ public static class AttributeGeneratorTests
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Action<string>>
 				{
-					public global::Rocks.Argument<string> @data { get; set; }
+					internal global::Rocks.Argument<string> @data { get; set; }
 				}
-				private global::Rocks.Handlers<global::MockTests.IHaveMultipleAttributesCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::MockTests.IHaveMultipleAttributesCreateExpectations.Handler0>? @handlers0;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::MockTests.IHaveMultipleAttributes"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -3382,7 +3855,7 @@ public static class AttributeGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -3406,12 +3879,13 @@ public static class AttributeGeneratorTests
 						{
 							var @foundMatch = false;
 							
-							foreach (var @handler in this.Expectations.handlers0)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers0))
 							{
 								if (@handler.@data.IsValid(@data!))
 								{
 									@foundMatch = true;
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									@handler.Callback?.Invoke(@data!);
 									break;
 								}
@@ -3422,7 +3896,7 @@ public static class AttributeGeneratorTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(0)}
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
 										data: {@data.FormatValue()}
 									""");
 							}
@@ -3432,7 +3906,7 @@ public static class AttributeGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
 									data: {@data.FormatValue()}
 								""");
 						}
@@ -3443,14 +3917,16 @@ public static class AttributeGeneratorTests
 				
 				public IHaveMultipleAttributesCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::MockTests.IHaveMultipleAttributes" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::MockTests.IHaveMultipleAttributes Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -3460,17 +3936,23 @@ public static class AttributeGeneratorTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForIHaveMultipleAttributes<TAdornments>
+					internal interface IAdornmentsForIHaveMultipleAttributes<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForIHaveMultipleAttributes<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::MockTests.IHaveMultipleAttributesCreateExpectations.Handler0, global::System.Action<string>>, IAdornmentsForIHaveMultipleAttributes<AdornmentsForHandler0>
+					internal sealed class FooAdornments639810A5
+						: global::Rocks.Adornments<FooAdornments639810A5, global::MockTests.IHaveMultipleAttributesCreateExpectations.Handler0, global::System.Action<string>>, IAdornmentsForIHaveMultipleAttributes<FooAdornments639810A5>
 					{
-						public AdornmentsForHandler0(global::MockTests.IHaveMultipleAttributesCreateExpectations.Handler0 handler)
-							: base(handler) { }
+						internal FooAdornments639810A5(global::MockTests.IHaveMultipleAttributesCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
+				}
+				
+				internal void Remove(global::MockTests.IHaveMultipleAttributesCreateExpectations.Adornments.FooAdornments639810A5 adornments)
+				{
+					adornments.Remove(this.@handlers0);
+					if (this.@handlers0?.Count == 0) { this.@handlers0 = null; }
 				}
 			}
 			
@@ -3493,9 +3975,15 @@ public static class AttributeGeneratorTests
 			
 			namespace MockTests
 			{
+				/// <summary>
+				/// Contains code to create a "simple" definition of <see cref="global::MockTests.IHaveMultipleAttributes"/>.
+				/// </summary>
 				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				internal sealed class IHaveMultipleAttributesMakeExpectations
 				{
+					/// <summary>
+					/// Creates a new "simple" instance of a <see cref="global::MockTests.IHaveMultipleAttributes" />-based type.
+					/// </summary>
 					internal global::MockTests.IHaveMultipleAttributes Instance()
 					{
 						return new Mock();

@@ -85,7 +85,6 @@ internal static class PropertyExpectationsPropertyBuilder
 			/// <summary>
 			/// Sets a "{{propertyTargetComment}}" expectation for the <see cref="{{propertyComment}}" /> property.
 			/// </summary>
-			
 			internal {{expectationsFullyQualifiedName}}.Adornments.{{adornmentsTypeName}} {{name}}({{propertyParameterValue}} @value)
 			{
 				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
