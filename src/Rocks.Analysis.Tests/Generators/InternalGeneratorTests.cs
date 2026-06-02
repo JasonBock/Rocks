@@ -88,20 +88,32 @@ public static class InternalGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::IDoStuff"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IDoStuffCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::IDoStuffCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::IDoStuff"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::IDoStuffCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::IDoStuffCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal global::IDoStuffCreateExpectations.Adornments.AdornmentsForHandler0 Do(global::Rocks.Argument<global::DataStuff> @dataStuff)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::IDoStuff.Do(DataStuff)"/>.
+					/// </summary>
+					internal global::IDoStuffCreateExpectations.Adornments.DoAdornments67F2E651 Do(global::Rocks.Argument<global::DataStuff> @dataStuff)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@dataStuff);
@@ -111,9 +123,9 @@ public static class InternalGeneratorTests
 							@dataStuff = @dataStuff,
 						};
 						
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
-						else { this.parent.handlers0.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers0 ??= new(1);
+						this.parent.handlers0.Add(@handler);
+						return new(@handler, this.parent);
 					}
 				}
 				
@@ -122,10 +134,13 @@ public static class InternalGeneratorTests
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Action<global::DataStuff>>
 				{
-					public global::Rocks.Argument<global::DataStuff> @dataStuff { get; set; }
+					internal global::Rocks.Argument<global::DataStuff> @dataStuff { get; set; }
 				}
-				private global::Rocks.Handlers<global::IDoStuffCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::IDoStuffCreateExpectations.Handler0>? @handlers0;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::IDoStuff"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -136,7 +151,7 @@ public static class InternalGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -160,12 +175,13 @@ public static class InternalGeneratorTests
 						{
 							var @foundMatch = false;
 							
-							foreach (var @handler in this.Expectations.handlers0)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers0))
 							{
 								if (@handler.@dataStuff.IsValid(@dataStuff!))
 								{
 									@foundMatch = true;
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									@handler.Callback?.Invoke(@dataStuff!);
 									break;
 								}
@@ -176,7 +192,7 @@ public static class InternalGeneratorTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(0)}
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
 										dataStuff: {@dataStuff.FormatValue()}
 									""");
 							}
@@ -186,7 +202,7 @@ public static class InternalGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
 									dataStuff: {@dataStuff.FormatValue()}
 								""");
 						}
@@ -197,14 +213,16 @@ public static class InternalGeneratorTests
 				
 				public IDoStuffCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::IDoStuff" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::IDoStuff Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -214,17 +232,23 @@ public static class InternalGeneratorTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForIDoStuff<TAdornments>
+					internal interface IAdornmentsForIDoStuff<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForIDoStuff<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::IDoStuffCreateExpectations.Handler0, global::System.Action<global::DataStuff>>, IAdornmentsForIDoStuff<AdornmentsForHandler0>
+					internal sealed class DoAdornments67F2E651
+						: global::Rocks.Adornments<DoAdornments67F2E651, global::IDoStuffCreateExpectations.Handler0, global::System.Action<global::DataStuff>>, IAdornmentsForIDoStuff<DoAdornments67F2E651>
 					{
-						public AdornmentsForHandler0(global::IDoStuffCreateExpectations.Handler0 handler)
-							: base(handler) { }
+						internal DoAdornments67F2E651(global::IDoStuffCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
+				}
+				
+				internal void Remove(global::IDoStuffCreateExpectations.Adornments.DoAdornments67F2E651 adornments)
+				{
+					adornments.Remove(this.@handlers0);
+					if (this.@handlers0?.Count == 0) { this.@handlers0 = null; }
 				}
 			}
 			
@@ -245,9 +269,15 @@ public static class InternalGeneratorTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::IDoStuff"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IDoStuffMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::IDoStuff" />-based type.
+				/// </summary>
 				internal global::IDoStuff Instance()
 				{
 					return new Mock();
@@ -326,20 +356,32 @@ public static class InternalGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::IDoStuff"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IDoStuffCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::IDoStuffCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::IDoStuff"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::IDoStuffCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::IDoStuffCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal global::IDoStuffCreateExpectations.Adornments.AdornmentsForHandler0 Do(global::Rocks.Argument<global::DataStuff> @dataStuff)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::IDoStuff.Do(DataStuff)"/>.
+					/// </summary>
+					internal global::IDoStuffCreateExpectations.Adornments.DoAdornments67F2E651 Do(global::Rocks.Argument<global::DataStuff> @dataStuff)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@dataStuff);
@@ -349,9 +391,9 @@ public static class InternalGeneratorTests
 							@dataStuff = @dataStuff,
 						};
 						
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
-						else { this.parent.handlers0.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers0 ??= new(1);
+						this.parent.handlers0.Add(@handler);
+						return new(@handler, this.parent);
 					}
 				}
 				
@@ -360,10 +402,13 @@ public static class InternalGeneratorTests
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Action<global::DataStuff>>
 				{
-					public global::Rocks.Argument<global::DataStuff> @dataStuff { get; set; }
+					internal global::Rocks.Argument<global::DataStuff> @dataStuff { get; set; }
 				}
-				private global::Rocks.Handlers<global::IDoStuffCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::IDoStuffCreateExpectations.Handler0>? @handlers0;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::IDoStuff"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -374,7 +419,7 @@ public static class InternalGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -398,12 +443,13 @@ public static class InternalGeneratorTests
 						{
 							var @foundMatch = false;
 							
-							foreach (var @handler in this.Expectations.handlers0)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers0))
 							{
 								if (@handler.@dataStuff.IsValid(@dataStuff!))
 								{
 									@foundMatch = true;
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									@handler.Callback?.Invoke(@dataStuff!);
 									break;
 								}
@@ -414,7 +460,7 @@ public static class InternalGeneratorTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(0)}
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
 										dataStuff: {@dataStuff.FormatValue()}
 									""");
 							}
@@ -424,7 +470,7 @@ public static class InternalGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
 									dataStuff: {@dataStuff.FormatValue()}
 								""");
 						}
@@ -435,14 +481,16 @@ public static class InternalGeneratorTests
 				
 				public IDoStuffCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::IDoStuff" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::IDoStuff Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -452,17 +500,23 @@ public static class InternalGeneratorTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForIDoStuff<TAdornments>
+					internal interface IAdornmentsForIDoStuff<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForIDoStuff<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::IDoStuffCreateExpectations.Handler0, global::System.Action<global::DataStuff>>, IAdornmentsForIDoStuff<AdornmentsForHandler0>
+					internal sealed class DoAdornments67F2E651
+						: global::Rocks.Adornments<DoAdornments67F2E651, global::IDoStuffCreateExpectations.Handler0, global::System.Action<global::DataStuff>>, IAdornmentsForIDoStuff<DoAdornments67F2E651>
 					{
-						public AdornmentsForHandler0(global::IDoStuffCreateExpectations.Handler0 handler)
-							: base(handler) { }
+						internal DoAdornments67F2E651(global::IDoStuffCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
+				}
+				
+				internal void Remove(global::IDoStuffCreateExpectations.Adornments.DoAdornments67F2E651 adornments)
+				{
+					adornments.Remove(this.@handlers0);
+					if (this.@handlers0?.Count == 0) { this.@handlers0 = null; }
 				}
 			}
 			
@@ -483,9 +537,15 @@ public static class InternalGeneratorTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::IDoStuff"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IDoStuffMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::IDoStuff" />-based type.
+				/// </summary>
 				internal global::IDoStuff Instance()
 				{
 					return new Mock();
