@@ -66,6 +66,17 @@ internal static class MethodExpectationsMethodBuilder
 
 			adornmentsFQNsPipeline(new(adornmentsTypeName, adornmentsType, typeArguments, constraints, method, method.MemberIdentifier));
 
+			var commentTarget = 
+				$"""
+				{(method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? type.Type.FullyQualifiedName : method.ContainingType.FullyQualifiedName)}.{method.Name}{typeArguments}({(string.Join(",", method.Parameters.Select(parameter => parameter.Type.Name)))})
+				""".TransformForXmlComment();
+			writer.WriteLines(
+				$$"""
+				/// <summary>
+				/// Sets an expectation for <see cref="{{commentTarget}}"/>.
+				/// </summary>
+				""");
+
 			if (isGeneratedWithDefaults)
 			{
 				var parameterValues = string.Join(", ", method.Parameters.Select(

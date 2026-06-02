@@ -66,17 +66,26 @@ internal static class IndexerExpectationsIndexerBuilder
 			else
 			{
 				var handlerContext = new VariablesNamingContext(property.Parameters);
-				writer.WriteLine($"{mockType.Accessibility} {expectationsFullyQualifiedName}.Adornments.{adornmentsTypeName} Gets()");
-				writer.WriteLine("{");
-				writer.Indent++;
+
+				var indexerParameterTypes = string.Join(",", property.Parameters.Select(parameter => parameter.Type.Name));
+				var commentTarget =
+					$"""
+					{(property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? mockType.Type.FullyQualifiedName : property.ContainingType.FullyQualifiedName)}.this[{indexerParameterTypes}]
+					""".TransformForXmlComment();
 				writer.WriteLines(
 					$$"""
-					global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
-
-					var @{{handlerContext["handler"]}} = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}
+					/// <summary>
+					/// Sets a "get" expectation for the <see cref="{{commentTarget}}" /> property.
+					/// </summary>
+					
+					{{mockType.Accessibility}} {{expectationsFullyQualifiedName}}.Adornments.{{adornmentsTypeName}} Gets()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
+
+						var @{{handlerContext["handler"]}} = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}
+						{
 					""");
-				writer.Indent++;
+				writer.Indent += 2;
 
 				var handlerNamingContext = HandlerVariableNamingContext.Create();
 
@@ -168,8 +177,23 @@ internal static class IndexerExpectationsIndexerBuilder
 			else
 			{
 				var handlerContext = new VariablesNamingContext(property.Parameters);
+
+				var indexerParameterTypes = string.Join(",", property.Parameters.Select(parameter => parameter.Type.Name));
+				var commentTarget =
+					$"""
+					{(property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? mockType.Type.FullyQualifiedName : property.ContainingType.FullyQualifiedName)}.this[{indexerParameterTypes}]
+					""".TransformForXmlComment();
+				var propertyTargetComment =
+					property.Accessors == PropertyAccessor.Set || property.Accessors == PropertyAccessor.GetAndSet ?
+						"set" :
+						"init";
+
 				writer.WriteLines(
 					$$"""
+					/// <summary>
+					/// Sets a "{{propertyTargetComment}}" expectation for the <see cref="{{commentTarget}}" /> property.
+					/// </summary>
+					
 					{{mockType.Accessibility}} {{expectationsFullyQualifiedName}}.Adornments.{{adornmentsTypeName}} {{name}}({{valueParameter}})
 					{
 					""");

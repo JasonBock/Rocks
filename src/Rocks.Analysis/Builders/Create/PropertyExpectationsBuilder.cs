@@ -14,8 +14,10 @@ internal static class PropertyExpectationsBuilder
 	{
 		if (properties.Length > 0)
 		{
-			BuildProperties(writer, mockType, properties, expectationsFullyQualifiedName, propertyExpectationsFullyQualifiedName, adornmentsFQNsPipeline);
-			BuildIndexers(writer, mockType, properties, expectationsFullyQualifiedName, propertyExpectationsFullyQualifiedName, adornmentsFQNsPipeline);
+			PropertyExpectationsBuilder.BuildProperties(
+				writer, mockType, properties, expectationsFullyQualifiedName, propertyExpectationsFullyQualifiedName, adornmentsFQNsPipeline);
+			PropertyExpectationsBuilder.BuildIndexers(
+				writer, mockType, properties, expectationsFullyQualifiedName, propertyExpectationsFullyQualifiedName, adornmentsFQNsPipeline);
 		}
 	}
 
@@ -92,9 +94,18 @@ internal static class PropertyExpectationsBuilder
 
 			writer.Indent--;
 
+			var indexerParameterTypes = string.Join(",", property.Parameters.Select(parameter => parameter.Type.Name));
+			var commentTarget =
+				$"""
+				{(property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? mockType.Type.FullyQualifiedName : property.ContainingType.FullyQualifiedName)}.this[{indexerParameterTypes}]
+				""".TransformForXmlComment();
 			writer.WriteLines(
 				$$"""
 				}
+
+				/// <summary>
+				/// Sets an expectation for <see cref="{{commentTarget}}"/>.
+				/// </summary>
 
 				{{mockType.Accessibility}} {{propertyExpectationsFullyQualifiedName}}.Indexer{{index}}Expectations this[{{string.Join(", ", indexerArguments)}}] => new(this.parent, {{string.Join(", ", property.Parameters.Select(parameter => $"@{parameter.Name}"))}});
 
@@ -135,10 +146,18 @@ internal static class PropertyExpectationsBuilder
 			PropertyExpectationsPropertyBuilder.Build(writer, mockType, property, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 
 			writer.Indent--;
+
+			var propertyComment = 
+				property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? 
+					mockType.Type.FullyQualifiedName.TransformForXmlComment() : 
+					property.ContainingType.FullyQualifiedName.TransformForXmlComment();
 			writer.WriteLines(
 				$$"""
 				}
 
+				/// <summary>
+				/// Contains expectation setups for the <see cref="{{propertyComment}}" property./>.
+				/// </summary>
 				{{mockType.Accessibility}} {{propertyExpectationsFullyQualifiedName}}.{{property.Name}}PropertyExpectations {{property.Name}} => new(this.parent);
 
 				""");

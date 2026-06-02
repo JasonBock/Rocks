@@ -35,8 +35,16 @@ internal static class PropertyExpectationsPropertyBuilder
 
 		adornmentsFQNsPipeline(new(adornmentsTypeName, adornmentsType, string.Empty, string.Empty, propertyGetMethod, memberIdentifier));
 
+		var propertyComment =
+			property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
+				type.Type.FullyQualifiedName.TransformForXmlComment() :
+				property.ContainingType.FullyQualifiedName.TransformForXmlComment();
 		writer.WriteLines(
 			$$"""
+			/// <summary>
+			/// Sets a "get" expectation for the <see cref="{{propertyComment}}" /> property.
+			/// </summary>
+
 			internal {{expectationsFullyQualifiedName}}.Adornments.{{adornmentsTypeName}} Gets()
 			{
 				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
@@ -64,8 +72,21 @@ internal static class PropertyExpectationsPropertyBuilder
 		var adornmentsType = $"global::Rocks.Adornments<{adornmentsTypeName}, {expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}>";
 		adornmentsFQNsPipeline(new(adornmentsTypeName, adornmentsType, string.Empty, string.Empty, propertySetMethod, memberIdentifier));
 
+		var propertyComment =
+			property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
+				type.Type.FullyQualifiedName.TransformForXmlComment() :
+				property.ContainingType.FullyQualifiedName.TransformForXmlComment();
+		var propertyTargetComment =
+			property.Accessors == PropertyAccessor.Set || property.Accessors == PropertyAccessor.GetAndSet ?
+				"set" :
+				"init";
+
 		writer.WriteLines(
 			$$"""
+			/// <summary>
+			/// Sets a "{{propertyTargetComment}}" expectation for the <see cref="{{propertyComment}}" /> property.
+			/// </summary>
+			
 			internal {{expectationsFullyQualifiedName}}.Adornments.{{adornmentsTypeName}} {{name}}({{propertyParameterValue}} @value)
 			{
 				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
@@ -92,7 +113,8 @@ internal static class PropertyExpectationsPropertyBuilder
 		if ((property.Accessors == PropertyAccessor.Get || property.Accessors == PropertyAccessor.GetAndSet || property.Accessors == PropertyAccessor.GetAndInit) &&
 			property.GetCanBeSeenByContainingAssembly)
 		{
-			BuildGetter(writer, type, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+			PropertyExpectationsPropertyBuilder.BuildGetter(
+				writer, type, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 			wasGetGenerated = true;
 		}
 
@@ -104,7 +126,8 @@ internal static class PropertyExpectationsPropertyBuilder
 				memberIdentifier++;
 			}
 
-			BuildSetter(writer, type, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
+			PropertyExpectationsPropertyBuilder.BuildSetter(
+				writer, type, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 		}
 	}
 }

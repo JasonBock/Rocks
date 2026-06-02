@@ -13,10 +13,16 @@ internal static class MockMembersExpectationsBuilder
 			$$"""
 			private readonly {{expectationsFullyQualifiedName}}.SetupsExpectations setups;
 
+			/// <summary>
+			/// Contains expectation setups for mockable members on <see cref="{{type.Type.FullyQualifiedName.TransformForXmlComment()}}"/>.
+			/// </summary>
 			{{type.Accessibility}} sealed class SetupsExpectations
 			{
 				private readonly {{expectationsFullyQualifiedName}} parent;
 
+				/// <summary>
+				/// Creates a new <see cref="SetupsExpectations"/> instance.
+				/// </summary>
 				{{type.Accessibility}} SetupsExpectations({{expectationsFullyQualifiedName}} parent) =>
 					this.parent = parent;
 
