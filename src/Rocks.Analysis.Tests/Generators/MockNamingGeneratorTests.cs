@@ -34,19 +34,31 @@ internal static class MockNamingGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::IWork"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IWorkCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::IWorkCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::IWork"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::IWorkCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::IWorkCreateExpectations parent) =>
 						this.parent = parent;
 				
+					/// <summary>
+					/// Sets an expectation for <see cref="global::IWork.Mock()"/>.
+					/// </summary>
 					internal global::IWorkCreateExpectations.Adornments.MockAdornments2D2816FE Mock()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
@@ -63,6 +75,9 @@ internal static class MockNamingGeneratorTests
 				{ }
 				private global::IWorkCreateExpectations.Handler0? @handlers0;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::IWork"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -73,7 +88,7 @@ internal static class MockNamingGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify([this.handlers0], 0)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers0], 0, typeof(Mock1))); }
 				
 						if (failures.Count > 0)
 						{
@@ -105,7 +120,7 @@ internal static class MockNamingGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								No handlers were found for {typeof(Mock1).GetMemberDescription(0)}
 								""");
 						}
 					}
@@ -115,14 +130,16 @@ internal static class MockNamingGeneratorTests
 				
 				public IWorkCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::IWork" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::IWork Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock1(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock1(this);
 					}
 					else
 					{
@@ -166,9 +183,15 @@ internal static class MockNamingGeneratorTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::IWork"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IWorkMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::IWork" />-based type.
+				/// </summary>
 				internal global::IWork Instance()
 				{
 					return new Mock1();

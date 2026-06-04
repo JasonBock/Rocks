@@ -41,20 +41,32 @@ public static class NullabilityGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::ConnectionBuilder{TSourceType}"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ConnectionBuilderCreateExpectations<TSourceType>
 				: global::Rocks.Expectations
 			{
 				private readonly global::ConnectionBuilderCreateExpectations<TSourceType>.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::ConnectionBuilder{TSourceType}"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::ConnectionBuilderCreateExpectations<TSourceType> parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::ConnectionBuilderCreateExpectations<TSourceType> parent) =>
 						this.parent = parent;
 				
-					internal global::ConnectionBuilderCreateExpectations<TSourceType>.Adornments.AdornmentsForHandler0 Equals(global::Rocks.Argument<object?> @obj)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::ConnectionBuilder{TSourceType}.Equals(Object)"/>.
+					/// </summary>
+					internal global::ConnectionBuilderCreateExpectations<TSourceType>.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
@@ -64,30 +76,37 @@ public static class NullabilityGeneratorTests
 							@obj = @obj,
 						};
 						
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
-						else { this.parent.handlers0.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers0 ??= new(1);
+						this.parent.handlers0.Add(@handler);
+						return new(@handler, this.parent);
 					}
 					
-					internal new global::ConnectionBuilderCreateExpectations<TSourceType>.Adornments.AdornmentsForHandler1 GetHashCode()
+					/// <summary>
+					/// Sets an expectation for <see cref="global::ConnectionBuilder{TSourceType}.GetHashCode()"/>.
+					/// </summary>
+					internal new global::ConnectionBuilderCreateExpectations<TSourceType>.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						var handler = new global::ConnectionBuilderCreateExpectations<TSourceType>.Handler1();
-						if (this.parent.handlers1 is null) { this.parent.handlers1 = new(handler); }
-						else { this.parent.handlers1.Add(handler); }
-						return new(handler);
+						this.parent.handlers1 = handler;
+						return new(handler, this.parent);
 					}
 					
-					internal new global::ConnectionBuilderCreateExpectations<TSourceType>.Adornments.AdornmentsForHandler2 ToString()
+					/// <summary>
+					/// Sets an expectation for <see cref="global::ConnectionBuilder{TSourceType}.ToString()"/>.
+					/// </summary>
+					internal new global::ConnectionBuilderCreateExpectations<TSourceType>.Adornments.ToStringAdornments2D2816FE ToString()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						var handler = new global::ConnectionBuilderCreateExpectations<TSourceType>.Handler2();
-						if (this.parent.handlers2 is null) { this.parent.handlers2 = new(handler); }
-						else { this.parent.handlers2.Add(handler); }
-						return new(handler);
+						this.parent.handlers2 = handler;
+						return new(handler, this.parent);
 					}
 					
-					internal global::ConnectionBuilderCreateExpectations<TSourceType>.Adornments.AdornmentsForHandler3<TArgumentGraphType, TArgumentType> Argument<TArgumentGraphType, TArgumentType>(global::Rocks.Argument<string> @name, global::Rocks.Argument<string?> @description, global::Rocks.Argument<TArgumentType> @defaultValue) where TArgumentGraphType : global::IGraphType
+					/// <summary>
+					/// Sets an expectation for <see cref="global::ConnectionBuilder{TSourceType}.Argument{TArgumentGraphType, TArgumentType}(String,String,TArgumentType)"/>.
+					/// </summary>
+					internal global::ConnectionBuilderCreateExpectations<TSourceType>.Adornments.ArgumentAdornmentsCF929532<TArgumentGraphType, TArgumentType> Argument<TArgumentGraphType, TArgumentType>(global::Rocks.Argument<string> @name, global::Rocks.Argument<string?> @description, global::Rocks.Argument<TArgumentType> @defaultValue) where TArgumentGraphType : global::IGraphType
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@name);
@@ -101,12 +120,15 @@ public static class NullabilityGeneratorTests
 							@defaultValue = @defaultValue.Transform(default!),
 						};
 						
-						if (this.parent.handlers3 is null) { this.parent.handlers3 = new(@handler); }
-						else { this.parent.handlers3.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers3 ??= new(1);
+						this.parent.handlers3.Add(@handler);
+						return new(@handler, this.parent);
 					}
 					
-					internal global::ConnectionBuilderCreateExpectations<TSourceType>.Adornments.AdornmentsForHandler3<TArgumentGraphType, TArgumentType> Argument<TArgumentGraphType, TArgumentType>(global::Rocks.Argument<string> @name, global::Rocks.Argument<string?> @description, TArgumentType @defaultValue = default!) where TArgumentGraphType : global::IGraphType =>
+					/// <summary>
+					/// Sets an expectation for <see cref="global::ConnectionBuilder{TSourceType}.Argument{TArgumentGraphType, TArgumentType}(String,String,TArgumentType)"/>.
+					/// </summary>
+					internal global::ConnectionBuilderCreateExpectations<TSourceType>.Adornments.ArgumentAdornmentsCF929532<TArgumentGraphType, TArgumentType> Argument<TArgumentGraphType, TArgumentType>(global::Rocks.Argument<string> @name, global::Rocks.Argument<string?> @description, TArgumentType @defaultValue = default!) where TArgumentGraphType : global::IGraphType =>
 						this.Argument<TArgumentGraphType, TArgumentType>(@name, @description, global::Rocks.Arg.Is(@defaultValue));
 				}
 				
@@ -115,30 +137,33 @@ public static class NullabilityGeneratorTests
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Func<object?, bool>, bool>
 				{
-					public global::Rocks.Argument<object?> @obj { get; set; }
+					internal global::Rocks.Argument<object?> @obj { get; set; }
 				}
-				private global::Rocks.Handlers<global::ConnectionBuilderCreateExpectations<TSourceType>.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::ConnectionBuilderCreateExpectations<TSourceType>.Handler0>? @handlers0;
 				
 				internal sealed class Handler1
 					: global::Rocks.Handler<global::System.Func<int>, int>
 				{ }
-				private global::Rocks.Handlers<global::ConnectionBuilderCreateExpectations<TSourceType>.Handler1>? @handlers1;
+				private global::ConnectionBuilderCreateExpectations<TSourceType>.Handler1? @handlers1;
 				
 				internal sealed class Handler2
 					: global::Rocks.Handler<global::System.Func<string?>, string?>
 				{ }
-				private global::Rocks.Handlers<global::ConnectionBuilderCreateExpectations<TSourceType>.Handler2>? @handlers2;
+				private global::ConnectionBuilderCreateExpectations<TSourceType>.Handler2? @handlers2;
 				
 				internal sealed class Handler3<TArgumentGraphType, TArgumentType>
 					: global::Rocks.Handler<global::System.Func<string, string?, TArgumentType, global::ConnectionBuilder<TSourceType>>, global::ConnectionBuilder<TSourceType>>
 					where TArgumentGraphType : global::IGraphType
 				{
-					public global::Rocks.Argument<string> @name { get; set; }
-					public global::Rocks.Argument<string?> @description { get; set; }
-					public global::Rocks.Argument<TArgumentType> @defaultValue { get; set; }
+					internal global::Rocks.Argument<string> @name { get; set; }
+					internal global::Rocks.Argument<string?> @description { get; set; }
+					internal global::Rocks.Argument<TArgumentType> @defaultValue { get; set; }
 				}
-				private global::Rocks.Handlers<global::Rocks.Handler>? @handlers3;
+				private global::System.Collections.Generic.List<global::Rocks.Handler>? @handlers3;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::ConnectionBuilder{TSourceType}"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -149,10 +174,10 @@ public static class NullabilityGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-						if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
-						if (this.handlers2 is not null) { failures.AddRange(this.Verify(this.handlers2, 2)); }
-						if (this.handlers3 is not null) { failures.AddRange(this.Verify(this.handlers3, 3)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
+						if (this.handlers1 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers1], 1, typeof(Mock))); }
+						if (this.handlers2 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers2], 2, typeof(Mock))); }
+						if (this.handlers3 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers3, 3, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -174,11 +199,12 @@ public static class NullabilityGeneratorTests
 					{
 						if (this.Expectations.handlers0 is not null)
 						{
-							foreach (var @handler in this.Expectations.handlers0)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers0))
 							{
 								if (@handler.@obj.IsValid(@obj!))
 								{
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									var @result = @handler.Callback is not null ?
 										@handler.Callback(@obj!) : @handler.ReturnValue;
 									return @result!;
@@ -188,7 +214,7 @@ public static class NullabilityGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers match for {this.GetType().GetMemberDescription(0)}
+								No handlers match for {typeof(Mock).GetMemberDescription(0)}
 									obj: {@obj.FormatValue()}
 								""");
 						}
@@ -203,8 +229,9 @@ public static class NullabilityGeneratorTests
 					{
 						if (this.Expectations.handlers1 is not null)
 						{
-							var @handler = this.Expectations.handlers1.First;
+							var @handler = this.Expectations.handlers1;
 							@handler.CallCount++;
+							if (@handler.Exception is not null) { throw @handler.Exception; }
 							var @result = @handler.Callback is not null ?
 								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
@@ -220,8 +247,9 @@ public static class NullabilityGeneratorTests
 					{
 						if (this.Expectations.handlers2 is not null)
 						{
-							var @handler = this.Expectations.handlers2.First;
+							var @handler = this.Expectations.handlers2;
 							@handler.CallCount++;
+							if (@handler.Exception is not null) { throw @handler.Exception; }
 							var @result = @handler.Callback is not null ?
 								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
@@ -237,7 +265,7 @@ public static class NullabilityGeneratorTests
 					{
 						if (this.Expectations.handlers3 is not null)
 						{
-							foreach (var @genericHandler in this.Expectations.handlers3)
+							foreach (var @genericHandler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers3))
 							{
 								if (@genericHandler is global::ConnectionBuilderCreateExpectations<TSourceType>.Handler3<TArgumentGraphType, TArgumentType> @handler)
 								{
@@ -246,6 +274,7 @@ public static class NullabilityGeneratorTests
 										@handler.@defaultValue.IsValid(@defaultValue!))
 									{
 										@handler.CallCount++;
+										if (@handler.Exception is not null) { throw @handler.Exception; }
 										var @result = @handler.Callback is not null ?
 											@handler.Callback(@name!, @description!, @defaultValue!) : @handler.ReturnValue;
 										return @result!;
@@ -256,7 +285,7 @@ public static class NullabilityGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers match for {this.GetType().GetMemberDescription(3)}
+								No handlers match for {typeof(Mock).GetMemberDescription(3)}
 									name: {@name.FormatValue()}
 									description: {@description.FormatValue()}
 									defaultValue: {@defaultValue.FormatValue()}
@@ -273,14 +302,16 @@ public static class NullabilityGeneratorTests
 				
 				public ConnectionBuilderCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::ConnectionBuilder{TSourceType}" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::ConnectionBuilder<TSourceType> Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -290,38 +321,56 @@ public static class NullabilityGeneratorTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForConnectionBuilder<TAdornments>
+					internal interface IAdornmentsForConnectionBuilder<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForConnectionBuilder<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::ConnectionBuilderCreateExpectations<TSourceType>.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForConnectionBuilder<AdornmentsForHandler0>
+					internal sealed class EqualsAdornmentsE60CFEEA
+						: global::Rocks.Adornments<EqualsAdornmentsE60CFEEA, global::ConnectionBuilderCreateExpectations<TSourceType>.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForConnectionBuilder<EqualsAdornmentsE60CFEEA>
 					{
-						public AdornmentsForHandler0(global::ConnectionBuilderCreateExpectations<TSourceType>.Handler0 handler)
-							: base(handler) { }
+						internal EqualsAdornmentsE60CFEEA(global::ConnectionBuilderCreateExpectations<TSourceType>.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler1
-						: global::Rocks.Adornments<AdornmentsForHandler1, global::ConnectionBuilderCreateExpectations<TSourceType>.Handler1, global::System.Func<int>, int>, IAdornmentsForConnectionBuilder<AdornmentsForHandler1>
+					internal sealed class GetHashCodeAdornments2D2816FE
+						: global::Rocks.Adornments<GetHashCodeAdornments2D2816FE, global::ConnectionBuilderCreateExpectations<TSourceType>.Handler1, global::System.Func<int>, int>, IAdornmentsForConnectionBuilder<GetHashCodeAdornments2D2816FE>
 					{
-						public AdornmentsForHandler1(global::ConnectionBuilderCreateExpectations<TSourceType>.Handler1 handler)
-							: base(handler) { }
+						internal GetHashCodeAdornments2D2816FE(global::ConnectionBuilderCreateExpectations<TSourceType>.Handler1 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler2
-						: global::Rocks.Adornments<AdornmentsForHandler2, global::ConnectionBuilderCreateExpectations<TSourceType>.Handler2, global::System.Func<string?>, string?>, IAdornmentsForConnectionBuilder<AdornmentsForHandler2>
+					internal sealed class ToStringAdornments2D2816FE
+						: global::Rocks.Adornments<ToStringAdornments2D2816FE, global::ConnectionBuilderCreateExpectations<TSourceType>.Handler2, global::System.Func<string?>, string?>, IAdornmentsForConnectionBuilder<ToStringAdornments2D2816FE>
 					{
-						public AdornmentsForHandler2(global::ConnectionBuilderCreateExpectations<TSourceType>.Handler2 handler)
-							: base(handler) { }
+						internal ToStringAdornments2D2816FE(global::ConnectionBuilderCreateExpectations<TSourceType>.Handler2 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler3<TArgumentGraphType, TArgumentType>
-						: global::Rocks.Adornments<AdornmentsForHandler3<TArgumentGraphType, TArgumentType>, global::ConnectionBuilderCreateExpectations<TSourceType>.Handler3<TArgumentGraphType, TArgumentType>, global::System.Func<string, string?, TArgumentType, global::ConnectionBuilder<TSourceType>>, global::ConnectionBuilder<TSourceType>>, IAdornmentsForConnectionBuilder<AdornmentsForHandler3<TArgumentGraphType, TArgumentType>> where TArgumentGraphType : global::IGraphType
+					internal sealed class ArgumentAdornmentsCF929532<TArgumentGraphType, TArgumentType>
+						: global::Rocks.Adornments<ArgumentAdornmentsCF929532<TArgumentGraphType, TArgumentType>, global::ConnectionBuilderCreateExpectations<TSourceType>.Handler3<TArgumentGraphType, TArgumentType>, global::System.Func<string, string?, TArgumentType, global::ConnectionBuilder<TSourceType>>, global::ConnectionBuilder<TSourceType>>, IAdornmentsForConnectionBuilder<ArgumentAdornmentsCF929532<TArgumentGraphType, TArgumentType>> where TArgumentGraphType : global::IGraphType
 					{
-						public AdornmentsForHandler3(global::ConnectionBuilderCreateExpectations<TSourceType>.Handler3<TArgumentGraphType, TArgumentType> handler)
-							: base(handler) { }
+						internal ArgumentAdornmentsCF929532(global::ConnectionBuilderCreateExpectations<TSourceType>.Handler3<TArgumentGraphType, TArgumentType> handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
+				}
+				
+				internal void Remove(global::ConnectionBuilderCreateExpectations<TSourceType>.Adornments.EqualsAdornmentsE60CFEEA adornments)
+				{
+					adornments.Remove(this.@handlers0);
+					if (this.@handlers0?.Count == 0) { this.@handlers0 = null; }
+				}
+				
+				internal void Remove(global::ConnectionBuilderCreateExpectations<TSourceType>.Adornments.GetHashCodeAdornments2D2816FE adornments) =>
+					this.@handlers1 = null;
+				
+				internal void Remove(global::ConnectionBuilderCreateExpectations<TSourceType>.Adornments.ToStringAdornments2D2816FE adornments) =>
+					this.@handlers2 = null;
+				
+				internal void Remove<TArgumentGraphType, TArgumentType>(global::ConnectionBuilderCreateExpectations<TSourceType>.Adornments.ArgumentAdornmentsCF929532<TArgumentGraphType, TArgumentType> adornments) where TArgumentGraphType : global::IGraphType
+				{
+					adornments.RemoveHandler(this.@handlers3);
+					if (this.@handlers3?.Count == 0) { this.@handlers3 = null; }
 				}
 			}
 			
@@ -342,9 +391,15 @@ public static class NullabilityGeneratorTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::ConnectionBuilder{TSourceType}"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ConnectionBuilderMakeExpectations<TSourceType>
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::ConnectionBuilder{TSourceType}" />-based type.
+				/// </summary>
 				internal global::ConnectionBuilder<TSourceType> Instance()
 				{
 					return new Mock();
@@ -436,20 +491,32 @@ public static class NullabilityGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::SubTracer"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class SubTracerCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::SubTracerCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::SubTracer"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::SubTracerCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::SubTracerCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal global::SubTracerCreateExpectations.Adornments.AdornmentsForHandler0 Equals(global::Rocks.Argument<object?> @obj)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::SubTracer.Equals(Object)"/>.
+					/// </summary>
+					internal global::SubTracerCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
@@ -459,30 +526,37 @@ public static class NullabilityGeneratorTests
 							@obj = @obj,
 						};
 						
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
-						else { this.parent.handlers0.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers0 ??= new(1);
+						this.parent.handlers0.Add(@handler);
+						return new(@handler, this.parent);
 					}
 					
-					internal new global::SubTracerCreateExpectations.Adornments.AdornmentsForHandler1 GetHashCode()
+					/// <summary>
+					/// Sets an expectation for <see cref="global::SubTracer.GetHashCode()"/>.
+					/// </summary>
+					internal new global::SubTracerCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						var handler = new global::SubTracerCreateExpectations.Handler1();
-						if (this.parent.handlers1 is null) { this.parent.handlers1 = new(handler); }
-						else { this.parent.handlers1.Add(handler); }
-						return new(handler);
+						this.parent.handlers1 = handler;
+						return new(handler, this.parent);
 					}
 					
-					internal new global::SubTracerCreateExpectations.Adornments.AdornmentsForHandler2 ToString()
+					/// <summary>
+					/// Sets an expectation for <see cref="global::SubTracer.ToString()"/>.
+					/// </summary>
+					internal new global::SubTracerCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						var handler = new global::SubTracerCreateExpectations.Handler2();
-						if (this.parent.handlers2 is null) { this.parent.handlers2 = new(handler); }
-						else { this.parent.handlers2.Add(handler); }
-						return new(handler);
+						this.parent.handlers2 = handler;
+						return new(handler, this.parent);
 					}
 					
-					internal global::SubTracerCreateExpectations.Adornments.AdornmentsForHandler4 TraceEvent(global::Rocks.Argument<string> @eventCache, global::Rocks.Argument<string> @source, global::Rocks.Argument<string> @eventType, global::Rocks.Argument<int> @id, global::Rocks.Argument<string> @format, global::Rocks.Argument<object[]> @args)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::SubTracer.TraceEvent(String,String,String,Int32,String,)"/>.
+					/// </summary>
+					internal global::SubTracerCreateExpectations.Adornments.TraceEventAdornments84D8E1F2 TraceEvent(global::Rocks.Argument<string> @eventCache, global::Rocks.Argument<string> @source, global::Rocks.Argument<string> @eventType, global::Rocks.Argument<int> @id, global::Rocks.Argument<string> @format, global::Rocks.Argument<object[]> @args)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@eventCache);
@@ -502,12 +576,15 @@ public static class NullabilityGeneratorTests
 							@args = @args,
 						};
 						
-						if (this.parent.handlers4 is null) { this.parent.handlers4 = new(@handler); }
-						else { this.parent.handlers4.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers4 ??= new(1);
+						this.parent.handlers4.Add(@handler);
+						return new(@handler, this.parent);
 					}
 					
-					internal global::SubTracerCreateExpectations.Adornments.AdornmentsForHandler4 TraceEvent(global::Rocks.Argument<string> @eventCache, global::Rocks.Argument<string> @source, global::Rocks.Argument<string> @eventType, global::Rocks.Argument<int> @id, global::Rocks.Argument<string> @format, params object[] @args) =>
+					/// <summary>
+					/// Sets an expectation for <see cref="global::SubTracer.TraceEvent(String,String,String,Int32,String,)"/>.
+					/// </summary>
+					internal global::SubTracerCreateExpectations.Adornments.TraceEventAdornments84D8E1F2 TraceEvent(global::Rocks.Argument<string> @eventCache, global::Rocks.Argument<string> @source, global::Rocks.Argument<string> @eventType, global::Rocks.Argument<int> @id, global::Rocks.Argument<string> @format, params object[] @args) =>
 						this.TraceEvent(@eventCache, @source, @eventType, @id, @format, global::Rocks.Arg.Is(@args));
 				}
 				
@@ -516,32 +593,35 @@ public static class NullabilityGeneratorTests
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Func<object?, bool>, bool>
 				{
-					public global::Rocks.Argument<object?> @obj { get; set; }
+					internal global::Rocks.Argument<object?> @obj { get; set; }
 				}
-				private global::Rocks.Handlers<global::SubTracerCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::SubTracerCreateExpectations.Handler0>? @handlers0;
 				
 				internal sealed class Handler1
 					: global::Rocks.Handler<global::System.Func<int>, int>
 				{ }
-				private global::Rocks.Handlers<global::SubTracerCreateExpectations.Handler1>? @handlers1;
+				private global::SubTracerCreateExpectations.Handler1? @handlers1;
 				
 				internal sealed class Handler2
 					: global::Rocks.Handler<global::System.Func<string?>, string?>
 				{ }
-				private global::Rocks.Handlers<global::SubTracerCreateExpectations.Handler2>? @handlers2;
+				private global::SubTracerCreateExpectations.Handler2? @handlers2;
 				
 				internal sealed class Handler4
 					: global::Rocks.Handler<global::System.Action<string, string, string, int, string, object[]>>
 				{
-					public global::Rocks.Argument<string> @eventCache { get; set; }
-					public global::Rocks.Argument<string> @source { get; set; }
-					public global::Rocks.Argument<string> @eventType { get; set; }
-					public global::Rocks.Argument<int> @id { get; set; }
-					public global::Rocks.Argument<string> @format { get; set; }
-					public global::Rocks.Argument<object[]> @args { get; set; }
+					internal global::Rocks.Argument<string> @eventCache { get; set; }
+					internal global::Rocks.Argument<string> @source { get; set; }
+					internal global::Rocks.Argument<string> @eventType { get; set; }
+					internal global::Rocks.Argument<int> @id { get; set; }
+					internal global::Rocks.Argument<string> @format { get; set; }
+					internal global::Rocks.Argument<object[]> @args { get; set; }
 				}
-				private global::Rocks.Handlers<global::SubTracerCreateExpectations.Handler4>? @handlers4;
+				private global::System.Collections.Generic.List<global::SubTracerCreateExpectations.Handler4>? @handlers4;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::SubTracer"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -552,10 +632,10 @@ public static class NullabilityGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-						if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
-						if (this.handlers2 is not null) { failures.AddRange(this.Verify(this.handlers2, 2)); }
-						if (this.handlers4 is not null) { failures.AddRange(this.Verify(this.handlers4, 4)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
+						if (this.handlers1 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers1], 1, typeof(Mock))); }
+						if (this.handlers2 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers2], 2, typeof(Mock))); }
+						if (this.handlers4 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers4, 4, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -577,11 +657,12 @@ public static class NullabilityGeneratorTests
 					{
 						if (this.Expectations.handlers0 is not null)
 						{
-							foreach (var @handler in this.Expectations.handlers0)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers0))
 							{
 								if (@handler.@obj.IsValid(@obj!))
 								{
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									var @result = @handler.Callback is not null ?
 										@handler.Callback(@obj!) : @handler.ReturnValue;
 									return @result!;
@@ -591,7 +672,7 @@ public static class NullabilityGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers match for {this.GetType().GetMemberDescription(0)}
+								No handlers match for {typeof(Mock).GetMemberDescription(0)}
 									obj: {@obj.FormatValue()}
 								""");
 						}
@@ -606,8 +687,9 @@ public static class NullabilityGeneratorTests
 					{
 						if (this.Expectations.handlers1 is not null)
 						{
-							var @handler = this.Expectations.handlers1.First;
+							var @handler = this.Expectations.handlers1;
 							@handler.CallCount++;
+							if (@handler.Exception is not null) { throw @handler.Exception; }
 							var @result = @handler.Callback is not null ?
 								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
@@ -623,8 +705,9 @@ public static class NullabilityGeneratorTests
 					{
 						if (this.Expectations.handlers2 is not null)
 						{
-							var @handler = this.Expectations.handlers2.First;
+							var @handler = this.Expectations.handlers2;
 							@handler.CallCount++;
+							if (@handler.Exception is not null) { throw @handler.Exception; }
 							var @result = @handler.Callback is not null ?
 								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
@@ -642,7 +725,7 @@ public static class NullabilityGeneratorTests
 						{
 							var @foundMatch = false;
 							
-							foreach (var @handler in this.Expectations.handlers4)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers4))
 							{
 								if (@handler.@eventCache.IsValid(@eventCache!) &&
 									@handler.@source.IsValid(@source!) &&
@@ -653,6 +736,7 @@ public static class NullabilityGeneratorTests
 								{
 									@foundMatch = true;
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									@handler.Callback?.Invoke(@eventCache!, @source!, @eventType!, @id!, @format!, @args!);
 									break;
 								}
@@ -663,7 +747,7 @@ public static class NullabilityGeneratorTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(4)}
+									No handlers match for {typeof(Mock).GetMemberDescription(4)}
 										eventCache: {@eventCache.FormatValue()}
 										source: {@source.FormatValue()}
 										eventType: {@eventType.FormatValue()}
@@ -684,14 +768,16 @@ public static class NullabilityGeneratorTests
 				
 				public SubTracerCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::SubTracer" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::SubTracer Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -701,38 +787,56 @@ public static class NullabilityGeneratorTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForSubTracer<TAdornments>
+					internal interface IAdornmentsForSubTracer<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForSubTracer<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::SubTracerCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForSubTracer<AdornmentsForHandler0>
+					internal sealed class EqualsAdornmentsE60CFEEA
+						: global::Rocks.Adornments<EqualsAdornmentsE60CFEEA, global::SubTracerCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>, IAdornmentsForSubTracer<EqualsAdornmentsE60CFEEA>
 					{
-						public AdornmentsForHandler0(global::SubTracerCreateExpectations.Handler0 handler)
-							: base(handler) { }
+						internal EqualsAdornmentsE60CFEEA(global::SubTracerCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler1
-						: global::Rocks.Adornments<AdornmentsForHandler1, global::SubTracerCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForSubTracer<AdornmentsForHandler1>
+					internal sealed class GetHashCodeAdornments2D2816FE
+						: global::Rocks.Adornments<GetHashCodeAdornments2D2816FE, global::SubTracerCreateExpectations.Handler1, global::System.Func<int>, int>, IAdornmentsForSubTracer<GetHashCodeAdornments2D2816FE>
 					{
-						public AdornmentsForHandler1(global::SubTracerCreateExpectations.Handler1 handler)
-							: base(handler) { }
+						internal GetHashCodeAdornments2D2816FE(global::SubTracerCreateExpectations.Handler1 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler2
-						: global::Rocks.Adornments<AdornmentsForHandler2, global::SubTracerCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForSubTracer<AdornmentsForHandler2>
+					internal sealed class ToStringAdornments2D2816FE
+						: global::Rocks.Adornments<ToStringAdornments2D2816FE, global::SubTracerCreateExpectations.Handler2, global::System.Func<string?>, string?>, IAdornmentsForSubTracer<ToStringAdornments2D2816FE>
 					{
-						public AdornmentsForHandler2(global::SubTracerCreateExpectations.Handler2 handler)
-							: base(handler) { }
+						internal ToStringAdornments2D2816FE(global::SubTracerCreateExpectations.Handler2 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler4
-						: global::Rocks.Adornments<AdornmentsForHandler4, global::SubTracerCreateExpectations.Handler4, global::System.Action<string, string, string, int, string, object[]>>, IAdornmentsForSubTracer<AdornmentsForHandler4>
+					internal sealed class TraceEventAdornments84D8E1F2
+						: global::Rocks.Adornments<TraceEventAdornments84D8E1F2, global::SubTracerCreateExpectations.Handler4, global::System.Action<string, string, string, int, string, object[]>>, IAdornmentsForSubTracer<TraceEventAdornments84D8E1F2>
 					{
-						public AdornmentsForHandler4(global::SubTracerCreateExpectations.Handler4 handler)
-							: base(handler) { }
+						internal TraceEventAdornments84D8E1F2(global::SubTracerCreateExpectations.Handler4 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
+				}
+				
+				internal void Remove(global::SubTracerCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA adornments)
+				{
+					adornments.Remove(this.@handlers0);
+					if (this.@handlers0?.Count == 0) { this.@handlers0 = null; }
+				}
+				
+				internal void Remove(global::SubTracerCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE adornments) =>
+					this.@handlers1 = null;
+				
+				internal void Remove(global::SubTracerCreateExpectations.Adornments.ToStringAdornments2D2816FE adornments) =>
+					this.@handlers2 = null;
+				
+				internal void Remove(global::SubTracerCreateExpectations.Adornments.TraceEventAdornments84D8E1F2 adornments)
+				{
+					adornments.Remove(this.@handlers4);
+					if (this.@handlers4?.Count == 0) { this.@handlers4 = null; }
 				}
 			}
 			
@@ -753,9 +857,15 @@ public static class NullabilityGeneratorTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::SubTracer"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class SubTracerMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::SubTracer" />-based type.
+				/// </summary>
 				internal global::SubTracer Instance()
 				{
 					return new Mock();
@@ -865,16 +975,25 @@ public static class NullabilityGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::IConventionSkipNavigation"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IConventionSkipNavigationCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::IConventionSkipNavigationCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::IConventionSkipNavigation"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::IConventionSkipNavigationCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::IConventionSkipNavigationCreateExpectations parent) =>
 						this.parent = parent;
 				
@@ -885,16 +1004,21 @@ public static class NullabilityGeneratorTests
 						internal InversePropertyExpectations(global::IConventionSkipNavigationCreateExpectations parent) => 
 							this.parent = parent;
 					
-						internal global::IConventionSkipNavigationCreateExpectations.Adornments.AdornmentsForHandler0 Gets()
+						/// <summary>
+						/// Sets a "get" expectation for the <see cref="global::IConventionSkipNavigation" /> property.
+						/// </summary>
+						internal global::IConventionSkipNavigationCreateExpectations.Adornments.InverseGetsAdornments2D2816FE Gets()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 							var handler = new global::IConventionSkipNavigationCreateExpectations.Handler0();
-							if (this.parent.handlers0 is null) { this.parent.handlers0 = new(handler); }
-							else { this.parent.handlers0.Add(handler); }
-							return new(handler);
+							this.parent.handlers0 = handler;
+							return new(handler, this.parent);
 						}
 					}
 					
+					/// <summary>
+					/// Contains expectation setups for the <see cref="global::IConventionSkipNavigation" property./>.
+					/// </summary>
 					internal global::IConventionSkipNavigationCreateExpectations.SetupsExpectations.InversePropertyExpectations Inverse => new(this.parent);
 					
 					internal sealed class ExplicitForIReadOnlySkipNavigationExpectations
@@ -911,16 +1035,21 @@ public static class NullabilityGeneratorTests
 							internal InversePropertyExpectations(global::IConventionSkipNavigationCreateExpectations parent) => 
 								this.parent = parent;
 						
-							internal global::IConventionSkipNavigationCreateExpectations.Adornments.AdornmentsForHandler1 Gets()
+							/// <summary>
+							/// Sets a "get" expectation for the <see cref="global::IReadOnlySkipNavigation" /> property.
+							/// </summary>
+							internal global::IConventionSkipNavigationCreateExpectations.Adornments.InverseGetsAdornments43F3ABBB Gets()
 							{
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 								var handler = new global::IConventionSkipNavigationCreateExpectations.Handler1();
-								if (this.parent.handlers1 is null) { this.parent.handlers1 = new(handler); }
-								else { this.parent.handlers1.Add(handler); }
-								return new(handler);
+								this.parent.handlers1 = handler;
+								return new(handler, this.parent);
 							}
 						}
 						
+						/// <summary>
+						/// Contains expectation setups for the <see cref="global::IReadOnlySkipNavigation" property./>.
+						/// </summary>
 						internal global::IConventionSkipNavigationCreateExpectations.SetupsExpectations.ExplicitForIReadOnlySkipNavigationExpectations.InversePropertyExpectations Inverse => new(this.parent);
 						
 					}
@@ -941,16 +1070,21 @@ public static class NullabilityGeneratorTests
 							internal InversePropertyExpectations(global::IConventionSkipNavigationCreateExpectations parent) => 
 								this.parent = parent;
 						
-							internal global::IConventionSkipNavigationCreateExpectations.Adornments.AdornmentsForHandler2 Gets()
+							/// <summary>
+							/// Sets a "get" expectation for the <see cref="global::IReadOnlyNavigationBase" /> property.
+							/// </summary>
+							internal global::IConventionSkipNavigationCreateExpectations.Adornments.InverseGetsAdornments769BDF1B Gets()
 							{
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 								var handler = new global::IConventionSkipNavigationCreateExpectations.Handler2();
-								if (this.parent.handlers2 is null) { this.parent.handlers2 = new(handler); }
-								else { this.parent.handlers2.Add(handler); }
-								return new(handler);
+								this.parent.handlers2 = handler;
+								return new(handler, this.parent);
 							}
 						}
 						
+						/// <summary>
+						/// Contains expectation setups for the <see cref="global::IReadOnlyNavigationBase" property./>.
+						/// </summary>
 						internal global::IConventionSkipNavigationCreateExpectations.SetupsExpectations.ExplicitForIReadOnlyNavigationBaseExpectations.InversePropertyExpectations Inverse => new(this.parent);
 						
 					}
@@ -963,18 +1097,21 @@ public static class NullabilityGeneratorTests
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Func<global::IConventionSkipNavigation?>, global::IConventionSkipNavigation?>
 				{ }
-				private global::Rocks.Handlers<global::IConventionSkipNavigationCreateExpectations.Handler0>? @handlers0;
+				private global::IConventionSkipNavigationCreateExpectations.Handler0? @handlers0;
 				
 				internal sealed class Handler1
 					: global::Rocks.Handler<global::System.Func<global::IReadOnlySkipNavigation>, global::IReadOnlySkipNavigation>
 				{ }
-				private global::Rocks.Handlers<global::IConventionSkipNavigationCreateExpectations.Handler1>? @handlers1;
+				private global::IConventionSkipNavigationCreateExpectations.Handler1? @handlers1;
 				
 				internal sealed class Handler2
 					: global::Rocks.Handler<global::System.Func<global::IReadOnlyNavigationBase?>, global::IReadOnlyNavigationBase?>
 				{ }
-				private global::Rocks.Handlers<global::IConventionSkipNavigationCreateExpectations.Handler2>? @handlers2;
+				private global::IConventionSkipNavigationCreateExpectations.Handler2? @handlers2;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::IConventionSkipNavigation"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -985,9 +1122,9 @@ public static class NullabilityGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-						if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
-						if (this.handlers2 is not null) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers0], 0, typeof(Mock))); }
+						if (this.handlers1 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers1], 1, typeof(Mock))); }
+						if (this.handlers2 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers2], 2, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -1013,8 +1150,9 @@ public static class NullabilityGeneratorTests
 						{
 							if (this.Expectations.handlers0 is not null)
 							{
-								var @handler = this.Expectations.handlers0.First;
+								var @handler = this.Expectations.handlers0;
 								@handler.CallCount++;
+								if (@handler.Exception is not null) { throw @handler.Exception; }
 								var @result = @handler.Callback is not null ?
 									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
@@ -1032,8 +1170,9 @@ public static class NullabilityGeneratorTests
 						{
 							if (this.Expectations.handlers1 is not null)
 							{
-								var @handler = this.Expectations.handlers1.First;
+								var @handler = this.Expectations.handlers1;
 								@handler.CallCount++;
+								if (@handler.Exception is not null) { throw @handler.Exception; }
 								var @result = @handler.Callback is not null ?
 									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
@@ -1042,7 +1181,7 @@ public static class NullabilityGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers match for {this.GetType().GetMemberDescription(1)}
+								No handlers match for {typeof(Mock).GetMemberDescription(1)}
 								""");
 						}
 					}
@@ -1053,8 +1192,9 @@ public static class NullabilityGeneratorTests
 						{
 							if (this.Expectations.handlers2 is not null)
 							{
-								var @handler = this.Expectations.handlers2.First;
+								var @handler = this.Expectations.handlers2;
 								@handler.CallCount++;
+								if (@handler.Exception is not null) { throw @handler.Exception; }
 								var @result = @handler.Callback is not null ?
 									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
@@ -1063,7 +1203,7 @@ public static class NullabilityGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers match for {this.GetType().GetMemberDescription(2)}
+								No handlers match for {typeof(Mock).GetMemberDescription(2)}
 								""");
 						}
 					}
@@ -1092,14 +1232,16 @@ public static class NullabilityGeneratorTests
 				
 				public IConventionSkipNavigationCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::IConventionSkipNavigation" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::IConventionSkipNavigation Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -1109,32 +1251,41 @@ public static class NullabilityGeneratorTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForIConventionSkipNavigation<TAdornments>
+					internal interface IAdornmentsForIConventionSkipNavigation<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForIConventionSkipNavigation<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::IConventionSkipNavigationCreateExpectations.Handler0, global::System.Func<global::IConventionSkipNavigation?>, global::IConventionSkipNavigation?>, IAdornmentsForIConventionSkipNavigation<AdornmentsForHandler0>
+					internal sealed class InverseGetsAdornments2D2816FE
+						: global::Rocks.Adornments<InverseGetsAdornments2D2816FE, global::IConventionSkipNavigationCreateExpectations.Handler0, global::System.Func<global::IConventionSkipNavigation?>, global::IConventionSkipNavigation?>, IAdornmentsForIConventionSkipNavigation<InverseGetsAdornments2D2816FE>
 					{
-						public AdornmentsForHandler0(global::IConventionSkipNavigationCreateExpectations.Handler0 handler)
-							: base(handler) { }
+						internal InverseGetsAdornments2D2816FE(global::IConventionSkipNavigationCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler1
-						: global::Rocks.Adornments<AdornmentsForHandler1, global::IConventionSkipNavigationCreateExpectations.Handler1, global::System.Func<global::IReadOnlySkipNavigation>, global::IReadOnlySkipNavigation>, IAdornmentsForIConventionSkipNavigation<AdornmentsForHandler1>
+					internal sealed class InverseGetsAdornments43F3ABBB
+						: global::Rocks.Adornments<InverseGetsAdornments43F3ABBB, global::IConventionSkipNavigationCreateExpectations.Handler1, global::System.Func<global::IReadOnlySkipNavigation>, global::IReadOnlySkipNavigation>, IAdornmentsForIConventionSkipNavigation<InverseGetsAdornments43F3ABBB>
 					{
-						public AdornmentsForHandler1(global::IConventionSkipNavigationCreateExpectations.Handler1 handler)
-							: base(handler) { }
+						internal InverseGetsAdornments43F3ABBB(global::IConventionSkipNavigationCreateExpectations.Handler1 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler2
-						: global::Rocks.Adornments<AdornmentsForHandler2, global::IConventionSkipNavigationCreateExpectations.Handler2, global::System.Func<global::IReadOnlyNavigationBase?>, global::IReadOnlyNavigationBase?>, IAdornmentsForIConventionSkipNavigation<AdornmentsForHandler2>
+					internal sealed class InverseGetsAdornments769BDF1B
+						: global::Rocks.Adornments<InverseGetsAdornments769BDF1B, global::IConventionSkipNavigationCreateExpectations.Handler2, global::System.Func<global::IReadOnlyNavigationBase?>, global::IReadOnlyNavigationBase?>, IAdornmentsForIConventionSkipNavigation<InverseGetsAdornments769BDF1B>
 					{
-						public AdornmentsForHandler2(global::IConventionSkipNavigationCreateExpectations.Handler2 handler)
-							: base(handler) { }
+						internal InverseGetsAdornments769BDF1B(global::IConventionSkipNavigationCreateExpectations.Handler2 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 				}
+				
+				internal void Remove(global::IConventionSkipNavigationCreateExpectations.Adornments.InverseGetsAdornments2D2816FE adornments) =>
+					this.@handlers0 = null;
+				
+				internal void Remove(global::IConventionSkipNavigationCreateExpectations.Adornments.InverseGetsAdornments43F3ABBB adornments) =>
+					this.@handlers1 = null;
+				
+				internal void Remove(global::IConventionSkipNavigationCreateExpectations.Adornments.InverseGetsAdornments769BDF1B adornments) =>
+					this.@handlers2 = null;
 			}
 			
 			#pragma warning restore CS8618
@@ -1154,9 +1305,15 @@ public static class NullabilityGeneratorTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::IConventionSkipNavigation"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IConventionSkipNavigationMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::IConventionSkipNavigation" />-based type.
+				/// </summary>
 				internal global::IConventionSkipNavigation Instance()
 				{
 					return new Mock();
@@ -1229,26 +1386,42 @@ public static class NullabilityGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::IDestination{TDestination}"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IDestinationCreateExpectations<TDestination>
 				: global::Rocks.Expectations
 			{
 				private readonly global::IDestinationCreateExpectations<TDestination>.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::IDestination{TDestination}"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::IDestinationCreateExpectations<TDestination> parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::IDestinationCreateExpectations<TDestination> parent) =>
 						this.parent = parent;
 				
-					internal global::IDestinationCreateExpectations<TDestination>.Adornments.AdornmentsForHandler0<T> As<T>() where T : notnull, TDestination
+					/// <summary>
+					/// Sets an expectation for <see cref="global::IDestination{TDestination}.As{T}()"/>.
+					/// </summary>
+					internal global::IDestinationCreateExpectations<TDestination>.Adornments.AsAdornments8AFF738D<T> As<T>() where T : notnull, TDestination
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
-						var handler = new global::IDestinationCreateExpectations<TDestination>.Handler0<T>();
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(handler); }
-						else { this.parent.handlers0.Add(handler); }
-						return new(handler);
+						
+						var @handler = new global::IDestinationCreateExpectations<TDestination>.Handler0<T>
+						{
+						};
+						
+						this.parent.handlers0 ??= new(1);
+						this.parent.handlers0.Add(@handler);
+						return new(@handler, this.parent);
 					}
 				}
 				
@@ -1258,8 +1431,11 @@ public static class NullabilityGeneratorTests
 					: global::Rocks.Handler<global::System.Action>
 					where T : notnull, TDestination
 				{ }
-				private global::Rocks.Handlers<global::Rocks.Handler>? @handlers0;
+				private global::System.Collections.Generic.List<global::Rocks.Handler>? @handlers0;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::IDestination{TDestination}"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -1270,7 +1446,7 @@ public static class NullabilityGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -1295,16 +1471,15 @@ public static class NullabilityGeneratorTests
 						{
 							var @foundMatch = false;
 							
-							foreach (var @genericHandler in this.Expectations.handlers0)
+							foreach (var @genericHandler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers0))
 							{
 								if (@genericHandler is global::IDestinationCreateExpectations<TDestination>.Handler0<T> @handler)
 								{
-									{
-										@foundMatch = true;
-										@handler.CallCount++;
-										@handler.Callback?.Invoke();
-										break;
-									}
+									@foundMatch = true;
+									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
+									@handler.Callback?.Invoke();
+									break;
 								}
 							}
 							
@@ -1313,7 +1488,7 @@ public static class NullabilityGeneratorTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(0)}
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
 									""");
 							}
 						}
@@ -1322,7 +1497,7 @@ public static class NullabilityGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
 								""");
 						}
 					}
@@ -1332,14 +1507,16 @@ public static class NullabilityGeneratorTests
 				
 				public IDestinationCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::IDestination{TDestination}" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::IDestination<TDestination> Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -1349,17 +1526,23 @@ public static class NullabilityGeneratorTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForIDestination<TAdornments>
+					internal interface IAdornmentsForIDestination<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForIDestination<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0<T>
-						: global::Rocks.Adornments<AdornmentsForHandler0<T>, global::IDestinationCreateExpectations<TDestination>.Handler0<T>, global::System.Action>, IAdornmentsForIDestination<AdornmentsForHandler0<T>> where T : notnull, TDestination
+					internal sealed class AsAdornments8AFF738D<T>
+						: global::Rocks.Adornments<AsAdornments8AFF738D<T>, global::IDestinationCreateExpectations<TDestination>.Handler0<T>, global::System.Action>, IAdornmentsForIDestination<AsAdornments8AFF738D<T>> where T : notnull, TDestination
 					{
-						public AdornmentsForHandler0(global::IDestinationCreateExpectations<TDestination>.Handler0<T> handler)
-							: base(handler) { }
+						internal AsAdornments8AFF738D(global::IDestinationCreateExpectations<TDestination>.Handler0<T> handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
+				}
+				
+				internal void Remove<T>(global::IDestinationCreateExpectations<TDestination>.Adornments.AsAdornments8AFF738D<T> adornments) where T : notnull, TDestination
+				{
+					adornments.RemoveHandler(this.@handlers0);
+					if (this.@handlers0?.Count == 0) { this.@handlers0 = null; }
 				}
 			}
 			
@@ -1380,9 +1563,15 @@ public static class NullabilityGeneratorTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::IDestination{TDestination}"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IDestinationMakeExpectations<TDestination>
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::IDestination{TDestination}" />-based type.
+				/// </summary>
 				internal global::IDestination<TDestination> Instance()
 				{
 					return new Mock();

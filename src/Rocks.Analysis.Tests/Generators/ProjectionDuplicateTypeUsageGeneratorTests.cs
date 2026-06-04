@@ -33,20 +33,32 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::ISpecialTypes"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal unsafe sealed class ISpecialTypesCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::ISpecialTypesCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::ISpecialTypes"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::ISpecialTypesCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::ISpecialTypesCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal global::ISpecialTypesCreateExpectations.Adornments.AdornmentsForHandler0 Use(global::Rocks.Projections.ArgIteratorArgument @value1, global::Rocks.Projections.ArgIteratorArgument @value2, global::Rocks.Projections.PointerArgument<int> @value3)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::ISpecialTypes.Use(ArgIterator,ArgIterator,int*)"/>.
+					/// </summary>
+					internal global::ISpecialTypesCreateExpectations.Adornments.UseAdornmentsA8B7E65D Use(global::Rocks.Projections.ArgIteratorArgument @value1, global::Rocks.Projections.ArgIteratorArgument @value2, global::Rocks.Projections.PointerArgument<int> @value3)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value1);
@@ -60,9 +72,9 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 							@value3 = @value3,
 						};
 						
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
-						else { this.parent.handlers0.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers0 ??= new(1);
+						this.parent.handlers0.Add(@handler);
+						return new(@handler, this.parent);
 					}
 				}
 				
@@ -72,13 +84,16 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 					: global::Rocks.Handler<Handler0.CallbackForHandler>
 				{
 					internal unsafe delegate int* CallbackForHandler(global::System.ArgIterator @value1, global::System.ArgIterator @value2, int* @value3);
-					public global::Rocks.Projections.ArgIteratorArgument @value1 { get; set; }
-					public global::Rocks.Projections.ArgIteratorArgument @value2 { get; set; }
-					public global::Rocks.Projections.PointerArgument<int> @value3 { get; set; }
-					public int* ReturnValue { get; set; }
+					internal global::Rocks.Projections.ArgIteratorArgument @value1 { get; set; }
+					internal global::Rocks.Projections.ArgIteratorArgument @value2 { get; set; }
+					internal global::Rocks.Projections.PointerArgument<int> @value3 { get; set; }
+					internal int* ReturnValue { get; set; }
 				}
-				private global::Rocks.Handlers<global::ISpecialTypesCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::ISpecialTypesCreateExpectations.Handler0>? @handlers0;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::ISpecialTypes"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -89,7 +104,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -111,13 +126,14 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 					{
 						if (this.Expectations.handlers0 is not null)
 						{
-							foreach (var @handler in this.Expectations.handlers0)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers0))
 							{
 								if (@handler.@value1.IsValid(@value1!) &&
 									@handler.@value2.IsValid(@value2!) &&
 									@handler.@value3.IsValid(@value3!))
 								{
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									var @result = @handler.Callback is not null ?
 										@handler.Callback(@value1!, @value2!, @value3!) : @handler.ReturnValue;
 									return @result!;
@@ -127,7 +143,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers match for {this.GetType().GetMemberDescription(0)}
+								No handlers match for {typeof(Mock).GetMemberDescription(0)}
 									value1: <Not formattable>
 									value2: <Not formattable>
 									value3: <Not formattable>
@@ -138,7 +154,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
 									value1: <Not formattable>
 									value2: <Not formattable>
 									value3: <Not formattable>
@@ -151,14 +167,16 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 				
 				public ISpecialTypesCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::ISpecialTypes" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::ISpecialTypes Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -168,22 +186,28 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForISpecialTypes<TAdornments>
+					internal interface IAdornmentsForISpecialTypes<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForISpecialTypes<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::ISpecialTypesCreateExpectations.Handler0, global::ISpecialTypesCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForISpecialTypes<AdornmentsForHandler0>
+					internal sealed class UseAdornmentsA8B7E65D
+						: global::Rocks.Adornments<UseAdornmentsA8B7E65D, global::ISpecialTypesCreateExpectations.Handler0, global::ISpecialTypesCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForISpecialTypes<UseAdornmentsA8B7E65D>
 					{
-						public AdornmentsForHandler0(global::ISpecialTypesCreateExpectations.Handler0 handler)
-							: base(handler) { }
-						public AdornmentsForHandler0 ReturnValue(int* returnValue)
+						internal UseAdornmentsA8B7E65D(global::ISpecialTypesCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
+						internal UseAdornmentsA8B7E65D ReturnValue(int* returnValue)
 						{
 							this.Handler.ReturnValue = returnValue;
 							return this;
 						}
 					}
+				}
+				
+				internal void Remove(global::ISpecialTypesCreateExpectations.Adornments.UseAdornmentsA8B7E65D adornments)
+				{
+					adornments.Remove(this.@handlers0);
+					if (this.@handlers0?.Count == 0) { this.@handlers0 = null; }
 				}
 			}
 			
@@ -204,9 +228,15 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::ISpecialTypes"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ISpecialTypesMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::ISpecialTypes" />-based type.
+				/// </summary>
 				internal global::ISpecialTypes Instance()
 				{
 					return new Mock();
@@ -234,7 +264,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			"""";
 
 		var argIteratorProjectionGeneratedCode =
-			"""
+			""""
 			// <auto-generated/>
 			
 			#pragma warning disable CS8618
@@ -280,10 +310,10 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			#pragma warning restore CS8714
 			#pragma warning restore CS8775
 			
-			""";
+			"""";
 
 		var pointerProjectionGeneratedCode =
-			"""
+			""""
 			// <auto-generated/>
 			
 			#pragma warning disable CS8618
@@ -340,7 +370,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			#pragma warning restore CS8714
 			#pragma warning restore CS8775
 			
-			""";
+			"""";
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
@@ -381,16 +411,25 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::ISpecialTypes"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal unsafe sealed class ISpecialTypesCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::ISpecialTypesCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::ISpecialTypes"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::ISpecialTypesCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::ISpecialTypesCreateExpectations parent) =>
 						this.parent = parent;
 				
@@ -412,10 +451,13 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 							this.@value3 = @value3;
 						}
 						
-						internal global::ISpecialTypesCreateExpectations.Adornments.AdornmentsForHandler0 Gets()
+						/// <summary>
+						/// Sets a "get" expectation for the <see cref="global::ISpecialTypes.this[ArgIterator,ArgIterator,int*]" /> property.
+						/// </summary>
+						internal global::ISpecialTypesCreateExpectations.Adornments.thisGetsAdornmentsA8B7E65D Gets()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
-							
+						
 							var @handler = new global::ISpecialTypesCreateExpectations.Handler0
 							{
 								@value1 = this.@value1,
@@ -423,12 +465,15 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 								@value3 = this.@value3,
 							};
 							
-							if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
-							else { this.parent.handlers0.Add(@handler); }
-							return new(@handler);
+							this.parent.handlers0 ??= new(1);
+							this.parent.handlers0.Add(@handler);
+							return new(@handler, this.parent);
 						}
 						
-						internal global::ISpecialTypesCreateExpectations.Adornments.AdornmentsForHandler1 Sets(global::Rocks.Projections.PointerArgument<int> @value)
+						/// <summary>
+						/// Sets a "set" expectation for the <see cref="global::ISpecialTypes.this[ArgIterator,ArgIterator,int*]" /> property.
+						/// </summary>
+						internal global::ISpecialTypesCreateExpectations.Adornments.thisSetsAdornmentsB3D2A43E Sets(global::Rocks.Projections.PointerArgument<int> @value)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -441,11 +486,15 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 								@value = @value,
 							};
 							
-							if (this.parent.handlers1 is null) { this.parent.handlers1 = new(@handler); }
-							else { this.parent.handlers1.Add(@handler); }
-							return new(@handler);
+							this.parent.handlers1 ??= new(1);
+							this.parent.handlers1.Add(@handler);
+							return new(@handler, this.parent);
 						}
 					}
+					
+					/// <summary>
+					/// Sets an expectation for <see cref="global::ISpecialTypes.this[ArgIterator,ArgIterator,int*]"/>.
+					/// </summary>
 					
 					internal global::ISpecialTypesCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Projections.ArgIteratorArgument @value1, global::Rocks.Projections.ArgIteratorArgument @value2, global::Rocks.Projections.PointerArgument<int> @value3] => new(this.parent, @value1, @value2, @value3);
 					
@@ -457,24 +506,27 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 					: global::Rocks.Handler<Handler0.CallbackForHandler>
 				{
 					internal unsafe delegate int* CallbackForHandler(global::System.ArgIterator @value1, global::System.ArgIterator @value2, int* @value3);
-					public global::Rocks.Projections.ArgIteratorArgument @value1 { get; set; }
-					public global::Rocks.Projections.ArgIteratorArgument @value2 { get; set; }
-					public global::Rocks.Projections.PointerArgument<int> @value3 { get; set; }
-					public int* ReturnValue { get; set; }
+					internal global::Rocks.Projections.ArgIteratorArgument @value1 { get; set; }
+					internal global::Rocks.Projections.ArgIteratorArgument @value2 { get; set; }
+					internal global::Rocks.Projections.PointerArgument<int> @value3 { get; set; }
+					internal int* ReturnValue { get; set; }
 				}
-				private global::Rocks.Handlers<global::ISpecialTypesCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::ISpecialTypesCreateExpectations.Handler0>? @handlers0;
 				
 				internal sealed class Handler1
 					: global::Rocks.Handler<Handler1.CallbackForHandler>
 				{
 					internal unsafe delegate void CallbackForHandler(global::System.ArgIterator @value1, global::System.ArgIterator @value2, int* @value3, int* @value);
-					public global::Rocks.Projections.ArgIteratorArgument @value1 { get; set; }
-					public global::Rocks.Projections.ArgIteratorArgument @value2 { get; set; }
-					public global::Rocks.Projections.PointerArgument<int> @value3 { get; set; }
-					public global::Rocks.Projections.PointerArgument<int> @value { get; set; }
+					internal global::Rocks.Projections.ArgIteratorArgument @value1 { get; set; }
+					internal global::Rocks.Projections.ArgIteratorArgument @value2 { get; set; }
+					internal global::Rocks.Projections.PointerArgument<int> @value3 { get; set; }
+					internal global::Rocks.Projections.PointerArgument<int> @value { get; set; }
 				}
-				private global::Rocks.Handlers<global::ISpecialTypesCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::ISpecialTypesCreateExpectations.Handler1>? @handlers1;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::ISpecialTypes"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -485,8 +537,8 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-						if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
+						if (this.handlers1 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers1, 1, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -517,6 +569,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 										@handler.@value3.IsValid(@value3!))
 									{
 										@handler.CallCount++;
+										if (@handler.Exception is not null) { throw @handler.Exception; }
 										var @result = @handler.Callback is not null ?
 											@handler.Callback(@value1!, @value2!, @value3!) : @handler.ReturnValue;
 										return @result!;
@@ -526,7 +579,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(0)}
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
 										value1: <Not formattable>
 										value2: <Not formattable>
 										value3: <Not formattable>
@@ -536,7 +589,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
 									value1: <Not formattable>
 									value2: <Not formattable>
 									value3: <Not formattable>
@@ -555,6 +608,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 										@handler.@value.IsValid(@value!))
 									{
 										@handler.CallCount++;
+										if (@handler.Exception is not null) { throw @handler.Exception; }
 										@handler.Callback?.Invoke(@value1!, @value2!, @value3!, @value!);
 										return;
 									}
@@ -563,7 +617,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(1)}
+									No handlers match for {typeof(Mock).GetMemberDescription(1)}
 										value1: <Not formattable>
 										value2: <Not formattable>
 										value3: <Not formattable>
@@ -574,7 +628,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(1)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(1)}
 									value1: <Not formattable>
 									value2: <Not formattable>
 									value3: <Not formattable>
@@ -588,14 +642,16 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 				
 				public ISpecialTypesCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::ISpecialTypes" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::ISpecialTypes Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -605,29 +661,41 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForISpecialTypes<TAdornments>
+					internal interface IAdornmentsForISpecialTypes<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForISpecialTypes<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::ISpecialTypesCreateExpectations.Handler0, global::ISpecialTypesCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForISpecialTypes<AdornmentsForHandler0>
+					internal sealed class thisGetsAdornmentsA8B7E65D
+						: global::Rocks.Adornments<thisGetsAdornmentsA8B7E65D, global::ISpecialTypesCreateExpectations.Handler0, global::ISpecialTypesCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForISpecialTypes<thisGetsAdornmentsA8B7E65D>
 					{
-						public AdornmentsForHandler0(global::ISpecialTypesCreateExpectations.Handler0 handler)
-							: base(handler) { }
-						public AdornmentsForHandler0 ReturnValue(int* returnValue)
+						internal thisGetsAdornmentsA8B7E65D(global::ISpecialTypesCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
+						internal thisGetsAdornmentsA8B7E65D ReturnValue(int* returnValue)
 						{
 							this.Handler.ReturnValue = returnValue;
 							return this;
 						}
 					}
 					
-					public sealed class AdornmentsForHandler1
-						: global::Rocks.Adornments<AdornmentsForHandler1, global::ISpecialTypesCreateExpectations.Handler1, global::ISpecialTypesCreateExpectations.Handler1.CallbackForHandler>, IAdornmentsForISpecialTypes<AdornmentsForHandler1>
+					internal sealed class thisSetsAdornmentsB3D2A43E
+						: global::Rocks.Adornments<thisSetsAdornmentsB3D2A43E, global::ISpecialTypesCreateExpectations.Handler1, global::ISpecialTypesCreateExpectations.Handler1.CallbackForHandler>, IAdornmentsForISpecialTypes<thisSetsAdornmentsB3D2A43E>
 					{
-						public AdornmentsForHandler1(global::ISpecialTypesCreateExpectations.Handler1 handler)
-							: base(handler) { }
+						internal thisSetsAdornmentsB3D2A43E(global::ISpecialTypesCreateExpectations.Handler1 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
+				}
+				
+				internal void Remove(global::ISpecialTypesCreateExpectations.Adornments.thisGetsAdornmentsA8B7E65D adornments)
+				{
+					adornments.Remove(this.@handlers0);
+					if (this.@handlers0?.Count == 0) { this.@handlers0 = null; }
+				}
+				
+				internal void Remove(global::ISpecialTypesCreateExpectations.Adornments.thisSetsAdornmentsB3D2A43E adornments)
+				{
+					adornments.Remove(this.@handlers1);
+					if (this.@handlers1?.Count == 0) { this.@handlers1 = null; }
 				}
 			}
 			
@@ -648,9 +716,15 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::ISpecialTypes"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ISpecialTypesMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::ISpecialTypes" />-based type.
+				/// </summary>
 				internal global::ISpecialTypes Instance()
 				{
 					return new Mock();
@@ -679,7 +753,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			"""";
 
 		var pointerProjectionGeneratedCode =
-			"""
+			""""
 			// <auto-generated/>
 			
 			#pragma warning disable CS8618
@@ -736,10 +810,10 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			#pragma warning restore CS8714
 			#pragma warning restore CS8775
 			
-			""";
+			"""";
 
 		var argIteratorProjectionGeneratedCode =
-			"""
+			""""
 			// <auto-generated/>
 			
 			#pragma warning disable CS8618
@@ -785,7 +859,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			#pragma warning restore CS8714
 			#pragma warning restore CS8775
 			
-			""";
+			"""";
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
@@ -826,20 +900,32 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::ISpecialTypes"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal unsafe sealed class ISpecialTypesCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::ISpecialTypesCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::ISpecialTypes"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::ISpecialTypesCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::ISpecialTypesCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal global::ISpecialTypesCreateExpectations.Adornments.AdornmentsForHandler0 Use(global::Rocks.Projections.PointerArgument<int> @value1, global::Rocks.Projections.PointerArgument<char> @value2)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::ISpecialTypes.Use(int*,char*)"/>.
+					/// </summary>
+					internal global::ISpecialTypesCreateExpectations.Adornments.UseAdornments0BBE28D7 Use(global::Rocks.Projections.PointerArgument<int> @value1, global::Rocks.Projections.PointerArgument<char> @value2)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value1);
@@ -851,9 +937,9 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 							@value2 = @value2,
 						};
 						
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
-						else { this.parent.handlers0.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers0 ??= new(1);
+						this.parent.handlers0.Add(@handler);
+						return new(@handler, this.parent);
 					}
 				}
 				
@@ -863,11 +949,14 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 					: global::Rocks.Handler<Handler0.CallbackForHandler>
 				{
 					internal unsafe delegate void CallbackForHandler(int* @value1, char* @value2);
-					public global::Rocks.Projections.PointerArgument<int> @value1 { get; set; }
-					public global::Rocks.Projections.PointerArgument<char> @value2 { get; set; }
+					internal global::Rocks.Projections.PointerArgument<int> @value1 { get; set; }
+					internal global::Rocks.Projections.PointerArgument<char> @value2 { get; set; }
 				}
-				private global::Rocks.Handlers<global::ISpecialTypesCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::ISpecialTypesCreateExpectations.Handler0>? @handlers0;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::ISpecialTypes"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -878,7 +967,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -902,13 +991,14 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 						{
 							var @foundMatch = false;
 							
-							foreach (var @handler in this.Expectations.handlers0)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers0))
 							{
 								if (@handler.@value1.IsValid(@value1!) &&
 									@handler.@value2.IsValid(@value2!))
 								{
 									@foundMatch = true;
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									@handler.Callback?.Invoke(@value1!, @value2!);
 									break;
 								}
@@ -919,7 +1009,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(0)}
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
 										value1: <Not formattable>
 										value2: <Not formattable>
 									""");
@@ -930,7 +1020,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
 									value1: <Not formattable>
 									value2: <Not formattable>
 								""");
@@ -942,14 +1032,16 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 				
 				public ISpecialTypesCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::ISpecialTypes" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::ISpecialTypes Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -959,17 +1051,23 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForISpecialTypes<TAdornments>
+					internal interface IAdornmentsForISpecialTypes<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForISpecialTypes<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::ISpecialTypesCreateExpectations.Handler0, global::ISpecialTypesCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForISpecialTypes<AdornmentsForHandler0>
+					internal sealed class UseAdornments0BBE28D7
+						: global::Rocks.Adornments<UseAdornments0BBE28D7, global::ISpecialTypesCreateExpectations.Handler0, global::ISpecialTypesCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForISpecialTypes<UseAdornments0BBE28D7>
 					{
-						public AdornmentsForHandler0(global::ISpecialTypesCreateExpectations.Handler0 handler)
-							: base(handler) { }
+						internal UseAdornments0BBE28D7(global::ISpecialTypesCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
+				}
+				
+				internal void Remove(global::ISpecialTypesCreateExpectations.Adornments.UseAdornments0BBE28D7 adornments)
+				{
+					adornments.Remove(this.@handlers0);
+					if (this.@handlers0?.Count == 0) { this.@handlers0 = null; }
 				}
 			}
 			
@@ -990,9 +1088,15 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::ISpecialTypes"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ISpecialTypesMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::ISpecialTypes" />-based type.
+				/// </summary>
 				internal global::ISpecialTypes Instance()
 				{
 					return new Mock();
@@ -1019,7 +1123,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			"""";
 
 		var pointerProjectionGeneratedCode =
-			"""
+			""""
 			// <auto-generated/>
 			
 			#pragma warning disable CS8618
@@ -1076,7 +1180,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			#pragma warning restore CS8714
 			#pragma warning restore CS8775
 			
-			""";
+			"""";
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
@@ -1116,16 +1220,25 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::ISpecialTypes"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal unsafe sealed class ISpecialTypesCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::ISpecialTypesCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::ISpecialTypes"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::ISpecialTypesCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::ISpecialTypesCreateExpectations parent) =>
 						this.parent = parent;
 				
@@ -1144,22 +1257,28 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 							this.@value3 = @value3;
 						}
 						
-						internal global::ISpecialTypesCreateExpectations.Adornments.AdornmentsForHandler0 Gets()
+						/// <summary>
+						/// Sets a "get" expectation for the <see cref="global::ISpecialTypes.this[int*,char*]" /> property.
+						/// </summary>
+						internal global::ISpecialTypesCreateExpectations.Adornments.thisGetsAdornments0BBE28D7 Gets()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
-							
+						
 							var @handler = new global::ISpecialTypesCreateExpectations.Handler0
 							{
 								@value1 = this.@value1,
 								@value3 = this.@value3,
 							};
 							
-							if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
-							else { this.parent.handlers0.Add(@handler); }
-							return new(@handler);
+							this.parent.handlers0 ??= new(1);
+							this.parent.handlers0.Add(@handler);
+							return new(@handler, this.parent);
 						}
 						
-						internal global::ISpecialTypesCreateExpectations.Adornments.AdornmentsForHandler1 Sets(global::Rocks.Argument<int> @value)
+						/// <summary>
+						/// Sets a "set" expectation for the <see cref="global::ISpecialTypes.this[int*,char*]" /> property.
+						/// </summary>
+						internal global::ISpecialTypesCreateExpectations.Adornments.thisSetsAdornmentsAC5CA55C Sets(global::Rocks.Argument<int> @value)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -1171,11 +1290,15 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 								@value = @value,
 							};
 							
-							if (this.parent.handlers1 is null) { this.parent.handlers1 = new(@handler); }
-							else { this.parent.handlers1.Add(@handler); }
-							return new(@handler);
+							this.parent.handlers1 ??= new(1);
+							this.parent.handlers1.Add(@handler);
+							return new(@handler, this.parent);
 						}
 					}
+					
+					/// <summary>
+					/// Sets an expectation for <see cref="global::ISpecialTypes.this[int*,char*]"/>.
+					/// </summary>
 					
 					internal global::ISpecialTypesCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Projections.PointerArgument<int> @value1, global::Rocks.Projections.PointerArgument<char> @value3] => new(this.parent, @value1, @value3);
 					
@@ -1187,21 +1310,24 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 					: global::Rocks.Handler<Handler0.CallbackForHandler, int>
 				{
 					internal unsafe delegate int CallbackForHandler(int* @value1, char* @value3);
-					public global::Rocks.Projections.PointerArgument<int> @value1 { get; set; }
-					public global::Rocks.Projections.PointerArgument<char> @value3 { get; set; }
+					internal global::Rocks.Projections.PointerArgument<int> @value1 { get; set; }
+					internal global::Rocks.Projections.PointerArgument<char> @value3 { get; set; }
 				}
-				private global::Rocks.Handlers<global::ISpecialTypesCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::ISpecialTypesCreateExpectations.Handler0>? @handlers0;
 				
 				internal sealed class Handler1
 					: global::Rocks.Handler<Handler1.CallbackForHandler>
 				{
 					internal unsafe delegate void CallbackForHandler(int* @value1, char* @value3, int @value);
-					public global::Rocks.Projections.PointerArgument<int> @value1 { get; set; }
-					public global::Rocks.Projections.PointerArgument<char> @value3 { get; set; }
-					public global::Rocks.Argument<int> @value { get; set; }
+					internal global::Rocks.Projections.PointerArgument<int> @value1 { get; set; }
+					internal global::Rocks.Projections.PointerArgument<char> @value3 { get; set; }
+					internal global::Rocks.Argument<int> @value { get; set; }
 				}
-				private global::Rocks.Handlers<global::ISpecialTypesCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::ISpecialTypesCreateExpectations.Handler1>? @handlers1;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::ISpecialTypes"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -1212,8 +1338,8 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-						if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
+						if (this.handlers1 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers1, 1, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -1243,6 +1369,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 										@handler.@value3.IsValid(@value3!))
 									{
 										@handler.CallCount++;
+										if (@handler.Exception is not null) { throw @handler.Exception; }
 										var @result = @handler.Callback is not null ?
 											@handler.Callback(@value1!, @value3!) : @handler.ReturnValue;
 										return @result!;
@@ -1252,7 +1379,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(0)}
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
 										value1: <Not formattable>
 										value3: <Not formattable>
 									""");
@@ -1261,7 +1388,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
 									value1: <Not formattable>
 									value3: <Not formattable>
 								""");
@@ -1278,6 +1405,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 										@handler.@value.IsValid(@value!))
 									{
 										@handler.CallCount++;
+										if (@handler.Exception is not null) { throw @handler.Exception; }
 										@handler.Callback?.Invoke(@value1!, @value3!, @value!);
 										return;
 									}
@@ -1286,7 +1414,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(1)}
+									No handlers match for {typeof(Mock).GetMemberDescription(1)}
 										value1: <Not formattable>
 										value3: <Not formattable>
 										value: {@value.FormatValue()}
@@ -1296,7 +1424,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(1)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(1)}
 									value1: <Not formattable>
 									value3: <Not formattable>
 									value: {@value.FormatValue()}
@@ -1309,14 +1437,16 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 				
 				public ISpecialTypesCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::ISpecialTypes" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::ISpecialTypes Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -1326,24 +1456,36 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForISpecialTypes<TAdornments>
+					internal interface IAdornmentsForISpecialTypes<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForISpecialTypes<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::ISpecialTypesCreateExpectations.Handler0, global::ISpecialTypesCreateExpectations.Handler0.CallbackForHandler, int>, IAdornmentsForISpecialTypes<AdornmentsForHandler0>
+					internal sealed class thisGetsAdornments0BBE28D7
+						: global::Rocks.Adornments<thisGetsAdornments0BBE28D7, global::ISpecialTypesCreateExpectations.Handler0, global::ISpecialTypesCreateExpectations.Handler0.CallbackForHandler, int>, IAdornmentsForISpecialTypes<thisGetsAdornments0BBE28D7>
 					{
-						public AdornmentsForHandler0(global::ISpecialTypesCreateExpectations.Handler0 handler)
-							: base(handler) { }
+						internal thisGetsAdornments0BBE28D7(global::ISpecialTypesCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler1
-						: global::Rocks.Adornments<AdornmentsForHandler1, global::ISpecialTypesCreateExpectations.Handler1, global::ISpecialTypesCreateExpectations.Handler1.CallbackForHandler>, IAdornmentsForISpecialTypes<AdornmentsForHandler1>
+					internal sealed class thisSetsAdornmentsAC5CA55C
+						: global::Rocks.Adornments<thisSetsAdornmentsAC5CA55C, global::ISpecialTypesCreateExpectations.Handler1, global::ISpecialTypesCreateExpectations.Handler1.CallbackForHandler>, IAdornmentsForISpecialTypes<thisSetsAdornmentsAC5CA55C>
 					{
-						public AdornmentsForHandler1(global::ISpecialTypesCreateExpectations.Handler1 handler)
-							: base(handler) { }
+						internal thisSetsAdornmentsAC5CA55C(global::ISpecialTypesCreateExpectations.Handler1 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
+				}
+				
+				internal void Remove(global::ISpecialTypesCreateExpectations.Adornments.thisGetsAdornments0BBE28D7 adornments)
+				{
+					adornments.Remove(this.@handlers0);
+					if (this.@handlers0?.Count == 0) { this.@handlers0 = null; }
+				}
+				
+				internal void Remove(global::ISpecialTypesCreateExpectations.Adornments.thisSetsAdornmentsAC5CA55C adornments)
+				{
+					adornments.Remove(this.@handlers1);
+					if (this.@handlers1?.Count == 0) { this.@handlers1 = null; }
 				}
 			}
 			
@@ -1364,9 +1506,15 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::ISpecialTypes"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ISpecialTypesMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::ISpecialTypes" />-based type.
+				/// </summary>
 				internal global::ISpecialTypes Instance()
 				{
 					return new Mock();
@@ -1395,7 +1543,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			"""";
 
 		var pointerProjectionGeneratedCode =
-			"""
+			""""
 			// <auto-generated/>
 			
 			#pragma warning disable CS8618
@@ -1452,7 +1600,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 			#pragma warning restore CS8714
 			#pragma warning restore CS8775
 			
-			""";
+			"""";
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[

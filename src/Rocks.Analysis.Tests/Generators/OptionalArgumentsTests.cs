@@ -42,20 +42,32 @@ public static class OptionalArgumentsTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::ICallerParameter"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ICallerParameterCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::ICallerParameterCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::ICallerParameter"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::ICallerParameterCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::ICallerParameterCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal global::ICallerParameterCreateExpectations.Adornments.AdornmentsForHandler0 Do(global::Rocks.Argument<string?> @propertyName)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::ICallerParameter.Do(String)"/>.
+					/// </summary>
+					internal global::ICallerParameterCreateExpectations.Adornments.DoAdornments3129B210 Do(global::Rocks.Argument<string?> @propertyName)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@propertyName);
@@ -65,12 +77,15 @@ public static class OptionalArgumentsTests
 							@propertyName = @propertyName.Transform(null),
 						};
 						
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
-						else { this.parent.handlers0.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers0 ??= new(1);
+						this.parent.handlers0.Add(@handler);
+						return new(@handler, this.parent);
 					}
 					
-					internal global::ICallerParameterCreateExpectations.Adornments.AdornmentsForHandler0 Do(string? @propertyName = null) =>
+					/// <summary>
+					/// Sets an expectation for <see cref="global::ICallerParameter.Do(String)"/>.
+					/// </summary>
+					internal global::ICallerParameterCreateExpectations.Adornments.DoAdornments3129B210 Do(string? @propertyName = null) =>
 						this.Do(global::Rocks.Arg.Is(@propertyName));
 					internal sealed class ExplicitForIBaseCallerParameterExpectations
 					{
@@ -79,7 +94,10 @@ public static class OptionalArgumentsTests
 						internal ExplicitForIBaseCallerParameterExpectations(global::ICallerParameterCreateExpectations parent) =>
 							this.parent = parent;
 					
-						internal global::ICallerParameterCreateExpectations.Adornments.AdornmentsForHandler1 Do(global::Rocks.Argument<string?> @propertyName)
+						/// <summary>
+						/// Sets an expectation for <see cref="global::IBaseCallerParameter.Do(String)"/>.
+						/// </summary>
+						internal global::ICallerParameterCreateExpectations.Adornments.DoAdornments138A9575 Do(global::Rocks.Argument<string?> @propertyName)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@propertyName);
@@ -89,12 +107,15 @@ public static class OptionalArgumentsTests
 								@propertyName = @propertyName,
 							};
 							
-							if (this.parent.handlers1 is null) { this.parent.handlers1 = new(@handler); }
-							else { this.parent.handlers1.Add(@handler); }
-							return new(@handler);
+							this.parent.handlers1 ??= new(1);
+							this.parent.handlers1.Add(@handler);
+							return new(@handler, this.parent);
 						}
 						
-						internal global::ICallerParameterCreateExpectations.Adornments.AdornmentsForHandler1 Do(string? @propertyName = null) =>
+						/// <summary>
+						/// Sets an expectation for <see cref="global::IBaseCallerParameter.Do(String)"/>.
+						/// </summary>
+						internal global::ICallerParameterCreateExpectations.Adornments.DoAdornments138A9575 Do(string? @propertyName = null) =>
 							this.Do(global::Rocks.Arg.Is(@propertyName));
 					}
 					
@@ -106,17 +127,20 @@ public static class OptionalArgumentsTests
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Func<string?, string>, string>
 				{
-					public global::Rocks.Argument<string?> @propertyName { get; set; }
+					internal global::Rocks.Argument<string?> @propertyName { get; set; }
 				}
-				private global::Rocks.Handlers<global::ICallerParameterCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::ICallerParameterCreateExpectations.Handler0>? @handlers0;
 				
 				internal sealed class Handler1
 					: global::Rocks.Handler<global::System.Func<string?, int>, int>
 				{
-					public global::Rocks.Argument<string?> @propertyName { get; set; }
+					internal global::Rocks.Argument<string?> @propertyName { get; set; }
 				}
-				private global::Rocks.Handlers<global::ICallerParameterCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::ICallerParameterCreateExpectations.Handler1>? @handlers1;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::ICallerParameter"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -127,8 +151,8 @@ public static class OptionalArgumentsTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-						if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
+						if (this.handlers1 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers1, 1, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -150,11 +174,12 @@ public static class OptionalArgumentsTests
 					{
 						if (this.Expectations.handlers0 is not null)
 						{
-							foreach (var @handler in this.Expectations.handlers0)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers0))
 							{
 								if (@handler.@propertyName.IsValid(@propertyName!))
 								{
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									var @result = @handler.Callback is not null ?
 										@handler.Callback(@propertyName!) : @handler.ReturnValue;
 									return @result!;
@@ -164,7 +189,7 @@ public static class OptionalArgumentsTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers match for {this.GetType().GetMemberDescription(0)}
+								No handlers match for {typeof(Mock).GetMemberDescription(0)}
 									propertyName: {@propertyName.FormatValue()}
 								""");
 						}
@@ -173,7 +198,7 @@ public static class OptionalArgumentsTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
 									propertyName: {@propertyName.FormatValue()}
 								""");
 						}
@@ -184,11 +209,12 @@ public static class OptionalArgumentsTests
 					{
 						if (this.Expectations.handlers1 is not null)
 						{
-							foreach (var @handler in this.Expectations.handlers1)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers1))
 							{
 								if (@handler.@propertyName.IsValid(@propertyName!))
 								{
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									var @result = @handler.Callback is not null ?
 										@handler.Callback(@propertyName!) : @handler.ReturnValue;
 									return @result!;
@@ -198,7 +224,7 @@ public static class OptionalArgumentsTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers match for {this.GetType().GetMemberDescription(1)}
+								No handlers match for {typeof(Mock).GetMemberDescription(1)}
 									propertyName: {@propertyName.FormatValue()}
 								""");
 						}
@@ -207,7 +233,7 @@ public static class OptionalArgumentsTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(1)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(1)}
 									propertyName: {@propertyName.FormatValue()}
 								""");
 						}
@@ -218,14 +244,16 @@ public static class OptionalArgumentsTests
 				
 				public ICallerParameterCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::ICallerParameter" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::ICallerParameter Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -235,24 +263,36 @@ public static class OptionalArgumentsTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForICallerParameter<TAdornments>
+					internal interface IAdornmentsForICallerParameter<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForICallerParameter<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::ICallerParameterCreateExpectations.Handler0, global::System.Func<string?, string>, string>, IAdornmentsForICallerParameter<AdornmentsForHandler0>
+					internal sealed class DoAdornments3129B210
+						: global::Rocks.Adornments<DoAdornments3129B210, global::ICallerParameterCreateExpectations.Handler0, global::System.Func<string?, string>, string>, IAdornmentsForICallerParameter<DoAdornments3129B210>
 					{
-						public AdornmentsForHandler0(global::ICallerParameterCreateExpectations.Handler0 handler)
-							: base(handler) { }
+						internal DoAdornments3129B210(global::ICallerParameterCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler1
-						: global::Rocks.Adornments<AdornmentsForHandler1, global::ICallerParameterCreateExpectations.Handler1, global::System.Func<string?, int>, int>, IAdornmentsForICallerParameter<AdornmentsForHandler1>
+					internal sealed class DoAdornments138A9575
+						: global::Rocks.Adornments<DoAdornments138A9575, global::ICallerParameterCreateExpectations.Handler1, global::System.Func<string?, int>, int>, IAdornmentsForICallerParameter<DoAdornments138A9575>
 					{
-						public AdornmentsForHandler1(global::ICallerParameterCreateExpectations.Handler1 handler)
-							: base(handler) { }
+						internal DoAdornments138A9575(global::ICallerParameterCreateExpectations.Handler1 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
+				}
+				
+				internal void Remove(global::ICallerParameterCreateExpectations.Adornments.DoAdornments3129B210 adornments)
+				{
+					adornments.Remove(this.@handlers0);
+					if (this.@handlers0?.Count == 0) { this.@handlers0 = null; }
+				}
+				
+				internal void Remove(global::ICallerParameterCreateExpectations.Adornments.DoAdornments138A9575 adornments)
+				{
+					adornments.Remove(this.@handlers1);
+					if (this.@handlers1?.Count == 0) { this.@handlers1 = null; }
 				}
 			}
 			
@@ -273,9 +313,15 @@ public static class OptionalArgumentsTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::ICallerParameter"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ICallerParameterMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::ICallerParameter" />-based type.
+				/// </summary>
 				internal global::ICallerParameter Instance()
 				{
 					return new Mock();
@@ -344,20 +390,32 @@ public static class OptionalArgumentsTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::IHaveOptionalArguments"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IHaveOptionalArgumentsCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::IHaveOptionalArgumentsCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::IHaveOptionalArguments"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::IHaveOptionalArgumentsCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::IHaveOptionalArgumentsCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal global::IHaveOptionalArgumentsCreateExpectations.Adornments.AdornmentsForHandler0 Foo(global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b, global::Rocks.Argument<double> @c)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::IHaveOptionalArguments.Foo(Int32,String,Double)"/>.
+					/// </summary>
+					internal global::IHaveOptionalArgumentsCreateExpectations.Adornments.FooAdornments0E162FE7 Foo(global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b, global::Rocks.Argument<double> @c)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@a);
@@ -371,12 +429,15 @@ public static class OptionalArgumentsTests
 							@c = @c.Transform(3.2),
 						};
 						
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
-						else { this.parent.handlers0.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers0 ??= new(1);
+						this.parent.handlers0.Add(@handler);
+						return new(@handler, this.parent);
 					}
 					
-					internal global::IHaveOptionalArgumentsCreateExpectations.Adornments.AdornmentsForHandler0 Foo(global::Rocks.Argument<int> @a, string @b = "b", double @c = 3.2) =>
+					/// <summary>
+					/// Sets an expectation for <see cref="global::IHaveOptionalArguments.Foo(Int32,String,Double)"/>.
+					/// </summary>
+					internal global::IHaveOptionalArgumentsCreateExpectations.Adornments.FooAdornments0E162FE7 Foo(global::Rocks.Argument<int> @a, string @b = "b", double @c = 3.2) =>
 						this.Foo(@a, global::Rocks.Arg.Is(@b), global::Rocks.Arg.Is(@c));
 					internal sealed class Indexer0Expectations
 					{
@@ -393,22 +454,28 @@ public static class OptionalArgumentsTests
 							this.@b = @b;
 						}
 						
-						internal global::IHaveOptionalArgumentsCreateExpectations.Adornments.AdornmentsForHandler1 Gets()
+						/// <summary>
+						/// Sets a "get" expectation for the <see cref="global::IHaveOptionalArguments.this[Int32,String]" /> property.
+						/// </summary>
+						internal global::IHaveOptionalArgumentsCreateExpectations.Adornments.thisGetsAdornmentsD443FCB6 Gets()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
-							
+						
 							var @handler = new global::IHaveOptionalArgumentsCreateExpectations.Handler1
 							{
 								@a = this.@a,
 								@b = this.@b.Transform("b"),
 							};
 							
-							if (this.parent.handlers1 is null) { this.parent.handlers1 = new(@handler); }
-							else { this.parent.handlers1.Add(@handler); }
-							return new(@handler);
+							this.parent.handlers1 ??= new(1);
+							this.parent.handlers1.Add(@handler);
+							return new(@handler, this.parent);
 						}
 						
-						internal global::IHaveOptionalArgumentsCreateExpectations.Adornments.AdornmentsForHandler2 Sets(global::Rocks.Argument<int> @value)
+						/// <summary>
+						/// Sets a "set" expectation for the <see cref="global::IHaveOptionalArguments.this[Int32,String]" /> property.
+						/// </summary>
+						internal global::IHaveOptionalArgumentsCreateExpectations.Adornments.thisSetsAdornments02547E49 Sets(global::Rocks.Argument<int> @value)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -420,11 +487,15 @@ public static class OptionalArgumentsTests
 								@value = @value,
 							};
 							
-							if (this.parent.handlers2 is null) { this.parent.handlers2 = new(@handler); }
-							else { this.parent.handlers2.Add(@handler); }
-							return new(@handler);
+							this.parent.handlers2 ??= new(1);
+							this.parent.handlers2.Add(@handler);
+							return new(@handler, this.parent);
 						}
 					}
+					
+					/// <summary>
+					/// Sets an expectation for <see cref="global::IHaveOptionalArguments.this[Int32,String]"/>.
+					/// </summary>
 					
 					internal global::IHaveOptionalArgumentsCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b] => new(this.parent, @a, @b);
 					
@@ -437,29 +508,32 @@ public static class OptionalArgumentsTests
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Action<int, string, double>>
 				{
-					public global::Rocks.Argument<int> @a { get; set; }
-					public global::Rocks.Argument<string> @b { get; set; }
-					public global::Rocks.Argument<double> @c { get; set; }
+					internal global::Rocks.Argument<int> @a { get; set; }
+					internal global::Rocks.Argument<string> @b { get; set; }
+					internal global::Rocks.Argument<double> @c { get; set; }
 				}
-				private global::Rocks.Handlers<global::IHaveOptionalArgumentsCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::IHaveOptionalArgumentsCreateExpectations.Handler0>? @handlers0;
 				
 				internal sealed class Handler1
 					: global::Rocks.Handler<global::System.Func<int, string, int>, int>
 				{
-					public global::Rocks.Argument<int> @a { get; set; }
-					public global::Rocks.Argument<string> @b { get; set; }
+					internal global::Rocks.Argument<int> @a { get; set; }
+					internal global::Rocks.Argument<string> @b { get; set; }
 				}
-				private global::Rocks.Handlers<global::IHaveOptionalArgumentsCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::IHaveOptionalArgumentsCreateExpectations.Handler1>? @handlers1;
 				
 				internal sealed class Handler2
 					: global::Rocks.Handler<global::System.Action<int, string, int>>
 				{
-					public global::Rocks.Argument<int> @a { get; set; }
-					public global::Rocks.Argument<string> @b { get; set; }
-					public global::Rocks.Argument<int> @value { get; set; }
+					internal global::Rocks.Argument<int> @a { get; set; }
+					internal global::Rocks.Argument<string> @b { get; set; }
+					internal global::Rocks.Argument<int> @value { get; set; }
 				}
-				private global::Rocks.Handlers<global::IHaveOptionalArgumentsCreateExpectations.Handler2>? @handlers2;
+				private global::System.Collections.Generic.List<global::IHaveOptionalArgumentsCreateExpectations.Handler2>? @handlers2;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::IHaveOptionalArguments"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -470,9 +544,9 @@ public static class OptionalArgumentsTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-						if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
-						if (this.handlers2 is not null) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
+						if (this.handlers1 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers1, 1, typeof(Mock))); }
+						if (this.handlers2 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers2, 2, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -496,7 +570,7 @@ public static class OptionalArgumentsTests
 						{
 							var @foundMatch = false;
 							
-							foreach (var @handler in this.Expectations.handlers0)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers0))
 							{
 								if (@handler.@a.IsValid(@a!) &&
 									@handler.@b.IsValid(@b!) &&
@@ -504,6 +578,7 @@ public static class OptionalArgumentsTests
 								{
 									@foundMatch = true;
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									@handler.Callback?.Invoke(@a!, @b!, @c!);
 									break;
 								}
@@ -514,7 +589,7 @@ public static class OptionalArgumentsTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(0)}
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
 										a: {@a.FormatValue()}
 										b: {@b.FormatValue()}
 										c: {@c.FormatValue()}
@@ -526,7 +601,7 @@ public static class OptionalArgumentsTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
 									a: {@a.FormatValue()}
 									b: {@b.FormatValue()}
 									c: {@c.FormatValue()}
@@ -547,6 +622,7 @@ public static class OptionalArgumentsTests
 										@handler.@b.IsValid(@b!))
 									{
 										@handler.CallCount++;
+										if (@handler.Exception is not null) { throw @handler.Exception; }
 										var @result = @handler.Callback is not null ?
 											@handler.Callback(@a!, @b!) : @handler.ReturnValue;
 										return @result!;
@@ -556,7 +632,7 @@ public static class OptionalArgumentsTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(1)}
+									No handlers match for {typeof(Mock).GetMemberDescription(1)}
 										a: {@a.FormatValue()}
 										b: {@b.FormatValue()}
 									""");
@@ -565,7 +641,7 @@ public static class OptionalArgumentsTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(1)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(1)}
 									a: {@a.FormatValue()}
 									b: {@b.FormatValue()}
 								""");
@@ -582,6 +658,7 @@ public static class OptionalArgumentsTests
 										@handler.@value.IsValid(@value!))
 									{
 										@handler.CallCount++;
+										if (@handler.Exception is not null) { throw @handler.Exception; }
 										@handler.Callback?.Invoke(@a!, @b!, @value!);
 										return;
 									}
@@ -590,7 +667,7 @@ public static class OptionalArgumentsTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(2)}
+									No handlers match for {typeof(Mock).GetMemberDescription(2)}
 										a: {@a.FormatValue()}
 										b: {@b.FormatValue()}
 										value: {@value.FormatValue()}
@@ -600,7 +677,7 @@ public static class OptionalArgumentsTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(2)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(2)}
 									a: {@a.FormatValue()}
 									b: {@b.FormatValue()}
 									value: {@value.FormatValue()}
@@ -613,14 +690,16 @@ public static class OptionalArgumentsTests
 				
 				public IHaveOptionalArgumentsCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::IHaveOptionalArguments" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::IHaveOptionalArguments Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -630,31 +709,49 @@ public static class OptionalArgumentsTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForIHaveOptionalArguments<TAdornments>
+					internal interface IAdornmentsForIHaveOptionalArguments<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForIHaveOptionalArguments<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::IHaveOptionalArgumentsCreateExpectations.Handler0, global::System.Action<int, string, double>>, IAdornmentsForIHaveOptionalArguments<AdornmentsForHandler0>
+					internal sealed class FooAdornments0E162FE7
+						: global::Rocks.Adornments<FooAdornments0E162FE7, global::IHaveOptionalArgumentsCreateExpectations.Handler0, global::System.Action<int, string, double>>, IAdornmentsForIHaveOptionalArguments<FooAdornments0E162FE7>
 					{
-						public AdornmentsForHandler0(global::IHaveOptionalArgumentsCreateExpectations.Handler0 handler)
-							: base(handler) { }
+						internal FooAdornments0E162FE7(global::IHaveOptionalArgumentsCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler1
-						: global::Rocks.Adornments<AdornmentsForHandler1, global::IHaveOptionalArgumentsCreateExpectations.Handler1, global::System.Func<int, string, int>, int>, IAdornmentsForIHaveOptionalArguments<AdornmentsForHandler1>
+					internal sealed class thisGetsAdornmentsD443FCB6
+						: global::Rocks.Adornments<thisGetsAdornmentsD443FCB6, global::IHaveOptionalArgumentsCreateExpectations.Handler1, global::System.Func<int, string, int>, int>, IAdornmentsForIHaveOptionalArguments<thisGetsAdornmentsD443FCB6>
 					{
-						public AdornmentsForHandler1(global::IHaveOptionalArgumentsCreateExpectations.Handler1 handler)
-							: base(handler) { }
+						internal thisGetsAdornmentsD443FCB6(global::IHaveOptionalArgumentsCreateExpectations.Handler1 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler2
-						: global::Rocks.Adornments<AdornmentsForHandler2, global::IHaveOptionalArgumentsCreateExpectations.Handler2, global::System.Action<int, string, int>>, IAdornmentsForIHaveOptionalArguments<AdornmentsForHandler2>
+					internal sealed class thisSetsAdornments02547E49
+						: global::Rocks.Adornments<thisSetsAdornments02547E49, global::IHaveOptionalArgumentsCreateExpectations.Handler2, global::System.Action<int, string, int>>, IAdornmentsForIHaveOptionalArguments<thisSetsAdornments02547E49>
 					{
-						public AdornmentsForHandler2(global::IHaveOptionalArgumentsCreateExpectations.Handler2 handler)
-							: base(handler) { }
+						internal thisSetsAdornments02547E49(global::IHaveOptionalArgumentsCreateExpectations.Handler2 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
+				}
+				
+				internal void Remove(global::IHaveOptionalArgumentsCreateExpectations.Adornments.FooAdornments0E162FE7 adornments)
+				{
+					adornments.Remove(this.@handlers0);
+					if (this.@handlers0?.Count == 0) { this.@handlers0 = null; }
+				}
+				
+				internal void Remove(global::IHaveOptionalArgumentsCreateExpectations.Adornments.thisGetsAdornmentsD443FCB6 adornments)
+				{
+					adornments.Remove(this.@handlers1);
+					if (this.@handlers1?.Count == 0) { this.@handlers1 = null; }
+				}
+				
+				internal void Remove(global::IHaveOptionalArgumentsCreateExpectations.Adornments.thisSetsAdornments02547E49 adornments)
+				{
+					adornments.Remove(this.@handlers2);
+					if (this.@handlers2?.Count == 0) { this.@handlers2 = null; }
 				}
 			}
 			
@@ -675,9 +772,15 @@ public static class OptionalArgumentsTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::IHaveOptionalArguments"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IHaveOptionalArgumentsMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::IHaveOptionalArguments" />-based type.
+				/// </summary>
 				internal global::IHaveOptionalArguments Instance()
 				{
 					return new Mock();
@@ -748,20 +851,32 @@ public static class OptionalArgumentsTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::IStuff"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IStuffCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::IStuffCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::IStuff"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::IStuffCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::IStuffCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal global::IStuffCreateExpectations.Adornments.AdornmentsForHandler0 Perform(global::Rocks.Argument<int> @mustHave, global::Rocks.Argument<string> @data, global::Rocks.Argument<int> @value)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::IStuff.Perform(Int32,String,Int32)"/>.
+					/// </summary>
+					internal global::IStuffCreateExpectations.Adornments.PerformAdornments02547E49 Perform(global::Rocks.Argument<int> @mustHave, global::Rocks.Argument<string> @data, global::Rocks.Argument<int> @value)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@mustHave);
@@ -775,12 +890,15 @@ public static class OptionalArgumentsTests
 							@value = @value.Transform(3),
 						};
 						
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
-						else { this.parent.handlers0.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers0 ??= new(1);
+						this.parent.handlers0.Add(@handler);
+						return new(@handler, this.parent);
 					}
 					
-					internal global::IStuffCreateExpectations.Adornments.AdornmentsForHandler0 Perform(global::Rocks.Argument<int> @mustHave, global::Rocks.Argument<string> @data, [global::System.Runtime.InteropServices.Optional, global::System.Runtime.InteropServices.DefaultParameterValue(3)] int @value) =>
+					/// <summary>
+					/// Sets an expectation for <see cref="global::IStuff.Perform(Int32,String,Int32)"/>.
+					/// </summary>
+					internal global::IStuffCreateExpectations.Adornments.PerformAdornments02547E49 Perform(global::Rocks.Argument<int> @mustHave, global::Rocks.Argument<string> @data, [global::System.Runtime.InteropServices.Optional, global::System.Runtime.InteropServices.DefaultParameterValue(3)] int @value) =>
 						this.Perform(@mustHave, @data, global::Rocks.Arg.Is(@value));
 				}
 				
@@ -789,12 +907,15 @@ public static class OptionalArgumentsTests
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Action<int, string, int>>
 				{
-					public global::Rocks.Argument<int> @mustHave { get; set; }
-					public global::Rocks.Argument<string> @data { get; set; }
-					public global::Rocks.Argument<int> @value { get; set; }
+					internal global::Rocks.Argument<int> @mustHave { get; set; }
+					internal global::Rocks.Argument<string> @data { get; set; }
+					internal global::Rocks.Argument<int> @value { get; set; }
 				}
-				private global::Rocks.Handlers<global::IStuffCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::IStuffCreateExpectations.Handler0>? @handlers0;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::IStuff"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -805,7 +926,7 @@ public static class OptionalArgumentsTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -829,7 +950,7 @@ public static class OptionalArgumentsTests
 						{
 							var @foundMatch = false;
 							
-							foreach (var @handler in this.Expectations.handlers0)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers0))
 							{
 								if (@handler.@mustHave.IsValid(@mustHave!) &&
 									@handler.@data.IsValid(@data!) &&
@@ -837,6 +958,7 @@ public static class OptionalArgumentsTests
 								{
 									@foundMatch = true;
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									@handler.Callback?.Invoke(@mustHave!, @data!, @value!);
 									break;
 								}
@@ -847,7 +969,7 @@ public static class OptionalArgumentsTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(0)}
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
 										mustHave: {@mustHave.FormatValue()}
 										data: {@data.FormatValue()}
 										value: {@value.FormatValue()}
@@ -859,7 +981,7 @@ public static class OptionalArgumentsTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
 									mustHave: {@mustHave.FormatValue()}
 									data: {@data.FormatValue()}
 									value: {@value.FormatValue()}
@@ -872,14 +994,16 @@ public static class OptionalArgumentsTests
 				
 				public IStuffCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::IStuff" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::IStuff Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -889,17 +1013,23 @@ public static class OptionalArgumentsTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForIStuff<TAdornments>
+					internal interface IAdornmentsForIStuff<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForIStuff<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::IStuffCreateExpectations.Handler0, global::System.Action<int, string, int>>, IAdornmentsForIStuff<AdornmentsForHandler0>
+					internal sealed class PerformAdornments02547E49
+						: global::Rocks.Adornments<PerformAdornments02547E49, global::IStuffCreateExpectations.Handler0, global::System.Action<int, string, int>>, IAdornmentsForIStuff<PerformAdornments02547E49>
 					{
-						public AdornmentsForHandler0(global::IStuffCreateExpectations.Handler0 handler)
-							: base(handler) { }
+						internal PerformAdornments02547E49(global::IStuffCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
+				}
+				
+				internal void Remove(global::IStuffCreateExpectations.Adornments.PerformAdornments02547E49 adornments)
+				{
+					adornments.Remove(this.@handlers0);
+					if (this.@handlers0?.Count == 0) { this.@handlers0 = null; }
 				}
 			}
 			
@@ -920,9 +1050,15 @@ public static class OptionalArgumentsTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::IStuff"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IStuffMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::IStuff" />-based type.
+				/// </summary>
 				internal global::IStuff Instance()
 				{
 					return new Mock();
@@ -987,20 +1123,32 @@ public static class OptionalArgumentsTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::IStuff"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IStuffCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::IStuffCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::IStuff"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::IStuffCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::IStuffCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal global::IStuffCreateExpectations.Adornments.AdornmentsForHandler0 Perform(global::Rocks.Argument<int> @mustHave, global::Rocks.Argument<int> @value, global::Rocks.Argument<string> @data)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::IStuff.Perform(Int32,Int32,String)"/>.
+					/// </summary>
+					internal global::IStuffCreateExpectations.Adornments.PerformAdornments37C9D115 Perform(global::Rocks.Argument<int> @mustHave, global::Rocks.Argument<int> @value, global::Rocks.Argument<string> @data)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@mustHave);
@@ -1014,12 +1162,15 @@ public static class OptionalArgumentsTests
 							@data = @data,
 						};
 						
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
-						else { this.parent.handlers0.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers0 ??= new(1);
+						this.parent.handlers0.Add(@handler);
+						return new(@handler, this.parent);
 					}
 					
-					internal global::IStuffCreateExpectations.Adornments.AdornmentsForHandler0 Perform(global::Rocks.Argument<int> @mustHave, [global::System.Runtime.InteropServices.Optional, global::System.Runtime.InteropServices.DefaultParameterValue(3)] int @value, global::Rocks.Argument<string> @data) =>
+					/// <summary>
+					/// Sets an expectation for <see cref="global::IStuff.Perform(Int32,Int32,String)"/>.
+					/// </summary>
+					internal global::IStuffCreateExpectations.Adornments.PerformAdornments37C9D115 Perform(global::Rocks.Argument<int> @mustHave, [global::System.Runtime.InteropServices.Optional, global::System.Runtime.InteropServices.DefaultParameterValue(3)] int @value, global::Rocks.Argument<string> @data) =>
 						this.Perform(@mustHave, global::Rocks.Arg.Is(@value), @data);
 				}
 				
@@ -1028,12 +1179,15 @@ public static class OptionalArgumentsTests
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Action<int, int, string>>
 				{
-					public global::Rocks.Argument<int> @mustHave { get; set; }
-					public global::Rocks.Argument<int> @value { get; set; }
-					public global::Rocks.Argument<string> @data { get; set; }
+					internal global::Rocks.Argument<int> @mustHave { get; set; }
+					internal global::Rocks.Argument<int> @value { get; set; }
+					internal global::Rocks.Argument<string> @data { get; set; }
 				}
-				private global::Rocks.Handlers<global::IStuffCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::IStuffCreateExpectations.Handler0>? @handlers0;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::IStuff"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -1044,7 +1198,7 @@ public static class OptionalArgumentsTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -1068,7 +1222,7 @@ public static class OptionalArgumentsTests
 						{
 							var @foundMatch = false;
 							
-							foreach (var @handler in this.Expectations.handlers0)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers0))
 							{
 								if (@handler.@mustHave.IsValid(@mustHave!) &&
 									@handler.@value.IsValid(@value!) &&
@@ -1076,6 +1230,7 @@ public static class OptionalArgumentsTests
 								{
 									@foundMatch = true;
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									@handler.Callback?.Invoke(@mustHave!, @value!, @data!);
 									break;
 								}
@@ -1086,7 +1241,7 @@ public static class OptionalArgumentsTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(0)}
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
 										mustHave: {@mustHave.FormatValue()}
 										value: {@value.FormatValue()}
 										data: {@data.FormatValue()}
@@ -1098,7 +1253,7 @@ public static class OptionalArgumentsTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
 									mustHave: {@mustHave.FormatValue()}
 									value: {@value.FormatValue()}
 									data: {@data.FormatValue()}
@@ -1111,14 +1266,16 @@ public static class OptionalArgumentsTests
 				
 				public IStuffCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::IStuff" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::IStuff Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -1128,17 +1285,23 @@ public static class OptionalArgumentsTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForIStuff<TAdornments>
+					internal interface IAdornmentsForIStuff<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForIStuff<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::IStuffCreateExpectations.Handler0, global::System.Action<int, int, string>>, IAdornmentsForIStuff<AdornmentsForHandler0>
+					internal sealed class PerformAdornments37C9D115
+						: global::Rocks.Adornments<PerformAdornments37C9D115, global::IStuffCreateExpectations.Handler0, global::System.Action<int, int, string>>, IAdornmentsForIStuff<PerformAdornments37C9D115>
 					{
-						public AdornmentsForHandler0(global::IStuffCreateExpectations.Handler0 handler)
-							: base(handler) { }
+						internal PerformAdornments37C9D115(global::IStuffCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
+				}
+				
+				internal void Remove(global::IStuffCreateExpectations.Adornments.PerformAdornments37C9D115 adornments)
+				{
+					adornments.Remove(this.@handlers0);
+					if (this.@handlers0?.Count == 0) { this.@handlers0 = null; }
 				}
 			}
 			
@@ -1159,9 +1322,15 @@ public static class OptionalArgumentsTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::IStuff"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IStuffMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::IStuff" />-based type.
+				/// </summary>
 				internal global::IStuff Instance()
 				{
 					return new Mock();

@@ -34,36 +34,50 @@ public static class PartialExpectationsTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::ITarget"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			public partial class TargetExpectationsStuff
 				: global::Rocks.Expectations
 			{
 				private readonly global::TargetExpectationsStuff.SetupsExpectations setups;
 				
-				internal sealed class SetupsExpectations
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::ITarget"/>.
+				/// </summary>
+				public sealed class SetupsExpectations
 				{
 					private readonly global::TargetExpectationsStuff parent;
 				
-					internal SetupsExpectations(global::TargetExpectationsStuff parent) =>
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
+					public SetupsExpectations(global::TargetExpectationsStuff parent) =>
 						this.parent = parent;
 				
-					internal global::TargetExpectationsStuff.Adornments.AdornmentsForHandler0 DoSomething()
+					/// <summary>
+					/// Sets an expectation for <see cref="global::ITarget.DoSomething()"/>.
+					/// </summary>
+					public global::TargetExpectationsStuff.Adornments.DoSomethingAdornments2D2816FE DoSomething()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						var handler = new global::TargetExpectationsStuff.Handler0();
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(handler); }
-						else { this.parent.handlers0.Add(handler); }
-						return new(handler);
+						this.parent.handlers0 = handler;
+						return new(handler, this.parent);
 					}
 				}
 				
-				internal global::TargetExpectationsStuff.SetupsExpectations Setups => this.setups;
+				public global::TargetExpectationsStuff.SetupsExpectations Setups => this.setups;
 				
-				internal sealed class Handler0
+				public sealed class Handler0
 					: global::Rocks.Handler<global::System.Action>
 				{ }
-				private global::Rocks.Handlers<global::TargetExpectationsStuff.Handler0>? @handlers0;
+				private global::TargetExpectationsStuff.Handler0? @handlers0;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::ITarget"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -74,7 +88,7 @@ public static class PartialExpectationsTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers0], 0, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -96,8 +110,9 @@ public static class PartialExpectationsTests
 					{
 						if (this.Expectations.handlers0 is not null)
 						{
-							var @handler = this.Expectations.handlers0.First;
+							var @handler = this.Expectations.handlers0;
 							@handler.CallCount++;
+							if (@handler.Exception is not null) { throw @handler.Exception; }
 							@handler.Callback?.Invoke();
 						}
 						else
@@ -105,7 +120,7 @@ public static class PartialExpectationsTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
 								""");
 						}
 					}
@@ -115,14 +130,16 @@ public static class PartialExpectationsTests
 				
 				public TargetExpectationsStuff() => this.setups = new(this);
 				
-				internal global::ITarget Instance()
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::ITarget" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
+				public global::ITarget Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -130,20 +147,23 @@ public static class PartialExpectationsTests
 					}
 				}
 				
-				internal static class Adornments
+				public static class Adornments
 				{
 					public interface IAdornmentsForTargetExpectationsStuff<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForTargetExpectationsStuff<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::TargetExpectationsStuff.Handler0, global::System.Action>, IAdornmentsForTargetExpectationsStuff<AdornmentsForHandler0>
+					public sealed class DoSomethingAdornments2D2816FE
+						: global::Rocks.Adornments<DoSomethingAdornments2D2816FE, global::TargetExpectationsStuff.Handler0, global::System.Action>, IAdornmentsForTargetExpectationsStuff<DoSomethingAdornments2D2816FE>
 					{
-						public AdornmentsForHandler0(global::TargetExpectationsStuff.Handler0 handler)
-							: base(handler) { }
+						public DoSomethingAdornments2D2816FE(global::TargetExpectationsStuff.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 				}
+				
+				public void Remove(global::TargetExpectationsStuff.Adornments.DoSomethingAdornments2D2816FE adornments) =>
+					this.@handlers0 = null;
 			}
 			
 			#pragma warning restore CS8618
@@ -196,20 +216,32 @@ public static class PartialExpectationsTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::ITarget"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal unsafe sealed class ITargetCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::ITargetCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::ITarget"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::ITargetCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::ITargetCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal global::ITargetCreateExpectations.Adornments.AdornmentsForHandler0 PointerParameter(global::Rocks.Projections.PointerArgument<int> @value)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::ITarget.PointerParameter(int*)"/>.
+					/// </summary>
+					internal global::ITargetCreateExpectations.Adornments.PointerParameterAdornments06BDC59D PointerParameter(global::Rocks.Projections.PointerArgument<int> @value)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -219,9 +251,9 @@ public static class PartialExpectationsTests
 							@value = @value,
 						};
 						
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
-						else { this.parent.handlers0.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers0 ??= new(1);
+						this.parent.handlers0.Add(@handler);
+						return new(@handler, this.parent);
 					}
 				}
 				
@@ -231,10 +263,13 @@ public static class PartialExpectationsTests
 					: global::Rocks.Handler<Handler0.CallbackForHandler>
 				{
 					internal unsafe delegate void CallbackForHandler(int* @value);
-					public global::Rocks.Projections.PointerArgument<int> @value { get; set; }
+					internal global::Rocks.Projections.PointerArgument<int> @value { get; set; }
 				}
-				private global::Rocks.Handlers<global::ITargetCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::ITargetCreateExpectations.Handler0>? @handlers0;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::ITarget"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -245,7 +280,7 @@ public static class PartialExpectationsTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -269,12 +304,13 @@ public static class PartialExpectationsTests
 						{
 							var @foundMatch = false;
 							
-							foreach (var @handler in this.Expectations.handlers0)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers0))
 							{
 								if (@handler.@value.IsValid(@value!))
 								{
 									@foundMatch = true;
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									@handler.Callback?.Invoke(@value!);
 									break;
 								}
@@ -285,7 +321,7 @@ public static class PartialExpectationsTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(0)}
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
 										value: <Not formattable>
 									""");
 							}
@@ -295,7 +331,7 @@ public static class PartialExpectationsTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
 									value: <Not formattable>
 								""");
 						}
@@ -306,14 +342,16 @@ public static class PartialExpectationsTests
 				
 				public ITargetCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::ITarget" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::ITarget Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -323,17 +361,23 @@ public static class PartialExpectationsTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForITarget<TAdornments>
+					internal interface IAdornmentsForITarget<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForITarget<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::ITargetCreateExpectations.Handler0, global::ITargetCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForITarget<AdornmentsForHandler0>
+					internal sealed class PointerParameterAdornments06BDC59D
+						: global::Rocks.Adornments<PointerParameterAdornments06BDC59D, global::ITargetCreateExpectations.Handler0, global::ITargetCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForITarget<PointerParameterAdornments06BDC59D>
 					{
-						public AdornmentsForHandler0(global::ITargetCreateExpectations.Handler0 handler)
-							: base(handler) { }
+						internal PointerParameterAdornments06BDC59D(global::ITargetCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
+				}
+				
+				internal void Remove(global::ITargetCreateExpectations.Adornments.PointerParameterAdornments06BDC59D adornments)
+				{
+					adornments.Remove(this.@handlers0);
+					if (this.@handlers0?.Count == 0) { this.@handlers0 = null; }
 				}
 			}
 			
@@ -356,20 +400,32 @@ public static class PartialExpectationsTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::IPartialTarget"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			public unsafe partial class TargetExpectationsStuff
 				: global::Rocks.Expectations
 			{
 				private readonly global::TargetExpectationsStuff.SetupsExpectations setups;
 				
-				internal sealed class SetupsExpectations
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::IPartialTarget"/>.
+				/// </summary>
+				public sealed class SetupsExpectations
 				{
 					private readonly global::TargetExpectationsStuff parent;
 				
-					internal SetupsExpectations(global::TargetExpectationsStuff parent) =>
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
+					public SetupsExpectations(global::TargetExpectationsStuff parent) =>
 						this.parent = parent;
 				
-					internal global::TargetExpectationsStuff.Adornments.AdornmentsForHandler0 PointerParameter(global::Rocks.Projections.PointerArgument<int> @value)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::IPartialTarget.PointerParameter(int*)"/>.
+					/// </summary>
+					public global::TargetExpectationsStuff.Adornments.PointerParameterAdornments06BDC59D PointerParameter(global::Rocks.Projections.PointerArgument<int> @value)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -379,22 +435,25 @@ public static class PartialExpectationsTests
 							@value = @value,
 						};
 						
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
-						else { this.parent.handlers0.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers0 ??= new(1);
+						this.parent.handlers0.Add(@handler);
+						return new(@handler, this.parent);
 					}
 				}
 				
-				internal global::TargetExpectationsStuff.SetupsExpectations Setups => this.setups;
+				public global::TargetExpectationsStuff.SetupsExpectations Setups => this.setups;
 				
-				internal sealed class Handler0
+				public sealed class Handler0
 					: global::Rocks.Handler<Handler0.CallbackForHandler>
 				{
-					internal unsafe delegate void CallbackForHandler(int* @value);
+					public unsafe delegate void CallbackForHandler(int* @value);
 					public global::Rocks.Projections.PointerArgument<int> @value { get; set; }
 				}
-				private global::Rocks.Handlers<global::TargetExpectationsStuff.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::TargetExpectationsStuff.Handler0>? @handlers0;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::IPartialTarget"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -405,7 +464,7 @@ public static class PartialExpectationsTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -429,12 +488,13 @@ public static class PartialExpectationsTests
 						{
 							var @foundMatch = false;
 							
-							foreach (var @handler in this.Expectations.handlers0)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers0))
 							{
 								if (@handler.@value.IsValid(@value!))
 								{
 									@foundMatch = true;
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									@handler.Callback?.Invoke(@value!);
 									break;
 								}
@@ -445,7 +505,7 @@ public static class PartialExpectationsTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(0)}
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
 										value: <Not formattable>
 									""");
 							}
@@ -455,7 +515,7 @@ public static class PartialExpectationsTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
 									value: <Not formattable>
 								""");
 						}
@@ -466,14 +526,16 @@ public static class PartialExpectationsTests
 				
 				public TargetExpectationsStuff() => this.setups = new(this);
 				
-				internal global::IPartialTarget Instance()
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::IPartialTarget" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
+				public global::IPartialTarget Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -481,19 +543,25 @@ public static class PartialExpectationsTests
 					}
 				}
 				
-				internal static class Adornments
+				public static class Adornments
 				{
 					public interface IAdornmentsForTargetExpectationsStuff<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForTargetExpectationsStuff<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::TargetExpectationsStuff.Handler0, global::TargetExpectationsStuff.Handler0.CallbackForHandler>, IAdornmentsForTargetExpectationsStuff<AdornmentsForHandler0>
+					public sealed class PointerParameterAdornments06BDC59D
+						: global::Rocks.Adornments<PointerParameterAdornments06BDC59D, global::TargetExpectationsStuff.Handler0, global::TargetExpectationsStuff.Handler0.CallbackForHandler>, IAdornmentsForTargetExpectationsStuff<PointerParameterAdornments06BDC59D>
 					{
-						public AdornmentsForHandler0(global::TargetExpectationsStuff.Handler0 handler)
-							: base(handler) { }
+						public PointerParameterAdornments06BDC59D(global::TargetExpectationsStuff.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
+				}
+				
+				public void Remove(global::TargetExpectationsStuff.Adornments.PointerParameterAdornments06BDC59D adornments)
+				{
+					adornments.Remove(this.@handlers0);
+					if (this.@handlers0?.Count == 0) { this.@handlers0 = null; }
 				}
 			}
 			
@@ -504,7 +572,7 @@ public static class PartialExpectationsTests
 			"""";
 
 		var projectionGeneratedCode =
-			"""
+			""""
 			// <auto-generated/>
 			
 			#pragma warning disable CS8618
@@ -561,7 +629,7 @@ public static class PartialExpectationsTests
 			#pragma warning restore CS8714
 			#pragma warning restore CS8775
 			
-			""";
+			"""";
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
@@ -602,36 +670,50 @@ public static class PartialExpectationsTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::ITarget{T}"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			public partial class TargetExpectationsStuff<T>
 				: global::Rocks.Expectations
 			{
 				private readonly global::TargetExpectationsStuff<T>.SetupsExpectations setups;
 				
-				internal sealed class SetupsExpectations
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::ITarget{T}"/>.
+				/// </summary>
+				public sealed class SetupsExpectations
 				{
 					private readonly global::TargetExpectationsStuff<T> parent;
 				
-					internal SetupsExpectations(global::TargetExpectationsStuff<T> parent) =>
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
+					public SetupsExpectations(global::TargetExpectationsStuff<T> parent) =>
 						this.parent = parent;
 				
-					internal global::TargetExpectationsStuff<T>.Adornments.AdornmentsForHandler0 DoSomething()
+					/// <summary>
+					/// Sets an expectation for <see cref="global::ITarget{T}.DoSomething()"/>.
+					/// </summary>
+					public global::TargetExpectationsStuff<T>.Adornments.DoSomethingAdornments2D2816FE DoSomething()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						var handler = new global::TargetExpectationsStuff<T>.Handler0();
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(handler); }
-						else { this.parent.handlers0.Add(handler); }
-						return new(handler);
+						this.parent.handlers0 = handler;
+						return new(handler, this.parent);
 					}
 				}
 				
-				internal global::TargetExpectationsStuff<T>.SetupsExpectations Setups => this.setups;
+				public global::TargetExpectationsStuff<T>.SetupsExpectations Setups => this.setups;
 				
-				internal sealed class Handler0
+				public sealed class Handler0
 					: global::Rocks.Handler<global::System.Func<T>, T>
 				{ }
-				private global::Rocks.Handlers<global::TargetExpectationsStuff<T>.Handler0>? @handlers0;
+				private global::TargetExpectationsStuff<T>.Handler0? @handlers0;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::ITarget{T}"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -642,7 +724,7 @@ public static class PartialExpectationsTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers0], 0, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -664,8 +746,9 @@ public static class PartialExpectationsTests
 					{
 						if (this.Expectations.handlers0 is not null)
 						{
-							var @handler = this.Expectations.handlers0.First;
+							var @handler = this.Expectations.handlers0;
 							@handler.CallCount++;
+							if (@handler.Exception is not null) { throw @handler.Exception; }
 							var @result = @handler.Callback is not null ?
 								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
@@ -675,7 +758,7 @@ public static class PartialExpectationsTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
 								""");
 						}
 					}
@@ -685,14 +768,16 @@ public static class PartialExpectationsTests
 				
 				public TargetExpectationsStuff() => this.setups = new(this);
 				
-				internal global::ITarget<T> Instance()
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::ITarget{T}" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
+				public global::ITarget<T> Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -700,20 +785,23 @@ public static class PartialExpectationsTests
 					}
 				}
 				
-				internal static class Adornments
+				public static class Adornments
 				{
 					public interface IAdornmentsForTargetExpectationsStuff<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForTargetExpectationsStuff<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::TargetExpectationsStuff<T>.Handler0, global::System.Func<T>, T>, IAdornmentsForTargetExpectationsStuff<AdornmentsForHandler0>
+					public sealed class DoSomethingAdornments2D2816FE
+						: global::Rocks.Adornments<DoSomethingAdornments2D2816FE, global::TargetExpectationsStuff<T>.Handler0, global::System.Func<T>, T>, IAdornmentsForTargetExpectationsStuff<DoSomethingAdornments2D2816FE>
 					{
-						public AdornmentsForHandler0(global::TargetExpectationsStuff<T>.Handler0 handler)
-							: base(handler) { }
+						public DoSomethingAdornments2D2816FE(global::TargetExpectationsStuff<T>.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 				}
+				
+				public void Remove(global::TargetExpectationsStuff<T>.Adornments.DoSomethingAdornments2D2816FE adornments) =>
+					this.@handlers0 = null;
 			}
 			
 			#pragma warning restore CS8618
@@ -767,36 +855,50 @@ public static class PartialExpectationsTests
 			
 			namespace ExpectationsTarget;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::MockTarget.ITarget"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			public partial class TargetExpectationsStuff
 				: global::Rocks.Expectations
 			{
 				private readonly global::ExpectationsTarget.TargetExpectationsStuff.SetupsExpectations setups;
 				
-				internal sealed class SetupsExpectations
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::MockTarget.ITarget"/>.
+				/// </summary>
+				public sealed class SetupsExpectations
 				{
 					private readonly global::ExpectationsTarget.TargetExpectationsStuff parent;
 				
-					internal SetupsExpectations(global::ExpectationsTarget.TargetExpectationsStuff parent) =>
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
+					public SetupsExpectations(global::ExpectationsTarget.TargetExpectationsStuff parent) =>
 						this.parent = parent;
 				
-					internal global::ExpectationsTarget.TargetExpectationsStuff.Adornments.AdornmentsForHandler0 DoSomething()
+					/// <summary>
+					/// Sets an expectation for <see cref="global::MockTarget.ITarget.DoSomething()"/>.
+					/// </summary>
+					public global::ExpectationsTarget.TargetExpectationsStuff.Adornments.DoSomethingAdornments2D2816FE DoSomething()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						var handler = new global::ExpectationsTarget.TargetExpectationsStuff.Handler0();
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(handler); }
-						else { this.parent.handlers0.Add(handler); }
-						return new(handler);
+						this.parent.handlers0 = handler;
+						return new(handler, this.parent);
 					}
 				}
 				
-				internal global::ExpectationsTarget.TargetExpectationsStuff.SetupsExpectations Setups => this.setups;
+				public global::ExpectationsTarget.TargetExpectationsStuff.SetupsExpectations Setups => this.setups;
 				
-				internal sealed class Handler0
+				public sealed class Handler0
 					: global::Rocks.Handler<global::System.Action>
 				{ }
-				private global::Rocks.Handlers<global::ExpectationsTarget.TargetExpectationsStuff.Handler0>? @handlers0;
+				private global::ExpectationsTarget.TargetExpectationsStuff.Handler0? @handlers0;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::MockTarget.ITarget"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -807,7 +909,7 @@ public static class PartialExpectationsTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify([this.handlers0], 0, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -829,8 +931,9 @@ public static class PartialExpectationsTests
 					{
 						if (this.Expectations.handlers0 is not null)
 						{
-							var @handler = this.Expectations.handlers0.First;
+							var @handler = this.Expectations.handlers0;
 							@handler.CallCount++;
+							if (@handler.Exception is not null) { throw @handler.Exception; }
 							@handler.Callback?.Invoke();
 						}
 						else
@@ -838,7 +941,7 @@ public static class PartialExpectationsTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
 								""");
 						}
 					}
@@ -848,14 +951,16 @@ public static class PartialExpectationsTests
 				
 				public TargetExpectationsStuff() => this.setups = new(this);
 				
-				internal global::MockTarget.ITarget Instance()
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::MockTarget.ITarget" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
+				public global::MockTarget.ITarget Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -863,20 +968,23 @@ public static class PartialExpectationsTests
 					}
 				}
 				
-				internal static class Adornments
+				public static class Adornments
 				{
 					public interface IAdornmentsForTargetExpectationsStuff<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForTargetExpectationsStuff<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::ExpectationsTarget.TargetExpectationsStuff.Handler0, global::System.Action>, IAdornmentsForTargetExpectationsStuff<AdornmentsForHandler0>
+					public sealed class DoSomethingAdornments2D2816FE
+						: global::Rocks.Adornments<DoSomethingAdornments2D2816FE, global::ExpectationsTarget.TargetExpectationsStuff.Handler0, global::System.Action>, IAdornmentsForTargetExpectationsStuff<DoSomethingAdornments2D2816FE>
 					{
-						public AdornmentsForHandler0(global::ExpectationsTarget.TargetExpectationsStuff.Handler0 handler)
-							: base(handler) { }
+						public DoSomethingAdornments2D2816FE(global::ExpectationsTarget.TargetExpectationsStuff.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 				}
+				
+				public void Remove(global::ExpectationsTarget.TargetExpectationsStuff.Adornments.DoSomethingAdornments2D2816FE adornments) =>
+					this.@handlers0 = null;
 			}
 			
 			#pragma warning restore CS8618
@@ -910,7 +1018,7 @@ public static class PartialExpectationsTests
 			""";
 
 		var generatedCode =
-			"""
+			""""
 			// <auto-generated/>
 			
 			#pragma warning disable CS8618
@@ -920,10 +1028,16 @@ public static class PartialExpectationsTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::ITarget"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			public partial class TargetExpectationsStuff
 			{
-				internal global::ITarget Instance()
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::ITarget" />-based type.
+				/// </summary>
+				public global::ITarget Instance()
 				{
 					return new Mock();
 				}
@@ -946,7 +1060,7 @@ public static class PartialExpectationsTests
 			#pragma warning restore CS8714
 			#pragma warning restore CS8775
 			
-			""";
+			"""";
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
@@ -973,7 +1087,7 @@ public static class PartialExpectationsTests
 			""";
 
 		var generatedCode =
-			"""
+			""""
 			// <auto-generated/>
 			
 			#pragma warning disable CS8618
@@ -983,10 +1097,16 @@ public static class PartialExpectationsTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::ITarget{T}"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			public partial class TargetExpectationsStuff<T>
 			{
-				internal global::ITarget<T> Instance()
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::ITarget{T}" />-based type.
+				/// </summary>
+				public global::ITarget<T> Instance()
 				{
 					return new Mock();
 				}
@@ -1010,7 +1130,7 @@ public static class PartialExpectationsTests
 			#pragma warning restore CS8714
 			#pragma warning restore CS8775
 			
-			""";
+			"""";
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[
@@ -1043,7 +1163,7 @@ public static class PartialExpectationsTests
 			""";
 
 		var generatedCode =
-			"""
+			""""
 			// <auto-generated/>
 			
 			#pragma warning disable CS8618
@@ -1055,10 +1175,16 @@ public static class PartialExpectationsTests
 			
 			namespace ExpectationsTarget
 			{
+				/// <summary>
+				/// Contains code to create a "simple" definition of <see cref="global::MockTarget.ITarget"/>.
+				/// </summary>
 				[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 				public partial class TargetExpectationsStuff
 				{
-					internal global::MockTarget.ITarget Instance()
+					/// <summary>
+					/// Creates a new "simple" instance of a <see cref="global::MockTarget.ITarget" />-based type.
+					/// </summary>
+					public global::MockTarget.ITarget Instance()
 					{
 						return new Mock();
 					}
@@ -1082,7 +1208,7 @@ public static class PartialExpectationsTests
 			#pragma warning restore CS8714
 			#pragma warning restore CS8775
 			
-			""";
+			"""";
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[

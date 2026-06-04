@@ -32,20 +32,32 @@ public static class ProjectionGenericsAndPointersGeneratorTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::ISurface"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal unsafe sealed class ISurfaceCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::ISurfaceCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::ISurface"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::ISurfaceCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::ISurfaceCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal global::ISurfaceCreateExpectations.Adornments.AdornmentsForHandler0<T> Create<T>(global::Rocks.Projections.PointerArgument<T> @allocator) where T : unmanaged
+					/// <summary>
+					/// Sets an expectation for <see cref="global::ISurface.Create{T}(T*)"/>.
+					/// </summary>
+					internal global::ISurfaceCreateExpectations.Adornments.CreateAdornments7BA2F513<T> Create<T>(global::Rocks.Projections.PointerArgument<T> @allocator) where T : unmanaged
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@allocator);
@@ -55,9 +67,9 @@ public static class ProjectionGenericsAndPointersGeneratorTests
 							@allocator = @allocator,
 						};
 						
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
-						else { this.parent.handlers0.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers0 ??= new(1);
+						this.parent.handlers0.Add(@handler);
+						return new(@handler, this.parent);
 					}
 				}
 				
@@ -68,10 +80,13 @@ public static class ProjectionGenericsAndPointersGeneratorTests
 					where T : unmanaged
 				{
 					internal unsafe delegate void CallbackForHandler(T* @allocator);
-					public global::Rocks.Projections.PointerArgument<T> @allocator { get; set; }
+					internal global::Rocks.Projections.PointerArgument<T> @allocator { get; set; }
 				}
-				private global::Rocks.Handlers<global::Rocks.Handler>? @handlers0;
+				private global::System.Collections.Generic.List<global::Rocks.Handler>? @handlers0;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::ISurface"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -82,7 +97,7 @@ public static class ProjectionGenericsAndPointersGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -107,7 +122,7 @@ public static class ProjectionGenericsAndPointersGeneratorTests
 						{
 							var @foundMatch = false;
 							
-							foreach (var @genericHandler in this.Expectations.handlers0)
+							foreach (var @genericHandler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers0))
 							{
 								if (@genericHandler is global::ISurfaceCreateExpectations.Handler0<T> @handler)
 								{
@@ -115,6 +130,7 @@ public static class ProjectionGenericsAndPointersGeneratorTests
 									{
 										@foundMatch = true;
 										@handler.CallCount++;
+										if (@handler.Exception is not null) { throw @handler.Exception; }
 										@handler.Callback?.Invoke(@allocator!);
 										break;
 									}
@@ -126,7 +142,7 @@ public static class ProjectionGenericsAndPointersGeneratorTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(0)}
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
 										allocator: <Not formattable>
 									""");
 							}
@@ -136,7 +152,7 @@ public static class ProjectionGenericsAndPointersGeneratorTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
 									allocator: <Not formattable>
 								""");
 						}
@@ -147,14 +163,16 @@ public static class ProjectionGenericsAndPointersGeneratorTests
 				
 				public ISurfaceCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::ISurface" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::ISurface Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -164,17 +182,23 @@ public static class ProjectionGenericsAndPointersGeneratorTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForISurface<TAdornments>
+					internal interface IAdornmentsForISurface<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForISurface<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0<T>
-						: global::Rocks.Adornments<AdornmentsForHandler0<T>, global::ISurfaceCreateExpectations.Handler0<T>, global::ISurfaceCreateExpectations.Handler0<T>.CallbackForHandler>, IAdornmentsForISurface<AdornmentsForHandler0<T>> where T : unmanaged
+					internal sealed class CreateAdornments7BA2F513<T>
+						: global::Rocks.Adornments<CreateAdornments7BA2F513<T>, global::ISurfaceCreateExpectations.Handler0<T>, global::ISurfaceCreateExpectations.Handler0<T>.CallbackForHandler>, IAdornmentsForISurface<CreateAdornments7BA2F513<T>> where T : unmanaged
 					{
-						public AdornmentsForHandler0(global::ISurfaceCreateExpectations.Handler0<T> handler)
-							: base(handler) { }
+						internal CreateAdornments7BA2F513(global::ISurfaceCreateExpectations.Handler0<T> handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
+				}
+				
+				internal void Remove<T>(global::ISurfaceCreateExpectations.Adornments.CreateAdornments7BA2F513<T> adornments) where T : unmanaged
+				{
+					adornments.RemoveHandler(this.@handlers0);
+					if (this.@handlers0?.Count == 0) { this.@handlers0 = null; }
 				}
 			}
 			
@@ -195,9 +219,15 @@ public static class ProjectionGenericsAndPointersGeneratorTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::ISurface"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class ISurfaceMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::ISurface" />-based type.
+				/// </summary>
 				internal global::ISurface Instance()
 				{
 					return new Mock();
@@ -225,7 +255,7 @@ public static class ProjectionGenericsAndPointersGeneratorTests
 			"""";
 
 		var projectedCode =
-			"""
+			""""
 			// <auto-generated/>
 			
 			#pragma warning disable CS8618
@@ -282,7 +312,7 @@ public static class ProjectionGenericsAndPointersGeneratorTests
 			#pragma warning restore CS8714
 			#pragma warning restore CS8775
 			
-			""";
+			"""";
 
 		await TestAssistants.RunGeneratorAsync<RockGenerator>(code,
 			[

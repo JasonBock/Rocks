@@ -14,6 +14,13 @@ namespace Rocks;
 public abstract class Expectations
 {
 	/// <summary>
+	/// Creates a new <see cref="Expectations" /> instance,
+	/// only used by subclasses.
+	/// </summary>
+	protected Expectations() 
+		: base() { }
+
+	/// <summary>
 	/// Verifies the expectations.
 	/// </summary>
 	public abstract void Verify();

@@ -47,11 +47,20 @@ public static class IDisposableInstancesIntoTasksSuppressorTests
 				: Handler<Func<Task<Disposable>>, Task<Disposable>>
 			{ }
 
+			public sealed class TestExpectations
+				: Expectations 
+			{ 
+				public TestExpectations()
+					: base() { }
+
+				public override void Verify() { }
+			}
+
 			public sealed class TestAdornments
 				: Adornments<TestAdornments, TestHandler, Func<Task<Disposable>>, Task<Disposable>>
 			{
-				public TestAdornments(TestHandler handler)
-					: base(handler) { }
+				public TestAdornments(TestHandler handler, TestExpectations expectations)
+					: base(handler, expectations) { }
 			}
 
 			public static class Tester
@@ -59,7 +68,7 @@ public static class IDisposableInstancesIntoTasksSuppressorTests
 				public static void Test()
 				{
 					using var disposable = new Disposable();
-					var adornments = new TestAdornments(new());
+					var adornments = new TestAdornments(new(), new());
 					adornments.Callback(() => Task.FromResult({|#0:disposable|}));
 				}
 			}
@@ -108,11 +117,20 @@ public static class IDisposableInstancesIntoTasksSuppressorTests
 				: Handler<Func<Task<Disposable>>, Task<Disposable>>
 			{ }
 
+			public sealed class TestExpectations
+				: Expectations 
+			{ 
+				public TestExpectations()
+					: base() { }
+			
+				public override void Verify() { }
+			}
+			
 			public sealed class TestAdornments
 				: Adornments<TestAdornments, TestHandler, Func<Task<Disposable>>, Task<Disposable>>
 			{
-				public TestAdornments(TestHandler handler)
-					: base(handler) { }
+				public TestAdornments(TestHandler handler, TestExpectations expectations)
+					: base(handler, expectations) { }
 			}
 
 			public static class Tester
@@ -120,7 +138,7 @@ public static class IDisposableInstancesIntoTasksSuppressorTests
 				public static void Test()
 				{
 					using var disposable = new Disposable();
-					var adornments = new TestAdornments(new());
+					var adornments = new TestAdornments(new(), new());
 					adornments.ReturnValue(Task.FromResult({|#0:disposable|}));
 				}
 			}

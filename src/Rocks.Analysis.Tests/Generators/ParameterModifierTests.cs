@@ -32,20 +32,32 @@ public static class ParameterModifierTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::IParameterModifier"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IParameterModifierCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::IParameterModifierCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::IParameterModifier"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::IParameterModifierCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::IParameterModifierCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler0 Modify(global::Rocks.Argument<string> @value)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::IParameterModifier.Modify(String)"/>.
+					/// </summary>
+					internal global::IParameterModifierCreateExpectations.Adornments.ModifyAdornments639810A5 Modify(global::Rocks.Argument<string> @value)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -55,9 +67,9 @@ public static class ParameterModifierTests
 							@value = @value,
 						};
 						
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
-						else { this.parent.handlers0.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers0 ??= new(1);
+						this.parent.handlers0.Add(@handler);
+						return new(@handler, this.parent);
 					}
 				}
 				
@@ -66,10 +78,13 @@ public static class ParameterModifierTests
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Action<string>>
 				{
-					public global::Rocks.Argument<string> @value { get; set; }
+					internal global::Rocks.Argument<string> @value { get; set; }
 				}
-				private global::Rocks.Handlers<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::IParameterModifier"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -80,7 +95,7 @@ public static class ParameterModifierTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -104,12 +119,13 @@ public static class ParameterModifierTests
 						{
 							var @foundMatch = false;
 							
-							foreach (var @handler in this.Expectations.handlers0)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers0))
 							{
 								if (@handler.@value.IsValid(@value!))
 								{
 									@foundMatch = true;
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									@handler.Callback?.Invoke(@value!);
 									break;
 								}
@@ -120,7 +136,7 @@ public static class ParameterModifierTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(0)}
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
 										value: {@value.FormatValue()}
 									""");
 							}
@@ -130,7 +146,7 @@ public static class ParameterModifierTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
 									value: {@value.FormatValue()}
 								""");
 						}
@@ -141,14 +157,16 @@ public static class ParameterModifierTests
 				
 				public IParameterModifierCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::IParameterModifier" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::IParameterModifier Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -158,17 +176,23 @@ public static class ParameterModifierTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForIParameterModifier<TAdornments>
+					internal interface IAdornmentsForIParameterModifier<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForIParameterModifier<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::System.Action<string>>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
+					internal sealed class ModifyAdornments639810A5
+						: global::Rocks.Adornments<ModifyAdornments639810A5, global::IParameterModifierCreateExpectations.Handler0, global::System.Action<string>>, IAdornmentsForIParameterModifier<ModifyAdornments639810A5>
 					{
-						public AdornmentsForHandler0(global::IParameterModifierCreateExpectations.Handler0 handler)
-							: base(handler) { }
+						internal ModifyAdornments639810A5(global::IParameterModifierCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
+				}
+				
+				internal void Remove(global::IParameterModifierCreateExpectations.Adornments.ModifyAdornments639810A5 adornments)
+				{
+					adornments.Remove(this.@handlers0);
+					if (this.@handlers0?.Count == 0) { this.@handlers0 = null; }
 				}
 			}
 			
@@ -189,9 +213,15 @@ public static class ParameterModifierTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::IParameterModifier"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IParameterModifierMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::IParameterModifier" />-based type.
+				/// </summary>
 				internal global::IParameterModifier Instance()
 				{
 					return new Mock();
@@ -254,20 +284,32 @@ public static class ParameterModifierTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::IParameterModifier"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IParameterModifierCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::IParameterModifierCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::IParameterModifier"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::IParameterModifierCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::IParameterModifierCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler0 Modify(global::Rocks.Argument<string> @value)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::IParameterModifier.Modify(String)"/>.
+					/// </summary>
+					internal global::IParameterModifierCreateExpectations.Adornments.ModifyAdornments030B0DC3 Modify(global::Rocks.Argument<string> @value)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -277,9 +319,9 @@ public static class ParameterModifierTests
 							@value = global::Rocks.Arg.Any<string>(),
 						};
 						
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
-						else { this.parent.handlers0.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers0 ??= new(1);
+						this.parent.handlers0.Add(@handler);
+						return new(@handler, this.parent);
 					}
 				}
 				
@@ -289,10 +331,13 @@ public static class ParameterModifierTests
 					: global::Rocks.Handler<Handler0.CallbackForHandler>
 				{
 					internal delegate void CallbackForHandler(out string @value);
-					public global::Rocks.Argument<string> @value { get; set; }
+					internal global::Rocks.Argument<string> @value { get; set; }
 				}
-				private global::Rocks.Handlers<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::IParameterModifier"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -303,7 +348,7 @@ public static class ParameterModifierTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -328,12 +373,13 @@ public static class ParameterModifierTests
 						{
 							var @foundMatch = false;
 							
-							foreach (var @handler in this.Expectations.handlers0)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers0))
 							{
 								if (@handler.@value.IsValid(@value!))
 								{
 									@foundMatch = true;
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									@handler.Callback?.Invoke(out @value!);
 									break;
 								}
@@ -344,7 +390,7 @@ public static class ParameterModifierTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(0)}
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
 										value: {@value.FormatValue()}
 									""");
 							}
@@ -354,7 +400,7 @@ public static class ParameterModifierTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
 									value: {@value.FormatValue()}
 								""");
 						}
@@ -365,14 +411,16 @@ public static class ParameterModifierTests
 				
 				public IParameterModifierCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::IParameterModifier" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::IParameterModifier Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -382,17 +430,23 @@ public static class ParameterModifierTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForIParameterModifier<TAdornments>
+					internal interface IAdornmentsForIParameterModifier<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForIParameterModifier<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
+					internal sealed class ModifyAdornments030B0DC3
+						: global::Rocks.Adornments<ModifyAdornments030B0DC3, global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForIParameterModifier<ModifyAdornments030B0DC3>
 					{
-						public AdornmentsForHandler0(global::IParameterModifierCreateExpectations.Handler0 handler)
-							: base(handler) { }
+						internal ModifyAdornments030B0DC3(global::IParameterModifierCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
+				}
+				
+				internal void Remove(global::IParameterModifierCreateExpectations.Adornments.ModifyAdornments030B0DC3 adornments)
+				{
+					adornments.Remove(this.@handlers0);
+					if (this.@handlers0?.Count == 0) { this.@handlers0 = null; }
 				}
 			}
 			
@@ -413,9 +467,15 @@ public static class ParameterModifierTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::IParameterModifier"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IParameterModifierMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::IParameterModifier" />-based type.
+				/// </summary>
 				internal global::IParameterModifier Instance()
 				{
 					return new Mock();
@@ -478,20 +538,32 @@ public static class ParameterModifierTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::IParameterModifier"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IParameterModifierCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::IParameterModifierCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::IParameterModifier"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::IParameterModifierCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::IParameterModifierCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler0 Modify(global::Rocks.Argument<string> @value)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::IParameterModifier.Modify(String)"/>.
+					/// </summary>
+					internal global::IParameterModifierCreateExpectations.Adornments.ModifyAdornmentsD893C6C0 Modify(global::Rocks.Argument<string> @value)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -501,9 +573,9 @@ public static class ParameterModifierTests
 							@value = @value,
 						};
 						
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
-						else { this.parent.handlers0.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers0 ??= new(1);
+						this.parent.handlers0.Add(@handler);
+						return new(@handler, this.parent);
 					}
 				}
 				
@@ -513,10 +585,13 @@ public static class ParameterModifierTests
 					: global::Rocks.Handler<Handler0.CallbackForHandler>
 				{
 					internal delegate void CallbackForHandler(ref string @value);
-					public global::Rocks.Argument<string> @value { get; set; }
+					internal global::Rocks.Argument<string> @value { get; set; }
 				}
-				private global::Rocks.Handlers<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::IParameterModifier"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -527,7 +602,7 @@ public static class ParameterModifierTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -551,12 +626,13 @@ public static class ParameterModifierTests
 						{
 							var @foundMatch = false;
 							
-							foreach (var @handler in this.Expectations.handlers0)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers0))
 							{
 								if (@handler.@value.IsValid(@value!))
 								{
 									@foundMatch = true;
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									@handler.Callback?.Invoke(ref @value!);
 									break;
 								}
@@ -567,7 +643,7 @@ public static class ParameterModifierTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(0)}
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
 										value: {@value.FormatValue()}
 									""");
 							}
@@ -577,7 +653,7 @@ public static class ParameterModifierTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
 									value: {@value.FormatValue()}
 								""");
 						}
@@ -588,14 +664,16 @@ public static class ParameterModifierTests
 				
 				public IParameterModifierCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::IParameterModifier" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::IParameterModifier Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -605,17 +683,23 @@ public static class ParameterModifierTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForIParameterModifier<TAdornments>
+					internal interface IAdornmentsForIParameterModifier<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForIParameterModifier<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
+					internal sealed class ModifyAdornmentsD893C6C0
+						: global::Rocks.Adornments<ModifyAdornmentsD893C6C0, global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForIParameterModifier<ModifyAdornmentsD893C6C0>
 					{
-						public AdornmentsForHandler0(global::IParameterModifierCreateExpectations.Handler0 handler)
-							: base(handler) { }
+						internal ModifyAdornmentsD893C6C0(global::IParameterModifierCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
+				}
+				
+				internal void Remove(global::IParameterModifierCreateExpectations.Adornments.ModifyAdornmentsD893C6C0 adornments)
+				{
+					adornments.Remove(this.@handlers0);
+					if (this.@handlers0?.Count == 0) { this.@handlers0 = null; }
 				}
 			}
 			
@@ -636,9 +720,15 @@ public static class ParameterModifierTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::IParameterModifier"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IParameterModifierMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::IParameterModifier" />-based type.
+				/// </summary>
 				internal global::IParameterModifier Instance()
 				{
 					return new Mock();
@@ -700,20 +790,32 @@ public static class ParameterModifierTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::IParameterModifier"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IParameterModifierCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::IParameterModifierCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::IParameterModifier"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::IParameterModifierCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::IParameterModifierCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler0 Modify(global::Rocks.Argument<string> @value)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::IParameterModifier.Modify(String)"/>.
+					/// </summary>
+					internal global::IParameterModifierCreateExpectations.Adornments.ModifyAdornments639810A5 Modify(global::Rocks.Argument<string> @value)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -723,9 +825,9 @@ public static class ParameterModifierTests
 							@value = @value,
 						};
 						
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
-						else { this.parent.handlers0.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers0 ??= new(1);
+						this.parent.handlers0.Add(@handler);
+						return new(@handler, this.parent);
 					}
 				}
 				
@@ -734,10 +836,13 @@ public static class ParameterModifierTests
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::System.Action<string>>
 				{
-					public global::Rocks.Argument<string> @value { get; set; }
+					internal global::Rocks.Argument<string> @value { get; set; }
 				}
-				private global::Rocks.Handlers<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::IParameterModifier"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -748,7 +853,7 @@ public static class ParameterModifierTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -772,13 +877,14 @@ public static class ParameterModifierTests
 						{
 							var @foundMatch = false;
 							
-							foreach (var @handler in this.Expectations.handlers0)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers0))
 							{
 								if (@handler.@value.IsValid(@value!))
 								{
 									@foundMatch = true;
 									@handler.CallCount++;
-									@handler.Callback?.Invoke(@value!);
+									if (@handler.Exception is not null) { throw @handler.Exception; }
+									@handler.Callback?.Invoke(in @value!);
 									break;
 								}
 							}
@@ -788,7 +894,7 @@ public static class ParameterModifierTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(0)}
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
 										value: {@value.FormatValue()}
 									""");
 							}
@@ -798,7 +904,7 @@ public static class ParameterModifierTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
 									value: {@value.FormatValue()}
 								""");
 						}
@@ -809,14 +915,16 @@ public static class ParameterModifierTests
 				
 				public IParameterModifierCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::IParameterModifier" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::IParameterModifier Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -826,17 +934,23 @@ public static class ParameterModifierTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForIParameterModifier<TAdornments>
+					internal interface IAdornmentsForIParameterModifier<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForIParameterModifier<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::System.Action<string>>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
+					internal sealed class ModifyAdornments639810A5
+						: global::Rocks.Adornments<ModifyAdornments639810A5, global::IParameterModifierCreateExpectations.Handler0, global::System.Action<string>>, IAdornmentsForIParameterModifier<ModifyAdornments639810A5>
 					{
-						public AdornmentsForHandler0(global::IParameterModifierCreateExpectations.Handler0 handler)
-							: base(handler) { }
+						internal ModifyAdornments639810A5(global::IParameterModifierCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
+				}
+				
+				internal void Remove(global::IParameterModifierCreateExpectations.Adornments.ModifyAdornments639810A5 adornments)
+				{
+					adornments.Remove(this.@handlers0);
+					if (this.@handlers0?.Count == 0) { this.@handlers0 = null; }
 				}
 			}
 			
@@ -857,9 +971,15 @@ public static class ParameterModifierTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::IParameterModifier"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IParameterModifierMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::IParameterModifier" />-based type.
+				/// </summary>
 				internal global::IParameterModifier Instance()
 				{
 					return new Mock();
@@ -924,20 +1044,32 @@ public static class ParameterModifierTests
 			
 			using Rocks.Extensions;
 			
+			/// <summary>
+			/// Contains mocking infrastructure code for <see cref="global::IParameterModifier"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IParameterModifierCreateExpectations
 				: global::Rocks.Expectations
 			{
 				private readonly global::IParameterModifierCreateExpectations.SetupsExpectations setups;
 				
+				/// <summary>
+				/// Contains expectation setups for mockable members on <see cref="global::IParameterModifier"/>.
+				/// </summary>
 				internal sealed class SetupsExpectations
 				{
 					private readonly global::IParameterModifierCreateExpectations parent;
 				
+					/// <summary>
+					/// Creates a new <see cref="SetupsExpectations"/> instance.
+					/// </summary>
 					internal SetupsExpectations(global::IParameterModifierCreateExpectations parent) =>
 						this.parent = parent;
 				
-					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler0 RefArgument(global::Rocks.Argument<int> @a)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::IParameterModifier.RefArgument(Int32)"/>.
+					/// </summary>
+					internal global::IParameterModifierCreateExpectations.Adornments.RefArgumentAdornmentsF1C2B998 RefArgument(global::Rocks.Argument<int> @a)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@a);
@@ -947,12 +1079,15 @@ public static class ParameterModifierTests
 							@a = @a,
 						};
 						
-						if (this.parent.handlers0 is null) { this.parent.handlers0 = new(@handler); }
-						else { this.parent.handlers0.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers0 ??= new(1);
+						this.parent.handlers0.Add(@handler);
+						return new(@handler, this.parent);
 					}
 					
-					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler1<T1, T2> RefArgumentsWithGenerics<T1, T2>(global::Rocks.Argument<T1> @a, global::Rocks.Argument<T2> @b)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::IParameterModifier.RefArgumentsWithGenerics{T1, T2}(T1,T2)"/>.
+					/// </summary>
+					internal global::IParameterModifierCreateExpectations.Adornments.RefArgumentsWithGenericsAdornmentsE4617FC0<T1, T2> RefArgumentsWithGenerics<T1, T2>(global::Rocks.Argument<T1> @a, global::Rocks.Argument<T2> @b)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@a);
@@ -964,12 +1099,15 @@ public static class ParameterModifierTests
 							@b = @b,
 						};
 						
-						if (this.parent.handlers1 is null) { this.parent.handlers1 = new(@handler); }
-						else { this.parent.handlers1.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers1 ??= new(1);
+						this.parent.handlers1.Add(@handler);
+						return new(@handler, this.parent);
 					}
 					
-					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler2 OutArgument(global::Rocks.Argument<int> @a)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::IParameterModifier.OutArgument(Int32)"/>.
+					/// </summary>
+					internal global::IParameterModifierCreateExpectations.Adornments.OutArgumentAdornmentsC7477EBD OutArgument(global::Rocks.Argument<int> @a)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@a);
@@ -979,12 +1117,15 @@ public static class ParameterModifierTests
 							@a = global::Rocks.Arg.Any<int>(),
 						};
 						
-						if (this.parent.handlers2 is null) { this.parent.handlers2 = new(@handler); }
-						else { this.parent.handlers2.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers2 ??= new(1);
+						this.parent.handlers2.Add(@handler);
+						return new(@handler, this.parent);
 					}
 					
-					internal global::IParameterModifierCreateExpectations.Adornments.AdornmentsForHandler3<T1, T2> OutArgumentsWithGenerics<T1, T2>(global::Rocks.Argument<T1> @a, global::Rocks.Argument<T2> @b)
+					/// <summary>
+					/// Sets an expectation for <see cref="global::IParameterModifier.OutArgumentsWithGenerics{T1, T2}(T1,T2)"/>.
+					/// </summary>
+					internal global::IParameterModifierCreateExpectations.Adornments.OutArgumentsWithGenericsAdornmentsB9EA34BD<T1, T2> OutArgumentsWithGenerics<T1, T2>(global::Rocks.Argument<T1> @a, global::Rocks.Argument<T2> @b)
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@a);
@@ -996,9 +1137,9 @@ public static class ParameterModifierTests
 							@b = global::Rocks.Arg.Any<T2>(),
 						};
 						
-						if (this.parent.handlers3 is null) { this.parent.handlers3 = new(@handler); }
-						else { this.parent.handlers3.Add(@handler); }
-						return new(@handler);
+						this.parent.handlers3 ??= new(1);
+						this.parent.handlers3.Add(@handler);
+						return new(@handler, this.parent);
 					}
 				}
 				
@@ -1008,36 +1149,39 @@ public static class ParameterModifierTests
 					: global::Rocks.Handler<Handler0.CallbackForHandler>
 				{
 					internal delegate void CallbackForHandler(ref int @a);
-					public global::Rocks.Argument<int> @a { get; set; }
+					internal global::Rocks.Argument<int> @a { get; set; }
 				}
-				private global::Rocks.Handlers<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
 				
 				internal sealed class Handler1<T1, T2>
 					: global::Rocks.Handler<Handler1<T1, T2>.CallbackForHandler>
 				{
 					internal delegate void CallbackForHandler(T1 @a, ref T2 @b);
-					public global::Rocks.Argument<T1> @a { get; set; }
-					public global::Rocks.Argument<T2> @b { get; set; }
+					internal global::Rocks.Argument<T1> @a { get; set; }
+					internal global::Rocks.Argument<T2> @b { get; set; }
 				}
-				private global::Rocks.Handlers<global::Rocks.Handler>? @handlers1;
+				private global::System.Collections.Generic.List<global::Rocks.Handler>? @handlers1;
 				
 				internal sealed class Handler2
 					: global::Rocks.Handler<Handler2.CallbackForHandler>
 				{
 					internal delegate void CallbackForHandler(out int @a);
-					public global::Rocks.Argument<int> @a { get; set; }
+					internal global::Rocks.Argument<int> @a { get; set; }
 				}
-				private global::Rocks.Handlers<global::IParameterModifierCreateExpectations.Handler2>? @handlers2;
+				private global::System.Collections.Generic.List<global::IParameterModifierCreateExpectations.Handler2>? @handlers2;
 				
 				internal sealed class Handler3<T1, T2>
 					: global::Rocks.Handler<Handler3<T1, T2>.CallbackForHandler>
 				{
 					internal delegate void CallbackForHandler(T1 @a, out T2 @b);
-					public global::Rocks.Argument<T1> @a { get; set; }
-					public global::Rocks.Argument<T2> @b { get; set; }
+					internal global::Rocks.Argument<T1> @a { get; set; }
+					internal global::Rocks.Argument<T2> @b { get; set; }
 				}
-				private global::Rocks.Handlers<global::Rocks.Handler>? @handlers3;
+				private global::System.Collections.Generic.List<global::Rocks.Handler>? @handlers3;
 				
+				/// <summary>
+				/// Verifies expectations set for the <see cref="global::IParameterModifier"/>-based mock.
+				/// </summary>
 				public override void Verify()
 				{
 					if (!this.WasInstanceInvoked)
@@ -1048,10 +1192,10 @@ public static class ParameterModifierTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-						if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
-						if (this.handlers2 is not null) { failures.AddRange(this.Verify(this.handlers2, 2)); }
-						if (this.handlers3 is not null) { failures.AddRange(this.Verify(this.handlers3, 3)); }
+						if (this.handlers0 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers0, 0, typeof(Mock))); }
+						if (this.handlers1 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers1, 1, typeof(Mock))); }
+						if (this.handlers2 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers2, 2, typeof(Mock))); }
+						if (this.handlers3 is not null) { failures.AddRange(global::Rocks.Expectations.Verify(this.handlers3, 3, typeof(Mock))); }
 				
 						if (failures.Count > 0)
 						{
@@ -1075,12 +1219,13 @@ public static class ParameterModifierTests
 						{
 							var @foundMatch = false;
 							
-							foreach (var @handler in this.Expectations.handlers0)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers0))
 							{
 								if (@handler.@a.IsValid(@a!))
 								{
 									@foundMatch = true;
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									@handler.Callback?.Invoke(ref @a!);
 									break;
 								}
@@ -1091,7 +1236,7 @@ public static class ParameterModifierTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(0)}
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
 										a: {@a.FormatValue()}
 									""");
 							}
@@ -1101,7 +1246,7 @@ public static class ParameterModifierTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(0)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
 									a: {@a.FormatValue()}
 								""");
 						}
@@ -1114,7 +1259,7 @@ public static class ParameterModifierTests
 						{
 							var @foundMatch = false;
 							
-							foreach (var @genericHandler in this.Expectations.handlers1)
+							foreach (var @genericHandler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers1))
 							{
 								if (@genericHandler is global::IParameterModifierCreateExpectations.Handler1<T1, T2> @handler)
 								{
@@ -1123,6 +1268,7 @@ public static class ParameterModifierTests
 									{
 										@foundMatch = true;
 										@handler.CallCount++;
+										if (@handler.Exception is not null) { throw @handler.Exception; }
 										@handler.Callback?.Invoke(@a!, ref @b!);
 										break;
 									}
@@ -1134,7 +1280,7 @@ public static class ParameterModifierTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(1)}
+									No handlers match for {typeof(Mock).GetMemberDescription(1)}
 										a: {@a.FormatValue()}
 										b: {@b.FormatValue()}
 									""");
@@ -1145,7 +1291,7 @@ public static class ParameterModifierTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(1)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(1)}
 									a: {@a.FormatValue()}
 									b: {@b.FormatValue()}
 								""");
@@ -1160,12 +1306,13 @@ public static class ParameterModifierTests
 						{
 							var @foundMatch = false;
 							
-							foreach (var @handler in this.Expectations.handlers2)
+							foreach (var @handler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers2))
 							{
 								if (@handler.@a.IsValid(@a!))
 								{
 									@foundMatch = true;
 									@handler.CallCount++;
+									if (@handler.Exception is not null) { throw @handler.Exception; }
 									@handler.Callback?.Invoke(out @a!);
 									break;
 								}
@@ -1176,7 +1323,7 @@ public static class ParameterModifierTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(2)}
+									No handlers match for {typeof(Mock).GetMemberDescription(2)}
 										a: {@a.FormatValue()}
 									""");
 							}
@@ -1186,7 +1333,7 @@ public static class ParameterModifierTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(2)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(2)}
 									a: {@a.FormatValue()}
 								""");
 						}
@@ -1200,7 +1347,7 @@ public static class ParameterModifierTests
 						{
 							var @foundMatch = false;
 							
-							foreach (var @genericHandler in this.Expectations.handlers3)
+							foreach (var @genericHandler in global::System.Runtime.InteropServices.CollectionsMarshal.AsSpan(this.Expectations.handlers3))
 							{
 								if (@genericHandler is global::IParameterModifierCreateExpectations.Handler3<T1, T2> @handler)
 								{
@@ -1209,6 +1356,7 @@ public static class ParameterModifierTests
 									{
 										@foundMatch = true;
 										@handler.CallCount++;
+										if (@handler.Exception is not null) { throw @handler.Exception; }
 										@handler.Callback?.Invoke(@a!, out @b!);
 										break;
 									}
@@ -1220,7 +1368,7 @@ public static class ParameterModifierTests
 								this.Expectations.WasExceptionThrown = true;
 								throw new global::Rocks.Exceptions.ExpectationException(
 									$"""
-									No handlers match for {this.GetType().GetMemberDescription(3)}
+									No handlers match for {typeof(Mock).GetMemberDescription(3)}
 										a: {@a.FormatValue()}
 										b: {@b.FormatValue()}
 									""");
@@ -1231,7 +1379,7 @@ public static class ParameterModifierTests
 							this.Expectations.WasExceptionThrown = true;
 							throw new global::Rocks.Exceptions.ExpectationException(
 								$"""
-								No handlers were found for {this.GetType().GetMemberDescription(3)}
+								No handlers were found for {typeof(Mock).GetMemberDescription(3)}
 									a: {@a.FormatValue()}
 									b: {@b.FormatValue()}
 								""");
@@ -1243,14 +1391,16 @@ public static class ParameterModifierTests
 				
 				public IParameterModifierCreateExpectations() => this.setups = new(this);
 				
+				/// <summary>
+				/// Creates a new instance of a <see cref="global::IParameterModifier" />-based mock.
+				/// </summary>
+				/// <exception cref="global::Rocks.Exceptions.NewMockInstanceException">Thrown if a mock instance has already been created.</exception>
 				internal global::IParameterModifier Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new Mock(this);
-						this.MockType = @mock.GetType();
-						return @mock;
+						return new Mock(this);
 					}
 					else
 					{
@@ -1260,38 +1410,62 @@ public static class ParameterModifierTests
 				
 				internal static class Adornments
 				{
-					public interface IAdornmentsForIParameterModifier<TAdornments>
+					internal interface IAdornmentsForIParameterModifier<TAdornments>
 						: global::Rocks.IAdornments<TAdornments>
 						where TAdornments : IAdornmentsForIParameterModifier<TAdornments>
 					{ }
 					
-					public sealed class AdornmentsForHandler0
-						: global::Rocks.Adornments<AdornmentsForHandler0, global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForIParameterModifier<AdornmentsForHandler0>
+					internal sealed class RefArgumentAdornmentsF1C2B998
+						: global::Rocks.Adornments<RefArgumentAdornmentsF1C2B998, global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Handler0.CallbackForHandler>, IAdornmentsForIParameterModifier<RefArgumentAdornmentsF1C2B998>
 					{
-						public AdornmentsForHandler0(global::IParameterModifierCreateExpectations.Handler0 handler)
-							: base(handler) { }
+						internal RefArgumentAdornmentsF1C2B998(global::IParameterModifierCreateExpectations.Handler0 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler1<T1, T2>
-						: global::Rocks.Adornments<AdornmentsForHandler1<T1, T2>, global::IParameterModifierCreateExpectations.Handler1<T1, T2>, global::IParameterModifierCreateExpectations.Handler1<T1, T2>.CallbackForHandler>, IAdornmentsForIParameterModifier<AdornmentsForHandler1<T1, T2>>
+					internal sealed class RefArgumentsWithGenericsAdornmentsE4617FC0<T1, T2>
+						: global::Rocks.Adornments<RefArgumentsWithGenericsAdornmentsE4617FC0<T1, T2>, global::IParameterModifierCreateExpectations.Handler1<T1, T2>, global::IParameterModifierCreateExpectations.Handler1<T1, T2>.CallbackForHandler>, IAdornmentsForIParameterModifier<RefArgumentsWithGenericsAdornmentsE4617FC0<T1, T2>>
 					{
-						public AdornmentsForHandler1(global::IParameterModifierCreateExpectations.Handler1<T1, T2> handler)
-							: base(handler) { }
+						internal RefArgumentsWithGenericsAdornmentsE4617FC0(global::IParameterModifierCreateExpectations.Handler1<T1, T2> handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler2
-						: global::Rocks.Adornments<AdornmentsForHandler2, global::IParameterModifierCreateExpectations.Handler2, global::IParameterModifierCreateExpectations.Handler2.CallbackForHandler>, IAdornmentsForIParameterModifier<AdornmentsForHandler2>
+					internal sealed class OutArgumentAdornmentsC7477EBD
+						: global::Rocks.Adornments<OutArgumentAdornmentsC7477EBD, global::IParameterModifierCreateExpectations.Handler2, global::IParameterModifierCreateExpectations.Handler2.CallbackForHandler>, IAdornmentsForIParameterModifier<OutArgumentAdornmentsC7477EBD>
 					{
-						public AdornmentsForHandler2(global::IParameterModifierCreateExpectations.Handler2 handler)
-							: base(handler) { }
+						internal OutArgumentAdornmentsC7477EBD(global::IParameterModifierCreateExpectations.Handler2 handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
 					
-					public sealed class AdornmentsForHandler3<T1, T2>
-						: global::Rocks.Adornments<AdornmentsForHandler3<T1, T2>, global::IParameterModifierCreateExpectations.Handler3<T1, T2>, global::IParameterModifierCreateExpectations.Handler3<T1, T2>.CallbackForHandler>, IAdornmentsForIParameterModifier<AdornmentsForHandler3<T1, T2>>
+					internal sealed class OutArgumentsWithGenericsAdornmentsB9EA34BD<T1, T2>
+						: global::Rocks.Adornments<OutArgumentsWithGenericsAdornmentsB9EA34BD<T1, T2>, global::IParameterModifierCreateExpectations.Handler3<T1, T2>, global::IParameterModifierCreateExpectations.Handler3<T1, T2>.CallbackForHandler>, IAdornmentsForIParameterModifier<OutArgumentsWithGenericsAdornmentsB9EA34BD<T1, T2>>
 					{
-						public AdornmentsForHandler3(global::IParameterModifierCreateExpectations.Handler3<T1, T2> handler)
-							: base(handler) { }
+						internal OutArgumentsWithGenericsAdornmentsB9EA34BD(global::IParameterModifierCreateExpectations.Handler3<T1, T2> handler, global::Rocks.Expectations expectations)
+							: base(handler, expectations) { }
 					}
+				}
+				
+				internal void Remove(global::IParameterModifierCreateExpectations.Adornments.RefArgumentAdornmentsF1C2B998 adornments)
+				{
+					adornments.Remove(this.@handlers0);
+					if (this.@handlers0?.Count == 0) { this.@handlers0 = null; }
+				}
+				
+				internal void Remove<T1, T2>(global::IParameterModifierCreateExpectations.Adornments.RefArgumentsWithGenericsAdornmentsE4617FC0<T1, T2> adornments)
+				{
+					adornments.RemoveHandler(this.@handlers1);
+					if (this.@handlers1?.Count == 0) { this.@handlers1 = null; }
+				}
+				
+				internal void Remove(global::IParameterModifierCreateExpectations.Adornments.OutArgumentAdornmentsC7477EBD adornments)
+				{
+					adornments.Remove(this.@handlers2);
+					if (this.@handlers2?.Count == 0) { this.@handlers2 = null; }
+				}
+				
+				internal void Remove<T1, T2>(global::IParameterModifierCreateExpectations.Adornments.OutArgumentsWithGenericsAdornmentsB9EA34BD<T1, T2> adornments)
+				{
+					adornments.RemoveHandler(this.@handlers3);
+					if (this.@handlers3?.Count == 0) { this.@handlers3 = null; }
 				}
 			}
 			
@@ -1312,9 +1486,15 @@ public static class ParameterModifierTests
 			
 			#nullable enable
 			
+			/// <summary>
+			/// Contains code to create a "simple" definition of <see cref="global::IParameterModifier"/>.
+			/// </summary>
 			[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 			internal sealed class IParameterModifierMakeExpectations
 			{
+				/// <summary>
+				/// Creates a new "simple" instance of a <see cref="global::IParameterModifier" />-based type.
+				/// </summary>
 				internal global::IParameterModifier Instance()
 				{
 					return new Mock();
