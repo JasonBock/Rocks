@@ -225,7 +225,7 @@ internal static class MockMethodBuilder
 				_.RefKind switch
 				{
 					RefKind.Ref => $"ref @{_.Name}!",
-					RefKind.RefReadOnlyParameter => $"in @{_.Name}!",
+					RefKind.RefReadOnlyParameter => _.Type.IsRefLikeType ? $"in @{_.Name}!" : $"@{_.Name}!",
 					RefKind.Out => $"out @{_.Name}!",
 					_ => $"@{_.Name}!"
 				}

@@ -884,7 +884,7 @@ public static class ParameterModifierTests
 									@foundMatch = true;
 									@handler.CallCount++;
 									if (@handler.Exception is not null) { throw @handler.Exception; }
-									@handler.Callback?.Invoke(in @value!);
+									@handler.Callback?.Invoke(@value!);
 									break;
 								}
 							}
