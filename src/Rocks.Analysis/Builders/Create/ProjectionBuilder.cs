@@ -41,30 +41,31 @@ internal static class ProjectionBuilder
 		return argumentTypeName;
 	}
 
-	internal static void Build(IndentedTextWriter writer, ITypeReferenceModel projectedModel, string accessibility)
+	// Argument types will always be public
+	internal static void Build(IndentedTextWriter writer, ITypeReferenceModel projectedModel)
 	{
 		if (projectedModel.TypeKind == TypeKind.FunctionPointer)
 		{
-			BuildFunctionPointerArgument(writer, projectedModel, accessibility);
+			ProjectionBuilder.BuildFunctionPointerArgument(writer, projectedModel);
 		}
 		else if (projectedModel.PointedAtCount > 0)
 		{
 			if (projectedModel.PointedAt!.SpecialType == SpecialType.System_Void)
 			{
-				BuildVoidPointerArgument(writer, projectedModel, accessibility);
+				ProjectionBuilder.BuildVoidPointerArgument(writer, projectedModel);
 			}
 			else
 			{
-				BuildPointerArgument(writer, projectedModel, accessibility);
+				ProjectionBuilder.BuildPointerArgument(writer, projectedModel);
 			}
 		}
 		else
 		{
-			BuildSpecialArgument(writer, projectedModel, accessibility);
+			ProjectionBuilder.BuildSpecialArgument(writer, projectedModel);
 		}
 	}
 
-	private static void BuildFunctionPointerArgument(IndentedTextWriter writer, ITypeReferenceModel projectedModel, string accessibility)
+	private static void BuildFunctionPointerArgument(IndentedTextWriter writer, ITypeReferenceModel projectedModel)
 	{
 		var flattenedName = projectedModel.FlattenedName;
 		var fullyQualifiedName = projectedModel.FullyQualifiedName;
@@ -73,24 +74,24 @@ internal static class ProjectionBuilder
 			$$"""
 			#pragma warning disable CS8909
 
-			{{accessibility}} unsafe delegate bool ArgumentEvaluationFor{{flattenedName}}({{fullyQualifiedName}} @value);
+			public unsafe delegate bool ArgumentEvaluationFor{{flattenedName}}({{fullyQualifiedName}} @value);
 
-			{{accessibility}} sealed unsafe class ArgumentFor{{flattenedName}}
+			public sealed unsafe class ArgumentFor{{flattenedName}}
 				: Argument
 			{
 				private readonly ArgumentEvaluationFor{{flattenedName}}? evaluation;
 				private readonly {{fullyQualifiedName}} value;
 				private readonly ValidationState validation;
 
-				{{accessibility}} ArgumentFor{{flattenedName}}() => this.validation = ValidationState.None;
+				public ArgumentFor{{flattenedName}}() => this.validation = ValidationState.None;
 
-				{{accessibility}} ArgumentFor{{flattenedName}}({{fullyQualifiedName}} @value)
+				public ArgumentFor{{flattenedName}}({{fullyQualifiedName}} @value)
 				{
 					this.value = @value;
 					this.validation = ValidationState.Value;
 				}
 
-				{{accessibility}} ArgumentFor{{flattenedName}}(ArgumentEvaluationFor{{flattenedName}} @evaluation)
+				public ArgumentFor{{flattenedName}}(ArgumentEvaluationFor{{flattenedName}} @evaluation)
 				{
 					this.evaluation = @evaluation;
 					this.validation = ValidationState.Evaluation;
@@ -113,7 +114,7 @@ internal static class ProjectionBuilder
 			""");
 	}
 
-	private static void BuildSpecialArgument(IndentedTextWriter writer, ITypeReferenceModel projectedModel, string accessibility)
+	private static void BuildSpecialArgument(IndentedTextWriter writer, ITypeReferenceModel projectedModel)
 	{
 		var needsUnsafe = projectedModel.TypeKind == TypeKind.FunctionPointer ?
 			$"unsafe " : string.Empty;
@@ -122,17 +123,17 @@ internal static class ProjectionBuilder
 
 		writer.WriteLines(
 			$$"""
-			{{accessibility}} {{needsUnsafe}}delegate bool {{typeName}}ArgumentEvaluation({{fullyQualifiedName}} @value);
+			public {{needsUnsafe}}delegate bool {{typeName}}ArgumentEvaluation({{fullyQualifiedName}} @value);
 
-			{{accessibility}} sealed {{needsUnsafe}}class {{typeName}}Argument
+			public sealed {{needsUnsafe}}class {{typeName}}Argument
 				: Argument
 			{
 				private readonly {{typeName}}ArgumentEvaluation? evaluation;
 				private readonly ValidationState validation;
 
-				{{accessibility}} {{typeName}}Argument() => this.validation = ValidationState.None;
+				public {{typeName}}Argument() => this.validation = ValidationState.None;
 
-				{{accessibility}} {{typeName}}Argument({{typeName}}ArgumentEvaluation @evaluation)
+				public {{typeName}}Argument({{typeName}}ArgumentEvaluation @evaluation)
 				{
 					this.evaluation = @evaluation;
 					this.validation = ValidationState.Evaluation;
@@ -150,16 +151,16 @@ internal static class ProjectionBuilder
 			""");
 	}
 
-	private static void BuildPointerArgument(IndentedTextWriter writer, ITypeReferenceModel projectedModel, string accessibility)
+	private static void BuildPointerArgument(IndentedTextWriter writer, ITypeReferenceModel projectedModel)
 	{
 		var pointerNames = projectedModel.PointerNames!;
 		var pointerSplats = new string('*', (int)projectedModel.PointedAtCount);
 
 		writer.WriteLines(
 			$$"""
-			{{accessibility}} unsafe delegate bool {{pointerNames}}ArgumentEvaluation<T>(T{{pointerSplats}} @value) where T : unmanaged;
+			public unsafe delegate bool {{pointerNames}}ArgumentEvaluation<T>(T{{pointerSplats}} @value) where T : unmanaged;
 
-			{{accessibility}} sealed unsafe class {{pointerNames}}Argument<T>
+			public sealed unsafe class {{pointerNames}}Argument<T>
 				: Argument
 				where T : unmanaged
 			{
@@ -167,15 +168,15 @@ internal static class ProjectionBuilder
 				private readonly T{{pointerSplats}} value;
 				private readonly ValidationState validation;
 
-				{{accessibility}} {{pointerNames}}Argument() => this.validation = ValidationState.None;
+				public {{pointerNames}}Argument() => this.validation = ValidationState.None;
 
-				{{accessibility}} {{pointerNames}}Argument(T{{pointerSplats}} @value)
+				public {{pointerNames}}Argument(T{{pointerSplats}} @value)
 				{
 					this.value = @value;
 					this.validation = ValidationState.Value;
 				}
 
-				{{accessibility}} {{pointerNames}}Argument({{pointerNames}}ArgumentEvaluation<T> @evaluation)
+				public {{pointerNames}}Argument({{pointerNames}}ArgumentEvaluation<T> @evaluation)
 				{
 					this.evaluation = @evaluation;
 					this.validation = ValidationState.Evaluation;
@@ -196,31 +197,31 @@ internal static class ProjectionBuilder
 			""");
 	}
 
-	private static void BuildVoidPointerArgument(IndentedTextWriter writer, ITypeReferenceModel projectedModel, string accessibility)
+	private static void BuildVoidPointerArgument(IndentedTextWriter writer, ITypeReferenceModel projectedModel)
 	{
 		var pointerNames = projectedModel.PointerNames!;
 		var pointerSplats = new string('*', (int)projectedModel.PointedAtCount);
 
 		writer.WriteLines(
 			$$"""
-			{{accessibility}} unsafe delegate bool {{pointerNames}}VoidArgumentEvaluation(void{{pointerSplats}} @value);
+			public unsafe delegate bool {{pointerNames}}VoidArgumentEvaluation(void{{pointerSplats}} @value);
 
-			{{accessibility}} sealed unsafe class {{pointerNames}}VoidArgument
+			public sealed unsafe class {{pointerNames}}VoidArgument
 				: Argument
 			{
 				private readonly {{pointerNames}}VoidArgumentEvaluation? evaluation;
 				private readonly void{{pointerSplats}} value;
 				private readonly ValidationState validation;
 
-				{{accessibility}} {{pointerNames}}VoidArgument() => this.validation = ValidationState.None;
+				public {{pointerNames}}VoidArgument() => this.validation = ValidationState.None;
 
-				{{accessibility}} {{pointerNames}}VoidArgument(void{{pointerSplats}} @value)
+				public {{pointerNames}}VoidArgument(void{{pointerSplats}} @value)
 				{
 					this.value = @value;
 					this.validation = ValidationState.Value;
 				}
 
-				{{accessibility}} {{pointerNames}}VoidArgument({{pointerNames}}VoidArgumentEvaluation @evaluation)
+				public {{pointerNames}}VoidArgument({{pointerNames}}VoidArgumentEvaluation @evaluation)
 				{
 					this.evaluation = @evaluation;
 					this.validation = ValidationState.Evaluation;

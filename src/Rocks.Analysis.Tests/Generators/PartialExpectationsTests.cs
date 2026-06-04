@@ -587,9 +587,9 @@ public static class PartialExpectationsTests
 			
 			namespace Rocks.Projections;
 			
-			internal unsafe delegate bool PointerArgumentEvaluation<T>(T* @value) where T : unmanaged;
+			public unsafe delegate bool PointerArgumentEvaluation<T>(T* @value) where T : unmanaged;
 			
-			internal sealed unsafe class PointerArgument<T>
+			public sealed unsafe class PointerArgument<T>
 				: Argument
 				where T : unmanaged
 			{
@@ -597,15 +597,15 @@ public static class PartialExpectationsTests
 				private readonly T* value;
 				private readonly ValidationState validation;
 			
-				internal PointerArgument() => this.validation = ValidationState.None;
+				public PointerArgument() => this.validation = ValidationState.None;
 			
-				internal PointerArgument(T* @value)
+				public PointerArgument(T* @value)
 				{
 					this.value = @value;
 					this.validation = ValidationState.Value;
 				}
 			
-				internal PointerArgument(PointerArgumentEvaluation<T> @evaluation)
+				public PointerArgument(PointerArgumentEvaluation<T> @evaluation)
 				{
 					this.evaluation = @evaluation;
 					this.validation = ValidationState.Evaluation;

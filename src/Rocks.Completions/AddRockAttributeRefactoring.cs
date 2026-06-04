@@ -66,7 +66,7 @@ public sealed partial class AddRockAttributeRefactoring
 
 			if (model is not null && !(await model.HasRockAttributeDefinitionAsync(mockTypeSymbol)))
 			{
-				AddRockAttribute(newRoot, mockTypeSymbol, context, document);
+				AddRockAttributeRefactoring.AddRockAttribute(newRoot, mockTypeSymbol, context, document);
 			}
 		}
 	}

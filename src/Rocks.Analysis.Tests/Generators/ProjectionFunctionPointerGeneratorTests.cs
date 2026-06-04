@@ -277,24 +277,24 @@ public static class ProjectionFunctionPointerGeneratorTests
 			
 			#pragma warning disable CS8909
 			
-			internal unsafe delegate bool ArgumentEvaluationFordelegatePointerOfint__void(delegate*<int, void> @value);
+			public unsafe delegate bool ArgumentEvaluationFordelegatePointerOfint__void(delegate*<int, void> @value);
 			
-			internal sealed unsafe class ArgumentFordelegatePointerOfint__void
+			public sealed unsafe class ArgumentFordelegatePointerOfint__void
 				: Argument
 			{
 				private readonly ArgumentEvaluationFordelegatePointerOfint__void? evaluation;
 				private readonly delegate*<int, void> value;
 				private readonly ValidationState validation;
 			
-				internal ArgumentFordelegatePointerOfint__void() => this.validation = ValidationState.None;
+				public ArgumentFordelegatePointerOfint__void() => this.validation = ValidationState.None;
 			
-				internal ArgumentFordelegatePointerOfint__void(delegate*<int, void> @value)
+				public ArgumentFordelegatePointerOfint__void(delegate*<int, void> @value)
 				{
 					this.value = @value;
 					this.validation = ValidationState.Value;
 				}
 			
-				internal ArgumentFordelegatePointerOfint__void(ArgumentEvaluationFordelegatePointerOfint__void @evaluation)
+				public ArgumentFordelegatePointerOfint__void(ArgumentEvaluationFordelegatePointerOfint__void @evaluation)
 				{
 					this.evaluation = @evaluation;
 					this.validation = ValidationState.Evaluation;
@@ -582,24 +582,24 @@ public static class ProjectionFunctionPointerGeneratorTests
 			
 			#pragma warning disable CS8909
 			
-			internal unsafe delegate bool ArgumentEvaluationFordelegatePointerOfint__void(delegate*<int, void> @value);
+			public unsafe delegate bool ArgumentEvaluationFordelegatePointerOfint__void(delegate*<int, void> @value);
 			
-			internal sealed unsafe class ArgumentFordelegatePointerOfint__void
+			public sealed unsafe class ArgumentFordelegatePointerOfint__void
 				: Argument
 			{
 				private readonly ArgumentEvaluationFordelegatePointerOfint__void? evaluation;
 				private readonly delegate*<int, void> value;
 				private readonly ValidationState validation;
 			
-				internal ArgumentFordelegatePointerOfint__void() => this.validation = ValidationState.None;
+				public ArgumentFordelegatePointerOfint__void() => this.validation = ValidationState.None;
 			
-				internal ArgumentFordelegatePointerOfint__void(delegate*<int, void> @value)
+				public ArgumentFordelegatePointerOfint__void(delegate*<int, void> @value)
 				{
 					this.value = @value;
 					this.validation = ValidationState.Value;
 				}
 			
-				internal ArgumentFordelegatePointerOfint__void(ArgumentEvaluationFordelegatePointerOfint__void @evaluation)
+				public ArgumentFordelegatePointerOfint__void(ArgumentEvaluationFordelegatePointerOfint__void @evaluation)
 				{
 					this.evaluation = @evaluation;
 					this.validation = ValidationState.Evaluation;
@@ -980,24 +980,24 @@ public static class ProjectionFunctionPointerGeneratorTests
 			
 			#pragma warning disable CS8909
 			
-			internal unsafe delegate bool ArgumentEvaluationFordelegatePointerOfint__void(delegate*<int, void> @value);
+			public unsafe delegate bool ArgumentEvaluationFordelegatePointerOfint__void(delegate*<int, void> @value);
 			
-			internal sealed unsafe class ArgumentFordelegatePointerOfint__void
+			public sealed unsafe class ArgumentFordelegatePointerOfint__void
 				: Argument
 			{
 				private readonly ArgumentEvaluationFordelegatePointerOfint__void? evaluation;
 				private readonly delegate*<int, void> value;
 				private readonly ValidationState validation;
 			
-				internal ArgumentFordelegatePointerOfint__void() => this.validation = ValidationState.None;
+				public ArgumentFordelegatePointerOfint__void() => this.validation = ValidationState.None;
 			
-				internal ArgumentFordelegatePointerOfint__void(delegate*<int, void> @value)
+				public ArgumentFordelegatePointerOfint__void(delegate*<int, void> @value)
 				{
 					this.value = @value;
 					this.validation = ValidationState.Value;
 				}
 			
-				internal ArgumentFordelegatePointerOfint__void(ArgumentEvaluationFordelegatePointerOfint__void @evaluation)
+				public ArgumentFordelegatePointerOfint__void(ArgumentEvaluationFordelegatePointerOfint__void @evaluation)
 				{
 					this.evaluation = @evaluation;
 					this.validation = ValidationState.Evaluation;
@@ -1401,24 +1401,24 @@ public static class ProjectionFunctionPointerGeneratorTests
 			
 			#pragma warning disable CS8909
 			
-			internal unsafe delegate bool ArgumentEvaluationFordelegatePointerOfint__void(delegate*<int, void> @value);
+			public unsafe delegate bool ArgumentEvaluationFordelegatePointerOfint__void(delegate*<int, void> @value);
 			
-			internal sealed unsafe class ArgumentFordelegatePointerOfint__void
+			public sealed unsafe class ArgumentFordelegatePointerOfint__void
 				: Argument
 			{
 				private readonly ArgumentEvaluationFordelegatePointerOfint__void? evaluation;
 				private readonly delegate*<int, void> value;
 				private readonly ValidationState validation;
 			
-				internal ArgumentFordelegatePointerOfint__void() => this.validation = ValidationState.None;
+				public ArgumentFordelegatePointerOfint__void() => this.validation = ValidationState.None;
 			
-				internal ArgumentFordelegatePointerOfint__void(delegate*<int, void> @value)
+				public ArgumentFordelegatePointerOfint__void(delegate*<int, void> @value)
 				{
 					this.value = @value;
 					this.validation = ValidationState.Value;
 				}
 			
-				internal ArgumentFordelegatePointerOfint__void(ArgumentEvaluationFordelegatePointerOfint__void @evaluation)
+				public ArgumentFordelegatePointerOfint__void(ArgumentEvaluationFordelegatePointerOfint__void @evaluation)
 				{
 					this.evaluation = @evaluation;
 					this.validation = ValidationState.Evaluation;
@@ -1827,24 +1827,24 @@ public static class ProjectionFunctionPointerGeneratorTests
 			
 			#pragma warning disable CS8909
 			
-			internal unsafe delegate bool ArgumentEvaluationFordelegatePointerOfint__void(delegate*<int, void> @value);
+			public unsafe delegate bool ArgumentEvaluationFordelegatePointerOfint__void(delegate*<int, void> @value);
 			
-			internal sealed unsafe class ArgumentFordelegatePointerOfint__void
+			public sealed unsafe class ArgumentFordelegatePointerOfint__void
 				: Argument
 			{
 				private readonly ArgumentEvaluationFordelegatePointerOfint__void? evaluation;
 				private readonly delegate*<int, void> value;
 				private readonly ValidationState validation;
 			
-				internal ArgumentFordelegatePointerOfint__void() => this.validation = ValidationState.None;
+				public ArgumentFordelegatePointerOfint__void() => this.validation = ValidationState.None;
 			
-				internal ArgumentFordelegatePointerOfint__void(delegate*<int, void> @value)
+				public ArgumentFordelegatePointerOfint__void(delegate*<int, void> @value)
 				{
 					this.value = @value;
 					this.validation = ValidationState.Value;
 				}
 			
-				internal ArgumentFordelegatePointerOfint__void(ArgumentEvaluationFordelegatePointerOfint__void @evaluation)
+				public ArgumentFordelegatePointerOfint__void(ArgumentEvaluationFordelegatePointerOfint__void @evaluation)
 				{
 					this.evaluation = @evaluation;
 					this.validation = ValidationState.Evaluation;

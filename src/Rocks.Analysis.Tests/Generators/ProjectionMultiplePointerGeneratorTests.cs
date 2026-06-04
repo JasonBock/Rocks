@@ -264,9 +264,9 @@ public static class ProjectionMultiplePointerGeneratorTests
 			
 			namespace Rocks.Projections;
 			
-			internal unsafe delegate bool PointerPointerArgumentEvaluation<T>(T** @value) where T : unmanaged;
+			public unsafe delegate bool PointerPointerArgumentEvaluation<T>(T** @value) where T : unmanaged;
 			
-			internal sealed unsafe class PointerPointerArgument<T>
+			public sealed unsafe class PointerPointerArgument<T>
 				: Argument
 				where T : unmanaged
 			{
@@ -274,15 +274,15 @@ public static class ProjectionMultiplePointerGeneratorTests
 				private readonly T** value;
 				private readonly ValidationState validation;
 			
-				internal PointerPointerArgument() => this.validation = ValidationState.None;
+				public PointerPointerArgument() => this.validation = ValidationState.None;
 			
-				internal PointerPointerArgument(T** @value)
+				public PointerPointerArgument(T** @value)
 				{
 					this.value = @value;
 					this.validation = ValidationState.Value;
 				}
 			
-				internal PointerPointerArgument(PointerPointerArgumentEvaluation<T> @evaluation)
+				public PointerPointerArgument(PointerPointerArgumentEvaluation<T> @evaluation)
 				{
 					this.evaluation = @evaluation;
 					this.validation = ValidationState.Evaluation;
@@ -555,9 +555,9 @@ public static class ProjectionMultiplePointerGeneratorTests
 			
 			namespace Rocks.Projections;
 			
-			internal unsafe delegate bool PointerPointerArgumentEvaluation<T>(T** @value) where T : unmanaged;
+			public unsafe delegate bool PointerPointerArgumentEvaluation<T>(T** @value) where T : unmanaged;
 			
-			internal sealed unsafe class PointerPointerArgument<T>
+			public sealed unsafe class PointerPointerArgument<T>
 				: Argument
 				where T : unmanaged
 			{
@@ -565,15 +565,15 @@ public static class ProjectionMultiplePointerGeneratorTests
 				private readonly T** value;
 				private readonly ValidationState validation;
 			
-				internal PointerPointerArgument() => this.validation = ValidationState.None;
+				public PointerPointerArgument() => this.validation = ValidationState.None;
 			
-				internal PointerPointerArgument(T** @value)
+				public PointerPointerArgument(T** @value)
 				{
 					this.value = @value;
 					this.validation = ValidationState.Value;
 				}
 			
-				internal PointerPointerArgument(PointerPointerArgumentEvaluation<T> @evaluation)
+				public PointerPointerArgument(PointerPointerArgumentEvaluation<T> @evaluation)
 				{
 					this.evaluation = @evaluation;
 					this.validation = ValidationState.Evaluation;
@@ -950,9 +950,9 @@ public static class ProjectionMultiplePointerGeneratorTests
 			
 			namespace Rocks.Projections;
 			
-			internal unsafe delegate bool PointerPointerArgumentEvaluation<T>(T** @value) where T : unmanaged;
+			public unsafe delegate bool PointerPointerArgumentEvaluation<T>(T** @value) where T : unmanaged;
 			
-			internal sealed unsafe class PointerPointerArgument<T>
+			public sealed unsafe class PointerPointerArgument<T>
 				: Argument
 				where T : unmanaged
 			{
@@ -960,15 +960,15 @@ public static class ProjectionMultiplePointerGeneratorTests
 				private readonly T** value;
 				private readonly ValidationState validation;
 			
-				internal PointerPointerArgument() => this.validation = ValidationState.None;
+				public PointerPointerArgument() => this.validation = ValidationState.None;
 			
-				internal PointerPointerArgument(T** @value)
+				public PointerPointerArgument(T** @value)
 				{
 					this.value = @value;
 					this.validation = ValidationState.Value;
 				}
 			
-				internal PointerPointerArgument(PointerPointerArgumentEvaluation<T> @evaluation)
+				public PointerPointerArgument(PointerPointerArgumentEvaluation<T> @evaluation)
 				{
 					this.evaluation = @evaluation;
 					this.validation = ValidationState.Evaluation;
@@ -1367,9 +1367,9 @@ public static class ProjectionMultiplePointerGeneratorTests
 			
 			namespace Rocks.Projections;
 			
-			internal unsafe delegate bool PointerPointerArgumentEvaluation<T>(T** @value) where T : unmanaged;
+			public unsafe delegate bool PointerPointerArgumentEvaluation<T>(T** @value) where T : unmanaged;
 			
-			internal sealed unsafe class PointerPointerArgument<T>
+			public sealed unsafe class PointerPointerArgument<T>
 				: Argument
 				where T : unmanaged
 			{
@@ -1377,15 +1377,15 @@ public static class ProjectionMultiplePointerGeneratorTests
 				private readonly T** value;
 				private readonly ValidationState validation;
 			
-				internal PointerPointerArgument() => this.validation = ValidationState.None;
+				public PointerPointerArgument() => this.validation = ValidationState.None;
 			
-				internal PointerPointerArgument(T** @value)
+				public PointerPointerArgument(T** @value)
 				{
 					this.value = @value;
 					this.validation = ValidationState.Value;
 				}
 			
-				internal PointerPointerArgument(PointerPointerArgumentEvaluation<T> @evaluation)
+				public PointerPointerArgument(PointerPointerArgumentEvaluation<T> @evaluation)
 				{
 					this.evaluation = @evaluation;
 					this.validation = ValidationState.Evaluation;
@@ -1790,9 +1790,9 @@ public static class ProjectionMultiplePointerGeneratorTests
 			
 			namespace Rocks.Projections;
 			
-			internal unsafe delegate bool PointerPointerArgumentEvaluation<T>(T** @value) where T : unmanaged;
+			public unsafe delegate bool PointerPointerArgumentEvaluation<T>(T** @value) where T : unmanaged;
 			
-			internal sealed unsafe class PointerPointerArgument<T>
+			public sealed unsafe class PointerPointerArgument<T>
 				: Argument
 				where T : unmanaged
 			{
@@ -1800,15 +1800,15 @@ public static class ProjectionMultiplePointerGeneratorTests
 				private readonly T** value;
 				private readonly ValidationState validation;
 			
-				internal PointerPointerArgument() => this.validation = ValidationState.None;
+				public PointerPointerArgument() => this.validation = ValidationState.None;
 			
-				internal PointerPointerArgument(T** @value)
+				public PointerPointerArgument(T** @value)
 				{
 					this.value = @value;
 					this.validation = ValidationState.Value;
 				}
 			
-				internal PointerPointerArgument(PointerPointerArgumentEvaluation<T> @evaluation)
+				public PointerPointerArgument(PointerPointerArgumentEvaluation<T> @evaluation)
 				{
 					this.evaluation = @evaluation;
 					this.validation = ValidationState.Evaluation;

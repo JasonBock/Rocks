@@ -27,7 +27,7 @@ internal static class SemanticModelExtensions
 						attributeCtor.ContainingType.Name == "RockAttribute" &&
 						attributeCtor.ContainingType.ContainingNamespace.ToDisplayString() == "Rocks" &&
 						attributeCtor.ContainingType.ContainingAssembly.ToDisplayString().StartsWith("Rocks") &&
-						attributeCtor.Parameters.Length == 2)
+						attributeCtor.Parameters.Length == 3)
 					{
 						if (attributeSyntax.ArgumentList?.Arguments[0].Expression is TypeOfExpressionSyntax attributeTypeOf)
 						{

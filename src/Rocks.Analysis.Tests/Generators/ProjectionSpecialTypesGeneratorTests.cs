@@ -265,17 +265,17 @@ public static class ProjectionSpecialTypesGeneratorTests
 			
 			namespace Rocks.Projections;
 			
-			internal delegate bool ArgIteratorArgumentEvaluation(global::System.ArgIterator @value);
+			public delegate bool ArgIteratorArgumentEvaluation(global::System.ArgIterator @value);
 			
-			internal sealed class ArgIteratorArgument
+			public sealed class ArgIteratorArgument
 				: Argument
 			{
 				private readonly ArgIteratorArgumentEvaluation? evaluation;
 				private readonly ValidationState validation;
 			
-				internal ArgIteratorArgument() => this.validation = ValidationState.None;
+				public ArgIteratorArgument() => this.validation = ValidationState.None;
 			
-				internal ArgIteratorArgument(ArgIteratorArgumentEvaluation @evaluation)
+				public ArgIteratorArgument(ArgIteratorArgumentEvaluation @evaluation)
 				{
 					this.evaluation = @evaluation;
 					this.validation = ValidationState.Evaluation;
@@ -568,17 +568,17 @@ public static class ProjectionSpecialTypesGeneratorTests
 			
 			namespace Rocks.Projections;
 			
-			internal delegate bool RuntimeArgumentHandleArgumentEvaluation(global::System.RuntimeArgumentHandle @value);
+			public delegate bool RuntimeArgumentHandleArgumentEvaluation(global::System.RuntimeArgumentHandle @value);
 			
-			internal sealed class RuntimeArgumentHandleArgument
+			public sealed class RuntimeArgumentHandleArgument
 				: Argument
 			{
 				private readonly RuntimeArgumentHandleArgumentEvaluation? evaluation;
 				private readonly ValidationState validation;
 			
-				internal RuntimeArgumentHandleArgument() => this.validation = ValidationState.None;
+				public RuntimeArgumentHandleArgument() => this.validation = ValidationState.None;
 			
-				internal RuntimeArgumentHandleArgument(RuntimeArgumentHandleArgumentEvaluation @evaluation)
+				public RuntimeArgumentHandleArgument(RuntimeArgumentHandleArgumentEvaluation @evaluation)
 				{
 					this.evaluation = @evaluation;
 					this.validation = ValidationState.Evaluation;
@@ -871,17 +871,17 @@ public static class ProjectionSpecialTypesGeneratorTests
 			
 			namespace Rocks.Projections;
 			
-			internal delegate bool TypedReferenceArgumentEvaluation(global::System.TypedReference @value);
+			public delegate bool TypedReferenceArgumentEvaluation(global::System.TypedReference @value);
 			
-			internal sealed class TypedReferenceArgument
+			public sealed class TypedReferenceArgument
 				: Argument
 			{
 				private readonly TypedReferenceArgumentEvaluation? evaluation;
 				private readonly ValidationState validation;
 			
-				internal TypedReferenceArgument() => this.validation = ValidationState.None;
+				public TypedReferenceArgument() => this.validation = ValidationState.None;
 			
-				internal TypedReferenceArgument(TypedReferenceArgumentEvaluation @evaluation)
+				public TypedReferenceArgument(TypedReferenceArgumentEvaluation @evaluation)
 				{
 					this.evaluation = @evaluation;
 					this.validation = ValidationState.Evaluation;

@@ -275,24 +275,24 @@ public static class ProjectionVoidPointerGeneratorTests
 			
 			namespace Rocks.Projections;
 			
-			internal unsafe delegate bool PointerVoidArgumentEvaluation(void* @value);
+			public unsafe delegate bool PointerVoidArgumentEvaluation(void* @value);
 			
-			internal sealed unsafe class PointerVoidArgument
+			public sealed unsafe class PointerVoidArgument
 				: Argument
 			{
 				private readonly PointerVoidArgumentEvaluation? evaluation;
 				private readonly void* value;
 				private readonly ValidationState validation;
 			
-				internal PointerVoidArgument() => this.validation = ValidationState.None;
+				public PointerVoidArgument() => this.validation = ValidationState.None;
 			
-				internal PointerVoidArgument(void* @value)
+				public PointerVoidArgument(void* @value)
 				{
 					this.value = @value;
 					this.validation = ValidationState.Value;
 				}
 			
-				internal PointerVoidArgument(PointerVoidArgumentEvaluation @evaluation)
+				public PointerVoidArgument(PointerVoidArgumentEvaluation @evaluation)
 				{
 					this.evaluation = @evaluation;
 					this.validation = ValidationState.Evaluation;
@@ -576,24 +576,24 @@ public static class ProjectionVoidPointerGeneratorTests
 			
 			namespace Rocks.Projections;
 			
-			internal unsafe delegate bool PointerVoidArgumentEvaluation(void* @value);
+			public unsafe delegate bool PointerVoidArgumentEvaluation(void* @value);
 			
-			internal sealed unsafe class PointerVoidArgument
+			public sealed unsafe class PointerVoidArgument
 				: Argument
 			{
 				private readonly PointerVoidArgumentEvaluation? evaluation;
 				private readonly void* value;
 				private readonly ValidationState validation;
 			
-				internal PointerVoidArgument() => this.validation = ValidationState.None;
+				public PointerVoidArgument() => this.validation = ValidationState.None;
 			
-				internal PointerVoidArgument(void* @value)
+				public PointerVoidArgument(void* @value)
 				{
 					this.value = @value;
 					this.validation = ValidationState.Value;
 				}
 			
-				internal PointerVoidArgument(PointerVoidArgumentEvaluation @evaluation)
+				public PointerVoidArgument(PointerVoidArgumentEvaluation @evaluation)
 				{
 					this.evaluation = @evaluation;
 					this.validation = ValidationState.Evaluation;
@@ -970,24 +970,24 @@ public static class ProjectionVoidPointerGeneratorTests
 			
 			namespace Rocks.Projections;
 			
-			internal unsafe delegate bool PointerVoidArgumentEvaluation(void* @value);
+			public unsafe delegate bool PointerVoidArgumentEvaluation(void* @value);
 			
-			internal sealed unsafe class PointerVoidArgument
+			public sealed unsafe class PointerVoidArgument
 				: Argument
 			{
 				private readonly PointerVoidArgumentEvaluation? evaluation;
 				private readonly void* value;
 				private readonly ValidationState validation;
 			
-				internal PointerVoidArgument() => this.validation = ValidationState.None;
+				public PointerVoidArgument() => this.validation = ValidationState.None;
 			
-				internal PointerVoidArgument(void* @value)
+				public PointerVoidArgument(void* @value)
 				{
 					this.value = @value;
 					this.validation = ValidationState.Value;
 				}
 			
-				internal PointerVoidArgument(PointerVoidArgumentEvaluation @evaluation)
+				public PointerVoidArgument(PointerVoidArgumentEvaluation @evaluation)
 				{
 					this.evaluation = @evaluation;
 					this.validation = ValidationState.Evaluation;
@@ -1386,24 +1386,24 @@ public static class ProjectionVoidPointerGeneratorTests
 			
 			namespace Rocks.Projections;
 			
-			internal unsafe delegate bool PointerVoidArgumentEvaluation(void* @value);
+			public unsafe delegate bool PointerVoidArgumentEvaluation(void* @value);
 			
-			internal sealed unsafe class PointerVoidArgument
+			public sealed unsafe class PointerVoidArgument
 				: Argument
 			{
 				private readonly PointerVoidArgumentEvaluation? evaluation;
 				private readonly void* value;
 				private readonly ValidationState validation;
 			
-				internal PointerVoidArgument() => this.validation = ValidationState.None;
+				public PointerVoidArgument() => this.validation = ValidationState.None;
 			
-				internal PointerVoidArgument(void* @value)
+				public PointerVoidArgument(void* @value)
 				{
 					this.value = @value;
 					this.validation = ValidationState.Value;
 				}
 			
-				internal PointerVoidArgument(PointerVoidArgumentEvaluation @evaluation)
+				public PointerVoidArgument(PointerVoidArgumentEvaluation @evaluation)
 				{
 					this.evaluation = @evaluation;
 					this.validation = ValidationState.Evaluation;
@@ -1808,24 +1808,24 @@ public static class ProjectionVoidPointerGeneratorTests
 			
 			namespace Rocks.Projections;
 			
-			internal unsafe delegate bool PointerVoidArgumentEvaluation(void* @value);
+			public unsafe delegate bool PointerVoidArgumentEvaluation(void* @value);
 			
-			internal sealed unsafe class PointerVoidArgument
+			public sealed unsafe class PointerVoidArgument
 				: Argument
 			{
 				private readonly PointerVoidArgumentEvaluation? evaluation;
 				private readonly void* value;
 				private readonly ValidationState validation;
 			
-				internal PointerVoidArgument() => this.validation = ValidationState.None;
+				public PointerVoidArgument() => this.validation = ValidationState.None;
 			
-				internal PointerVoidArgument(void* @value)
+				public PointerVoidArgument(void* @value)
 				{
 					this.value = @value;
 					this.validation = ValidationState.Value;
 				}
 			
-				internal PointerVoidArgument(PointerVoidArgumentEvaluation @evaluation)
+				public PointerVoidArgument(PointerVoidArgumentEvaluation @evaluation)
 				{
 					this.evaluation = @evaluation;
 					this.validation = ValidationState.Evaluation;

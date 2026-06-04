@@ -25,18 +25,27 @@ public static class ValueTaskInReturnValueSuppressorTests
 				: Handler<Func<ValueTask<string>>, ValueTask<string>>
 			{ }
 
+			public sealed class TestExpectations
+				: Expectations 
+			{ 
+				public TestExpectations()
+					: base() { }
+			
+				public override void Verify() { }
+			}
+			
 			public sealed class TestAdornments
 				: Adornments<TestAdornments, TestHandler, Func<ValueTask<string>>, ValueTask<string>>
 			{
-				public TestAdornments(TestHandler handler) 
-					: base(handler) { }
+				public TestAdornments(TestHandler handler, TestExpectations expectations) 
+					: base(handler, expectations) { }
 			}
 
 			public static class Tester
 			{
 				public static void Test()
 				{
-					var adornments = new TestAdornments(new());
+					var adornments = new TestAdornments(new(), new());
 					adornments.ReturnValue({|#0:ValueTask.FromResult("hi")|});
 				}
 			}
@@ -63,18 +72,27 @@ public static class ValueTaskInReturnValueSuppressorTests
 				: Handler<Func<ValueTask<string>>, ValueTask<string>>
 			{ }
 
+			public sealed class TestExpectations
+				: Expectations 
+			{ 
+				public TestExpectations()
+					: base() { }
+			
+				public override void Verify() { }
+			}
+			
 			public sealed class TestAdornments
 				: Adornments<TestAdornments, TestHandler, Func<ValueTask<string>>, ValueTask<string>>
 			{
-				public TestAdornments(TestHandler handler) 
-					: base(handler) { }
+				public TestAdornments(TestHandler handler, TestExpectations expectations) 
+					: base(handler, expectations) { }
 			}
 
 			public static class Tester
 			{
 				public static void Test()
 				{
-					var adornments = new TestAdornments(new());
+					var adornments = new TestAdornments(new(), new());
 					adornments.Callback(() => {|#0:ValueTask.FromResult("hi")|});
 				}
 			}

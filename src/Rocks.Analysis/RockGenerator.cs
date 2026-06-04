@@ -196,7 +196,7 @@ internal sealed class RockGenerator
 
 			foreach (var (projection, accessibility) in projections)
 			{
-				var builder = new RockProjectionBuilder(projection, accessibility);
+				var builder = new RockProjectionBuilder(projection);
 
 				if (projectionFileNames.Add(builder.Name))
 				{
