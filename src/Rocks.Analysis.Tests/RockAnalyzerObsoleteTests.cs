@@ -38,7 +38,7 @@ public static class RockAnalyzerObsoleteTests
 			}
 			""";
 
-		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.CannotMockObsoleteTypeId, DiagnosticSeverity.Error)
+		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.MemberUsesObsoleteTypeId, DiagnosticSeverity.Error)
 			.WithSpan(7, 12, 7, 86).WithArguments("Use");
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}
@@ -74,7 +74,7 @@ public static class RockAnalyzerObsoleteTests
 			}
 			""";
 
-		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.CannotMockObsoleteTypeId, DiagnosticSeverity.Error)
+		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.MemberUsesObsoleteTypeId, DiagnosticSeverity.Error)
 			.WithSpan(7, 12, 7, 86).WithArguments("Use");
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic]);
 	}
@@ -110,7 +110,7 @@ public static class RockAnalyzerObsoleteTests
 			}
 			""";
 
-		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.CannotMockObsoleteTypeId, DiagnosticSeverity.Error)
+		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.MemberUsesObsoleteTypeId, DiagnosticSeverity.Error)
 			.WithSpan(7, 12, 7, 81).WithArguments("GetComponents");
 		var compiler1Diagnostic = DiagnosticResult.CompilerError("CS0619")
 			.WithSpan(21, 30, 21, 46).WithArguments("MockTests.IServerComponent", "Do not use this");
@@ -140,7 +140,7 @@ public static class RockAnalyzerObsoleteTests
 			}
 			""";
 
-		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.CannotMockObsoleteTypeId, DiagnosticSeverity.Error)
+		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.MemberUsesObsoleteTypeId, DiagnosticSeverity.Error)
 			.WithSpan(4, 12, 4, 73).WithArguments(".ctor");
 		var compilerDiagnostic = DiagnosticResult.CompilerError("CS0619").WithSpan(11, 22, 11, 30);
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic, compilerDiagnostic]);
@@ -165,7 +165,7 @@ public static class RockAnalyzerObsoleteTests
 			}
 			""";
 
-		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.CannotMockObsoleteTypeId, DiagnosticSeverity.Error)
+		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.MemberUsesObsoleteTypeId, DiagnosticSeverity.Error)
 			.WithSpan(4, 12, 4, 73).WithArguments("ObsoleteMethod");
 		var compilerDiagnostic = DiagnosticResult.CompilerError("CS0619").WithSpan(11, 37, 11, 45);
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic, compilerDiagnostic]);
@@ -190,7 +190,7 @@ public static class RockAnalyzerObsoleteTests
 			}
 			""";
 
-		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.CannotMockObsoleteTypeId, DiagnosticSeverity.Error)
+		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.MemberUsesObsoleteTypeId, DiagnosticSeverity.Error)
 			.WithSpan(4, 12, 4, 73).WithArguments("ObsoleteMethod");
 		var compilerDiagnostic = DiagnosticResult.CompilerError("CS0619").WithSpan(11, 17, 11, 25);
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic, compilerDiagnostic]);
@@ -215,7 +215,7 @@ public static class RockAnalyzerObsoleteTests
 			}
 			""";
 
-		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.CannotMockObsoleteTypeId, DiagnosticSeverity.Error)
+		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.MemberUsesObsoleteTypeId, DiagnosticSeverity.Error)
 			.WithSpan(4, 12, 4, 73).WithArguments("ObsoleteProperty");
 		var compilerDiagnostic = DiagnosticResult.CompilerError("CS0619").WithSpan(11, 17, 11, 25);
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic, compilerDiagnostic]);
@@ -240,7 +240,7 @@ public static class RockAnalyzerObsoleteTests
 			}
 			""";
 
-		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.CannotMockObsoleteTypeId, DiagnosticSeverity.Error)
+		var diagnostic = new DiagnosticResult(DescriptorIdentifiers.MemberUsesObsoleteTypeId, DiagnosticSeverity.Error)
 			.WithSpan(4, 12, 4, 73).WithArguments("this[]");
 		var compilerDiagnostic = DiagnosticResult.CompilerError("CS0619").WithSpan(11, 26, 11, 34);
 		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, diagnostic, compilerDiagnostic]);
