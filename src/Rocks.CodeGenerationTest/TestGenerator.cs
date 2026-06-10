@@ -68,6 +68,7 @@ internal static class TestGenerator
 		{ "ASPIREPIPELINES002", ReportDiagnostic.Suppress },
 		{ "ASPIREPIPELINES003", ReportDiagnostic.Suppress },
 		{ "ASPIREPIPELINES004", ReportDiagnostic.Suppress },
+		{ "ASPIREPROCESSCOMMAND001", ReportDiagnostic.Suppress },
 		{ "ASPIREPUBLISHERS001", ReportDiagnostic.Suppress },
 		{ "ASPIREUSERSECRETS001", ReportDiagnostic.Suppress },
 		{ "SCME0002", ReportDiagnostic.Suppress },
