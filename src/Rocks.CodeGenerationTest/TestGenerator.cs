@@ -27,7 +27,7 @@ internal static class TestGenerator
 	* Code access security (SYSLIB0003)
 	* EF "future" warnings (EF9100)
 	* Aspire evaluation warnings (ASPIRE*)
-	* StackExchange.Redis evaluation warnings (SER001, SER003, SER006)
+	* StackExchange.Redis evaluation warnings (SER001, SER003, SER005, SER006)
 	* Azure evaluation warnings (SCME0002)
 	* OpenTelemetry (OTEL1001)
 
@@ -74,6 +74,7 @@ internal static class TestGenerator
 		{ "SCME0002", ReportDiagnostic.Suppress },
 		{ "SER001", ReportDiagnostic.Suppress },
 		{ "SER003", ReportDiagnostic.Suppress },
+		{ "SER005", ReportDiagnostic.Suppress },
 		{ "SER006", ReportDiagnostic.Suppress },
 		{ "OTEL1001", ReportDiagnostic.Suppress }
 	};
