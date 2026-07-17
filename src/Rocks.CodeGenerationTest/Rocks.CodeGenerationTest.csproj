@@ -87,6 +87,7 @@
 		<PackageReference Include="Microsoft.Quantum.Standard" />
 		<PackageReference Include="Mono.Cecil" />
 		<PackageReference Include="Mscc.GenerativeAI" />
+		<PackageReference Include="NCalc" />
 		<PackageReference Include="NetFabric.Hyperlinq.Abstractions" />
 		<PackageReference Include="NetFabric.Numerics.Tensors" />
 		<PackageReference Include="Ninject" />

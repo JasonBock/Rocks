@@ -207,6 +207,7 @@ static async Task TestWithTypesAsync()
 		new (typeof(Microsoft.Quantum.AmplitudeAmplification.AmpAmpByOracle), []),
 		new (typeof(Mono.Cecil.FixedSysStringMarshalInfo), []),
 		new (typeof(Mscc.GenerativeAI.AioModel), []),
+		new (typeof(NCalc.BinaryExpression), []),
 		new (typeof(NetFabric.EnumerableExtensions), []),
 		new (typeof(nietras.SeparatedValues.SepReaderExtensions), []),
 		new (typeof(Ninject.ActivationException), []),
