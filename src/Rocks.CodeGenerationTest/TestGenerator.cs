@@ -30,6 +30,7 @@ internal static class TestGenerator
 	* StackExchange.Redis evaluation warnings (SER001, SER003, SER005, SER006)
 	* Azure evaluation warnings (SCME0002)
 	* OpenTelemetry (OTEL1001)
+	* CodeAnalysis experiments (RSEXPERIMENTAL006)
 
 	These are warnings, and they should not cause errors. A user can decide to treat them
 	as errors, but Rocks should still be able to create code that cause these warnings.
@@ -76,7 +77,8 @@ internal static class TestGenerator
 		{ "SER003", ReportDiagnostic.Suppress },
 		{ "SER005", ReportDiagnostic.Suppress },
 		{ "SER006", ReportDiagnostic.Suppress },
-		{ "OTEL1001", ReportDiagnostic.Suppress }
+		{ "OTEL1001", ReportDiagnostic.Suppress },
+		{ "RSEXPERIMENTAL006", ReportDiagnostic.Suppress },
 	};
 
 	internal static async Task<ImmutableArray<Type>> GetTargetsAsync(HashSet<Assembly> targetAssemblies, ImmutableArray<Type> typesToIgnore,

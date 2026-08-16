@@ -5,7 +5,6 @@ using DotNet.Testcontainers.Containers;
 using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 using R3;
-using Rocks;
 using Rocks.Analysis;
 using Rocks.CodeGenerationTest;
 using Rocks.CodeGenerationTest.Extensions;
@@ -19,7 +18,7 @@ var stopwatch = Stopwatch.StartNew();
 //TestWithCode();
 //TestWithType();
 //TestWithTypeNoEmit();
-await TestWithTypesAsync();
+TestWithTypes();
 //TestTypesIndividually();
 
 stopwatch.Stop();
@@ -120,12 +119,12 @@ static void TestWithTypeNoEmit()
 	}
 }
 
-static async Task TestWithTypesAsync()
+static void TestWithTypes()
 {
-	Console.WriteLine($"Creating type alias mappings...");
+   Console.WriteLine($"Creating type alias mappings...");
 
-	var targetMappings = new TypeAliasesMapping[]
-	{
+   var targetMappings = new TypeAliasesMapping[]
+   {
 #if INCLUDE_PASSING
 		// .NET types
 		new (typeof(object), []),
@@ -259,10 +258,10 @@ static async Task TestWithTypesAsync()
 #endif
 #if INCLUDE_FAILING
 #endif
-   };
+  };
 
-	var typesToLoadAssembliesFrom = new Type[]
-	{
+   var typesToLoadAssembliesFrom = new Type[]
+   {
 		typeof(AnyOfTypes.AnyOf<,>),
 		typeof(Microsoft.IdentityModel.Tokens.Saml2.Saml2SecurityTokenHandler),
 		typeof(System.Security.Claims.ClaimsPrincipal),
@@ -279,91 +278,91 @@ static async Task TestWithTypesAsync()
 		typeof(Azure.Core.Amqp.AmqpAnnotatedMessage),
 		typeof(Pragmastat.Sample),
 		typeof(IConfigurationSection),
-	}.ToImmutableArray();
+   }.ToImmutableArray();
 
-	Console.WriteLine($"Getting mapped types...");
-	var totalDiscoveredTypeCount = 0;
-	var issues = new List<Issue>();
-	var visitedAssemblies = new HashSet<Assembly>();
+   Console.WriteLine($"Getting mapped types...");
+   var totalDiscoveredTypeCount = 0;
+   var issues = new List<Issue>();
+   var visitedAssemblies = new HashSet<Assembly>();
 
-	var generatorTasks = new List<Task<GeneratorResults>>();
-	// 4 seems to be a reasonable number. Going higher
-	// doesn't seem to help. I may have some contention in the underlying code
-	// that I don't realize. Also, if I go to 20 on my 20-core machine,
-	// I get an error that doesn't happen when the count is lower.
-	var maximumGeneratorTasksCount = 4;
+   var generatorTasks = new List<Task<GeneratorResults>>();
+   // 4 seems to be a reasonable number. Going higher
+   // doesn't seem to help. I may have some contention in the underlying code
+   // that I don't realize. Also, if I go to 20 on my 20-core machine,
+   // I get an error that doesn't happen when the count is lower.
+   var maximumGeneratorTasksCount = 4;
 
-	Console.WriteLine($"Generator task count: {maximumGeneratorTasksCount}");
+   Console.WriteLine($"Generator task count: {maximumGeneratorTasksCount}");
 
-	static async Task<GeneratorResults> Generate(
-		TypeAliasesMapping typeAliasesMapping, ImmutableArray<Type> typesToLoadAssembliesFrom, Rocks.Analysis.CodeAccessibility codeAccessibility)
-	{
-		var targetAssemblySet = new HashSet<Assembly> { typeAliasesMapping.type.Assembly };
+   static async Task<GeneratorResults> Generate(
+	   TypeAliasesMapping typeAliasesMapping, ImmutableArray<Type> typesToLoadAssembliesFrom, Rocks.Analysis.CodeAccessibility codeAccessibility)
+   {
+	  var targetAssemblySet = new HashSet<Assembly> { typeAliasesMapping.type.Assembly };
 
-		var discoveredTypes = await TestGenerator.GetTargetsAsync(
-			targetAssemblySet, [], typesToLoadAssembliesFrom, typeAliasesMapping.aliases);
+	  var discoveredTypes = await TestGenerator.GetTargetsAsync(
+		  targetAssemblySet, [], typesToLoadAssembliesFrom, typeAliasesMapping.aliases);
 
-		(var createIssues, _) = TestGenerator.Generate(
-			new RockGenerator(), discoveredTypes, typesToLoadAssembliesFrom, typeAliasesMapping.aliases, Rocks.Analysis.BuildType.Create, codeAccessibility);
-		(var makeIssues, _) = TestGenerator.Generate(
-			new RockGenerator(), discoveredTypes, typesToLoadAssembliesFrom, typeAliasesMapping.aliases, Rocks.Analysis.BuildType.Make, codeAccessibility);
+	  (var createIssues, _) = TestGenerator.Generate(
+		  new RockGenerator(), discoveredTypes, typesToLoadAssembliesFrom, typeAliasesMapping.aliases, Rocks.Analysis.BuildType.Create, codeAccessibility);
+	  (var makeIssues, _) = TestGenerator.Generate(
+		  new RockGenerator(), discoveredTypes, typesToLoadAssembliesFrom, typeAliasesMapping.aliases, Rocks.Analysis.BuildType.Make, codeAccessibility);
 
-		return new(typeAliasesMapping.type.Assembly.GetName().Name, discoveredTypes.Length, createIssues, makeIssues);
-	}
+	  return new(typeAliasesMapping.type.Assembly.GetName().Name, discoveredTypes.Length, createIssues, makeIssues);
+   }
 
-	foreach (var targetMapping in targetMappings)
-	{
-		if (visitedAssemblies.Add(targetMapping.type.Assembly) &&
-			generatorTasks.Count < maximumGeneratorTasksCount)
-		{
-			Console.WriteLine($"Started {targetMapping.type.Assembly.GetName().Name}");
-			generatorTasks.Add(Task.Run(() => Generate(targetMapping, typesToLoadAssembliesFrom, Rocks.Analysis.CodeAccessibility.Public)));
-			generatorTasks.Add(Task.Run(() => Generate(targetMapping, typesToLoadAssembliesFrom, Rocks.Analysis.CodeAccessibility.Internal)));
-		}
+   foreach (var targetMapping in targetMappings)
+   {
+	  if (visitedAssemblies.Add(targetMapping.type.Assembly) &&
+		  generatorTasks.Count < maximumGeneratorTasksCount)
+	  {
+		 Console.WriteLine($"Started {targetMapping.type.Assembly.GetName().Name}");
+		 generatorTasks.Add(Task.Run(() => Generate(targetMapping, typesToLoadAssembliesFrom, Rocks.Analysis.CodeAccessibility.Public)));
+		 generatorTasks.Add(Task.Run(() => Generate(targetMapping, typesToLoadAssembliesFrom, Rocks.Analysis.CodeAccessibility.Internal)));
+	  }
 
-		if (generatorTasks.Count >= maximumGeneratorTasksCount)
-		{
+	  if (generatorTasks.Count >= maximumGeneratorTasksCount)
+	  {
 #pragma warning disable CA1849 // Call async methods when in an async method
-			var finishedTaskIndex = Task.WaitAny([.. generatorTasks]);
-			var finishedTask = generatorTasks[finishedTaskIndex].Result;
+		 var finishedTaskIndex = Task.WaitAny([.. generatorTasks]);
+		 var finishedTask = generatorTasks[finishedTaskIndex].Result;
 #pragma warning restore CA1849 // Call async methods when in an async method
 
-			Console.WriteLine($"Finished {finishedTask.AssemblyName}");
-			totalDiscoveredTypeCount += finishedTask.DiscoveredTypesCount;
-			issues.AddRange(finishedTask.CreateIssues);
-			issues.AddRange(finishedTask.MakeIssues);
+		 Console.WriteLine($"Finished {finishedTask.AssemblyName}");
+		 totalDiscoveredTypeCount += finishedTask.DiscoveredTypesCount;
+		 issues.AddRange(finishedTask.CreateIssues);
+		 issues.AddRange(finishedTask.MakeIssues);
 
-			generatorTasks.RemoveAt(finishedTaskIndex);
-		}
-	}
+		 generatorTasks.RemoveAt(finishedTaskIndex);
+	  }
+   }
 
-	Console.WriteLine();
-	Console.WriteLine("Waiting for remaining tasks to finish...");
-	Console.WriteLine();
+   Console.WriteLine();
+   Console.WriteLine("Waiting for remaining tasks to finish...");
+   Console.WriteLine();
 
-	while (generatorTasks.Count > 0)
-	{
+   while (generatorTasks.Count > 0)
+   {
 #pragma warning disable CA1849 // Call async methods when in an async method
-		var finishedTaskIndex = Task.WaitAny([.. generatorTasks]);
-		var finishedTask = generatorTasks[finishedTaskIndex].Result;
+	  var finishedTaskIndex = Task.WaitAny([.. generatorTasks]);
+	  var finishedTask = generatorTasks[finishedTaskIndex].Result;
 #pragma warning restore CA1849 // Call async methods when in an async method
 
-		Console.WriteLine($"Finished {finishedTask.AssemblyName}");
-		totalDiscoveredTypeCount += finishedTask.DiscoveredTypesCount;
-		issues.AddRange(finishedTask.CreateIssues);
-		issues.AddRange(finishedTask.MakeIssues);
+	  Console.WriteLine($"Finished {finishedTask.AssemblyName}");
+	  totalDiscoveredTypeCount += finishedTask.DiscoveredTypesCount;
+	  issues.AddRange(finishedTask.CreateIssues);
+	  issues.AddRange(finishedTask.MakeIssues);
 
-		generatorTasks.RemoveAt(finishedTaskIndex);
-	}
+	  generatorTasks.RemoveAt(finishedTaskIndex);
+   }
 
-	Console.WriteLine(
-		$$"""
+   Console.WriteLine(
+	   $$"""
 		Generator testing complete.
 			Total assembly count is {{visitedAssemblies.Count}}
 			Total discovered type count is {{totalDiscoveredTypeCount}}
 		""");
 
-	PrintIssues([.. issues]);
+   PrintIssues([.. issues]);
 }
 
 static async Task TestTypesIndividuallyAsync()
