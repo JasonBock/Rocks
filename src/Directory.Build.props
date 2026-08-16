@@ -3,18 +3,20 @@
 		<AnalysisMode>all</AnalysisMode>
 		<Authors>Jason Bock</Authors>
 		<Copyright>Copyright © 2026</Copyright>
+		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<LangVersion>latest</LangVersion>
+		<LangVersion>preview</LangVersion>
 		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-		<NoWarn>CA1308,CA1861</NoWarn>
+		<!-- Ignoring NU1603 for Roslyn pre-release package sanity -->
+		<NoWarn>CA1308,CA1861,NU1603</NoWarn>
 		<!-- https://learn.microsoft.com/en-us/nuget/concepts/auditing-packages -->
 		<NuGetAudit>true</NuGetAudit>
 		<NuGetAuditMode>all</NuGetAuditMode>
 		<NuGetAuditLevel>critical</NuGetAuditLevel>
 		<Nullable>enable</Nullable>
-		<TargetFramework>net10.0</TargetFramework>
+		<TargetFramework>net11.0</TargetFramework>
 		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
 		<UseArtifactsOutput>true</UseArtifactsOutput>
-		<Version>10.3.0</Version>
+		<Version>11.0.0-alpha.1</Version>
 	</PropertyGroup>
 </Project>

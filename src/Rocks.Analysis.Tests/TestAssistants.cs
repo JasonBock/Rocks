@@ -19,7 +19,7 @@ internal static class TestAssistants
 	{
 		var test = new AnalyzerTest<TAnalyzer>()
 		{
-			ReferenceAssemblies = net10ReferenceAssemblies.Value,
+			ReferenceAssemblies = net11ReferenceAssemblies.Value,
 			TestState =
 			{
 				Sources = { code },
@@ -48,7 +48,7 @@ internal static class TestAssistants
 	{
 		var test = new DiagnosticSuppressorVerifier<TDiagnosticSuppressor, TDiagnosticAnalyzer>()
 		{
-			ReferenceAssemblies = net10ReferenceAssemblies.Value,
+			ReferenceAssemblies = net11ReferenceAssemblies.Value,
 			TestState =
 			{
 				Sources = { code },
@@ -108,7 +108,7 @@ internal static class TestAssistants
 	{
 		var test = new IncrementalGeneratorTest<TGenerator>(generalDiagnosticOption)
 		{
-			ReferenceAssemblies = net10ReferenceAssemblies.Value,
+			ReferenceAssemblies = net11ReferenceAssemblies.Value,
 			TestState =
 			{
 				Sources = { code },
@@ -143,21 +143,21 @@ internal static class TestAssistants
 		await test.RunAsync();
 	}
 
-	private static readonly Lazy<ReferenceAssemblies> net10ReferenceAssemblies = new(() =>
+	private static readonly Lazy<ReferenceAssemblies> net11ReferenceAssemblies = new(() =>
 		{
 			// Always look here for the latest version of a particular runtime:
 			// https://www.nuget.org/packages/Microsoft.NETCore.App.Ref
-			if (!NuGetFramework.Parse("net10.0").IsPackageBased)
+			if (!NuGetFramework.Parse("net11.0").IsPackageBased)
 			{
-				// The NuGet version provided at runtime does not recognize the 'net10.0' target framework
-				throw new NotSupportedException("The 'net10.0' target framework is not supported by this version of NuGet.");
+				// The NuGet version provided at runtime does not recognize the 'net11.0' target framework
+				throw new NotSupportedException("The 'net11.0' target framework is not supported by this version of NuGet.");
 			}
 
 			return new ReferenceAssemblies(
-				 "net10.0",
+				 "net11.0",
 				 new PackageIdentity(
 					  "Microsoft.NETCore.App.Ref",
-					  "10.0.0"),
-				 Path.Combine("ref", "net10.0"));
+					  "11.0.0-preview.7.26381.103"),
+				 Path.Combine("ref", "net11.0"));
 		}, LazyThreadSafetyMode.ExecutionAndPublication);
 }
