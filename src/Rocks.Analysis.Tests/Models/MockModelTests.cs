@@ -598,6 +598,6 @@ public static class MockModelTests
 	{
 		var (invocation, typeSymbol, modelContext) =
 			await GetTypeAsync(source, targetTypeName, generalDiagnosticOption);
-		return MockModel.Create(invocation, typeSymbol!, null, modelContext, buildType, CodeAccessibility.Public, true);
+		return MockModel.Create(invocation, typeSymbol, null, modelContext, buildType, CodeAccessibility.Public, true);
 	}
 }

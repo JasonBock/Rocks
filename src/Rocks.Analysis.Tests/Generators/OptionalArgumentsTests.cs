@@ -821,7 +821,7 @@ public static class OptionalArgumentsTests
 	}
 
 	[Test]
-	public async static Task GenerateWhenOptionalIsDefinedWithAttributesAsync()
+	public static async Task GenerateWhenOptionalIsDefinedWithAttributesAsync()
 	{
 		var code =
 			"""
@@ -1093,7 +1093,7 @@ public static class OptionalArgumentsTests
 	}
 
 	[Test]
-	public async static Task GenerateWhenOptionalIsDefinedWithAttributesOutOfOrderAsync()
+	public static async Task GenerateWhenOptionalIsDefinedWithAttributesOutOfOrderAsync()
 	{
 		var code =
 			"""

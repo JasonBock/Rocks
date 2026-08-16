@@ -19,8 +19,7 @@ public static class ConstructorModelTests
 			}
 			""";
 
-		(var type, var constructor, var modelContext) = await GetSymbolsCompilationAsync(code);
-		var mockType = modelContext.CreateTypeReference(type);
+		(_, var constructor, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var model = new ConstructorModel(constructor, modelContext);
 
 		using (Assert.EnterMultipleScope())
@@ -45,8 +44,7 @@ public static class ConstructorModelTests
 			}
 			""";
 
-		(var type, var constructor, var modelContext) = await GetSymbolsCompilationAsync(code);
-		var mockType = modelContext.CreateTypeReference(type);
+		(_, var constructor, var modelContext) = await GetSymbolsCompilationAsync(code);
 		var model = new ConstructorModel(constructor, modelContext);
 
 		using (Assert.EnterMultipleScope())

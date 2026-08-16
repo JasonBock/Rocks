@@ -127,7 +127,6 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 	[Test]
 	public static async Task CallWhenSymbolIsPrivateProtectedAndContainingAssemblyEqualsInvocationAssemblyAsync()
 	{
-		const string ContainingAssembly = nameof(ContainingAssembly);
 		var code =
 			$$"""
 			public class Source

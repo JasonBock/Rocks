@@ -267,7 +267,7 @@ public static class NamingGeneratorTests
 			generators: [new RockGenerator().AsSourceGenerator()]);
 
 		_ = sourceDriver.RunGeneratorsAndUpdateCompilation(sourceCompilation, out var newSourceCompilation, out _);
-		var sourceReference = newSourceCompilation.ToMetadataReference()!;
+		var sourceReference = newSourceCompilation.ToMetadataReference();
 
 		var code =
 			"""
@@ -566,7 +566,7 @@ public static class NamingGeneratorTests
 			generators: [new RockGenerator().AsSourceGenerator()]);
 
 		_ = sourceDriver.RunGeneratorsAndUpdateCompilation(sourceCompilation, out var newSourceCompilation, out _);
-		var sourceReference = newSourceCompilation.ToMetadataReference()!;
+		var sourceReference = newSourceCompilation.ToMetadataReference();
 
 		var code =
 			"""
@@ -2663,7 +2663,7 @@ public static class NamingGeneratorTests
 		var firstSourceCompilation = CSharpCompilation.Create("first", [firstSourceSyntaxTree],
 			references,
 			new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
-		var firstSourceReference = firstSourceCompilation.ToMetadataReference()!;
+		var firstSourceReference = firstSourceCompilation.ToMetadataReference();
 		firstSourceReference = firstSourceReference.WithAliases(["First"]);
 
 		var secondSource =
@@ -2677,7 +2677,7 @@ public static class NamingGeneratorTests
 		var secondSourceCompilation = CSharpCompilation.Create("second", [secondSourceSyntaxTree],
 			references,
 			new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
-		var secondSourceReference = secondSourceCompilation.ToMetadataReference()!;
+		var secondSourceReference = secondSourceCompilation.ToMetadataReference();
 
 		var code =
 			"""

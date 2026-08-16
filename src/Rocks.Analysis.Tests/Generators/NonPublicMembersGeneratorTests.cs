@@ -589,7 +589,7 @@ public static class NonPublicMembersGeneratorTests
 		var sourceCompilation = CSharpCompilation.Create("internal", [sourceSyntaxTree],
 			sourceReferences,
 			new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
-		var sourceReference = sourceCompilation.ToMetadataReference()!;
+		var sourceReference = sourceCompilation.ToMetadataReference();
 
 		var code =
 			"""
@@ -620,7 +620,7 @@ public static class NonPublicMembersGeneratorTests
 		var sourceCompilation = CSharpCompilation.Create("internal", [sourceSyntaxTree],
 			sourceReferences,
 			new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
-		var sourceReference = sourceCompilation.ToMetadataReference()!;
+		var sourceReference = sourceCompilation.ToMetadataReference();
 
 		var code =
 			"""
@@ -1126,7 +1126,7 @@ public static class NonPublicMembersGeneratorTests
 			.Cast<MetadataReference>();
 		var sourceCompilation = CSharpCompilation.Create("SourceAssembly", [sourceSyntaxTree],
 			sourceReferences, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
-		var sourceReference = sourceCompilation.ToMetadataReference()!;
+		var sourceReference = sourceCompilation.ToMetadataReference();
 
 		var code =
 			"""
