@@ -14,7 +14,7 @@ internal static class SyntaxNodeExtensions
 		{
 			if (parent is T tParent && isTarget(tParent))
 			{
-				return (T)parent!;
+				return (T)parent;
 			}
 
 			parent = parent.Parent;

@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
+		<NoWarn>$(NoWarn),EnableGenerateDocumentationFile</NoWarn>
 		<OutputType>Exe</OutputType>
 	</PropertyGroup>
 	<ItemGroup>

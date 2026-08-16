@@ -8,7 +8,7 @@ namespace Rocks.Analysis.Models;
 internal sealed class ModelContext
 {
 	private readonly Dictionary<ITypeSymbol, TypeReferenceModel> typeMap =
-		new(SymbolEqualityComparer.IncludeNullability);
+		[with(SymbolEqualityComparer.IncludeNullability)];
 
 	internal ModelContext(SemanticModel semanticModel) =>
 		this.SemanticModel = semanticModel;

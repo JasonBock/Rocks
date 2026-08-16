@@ -14,7 +14,7 @@ public static class RockContextTests
 			expectations = context.Create<MyExpectations>();
 		}
 
-		Assert.That(expectations!.HasBeenVerified, Is.True);
+		Assert.That(expectations.HasBeenVerified, Is.True);
 	}
 
 	[Test]

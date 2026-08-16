@@ -4,7 +4,7 @@
 		
 		<!--<CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
 		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>-->
-		
+		<NoWarn>$(NoWarn),EnableGenerateDocumentationFile</NoWarn>
 		<OutputType>Exe</OutputType>
 	</PropertyGroup>
 	<ItemGroup>

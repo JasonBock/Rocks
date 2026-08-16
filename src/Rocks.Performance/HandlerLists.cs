@@ -76,7 +76,7 @@ public class HandlerLists
 		for (var i = 0; i < count; i++)
 		{
 			var handler = new HandlerInt { input = i };
-			handlers ??= new(1);
+			handlers ??= [with(1)];
 			handlers.Add(@handler);
 		}
 
@@ -92,7 +92,7 @@ public class HandlerLists
 		for (var i = 0; i < count; i++)
 		{
 			var handler = new HandlerInt { input = i };
-			handlers ??= new(2);
+			handlers ??= [with(2)];
 			handlers.Add(@handler);
 		}
 
@@ -110,7 +110,7 @@ public class HandlerLists
 			var handler = new HandlerInt { input = i };
 			// TODO: the new hotness:
 			// this.handlerListOneInitialization ??= new([handler]);
-			if (handlers is null) { handlers = new([handler]); }
+			if (handlers is null) { handlers = [with([handler])]; }
 			else { handlers.Add(@handler); }
 		}
 

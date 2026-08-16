@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<AssemblyName>Rocks.Tests</AssemblyName>
 		<EnableNUnitRunner>true</EnableNUnitRunner>
-		<NoWarn>$(NoWarn),CS1705</NoWarn>
+		<NoWarn>$(NoWarn),CS1705,EnableGenerateDocumentationFile</NoWarn>
 		<RootNamespace>Rocks.Tests</RootNamespace>
 		<TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
 	</PropertyGroup>

@@ -50,7 +50,7 @@ internal sealed class RockProjectionBuilder
 
 		var text = SourceText.From(writer.ToString(), Encoding.UTF8);
 		var name = this.ProjectedType.PointedAtCount > 0 ?
-			this.ProjectedType.PointerNames! :
+			this.ProjectedType.PointerNames :
 			this.ProjectedType.FullyQualifiedName.GenerateFileName();
 		return ($"{name}_Projection.g.cs", text);
 	}

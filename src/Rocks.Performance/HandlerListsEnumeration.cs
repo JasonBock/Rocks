@@ -111,7 +111,7 @@ public class HandlerListsEnumeration
 	{
 		static List<HandlerInt> Generate(int size)
 		{
-			var handlers = new List<HandlerInt>() { new HandlerInt { input = 0 } };
+			var handlers = new List<HandlerInt>() { new() { input = 0 } };
 
 			for (var i = 1; i < size; i++)
 			{

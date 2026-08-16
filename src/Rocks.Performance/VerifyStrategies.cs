@@ -98,8 +98,6 @@ public interface IInterfaceMethodVoid
 internal sealed class CurrentExpectations
 	: Expectations
 {
-	private readonly SetupsExpectations setups;
-
 	internal sealed class SetupsExpectations
 	{
 		private readonly CurrentExpectations parent;
@@ -111,7 +109,7 @@ internal sealed class CurrentExpectations
 		{
 			ExpectationException.ThrowIf(this.parent.WasInstanceInvoked);
 			var handler = new Handler0();
-			if (this.parent.handlers0 is null) { this.parent.handlers0 = new(1); }
+			this.parent.handlers0 ??= [with(1)];
 			this.parent.handlers0.Add(handler);
 			return new(handler, this.parent);
 		}
@@ -126,7 +124,7 @@ internal sealed class CurrentExpectations
 				@a = @a,
 			};
 
-			if (this.parent.handlers1 is null) { this.parent.handlers1 = new(1); }
+			this.parent.handlers1 ??= [with(1)];
 			this.parent.handlers1.Add(@handler);
 			return new(@handler, this.parent);
 		}
@@ -143,13 +141,13 @@ internal sealed class CurrentExpectations
 				@b = @b,
 			};
 
-			if (this.parent.handlers2 is null) { this.parent.handlers2 = new(1); }
+			this.parent.handlers2 ??= [with(1)];
 			this.parent.handlers2.Add(@handler);
 			return new(@handler, this.parent);
 		}
 	}
 
-	internal SetupsExpectations Setups => this.setups;
+	internal SetupsExpectations Setups { get; }
 
 	internal sealed class Handler0
 		: Handler<Action>
@@ -217,11 +215,11 @@ internal sealed class CurrentExpectations
 
 				foreach (var @handler in this.Expectations.handlers1)
 				{
-					if (@handler.@a.IsValid(@a!))
+					if (@handler.@a.IsValid(@a))
 					{
 						@foundMatch = true;
 						@handler.CallCount++;
-						@handler.Callback?.Invoke(@a!);
+						@handler.Callback?.Invoke(@a);
 						break;
 					}
 				}
@@ -256,12 +254,12 @@ internal sealed class CurrentExpectations
 
 				foreach (var @handler in this.Expectations.handlers2)
 				{
-					if (@handler.@a.IsValid(@a!) &&
-						@handler.@b.IsValid(@b!))
+					if (@handler.@a.IsValid(@a) &&
+						@handler.@b.IsValid(@b))
 					{
 						@foundMatch = true;
 						@handler.CallCount++;
-						@handler.Callback?.Invoke(@a!, @b!);
+						@handler.Callback?.Invoke(@a, @b);
 						break;
 					}
 				}
@@ -292,7 +290,7 @@ internal sealed class CurrentExpectations
 		private CurrentExpectations Expectations { get; }
 	}
 
-	public CurrentExpectations() => this.setups = new(this);
+	public CurrentExpectations() => this.Setups = new(this);
 
 	internal IInterfaceMethodVoid Instance()
 	{

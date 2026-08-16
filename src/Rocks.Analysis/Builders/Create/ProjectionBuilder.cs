@@ -153,7 +153,7 @@ internal static class ProjectionBuilder
 
 	private static void BuildPointerArgument(IndentedTextWriter writer, ITypeReferenceModel projectedModel)
 	{
-		var pointerNames = projectedModel.PointerNames!;
+		var pointerNames = projectedModel.PointerNames;
 		var pointerSplats = new string('*', (int)projectedModel.PointedAtCount);
 
 		writer.WriteLines(
@@ -199,7 +199,7 @@ internal static class ProjectionBuilder
 
 	private static void BuildVoidPointerArgument(IndentedTextWriter writer, ITypeReferenceModel projectedModel)
 	{
-		var pointerNames = projectedModel.PointerNames!;
+		var pointerNames = projectedModel.PointerNames;
 		var pointerSplats = new string('*', (int)projectedModel.PointedAtCount);
 
 		writer.WriteLines(

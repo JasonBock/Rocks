@@ -1,6 +1,6 @@
 ﻿namespace Rocks.Comparisons;
 
-public unsafe interface IHavePointers
+public interface IHavePointers
 {
 	void PointerParameter(int* value);
 }
