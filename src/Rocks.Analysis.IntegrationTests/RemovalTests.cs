@@ -1,9 +1,9 @@
 ﻿using NUnit.Framework;
 
-namespace Rocks.Analysis.IntegrationTests.RemovalTestTypes;
-
 using static Rocks.Analysis.IntegrationTests.RemovalTestTypes.ICustomerServiceCreateExpectations.Adornments;
-using RetrieveAdornment = ICustomerServiceCreateExpectations.Adornments.RetrieveAdornments14C3B8D6;
+using RetrieveAdornment = Rocks.Analysis.IntegrationTests.RemovalTestTypes.ICustomerServiceCreateExpectations.Adornments.RetrieveAdornments14C3B8D6;
+
+namespace Rocks.Analysis.IntegrationTests.RemovalTestTypes;
 
 public sealed record Customer(string Name);
 

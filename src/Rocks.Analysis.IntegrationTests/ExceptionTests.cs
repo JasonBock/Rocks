@@ -34,7 +34,7 @@ internal static class ExceptionTests
 		throwsExpectations.Setups.ThrowIt().Throws<ThrownException>();
 
 		var mock = throwsExpectations.Instance();
-		Assert.That(() => mock.ThrowIt(),
+		Assert.That(mock.ThrowIt,
 			Throws.TypeOf<ThrownException>().With.Message.EqualTo(ThrownException.DefaultMessage));
 	}
 
@@ -48,7 +48,7 @@ internal static class ExceptionTests
 		throwsExpectations.Setups.ThrowIt().Throws(new ThrownException(message));
 
 		var mock = throwsExpectations.Instance();
-		Assert.That(() => mock.ThrowIt(),
+		Assert.That(mock.ThrowIt,
 			Throws.TypeOf<ThrownException>().With.Message.EqualTo(message));
 	}
 }

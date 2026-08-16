@@ -32,7 +32,7 @@ internal static class MismatchParameterCountsTests
 		expectations.Setups.NoParameters<string>();
 
 		var mock = expectations.Instance();
-		Assert.That(() => mock.NoParameters<Guid>(), Throws.TypeOf<ExpectationException>());
+		Assert.That(mock.NoParameters<Guid>, Throws.TypeOf<ExpectationException>());
 	}
 
 	[Test]

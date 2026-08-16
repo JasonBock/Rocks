@@ -11,7 +11,7 @@ public class ClassGenericMethod<T>
 	public virtual List<string>? FooReturn() => default;
 	public virtual T? QuuxReturn() => default;
 	public virtual TReturn BarReturn<TReturn>() => default!;
-	public virtual TData? NullableValues<TData>(TData? data) => default!;
+	public virtual TData? NullableValues<TData>(TData? data) => default;
 }
 
 internal static class ClassGenericMethodTests

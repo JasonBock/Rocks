@@ -5,10 +5,10 @@ namespace Rocks.Analysis.IntegrationTests.PointerTestTypes;
 
 public interface ISurface
 {
-	unsafe void Create<T>(T* allocator) where T : unmanaged;
+	void Create<T>(T* allocator) where T : unmanaged;
 }
 
-public unsafe interface IHavePointers
+public interface IHavePointers
 {
 	void DelegatePointerParameter(delegate*<int, void> value);
 	delegate*<int, void> DelegatePointerReturn();
@@ -99,7 +99,7 @@ internal static unsafe class PointerTests
 	[Test]
 	public static void CreateWithPointerParameterWithCallbackNoReturn()
 	{
-		unsafe static void PointerParameterCallback(int* callbackValue) => *callbackValue = 20;
+		static void PointerParameterCallback(int* callbackValue) => *callbackValue = 20;
 
 		var value = 10;
 		var pValue = &value;
@@ -132,7 +132,7 @@ internal static unsafe class PointerTests
 	[Test]
 	public static void CreateWithPointerReturnWithCallback()
 	{
-		unsafe static int* PointerReturnCallback() => default;
+		static int* PointerReturnCallback() => default;
 
 		using var context = new RockContext();
 		var expectations = context.Create<IHavePointersCreateExpectations>();
@@ -185,7 +185,7 @@ internal static unsafe class PointerTests
 	{
 		var wasCalled = false;
 		static void DelegatePointerParameterDelegate(int a) { }
-		unsafe void DelegatePointerParameterCallback(delegate*<int, void> value) => wasCalled = true;
+		void DelegatePointerParameterCallback(delegate*<int, void> value) => wasCalled = true;
 
 		var value = 10;
 		var pValue = &value;
@@ -219,7 +219,7 @@ internal static unsafe class PointerTests
 
 		var wasCalled = false;
 
-		unsafe delegate*<int, void> DelegatePointerReturnCallback()
+		delegate*<int, void> DelegatePointerReturnCallback()
 		{
 			wasCalled = true;
 			return &DelegatePointerParameterDelegate;
