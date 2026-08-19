@@ -1,4 +1,6 @@
-﻿using Rocks.Performance.Baselines;
+﻿using BenchmarkDotNet.Running;
+using Rocks.Performance;
+//using Rocks.Performance.Baselines;
 
-BaselineRunner.Run();
-//BenchmarkRunner.Run<ListsVsArrays>();
+//BaselineRunner.Run();
+BenchmarkRunner.Run<RecordEqualityOverride>();

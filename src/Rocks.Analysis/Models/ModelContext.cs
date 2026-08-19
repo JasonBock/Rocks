@@ -96,7 +96,7 @@ internal sealed class ModelContext
 			{
 				var (pointedAtCount, pointedAt) = type.GetPointerInformation();
 				this.PointedAtCount = pointedAtCount;
-				this.PointedAt = new TypeReferenceModel(pointedAt, modelContext);
+				this.PointedAt = modelContext.CreateTypeReference(pointedAt); //new TypeReferenceModel(pointedAt, modelContext);
 				this.PointerNames = string.Concat(Enumerable.Repeat("Pointer", (int)this.PointedAtCount));
 			}
 		}
@@ -163,6 +163,11 @@ internal sealed class ModelContext
 		public bool Equals(ITypeReferenceModel other) =>
 			this.Equals(other as TypeReferenceModel);
 
+		public bool Equals(TypeReferenceModel? other) =>
+			this.FullyQualifiedName == other?.FullyQualifiedName;
+
+		public override int GetHashCode() => this.FullyQualifiedName.GetHashCode();
+		
 		public bool AllowsRefLikeType { get; }
 		public string AttributesDescription { get; }
 		public EquatableArray<Constraints> Constraints { get; }

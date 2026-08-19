@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Updated to .NET 11 Preview 7 (issue [#425](https://github.com/JasonBock/Rocks/issues/425))
+- Small micro-optimization in performance during code generation (issue [#424](https://github.com/JasonBock/Rocks/issues/424))
 
 ## [10.3.0] - 2026-06-03
 

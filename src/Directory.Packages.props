@@ -18,7 +18,7 @@
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.30.0-beta.1" />
     <PackageVersion Include="Azure.Storage.Queues" Version="12.28.0-beta.1" />
     <PackageVersion Include="Ben.Demystifier" Version="0.4.1" />
-    <PackageVersion Include="BenchmarkDotNet" Version="0.15.8" />
+    <PackageVersion Include="BenchmarkDotNet" Version="0.16.0-preview.1" />
     <PackageVersion Include="Blazored.LocalStorage" Version="4.5.0" />
     <PackageVersion Include="Blazored.Video" Version="1.0.1" />
     <PackageVersion Include="Bogus" Version="35.6.5" />
