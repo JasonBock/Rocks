@@ -101,6 +101,7 @@
     <PackageVersion Include="NetArchTest.Rules" Version="1.3.2" />
     <PackageVersion Include="NetFabric.Hyperlinq.Abstractions" Version="1.3.0" />
     <PackageVersion Include="NetFabric.Numerics.Tensors" Version="4.0.0" />
+    <PackageVersion Include="Newtonsoft.Json" Version="13.0.5-beta1" />
     <PackageVersion Include="Ninject" Version="4.0.0-beta.1" />
     <PackageVersion Include="NodaTime" Version="3.3.3" />
     <PackageVersion Include="Npgsql" Version="7.0.4" />

@@ -91,7 +91,7 @@ static void TestWithType()
 #pragma warning disable EF9100 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 #pragma warning disable CS0618 // Type or member is obsolete
 	(var issues, var times) = TestGenerator.Generate(new RockGenerator(),
-		[typeof(Pidgin.Expected<>)],
+		[typeof(Microsoft.FluentUI.AspNetCore.Components.Utilities.AddTag)],
 		typesToLoadAssembliesFrom,
 		[],
 		Rocks.Analysis.BuildType.Create,
@@ -167,7 +167,10 @@ static void TestWithTypes()
 		new (typeof(DiffEngine.BuildServerDetector), []),
 		new (typeof(DnsClient.DnsDatagramReader), ["DnsClientAlias"]),
 		new (typeof(DotNext.BasicExtensions), []),
-		new (typeof(DotNext.Threading.AsyncAutoResetEvent), []),
+		// TODO: This is currently commented out because of a weird
+		// .NET 11 Reflection issue:
+		// https://github.com/dotnet/dotNext/issues/297
+		//new (typeof(DotNext.Threading.AsyncAutoResetEvent), []),
 		new (typeof(DotNext.IO.DataTransferObject), []),
 		new (typeof(DotNext.Metaprogramming.AsyncLambdaFlags), []),
 		new (typeof(DSharpPlus.AnsiColor), []),
@@ -208,6 +211,7 @@ static void TestWithTypes()
 		new (typeof(Mscc.GenerativeAI.AioModel), []),
 		new (typeof(NCalc.BinaryExpression), []),
 		new (typeof(NetFabric.EnumerableExtensions), []),
+		new (typeof(Newtonsoft.Json.ConstructorHandling), ["NewtonsoftAlias"]),
 		new (typeof(nietras.SeparatedValues.SepReaderExtensions), []),
 		new (typeof(Ninject.ActivationException), []),
 		new (typeof(NodaTime.AmbiguousTimeException), []),
@@ -322,10 +326,8 @@ static void TestWithTypes()
 
 		while (generatorTasks.Count >= maximumGeneratorTasksCount)
 		{
-#pragma warning disable CA1849 // Call async methods when in an async method
 			var finishedTaskIndex = Task.WaitAny([.. generatorTasks]);
 			var finishedTask = generatorTasks[finishedTaskIndex].Result;
-#pragma warning restore CA1849 // Call async methods when in an async method
 
 			Console.WriteLine($"Finished {finishedTask.AssemblyName}");
 			totalDiscoveredTypeCount += finishedTask.DiscoveredTypesCount;

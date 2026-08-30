@@ -90,6 +90,7 @@
 		<PackageReference Include="NCalc" />
 		<PackageReference Include="NetFabric.Hyperlinq.Abstractions" />
 		<PackageReference Include="NetFabric.Numerics.Tensors" />
+		<PackageReference Include="Newtonsoft.Json" />
 		<PackageReference Include="Ninject" />
 		<PackageReference Include="NodaTime" />
 		<PackageReference Include="NuGet.Common" />

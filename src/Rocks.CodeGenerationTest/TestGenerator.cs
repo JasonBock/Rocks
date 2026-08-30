@@ -27,10 +27,11 @@ internal static class TestGenerator
 	* Code access security (SYSLIB0003)
 	* EF "future" warnings (EF9100)
 	* Aspire evaluation warnings (ASPIRE*)
-	* StackExchange.Redis evaluation warnings (SER001, SER003, SER005, SER006)
+	* StackExchange.Redis evaluation warnings (SER001, SER003, SER005, SER006, SER007, SER008, SER009)
 	* Azure evaluation warnings (SCME0002)
 	* OpenTelemetry (OTEL1001)
 	* CodeAnalysis experiments (RSEXPERIMENTAL006)
+	* Azure (AZID0004)
 
 	These are warnings, and they should not cause errors. A user can decide to treat them
 	as errors, but Rocks should still be able to create code that cause these warnings.
@@ -77,9 +78,20 @@ internal static class TestGenerator
 		{ "SER003", ReportDiagnostic.Suppress },
 		{ "SER005", ReportDiagnostic.Suppress },
 		{ "SER006", ReportDiagnostic.Suppress },
+		{ "SER007", ReportDiagnostic.Suppress },
+		{ "SER008", ReportDiagnostic.Suppress },
+		{ "SER009", ReportDiagnostic.Suppress },
 		{ "OTEL1001", ReportDiagnostic.Suppress },
 		{ "RSEXPERIMENTAL006", ReportDiagnostic.Suppress },
+		{ "AZID0004", ReportDiagnostic.Suppress },
 	};
+
+	internal static ImmutableArray<Type> GetTargets(Assembly targetAssembly)
+	{
+		var initialTypes = targetAssembly.GetTypes()
+			.ToImmutableArray();
+		return initialTypes;
+	}
 
 	internal static async Task<ImmutableArray<Type>> GetTargetsAsync(HashSet<Assembly> targetAssemblies, ImmutableArray<Type> typesToIgnore,
 		 ImmutableArray<Type> typesToLoadAssembliesFrom, string[] aliases)

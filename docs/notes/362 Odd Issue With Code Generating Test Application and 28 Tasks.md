@@ -98,5 +98,295 @@ System.TypeLoadException: Method 'get_Task' in type 'DotNext.Threading.Tasks.<Ta
 ```
 
 * Why is `DotNext.Threading.Tasks.<TaskSchedulerExtensions_T>FEC23FF8E24C5C893F2B0DCE3A3DBD6B033A895D525ABEAE11C935B5879FC7CF4__ImmediateTask``2'` even showing up? It's `internal`, it's `sealed`, its name isn't "speakable" ... why?
+   * Seems like it's a Reflection issue. Start with logging a bug to DotNext, but it may require going to .NET runtime: `_ = typeof(DotNext.Threading.AsyncAutoResetEvent).Assembly.GetTypes();`
 * Why are we getting that weird `get_Name` not having an implementation?
 * Why is there a conflict with Aspose and Newtonsoft.Json?
+
+Looks like there's real issues:
+
+```
+Error:
+
+ID: CS0277
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.IFluentComponentElementBase_Partial_Rock_Create.g.cs(117,5): error CS0277: 'IFluentComponentElementBasePartialTarget.Mock' does not implement interface member 'IFluentComponentElementBase.Element.set'. 'IFluentComponentElementBasePartialTarget.Mock.Element.set' is not public.
+Code:
+global::Microsoft.FluentUI.AspNetCore.Components.IFluentComponentElementBase
+
+Error:
+
+ID: CS0277
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.IFluentComponentElementBase_Rock_Create.g.cs(117,5): error CS0277: 'IFluentComponentElementBaseCreateExpectations.Mock' does not implement interface member 'IFluentComponentElementBase.Element.set'. 'IFluentComponentElementBaseCreateExpectations.Mock.Element.set' is not public.
+Code:
+global::Microsoft.FluentUI.AspNetCore.Components.IFluentComponentElementBase
+
+Error:
+
+ID: CS0277
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.IFluentComponentElementBase_Partial_Rock_Make.g.cs(27,6): error CS0277: 'IFluentComponentElementBasePartialTarget.Mock' does not implement interface member 'IFluentComponentElementBase.Element.set'. 'IFluentComponentElementBasePartialTarget.Mock.Element.set' is not public.
+Code:
+global::Microsoft.FluentUI.AspNetCore.Components.IFluentComponentElementBase
+
+Error:
+
+ID: CS0277
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.IFluentComponentElementBase_Rock_Make.g.cs(27,6): error CS0277: 'IFluentComponentElementBaseMakeExpectations.Mock' does not implement interface member 'IFluentComponentElementBase.Element.set'. 'IFluentComponentElementBaseMakeExpectations.Mock.Element.set' is not public.
+Code:
+global::Microsoft.FluentUI.AspNetCore.Components.IFluentComponentElementBase
+
+Error:
+
+ID: CS0277
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.IFluentComponentElementBase_Partial_Rock_Create.g.cs(117,5): error CS0277: 'IFluentComponentElementBasePartialTarget.Mock' does not implement interface member 'IFluentComponentElementBase.Element.set'. 'IFluentComponentElementBasePartialTarget.Mock.Element.set' is not public.
+Code:
+global::Microsoft.FluentUI.AspNetCore.Components.IFluentComponentElementBase
+
+Error:
+
+ID: CS0277
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.IFluentComponentElementBase_Rock_Create.g.cs(117,5): error CS0277: 'IFluentComponentElementBaseCreateExpectations.Mock' does not implement interface member 'IFluentComponentElementBase.Element.set'. 'IFluentComponentElementBaseCreateExpectations.Mock.Element.set' is not public.
+Code:
+global::Microsoft.FluentUI.AspNetCore.Components.IFluentComponentElementBase
+
+Error:
+
+ID: CS0277
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.IFluentComponentElementBase_Partial_Rock_Make.g.cs(27,6): error CS0277: 'IFluentComponentElementBasePartialTarget.Mock' does not implement interface member 'IFluentComponentElementBase.Element.set'. 'IFluentComponentElementBasePartialTarget.Mock.Element.set' is not public.
+Code:
+global::Microsoft.FluentUI.AspNetCore.Components.IFluentComponentElementBase
+
+Error:
+
+ID: CS0277
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.IFluentComponentElementBase_Rock_Make.g.cs(27,6): error CS0277: 'IFluentComponentElementBaseMakeExpectations.Mock' does not implement interface member 'IFluentComponentElementBase.Element.set'. 'IFluentComponentElementBaseMakeExpectations.Mock.Element.set' is not public.
+Code:
+global::Microsoft.FluentUI.AspNetCore.Components.IFluentComponentElementBase
+
+Error:
+
+ID: CS0628
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.IFluentComponentElementBase_Partial_Rock_Create.g.cs(146,14): error CS0628: 'IFluentComponentElementBasePartialTarget.Mock.Element.set': new protected member declared in sealed type
+Code:
+set
+
+Error:
+
+ID: CS0628
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.IFluentComponentElementBase_Rock_Create.g.cs(146,14): error CS0628: 'IFluentComponentElementBaseCreateExpectations.Mock.Element.set': new protected member declared in sealed type
+Code:
+set
+
+Error:
+
+ID: CS0628
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.IFluentComponentElementBase_Partial_Rock_Make.g.cs(36,15): error CS0628: 'IFluentComponentElementBasePartialTarget.Mock.Element.set': new protected member declared in sealed type
+Code:
+set
+
+Error:
+
+ID: CS0628
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.IFluentComponentElementBase_Rock_Make.g.cs(36,15): error CS0628: 'IFluentComponentElementBaseMakeExpectations.Mock.Element.set': new protected member declared in sealed type
+Code:
+set
+
+Error:
+
+ID: CS0628
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.IFluentComponentElementBase_Partial_Rock_Create.g.cs(146,14): error CS0628: 'IFluentComponentElementBasePartialTarget.Mock.Element.set': new protected member declared in sealed type
+Code:
+set
+
+Error:
+
+ID: CS0628
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.IFluentComponentElementBase_Rock_Create.g.cs(146,14): error CS0628: 'IFluentComponentElementBaseCreateExpectations.Mock.Element.set': new protected member declared in sealed type
+Code:
+set
+
+Error:
+
+ID: CS0628
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.IFluentComponentElementBase_Partial_Rock_Make.g.cs(36,15): error CS0628: 'IFluentComponentElementBasePartialTarget.Mock.Element.set': new protected member declared in sealed type
+Code:
+set
+
+Error:
+
+ID: CS0628
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.IFluentComponentElementBase_Rock_Make.g.cs(36,15): error CS0628: 'IFluentComponentElementBaseMakeExpectations.Mock.Element.set': new protected member declared in sealed type
+Code:
+set
+
+Error:
+
+ID: CS9030
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.Utilities.AddTag_Rock_Create.g.cs(822,26): error CS9030: 'AddTagCreateExpectations.Mock.Name' must be required because it overrides required member 'AddTag.Name'
+Code:
+Name
+
+Error:
+
+ID: CS9030
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.Utilities.AddTag_Partial_Rock_Create.g.cs(822,26): error CS9030: 'AddTagPartialTarget.Mock.Name' must be required because it overrides required member 'AddTag.Name'
+Code:
+Name
+
+Error:
+
+ID: CS9030
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.FluentDialogInstance_Rock_Create.g.cs(840,84): error CS9030: 'FluentDialogInstanceCreateExpectations.Mock.DialogInstance' must be required because it overrides required member 'FluentDialogInstance.DialogInstance'
+Code:
+DialogInstance
+
+Error:
+
+ID: CS9030
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.FluentDialogInstance_Rock_Create.g.cs(894,85): error CS9030: 'FluentDialogInstanceCreateExpectations.Mock.Localizer' must be required because it overrides required member 'FluentDialogInstance.Localizer'
+Code:
+Localizer
+
+Error:
+
+ID: CS9030
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.FluentDialogInstance_Partial_Rock_Create.g.cs(840,84): error CS9030: 'FluentDialogInstancePartialTarget.Mock.DialogInstance' must be required because it overrides required member 'FluentDialogInstance.DialogInstance'
+Code:
+DialogInstance
+
+Error:
+
+ID: CS9030
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.FluentDialogInstance_Partial_Rock_Create.g.cs(894,85): error CS9030: 'FluentDialogInstancePartialTarget.Mock.Localizer' must be required because it overrides required member 'FluentDialogInstance.Localizer'
+Code:
+Localizer
+
+Error:
+
+ID: CS9030
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.FluentDialogInstance_Partial_Rock_Make.g.cs(109,85): error CS9030: 'FluentDialogInstancePartialTarget.Mock.DialogInstance' must be required because it overrides required member 'FluentDialogInstance.DialogInstance'
+Code:
+DialogInstance
+
+Error:
+
+ID: CS9030
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.FluentDialogInstance_Partial_Rock_Make.g.cs(116,86): error CS9030: 'FluentDialogInstancePartialTarget.Mock.Localizer' must be required because it overrides required member 'FluentDialogInstance.Localizer'
+Code:
+Localizer
+
+Error:
+
+ID: CS9030
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.Utilities.AddTag_Partial_Rock_Make.g.cs(98,27): error CS9030: 'AddTagPartialTarget.Mock.Name' must be required because it overrides required member 'AddTag.Name'
+Code:
+Name
+
+Error:
+
+ID: CS9030
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.Utilities.AddTag_Rock_Make.g.cs(98,27): error CS9030: 'AddTagMakeExpectations.Mock.Name' must be required because it overrides required member 'AddTag.Name'
+Code:
+Name
+
+Error:
+
+ID: CS9030
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.FluentDialogInstance_Rock_Make.g.cs(109,85): error CS9030: 'FluentDialogInstanceMakeExpectations.Mock.DialogInstance' must be required because it overrides required member 'FluentDialogInstance.DialogInstance'
+Code:
+DialogInstance
+
+Error:
+
+ID: CS9030
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.FluentDialogInstance_Rock_Make.g.cs(116,86): error CS9030: 'FluentDialogInstanceMakeExpectations.Mock.Localizer' must be required because it overrides required member 'FluentDialogInstance.Localizer'
+Code:
+Localizer
+
+Error:
+
+ID: CS9030
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.Utilities.AddTag_Rock_Create.g.cs(822,26): error CS9030: 'AddTagCreateExpectations.Mock.Name' must be required because it overrides required member 'AddTag.Name'
+Code:
+Name
+
+Error:
+
+ID: CS9030
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.Utilities.AddTag_Partial_Rock_Create.g.cs(822,26): error CS9030: 'AddTagPartialTarget.Mock.Name' must be required because it overrides required member 'AddTag.Name'
+Code:
+Name
+
+Error:
+
+ID: CS9030
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.FluentDialogInstance_Rock_Create.g.cs(840,84): error CS9030: 'FluentDialogInstanceCreateExpectations.Mock.DialogInstance' must be required because it overrides required member 'FluentDialogInstance.DialogInstance'
+Code:
+DialogInstance
+
+Error:
+
+ID: CS9030
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.FluentDialogInstance_Rock_Create.g.cs(894,85): error CS9030: 'FluentDialogInstanceCreateExpectations.Mock.Localizer' must be required because it overrides required member 'FluentDialogInstance.Localizer'
+Code:
+Localizer
+
+Error:
+
+ID: CS9030
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.FluentDialogInstance_Partial_Rock_Create.g.cs(840,84): error CS9030: 'FluentDialogInstancePartialTarget.Mock.DialogInstance' must be required because it overrides required member 'FluentDialogInstance.DialogInstance'
+Code:
+DialogInstance
+
+Error:
+
+ID: CS9030
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.FluentDialogInstance_Partial_Rock_Create.g.cs(894,85): error CS9030: 'FluentDialogInstancePartialTarget.Mock.Localizer' must be required because it overrides required member 'FluentDialogInstance.Localizer'
+Code:
+Localizer
+
+Error:
+
+ID: CS9030
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.Utilities.AddTag_Partial_Rock_Make.g.cs(98,27): error CS9030: 'AddTagPartialTarget.Mock.Name' must be required because it overrides required member 'AddTag.Name'
+Code:
+Name
+
+Error:
+
+ID: CS9030
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.Utilities.AddTag_Rock_Make.g.cs(98,27): error CS9030: 'AddTagMakeExpectations.Mock.Name' must be required because it overrides required member 'AddTag.Name'
+Code:
+Name
+
+Error:
+
+ID: CS9030
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.FluentDialogInstance_Rock_Make.g.cs(109,85): error CS9030: 'FluentDialogInstanceMakeExpectations.Mock.DialogInstance' must be required because it overrides required member 'FluentDialogInstance.DialogInstance'
+Code:
+DialogInstance
+
+Error:
+
+ID: CS9030
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.FluentDialogInstance_Rock_Make.g.cs(116,86): error CS9030: 'FluentDialogInstanceMakeExpectations.Mock.Localizer' must be required because it overrides required member 'FluentDialogInstance.Localizer'
+Code:
+Localizer
+
+Error:
+
+ID: CS9030
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.FluentDialogInstance_Partial_Rock_Make.g.cs(109,85): error CS9030: 'FluentDialogInstancePartialTarget.Mock.DialogInstance' must be required because it overrides required member 'FluentDialogInstance.DialogInstance'
+Code:
+DialogInstance
+
+Error:
+
+ID: CS9030
+Description: Rocks.Analysis\Rocks.Analysis.RockGenerator\Microsoft.FluentUI.AspNetCore.Components.FluentDialogInstance_Partial_Rock_Make.g.cs(116,86): error CS9030: 'FluentDialogInstancePartialTarget.Mock.Localizer' must be required because it overrides required member 'FluentDialogInstance.Localizer'
+Code:
+Localizer
+
+        Code: CS0277, Count: 8
+        Code: CS0628, Count: 8
+        Code: CS9030, Count: 24
+Total Error Count: 40
+```
