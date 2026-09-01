@@ -20,6 +20,7 @@ internal sealed record PropertyModel
 		this.IsAbstract = property.IsAbstract;
 		this.IsIndexer = property.IsIndexer;
 		this.IsUnsafe = property.IsUnsafe();
+		this.IsRequired = property.IsRequired;
 		this.Parameters = [..property.Parameters.Select(
 			_ => new ParameterModel(_, modelContext, requiresExplicitInterfaceImplementation: requiresExplicitInterfaceImplementation))];
 
@@ -83,6 +84,7 @@ internal sealed record PropertyModel
 	internal bool InitCanBeSeenByContainingAssembly { get; }
 	internal bool IsAbstract { get; }
 	internal bool IsIndexer { get; }
+	internal bool IsRequired { get; }
 	internal bool IsUnsafe { get; }
 	internal bool IsVirtual { get; }
 	internal uint MemberIdentifier { get; }

@@ -1,0 +1,1 @@
+So, `required` is necessary if the base property has it on a class. Is it the same for an interface? No, because interfaces can't define properties that are required (CS0106).

@@ -207,13 +207,16 @@ internal static class MockPropertyBuilder
 			isSetterVisible = property.SetCanBeSeenByContainingAssembly || property.InitCanBeSeenByContainingAssembly;
 		}
 
+		var isRequired = property.IsRequired ?
+			"required " :
+			string.Empty;
 		var visibility = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 			$"{property.OverridingCodeValue} " : string.Empty;
 		var isOverriden = property.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty;
 		var isUnsafe = property.IsUnsafe ? "unsafe " : string.Empty;
 
 		var returnByRef = property.ReturnsByRef ? "ref " : property.ReturnsByRefReadOnly ? "ref readonly " : string.Empty;
-		writer.WriteLine($"{visibility}{isUnsafe}{isOverriden}{returnByRef}{property.Type.FullyQualifiedName} {explicitTypeName}{property.Name}");
+		writer.WriteLine($"{visibility}{isUnsafe}{isOverriden}{isRequired}{returnByRef}{property.Type.FullyQualifiedName} {explicitTypeName}{property.Name}");
 		writer.WriteLine("{");
 		writer.Indent++;
 
