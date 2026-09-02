@@ -19,8 +19,9 @@ internal sealed record MethodModel
 
 		if (requiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 		{
-			this.OverridingCodeValue = method.GetAccessibilityValue(
-				modelContext.SemanticModel.Compilation.Assembly);
+			this.OverridingCodeValue = method.ContainingType.TypeKind == TypeKind.Interface ?
+				"public" :
+				method.GetAccessibilityValue(modelContext.SemanticModel.Compilation.Assembly);
 		}
 
 		this.IsMarkedWithDoesNotReturn = method.IsMarkedWithDoesNotReturn(compilation);

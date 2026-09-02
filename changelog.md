@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Required properties are now generated correctly in the mock type (issue [#424](https://github.com/JasonBock/Rocks/issues/424))
+- All members defined from an interface that do not require explicit implementation are now marked with `public` visibility in the generated mock type (issue [#426](https://github.com/JasonBock/Rocks/issues/426))
 
 ## [10.3.0] - 2026-06-03
 
