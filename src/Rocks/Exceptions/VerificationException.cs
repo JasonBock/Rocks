@@ -14,22 +14,30 @@
 public sealed class VerificationException
 	: Exception
 {
+	private readonly string message;
+
 	/// <summary>
 	/// Creates a new <see cref="VerificationException"/> instance
 	/// with the given list of failures.
 	/// </summary>
 	/// <param name="failures">A list of verification errors.</param>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="failures"/> is <c>null</c>.</exception>
-	public VerificationException(IReadOnlyList<string> failures) =>
+	public VerificationException(IReadOnlyList<string> failures)
+	{
 		this.Failures = failures ?? throw new ArgumentNullException(nameof(failures));
+		this.message = this.Failures.Count > 0 ?
+			$"""
+			The following verification failure(s) occurred:
+
+			{string.Join(Environment.NewLine, this.Failures)}
+			""" :
+			$"No failures were reported.";
+	}
 
 	/// <summary>
 	/// Gets the exception message, which is a concatenation of the <see cref="Failures"/> values.
 	/// </summary>
-	public override string Message =>
-		this.Failures.Count > 0 ?
-			$"The following verification failure(s) occurred: {string.Join(", ", this.Failures)}" :
-			$"No failures were reported.";
+	public override string Message => this.message;
 
 	/// <summary>
 	/// Gets the list of verification failures.
