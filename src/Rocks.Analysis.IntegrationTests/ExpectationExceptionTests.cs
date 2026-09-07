@@ -11,8 +11,58 @@ public interface ISetAfterMock
 	int this[string Index] { get; set; }
 }
 
+public interface ISuppressExceptions
+{
+	void Work(string message);
+}
+
+public sealed class SuppressExceptions
+{
+	public SuppressExceptions(ISuppressExceptions suppressed) =>
+		this.Suppressed = suppressed;
+
+	public void Use(string message)
+	{
+		// We want to suppress the exception on purpose.
+#pragma warning disable CA1031 // Do not catch general exception types
+		try
+		{
+			this.Suppressed.Work(message);
+		}
+		catch { }
+#pragma warning restore CA1031 // Do not catch general exception types
+	}
+
+	private ISuppressExceptions Suppressed { get; }
+}
+
 internal static class ExpectationExceptionTests
 {
+	[Test]
+	public static void SuppressExceptions()
+	{
+		var expectations = new ISuppressExceptionsCreateExpectations();
+		expectations.Setups.Work("10");
+
+		var suppressor = new SuppressExceptions(expectations.Instance());
+		suppressor.Use("42");
+
+		expectations.Verify();
+
+		using (Assert.EnterMultipleScope())
+		{
+			Assert.That(expectations.WasExceptionThrown, Is.True);
+			Assert.That(expectations.ExpectationFailures,
+				Is.EquivalentTo(
+				[
+					"""
+					No handlers match for Void Work(System.String)
+						message: 42
+					"""
+				]));
+		}
+	}
+
 	[Test]
 	public static void GetExceptionMessage()
 	{

@@ -200,7 +200,8 @@ internal static class MockMethodBuilder
 		else
 		{
 			ExpectationExceptionBuilder.Build(
-				writer, method, "No handlers were found for", type.ExpectationsPropertyName, type.MockName);
+				writer, method, namingContext, 
+				"No handlers were found for", type.ExpectationsPropertyName, type.MockName);
 		}
 
 		writer.Indent--;
@@ -398,7 +399,8 @@ internal static class MockMethodBuilder
 			writer.WriteLine("{");
 			writer.Indent++;
 			ExpectationExceptionBuilder.Build(
-				writer, method, "No handlers match for", type.ExpectationsPropertyName, type.MockName);
+				writer, method, namingContext, 
+				"No handlers match for", type.ExpectationsPropertyName, type.MockName);
 			writer.Indent--;
 			writer.WriteLine("}");
 
@@ -416,7 +418,8 @@ internal static class MockMethodBuilder
 		else
 		{
 			ExpectationExceptionBuilder.Build(
-				writer, method, "No handlers match for", type.ExpectationsPropertyName, type.MockName);
+				writer, method, namingContext, 
+				"No handlers match for", type.ExpectationsPropertyName, type.MockName);
 		}
 	}
 

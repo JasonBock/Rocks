@@ -42,6 +42,14 @@ public abstract class Expectations
 				});
 
 	/// <summary>
+	/// Gets a list of messages created when <see cref="ExpectationException"/>
+	/// is thrown in a mock.
+	/// </summary>
+#pragma warning disable CA1822 // Mark members as static
+	public List<string> ExpectationFailures { get; } = [];
+#pragma warning restore CA1822 // Mark members as static
+
+	/// <summary>
 	/// Gets or sets the flag to determine if a mock threw an exception, like <see cref="ExpectationException"/>.
 	/// </summary>
 	public bool WasExceptionThrown { get; protected set; }

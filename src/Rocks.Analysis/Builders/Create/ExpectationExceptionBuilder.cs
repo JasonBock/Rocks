@@ -7,17 +7,20 @@ namespace Rocks.Analysis.Builders.Create;
 internal static class ExpectationExceptionBuilder
 {
 	internal static void Build(IndentedTextWriter writer, MethodModel method,
-		string message, string expectationsPropertyName, string mockTypeName)
+		VariablesNamingContext namingContext, string message, string expectationsPropertyName, string mockTypeName)
 	{
+		const string expectationMessageVariable = "expectationMessage";
+
 		writer.WriteLines(
 			$$""""
-			this.{{expectationsPropertyName}}.WasExceptionThrown = true;
-			throw new global::Rocks.Exceptions.ExpectationException(
-				$"""
-				{{message}} {typeof({{mockTypeName}}).GetMemberDescription({{method.MemberIdentifier}})}
+			{
+				this.{{expectationsPropertyName}}.WasExceptionThrown = true;
+				var @{{namingContext[expectationMessageVariable]}} =
+					$"""
+					{{message}} {typeof({{mockTypeName}}).GetMemberDescription({{method.MemberIdentifier}})}
 			"""");
 
-		writer.Indent += 2;
+		writer.Indent += 3;
 
 		foreach (var parameter in method.Parameters)
 		{
@@ -34,11 +37,14 @@ internal static class ExpectationExceptionBuilder
 			}
 		}
 
-		writer.Indent -= 2;
+		writer.Indent -= 3;
 
 		writer.WriteLines(
 			$$""""
-				""");
+					""";
+				this.{{expectationsPropertyName}}.ExpectationFailures.Add(@{{namingContext[expectationMessageVariable]}});
+				throw new global::Rocks.Exceptions.ExpectationException(@{{namingContext[expectationMessageVariable]}});		
+			}			
 			"""");
 	}
 }

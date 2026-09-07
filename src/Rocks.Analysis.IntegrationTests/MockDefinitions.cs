@@ -126,3 +126,4 @@
 [assembly: Rocks.Rock(typeof(Rocks.Analysis.IntegrationTests.ExceptionTestTypes.IThrowException), Rocks.BuildType.Create)]
 [assembly: Rocks.Rock(typeof(Rocks.Analysis.IntegrationTests.MismatchParameterCountsTestTypes.IMismatch), Rocks.BuildType.Create)]
 [assembly: Rocks.Rock(typeof(Rocks.Analysis.IntegrationTests.UnionTestTypes.IClassifierUsage), Rocks.BuildType.Create | Rocks.BuildType.Make)]
+[assembly: Rocks.Rock(typeof(Rocks.Analysis.IntegrationTests.ExpectationExceptionTestTypes.ISuppressExceptions), Rocks.BuildType.Create | Rocks.BuildType.Make)]

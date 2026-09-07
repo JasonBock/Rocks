@@ -90,7 +90,8 @@ internal static class MockPropertyBuilder
 		{
 			writer.WriteLine();
 			ExpectationExceptionBuilder.Build(
-				writer, propertyGetMethod, "No handlers match for", type.ExpectationsPropertyName, type.MockName);
+				writer, propertyGetMethod, new(), 
+				"No handlers match for", type.ExpectationsPropertyName, type.MockName);
 		}
 
 		writer.Indent--;
@@ -145,7 +146,8 @@ internal static class MockPropertyBuilder
 
 		writer.Indent += 3;
 		ExpectationExceptionBuilder.Build(
-			writer, property.SetMethod!, "No handlers match for", type.ExpectationsPropertyName, type.MockName);
+			writer, property.SetMethod!, new(),
+			"No handlers match for", type.ExpectationsPropertyName, type.MockName);
 		writer.Indent -= 3;
 
 		writer.WriteLines(
@@ -171,7 +173,8 @@ internal static class MockPropertyBuilder
 		else
 		{
 			ExpectationExceptionBuilder.Build(
-				writer, property.SetMethod!, "No handlers were found for", type.ExpectationsPropertyName, type.MockName);
+				writer, property.SetMethod!, new(),
+				"No handlers were found for", type.ExpectationsPropertyName, type.MockName);
 		}
 
 		writer.Indent--;
@@ -182,6 +185,7 @@ internal static class MockPropertyBuilder
 	}
 
 	internal static void Build(IndentedTextWriter writer, TypeMockModel type,
+
 		PropertyModel property, bool raiseEvents)
 	{
 		var isGetterVisible = false;
