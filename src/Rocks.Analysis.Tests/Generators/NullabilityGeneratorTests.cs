@@ -554,7 +554,7 @@ public static class NullabilityGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::SubTracer.TraceEvent(String,String,String,Int32,String,)"/>.
+					/// Sets an expectation for <see cref="global::SubTracer.TraceEvent(String,String,String,Int32,String,Object[])"/>.
 					/// </summary>
 					internal global::SubTracerCreateExpectations.Adornments.TraceEventAdornments84D8E1F2 TraceEvent(global::Rocks.Argument<string> @eventCache, global::Rocks.Argument<string> @source, global::Rocks.Argument<string> @eventType, global::Rocks.Argument<int> @id, global::Rocks.Argument<string> @format, global::Rocks.Argument<object[]> @args)
 					{
@@ -582,7 +582,7 @@ public static class NullabilityGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::SubTracer.TraceEvent(String,String,String,Int32,String,)"/>.
+					/// Sets an expectation for <see cref="global::SubTracer.TraceEvent(String,String,String,Int32,String,Object[])"/>.
 					/// </summary>
 					internal global::SubTracerCreateExpectations.Adornments.TraceEventAdornments84D8E1F2 TraceEvent(global::Rocks.Argument<string> @eventCache, global::Rocks.Argument<string> @source, global::Rocks.Argument<string> @eventType, global::Rocks.Argument<int> @id, global::Rocks.Argument<string> @format, params object[] @args) =>
 						this.TraceEvent(@eventCache, @source, @eventType, @id, @format, global::Rocks.Arg.Is(@args));

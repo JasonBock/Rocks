@@ -94,7 +94,7 @@ internal static class PropertyExpectationsBuilder
 
 			writer.Indent--;
 
-			var indexerParameterTypes = string.Join(",", property.Parameters.Select(parameter => parameter.Type.Name));
+			var indexerParameterTypes = string.Join(",", property.Parameters.Select(parameter => parameter.Type.XmlCommentName));
 			var commentTarget =
 				$"""
 				{(property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? mockType.Type.FullyQualifiedName : property.ContainingType.FullyQualifiedName)}.this[{indexerParameterTypes}]

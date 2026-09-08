@@ -9,6 +9,8 @@ internal interface ITypeReferenceModel
 	string BuildName(TypeArgumentsNamingContext parentNamingContext);
 
 	bool AllowsRefLikeType { get; }
+	ITypeReferenceModel? ArrayElementType { get; }
+	int ArrayRank { get; }
 	string AttributesDescription { get; }
 	EquatableArray<Constraints> Constraints { get; }
 	string FlattenedName { get; }
@@ -33,4 +35,5 @@ internal interface ITypeReferenceModel
 	EquatableArray<ITypeReferenceModel> TypeArguments { get; }
 	EquatableArray<ITypeReferenceModel> TypeParameters { get; }
 	TypeKind TypeKind { get; }
+	string XmlCommentName { get; }
 }

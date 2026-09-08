@@ -78,12 +78,18 @@ internal sealed class ModelContext
 				this.TypeParameters = [];
 			}
 
-			this.NullableAnnotation = type.NullableAnnotation;
-			this.IsRecord = type.IsRecord;
-			this.IsReferenceType = type.IsReferenceType;
-			this.IsPointer = type.IsPointer();
-			this.IsRefLikeType = type.IsRefLikeType;
-			this.IsTupleType = type.IsTupleType;
+		this.NullableAnnotation = type.NullableAnnotation;
+		this.IsRecord = type.IsRecord;
+		this.IsReferenceType = type.IsReferenceType;
+		this.IsPointer = type.IsPointer();
+		this.IsRefLikeType = type.IsRefLikeType;
+		this.IsTupleType = type.IsTupleType;
+
+		if (type is IArrayTypeSymbol arraySymbol)
+		{
+			this.ArrayElementType = modelContext.CreateTypeReference(arraySymbol.ElementType);
+			this.ArrayRank = arraySymbol.Rank;
+		}
 
 			var typeParameterTarget = this.IsPointer ?
 				type.Kind == SymbolKind.PointerType ?
@@ -188,5 +194,15 @@ internal sealed class ModelContext
 		public EquatableArray<ITypeReferenceModel> TypeArguments { get; }
 		public EquatableArray<ITypeReferenceModel> TypeParameters { get; }
 		public TypeKind TypeKind { get; }
+		public ITypeReferenceModel? ArrayElementType { get; }
+		public int ArrayRank { get; }
+
+		// XML doc cref rendering for array-typed parameters. ITypeSymbol.Name is
+		// empty for arrays, which produced empty slots (e.g. (String,,CancellationToken)).
+		// Arrays render as Element[] with rank commas; every other kind keeps Name.
+		public string XmlCommentName =>
+			this.ArrayElementType is not null ?
+				$"{this.ArrayElementType.XmlCommentName}[{new string(',', this.ArrayRank - 1)}]" :
+				this.Name;
 	}
 }
