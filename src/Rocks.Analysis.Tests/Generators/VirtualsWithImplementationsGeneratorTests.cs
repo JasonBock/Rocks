@@ -102,7 +102,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.VoidMethodWithParams.CallMe()"/>.
+					/// Sets an expectation for <see cref="global::MockTests.VoidMethodWithParams.CallMe(String[])"/>.
 					/// </summary>
 					internal global::MockTests.VoidMethodWithParamsCreateExpectations.Adornments.CallMeAdornmentsED6F815B CallMe(global::Rocks.Argument<string[]> @values)
 					{
@@ -120,7 +120,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.VoidMethodWithParams.CallMe()"/>.
+					/// Sets an expectation for <see cref="global::MockTests.VoidMethodWithParams.CallMe(String[])"/>.
 					/// </summary>
 					internal global::MockTests.VoidMethodWithParamsCreateExpectations.Adornments.CallMeAdornmentsED6F815B CallMe(params string[] @values) =>
 						this.CallMe(global::Rocks.Arg.Is(@values));
@@ -537,7 +537,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.ValueMethodWithParams.CallMe()"/>.
+					/// Sets an expectation for <see cref="global::MockTests.ValueMethodWithParams.CallMe(String[])"/>.
 					/// </summary>
 					internal global::MockTests.ValueMethodWithParamsCreateExpectations.Adornments.CallMeAdornmentsED6F815B CallMe(global::Rocks.Argument<string[]> @values)
 					{
@@ -555,7 +555,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.ValueMethodWithParams.CallMe()"/>.
+					/// Sets an expectation for <see cref="global::MockTests.ValueMethodWithParams.CallMe(String[])"/>.
 					/// </summary>
 					internal global::MockTests.ValueMethodWithParamsCreateExpectations.Adornments.CallMeAdornmentsED6F815B CallMe(params string[] @values) =>
 						this.CallMe(global::Rocks.Arg.Is(@values));

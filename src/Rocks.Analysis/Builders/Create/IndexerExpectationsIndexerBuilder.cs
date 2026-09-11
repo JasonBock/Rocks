@@ -67,7 +67,7 @@ internal static class IndexerExpectationsIndexerBuilder
 			{
 				var handlerContext = new VariablesNamingContext(property.Parameters);
 
-				var indexerParameterTypes = string.Join(",", property.Parameters.Select(parameter => parameter.Type.Name));
+				var indexerParameterTypes = string.Join(",", property.Parameters.Select(parameter => parameter.Type.XmlCommentName));
 				var commentTarget =
 					$"""
 					{(property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? mockType.Type.FullyQualifiedName : property.ContainingType.FullyQualifiedName)}.this[{indexerParameterTypes}]
@@ -177,7 +177,7 @@ internal static class IndexerExpectationsIndexerBuilder
 			{
 				var handlerContext = new VariablesNamingContext(property.Parameters);
 
-				var indexerParameterTypes = string.Join(",", property.Parameters.Select(parameter => parameter.Type.Name));
+				var indexerParameterTypes = string.Join(",", property.Parameters.Select(parameter => parameter.Type.XmlCommentName));
 				var commentTarget =
 					$"""
 					{(property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? mockType.Type.FullyQualifiedName : property.ContainingType.FullyQualifiedName)}.this[{indexerParameterTypes}]

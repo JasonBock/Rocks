@@ -1557,7 +1557,7 @@ public static class ParamsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParamsMethods.Do(Int32,)"/>.
+					/// Sets an expectation for <see cref="global::IParamsMethods.Do(Int32,String[])"/>.
 					/// </summary>
 					internal global::IParamsMethodsCreateExpectations.Adornments.DoAdornments8B3D203A Do(global::Rocks.Argument<int> @value, global::Rocks.Argument<string[]> @args)
 					{
@@ -1577,7 +1577,7 @@ public static class ParamsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParamsMethods.Do(Int32,)"/>.
+					/// Sets an expectation for <see cref="global::IParamsMethods.Do(Int32,String[])"/>.
 					/// </summary>
 					internal global::IParamsMethodsCreateExpectations.Adornments.DoAdornments8B3D203A Do([global::System.Runtime.InteropServices.Optional, global::System.Runtime.InteropServices.DefaultParameterValue(3)] int @value, params string[] @args) =>
 						this.Do(global::Rocks.Arg.Is(@value), global::Rocks.Arg.Is(@args));
@@ -1837,7 +1837,7 @@ public static class ParamsGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::IParamsMethods.this[Int32,]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::IParamsMethods.this[Int32,String[]]" /> property.
 						/// </summary>
 						internal global::IParamsMethodsCreateExpectations.Adornments.thisGetsAdornments8B3D203A Gets()
 						{
@@ -1855,7 +1855,7 @@ public static class ParamsGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "set" expectation for the <see cref="global::IParamsMethods.this[Int32,]" /> property.
+						/// Sets a "set" expectation for the <see cref="global::IParamsMethods.this[Int32,String[]]" /> property.
 						/// </summary>
 						internal global::IParamsMethodsCreateExpectations.Adornments.thisSetsAdornmentsB7875655 Sets(global::Rocks.Argument<string> @value)
 						{
@@ -1876,7 +1876,7 @@ public static class ParamsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParamsMethods.this[Int32,]"/>.
+					/// Sets an expectation for <see cref="global::IParamsMethods.this[Int32,String[]]"/>.
 					/// </summary>
 					
 					internal global::IParamsMethodsCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<int> @content, global::Rocks.Argument<string[]> @args] => new(this.parent, @content, @args);
@@ -2181,7 +2181,7 @@ public static class ParamsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParamsMethods.Do(Int32,)"/>.
+					/// Sets an expectation for <see cref="global::IParamsMethods.Do(Int32,String[])"/>.
 					/// </summary>
 					internal global::IParamsMethodsCreateExpectations.Adornments.DoAdornments8B3D203A Do(global::Rocks.Argument<int> @value, global::Rocks.Argument<string[]> @args)
 					{
@@ -2201,7 +2201,7 @@ public static class ParamsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParamsMethods.Do(Int32,)"/>.
+					/// Sets an expectation for <see cref="global::IParamsMethods.Do(Int32,String[])"/>.
 					/// </summary>
 					internal global::IParamsMethodsCreateExpectations.Adornments.DoAdornments8B3D203A Do(int @value = 3, params string[] @args) =>
 						this.Do(global::Rocks.Arg.Is(@value), global::Rocks.Arg.Is(@args));
@@ -2460,7 +2460,7 @@ public static class ParamsGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::IParamsMethods.this[Int32,]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::IParamsMethods.this[Int32,String[]]" /> property.
 						/// </summary>
 						internal global::IParamsMethodsCreateExpectations.Adornments.thisGetsAdornments8B3D203A Gets()
 						{
@@ -2478,7 +2478,7 @@ public static class ParamsGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "set" expectation for the <see cref="global::IParamsMethods.this[Int32,]" /> property.
+						/// Sets a "set" expectation for the <see cref="global::IParamsMethods.this[Int32,String[]]" /> property.
 						/// </summary>
 						internal global::IParamsMethodsCreateExpectations.Adornments.thisSetsAdornmentsB7875655 Sets(global::Rocks.Argument<string> @value)
 						{
@@ -2499,7 +2499,7 @@ public static class ParamsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParamsMethods.this[Int32,]"/>.
+					/// Sets an expectation for <see cref="global::IParamsMethods.this[Int32,String[]]"/>.
 					/// </summary>
 					
 					internal global::IParamsMethodsCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<int> @content, global::Rocks.Argument<string[]> @args] => new(this.parent, @content, @args);
@@ -2804,7 +2804,7 @@ public static class ParamsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParamsMethods.Do()"/>.
+					/// Sets an expectation for <see cref="global::IParamsMethods.Do(String[])"/>.
 					/// </summary>
 					internal global::IParamsMethodsCreateExpectations.Adornments.DoAdornmentsED6F815B Do(global::Rocks.Argument<string[]> @args)
 					{
@@ -2822,7 +2822,7 @@ public static class ParamsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParamsMethods.Do()"/>.
+					/// Sets an expectation for <see cref="global::IParamsMethods.Do(String[])"/>.
 					/// </summary>
 					internal global::IParamsMethodsCreateExpectations.Adornments.DoAdornmentsED6F815B Do(params string[] @args) =>
 						this.Do(global::Rocks.Arg.Is(@args));
@@ -3418,7 +3418,7 @@ public static class ParamsGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::IParamsIndexer.this[]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::IParamsIndexer.this[String[]]" /> property.
 						/// </summary>
 						internal global::IParamsIndexerCreateExpectations.Adornments.thisGetsAdornmentsED6F815B Gets()
 						{
@@ -3435,7 +3435,7 @@ public static class ParamsGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "set" expectation for the <see cref="global::IParamsIndexer.this[]" /> property.
+						/// Sets a "set" expectation for the <see cref="global::IParamsIndexer.this[String[]]" /> property.
 						/// </summary>
 						internal global::IParamsIndexerCreateExpectations.Adornments.thisSetsAdornments836F1696 Sets(global::Rocks.Argument<string> @value)
 						{
@@ -3455,7 +3455,7 @@ public static class ParamsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParamsIndexer.this[]"/>.
+					/// Sets an expectation for <see cref="global::IParamsIndexer.this[String[]]"/>.
 					/// </summary>
 					
 					internal global::IParamsIndexerCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<string[]> @args] => new(this.parent, @args);

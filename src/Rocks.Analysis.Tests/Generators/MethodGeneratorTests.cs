@@ -1,4 +1,7 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Rocks.Analysis.Tests.Generators;
 
@@ -793,7 +796,7 @@ public static class MethodGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.IMember.Exists(String,Int32,)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.IMember.Exists(String,Int32,Char[])"/>.
 					/// </summary>
 					internal global::MockTests.IMemberCreateExpectations.Adornments.ExistsAdornmentsA69B4218 Exists(global::Rocks.Argument<string> @data1, global::Rocks.Argument<int> @data2, global::Rocks.Argument<char[]> @data3)
 					{
@@ -1009,6 +1012,43 @@ public static class MethodGeneratorTests
 	}
 
 	[Test]
+	public static void GenerateArrayParameterDocComment()
+	{
+		var code =
+			"""
+			using Rocks;
+
+			[assembly: Rock(typeof(MockTests.IArrayParameters), BuildType.Create)]
+
+			namespace MockTests
+			{
+				public interface IArrayParameters
+				{
+					void Use(byte[] data);
+				}
+			}
+			""";
+
+		var syntaxTree = CSharpSyntaxTree.ParseText(code);
+		var references = new List<MetadataReference>(Shared.References.Value);
+		references.Add(MetadataReference.CreateFromFile(typeof(RockAttribute).Assembly.Location));
+		var compilation = CSharpCompilation.Create("Tests", [syntaxTree],
+			references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+		GeneratorDriver driver = CSharpGeneratorDriver.Create(
+			generators: [new RockGenerator().AsSourceGenerator()]);
+		driver = driver.RunGenerators(compilation);
+
+		var generated = string.Empty;
+		foreach (var tree in driver.GetRunResult().GeneratedTrees)
+		{
+			generated += tree.GetText().ToString();
+		}
+
+		Assert.That(generated, Does.Contain("IArrayParameters.Use(Byte[])"));
+		Assert.That(generated, Does.Not.Contain("IArrayParameters.Use()"));  // The empty-slot rendering this test guards against.
+	}
+
+	[Test]
 	public static async Task GenerateWithOptionalParametersAndParamsAsync()
 	{
 		var code =
@@ -1071,7 +1111,7 @@ public static class MethodGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.IMapper.ProjectTo{TDestination}(IQueryable,Object,)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.IMapper.ProjectTo{TDestination}(IQueryable,Object,Expression[])"/>.
 					/// </summary>
 					internal global::MockTests.IMapperCreateExpectations.Adornments.ProjectToAdornmentsE0B61ABA<TDestination> ProjectTo<TDestination>(global::Rocks.Argument<global::System.Linq.IQueryable> @source, global::Rocks.Argument<object?> @parameters, global::Rocks.Argument<global::System.Linq.Expressions.Expression<global::System.Func<TDestination, object>>[]> @membersToExpand)
 					{
@@ -1093,13 +1133,13 @@ public static class MethodGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.IMapper.ProjectTo{TDestination}(IQueryable,Object,)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.IMapper.ProjectTo{TDestination}(IQueryable,Object,Expression[])"/>.
 					/// </summary>
 					internal global::MockTests.IMapperCreateExpectations.Adornments.ProjectToAdornmentsE0B61ABA<TDestination> ProjectTo<TDestination>(global::Rocks.Argument<global::System.Linq.IQueryable> @source, object? @parameters = null, params global::System.Linq.Expressions.Expression<global::System.Func<TDestination, object>>[] @membersToExpand) =>
 						this.ProjectTo<TDestination>(@source, global::Rocks.Arg.Is(@parameters), global::Rocks.Arg.Is(@membersToExpand));
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.IMapper.ProjectTo{TDestination}(IQueryable,IDictionary,)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.IMapper.ProjectTo{TDestination}(IQueryable,IDictionary,String[])"/>.
 					/// </summary>
 					internal global::MockTests.IMapperCreateExpectations.Adornments.ProjectToAdornmentsDF21EC61<TDestination> ProjectTo<TDestination>(global::Rocks.Argument<global::System.Linq.IQueryable> @source, global::Rocks.Argument<global::System.Collections.Generic.IDictionary<string, object>> @parameters, global::Rocks.Argument<string[]> @membersToExpand)
 					{
@@ -1121,7 +1161,7 @@ public static class MethodGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.IMapper.ProjectTo{TDestination}(IQueryable,IDictionary,)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.IMapper.ProjectTo{TDestination}(IQueryable,IDictionary,String[])"/>.
 					/// </summary>
 					internal global::MockTests.IMapperCreateExpectations.Adornments.ProjectToAdornmentsDF21EC61<TDestination> ProjectTo<TDestination>(global::Rocks.Argument<global::System.Linq.IQueryable> @source, global::Rocks.Argument<global::System.Collections.Generic.IDictionary<string, object>> @parameters, params string[] @membersToExpand) =>
 						this.ProjectTo<TDestination>(@source, @parameters, global::Rocks.Arg.Is(@membersToExpand));
@@ -1725,7 +1765,7 @@ public static class MethodGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.IProjection.Project(String,Int32,)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.IProjection.Project(String,Int32,Guid[])"/>.
 					/// </summary>
 					internal global::MockTests.IProjectionCreateExpectations.Adornments.ProjectAdornments47D7E4B3 Project(global::Rocks.Argument<string> @a, global::Rocks.Argument<int> @b, global::Rocks.Argument<global::System.Guid[]> @values)
 					{
@@ -1747,7 +1787,7 @@ public static class MethodGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.IProjection.Project(String,Int32,)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.IProjection.Project(String,Int32,Guid[])"/>.
 					/// </summary>
 					internal global::MockTests.IProjectionCreateExpectations.Adornments.ProjectAdornments47D7E4B3 Project(global::Rocks.Argument<string> @a, int @b = 22, params global::System.Guid[] @values) =>
 						this.Project(@a, global::Rocks.Arg.Is(@b), global::Rocks.Arg.Is(@values));

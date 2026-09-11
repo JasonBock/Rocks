@@ -1621,7 +1621,7 @@ public static class ConstraintsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::BaseStuff.GetService{T}()"/>.
+					/// Sets an expectation for <see cref="global::BaseStuff.GetService{T}(Object[])"/>.
 					/// </summary>
 					internal global::BaseStuffCreateExpectations.Adornments.GetServiceAdornmentsD0100A16<T> GetService<T>(global::Rocks.Argument<object[]> @args) where T : class
 					{

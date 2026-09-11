@@ -68,7 +68,7 @@ internal static class MethodExpectationsMethodBuilder
 
 			var commentTarget = 
 				$"""
-				{(method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? type.Type.FullyQualifiedName : method.ContainingType.FullyQualifiedName)}.{method.Name}{typeArguments}({(string.Join(",", method.Parameters.Select(parameter => parameter.Type.Name)))})
+				{(method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? type.Type.FullyQualifiedName : method.ContainingType.FullyQualifiedName)}.{method.Name}{typeArguments}({(string.Join(",", method.Parameters.Select(parameter => parameter.Type.XmlCommentName)))})
 				""".TransformForXmlComment();
 			writer.WriteLines(
 				$$"""
