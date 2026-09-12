@@ -73,7 +73,7 @@ public static class AttributeGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::TransactionProvider.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::TransactionProvider.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::TransactionProviderCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -727,7 +727,7 @@ public static class AttributeGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::Caller.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::Caller.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::CallerCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -767,7 +767,7 @@ public static class AttributeGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::Caller.SetAndRaise(String,String)"/>.
+					/// Sets an expectation for <see cref="global::Caller.SetAndRaise(global::System.String,global::System.String)"/>.
 					/// </summary>
 					internal global::CallerCreateExpectations.Adornments.SetAndRaiseAdornmentsEE44D4F6 SetAndRaise(global::Rocks.Argument<string> @newValue, global::Rocks.Argument<string?> @propertyName)
 					{
@@ -787,7 +787,7 @@ public static class AttributeGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::Caller.SetAndRaise(String,String)"/>.
+					/// Sets an expectation for <see cref="global::Caller.SetAndRaise(global::System.String,global::System.String)"/>.
 					/// </summary>
 					internal global::CallerCreateExpectations.Adornments.SetAndRaiseAdornmentsEE44D4F6 SetAndRaise(global::Rocks.Argument<string> @newValue, string? @propertyName = null) =>
 						this.SetAndRaise(@newValue, global::Rocks.Arg.Is(@propertyName));
@@ -1715,7 +1715,7 @@ public static class AttributeGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ConventionDispatcher.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::ConventionDispatcher.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::ConventionDispatcherCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -2116,7 +2116,7 @@ public static class AttributeGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::NotNullIfNotCases.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::NotNullIfNotCases.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::NotNullIfNotCasesCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -2156,7 +2156,7 @@ public static class AttributeGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::NotNullIfNotCases.VisitMethod(Object)"/>.
+					/// Sets an expectation for <see cref="global::NotNullIfNotCases.VisitMethod(global::System.Object)"/>.
 					/// </summary>
 					internal global::NotNullIfNotCasesCreateExpectations.Adornments.VisitMethodAdornmentsE60CFEEA VisitMethod(global::Rocks.Argument<object?> @node)
 					{
@@ -2174,7 +2174,7 @@ public static class AttributeGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::NotNullIfNotCases.VisitParameter(Object)"/>.
+					/// Sets an expectation for <see cref="global::NotNullIfNotCases.VisitParameter(global::System.Object)"/>.
 					/// </summary>
 					internal global::NotNullIfNotCasesCreateExpectations.Adornments.VisitParameterAdornmentsE60CFEEA VisitParameter(global::Rocks.Argument<object?> @node)
 					{
@@ -2244,7 +2244,7 @@ public static class AttributeGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::NotNullIfNotCases.this[Object]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::NotNullIfNotCases.this[global::System.Object]" /> property.
 						/// </summary>
 						internal global::NotNullIfNotCasesCreateExpectations.Adornments.thisGetsAdornmentsE60CFEEA Gets()
 						{
@@ -2261,7 +2261,7 @@ public static class AttributeGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "set" expectation for the <see cref="global::NotNullIfNotCases.this[Object]" /> property.
+						/// Sets a "set" expectation for the <see cref="global::NotNullIfNotCases.this[global::System.Object]" /> property.
 						/// </summary>
 						internal global::NotNullIfNotCasesCreateExpectations.Adornments.thisSetsAdornments3F0BFBE4 Sets(global::Rocks.Argument<string?> @value)
 						{
@@ -2281,7 +2281,7 @@ public static class AttributeGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::NotNullIfNotCases.this[Object]"/>.
+					/// Sets an expectation for <see cref="global::NotNullIfNotCases.this[global::System.Object]"/>.
 					/// </summary>
 					
 					internal global::NotNullIfNotCasesCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<object?> @node] => new(this.parent, @node);
@@ -3169,7 +3169,7 @@ public static class AttributeGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::HaveDynamic.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::HaveDynamic.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::HaveDynamicCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -3815,7 +3815,7 @@ public static class AttributeGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.IHaveMultipleAttributes.Foo(String)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.IHaveMultipleAttributes.Foo(global::System.String)"/>.
 					/// </summary>
 					internal global::MockTests.IHaveMultipleAttributesCreateExpectations.Adornments.FooAdornments639810A5 Foo(global::Rocks.Argument<string> @data)
 					{

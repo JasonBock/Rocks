@@ -66,7 +66,7 @@ public static class GenericsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::HistoricalScheduler.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::HistoricalScheduler.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::HistoricalSchedulerCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -106,7 +106,7 @@ public static class GenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::HistoricalScheduler.ScheduleAbsolute{TState}(TState,DateTimeOffset,global::System.Func{global::IScheduler,TState,global::System.IDisposable})"/>.
+					/// Sets an expectation for <see cref="global::HistoricalScheduler.ScheduleAbsolute{TState}(TState,global::System.DateTimeOffset,global::System.Func{global::IScheduler,TState,global::System.IDisposable})"/>.
 					/// </summary>
 					internal global::HistoricalSchedulerCreateExpectations.Adornments.ScheduleAbsoluteAdornments06F92D90<TState> ScheduleAbsolute<TState>(global::Rocks.Argument<TState> @state, global::Rocks.Argument<global::System.DateTimeOffset> @dueTime, global::Rocks.Argument<global::System.Func<global::IScheduler, TState, global::System.IDisposable>> @action)
 					{
@@ -505,7 +505,7 @@ public static class GenericsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::CustomSerializer.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::CustomSerializer.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::CustomSerializerCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -545,7 +545,7 @@ public static class GenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::CustomSerializer.Serialize{T}(T,Stream)"/>.
+					/// Sets an expectation for <see cref="global::CustomSerializer.Serialize{T}(T,global::System.IO.Stream)"/>.
 					/// </summary>
 					internal global::CustomSerializerCreateExpectations.Adornments.SerializeAdornments09A79C4C<T> Serialize<T>(global::Rocks.Argument<T> @data, global::Rocks.Argument<global::System.IO.Stream> @writableStream)
 					{
@@ -2306,7 +2306,7 @@ public static class GenericsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::M{A}.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::M{A}.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MCreateExpectations<A>.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -2734,7 +2734,7 @@ public static class GenericsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::GenericContainer.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::GenericContainer.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::GenericContainerCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -3245,7 +3245,7 @@ public static class GenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::Criterion{T}.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::Criterion{T}.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::CriterionCreateExpectations<T>.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -3578,7 +3578,7 @@ public static class GenericsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::GeometryValueComparer{TGeometry}.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::GeometryValueComparer{TGeometry}.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::GeometryValueComparerCreateExpectations<TGeometry>.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -3618,7 +3618,7 @@ public static class GenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::GeometryValueComparer{TGeometry}.Snapshot(Object)"/>.
+					/// Sets an expectation for <see cref="global::GeometryValueComparer{TGeometry}.Snapshot(global::System.Object)"/>.
 					/// </summary>
 					internal global::GeometryValueComparerCreateExpectations<TGeometry>.Adornments.SnapshotAdornmentsE60CFEEA Snapshot(global::Rocks.Argument<object?> @instance)
 					{
@@ -4100,7 +4100,7 @@ public static class GenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.IRequestClient{TRequest}.Create(Object)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.IRequestClient{TRequest}.Create(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.IRequestClientCreateExpectations<TRequest>.Adornments.CreateAdornments18819E91 Create(global::Rocks.Argument<object> @values)
 					{
@@ -4422,7 +4422,7 @@ public static class GenericsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.IRequest{T}.Send(Guid,Object)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.IRequest{T}.Send(global::System.Guid,global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.IRequestCreateExpectations<T>.Adornments.SendAdornments916DB168 Send(global::Rocks.Argument<global::System.Guid> @requestId, global::Rocks.Argument<object> @values)
 					{
@@ -4442,7 +4442,7 @@ public static class GenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.IRequest{T}.Send(Guid,T)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.IRequest{T}.Send(global::System.Guid,T)"/>.
 					/// </summary>
 					internal global::MockTests.IRequestCreateExpectations<T>.Adornments.SendAdornmentsD0E69DEF Send(global::Rocks.Argument<global::System.Guid> @requestId, global::Rocks.Argument<T> @message)
 					{

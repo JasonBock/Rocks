@@ -63,7 +63,7 @@ public static class ConstraintsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::SubClass.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::SubClass.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::SubClassCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -1141,7 +1141,7 @@ public static class ConstraintsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ClassMap{TClass}.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::ClassMap{TClass}.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::ClassMapCreateExpectations<TClass>.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -1181,7 +1181,7 @@ public static class ConstraintsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ClassMap{TClass}.MapNullable{TMember}(global::System.Collections.Generic.IList{TMember},Boolean)"/>.
+					/// Sets an expectation for <see cref="global::ClassMap{TClass}.MapNullable{TMember}(global::System.Collections.Generic.IList{TMember},global::System.Boolean)"/>.
 					/// </summary>
 					internal global::ClassMapCreateExpectations<TClass>.Adornments.MapNullableAdornments5ED981D2<TMember> MapNullable<TMember>(global::Rocks.Argument<global::System.Collections.Generic.IList<TMember?>> @member, global::Rocks.Argument<bool> @useExistingMap)
 					{
@@ -1201,7 +1201,7 @@ public static class ConstraintsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ClassMap{TClass}.MapNullable{TMember}(global::System.Collections.Generic.IList{TMember},Boolean)"/>.
+					/// Sets an expectation for <see cref="global::ClassMap{TClass}.MapNullable{TMember}(global::System.Collections.Generic.IList{TMember},global::System.Boolean)"/>.
 					/// </summary>
 					internal global::ClassMapCreateExpectations<TClass>.Adornments.MapNullableAdornments5ED981D2<TMember> MapNullable<TMember>(global::Rocks.Argument<global::System.Collections.Generic.IList<TMember?>> @member, bool @useExistingMap = true) =>
 						this.MapNullable<TMember>(@member, global::Rocks.Arg.Is(@useExistingMap));
@@ -1581,7 +1581,7 @@ public static class ConstraintsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::BaseStuff.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::BaseStuff.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::BaseStuffCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -1621,7 +1621,7 @@ public static class ConstraintsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::BaseStuff.GetService{T}(Object[])"/>.
+					/// Sets an expectation for <see cref="global::BaseStuff.GetService{T}(global::System.Object[])"/>.
 					/// </summary>
 					internal global::BaseStuffCreateExpectations.Adornments.GetServiceAdornmentsD0100A16<T> GetService<T>(global::Rocks.Argument<object[]> @args) where T : class
 					{
@@ -2009,7 +2009,7 @@ public static class ConstraintsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::INeedDelegate.Foo{T}(Int32,global::Frame{T})"/>.
+					/// Sets an expectation for <see cref="global::INeedDelegate.Foo{T}(global::System.Int32,global::Frame{T})"/>.
 					/// </summary>
 					internal global::INeedDelegateCreateExpectations.Adornments.FooAdornmentsC7F2E118<T> Foo<T>(global::Rocks.Argument<int> @a, global::Rocks.Argument<global::Frame<T>> @frame) where T : unmanaged, global::IDot<T>
 					{
@@ -3107,7 +3107,7 @@ public static class ConstraintsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::TypeConstraints.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::TypeConstraints.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::TypeConstraintsCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -4326,7 +4326,7 @@ public static class ConstraintsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Thing{T}.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.Thing{T}.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.ThingCreateExpectations<T>.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{

@@ -61,7 +61,7 @@ public static class ConstructorGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::RequiredConstructor.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::RequiredConstructor.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::RequiredConstructorCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -511,7 +511,7 @@ public static class ConstructorGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::AnyOf{T1, T2}.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::AnyOf{T1, T2}.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::AnyOfCreateExpectations<T1, T2>.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{

@@ -390,7 +390,7 @@ public static class AllowNullGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Allow.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.Allow.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.AllowCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{

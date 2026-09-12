@@ -440,7 +440,7 @@ public static class HiddenMembersGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.NewCopy.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.NewCopy.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.NewCopyCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -849,7 +849,7 @@ public static class HiddenMembersGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::SubClass.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::SubClass.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::SubClassCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -955,7 +955,7 @@ public static class HiddenMembersGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::SubClass.this[Int32,String]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::SubClass.this[global::System.Int32,global::System.String]" /> property.
 						/// </summary>
 						internal global::SubClassCreateExpectations.Adornments.thisGetsAdornmentsD443FCB6 Gets()
 						{
@@ -975,7 +975,7 @@ public static class HiddenMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::SubClass.this[Int32,String]"/>.
+					/// Sets an expectation for <see cref="global::SubClass.this[global::System.Int32,global::System.String]"/>.
 					/// </summary>
 					
 					internal global::SubClassCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b] => new(this.parent, @a, @b);
@@ -1564,7 +1564,7 @@ public static class HiddenMembersGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::ISub.this[Int32,String]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::ISub.this[global::System.Int32,global::System.String]" /> property.
 						/// </summary>
 						internal global::ISubCreateExpectations.Adornments.thisGetsAdornmentsD443FCB6 Gets()
 						{
@@ -1584,7 +1584,7 @@ public static class HiddenMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ISub.this[Int32,String]"/>.
+					/// Sets an expectation for <see cref="global::ISub.this[global::System.Int32,global::System.String]"/>.
 					/// </summary>
 					
 					internal global::ISubCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b] => new(this.parent, @a, @b);
@@ -1663,7 +1663,7 @@ public static class HiddenMembersGeneratorTests
 							}
 							
 							/// <summary>
-							/// Sets a "get" expectation for the <see cref="global::IBase.this[Int32,String]" /> property.
+							/// Sets a "get" expectation for the <see cref="global::IBase.this[global::System.Int32,global::System.String]" /> property.
 							/// </summary>
 							internal global::ISubCreateExpectations.Adornments.thisGetsAdornments9348910D Gets()
 							{
@@ -1683,7 +1683,7 @@ public static class HiddenMembersGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets an expectation for <see cref="global::IBase.this[Int32,String]"/>.
+						/// Sets an expectation for <see cref="global::IBase.this[global::System.Int32,global::System.String]"/>.
 						/// </summary>
 						
 						internal global::ISubCreateExpectations.SetupsExpectations.ExplicitForIBaseExpectations.Indexer0Expectations this[global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b] => new(this.parent, @a, @b);

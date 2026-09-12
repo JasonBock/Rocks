@@ -66,7 +66,7 @@ public static class DoesNotReturnGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.ClassTest.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.ClassTest.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.ClassTestCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{

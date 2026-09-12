@@ -302,7 +302,7 @@ public static class ObsoleteGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Container.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.Container.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.ContainerCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{

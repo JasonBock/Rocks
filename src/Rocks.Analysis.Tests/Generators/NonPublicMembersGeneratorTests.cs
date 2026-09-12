@@ -84,7 +84,7 @@ public static class NonPublicMembersGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::VisibilityIssues.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::VisibilityIssues.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::VisibilityIssuesCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -676,7 +676,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::VisibilityIssues.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::VisibilityIssues.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::VisibilityIssuesCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -1183,7 +1183,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::HasInternalVirtual.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::HasInternalVirtual.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::HasInternalVirtualCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -1258,7 +1258,7 @@ public static class NonPublicMembersGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::HasInternalVirtual.this[String]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::HasInternalVirtual.this[global::System.String]" /> property.
 						/// </summary>
 						internal global::HasInternalVirtualCreateExpectations.Adornments.thisGetsAdornments639810A5 Gets()
 						{
@@ -1277,7 +1277,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::HasInternalVirtual.this[String]"/>.
+					/// Sets an expectation for <see cref="global::HasInternalVirtual.this[global::System.String]"/>.
 					/// </summary>
 					
 					internal global::HasInternalVirtualCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<string> @key] => new(this.parent, @key);
@@ -1768,7 +1768,7 @@ public static class NonPublicMembersGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Test.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.Test.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.TestCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -2340,7 +2340,7 @@ public static class NonPublicMembersGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Test.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.Test.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.TestCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -2923,7 +2923,7 @@ public static class NonPublicMembersGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Test.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.Test.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.TestCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{

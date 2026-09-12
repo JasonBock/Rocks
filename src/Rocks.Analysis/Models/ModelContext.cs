@@ -120,9 +120,18 @@ internal sealed class ModelContext
 				// reject with CS1574/CS1580.
 				this.XmlCommentName = TypeReferenceModel.GetGenericXmlCommentName(this);
 			}
+			else if (this.IsPointer)
+			{
+				// Qualified pointer syntax is unverified; keep Name.
+				this.XmlCommentName = this.Name;
+			}
 			else
 			{
-				this.XmlCommentName = this.Name;
+				// Bare names do not resolve in generated files (only using
+				// Rocks.Extensions) — verified: even System names like String
+				// fail without qualification. Everything renders fully
+				// qualified; method type parameters stay bare (in scope).
+				this.XmlCommentName = TypeReferenceModel.GetQualifiedXmlCommentName(this);
 			}
 		}
 

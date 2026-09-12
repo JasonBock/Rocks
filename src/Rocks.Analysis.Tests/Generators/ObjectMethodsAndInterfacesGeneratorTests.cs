@@ -62,7 +62,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.StaticToString.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.StaticToString.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.StaticToStringCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{

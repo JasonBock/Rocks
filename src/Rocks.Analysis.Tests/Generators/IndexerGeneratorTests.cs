@@ -69,7 +69,7 @@ public static class IndexerGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::IIndexers.this[String]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::IIndexers.this[global::System.String]" /> property.
 						/// </summary>
 						internal global::IIndexersCreateExpectations.Adornments.thisGetsAdornments639810A5 Gets()
 						{
@@ -86,7 +86,7 @@ public static class IndexerGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "set" expectation for the <see cref="global::IIndexers.this[String]" /> property.
+						/// Sets a "set" expectation for the <see cref="global::IIndexers.this[global::System.String]" /> property.
 						/// </summary>
 						internal global::IIndexersCreateExpectations.Adornments.thisSetsAdornments9076DDCC Sets(global::Rocks.Argument<int> @value)
 						{
@@ -106,7 +106,7 @@ public static class IndexerGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IIndexers.this[String]"/>.
+					/// Sets an expectation for <see cref="global::IIndexers.this[global::System.String]"/>.
 					/// </summary>
 					
 					internal global::IIndexersCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<string> @name] => new(this.parent, @name);
@@ -456,7 +456,7 @@ public static class IndexerGeneratorTests
 							}
 							
 							/// <summary>
-							/// Sets a "get" expectation for the <see cref="global::IBaseIndexOne.this[String]" /> property.
+							/// Sets a "get" expectation for the <see cref="global::IBaseIndexOne.this[global::System.String]" /> property.
 							/// </summary>
 							internal global::ISubIndexCreateExpectations.Adornments.thisGetsAdornmentsD0A098B6 Gets()
 							{
@@ -475,7 +475,7 @@ public static class IndexerGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets an expectation for <see cref="global::IBaseIndexOne.this[String]"/>.
+						/// Sets an expectation for <see cref="global::IBaseIndexOne.this[global::System.String]"/>.
 						/// </summary>
 						
 						internal global::ISubIndexCreateExpectations.SetupsExpectations.ExplicitForIBaseIndexOneExpectations.Indexer0Expectations this[global::Rocks.Argument<string> @name] => new(this.parent, @name);
@@ -504,7 +504,7 @@ public static class IndexerGeneratorTests
 							}
 							
 							/// <summary>
-							/// Sets a "get" expectation for the <see cref="global::IBaseIndexTwo.this[String]" /> property.
+							/// Sets a "get" expectation for the <see cref="global::IBaseIndexTwo.this[global::System.String]" /> property.
 							/// </summary>
 							internal global::ISubIndexCreateExpectations.Adornments.thisGetsAdornments5E0C6808 Gets()
 							{
@@ -523,7 +523,7 @@ public static class IndexerGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets an expectation for <see cref="global::IBaseIndexTwo.this[String]"/>.
+						/// Sets an expectation for <see cref="global::IBaseIndexTwo.this[global::System.String]"/>.
 						/// </summary>
 						
 						internal global::ISubIndexCreateExpectations.SetupsExpectations.ExplicitForIBaseIndexTwoExpectations.Indexer0Expectations this[global::Rocks.Argument<string> @name] => new(this.parent, @name);
@@ -870,7 +870,7 @@ public static class IndexerGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::AbstractClassIndexerGetterSetter.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::AbstractClassIndexerGetterSetter.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::AbstractClassIndexerGetterSetterCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -921,7 +921,7 @@ public static class IndexerGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::AbstractClassIndexerGetterSetter.this[Int32]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::AbstractClassIndexerGetterSetter.this[global::System.Int32]" /> property.
 						/// </summary>
 						internal global::AbstractClassIndexerGetterSetterCreateExpectations.Adornments.thisGetsAdornments6246614F Gets()
 						{
@@ -938,7 +938,7 @@ public static class IndexerGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "set" expectation for the <see cref="global::AbstractClassIndexerGetterSetter.this[Int32]" /> property.
+						/// Sets a "set" expectation for the <see cref="global::AbstractClassIndexerGetterSetter.this[global::System.Int32]" /> property.
 						/// </summary>
 						internal global::AbstractClassIndexerGetterSetterCreateExpectations.Adornments.thisSetsAdornments4D7D9C64 Sets(global::Rocks.Argument<int> @value)
 						{
@@ -958,7 +958,7 @@ public static class IndexerGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::AbstractClassIndexerGetterSetter.this[Int32]"/>.
+					/// Sets an expectation for <see cref="global::AbstractClassIndexerGetterSetter.this[global::System.Int32]"/>.
 					/// </summary>
 					
 					internal global::AbstractClassIndexerGetterSetterCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<int> @a] => new(this.parent, @a);
@@ -979,7 +979,7 @@ public static class IndexerGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::AbstractClassIndexerGetterSetter.this[Int32,String]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::AbstractClassIndexerGetterSetter.this[global::System.Int32,global::System.String]" /> property.
 						/// </summary>
 						internal global::AbstractClassIndexerGetterSetterCreateExpectations.Adornments.thisGetsAdornmentsD443FCB6 Gets()
 						{
@@ -997,7 +997,7 @@ public static class IndexerGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "set" expectation for the <see cref="global::AbstractClassIndexerGetterSetter.this[Int32,String]" /> property.
+						/// Sets a "set" expectation for the <see cref="global::AbstractClassIndexerGetterSetter.this[global::System.Int32,global::System.String]" /> property.
 						/// </summary>
 						internal global::AbstractClassIndexerGetterSetterCreateExpectations.Adornments.thisSetsAdornments02547E49 Sets(global::Rocks.Argument<int> @value)
 						{
@@ -1018,7 +1018,7 @@ public static class IndexerGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::AbstractClassIndexerGetterSetter.this[Int32,String]"/>.
+					/// Sets an expectation for <see cref="global::AbstractClassIndexerGetterSetter.this[global::System.Int32,global::System.String]"/>.
 					/// </summary>
 					
 					internal global::AbstractClassIndexerGetterSetterCreateExpectations.SetupsExpectations.Indexer1Expectations this[global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b] => new(this.parent, @a, @b);
@@ -1588,7 +1588,7 @@ public static class IndexerGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::IHaveOptionalArguments.this[Int32,String]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::IHaveOptionalArguments.this[global::System.Int32,global::System.String]" /> property.
 						/// </summary>
 						internal global::IHaveOptionalArgumentsCreateExpectations.Adornments.thisGetsAdornmentsD443FCB6 Gets()
 						{
@@ -1606,7 +1606,7 @@ public static class IndexerGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "set" expectation for the <see cref="global::IHaveOptionalArguments.this[Int32,String]" /> property.
+						/// Sets a "set" expectation for the <see cref="global::IHaveOptionalArguments.this[global::System.Int32,global::System.String]" /> property.
 						/// </summary>
 						internal global::IHaveOptionalArgumentsCreateExpectations.Adornments.thisSetsAdornments02547E49 Sets(global::Rocks.Argument<int> @value)
 						{
@@ -1627,7 +1627,7 @@ public static class IndexerGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IHaveOptionalArguments.this[Int32,String]"/>.
+					/// Sets an expectation for <see cref="global::IHaveOptionalArguments.this[global::System.Int32,global::System.String]"/>.
 					/// </summary>
 					
 					internal global::IHaveOptionalArgumentsCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b] => new(this.parent, @a, @b);
@@ -1947,7 +1947,7 @@ public static class IndexerGeneratorTests
 						
 						
 						/// <summary>
-						/// Sets a "init" expectation for the <see cref="global::IHaveIndexersWithInit.this[UInt32]" /> property.
+						/// Sets a "init" expectation for the <see cref="global::IHaveIndexersWithInit.this[global::System.UInt32]" /> property.
 						/// </summary>
 						internal global::IHaveIndexersWithInitCreateExpectations.Adornments.thisInitsAdornmentsAF2E9033 Inits(global::Rocks.Argument<double> @value)
 						{
@@ -1967,7 +1967,7 @@ public static class IndexerGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IHaveIndexersWithInit.this[UInt32]"/>.
+					/// Sets an expectation for <see cref="global::IHaveIndexersWithInit.this[global::System.UInt32]"/>.
 					/// </summary>
 					
 					internal global::IHaveIndexersWithInitCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<uint> @a] => new(this.parent, @a);
@@ -1989,7 +1989,7 @@ public static class IndexerGeneratorTests
 						
 						
 						/// <summary>
-						/// Sets a "init" expectation for the <see cref="global::IHaveIndexersWithInit.this[Int32,String]" /> property.
+						/// Sets a "init" expectation for the <see cref="global::IHaveIndexersWithInit.this[global::System.Int32,global::System.String]" /> property.
 						/// </summary>
 						internal global::IHaveIndexersWithInitCreateExpectations.Adornments.thisInitsAdornments372C1BEF Inits(global::Rocks.Argument<string> @value)
 						{
@@ -2010,7 +2010,7 @@ public static class IndexerGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IHaveIndexersWithInit.this[Int32,String]"/>.
+					/// Sets an expectation for <see cref="global::IHaveIndexersWithInit.this[global::System.Int32,global::System.String]"/>.
 					/// </summary>
 					
 					internal global::IHaveIndexersWithInitCreateExpectations.SetupsExpectations.Indexer1Expectations this[global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b] => new(this.parent, @a, @b);
@@ -2035,7 +2035,7 @@ public static class IndexerGeneratorTests
 						
 						
 						/// <summary>
-						/// Sets a "init" expectation for the <see cref="global::IHaveIndexersWithInit.this[String,Int32,Guid]" /> property.
+						/// Sets a "init" expectation for the <see cref="global::IHaveIndexersWithInit.this[global::System.String,global::System.Int32,global::System.Guid]" /> property.
 						/// </summary>
 						internal global::IHaveIndexersWithInitCreateExpectations.Adornments.thisInitsAdornments17BFD68A Inits(global::Rocks.Argument<int> @value)
 						{
@@ -2057,7 +2057,7 @@ public static class IndexerGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IHaveIndexersWithInit.this[String,Int32,Guid]"/>.
+					/// Sets an expectation for <see cref="global::IHaveIndexersWithInit.this[global::System.String,global::System.Int32,global::System.Guid]"/>.
 					/// </summary>
 					
 					internal global::IHaveIndexersWithInitCreateExpectations.SetupsExpectations.Indexer2Expectations this[global::Rocks.Argument<string> @a, global::Rocks.Argument<int> @b, global::Rocks.Argument<global::System.Guid> @c] => new(this.parent, @a, @b, @c);
@@ -2570,7 +2570,7 @@ public static class IndexerGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Target.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.Target.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.TargetCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -2621,7 +2621,7 @@ public static class IndexerGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::MockTests.Target.this[Int32]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::MockTests.Target.this[global::System.Int32]" /> property.
 						/// </summary>
 						internal global::MockTests.TargetCreateExpectations.Adornments.thisGetsAdornments6246614F Gets()
 						{
@@ -2637,7 +2637,7 @@ public static class IndexerGeneratorTests
 							return new(@handler, this.parent);
 						}
 						/// <summary>
-						/// Sets a "init" expectation for the <see cref="global::MockTests.Target.this[Int32]" /> property.
+						/// Sets a "init" expectation for the <see cref="global::MockTests.Target.this[global::System.Int32]" /> property.
 						/// </summary>
 						internal global::MockTests.TargetCreateExpectations.Adornments.thisInitsAdornments4D7D9C64 Inits(global::Rocks.Argument<int> @value)
 						{
@@ -2657,7 +2657,7 @@ public static class IndexerGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Target.this[Int32]"/>.
+					/// Sets an expectation for <see cref="global::MockTests.Target.this[global::System.Int32]"/>.
 					/// </summary>
 					
 					internal global::MockTests.TargetCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<int> @a] => new(this.parent, @a);

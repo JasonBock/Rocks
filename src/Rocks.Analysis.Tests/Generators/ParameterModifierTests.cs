@@ -55,7 +55,7 @@ public static class ParameterModifierTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParameterModifier.Modify(String)"/>.
+					/// Sets an expectation for <see cref="global::IParameterModifier.Modify(global::System.String)"/>.
 					/// </summary>
 					internal global::IParameterModifierCreateExpectations.Adornments.ModifyAdornments639810A5 Modify(global::Rocks.Argument<string> @value)
 					{
@@ -307,7 +307,7 @@ public static class ParameterModifierTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParameterModifier.Modify(String)"/>.
+					/// Sets an expectation for <see cref="global::IParameterModifier.Modify(global::System.String)"/>.
 					/// </summary>
 					internal global::IParameterModifierCreateExpectations.Adornments.ModifyAdornments030B0DC3 Modify(global::Rocks.Argument<string> @value)
 					{
@@ -561,7 +561,7 @@ public static class ParameterModifierTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParameterModifier.Modify(String)"/>.
+					/// Sets an expectation for <see cref="global::IParameterModifier.Modify(global::System.String)"/>.
 					/// </summary>
 					internal global::IParameterModifierCreateExpectations.Adornments.ModifyAdornmentsD893C6C0 Modify(global::Rocks.Argument<string> @value)
 					{
@@ -813,7 +813,7 @@ public static class ParameterModifierTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParameterModifier.Modify(String)"/>.
+					/// Sets an expectation for <see cref="global::IParameterModifier.Modify(global::System.String)"/>.
 					/// </summary>
 					internal global::IParameterModifierCreateExpectations.Adornments.ModifyAdornments639810A5 Modify(global::Rocks.Argument<string> @value)
 					{
@@ -1067,7 +1067,7 @@ public static class ParameterModifierTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParameterModifier.RefArgument(Int32)"/>.
+					/// Sets an expectation for <see cref="global::IParameterModifier.RefArgument(global::System.Int32)"/>.
 					/// </summary>
 					internal global::IParameterModifierCreateExpectations.Adornments.RefArgumentAdornmentsF1C2B998 RefArgument(global::Rocks.Argument<int> @a)
 					{
@@ -1105,7 +1105,7 @@ public static class ParameterModifierTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParameterModifier.OutArgument(Int32)"/>.
+					/// Sets an expectation for <see cref="global::IParameterModifier.OutArgument(global::System.Int32)"/>.
 					/// </summary>
 					internal global::IParameterModifierCreateExpectations.Adornments.OutArgumentAdornmentsC7477EBD OutArgument(global::Rocks.Argument<int> @a)
 					{

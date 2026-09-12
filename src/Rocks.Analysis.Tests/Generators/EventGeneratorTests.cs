@@ -576,7 +576,7 @@ public static class EventGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::AbstractClassMethodReturnWithEvents.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::AbstractClassMethodReturnWithEvents.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::AbstractClassMethodReturnWithEventsCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
