@@ -106,13 +106,112 @@ internal sealed class ModelContext
 				this.PointerNames = string.Concat(Enumerable.Repeat("Pointer", (int)this.PointedAtCount));
 			}
 
-			// XML doc cref rendering for array-typed parameters. ITypeSymbol.Name is
-			// empty for arrays, which produced empty slots (e.g. (String,,CancellationToken)).
-			// Arrays render as Element[] with rank commas; every other kind keeps Name.
-			this.XmlCommentName =
-				this.ArrayElementType is not null ?
-					$"{this.ArrayElementType.XmlCommentName}[{new string(',', this.ArrayRank - 1)}]" :
-					this.Name;
+			if (this.ArrayElementType is not null)
+			{
+				// ITypeSymbol.Name is empty for arrays, which produced empty
+				// slots (e.g. (String,,CancellationToken)). Arrays render as
+				// Element[] with rank commas.
+				this.XmlCommentName = $"{this.ArrayElementType.XmlCommentName}[{new string(',', this.ArrayRank - 1)}]";
+			}
+			else if (this.IsGenericType && this.TypeArguments.Length > 0)
+			{
+				// ITypeSymbol.Name drops generic arguments, leaving the bare
+				// open-generic name (e.g. Use(List)), which strict consumers
+				// reject with CS1574/CS1580.
+				this.XmlCommentName = GetGenericXmlCommentName(this);
+			}
+			else
+			{
+				this.XmlCommentName = this.Name;
+			}
+		}
+
+		private static string GetGenericXmlCommentName(ITypeReferenceModel current)
+		{
+			// Fully qualified outer name with recursively rendered arguments:
+			// Name{args} when no argument transitively contains a constructed
+			// generic (braces keep the XML valid, matching the existing {T}
+			// method-arity convention), otherwise escaped angle brackets
+			// Name&lt;args&gt; (Roslyn rejects nested braces with CS1584).
+			// Bare names do not resolve in generated files (only using
+			// Rocks.Extensions); method type parameters stay bare (in scope).
+			var outerName = GetQualifiedXmlCommentName(current);
+			var useAngles = current.TypeArguments.Any(ContainsConstructedGeneric);
+			var arguments = string.Join(",", current.TypeArguments.Select(_ => GetGenericArgumentXmlCommentName(_, useAngles)));
+			return useAngles ? $"{outerName}&lt;{arguments}&gt;" : $"{outerName}{{{arguments}}}";
+		}
+
+		private static string GetGenericArgumentXmlCommentName(ITypeReferenceModel type, bool useAngles)
+		{
+			if (type.ArrayElementType is not null)
+			{
+				return $"{GetGenericArgumentXmlCommentName(type.ArrayElementType, useAngles)}[{new string(',', type.ArrayRank - 1)}]";
+			}
+			if (type.IsGenericType && type.TypeArguments.Length > 0)
+			{
+				var outerName = GetQualifiedXmlCommentName(type);
+				var arguments = string.Join(",", type.TypeArguments.Select(_ => GetGenericArgumentXmlCommentName(_, true)));
+				return useAngles ? $"{outerName}&lt;{arguments}&gt;" : $"{outerName}{{{arguments}}}";
+			}
+			return GetQualifiedXmlCommentName(type);
+		}
+
+		private static bool ContainsConstructedGeneric(ITypeReferenceModel type) =>
+			(type.IsGenericType && type.TypeArguments.Length > 0) ||
+			(type.ArrayElementType is not null && ContainsConstructedGeneric(type.ArrayElementType));
+
+		private static readonly Dictionary<SpecialType, string> SpecialTypeXmlCommentNames = new()
+		{
+			[SpecialType.System_Object] = "global::System.Object",
+			[SpecialType.System_Boolean] = "global::System.Boolean",
+			[SpecialType.System_Char] = "global::System.Char",
+			[SpecialType.System_SByte] = "global::System.SByte",
+			[SpecialType.System_Byte] = "global::System.Byte",
+			[SpecialType.System_Int16] = "global::System.Int16",
+			[SpecialType.System_UInt16] = "global::System.UInt16",
+			[SpecialType.System_Int32] = "global::System.Int32",
+			[SpecialType.System_UInt32] = "global::System.UInt32",
+			[SpecialType.System_Int64] = "global::System.Int64",
+			[SpecialType.System_UInt64] = "global::System.UInt64",
+			[SpecialType.System_Decimal] = "global::System.Decimal",
+			[SpecialType.System_Single] = "global::System.Single",
+			[SpecialType.System_Double] = "global::System.Double",
+			[SpecialType.System_String] = "global::System.String",
+			[SpecialType.System_IntPtr] = "global::System.IntPtr",
+			[SpecialType.System_UIntPtr] = "global::System.UIntPtr",
+		};
+
+		private static string GetQualifiedXmlCommentName(ITypeReferenceModel type)
+		{
+			if (type.TypeKind == TypeKind.TypeParameter)
+			{
+				return type.Name.TrimEnd('?');
+			}
+			// FullyQualifiedNameNoGenerics renders Nullable<T> as T? shorthand
+			// (constructed Nullable<T> does not reliably report its SpecialType)
+			// and special types as C# keywords (int, string): neither is valid
+			// in crefs, so both map to fully qualified names.
+			if (type.SpecialType == SpecialType.System_Nullable_T || type.FullyQualifiedNameNoGenerics.EndsWith("?", StringComparison.Ordinal))
+			{
+				return "global::System.Nullable";
+			}
+
+			return SpecialTypeXmlCommentNames.TryGetValue(type.SpecialType, out var specialTypeName) ? specialTypeName : StripGenericArity(type.FullyQualifiedNameNoGenerics);
+		}
+
+		private static string StripGenericArity(string name)
+		{
+			var result = name;
+			for (var index = result.IndexOf('`'); index >= 0; index = result.IndexOf('`', index))
+			{
+				var end = index + 1;
+				while (end < result.Length && char.IsDigit(result[end]))
+				{
+					end++;
+				}
+				result = result.Remove(index, end - index);
+			}
+			return result;
 		}
 
 		private static string BuildName(ITypeReferenceModel current, TypeArgumentsNamingContext parentNamingContext)

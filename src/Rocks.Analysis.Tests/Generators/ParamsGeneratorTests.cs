@@ -56,7 +56,7 @@ public static class ParamsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParamsMethods.Do(ReadOnlySpan)"/>.
+					/// Sets an expectation for <see cref="global::IParamsMethods.Do(global::System.ReadOnlySpan{global::System.String})"/>.
 					/// </summary>
 					internal global::IParamsMethodsCreateExpectations.Adornments.DoAdornments9A45C941 Do(global::Rocks.RefStructArgument<global::System.ReadOnlySpan<string>> @args)
 					{
@@ -308,7 +308,7 @@ public static class ParamsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParamsMethods.Do(Int32,ReadOnlySpan)"/>.
+					/// Sets an expectation for <see cref="global::IParamsMethods.Do(Int32,global::System.ReadOnlySpan{global::System.String})"/>.
 					/// </summary>
 					internal global::IParamsMethodsCreateExpectations.Adornments.DoAdornments1DD24516 Do(global::Rocks.Argument<int> @value, global::Rocks.RefStructArgument<global::System.ReadOnlySpan<string>> @args)
 					{
@@ -328,7 +328,7 @@ public static class ParamsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParamsMethods.Do(Int32,ReadOnlySpan)"/>.
+					/// Sets an expectation for <see cref="global::IParamsMethods.Do(Int32,global::System.ReadOnlySpan{global::System.String})"/>.
 					/// </summary>
 					internal global::IParamsMethodsCreateExpectations.Adornments.DoAdornments1DD24516 Do([global::System.Runtime.InteropServices.Optional, global::System.Runtime.InteropServices.DefaultParameterValue(3)] int @value, global::Rocks.RefStructArgument<global::System.ReadOnlySpan<string>> @args) =>
 						this.Do(global::Rocks.Arg.Is(@value), @args);
@@ -587,7 +587,7 @@ public static class ParamsGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::IParamsMethods.this[Int32,ReadOnlySpan]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::IParamsMethods.this[Int32,global::System.ReadOnlySpan{global::System.String}]" /> property.
 						/// </summary>
 						internal global::IParamsMethodsCreateExpectations.Adornments.thisGetsAdornments1DD24516 Gets()
 						{
@@ -605,7 +605,7 @@ public static class ParamsGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "set" expectation for the <see cref="global::IParamsMethods.this[Int32,ReadOnlySpan]" /> property.
+						/// Sets a "set" expectation for the <see cref="global::IParamsMethods.this[Int32,global::System.ReadOnlySpan{global::System.String}]" /> property.
 						/// </summary>
 						internal global::IParamsMethodsCreateExpectations.Adornments.thisSetsAdornments07EFF45B Sets(global::Rocks.Argument<string> @value)
 						{
@@ -626,7 +626,7 @@ public static class ParamsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParamsMethods.this[Int32,ReadOnlySpan]"/>.
+					/// Sets an expectation for <see cref="global::IParamsMethods.this[Int32,global::System.ReadOnlySpan{global::System.String}]"/>.
 					/// </summary>
 					
 					internal global::IParamsMethodsCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<int> @content, global::Rocks.RefStructArgument<global::System.ReadOnlySpan<string>> @args] => new(this.parent, @content, @args);
@@ -932,7 +932,7 @@ public static class ParamsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParamsMethods.Do(Int32,ReadOnlySpan)"/>.
+					/// Sets an expectation for <see cref="global::IParamsMethods.Do(Int32,global::System.ReadOnlySpan{global::System.String})"/>.
 					/// </summary>
 					internal global::IParamsMethodsCreateExpectations.Adornments.DoAdornments1DD24516 Do(global::Rocks.Argument<int> @value, global::Rocks.RefStructArgument<global::System.ReadOnlySpan<string>> @args)
 					{
@@ -952,7 +952,7 @@ public static class ParamsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParamsMethods.Do(Int32,ReadOnlySpan)"/>.
+					/// Sets an expectation for <see cref="global::IParamsMethods.Do(Int32,global::System.ReadOnlySpan{global::System.String})"/>.
 					/// </summary>
 					internal global::IParamsMethodsCreateExpectations.Adornments.DoAdornments1DD24516 Do([global::System.Runtime.InteropServices.Optional, global::System.Runtime.InteropServices.DefaultParameterValue(3)] int @value, global::Rocks.RefStructArgument<global::System.ReadOnlySpan<string>> @args) =>
 						this.Do(global::Rocks.Arg.Is(@value), @args);
@@ -1212,7 +1212,7 @@ public static class ParamsGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::IParamsMethods.this[Int32,ReadOnlySpan]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::IParamsMethods.this[Int32,global::System.ReadOnlySpan{global::System.String}]" /> property.
 						/// </summary>
 						internal global::IParamsMethodsCreateExpectations.Adornments.thisGetsAdornments1DD24516 Gets()
 						{
@@ -1230,7 +1230,7 @@ public static class ParamsGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "set" expectation for the <see cref="global::IParamsMethods.this[Int32,ReadOnlySpan]" /> property.
+						/// Sets a "set" expectation for the <see cref="global::IParamsMethods.this[Int32,global::System.ReadOnlySpan{global::System.String}]" /> property.
 						/// </summary>
 						internal global::IParamsMethodsCreateExpectations.Adornments.thisSetsAdornments07EFF45B Sets(global::Rocks.Argument<string> @value)
 						{
@@ -1251,7 +1251,7 @@ public static class ParamsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParamsMethods.this[Int32,ReadOnlySpan]"/>.
+					/// Sets an expectation for <see cref="global::IParamsMethods.this[Int32,global::System.ReadOnlySpan{global::System.String}]"/>.
 					/// </summary>
 					
 					internal global::IParamsMethodsCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<int> @content, global::Rocks.RefStructArgument<global::System.ReadOnlySpan<string>> @args] => new(this.parent, @content, @args);
@@ -3074,7 +3074,7 @@ public static class ParamsGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::IParamsIndexer.this[ReadOnlySpan]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::IParamsIndexer.this[global::System.ReadOnlySpan{global::System.String}]" /> property.
 						/// </summary>
 						internal global::IParamsIndexerCreateExpectations.Adornments.thisGetsAdornments9A45C941 Gets()
 						{
@@ -3091,7 +3091,7 @@ public static class ParamsGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "set" expectation for the <see cref="global::IParamsIndexer.this[ReadOnlySpan]" /> property.
+						/// Sets a "set" expectation for the <see cref="global::IParamsIndexer.this[global::System.ReadOnlySpan{global::System.String}]" /> property.
 						/// </summary>
 						internal global::IParamsIndexerCreateExpectations.Adornments.thisSetsAdornmentsF05B2EAC Sets(global::Rocks.Argument<string> @value)
 						{
@@ -3111,7 +3111,7 @@ public static class ParamsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParamsIndexer.this[ReadOnlySpan]"/>.
+					/// Sets an expectation for <see cref="global::IParamsIndexer.this[global::System.ReadOnlySpan{global::System.String}]"/>.
 					/// </summary>
 					
 					internal global::IParamsIndexerCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.RefStructArgument<global::System.ReadOnlySpan<string>> @args] => new(this.parent, @args);
