@@ -118,7 +118,7 @@ internal sealed class ModelContext
 				// ITypeSymbol.Name drops generic arguments, leaving the bare
 				// open-generic name (e.g. Use(List)), which strict consumers
 				// reject with CS1574/CS1580.
-				this.XmlCommentName = GetGenericXmlCommentName(this);
+				this.XmlCommentName = TypeReferenceModel.GetGenericXmlCommentName(this);
 			}
 			else
 			{
@@ -135,9 +135,9 @@ internal sealed class ModelContext
 			// Name&lt;args&gt; (Roslyn rejects nested braces with CS1584).
 			// Bare names do not resolve in generated files (only using
 			// Rocks.Extensions); method type parameters stay bare (in scope).
-			var outerName = GetQualifiedXmlCommentName(current);
-			var useAngles = current.TypeArguments.Any(ContainsConstructedGeneric);
-			var arguments = string.Join(",", current.TypeArguments.Select(_ => GetGenericArgumentXmlCommentName(_, useAngles)));
+			var outerName = TypeReferenceModel.GetQualifiedXmlCommentName(current);
+			var useAngles = current.TypeArguments.Any(TypeReferenceModel.ContainsConstructedGeneric);
+			var arguments = string.Join(",", current.TypeArguments.Select(_ => TypeReferenceModel.GetGenericArgumentXmlCommentName(_, useAngles)));
 			return useAngles ? $"{outerName}&lt;{arguments}&gt;" : $"{outerName}{{{arguments}}}";
 		}
 
@@ -145,20 +145,20 @@ internal sealed class ModelContext
 		{
 			if (type.ArrayElementType is not null)
 			{
-				return $"{GetGenericArgumentXmlCommentName(type.ArrayElementType, useAngles)}[{new string(',', type.ArrayRank - 1)}]";
+				return $"{TypeReferenceModel.GetGenericArgumentXmlCommentName(type.ArrayElementType, useAngles)}[{new string(',', type.ArrayRank - 1)}]";
 			}
 			if (type.IsGenericType && type.TypeArguments.Length > 0)
 			{
-				var outerName = GetQualifiedXmlCommentName(type);
-				var arguments = string.Join(",", type.TypeArguments.Select(_ => GetGenericArgumentXmlCommentName(_, true)));
+				var outerName = TypeReferenceModel.GetQualifiedXmlCommentName(type);
+				var arguments = string.Join(",", type.TypeArguments.Select(_ => TypeReferenceModel.GetGenericArgumentXmlCommentName(_, true)));
 				return useAngles ? $"{outerName}&lt;{arguments}&gt;" : $"{outerName}{{{arguments}}}";
 			}
-			return GetQualifiedXmlCommentName(type);
+			return TypeReferenceModel.GetQualifiedXmlCommentName(type);
 		}
 
 		private static bool ContainsConstructedGeneric(ITypeReferenceModel type) =>
 			(type.IsGenericType && type.TypeArguments.Length > 0) ||
-			(type.ArrayElementType is not null && ContainsConstructedGeneric(type.ArrayElementType));
+			(type.ArrayElementType is not null && TypeReferenceModel.ContainsConstructedGeneric(type.ArrayElementType));
 
 		private static readonly Dictionary<SpecialType, string> SpecialTypeXmlCommentNames = new()
 		{
@@ -196,7 +196,7 @@ internal sealed class ModelContext
 				return "global::System.Nullable";
 			}
 
-			return SpecialTypeXmlCommentNames.TryGetValue(type.SpecialType, out var specialTypeName) ? specialTypeName : StripGenericArity(type.FullyQualifiedNameNoGenerics);
+			return TypeReferenceModel.SpecialTypeXmlCommentNames.TryGetValue(type.SpecialType, out var specialTypeName) ? specialTypeName : TypeReferenceModel.StripGenericArity(type.FullyQualifiedNameNoGenerics);
 		}
 
 		private static string StripGenericArity(string name)
