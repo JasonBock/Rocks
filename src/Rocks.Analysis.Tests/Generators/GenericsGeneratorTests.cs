@@ -106,7 +106,7 @@ public static class GenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::HistoricalScheduler.ScheduleAbsolute{TState}(TState,DateTimeOffset,Func)"/>.
+					/// Sets an expectation for <see cref="global::HistoricalScheduler.ScheduleAbsolute{TState}(TState,DateTimeOffset,global::System.Func{global::IScheduler,TState,global::System.IDisposable})"/>.
 					/// </summary>
 					internal global::HistoricalSchedulerCreateExpectations.Adornments.ScheduleAbsoluteAdornments06F92D90<TState> ScheduleAbsolute<TState>(global::Rocks.Argument<TState> @state, global::Rocks.Argument<global::System.DateTimeOffset> @dueTime, global::Rocks.Argument<global::System.Func<global::IScheduler, TState, global::System.IDisposable>> @action)
 					{
@@ -968,7 +968,7 @@ public static class GenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ISourceUpdater{TObject, TKey}.Refresh(IEnumerable)"/>.
+					/// Sets an expectation for <see cref="global::ISourceUpdater{TObject, TKey}.Refresh(global::System.Collections.Generic.IEnumerable{TObject})"/>.
 					/// </summary>
 					internal global::ISourceUpdaterCreateExpectations<TObject, TKey>.Adornments.RefreshAdornmentsC1B05B0A Refresh(global::Rocks.Argument<global::System.Collections.Generic.IEnumerable<TObject>> @items)
 					{
@@ -986,7 +986,7 @@ public static class GenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ISourceUpdater{TObject, TKey}.Refresh(IEnumerable)"/>.
+					/// Sets an expectation for <see cref="global::ISourceUpdater{TObject, TKey}.Refresh(global::System.Collections.Generic.IEnumerable{TKey})"/>.
 					/// </summary>
 					internal global::ISourceUpdaterCreateExpectations<TObject, TKey>.Adornments.RefreshAdornmentsF112E418 Refresh(global::Rocks.Argument<global::System.Collections.Generic.IEnumerable<TKey>> @keys)
 					{
@@ -2346,7 +2346,7 @@ public static class GenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::M{A}.Bind{S}(Func)"/>.
+					/// Sets an expectation for <see cref="global::M{A}.Bind{S}(global::System.Func{S})"/>.
 					/// </summary>
 					internal global::MCreateExpectations<A>.Adornments.BindAdornments1C97442B<S> Bind<S>(global::Rocks.Argument<global::System.Func<S>> @f)
 					{

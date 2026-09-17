@@ -2131,7 +2131,7 @@ public static class OpenGenericsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IHasTypeConverterOptions{TClass, TMember}.Map{TMember1}(Expression,Boolean)"/>.
+					/// Sets an expectation for <see cref="global::IHasTypeConverterOptions{TClass, TMember}.Map{TMember1}(global::System.Linq.Expressions.Expression&lt;global::System.Func&lt;TClass,TMember&gt;&gt;,Boolean)"/>.
 					/// </summary>
 					internal global::IHasTypeConverterOptionsCreateExpectations<TClass, TMember>.Adornments.MapAdornments447589F3<TMember1> Map<TMember1>(global::Rocks.Argument<global::System.Linq.Expressions.Expression<global::System.Func<TClass, TMember1>>> @expression, global::Rocks.Argument<bool> @useExistingMap)
 					{
@@ -2151,7 +2151,7 @@ public static class OpenGenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IHasTypeConverterOptions{TClass, TMember}.Map{TMember1}(Expression,Boolean)"/>.
+					/// Sets an expectation for <see cref="global::IHasTypeConverterOptions{TClass, TMember}.Map{TMember1}(global::System.Linq.Expressions.Expression&lt;global::System.Func&lt;TClass,TMember&gt;&gt;,Boolean)"/>.
 					/// </summary>
 					internal global::IHasTypeConverterOptionsCreateExpectations<TClass, TMember>.Adornments.MapAdornments447589F3<TMember1> Map<TMember1>(global::Rocks.Argument<global::System.Linq.Expressions.Expression<global::System.Func<TClass, TMember1>>> @expression, bool @useExistingMap = true) =>
 						this.Map<TMember1>(@expression, global::Rocks.Arg.Is(@useExistingMap));
@@ -3135,7 +3135,7 @@ public static class OpenGenericsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IPixelOperations{TPixel}.Destructive(Span)"/>.
+					/// Sets an expectation for <see cref="global::IPixelOperations{TPixel}.Destructive(global::System.Span{TPixel})"/>.
 					/// </summary>
 					internal global::IPixelOperationsCreateExpectations<TPixel>.Adornments.DestructiveAdornments538EAA98 Destructive(global::Rocks.RefStructArgument<global::System.Span<TPixel>> @destinationPixels)
 					{
@@ -3390,7 +3390,7 @@ public static class OpenGenericsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::INotification.Similar{T}(String,Nullable)"/>.
+					/// Sets an expectation for <see cref="global::INotification.Similar{T}(String,global::System.Nullable{T})"/>.
 					/// </summary>
 					internal global::INotificationCreateExpectations.Adornments.SimilarAdornments8C83C370<T> Similar<T>(global::Rocks.Argument<string?> @key, global::Rocks.Argument<T?> @value) where T : struct, global::System.Enum
 					{
@@ -3927,7 +3927,7 @@ public static class OpenGenericsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::INotification{T}.Similar(INotification)"/>.
+					/// Sets an expectation for <see cref="global::INotification{T}.Similar(global::INotification{T})"/>.
 					/// </summary>
 					internal global::INotificationCreateExpectations<T>.Adornments.SimilarAdornments9521B3E4 Similar(global::Rocks.Argument<global::INotification<T>?> @other)
 					{
@@ -4178,7 +4178,7 @@ public static class OpenGenericsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IWriter.WriteCollectionOfEnumValues{T}(String,IEnumerable)"/>.
+					/// Sets an expectation for <see cref="global::IWriter.WriteCollectionOfEnumValues{T}(String,global::System.Collections.Generic.IEnumerable&lt;global::System.Nullable&lt;T&gt;&gt;)"/>.
 					/// </summary>
 					internal global::IWriterCreateExpectations.Adornments.WriteCollectionOfEnumValuesAdornments8F88EE00<T> WriteCollectionOfEnumValues<T>(global::Rocks.Argument<string?> @key, global::Rocks.Argument<global::System.Collections.Generic.IEnumerable<T?>?> @values) where T : struct, global::System.Enum
 					{

@@ -1181,7 +1181,7 @@ public static class ConstraintsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ClassMap{TClass}.MapNullable{TMember}(IList,Boolean)"/>.
+					/// Sets an expectation for <see cref="global::ClassMap{TClass}.MapNullable{TMember}(global::System.Collections.Generic.IList{TMember},Boolean)"/>.
 					/// </summary>
 					internal global::ClassMapCreateExpectations<TClass>.Adornments.MapNullableAdornments5ED981D2<TMember> MapNullable<TMember>(global::Rocks.Argument<global::System.Collections.Generic.IList<TMember?>> @member, global::Rocks.Argument<bool> @useExistingMap)
 					{
@@ -1201,7 +1201,7 @@ public static class ConstraintsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ClassMap{TClass}.MapNullable{TMember}(IList,Boolean)"/>.
+					/// Sets an expectation for <see cref="global::ClassMap{TClass}.MapNullable{TMember}(global::System.Collections.Generic.IList{TMember},Boolean)"/>.
 					/// </summary>
 					internal global::ClassMapCreateExpectations<TClass>.Adornments.MapNullableAdornments5ED981D2<TMember> MapNullable<TMember>(global::Rocks.Argument<global::System.Collections.Generic.IList<TMember?>> @member, bool @useExistingMap = true) =>
 						this.MapNullable<TMember>(@member, global::Rocks.Arg.Is(@useExistingMap));
@@ -2009,7 +2009,7 @@ public static class ConstraintsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::INeedDelegate.Foo{T}(Int32,Frame)"/>.
+					/// Sets an expectation for <see cref="global::INeedDelegate.Foo{T}(Int32,global::Frame{T})"/>.
 					/// </summary>
 					internal global::INeedDelegateCreateExpectations.Adornments.FooAdornmentsC7F2E118<T> Foo<T>(global::Rocks.Argument<int> @a, global::Rocks.Argument<global::Frame<T>> @frame) where T : unmanaged, global::IDot<T>
 					{
@@ -4059,7 +4059,7 @@ public static class ConstraintsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IUnmanagedValue.Use{TValue}(Value)"/>.
+					/// Sets an expectation for <see cref="global::IUnmanagedValue.Use{TValue}(global::Value{TValue})"/>.
 					/// </summary>
 					internal global::IUnmanagedValueCreateExpectations.Adornments.UseAdornmentsEB9134B7<TValue> Use<TValue>(global::Rocks.Argument<global::Value<TValue>> @value) where TValue : unmanaged, global::IValue<TValue>
 					{
