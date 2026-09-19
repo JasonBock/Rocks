@@ -1513,7 +1513,7 @@ public static class ProjectionPointerGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::MockTests.IHavePointers.this[String]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::MockTests.IHavePointers.this[global::System.String]" /> property.
 						/// </summary>
 						internal global::MockTests.IHavePointersCreateExpectations.Adornments.thisGetsAdornments639810A5 Gets()
 						{
@@ -1530,7 +1530,7 @@ public static class ProjectionPointerGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "set" expectation for the <see cref="global::MockTests.IHavePointers.this[String]" /> property.
+						/// Sets a "set" expectation for the <see cref="global::MockTests.IHavePointers.this[global::System.String]" /> property.
 						/// </summary>
 						internal global::MockTests.IHavePointersCreateExpectations.Adornments.thisSetsAdornments775B16FE Sets(global::Rocks.Projections.PointerArgument<int> @value)
 						{
@@ -1550,7 +1550,7 @@ public static class ProjectionPointerGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.IHavePointers.this[String]"/>.
+					/// Sets an expectation for <see cref="global::MockTests.IHavePointers.this[global::System.String]"/>.
 					/// </summary>
 					
 					internal global::MockTests.IHavePointersCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<string> @index] => new(this.parent, @index);

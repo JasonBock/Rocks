@@ -64,7 +64,7 @@ public static class NullabilityGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ConnectionBuilder{TSourceType}.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::ConnectionBuilder{TSourceType}.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::ConnectionBuilderCreateExpectations<TSourceType>.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -104,7 +104,7 @@ public static class NullabilityGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ConnectionBuilder{TSourceType}.Argument{TArgumentGraphType, TArgumentType}(String,String,TArgumentType)"/>.
+					/// Sets an expectation for <see cref="global::ConnectionBuilder{TSourceType}.Argument{TArgumentGraphType, TArgumentType}(global::System.String,global::System.String,TArgumentType)"/>.
 					/// </summary>
 					internal global::ConnectionBuilderCreateExpectations<TSourceType>.Adornments.ArgumentAdornmentsCF929532<TArgumentGraphType, TArgumentType> Argument<TArgumentGraphType, TArgumentType>(global::Rocks.Argument<string> @name, global::Rocks.Argument<string?> @description, global::Rocks.Argument<TArgumentType> @defaultValue) where TArgumentGraphType : global::IGraphType
 					{
@@ -126,7 +126,7 @@ public static class NullabilityGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ConnectionBuilder{TSourceType}.Argument{TArgumentGraphType, TArgumentType}(String,String,TArgumentType)"/>.
+					/// Sets an expectation for <see cref="global::ConnectionBuilder{TSourceType}.Argument{TArgumentGraphType, TArgumentType}(global::System.String,global::System.String,TArgumentType)"/>.
 					/// </summary>
 					internal global::ConnectionBuilderCreateExpectations<TSourceType>.Adornments.ArgumentAdornmentsCF929532<TArgumentGraphType, TArgumentType> Argument<TArgumentGraphType, TArgumentType>(global::Rocks.Argument<string> @name, global::Rocks.Argument<string?> @description, TArgumentType @defaultValue = default!) where TArgumentGraphType : global::IGraphType =>
 						this.Argument<TArgumentGraphType, TArgumentType>(@name, @description, global::Rocks.Arg.Is(@defaultValue));
@@ -514,7 +514,7 @@ public static class NullabilityGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::SubTracer.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::SubTracer.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::SubTracerCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -554,7 +554,7 @@ public static class NullabilityGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::SubTracer.TraceEvent(String,String,String,Int32,String,Object[])"/>.
+					/// Sets an expectation for <see cref="global::SubTracer.TraceEvent(global::System.String,global::System.String,global::System.String,global::System.Int32,global::System.String,global::System.Object[])"/>.
 					/// </summary>
 					internal global::SubTracerCreateExpectations.Adornments.TraceEventAdornments84D8E1F2 TraceEvent(global::Rocks.Argument<string> @eventCache, global::Rocks.Argument<string> @source, global::Rocks.Argument<string> @eventType, global::Rocks.Argument<int> @id, global::Rocks.Argument<string> @format, global::Rocks.Argument<object[]> @args)
 					{
@@ -582,7 +582,7 @@ public static class NullabilityGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::SubTracer.TraceEvent(String,String,String,Int32,String,Object[])"/>.
+					/// Sets an expectation for <see cref="global::SubTracer.TraceEvent(global::System.String,global::System.String,global::System.String,global::System.Int32,global::System.String,global::System.Object[])"/>.
 					/// </summary>
 					internal global::SubTracerCreateExpectations.Adornments.TraceEventAdornments84D8E1F2 TraceEvent(global::Rocks.Argument<string> @eventCache, global::Rocks.Argument<string> @source, global::Rocks.Argument<string> @eventType, global::Rocks.Argument<int> @id, global::Rocks.Argument<string> @format, params object[] @args) =>
 						this.TraceEvent(@eventCache, @source, @eventType, @id, @format, global::Rocks.Arg.Is(@args));

@@ -64,7 +64,7 @@ public static class InheritanceGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::BindableReactiveProperty{T}.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::BindableReactiveProperty{T}.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::BindableReactivePropertyCreateExpectations<T>.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -421,7 +421,7 @@ public static class InheritanceGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::BindableReactiveProperty{T}.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::BindableReactiveProperty{T}.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::BindableReactivePropertyCreateExpectations<T>.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -782,7 +782,7 @@ public static class InheritanceGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.JsBinaryOperator.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.JsBinaryOperator.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.JsBinaryOperatorCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -822,7 +822,7 @@ public static class InheritanceGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.JsBinaryOperator.Evaluate(ScriptScopeContext)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.JsBinaryOperator.Evaluate(global::MockTests.ScriptScopeContext)"/>.
 					/// </summary>
 					internal global::MockTests.JsBinaryOperatorCreateExpectations.Adornments.EvaluateAdornments8E02E0FA Evaluate(global::Rocks.Argument<global::MockTests.ScriptScopeContext> @scope)
 					{
@@ -840,7 +840,7 @@ public static class InheritanceGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.JsBinaryOperator.Evaluate(Object)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.JsBinaryOperator.Evaluate(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.JsBinaryOperatorCreateExpectations.Adornments.EvaluateAdornments18819E91 Evaluate(global::Rocks.Argument<object> @target)
 					{

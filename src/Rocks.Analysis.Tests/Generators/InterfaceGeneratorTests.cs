@@ -905,7 +905,7 @@ public static class InterfaceGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IRequest.AddInvokeMethodOptions(Int32)"/>.
+					/// Sets an expectation for <see cref="global::IRequest.AddInvokeMethodOptions(global::System.Int32)"/>.
 					/// </summary>
 					internal global::IRequestCreateExpectations.Adornments.AddInvokeMethodOptionsAdornments6246614F AddInvokeMethodOptions(global::Rocks.Argument<int> @options)
 					{
@@ -1162,7 +1162,7 @@ public static class InterfaceGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.ITarget.Retrieve(Int32)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.ITarget.Retrieve(global::System.Int32)"/>.
 					/// </summary>
 					internal global::MockTests.ITargetCreateExpectations.Adornments.RetrieveAdornments6246614F Retrieve(global::Rocks.Argument<int> @value)
 					{

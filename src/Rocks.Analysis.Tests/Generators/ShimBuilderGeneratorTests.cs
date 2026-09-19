@@ -810,7 +810,7 @@ public static class ShimBuilderGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IBufferedChannel.Consume(Int32)"/>.
+					/// Sets an expectation for <see cref="global::IBufferedChannel.Consume(global::System.Int32)"/>.
 					/// </summary>
 					internal global::IBufferedChannelCreateExpectations.Adornments.ConsumeAdornments6246614F Consume(global::Rocks.Argument<int> @count)
 					{
@@ -1527,7 +1527,7 @@ public static class ShimBuilderGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IDialogService.ShowSuccess(String)"/>.
+					/// Sets an expectation for <see cref="global::IDialogService.ShowSuccess(global::System.String)"/>.
 					/// </summary>
 					internal global::IDialogServiceCreateExpectations.Adornments.ShowSuccessAdornments639810A5 ShowSuccess(global::Rocks.Argument<string> @message)
 					{
@@ -2380,7 +2380,7 @@ public static class ShimBuilderGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::IHaveDims.this[String,Int32]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::IHaveDims.this[global::System.String,global::System.Int32]" /> property.
 						/// </summary>
 						internal global::IHaveDimsCreateExpectations.Adornments.thisGetsAdornments9076DDCC Gets()
 						{
@@ -2400,7 +2400,7 @@ public static class ShimBuilderGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IHaveDims.this[String,Int32]"/>.
+					/// Sets an expectation for <see cref="global::IHaveDims.this[global::System.String,global::System.Int32]"/>.
 					/// </summary>
 					
 					internal global::IHaveDimsCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<string> @dimKey, global::Rocks.Argument<int> @dimValue] => new(this.parent, @dimKey, @dimValue);
@@ -2418,7 +2418,7 @@ public static class ShimBuilderGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::IHaveDims.this[String]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::IHaveDims.this[global::System.String]" /> property.
 						/// </summary>
 						internal global::IHaveDimsCreateExpectations.Adornments.thisGetsAdornments639810A5 Gets()
 						{
@@ -2437,7 +2437,7 @@ public static class ShimBuilderGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IHaveDims.this[String]"/>.
+					/// Sets an expectation for <see cref="global::IHaveDims.this[global::System.String]"/>.
 					/// </summary>
 					
 					internal global::IHaveDimsCreateExpectations.SetupsExpectations.Indexer1Expectations this[global::Rocks.Argument<string> @notDimKey] => new(this.parent, @notDimKey);

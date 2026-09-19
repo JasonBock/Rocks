@@ -85,7 +85,7 @@ public static class RecordGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.RecordTest.PrintMembers(StringBuilder)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.RecordTest.PrintMembers(global::System.Text.StringBuilder)"/>.
 					/// </summary>
 					internal global::MockTests.RecordTestCreateExpectations.Adornments.PrintMembersAdornments1325161B PrintMembers(global::Rocks.Argument<global::System.Text.StringBuilder> @builder)
 					{

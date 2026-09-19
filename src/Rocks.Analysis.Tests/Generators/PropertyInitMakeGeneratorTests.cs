@@ -857,7 +857,7 @@ public static class PropertyInitMakeGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Test.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.Test.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.TestCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{

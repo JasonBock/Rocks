@@ -725,7 +725,7 @@ public static class PropertyGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::PrivatePublicProperties.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::PrivatePublicProperties.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::PrivatePublicPropertiesCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -1350,7 +1350,7 @@ public static class PropertyGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::PrivatePublicProperty.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::PrivatePublicProperty.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::PrivatePublicPropertyCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -1792,7 +1792,7 @@ public static class PropertyGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MixedIndexers.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::MixedIndexers.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MixedIndexersCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -1843,7 +1843,7 @@ public static class PropertyGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::MixedIndexers.this[Int32]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::MixedIndexers.this[global::System.Int32]" /> property.
 						/// </summary>
 						internal global::MixedIndexersCreateExpectations.Adornments.thisGetsAdornments6246614F Gets()
 						{
@@ -1862,7 +1862,7 @@ public static class PropertyGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MixedIndexers.this[Int32]"/>.
+					/// Sets an expectation for <see cref="global::MixedIndexers.this[global::System.Int32]"/>.
 					/// </summary>
 					
 					internal global::MixedIndexersCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<int> @index] => new(this.parent, @index);
@@ -1880,7 +1880,7 @@ public static class PropertyGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::MixedIndexers.this[Int64]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::MixedIndexers.this[global::System.Int64]" /> property.
 						/// </summary>
 						internal global::MixedIndexersCreateExpectations.Adornments.thisGetsAdornments68189388 Gets()
 						{
@@ -1897,7 +1897,7 @@ public static class PropertyGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "set" expectation for the <see cref="global::MixedIndexers.this[Int64]" /> property.
+						/// Sets a "set" expectation for the <see cref="global::MixedIndexers.this[global::System.Int64]" /> property.
 						/// </summary>
 						internal global::MixedIndexersCreateExpectations.Adornments.thisSetsAdornmentsBC8C828A Sets(global::Rocks.Argument<string?> @value)
 						{
@@ -1917,7 +1917,7 @@ public static class PropertyGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MixedIndexers.this[Int64]"/>.
+					/// Sets an expectation for <see cref="global::MixedIndexers.this[global::System.Int64]"/>.
 					/// </summary>
 					
 					internal global::MixedIndexersCreateExpectations.SetupsExpectations.Indexer1Expectations this[global::Rocks.Argument<long> @index] => new(this.parent, @index);
@@ -1936,7 +1936,7 @@ public static class PropertyGeneratorTests
 						
 						
 						/// <summary>
-						/// Sets a "set" expectation for the <see cref="global::MixedIndexers.this[Guid]" /> property.
+						/// Sets a "set" expectation for the <see cref="global::MixedIndexers.this[global::System.Guid]" /> property.
 						/// </summary>
 						internal global::MixedIndexersCreateExpectations.Adornments.thisSetsAdornmentsEBDB18E5 Sets(global::Rocks.Argument<string?> @value)
 						{
@@ -1956,7 +1956,7 @@ public static class PropertyGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MixedIndexers.this[Guid]"/>.
+					/// Sets an expectation for <see cref="global::MixedIndexers.this[global::System.Guid]"/>.
 					/// </summary>
 					
 					internal global::MixedIndexersCreateExpectations.SetupsExpectations.Indexer2Expectations this[global::Rocks.Argument<global::System.Guid> @index] => new(this.parent, @index);
@@ -1974,7 +1974,7 @@ public static class PropertyGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::MixedIndexers.this[String]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::MixedIndexers.this[global::System.String]" /> property.
 						/// </summary>
 						internal global::MixedIndexersCreateExpectations.Adornments.thisGetsAdornments639810A5 Gets()
 						{
@@ -1991,7 +1991,7 @@ public static class PropertyGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "set" expectation for the <see cref="global::MixedIndexers.this[String]" /> property.
+						/// Sets a "set" expectation for the <see cref="global::MixedIndexers.this[global::System.String]" /> property.
 						/// </summary>
 						internal global::MixedIndexersCreateExpectations.Adornments.thisSetsAdornmentsA6D77073 Sets(global::Rocks.Argument<string?> @value)
 						{
@@ -2011,7 +2011,7 @@ public static class PropertyGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MixedIndexers.this[String]"/>.
+					/// Sets an expectation for <see cref="global::MixedIndexers.this[global::System.String]"/>.
 					/// </summary>
 					
 					internal global::MixedIndexersCreateExpectations.SetupsExpectations.Indexer3Expectations this[global::Rocks.Argument<string> @index] => new(this.parent, @index);
@@ -2667,7 +2667,7 @@ public static class PropertyGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MixedProperties.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::MixedProperties.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MixedPropertiesCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{

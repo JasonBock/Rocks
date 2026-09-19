@@ -63,7 +63,7 @@ public static class ClassConstructorGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.BaseCtor.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.BaseCtor.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.BaseCtorCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{

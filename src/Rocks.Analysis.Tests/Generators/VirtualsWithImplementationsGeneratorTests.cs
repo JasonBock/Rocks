@@ -62,7 +62,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.VoidMethodWithParams.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.VoidMethodWithParams.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.VoidMethodWithParamsCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -102,7 +102,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.VoidMethodWithParams.CallMe(String[])"/>.
+					/// Sets an expectation for <see cref="global::MockTests.VoidMethodWithParams.CallMe(global::System.String[])"/>.
 					/// </summary>
 					internal global::MockTests.VoidMethodWithParamsCreateExpectations.Adornments.CallMeAdornmentsED6F815B CallMe(global::Rocks.Argument<string[]> @values)
 					{
@@ -120,7 +120,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.VoidMethodWithParams.CallMe(String[])"/>.
+					/// Sets an expectation for <see cref="global::MockTests.VoidMethodWithParams.CallMe(global::System.String[])"/>.
 					/// </summary>
 					internal global::MockTests.VoidMethodWithParamsCreateExpectations.Adornments.CallMeAdornmentsED6F815B CallMe(params string[] @values) =>
 						this.CallMe(global::Rocks.Arg.Is(@values));
@@ -497,7 +497,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.ValueMethodWithParams.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.ValueMethodWithParams.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.ValueMethodWithParamsCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -537,7 +537,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.ValueMethodWithParams.CallMe(String[])"/>.
+					/// Sets an expectation for <see cref="global::MockTests.ValueMethodWithParams.CallMe(global::System.String[])"/>.
 					/// </summary>
 					internal global::MockTests.ValueMethodWithParamsCreateExpectations.Adornments.CallMeAdornmentsED6F815B CallMe(global::Rocks.Argument<string[]> @values)
 					{
@@ -555,7 +555,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.ValueMethodWithParams.CallMe(String[])"/>.
+					/// Sets an expectation for <see cref="global::MockTests.ValueMethodWithParams.CallMe(global::System.String[])"/>.
 					/// </summary>
 					internal global::MockTests.ValueMethodWithParamsCreateExpectations.Adornments.CallMeAdornmentsED6F815B CallMe(params string[] @values) =>
 						this.CallMe(global::Rocks.Arg.Is(@values));
@@ -1401,7 +1401,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.HaveImplementation.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.HaveImplementation.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.HaveImplementationCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -1799,7 +1799,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.HaveImplementation.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.HaveImplementation.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.HaveImplementationCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{

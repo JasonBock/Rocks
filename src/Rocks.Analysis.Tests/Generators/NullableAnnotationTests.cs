@@ -84,7 +84,7 @@ public static class NullableAnnotationTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IUseTaskDefault{T}.RequestAsync{T1}(Guid,Object,CancellationToken)"/>.
+					/// Sets an expectation for <see cref="global::IUseTaskDefault{T}.RequestAsync{T1}(global::System.Guid,global::System.Object,global::System.Threading.CancellationToken)"/>.
 					/// </summary>
 					internal global::IUseTaskDefaultCreateExpectations<T>.Adornments.RequestAsyncAdornmentsEFC37FDE<T1> RequestAsync<T1>(global::Rocks.Argument<global::System.Guid> @target, global::Rocks.Argument<object> @message, global::Rocks.Argument<global::System.Threading.CancellationToken> @cancellationToken)
 					{
@@ -414,7 +414,7 @@ public static class NullableAnnotationTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::NeedNullable.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::NeedNullable.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::NeedNullableCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -759,7 +759,7 @@ public static class NullableAnnotationTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::NeedNullable.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::NeedNullable.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::NeedNullableCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -799,7 +799,7 @@ public static class NullableAnnotationTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::NeedNullable.IntReturn(Object)"/>.
+					/// Sets an expectation for <see cref="global::NeedNullable.IntReturn(global::System.Object)"/>.
 					/// </summary>
 					internal global::NeedNullableCreateExpectations.Adornments.IntReturnAdornments18819E91 IntReturn(global::Rocks.Argument<object?> @initializationData)
 					{
@@ -817,13 +817,13 @@ public static class NullableAnnotationTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::NeedNullable.IntReturn(Object)"/>.
+					/// Sets an expectation for <see cref="global::NeedNullable.IntReturn(global::System.Object)"/>.
 					/// </summary>
 					internal global::NeedNullableCreateExpectations.Adornments.IntReturnAdornments18819E91 IntReturn(object? @initializationData = null) =>
 						this.IntReturn(global::Rocks.Arg.Is(@initializationData));
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::NeedNullable.VoidReturn(Object)"/>.
+					/// Sets an expectation for <see cref="global::NeedNullable.VoidReturn(global::System.Object)"/>.
 					/// </summary>
 					internal global::NeedNullableCreateExpectations.Adornments.VoidReturnAdornments18819E91 VoidReturn(global::Rocks.Argument<object?> @initializationData)
 					{
@@ -841,7 +841,7 @@ public static class NullableAnnotationTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::NeedNullable.VoidReturn(Object)"/>.
+					/// Sets an expectation for <see cref="global::NeedNullable.VoidReturn(global::System.Object)"/>.
 					/// </summary>
 					internal global::NeedNullableCreateExpectations.Adornments.VoidReturnAdornments18819E91 VoidReturn(object? @initializationData = null) =>
 						this.VoidReturn(global::Rocks.Arg.Is(@initializationData));

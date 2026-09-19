@@ -111,7 +111,7 @@ public static class InternalGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IDoStuff.Do(DataStuff)"/>.
+					/// Sets an expectation for <see cref="global::IDoStuff.Do(global::DataStuff)"/>.
 					/// </summary>
 					internal global::IDoStuffCreateExpectations.Adornments.DoAdornments67F2E651 Do(global::Rocks.Argument<global::DataStuff> @dataStuff)
 					{
@@ -379,7 +379,7 @@ public static class InternalGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IDoStuff.Do(DataStuff)"/>.
+					/// Sets an expectation for <see cref="global::IDoStuff.Do(global::DataStuff)"/>.
 					/// </summary>
 					internal global::IDoStuffCreateExpectations.Adornments.DoAdornments67F2E651 Do(global::Rocks.Argument<global::DataStuff> @dataStuff)
 					{

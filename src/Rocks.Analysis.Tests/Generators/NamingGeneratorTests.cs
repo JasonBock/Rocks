@@ -323,7 +323,7 @@ public static class NamingGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::Class1.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::Class1.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::Class1CreateExpectations2.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -622,7 +622,7 @@ public static class NamingGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::Class1.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::Class1.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::Class1CreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -900,7 +900,7 @@ public static class NamingGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::NewNameUsage.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::NewNameUsage.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::NewNameUsageCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -940,7 +940,7 @@ public static class NamingGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::NewNameUsage.Work(String)"/>.
+					/// Sets an expectation for <see cref="global::NewNameUsage.Work(global::System.String)"/>.
 					/// </summary>
 					internal global::NewNameUsageCreateExpectations.Adornments.WorkAdornments639810A5 Work(global::Rocks.Argument<string> @new)
 					{
@@ -969,7 +969,7 @@ public static class NamingGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::NewNameUsage.this[String]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::NewNameUsage.this[global::System.String]" /> property.
 						/// </summary>
 						internal global::NewNameUsageCreateExpectations.Adornments.thisGetsAdornments639810A5 Gets()
 						{
@@ -986,7 +986,7 @@ public static class NamingGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "set" expectation for the <see cref="global::NewNameUsage.this[String]" /> property.
+						/// Sets a "set" expectation for the <see cref="global::NewNameUsage.this[global::System.String]" /> property.
 						/// </summary>
 						internal global::NewNameUsageCreateExpectations.Adornments.thisSetsAdornments9076DDCC Sets(global::Rocks.Argument<int> @value)
 						{
@@ -1006,7 +1006,7 @@ public static class NamingGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::NewNameUsage.this[String]"/>.
+					/// Sets an expectation for <see cref="global::NewNameUsage.this[global::System.String]"/>.
 					/// </summary>
 					
 					internal global::NewNameUsageCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<string> @new] => new(this.parent, @new);
@@ -2342,7 +2342,7 @@ public static class NamingGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IHandle.Handle(String)"/>.
+					/// Sets an expectation for <see cref="global::IHandle.Handle(global::System.String)"/>.
 					/// </summary>
 					internal global::IHandleCreateExpectations.Adornments.HandleAdornments639810A5 Handle(global::Rocks.Argument<string> @handler)
 					{
@@ -2371,7 +2371,7 @@ public static class NamingGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::IHandle.this[String]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::IHandle.this[global::System.String]" /> property.
 						/// </summary>
 						internal global::IHandleCreateExpectations.Adornments.thisGetsAdornments639810A5 Gets()
 						{
@@ -2390,7 +2390,7 @@ public static class NamingGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IHandle.this[String]"/>.
+					/// Sets an expectation for <see cref="global::IHandle.this[global::System.String]"/>.
 					/// </summary>
 					
 					internal global::IHandleCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<string> @handler] => new(this.parent, @handler);
@@ -2726,7 +2726,7 @@ public static class NamingGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="First::IUseSameNames.Use(SameType)"/>.
+					/// Sets an expectation for <see cref="First::IUseSameNames.Use(First::SameNamespace.SameType)"/>.
 					/// </summary>
 					internal global::IUseSameNamesCreateExpectations.Adornments.UseAdornments023F8043 Use(global::Rocks.Argument<First::SameNamespace.SameType> @value)
 					{
@@ -2987,7 +2987,7 @@ public static class NamingGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::DbSet{TEntity}.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::DbSet{TEntity}.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::DbSetCreateExpectations<TEntity>.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -3383,7 +3383,7 @@ public static class NamingGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IHaveDelegate.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::IHaveDelegate.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::IHaveDelegateCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -3790,7 +3790,7 @@ public static class NamingGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IUseKeyword.Foo(String,String,String)"/>.
+					/// Sets an expectation for <see cref="global::IUseKeyword.Foo(global::System.String,global::System.String,global::System.String)"/>.
 					/// </summary>
 					internal global::IUseKeywordCreateExpectations.Adornments.FooAdornmentsD9D54F05 Foo(global::Rocks.Argument<string> @namespace, global::Rocks.Argument<string> @event, global::Rocks.Argument<string> @property)
 					{
@@ -4054,7 +4054,7 @@ public static class NamingGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::HaveNamingConflicts.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::HaveNamingConflicts.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::HaveNamingConflictsCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -4469,7 +4469,7 @@ public static class NamingGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::IHaveNamingConflicts.this[String,String,String,String,String]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::IHaveNamingConflicts.this[global::System.String,global::System.String,global::System.String,global::System.String,global::System.String]" /> property.
 						/// </summary>
 						internal global::IHaveNamingConflictsCreateExpectations.Adornments.thisGetsAdornmentsB4932C65 Gets()
 						{
@@ -4492,7 +4492,7 @@ public static class NamingGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IHaveNamingConflicts.this[String,String,String,String,String]"/>.
+					/// Sets an expectation for <see cref="global::IHaveNamingConflicts.this[global::System.String,global::System.String,global::System.String,global::System.String,global::System.String]"/>.
 					/// </summary>
 					
 					internal global::IHaveNamingConflictsCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<string> @methodHandlers, global::Rocks.Argument<string> @methodHandler, global::Rocks.Argument<string> @result, global::Rocks.Argument<string> @result2, global::Rocks.Argument<string> @self] => new(this.parent, @methodHandlers, @methodHandler, @result, @result2, @self);
@@ -4745,7 +4745,7 @@ public static class NamingGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IHaveNamingConflicts.Foo(String,String,String,String,String)"/>.
+					/// Sets an expectation for <see cref="global::IHaveNamingConflicts.Foo(global::System.String,global::System.String,global::System.String,global::System.String,global::System.String)"/>.
 					/// </summary>
 					internal global::IHaveNamingConflictsCreateExpectations.Adornments.FooAdornmentsB4932C65 Foo(global::Rocks.Argument<string> @methodHandlers, global::Rocks.Argument<string> @methodHandler, global::Rocks.Argument<string> @result, global::Rocks.Argument<string> @result2, global::Rocks.Argument<string> @self)
 					{
@@ -5020,7 +5020,7 @@ public static class NamingGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::HasRequiredProperty.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::HasRequiredProperty.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::HasRequiredPropertyCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -5441,7 +5441,7 @@ public static class NamingGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IUsesThing.Use(Thing,Stuff)"/>.
+					/// Sets an expectation for <see cref="global::IUsesThing.Use(global::Namespace2.Thing,global::Namespace1.Stuff)"/>.
 					/// </summary>
 					internal global::IUsesThingCreateExpectations.Adornments.UseAdornments2D832FFD Use(global::Rocks.Argument<global::Namespace2.Thing> @thing, global::Rocks.Argument<global::Namespace1.Stuff> @stuff)
 					{

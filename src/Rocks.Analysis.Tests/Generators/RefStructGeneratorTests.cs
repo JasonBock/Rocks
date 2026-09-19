@@ -131,7 +131,7 @@ public static class RefStructGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IOptionMonad{T}.DynamicInvoke(Variant,Int32,Variant)"/>.
+					/// Sets an expectation for <see cref="global::IOptionMonad{T}.DynamicInvoke(global::Variant,global::System.Int32,global::Variant)"/>.
 					/// </summary>
 					internal global::IOptionMonadCreateExpectations<T>.Adornments.DynamicInvokeAdornments96E51703 DynamicInvoke(global::Rocks.RefStructArgument<global::Variant> @args, global::Rocks.Argument<int> @count, global::Rocks.RefStructArgument<global::Variant> @result)
 					{
@@ -917,7 +917,7 @@ public static class RefStructGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IAmNonGeneric.Work(MyRefStruct)"/>.
+					/// Sets an expectation for <see cref="global::IAmNonGeneric.Work(global::MyRefStruct)"/>.
 					/// </summary>
 					internal global::IAmNonGenericCreateExpectations.Adornments.WorkAdornmentsABD34E89 Work(global::Rocks.RefStructArgument<global::MyRefStruct> @data)
 					{
@@ -1597,7 +1597,7 @@ public static class RefStructGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ScopedParameter.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="global::ScopedParameter.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::ScopedParameterCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -1673,7 +1673,7 @@ public static class RefStructGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ScopedParameter.DoWorkWithInt(Int32)"/>.
+					/// Sets an expectation for <see cref="global::ScopedParameter.DoWorkWithInt(global::System.Int32)"/>.
 					/// </summary>
 					internal global::ScopedParameterCreateExpectations.Adornments.DoWorkWithIntAdornmentsF1C2B998 DoWorkWithInt(global::Rocks.Argument<int> @data)
 					{
@@ -3590,7 +3590,7 @@ public static class RefStructGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::IHaveRefStruct.this[String]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::IHaveRefStruct.this[global::System.String]" /> property.
 						/// </summary>
 						internal global::IHaveRefStructCreateExpectations.Adornments.thisGetsAdornments639810A5 Gets()
 						{
@@ -3607,7 +3607,7 @@ public static class RefStructGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "set" expectation for the <see cref="global::IHaveRefStruct.this[String]" /> property.
+						/// Sets a "set" expectation for the <see cref="global::IHaveRefStruct.this[global::System.String]" /> property.
 						/// </summary>
 						internal global::IHaveRefStructCreateExpectations.Adornments.thisSetsAdornmentsD23F3D4E Sets(global::Rocks.RefStructArgument<global::System.Span<int>> @value)
 						{
@@ -3627,7 +3627,7 @@ public static class RefStructGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IHaveRefStruct.this[String]"/>.
+					/// Sets an expectation for <see cref="global::IHaveRefStruct.this[global::System.String]"/>.
 					/// </summary>
 					
 					internal global::IHaveRefStructCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<string> @index] => new(this.parent, @index);

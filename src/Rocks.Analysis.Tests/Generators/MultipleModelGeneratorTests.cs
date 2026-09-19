@@ -65,7 +65,7 @@ public static class MultipleModelGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.ITarget.Retrieve(Int32)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.ITarget.Retrieve(global::System.Int32)"/>.
 					/// </summary>
 					internal global::MockTests.ITargetCreateExpectations.Adornments.RetrieveAdornments6246614F Retrieve(global::Rocks.Argument<int> @value)
 					{
