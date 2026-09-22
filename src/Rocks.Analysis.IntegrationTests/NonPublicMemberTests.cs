@@ -26,7 +26,8 @@ internal static class NonPublicMemberTests
 				.With.Message.EqualTo(
 					"""
 					No handlers were found for Void DoSomething(Int32)
-						data: 3
+						Parameters:
+							data: 3
 					"""));
 	}
 }

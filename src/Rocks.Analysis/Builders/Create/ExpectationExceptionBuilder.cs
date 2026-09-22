@@ -20,24 +20,50 @@ internal static class ExpectationExceptionBuilder
 					{{message}} {typeof({{mockTypeName}}).GetMemberDescription({{method.MemberIdentifier}})}
 			"""");
 
-		writer.Indent += 3;
-
-		foreach (var parameter in method.Parameters)
+		if (method.Parameters.Length > 0 || method.TypeParameters.Length > 0)
 		{
-			var canFormatValue = !parameter.Type.RequiresProjectedArgument &&
-				!(parameter.Type.IsRefLikeType || parameter.Type.AllowsRefLikeType);
+			writer.Indent += 3;
 
-			if (canFormatValue)
+			if (method.Parameters.Length > 0)
 			{
-				writer.WriteLine($$"""{{parameter.Name}}: {@{{parameter.Name}}.FormatValue()}""");
+				writer.WriteLine("Parameters:");
+				writer.Indent++;
+
+				foreach (var parameter in method.Parameters)
+				{
+					var canFormatValue = !parameter.Type.RequiresProjectedArgument &&
+						!(parameter.Type.IsRefLikeType || parameter.Type.AllowsRefLikeType);
+
+					if (canFormatValue)
+					{
+						writer.WriteLine($$"""{{parameter.Name}}: {@{{parameter.Name}}.FormatValue()}""");
+					}
+					else
+					{
+						writer.WriteLine($$"""{{parameter.Name}}: <Not formattable>""");
+					}
+				}
+
+				writer.Indent--;
 			}
-			else
+
+			if (method.TypeParameters.Length > 0)
 			{
-				writer.WriteLine($$"""{{parameter.Name}}: <Not formattable>""");
+				writer.WriteLine("Type Parameters:");
+				writer.Indent++;
+
+				for (var i = 0; i < method.TypeParameters.Length; i++)
+				{
+					var typeParameter = method.TypeParameters[i];
+					var typeArgument = method.TypeArguments[i];
+					writer.WriteLine($$"""{{typeParameter.Name}}: {typeof(@{{typeParameter.FullyQualifiedName}}).FullName}""");
+				}
+
+				writer.Indent--;
 			}
+
+			writer.Indent -= 3;
 		}
-
-		writer.Indent -= 3;
 
 		writer.WriteLines(
 			$$""""

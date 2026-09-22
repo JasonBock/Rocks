@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated to .NET 11 Preview 7 (issue [#425](https://github.com/JasonBock/Rocks/issues/425))
 - Small micro-optimization in performance during code generation (issue [#427](https://github.com/JasonBock/Rocks/issues/427))
+- Improvements made to `ExpectationException` message, and all throw `ExpectationException`s are now tracked (issue [#428](https://github.com/JasonBock/Rocks/issues/428))
 
 ### Fixed
 

@@ -57,7 +57,8 @@ internal static class ExpectationExceptionTests
 				[
 					"""
 					No handlers match for Void Work(System.String)
-						message: 42
+						Parameters:
+							message: 42
 					"""
 				]));
 		}
@@ -75,9 +76,10 @@ internal static class ExpectationExceptionTests
 				.With.Message.EqualTo(
 					"""
 					No handlers match for Void WorkWithData(System.String, Int32, Char[])
-						data1: b
-						data2: 3
-						data3: System.Char[], Count = 3
+						Parameters:
+							data1: b
+							data2: 3
+							data3: System.Char[], Count = 3
 					"""));
 	}
 
