@@ -432,7 +432,7 @@ public static class IndexerGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::ISubIndex" property./>.
+					/// Contains expectation setups for the <see cref="global::ISubIndex.Value"/> property.
 					/// </summary>
 					internal global::ISubIndexCreateExpectations.SetupsExpectations.ValuePropertyExpectations Value => new(this.parent);
 					
@@ -870,7 +870,7 @@ public static class IndexerGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::AbstractClassIndexerGetterSetter.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::AbstractClassIndexerGetterSetterCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -888,7 +888,7 @@ public static class IndexerGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::AbstractClassIndexerGetterSetter.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::AbstractClassIndexerGetterSetterCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -899,7 +899,7 @@ public static class IndexerGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::AbstractClassIndexerGetterSetter.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::AbstractClassIndexerGetterSetterCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -2570,7 +2570,7 @@ public static class IndexerGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Target.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.TargetCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -2588,7 +2588,7 @@ public static class IndexerGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Target.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::MockTests.TargetCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -2599,7 +2599,7 @@ public static class IndexerGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Target.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::MockTests.TargetCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{

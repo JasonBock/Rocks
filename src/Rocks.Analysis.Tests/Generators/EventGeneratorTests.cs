@@ -576,7 +576,7 @@ public static class EventGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::AbstractClassMethodReturnWithEvents.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::AbstractClassMethodReturnWithEventsCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -594,7 +594,7 @@ public static class EventGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::AbstractClassMethodReturnWithEvents.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::AbstractClassMethodReturnWithEventsCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -605,7 +605,7 @@ public static class EventGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::AbstractClassMethodReturnWithEvents.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::AbstractClassMethodReturnWithEventsCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{

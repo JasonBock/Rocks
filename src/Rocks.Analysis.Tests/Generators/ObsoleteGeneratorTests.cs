@@ -302,7 +302,7 @@ public static class ObsoleteGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Container.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.ContainerCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -320,7 +320,7 @@ public static class ObsoleteGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Container.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::MockTests.ContainerCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -331,7 +331,7 @@ public static class ObsoleteGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Container.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::MockTests.ContainerCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -895,7 +895,7 @@ public static class ObsoleteGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::MockTests.IPixelShader" property./>.
+					/// Contains expectation setups for the <see cref="global::MockTests.IPixelShader.Values"/> property.
 					/// </summary>
 					internal global::MockTests.IPixelShaderCreateExpectations.SetupsExpectations.ValuesPropertyExpectations Values => new(this.parent);
 					
@@ -1239,7 +1239,7 @@ public static class ObsoleteGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::MockTests.IPixelShader" property./>.
+					/// Contains expectation setups for the <see cref="global::MockTests.IPixelShader.Values"/> property.
 					/// </summary>
 					internal global::MockTests.IPixelShaderCreateExpectations.SetupsExpectations.ValuesPropertyExpectations Values => new(this.parent);
 					

@@ -102,7 +102,7 @@ public static class RefStructGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IOptionMonad{T}.TryGet(T)"/>.
+					/// Sets an expectation for <see cref="global::IOptionMonad{T}.TryGet(out T)"/>.
 					/// </summary>
 					internal global::IOptionMonadCreateExpectations<T>.Adornments.TryGetAdornments9AF9DB1A TryGet(global::Rocks.Argument<T> @value)
 					{
@@ -120,7 +120,7 @@ public static class RefStructGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IOptionMonad{T}.Invoke()"/>.
+					/// Sets an expectation for <see cref="global::ISupplier{TResult}.Invoke()"/>.
 					/// </summary>
 					internal global::IOptionMonadCreateExpectations<T>.Adornments.InvokeAdornments2D2816FE Invoke()
 					{
@@ -131,7 +131,7 @@ public static class RefStructGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IOptionMonad{T}.DynamicInvoke(global::Variant,global::System.Int32,global::Variant)"/>.
+					/// Sets an expectation for <see cref="global::IFunctional.DynamicInvoke(ref readonly global::Variant,global::System.Int32,global::Variant)"/>.
 					/// </summary>
 					internal global::IOptionMonadCreateExpectations<T>.Adornments.DynamicInvokeAdornments96E51703 DynamicInvoke(global::Rocks.RefStructArgument<global::Variant> @args, global::Rocks.Argument<int> @count, global::Rocks.RefStructArgument<global::Variant> @result)
 					{
@@ -171,7 +171,7 @@ public static class RefStructGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::IOptionMonad{T}" property./>.
+					/// Contains expectation setups for the <see cref="global::IOptionMonad{T}.HasValue"/> property.
 					/// </summary>
 					internal global::IOptionMonadCreateExpectations<T>.SetupsExpectations.HasValuePropertyExpectations HasValue => new(this.parent);
 					
@@ -195,7 +195,7 @@ public static class RefStructGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::IOptionMonad{T}" property./>.
+					/// Contains expectation setups for the <see cref="global::IOptionMonad{T}.ValueOrDefault"/> property.
 					/// </summary>
 					internal global::IOptionMonadCreateExpectations<T>.SetupsExpectations.ValueOrDefaultPropertyExpectations ValueOrDefault => new(this.parent);
 					
@@ -660,7 +660,7 @@ public static class RefStructGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IHaveOutRefStruct.Perform(global::System.ReadOnlySpan{global::System.Byte})"/>.
+					/// Sets an expectation for <see cref="global::IHaveOutRefStruct.Perform(out global::System.ReadOnlySpan{global::System.Byte})"/>.
 					/// </summary>
 					internal global::IHaveOutRefStructCreateExpectations.Adornments.PerformAdornmentsB1A87DFC Perform(global::Rocks.RefStructArgument<global::System.ReadOnlySpan<byte>> @buffer)
 					{
@@ -1597,7 +1597,7 @@ public static class RefStructGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ScopedParameter.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::ScopedParameterCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -1615,7 +1615,7 @@ public static class RefStructGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ScopedParameter.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::ScopedParameterCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -1626,7 +1626,7 @@ public static class RefStructGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ScopedParameter.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::ScopedParameterCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -1673,7 +1673,7 @@ public static class RefStructGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ScopedParameter.DoWorkWithInt(global::System.Int32)"/>.
+					/// Sets an expectation for <see cref="global::ScopedParameter.DoWorkWithInt(ref global::System.Int32)"/>.
 					/// </summary>
 					internal global::ScopedParameterCreateExpectations.Adornments.DoWorkWithIntAdornmentsF1C2B998 DoWorkWithInt(global::Rocks.Argument<int> @data)
 					{
@@ -2955,7 +2955,7 @@ public static class RefStructGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::IHaveRefStruct" property./>.
+					/// Contains expectation setups for the <see cref="global::IHaveRefStruct.Data"/> property.
 					/// </summary>
 					internal global::IHaveRefStructCreateExpectations.SetupsExpectations.DataPropertyExpectations Data => new(this.parent);
 					

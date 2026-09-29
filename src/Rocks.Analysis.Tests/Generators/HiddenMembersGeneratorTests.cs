@@ -64,7 +64,7 @@ public static class HiddenMembersGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IServiceDerived.TryGet{T}(T)"/>.
+					/// Sets an expectation for <see cref="global::IServiceDerived.TryGet{T}(out T)"/>.
 					/// </summary>
 					internal global::IServiceDerivedCreateExpectations.Adornments.TryGetAdornmentsD09AE2DC<T> TryGet<T>(global::Rocks.Argument<T> @value) where T : global::IOutDerived
 					{
@@ -88,7 +88,7 @@ public static class HiddenMembersGeneratorTests
 							this.parent = parent;
 					
 						/// <summary>
-						/// Sets an expectation for <see cref="global::IServiceBase.TryGet{T}(T)"/>.
+						/// Sets an expectation for <see cref="global::IServiceBase.TryGet{T}(out T)"/>.
 						/// </summary>
 						internal global::IServiceDerivedCreateExpectations.Adornments.TryGetAdornments37F5A952<T> TryGet<T>(global::Rocks.Argument<T> @value) where T : global::IOutBase
 						{
@@ -440,7 +440,7 @@ public static class HiddenMembersGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.NewCopy.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.NewCopyCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -458,7 +458,7 @@ public static class HiddenMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.NewCopy.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::MockTests.NewCopyCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -469,7 +469,7 @@ public static class HiddenMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.NewCopy.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::MockTests.NewCopyCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -480,7 +480,7 @@ public static class HiddenMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.NewCopy.Ok()"/>.
+					/// Sets an expectation for <see cref="global::MockTests.BaseCopy.Ok()"/>.
 					/// </summary>
 					internal global::MockTests.NewCopyCreateExpectations.Adornments.OkAdornments2D2816FE Ok()
 					{
@@ -849,7 +849,7 @@ public static class HiddenMembersGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::SubClass.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::SubClassCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -867,7 +867,7 @@ public static class HiddenMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::SubClass.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::SubClassCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -878,7 +878,7 @@ public static class HiddenMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::SubClass.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::SubClassCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -935,7 +935,7 @@ public static class HiddenMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::SubClass" property./>.
+					/// Contains expectation setups for the <see cref="global::SubClass.Data"/> property.
 					/// </summary>
 					internal global::SubClassCreateExpectations.SetupsExpectations.DataPropertyExpectations Data => new(this.parent);
 					
@@ -1544,7 +1544,7 @@ public static class HiddenMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::ISub" property./>.
+					/// Contains expectation setups for the <see cref="global::ISub.Data"/> property.
 					/// </summary>
 					internal global::ISubCreateExpectations.SetupsExpectations.DataPropertyExpectations Data => new(this.parent);
 					
@@ -1643,7 +1643,7 @@ public static class HiddenMembersGeneratorTests
 						}
 						
 						/// <summary>
-						/// Contains expectation setups for the <see cref="global::IBase" property./>.
+						/// Contains expectation setups for the <see cref="global::IBase.Data"/> property.
 						/// </summary>
 						internal global::ISubCreateExpectations.SetupsExpectations.ExplicitForIBaseExpectations.DataPropertyExpectations Data => new(this.parent);
 						

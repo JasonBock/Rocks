@@ -725,7 +725,7 @@ public static class ProjectionPointerGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::MockTests.IHavePointers" property./>.
+					/// Contains expectation setups for the <see cref="global::MockTests.IHavePointers.Data"/> property.
 					/// </summary>
 					internal global::MockTests.IHavePointersCreateExpectations.SetupsExpectations.DataPropertyExpectations Data => new(this.parent);
 					

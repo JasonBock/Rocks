@@ -116,7 +116,7 @@ public static class OpenGenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::IRequest{TResponse, TResponse2, TResponse3}" property./>.
+					/// Contains expectation setups for the <see cref="global::IRequest{TResponse, TResponse2, TResponse3}.Settings"/> property.
 					/// </summary>
 					internal global::IRequestCreateExpectations<TResponse, TResponse2, TResponse3>.SetupsExpectations.SettingsPropertyExpectations Settings => new(this.parent);
 					
@@ -147,7 +147,7 @@ public static class OpenGenericsGeneratorTests
 						}
 						
 						/// <summary>
-						/// Contains expectation setups for the <see cref="global::IRequest{TResponse, TResponse2}" property./>.
+						/// Contains expectation setups for the <see cref="global::IRequest{TResponse, TResponse2}.Settings"/> property.
 						/// </summary>
 						internal global::IRequestCreateExpectations<TResponse, TResponse2, TResponse3>.SetupsExpectations.ExplicitForIRequest0Expectations.SettingsPropertyExpectations Settings => new(this.parent);
 						
@@ -182,7 +182,7 @@ public static class OpenGenericsGeneratorTests
 						}
 						
 						/// <summary>
-						/// Contains expectation setups for the <see cref="global::IRequest{TResponse}" property./>.
+						/// Contains expectation setups for the <see cref="global::IRequest{TResponse}.Settings"/> property.
 						/// </summary>
 						internal global::IRequestCreateExpectations<TResponse, TResponse2, TResponse3>.SetupsExpectations.ExplicitForIRequest1Expectations.SettingsPropertyExpectations Settings => new(this.parent);
 						
@@ -522,7 +522,7 @@ public static class OpenGenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IConsumerContext{T}.TryGetPayload{T1}(T)"/>.
+					/// Sets an expectation for <see cref="global::IPipeContext.TryGetPayload{T1}(out T)"/>.
 					/// </summary>
 					internal global::IConsumerContextCreateExpectations<T>.Adornments.TryGetPayloadAdornmentsE4DAC2A9<T1> TryGetPayload<T1>(global::Rocks.Argument<T1?> @payload) where T1 : class
 					{
@@ -1413,7 +1413,7 @@ public static class OpenGenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::IService{T, TReturn}" property./>.
+					/// Contains expectation setups for the <see cref="global::IService{T, TReturn}.Data"/> property.
 					/// </summary>
 					internal global::IServiceCreateExpectations<T, TReturn>.SetupsExpectations.DataPropertyExpectations Data => new(this.parent);
 					
@@ -2131,7 +2131,7 @@ public static class OpenGenericsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IHasTypeConverterOptions{TClass, TMember}.Map{TMember1}(global::System.Linq.Expressions.Expression&lt;global::System.Func&lt;TClass,TMember&gt;&gt;,global::System.Boolean)"/>.
+					/// Sets an expectation for <see cref="global::IHasMap{TClass}.Map{TMember1}(global::System.Linq.Expressions.Expression&lt;global::System.Func&lt;TClass,TMember&gt;&gt;,global::System.Boolean)"/>.
 					/// </summary>
 					internal global::IHasTypeConverterOptionsCreateExpectations<TClass, TMember>.Adornments.MapAdornments447589F3<TMember1> Map<TMember1>(global::Rocks.Argument<global::System.Linq.Expressions.Expression<global::System.Func<TClass, TMember1>>> @expression, global::Rocks.Argument<bool> @useExistingMap)
 					{
@@ -2151,7 +2151,7 @@ public static class OpenGenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IHasTypeConverterOptions{TClass, TMember}.Map{TMember1}(global::System.Linq.Expressions.Expression&lt;global::System.Func&lt;TClass,TMember&gt;&gt;,global::System.Boolean)"/>.
+					/// Sets an expectation for <see cref="global::IHasMap{TClass}.Map{TMember1}(global::System.Linq.Expressions.Expression&lt;global::System.Func&lt;TClass,TMember&gt;&gt;,global::System.Boolean)"/>.
 					/// </summary>
 					internal global::IHasTypeConverterOptionsCreateExpectations<TClass, TMember>.Adornments.MapAdornments447589F3<TMember1> Map<TMember1>(global::Rocks.Argument<global::System.Linq.Expressions.Expression<global::System.Func<TClass, TMember1>>> @expression, bool @useExistingMap = true) =>
 						this.Map<TMember1>(@expression, global::Rocks.Arg.Is(@useExistingMap));
@@ -2417,7 +2417,7 @@ public static class OpenGenericsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IExceptionConsumeContext{T}.SetCompleted()"/>.
+					/// Sets an expectation for <see cref="global::IConsumeContext{TStory}.SetCompleted()"/>.
 					/// </summary>
 					internal global::IExceptionConsumeContextCreateExpectations<T>.Adornments.SetCompletedAdornments2D2816FE SetCompleted()
 					{
@@ -2428,7 +2428,7 @@ public static class OpenGenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IExceptionConsumeContext{T}.RespondAsync{T1}(T)"/>.
+					/// Sets an expectation for <see cref="global::IContext.RespondAsync{T1}(T)"/>.
 					/// </summary>
 					internal global::IExceptionConsumeContextCreateExpectations<T>.Adornments.RespondAsyncAdornmentsCDCAB7EA<T1> RespondAsync<T1>(global::Rocks.Argument<T1> @message)
 					{
@@ -2464,7 +2464,7 @@ public static class OpenGenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::IExceptionConsumeContext{T}" property./>.
+					/// Contains expectation setups for the <see cref="global::IExceptionConsumeContext{T}.Exception"/> property.
 					/// </summary>
 					internal global::IExceptionConsumeContextCreateExpectations<T>.SetupsExpectations.ExceptionPropertyExpectations Exception => new(this.parent);
 					
@@ -2817,7 +2817,7 @@ public static class OpenGenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IService{T}.Obtain{T1}(T)"/>.
+					/// Sets an expectation for <see cref="global::IValues.Obtain{T1}(T)"/>.
 					/// </summary>
 					internal global::IServiceCreateExpectations<T>.Adornments.ObtainAdornments6EB9D00E<T1> Obtain<T1>(global::Rocks.Argument<T1> @key) where T1 : class
 					{
@@ -3662,7 +3662,7 @@ public static class OpenGenericsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IReaderWriter{TCollection, TConcreteCollection, TElement}.FromJsonTyped(global::Manager,global::System.Object)"/>.
+					/// Sets an expectation for <see cref="global::IReaderWriter{TCollection, TConcreteCollection, TElement}.FromJsonTyped(ref global::Manager,global::System.Object)"/>.
 					/// </summary>
 					internal global::IReaderWriterCreateExpectations<TCollection, TConcreteCollection, TElement>.Adornments.FromJsonTypedAdornmentsA4AE0077 FromJsonTyped(global::Rocks.Argument<global::Manager> @manager, global::Rocks.Argument<object?> @existingObject)
 					{
@@ -3682,7 +3682,7 @@ public static class OpenGenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IReaderWriter{TCollection, TConcreteCollection, TElement}.FromJsonTyped(global::Manager,global::System.Object)"/>.
+					/// Sets an expectation for <see cref="global::IReaderWriter{TCollection, TConcreteCollection, TElement}.FromJsonTyped(ref global::Manager,global::System.Object)"/>.
 					/// </summary>
 					internal global::IReaderWriterCreateExpectations<TCollection, TConcreteCollection, TElement>.Adornments.FromJsonTypedAdornmentsA4AE0077 FromJsonTyped(global::Rocks.Argument<global::Manager> @manager, object? @existingObject = null) =>
 						this.FromJsonTyped(@manager, global::Rocks.Arg.Is(@existingObject));

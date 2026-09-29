@@ -64,7 +64,7 @@ public static class AsyncIteratorGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::AsyncEnumeration.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::AsyncEnumerationCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -82,7 +82,7 @@ public static class AsyncIteratorGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::AsyncEnumeration.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::AsyncEnumerationCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -93,7 +93,7 @@ public static class AsyncIteratorGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::AsyncEnumeration.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::AsyncEnumerationCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{

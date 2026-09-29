@@ -64,7 +64,7 @@ public static class InheritanceGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::BindableReactiveProperty{T}.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::BindableReactivePropertyCreateExpectations<T>.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -82,7 +82,7 @@ public static class InheritanceGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::BindableReactiveProperty{T}.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::BindableReactivePropertyCreateExpectations<T>.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -93,7 +93,7 @@ public static class InheritanceGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::BindableReactiveProperty{T}.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::BindableReactivePropertyCreateExpectations<T>.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -421,7 +421,7 @@ public static class InheritanceGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::BindableReactiveProperty{T}.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::BindableReactivePropertyCreateExpectations<T>.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -439,7 +439,7 @@ public static class InheritanceGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::BindableReactiveProperty{T}.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::BindableReactivePropertyCreateExpectations<T>.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -450,7 +450,7 @@ public static class InheritanceGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::BindableReactiveProperty{T}.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::BindableReactivePropertyCreateExpectations<T>.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -782,7 +782,7 @@ public static class InheritanceGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.JsBinaryOperator.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.JsBinaryOperatorCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -800,7 +800,7 @@ public static class InheritanceGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.JsBinaryOperator.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::MockTests.JsBinaryOperatorCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -811,7 +811,7 @@ public static class InheritanceGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.JsBinaryOperator.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::MockTests.JsBinaryOperatorCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -822,7 +822,7 @@ public static class InheritanceGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.JsBinaryOperator.Evaluate(global::MockTests.ScriptScopeContext)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.JsOperator.Evaluate(global::MockTests.ScriptScopeContext)"/>.
 					/// </summary>
 					internal global::MockTests.JsBinaryOperatorCreateExpectations.Adornments.EvaluateAdornments8E02E0FA Evaluate(global::Rocks.Argument<global::MockTests.ScriptScopeContext> @scope)
 					{
