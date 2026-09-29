@@ -37,7 +37,7 @@ internal sealed class MockableMethodDiscovery
 		Compilation compilation)
 	{
 		var methods = new List<MockableMethodResult>();
-		var inaccessibleAbstractMembers = false;
+		var inaccessibleAbstractMembers = new List<IMethodSymbol>();
 
 		var hierarchy = mockType.GetInheritanceHierarchy();
 
@@ -79,7 +79,7 @@ internal sealed class MockableMethodDiscovery
 						{
 							if (!canBeSeen && hierarchyMethod.IsAbstract)
 							{
-								inaccessibleAbstractMembers = true;
+								inaccessibleAbstractMembers.Add(hierarchyMethod);
 							}
 							else if (canBeSeen)
 							{
@@ -88,7 +88,7 @@ internal sealed class MockableMethodDiscovery
 									methods.Add(new(hierarchyMethod, mockType, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes,
 										objectMethods.Any(_ => hierarchyMethod.Name == _.Name && hierarchyMethod.Parameters.Length == 0) ?
 											RequiresHiding.Yes : RequiresHiding.No, memberIdentifier));
-
+			
 									if (hierarchyMethod.ContainingType.TypeKind == TypeKind.Interface && hierarchyMethod.IsVirtual)
 									{
 										shims.Add(hierarchyMethod.ContainingType);
@@ -96,6 +96,10 @@ internal sealed class MockableMethodDiscovery
 
 									memberIdentifier++;
 								}
+							}
+							else if (hierarchyMethod.IsOverride && hierarchyMethod.OverriddenMethod is not null)
+							{
+								inaccessibleAbstractMembers.Remove(hierarchyMethod.OverriddenMethod);
 							}
 						}
 						else
@@ -120,7 +124,7 @@ internal sealed class MockableMethodDiscovery
 			}
 		}
 
-		return new MockableMethods([.. methods], inaccessibleAbstractMembers, false);
+		return new MockableMethods([.. methods], inaccessibleAbstractMembers.Count > 0, false);
 	}
 
 	private static MockableMethods GetMethodsForInterface(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol,
