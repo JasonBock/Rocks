@@ -39,7 +39,7 @@ internal sealed class MockablePropertyDiscovery
 		}
 
 		var properties = new List<MockablePropertyResult>();
-		var inaccessibleAbstractMembers = false;
+		var inaccessibleAbstractMembers = new List<IPropertySymbol>();
 
 		var hierarchy = mockType.GetInheritanceHierarchy();
 
@@ -72,7 +72,7 @@ internal sealed class MockablePropertyDiscovery
 				{
 					if (!canBeSeen && hierarchyProperty.IsAbstract)
 					{
-						inaccessibleAbstractMembers = true;
+						inaccessibleAbstractMembers.Add(hierarchyProperty);
 					}
 					else if (canBeSeen)
 					{
@@ -96,11 +96,15 @@ internal sealed class MockablePropertyDiscovery
 							}
 						}
 					}
+					else if (hierarchyProperty.IsOverride && hierarchyProperty.OverriddenProperty is not null)
+					{
+						inaccessibleAbstractMembers.Remove(hierarchyProperty.OverriddenProperty);
+					}
 				}
 			}
 		}
 
-		return new([.. properties], inaccessibleAbstractMembers, false);
+		return new([.. properties], inaccessibleAbstractMembers.Count > 0, false);
 	}
 
 	private static MockableProperties GetPropertiesForInterface(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol,

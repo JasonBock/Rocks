@@ -2,6 +2,7 @@
 //#define INCLUDE_FAILING
 
 using DotNet.Testcontainers.Containers;
+using Grpc.Core;
 using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 using R3;
@@ -92,7 +93,7 @@ static void TestWithType()
 #pragma warning disable EF9100 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 #pragma warning disable CS0618 // Type or member is obsolete
 	(var issues, var times) = TestGenerator.Generate(new RockGenerator(),
-		[typeof(Pidgin.Expected<>)],
+		[typeof(TestClientBase)],
 		typesToLoadAssembliesFrom,
 		[],
 		Rocks.Analysis.BuildType.Create,
@@ -537,5 +538,30 @@ static void PrintIssues(ImmutableArray<Issue> issues)
 		}
 
 		Console.ForegroundColor = currentColor;
+	}
+}
+
+namespace Grpc.Core
+{
+	public class TestClientBase
+		: ClientBase<TestClientBase>
+	{
+		public TestClientBase()
+		{
+		}
+
+		private TestClientBase(ClientBaseConfiguration configuration) : base(configuration)
+		{
+		}
+
+		public TestClientBase(ChannelBase channel) : base(channel)
+		{
+		}
+
+		public TestClientBase(CallInvoker callInvoker) : base(callInvoker)
+		{
+		}
+
+		protected override sealed TestClientBase NewInstance(ClientBaseConfiguration configuration) => new(configuration);
 	}
 }

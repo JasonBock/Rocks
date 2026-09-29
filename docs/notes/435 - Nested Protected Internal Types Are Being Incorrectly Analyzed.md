@@ -44,11 +44,13 @@ public class TestClientBase
 and that **should** get rid of the member so it allows the user to still mock other members on the type. Maybe a future enhancement could be to generate the intermediary type that takes the inaccessible members, create a type between the target type and the mock type that does the "override sealed" gymnastics for you, so you don't have to do this - it'll be transparent.
 
 This needs to be done on:
-* `MockableMethodDiscovery`
-* `MockablePropertyDiscovery`
-* `MockableEventDiscovery`
+* DONE - `MockableMethodDiscovery`
+* DONE - `MockablePropertyDiscovery`
+* IGNORED (see TODO) - `MockableEventDiscovery`
 
 `MockableConstructorDiscovery` **shouldn't** matter because we only look at the constructors on the mock type. The user may need to add constructors to "mask" mock constructors so inaccessible types won't show up.
 
 TODO:
 * Write up a feature to potentially do this automatically for the user. That is, they say they want to mock `ClientBase<>`, we detect that there's overriden inaccessiable abstract members, so we create this intermediately type underneath the scenes, and that's what the mock type derives from. This can be problematic because we can't call the base member as it's `abstract`, and we don't know what the user will want to do in that case.
+* Write up a feature to handle events similar to properties and methods - that is, look through the hierachy and process `IEventSymbol` values the "same" way.
+* Write up a feature to see if I can list the specific members for diagnostics like `ROCK8` as that would be very nice for user experience. I really don't want to get into a case where it could be a large number of inaccessible members, but not knowing what any of them are makes it hard to diagnose and troubleshoot.
