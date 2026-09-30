@@ -55,7 +55,6 @@ internal static class ExpectationExceptionBuilder
 				for (var i = 0; i < method.TypeParameters.Length; i++)
 				{
 					var typeParameter = method.TypeParameters[i];
-					var typeArgument = method.TypeArguments[i];
 					writer.WriteLine($$"""{{typeParameter.Name}}: {typeof(@{{typeParameter.FullyQualifiedName}}).FullName}""");
 				}
 
