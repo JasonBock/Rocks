@@ -64,7 +64,7 @@ public static class NullabilityGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ConnectionBuilder{TSourceType}.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::ConnectionBuilderCreateExpectations<TSourceType>.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -82,7 +82,7 @@ public static class NullabilityGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ConnectionBuilder{TSourceType}.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::ConnectionBuilderCreateExpectations<TSourceType>.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -93,7 +93,7 @@ public static class NullabilityGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ConnectionBuilder{TSourceType}.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::ConnectionBuilderCreateExpectations<TSourceType>.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -514,7 +514,7 @@ public static class NullabilityGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::SubTracer.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::SubTracerCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -532,7 +532,7 @@ public static class NullabilityGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::SubTracer.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::SubTracerCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -543,7 +543,7 @@ public static class NullabilityGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::SubTracer.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::SubTracerCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -1017,7 +1017,7 @@ public static class NullabilityGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::IConventionSkipNavigation" property./>.
+					/// Contains expectation setups for the <see cref="global::IConventionSkipNavigation.Inverse"/> property.
 					/// </summary>
 					internal global::IConventionSkipNavigationCreateExpectations.SetupsExpectations.InversePropertyExpectations Inverse => new(this.parent);
 					
@@ -1048,7 +1048,7 @@ public static class NullabilityGeneratorTests
 						}
 						
 						/// <summary>
-						/// Contains expectation setups for the <see cref="global::IReadOnlySkipNavigation" property./>.
+						/// Contains expectation setups for the <see cref="global::IReadOnlySkipNavigation.Inverse"/> property.
 						/// </summary>
 						internal global::IConventionSkipNavigationCreateExpectations.SetupsExpectations.ExplicitForIReadOnlySkipNavigationExpectations.InversePropertyExpectations Inverse => new(this.parent);
 						
@@ -1083,7 +1083,7 @@ public static class NullabilityGeneratorTests
 						}
 						
 						/// <summary>
-						/// Contains expectation setups for the <see cref="global::IReadOnlyNavigationBase" property./>.
+						/// Contains expectation setups for the <see cref="global::IReadOnlyNavigationBase.Inverse"/> property.
 						/// </summary>
 						internal global::IConventionSkipNavigationCreateExpectations.SetupsExpectations.ExplicitForIReadOnlyNavigationBaseExpectations.InversePropertyExpectations Inverse => new(this.parent);
 						

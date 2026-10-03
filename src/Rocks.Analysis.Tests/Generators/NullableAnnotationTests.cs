@@ -84,7 +84,7 @@ public static class NullableAnnotationTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IUseTaskDefault{T}.RequestAsync{T1}(global::System.Guid,global::System.Object,global::System.Threading.CancellationToken)"/>.
+					/// Sets an expectation for <see cref="global::ITaskDefault.RequestAsync{T1}(global::System.Guid,global::System.Object,global::System.Threading.CancellationToken)"/>.
 					/// </summary>
 					internal global::IUseTaskDefaultCreateExpectations<T>.Adornments.RequestAsyncAdornmentsEFC37FDE<T1> RequestAsync<T1>(global::Rocks.Argument<global::System.Guid> @target, global::Rocks.Argument<object> @message, global::Rocks.Argument<global::System.Threading.CancellationToken> @cancellationToken)
 					{
@@ -414,7 +414,7 @@ public static class NullableAnnotationTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::NeedNullable.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::NeedNullableCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -432,7 +432,7 @@ public static class NullableAnnotationTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::NeedNullable.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::NeedNullableCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -443,7 +443,7 @@ public static class NullableAnnotationTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::NeedNullable.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::NeedNullableCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -759,7 +759,7 @@ public static class NullableAnnotationTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::NeedNullable.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::NeedNullableCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -777,7 +777,7 @@ public static class NullableAnnotationTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::NeedNullable.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::NeedNullableCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -788,7 +788,7 @@ public static class NullableAnnotationTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::NeedNullable.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::NeedNullableCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{

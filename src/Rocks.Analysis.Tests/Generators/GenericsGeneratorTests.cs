@@ -66,7 +66,7 @@ public static class GenericsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::HistoricalScheduler.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::HistoricalSchedulerCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -84,7 +84,7 @@ public static class GenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::HistoricalScheduler.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::HistoricalSchedulerCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -95,7 +95,7 @@ public static class GenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::HistoricalScheduler.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::HistoricalSchedulerCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -505,7 +505,7 @@ public static class GenericsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::CustomSerializer.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::CustomSerializerCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -523,7 +523,7 @@ public static class GenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::CustomSerializer.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::CustomSerializerCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -534,7 +534,7 @@ public static class GenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::CustomSerializer.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::CustomSerializerCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -986,7 +986,7 @@ public static class GenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ISourceUpdater{TObject, TKey}.Refresh(global::System.Collections.Generic.IEnumerable{TKey})"/>.
+					/// Sets an expectation for <see cref="global::ICacheUpdater{TObject, TKey}.Refresh(global::System.Collections.Generic.IEnumerable{TKey})"/>.
 					/// </summary>
 					internal global::ISourceUpdaterCreateExpectations<TObject, TKey>.Adornments.RefreshAdornmentsF112E418 Refresh(global::Rocks.Argument<global::System.Collections.Generic.IEnumerable<TKey>> @keys)
 					{
@@ -2306,7 +2306,7 @@ public static class GenericsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::M{A}.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MCreateExpectations<A>.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -2324,7 +2324,7 @@ public static class GenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::M{A}.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::MCreateExpectations<A>.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -2335,7 +2335,7 @@ public static class GenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::M{A}.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::MCreateExpectations<A>.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -2734,7 +2734,7 @@ public static class GenericsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::GenericContainer.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::GenericContainerCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -2752,7 +2752,7 @@ public static class GenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::GenericContainer.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::GenericContainerCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -2763,7 +2763,7 @@ public static class GenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::GenericContainer.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::GenericContainerCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -3223,7 +3223,7 @@ public static class GenericsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::Criterion{T}.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::CriterionCreateExpectations<T>.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -3578,7 +3578,7 @@ public static class GenericsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::GeometryValueComparer{TGeometry}.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::GeometryValueComparerCreateExpectations<TGeometry>.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -3596,7 +3596,7 @@ public static class GenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::GeometryValueComparer{TGeometry}.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::GeometryValueComparerCreateExpectations<TGeometry>.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -3607,7 +3607,7 @@ public static class GenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::GeometryValueComparer{TGeometry}.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::GeometryValueComparerCreateExpectations<TGeometry>.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -3618,7 +3618,7 @@ public static class GenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::GeometryValueComparer{TGeometry}.Snapshot(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="global::ValueComparer{T}.Snapshot(global::System.Object)"/>.
 					/// </summary>
 					internal global::GeometryValueComparerCreateExpectations<TGeometry>.Adornments.SnapshotAdornmentsE60CFEEA Snapshot(global::Rocks.Argument<object?> @instance)
 					{
@@ -3636,7 +3636,7 @@ public static class GenericsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::GeometryValueComparer{TGeometry}.Snapshot(TGeometry)"/>.
+					/// Sets an expectation for <see cref="global::ValueComparer{T}.Snapshot(T)"/>.
 					/// </summary>
 					internal global::GeometryValueComparerCreateExpectations<TGeometry>.Adornments.SnapshotAdornmentsD7B98BB6 Snapshot(global::Rocks.Argument<TGeometry> @instance)
 					{

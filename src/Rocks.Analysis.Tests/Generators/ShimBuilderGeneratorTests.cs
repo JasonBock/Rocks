@@ -376,7 +376,7 @@ public static class ShimBuilderGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::IMutableComplexType" property./>.
+					/// Contains expectation setups for the <see cref="global::IMutableComplexType.BaseType"/> property.
 					/// </summary>
 					internal global::IMutableComplexTypeCreateExpectations.SetupsExpectations.BaseTypePropertyExpectations BaseType => new(this.parent);
 					
@@ -424,7 +424,7 @@ public static class ShimBuilderGeneratorTests
 						}
 						
 						/// <summary>
-						/// Contains expectation setups for the <see cref="global::IMutableTypeBase" property./>.
+						/// Contains expectation setups for the <see cref="global::IMutableTypeBase.BaseType"/> property.
 						/// </summary>
 						internal global::IMutableComplexTypeCreateExpectations.SetupsExpectations.ExplicitForIMutableTypeBaseExpectations.BaseTypePropertyExpectations BaseType => new(this.parent);
 						
@@ -863,7 +863,7 @@ public static class ShimBuilderGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::IBufferedChannel" property./>.
+					/// Contains expectation setups for the <see cref="global::IBufferedChannel.MaxBufferSize"/> property.
 					/// </summary>
 					internal global::IBufferedChannelCreateExpectations.SetupsExpectations.MaxBufferSizePropertyExpectations MaxBufferSize => new(this.parent);
 					
@@ -1253,7 +1253,7 @@ public static class ShimBuilderGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IAuditTrail{T}.Work()"/>.
+					/// Sets an expectation for <see cref="global::IAuditTrail.Work()"/>.
 					/// </summary>
 					internal global::IAuditTrailCreateExpectations<T>.Adornments.WorkAdornments2D2816FE Work()
 					{
@@ -1837,7 +1837,7 @@ public static class ShimBuilderGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IRuntimeKey.GetKeyType()"/>.
+					/// Sets an expectation for <see cref="global::IKey.GetKeyType()"/>.
 					/// </summary>
 					internal global::IRuntimeKeyCreateExpectations.Adornments.GetKeyTypeAdornments2D2816FE GetKeyType()
 					{
@@ -1848,7 +1848,7 @@ public static class ShimBuilderGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IRuntimeKey.IsPrimaryKey()"/>.
+					/// Sets an expectation for <see cref="global::IReadOnlyKey.IsPrimaryKey()"/>.
 					/// </summary>
 					internal global::IRuntimeKeyCreateExpectations.Adornments.IsPrimaryKeyAdornments2D2816FE IsPrimaryKey()
 					{
@@ -1877,7 +1877,7 @@ public static class ShimBuilderGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::IRuntimeKey" property./>.
+					/// Contains expectation setups for the <see cref="global::IKey.Properties"/> property.
 					/// </summary>
 					internal global::IRuntimeKeyCreateExpectations.SetupsExpectations.PropertiesPropertyExpectations Properties => new(this.parent);
 					
@@ -1908,7 +1908,7 @@ public static class ShimBuilderGeneratorTests
 						}
 						
 						/// <summary>
-						/// Contains expectation setups for the <see cref="global::IReadOnlyKey" property./>.
+						/// Contains expectation setups for the <see cref="global::IReadOnlyKey.Properties"/> property.
 						/// </summary>
 						internal global::IRuntimeKeyCreateExpectations.SetupsExpectations.ExplicitForIReadOnlyKeyExpectations.PropertiesPropertyExpectations Properties => new(this.parent);
 						
@@ -2307,7 +2307,7 @@ public static class ShimBuilderGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IHaveDims.IAmNotADim()"/>.
+					/// Sets an expectation for <see cref="global::IDoNotHaveDims.IAmNotADim()"/>.
 					/// </summary>
 					internal global::IHaveDimsCreateExpectations.Adornments.IAmNotADimAdornments2D2816FE IAmNotADim()
 					{
@@ -2336,7 +2336,7 @@ public static class ShimBuilderGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::IHaveDims" property./>.
+					/// Contains expectation setups for the <see cref="global::IHaveDims.AmADim"/> property.
 					/// </summary>
 					internal global::IHaveDimsCreateExpectations.SetupsExpectations.AmADimPropertyExpectations AmADim => new(this.parent);
 					
@@ -2360,7 +2360,7 @@ public static class ShimBuilderGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::IHaveDims" property./>.
+					/// Contains expectation setups for the <see cref="global::IDoNotHaveDims.NotDim"/> property.
 					/// </summary>
 					internal global::IHaveDimsCreateExpectations.SetupsExpectations.NotDimPropertyExpectations NotDim => new(this.parent);
 					
@@ -2418,7 +2418,7 @@ public static class ShimBuilderGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::IHaveDims.this[global::System.String]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::IDoNotHaveDims.this[global::System.String]" /> property.
 						/// </summary>
 						internal global::IHaveDimsCreateExpectations.Adornments.thisGetsAdornments639810A5 Gets()
 						{
@@ -2437,7 +2437,7 @@ public static class ShimBuilderGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IHaveDims.this[global::System.String]"/>.
+					/// Sets an expectation for <see cref="global::IDoNotHaveDims.this[global::System.String]"/>.
 					/// </summary>
 					
 					internal global::IHaveDimsCreateExpectations.SetupsExpectations.Indexer1Expectations this[global::Rocks.Argument<string> @notDimKey] => new(this.parent, @notDimKey);

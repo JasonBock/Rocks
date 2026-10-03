@@ -132,7 +132,7 @@ public static class RecordGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::MockTests.RecordTest" property./>.
+					/// Contains expectation setups for the <see cref="global::MockTests.RecordTest.EqualityContract"/> property.
 					/// </summary>
 					internal global::MockTests.RecordTestCreateExpectations.SetupsExpectations.EqualityContractPropertyExpectations EqualityContract => new(this.parent);
 					

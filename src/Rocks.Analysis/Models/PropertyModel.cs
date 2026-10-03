@@ -15,6 +15,7 @@ internal sealed record PropertyModel
 			(modelContext.CreateTypeReference(property.Type), mockType, requiresExplicitInterfaceImplementation, requiresOverride, accessors, memberIdentifier);
 
 		this.ContainingType = modelContext.CreateTypeReference(property.ContainingType);
+		this.ContainingTypeDefinition = modelContext.CreateTypeReference(property.ContainingType.OriginalDefinition);
 		this.Name = property.Name;
 		this.IsVirtual = property.IsVirtual;
 		this.IsAbstract = property.IsAbstract;
@@ -78,6 +79,7 @@ internal sealed record PropertyModel
 	internal string AllAttributesDescription { get; }
 	internal string AttributesDescription { get; }
 	internal ITypeReferenceModel ContainingType { get; }
+	internal ITypeReferenceModel ContainingTypeDefinition { get; }
 	internal bool GetCanBeSeenByContainingAssembly { get; }
 	internal MethodModel? GetMethod { get; }
 	internal bool InitCanBeSeenByContainingAssembly { get; }

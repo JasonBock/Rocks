@@ -62,7 +62,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.VoidMethodWithParams.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.VoidMethodWithParamsCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -80,7 +80,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.VoidMethodWithParams.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::MockTests.VoidMethodWithParamsCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -91,7 +91,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.VoidMethodWithParams.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::MockTests.VoidMethodWithParamsCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -497,7 +497,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.ValueMethodWithParams.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.ValueMethodWithParamsCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -515,7 +515,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.ValueMethodWithParams.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::MockTests.ValueMethodWithParamsCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -526,7 +526,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.ValueMethodWithParams.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::MockTests.ValueMethodWithParamsCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -1401,7 +1401,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.HaveImplementation.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.HaveImplementationCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -1419,7 +1419,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.HaveImplementation.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::MockTests.HaveImplementationCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -1430,7 +1430,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.HaveImplementation.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::MockTests.HaveImplementationCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -1799,7 +1799,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.HaveImplementation.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.HaveImplementationCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -1817,7 +1817,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.HaveImplementation.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::MockTests.HaveImplementationCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -1828,7 +1828,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.HaveImplementation.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::MockTests.HaveImplementationCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{

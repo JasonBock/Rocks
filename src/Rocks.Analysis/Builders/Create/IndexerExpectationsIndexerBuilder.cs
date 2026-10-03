@@ -67,10 +67,10 @@ internal static class IndexerExpectationsIndexerBuilder
 			{
 				var handlerContext = new VariablesNamingContext(property.Parameters);
 
-				var indexerParameterTypes = string.Join(",", property.Parameters.Select(parameter => parameter.Type.XmlCommentName));
+				var indexerParameterTypes = string.Join(",", property.Parameters.Select(parameter => parameter.XmlCommentName));
 				var commentTarget =
 					$"""
-					{(property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? mockType.Type.FullyQualifiedName : property.ContainingType.FullyQualifiedName)}.this[{indexerParameterTypes}]
+					{property.ContainingTypeDefinition.FullyQualifiedName}.this[{indexerParameterTypes}]
 					""".TransformForXmlComment();
 				writer.WriteLines(
 					$$"""
@@ -177,10 +177,10 @@ internal static class IndexerExpectationsIndexerBuilder
 			{
 				var handlerContext = new VariablesNamingContext(property.Parameters);
 
-				var indexerParameterTypes = string.Join(",", property.Parameters.Select(parameter => parameter.Type.XmlCommentName));
+				var indexerParameterTypes = string.Join(",", property.Parameters.Select(parameter => parameter.XmlCommentName));
 				var commentTarget =
 					$"""
-					{(property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? mockType.Type.FullyQualifiedName : property.ContainingType.FullyQualifiedName)}.this[{indexerParameterTypes}]
+					{property.ContainingTypeDefinition.FullyQualifiedName}.this[{indexerParameterTypes}]
 					""".TransformForXmlComment();
 				var propertyTargetComment =
 					property.Accessors == PropertyAccessor.Set || property.Accessors == PropertyAccessor.GetAndSet ?

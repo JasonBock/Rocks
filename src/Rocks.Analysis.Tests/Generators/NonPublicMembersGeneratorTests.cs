@@ -84,7 +84,7 @@ public static class NonPublicMembersGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::VisibilityIssues.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::VisibilityIssuesCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -102,7 +102,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::VisibilityIssues.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::VisibilityIssuesCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -113,7 +113,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::VisibilityIssues.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::VisibilityIssuesCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -159,7 +159,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::VisibilityIssues" property./>.
+					/// Contains expectation setups for the <see cref="global::VisibilityIssues.OwnsHandle"/> property.
 					/// </summary>
 					internal global::VisibilityIssuesCreateExpectations.SetupsExpectations.OwnsHandlePropertyExpectations OwnsHandle => new(this.parent);
 					
@@ -665,7 +665,7 @@ public static class NonPublicMembersGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::VisibilityIssues.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::VisibilityIssuesCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -676,7 +676,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::VisibilityIssues.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::VisibilityIssuesCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -694,7 +694,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::VisibilityIssues.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::VisibilityIssuesCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -740,7 +740,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::VisibilityIssues" property./>.
+					/// Contains expectation setups for the <see cref="global::VisibilityIssues.OwnsHandle"/> property.
 					/// </summary>
 					internal global::VisibilityIssuesCreateExpectations.SetupsExpectations.OwnsHandlePropertyExpectations OwnsHandle => new(this.parent);
 					
@@ -1172,7 +1172,7 @@ public static class NonPublicMembersGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::HasInternalVirtual.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::HasInternalVirtualCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -1183,7 +1183,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::HasInternalVirtual.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::HasInternalVirtualCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -1201,7 +1201,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::HasInternalVirtual.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::HasInternalVirtualCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -1241,7 +1241,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::HasInternalVirtual" property./>.
+					/// Contains expectation setups for the <see cref="global::HasInternalVirtual.PublicVirtualProperty"/> property.
 					/// </summary>
 					internal global::HasInternalVirtualCreateExpectations.SetupsExpectations.PublicVirtualPropertyPropertyExpectations PublicVirtualProperty => new(this.parent);
 					
@@ -1768,7 +1768,7 @@ public static class NonPublicMembersGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Test.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.TestCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -1786,7 +1786,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Test.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::MockTests.TestCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -1797,7 +1797,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Test.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::MockTests.TestCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -1854,7 +1854,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::MockTests.Test" property./>.
+					/// Contains expectation setups for the <see cref="global::MockTests.Test.ProtectedProperty"/> property.
 					/// </summary>
 					internal global::MockTests.TestCreateExpectations.SetupsExpectations.ProtectedPropertyPropertyExpectations ProtectedProperty => new(this.parent);
 					
@@ -2340,7 +2340,7 @@ public static class NonPublicMembersGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Test.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.TestCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -2358,7 +2358,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Test.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::MockTests.TestCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -2369,7 +2369,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Test.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::MockTests.TestCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -2426,7 +2426,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::MockTests.Test" property./>.
+					/// Contains expectation setups for the <see cref="global::MockTests.Test.ProtectedProperty"/> property.
 					/// </summary>
 					internal global::MockTests.TestCreateExpectations.SetupsExpectations.ProtectedPropertyPropertyExpectations ProtectedProperty => new(this.parent);
 					
@@ -2923,7 +2923,7 @@ public static class NonPublicMembersGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Test.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.TestCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -2941,7 +2941,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Test.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::MockTests.TestCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -2952,7 +2952,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Test.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::MockTests.TestCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -3009,7 +3009,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::MockTests.Test" property./>.
+					/// Contains expectation setups for the <see cref="global::MockTests.Test.ProtectedProperty"/> property.
 					/// </summary>
 					internal global::MockTests.TestCreateExpectations.SetupsExpectations.ProtectedPropertyPropertyExpectations ProtectedProperty => new(this.parent);
 					

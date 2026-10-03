@@ -312,7 +312,7 @@ public static class NamingGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::Class1.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::Class1CreateExpectations2.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -323,7 +323,7 @@ public static class NamingGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::Class1.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::Class1CreateExpectations2.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -341,7 +341,7 @@ public static class NamingGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::Class1.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::Class1CreateExpectations2.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -611,7 +611,7 @@ public static class NamingGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::Class1.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::Class1CreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -622,7 +622,7 @@ public static class NamingGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::Class1.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::Class1CreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -640,7 +640,7 @@ public static class NamingGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::Class1.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::Class1CreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -900,7 +900,7 @@ public static class NamingGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::NewNameUsage.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::NewNameUsageCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -918,7 +918,7 @@ public static class NamingGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::NewNameUsage.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::NewNameUsageCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -929,7 +929,7 @@ public static class NamingGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::NewNameUsage.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::NewNameUsageCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -1534,7 +1534,7 @@ public static class NamingGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::IHandle" property./>.
+					/// Contains expectation setups for the <see cref="global::IHandle.Expectations"/> property.
 					/// </summary>
 					internal global::IHandleCreateExpectations.SetupsExpectations.ExpectationsPropertyExpectations Expectations => new(this.parent);
 					
@@ -2987,7 +2987,7 @@ public static class NamingGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::DbSet{TEntity}.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::DbSetCreateExpectations<TEntity>.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -3005,7 +3005,7 @@ public static class NamingGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::DbSet{TEntity}.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::DbSetCreateExpectations<TEntity>.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -3016,7 +3016,7 @@ public static class NamingGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::DbSet{TEntity}.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::DbSetCreateExpectations<TEntity>.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -3383,7 +3383,7 @@ public static class NamingGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IHaveDelegate.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::IHaveDelegateCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -3401,7 +3401,7 @@ public static class NamingGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IHaveDelegate.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::IHaveDelegateCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -3412,7 +3412,7 @@ public static class NamingGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IHaveDelegate.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::IHaveDelegateCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -4054,7 +4054,7 @@ public static class NamingGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::HaveNamingConflicts.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::HaveNamingConflictsCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -4072,7 +4072,7 @@ public static class NamingGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::HaveNamingConflicts.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::HaveNamingConflictsCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -4083,7 +4083,7 @@ public static class NamingGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::HaveNamingConflicts.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::HaveNamingConflictsCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -5020,7 +5020,7 @@ public static class NamingGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::HasRequiredProperty.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::HasRequiredPropertyCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -5038,7 +5038,7 @@ public static class NamingGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::HasRequiredProperty.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::HasRequiredPropertyCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -5049,7 +5049,7 @@ public static class NamingGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::HasRequiredProperty.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::HasRequiredPropertyCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -5720,7 +5720,7 @@ public static class NamingGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::IUseMethodInformation" property./>.
+					/// Contains expectation setups for the <see cref="global::IUseMethodInformation.Methods"/> property.
 					/// </summary>
 					internal global::IUseMethodInformationCreateExpectations.SetupsExpectations.MethodsPropertyExpectations Methods => new(this.parent);
 					
@@ -5960,7 +5960,7 @@ public static class NamingGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::IOperation" property./>.
+					/// Contains expectation setups for the <see cref="global::IOperation.Operations"/> property.
 					/// </summary>
 					internal global::IOperationCreateExpectations.SetupsExpectations.OperationsPropertyExpectations Operations => new(this.parent);
 					

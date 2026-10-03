@@ -55,7 +55,7 @@ public static class ParameterModifierTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParameterModifier.Modify(global::System.String)"/>.
+					/// Sets an expectation for <see cref="global::IParameterModifier.Modify(in global::System.String)"/>.
 					/// </summary>
 					internal global::IParameterModifierCreateExpectations.Adornments.ModifyAdornments639810A5 Modify(global::Rocks.Argument<string> @value)
 					{
@@ -307,7 +307,7 @@ public static class ParameterModifierTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParameterModifier.Modify(global::System.String)"/>.
+					/// Sets an expectation for <see cref="global::IParameterModifier.Modify(out global::System.String)"/>.
 					/// </summary>
 					internal global::IParameterModifierCreateExpectations.Adornments.ModifyAdornments030B0DC3 Modify(global::Rocks.Argument<string> @value)
 					{
@@ -561,7 +561,7 @@ public static class ParameterModifierTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParameterModifier.Modify(global::System.String)"/>.
+					/// Sets an expectation for <see cref="global::IParameterModifier.Modify(ref global::System.String)"/>.
 					/// </summary>
 					internal global::IParameterModifierCreateExpectations.Adornments.ModifyAdornmentsD893C6C0 Modify(global::Rocks.Argument<string> @value)
 					{
@@ -813,7 +813,7 @@ public static class ParameterModifierTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParameterModifier.Modify(global::System.String)"/>.
+					/// Sets an expectation for <see cref="global::IParameterModifier.Modify(ref readonly global::System.String)"/>.
 					/// </summary>
 					internal global::IParameterModifierCreateExpectations.Adornments.ModifyAdornments639810A5 Modify(global::Rocks.Argument<string> @value)
 					{
@@ -1067,7 +1067,7 @@ public static class ParameterModifierTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParameterModifier.RefArgument(global::System.Int32)"/>.
+					/// Sets an expectation for <see cref="global::IParameterModifier.RefArgument(ref global::System.Int32)"/>.
 					/// </summary>
 					internal global::IParameterModifierCreateExpectations.Adornments.RefArgumentAdornmentsF1C2B998 RefArgument(global::Rocks.Argument<int> @a)
 					{
@@ -1085,7 +1085,7 @@ public static class ParameterModifierTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParameterModifier.RefArgumentsWithGenerics{T1, T2}(T1,T2)"/>.
+					/// Sets an expectation for <see cref="global::IParameterModifier.RefArgumentsWithGenerics{T1, T2}(T1,ref T2)"/>.
 					/// </summary>
 					internal global::IParameterModifierCreateExpectations.Adornments.RefArgumentsWithGenericsAdornmentsE4617FC0<T1, T2> RefArgumentsWithGenerics<T1, T2>(global::Rocks.Argument<T1> @a, global::Rocks.Argument<T2> @b)
 					{
@@ -1105,7 +1105,7 @@ public static class ParameterModifierTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParameterModifier.OutArgument(global::System.Int32)"/>.
+					/// Sets an expectation for <see cref="global::IParameterModifier.OutArgument(out global::System.Int32)"/>.
 					/// </summary>
 					internal global::IParameterModifierCreateExpectations.Adornments.OutArgumentAdornmentsC7477EBD OutArgument(global::Rocks.Argument<int> @a)
 					{
@@ -1123,7 +1123,7 @@ public static class ParameterModifierTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IParameterModifier.OutArgumentsWithGenerics{T1, T2}(T1,T2)"/>.
+					/// Sets an expectation for <see cref="global::IParameterModifier.OutArgumentsWithGenerics{T1, T2}(T1,out T2)"/>.
 					/// </summary>
 					internal global::IParameterModifierCreateExpectations.Adornments.OutArgumentsWithGenericsAdornmentsB9EA34BD<T1, T2> OutArgumentsWithGenerics<T1, T2>(global::Rocks.Argument<T1> @a, global::Rocks.Argument<T2> @b)
 					{

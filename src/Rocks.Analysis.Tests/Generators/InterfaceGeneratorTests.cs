@@ -179,7 +179,7 @@ public static class InterfaceGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::IHaveStaticVirtuals" property./>.
+					/// Contains expectation setups for the <see cref="global::IHaveStaticVirtuals.InstancePush"/> property.
 					/// </summary>
 					internal global::IHaveStaticVirtualsCreateExpectations.SetupsExpectations.InstancePushPropertyExpectations InstancePush => new(this.parent);
 					
@@ -554,7 +554,7 @@ public static class InterfaceGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::ISealed" property./>.
+					/// Contains expectation setups for the <see cref="global::ISealed.NonSealedData"/> property.
 					/// </summary>
 					internal global::ISealedCreateExpectations.SetupsExpectations.NonSealedDataPropertyExpectations NonSealedData => new(this.parent);
 					

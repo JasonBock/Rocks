@@ -99,7 +99,7 @@ public static class AllowNullGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::MockTests.IAllow" property./>.
+					/// Contains expectation setups for the <see cref="global::MockTests.IAllow.NewLine"/> property.
 					/// </summary>
 					internal global::MockTests.IAllowCreateExpectations.SetupsExpectations.NewLinePropertyExpectations NewLine => new(this.parent);
 					
@@ -390,7 +390,7 @@ public static class AllowNullGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Allow.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.AllowCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -408,7 +408,7 @@ public static class AllowNullGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Allow.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::MockTests.AllowCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -419,7 +419,7 @@ public static class AllowNullGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Allow.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::MockTests.AllowCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -465,7 +465,7 @@ public static class AllowNullGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::MockTests.Allow" property./>.
+					/// Contains expectation setups for the <see cref="global::MockTests.Allow.NewLine"/> property.
 					/// </summary>
 					internal global::MockTests.AllowCreateExpectations.SetupsExpectations.NewLinePropertyExpectations NewLine => new(this.parent);
 					

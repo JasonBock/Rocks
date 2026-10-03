@@ -94,10 +94,10 @@ internal static class PropertyExpectationsBuilder
 
 			writer.Indent--;
 
-			var indexerParameterTypes = string.Join(",", property.Parameters.Select(parameter => parameter.Type.XmlCommentName));
+			var indexerParameterTypes = string.Join(",", property.Parameters.Select(parameter => parameter.XmlCommentName));
 			var commentTarget =
 				$"""
-				{(property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? mockType.Type.FullyQualifiedName : property.ContainingType.FullyQualifiedName)}.this[{indexerParameterTypes}]
+				{property.ContainingTypeDefinition.FullyQualifiedName}.this[{indexerParameterTypes}]
 				""".TransformForXmlComment();
 			writer.WriteLines(
 				$$"""
@@ -147,16 +147,14 @@ internal static class PropertyExpectationsBuilder
 
 			writer.Indent--;
 
-			var propertyComment = 
-				property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? 
-					mockType.Type.FullyQualifiedName.TransformForXmlComment() : 
-					property.ContainingType.FullyQualifiedName.TransformForXmlComment();
+			var propertyComment =
+				$"{property.ContainingTypeDefinition.FullyQualifiedName}.{property.Name}".TransformForXmlComment();
 			writer.WriteLines(
 				$$"""
 				}
 
 				/// <summary>
-				/// Contains expectation setups for the <see cref="{{propertyComment}}" property./>.
+				/// Contains expectation setups for the <see cref="{{propertyComment}}"/> property.
 				/// </summary>
 				{{mockType.Accessibility}} {{propertyExpectationsFullyQualifiedName}}.{{property.Name}}PropertyExpectations {{property.Name}} => new(this.parent);
 

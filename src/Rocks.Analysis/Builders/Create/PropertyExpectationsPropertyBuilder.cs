@@ -38,7 +38,7 @@ internal static class PropertyExpectationsPropertyBuilder
 		var propertyComment =
 			property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 				type.Type.FullyQualifiedName.TransformForXmlComment() :
-				property.ContainingType.FullyQualifiedName.TransformForXmlComment();
+				property.ContainingTypeDefinition.FullyQualifiedName.TransformForXmlComment();
 		writer.WriteLines(
 			$$"""
 			/// <summary>
@@ -74,7 +74,7 @@ internal static class PropertyExpectationsPropertyBuilder
 		var propertyComment =
 			property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 				type.Type.FullyQualifiedName.TransformForXmlComment() :
-				property.ContainingType.FullyQualifiedName.TransformForXmlComment();
+				property.ContainingTypeDefinition.FullyQualifiedName.TransformForXmlComment();
 		var propertyTargetComment =
 			property.Accessors == PropertyAccessor.Set || property.Accessors == PropertyAccessor.GetAndSet ?
 				"set" :

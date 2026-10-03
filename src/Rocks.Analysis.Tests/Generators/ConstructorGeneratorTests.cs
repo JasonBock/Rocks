@@ -61,7 +61,7 @@ public static class ConstructorGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::RequiredConstructor.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::RequiredConstructorCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -79,7 +79,7 @@ public static class ConstructorGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::RequiredConstructor.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::RequiredConstructorCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -90,7 +90,7 @@ public static class ConstructorGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::RequiredConstructor.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::RequiredConstructorCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -511,7 +511,7 @@ public static class ConstructorGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::AnyOf{T1, T2}.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::AnyOfCreateExpectations<T1, T2>.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -529,7 +529,7 @@ public static class ConstructorGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::AnyOf{T1, T2}.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::AnyOfCreateExpectations<T1, T2>.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -540,7 +540,7 @@ public static class ConstructorGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::AnyOf{T1, T2}.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::AnyOfCreateExpectations<T1, T2>.Adornments.ToStringAdornments2D2816FE ToString()
 					{

@@ -196,6 +196,13 @@ internal sealed class ModelContext
 			{
 				return type.Name.TrimEnd('?');
 			}
+			// FullyQualifiedNameNoGenerics renders tuples with tuple syntax
+			// ((A Key, B Value)), which crefs do not support; tuples render as
+			// their underlying ValueTuple with the tuple's type arguments.
+			if (type.IsTupleType)
+			{
+				return "global::System.ValueTuple";
+			}
 			// FullyQualifiedNameNoGenerics renders Nullable<T> as T? shorthand
 			// (constructed Nullable<T> does not reliably report its SpecialType)
 			// and special types as C# keywords (int, string): neither is valid

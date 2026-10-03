@@ -62,7 +62,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.StaticToString.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.StaticToStringCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -80,7 +80,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.StaticToString.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::MockTests.StaticToStringCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{

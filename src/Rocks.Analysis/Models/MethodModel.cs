@@ -16,6 +16,7 @@ internal sealed record MethodModel
 			(mockType, requiresExplicitInterfaceImplementation, requiresOverride, memberIdentifier);
 
 		this.ContainingType = modelContext.CreateTypeReference(method.ContainingType);
+		this.ContainingTypeDefinition = modelContext.CreateTypeReference(method.ContainingType.OriginalDefinition);
 
 		if (requiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 		{
@@ -142,6 +143,7 @@ internal sealed record MethodModel
 	internal string AttributesDescription { get; }
 	internal EquatableArray<Constraints> Constraints { get; }
 	internal ITypeReferenceModel ContainingType { get; }
+	internal ITypeReferenceModel ContainingTypeDefinition { get; }
 	internal EquatableArray<Constraints> DefaultConstraints { get; }
 	internal string Hash { get; }
 	internal bool IsAbstract { get; }

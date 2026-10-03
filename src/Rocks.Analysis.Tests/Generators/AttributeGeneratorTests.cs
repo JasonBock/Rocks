@@ -310,7 +310,7 @@ public static class AttributeGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::TransactionProvider.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::TransactionProviderCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -328,7 +328,7 @@ public static class AttributeGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::TransactionProvider.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::TransactionProviderCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -339,7 +339,7 @@ public static class AttributeGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::TransactionProvider.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::TransactionProviderCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -368,7 +368,7 @@ public static class AttributeGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::TransactionProvider" property./>.
+					/// Contains expectation setups for the <see cref="global::TransactionProvider.HasOpenTransaction"/> property.
 					/// </summary>
 					internal global::TransactionProviderCreateExpectations.SetupsExpectations.HasOpenTransactionPropertyExpectations HasOpenTransaction => new(this.parent);
 					
@@ -742,7 +742,7 @@ public static class AttributeGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::IReadOnlyTensor" property./>.
+					/// Contains expectation setups for the <see cref="global::IReadOnlyTensor.Lengths"/> property.
 					/// </summary>
 					internal global::IReadOnlyTensorCreateExpectations.SetupsExpectations.LengthsPropertyExpectations Lengths => new(this.parent);
 					
@@ -964,7 +964,7 @@ public static class AttributeGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::Caller.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::CallerCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -982,7 +982,7 @@ public static class AttributeGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::Caller.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::CallerCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -993,7 +993,7 @@ public static class AttributeGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::Caller.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::CallerCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -1004,7 +1004,7 @@ public static class AttributeGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::Caller.SetAndRaise(global::System.String,global::System.String)"/>.
+					/// Sets an expectation for <see cref="global::Caller.SetAndRaise(ref global::System.String,global::System.String)"/>.
 					/// </summary>
 					internal global::CallerCreateExpectations.Adornments.SetAndRaiseAdornmentsEE44D4F6 SetAndRaise(global::Rocks.Argument<string> @newValue, global::Rocks.Argument<string?> @propertyName)
 					{
@@ -1024,7 +1024,7 @@ public static class AttributeGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::Caller.SetAndRaise(global::System.String,global::System.String)"/>.
+					/// Sets an expectation for <see cref="global::Caller.SetAndRaise(ref global::System.String,global::System.String)"/>.
 					/// </summary>
 					internal global::CallerCreateExpectations.Adornments.SetAndRaiseAdornmentsEE44D4F6 SetAndRaise(global::Rocks.Argument<string> @newValue, string? @propertyName = null) =>
 						this.SetAndRaise(@newValue, global::Rocks.Arg.Is(@propertyName));
@@ -1419,7 +1419,7 @@ public static class AttributeGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::INotNull" property./>.
+					/// Contains expectation setups for the <see cref="global::INotNull.IsSuccess"/> property.
 					/// </summary>
 					internal global::INotNullCreateExpectations.SetupsExpectations.IsSuccessPropertyExpectations IsSuccess => new(this.parent);
 					
@@ -1443,7 +1443,7 @@ public static class AttributeGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::INotNull" property./>.
+					/// Contains expectation setups for the <see cref="global::INotNull.Error"/> property.
 					/// </summary>
 					internal global::INotNullCreateExpectations.SetupsExpectations.ErrorPropertyExpectations Error => new(this.parent);
 					
@@ -1731,7 +1731,7 @@ public static class AttributeGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::IItems" property./>.
+					/// Contains expectation setups for the <see cref="global::IItems.Length"/> property.
 					/// </summary>
 					internal global::IItemsCreateExpectations.SetupsExpectations.LengthPropertyExpectations Length => new(this.parent);
 					
@@ -1952,7 +1952,7 @@ public static class AttributeGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ConventionDispatcher.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::ConventionDispatcherCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -1970,7 +1970,7 @@ public static class AttributeGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ConventionDispatcher.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::ConventionDispatcherCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -1981,7 +1981,7 @@ public static class AttributeGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ConventionDispatcher.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::ConventionDispatcherCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -2353,7 +2353,7 @@ public static class AttributeGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::NotNullIfNotCases.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::NotNullIfNotCasesCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -2371,7 +2371,7 @@ public static class AttributeGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::NotNullIfNotCases.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::NotNullIfNotCasesCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -2382,7 +2382,7 @@ public static class AttributeGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::NotNullIfNotCases.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::NotNullIfNotCasesCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -2464,7 +2464,7 @@ public static class AttributeGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::NotNullIfNotCases" property./>.
+					/// Contains expectation setups for the <see cref="global::NotNullIfNotCases.VisitProperty"/> property.
 					/// </summary>
 					internal global::NotNullIfNotCasesCreateExpectations.SetupsExpectations.VisitPropertyPropertyExpectations VisitProperty => new(this.parent);
 					
@@ -3184,7 +3184,7 @@ public static class AttributeGeneratorTests
 					}
 					
 					/// <summary>
-					/// Contains expectation setups for the <see cref="global::IUseTuples" property./>.
+					/// Contains expectation setups for the <see cref="global::IUseTuples.X11"/> property.
 					/// </summary>
 					internal global::IUseTuplesCreateExpectations.SetupsExpectations.X11PropertyExpectations X11 => new(this.parent);
 					
@@ -3406,7 +3406,7 @@ public static class AttributeGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::HaveDynamic.Equals(global::System.Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::HaveDynamicCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -3424,7 +3424,7 @@ public static class AttributeGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::HaveDynamic.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::HaveDynamicCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -3435,7 +3435,7 @@ public static class AttributeGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::HaveDynamic.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::HaveDynamicCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
