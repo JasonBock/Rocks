@@ -10,7 +10,8 @@ internal sealed record TypeMockModel
 {
 	internal TypeMockModel(
 		SyntaxNode node, ITypeSymbol type, ITypeSymbol? expectationsInformationSource, ModelContext modelContext,
-		ImmutableArray<IMethodSymbol> constructors, MockableMethods methods,
+		ImmutableArray<IMethodSymbol> constructors, 
+		MockableMethods methods,
 		MockableProperties properties, MockableEvents events,
 		HashSet<ITypeSymbol> shims, TypeMockModelMemberCount memberCount, bool shouldResolveShims, BuildType buildType, CodeAccessibility codeVisibility)
 	{
@@ -47,6 +48,9 @@ internal sealed record TypeMockModel
 		this.Aliases = compilation.GetAliases();
 		this.Constructors = [.. constructors.Select(_ => new ConstructorModel(_, modelContext))];
 		this.Methods = [.. methods.Results.Select(_ =>
+			new MethodModel(_.Value, this.Type, modelContext, _.RequiresExplicitInterfaceImplementation,
+				_.RequiresOverride, _.RequiresHiding, _.MemberIdentifier))];
+		this.InaccessibleAbstractMethods = [.. methods.InaccessibleAbstractMembers.Select(_ =>
 			new MethodModel(_.Value, this.Type, modelContext, _.RequiresExplicitInterfaceImplementation,
 				_.RequiresOverride, _.RequiresHiding, _.MemberIdentifier))];
 		this.Properties = [.. properties.Results.Select(_ =>
@@ -177,6 +181,7 @@ internal sealed record TypeMockModel
 	internal string? ExpectationsNamespace { get; }
 	internal string ExpectationsPropertyName { get; }
 	internal EquatableArray<EventModel> Events { get; }
+	internal EquatableArray<MethodModel> InaccessibleAbstractMethods { get; }
 	internal bool IsPartial { get; }
 	internal TypeMockModelMemberCount MemberCount { get; }
 	internal EquatableArray<MethodModel> Methods { get; }

@@ -57,6 +57,10 @@ internal static class MockEventsBuilder
 			}
 		}
 
-		writer.WriteLine("#pragma warning restore CS0067");
+		writer.WriteLines(
+			"""
+			#pragma warning restore CS0067
+			
+			""");
 	}
 }

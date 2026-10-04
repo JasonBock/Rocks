@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Analysis.Extensions;
 using Rocks.Analysis.Models;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
@@ -67,7 +68,11 @@ internal static class MockIndexerBuilder
 		}
 
 		writer.Indent--;
-		writer.WriteLine("}");
+		writer.WriteLines(
+			"""
+			}
+			
+			""");
 	}
 
 	private static string GetSignature(ImmutableArray<ParameterModel> parameters, bool includeOptionalParameterValues)

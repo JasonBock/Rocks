@@ -32,38 +32,28 @@ internal static class MockMakeBuilder
 			MockConstructorBuilder.Build(writer, mockType, null);
 		}
 
-		writer.WriteLine();
-
 		for (var i = 0; i < mockType.Methods.Length; i++)
 		{
 			var method = mockType.Methods[i];
 
 			MockMethodBuilder.Build(writer, method);
+		}
 
-			if (i != mockType.Methods.Length - 1)
-			{
-				writer.WriteLine();
-			}
+		for (var i = 0; i < mockType.InaccessibleAbstractMethods.Length; i++)
+		{
+			var inaccessibleAbstractMethod = mockType.InaccessibleAbstractMethods[i];
+
+			MockMethodBuilder.Build(writer, inaccessibleAbstractMethod);
 		}
 
 		var properties = mockType.Properties.Where(_ => !_.IsIndexer).ToArray();
 
 		if (properties.Length > 0)
 		{
-			if (mockType.Methods.Length > 0)
-			{
-				writer.WriteLine();
-			}
-
 			for (var i = 0; i < properties.Length; i++)
 			{
 				var property = properties[i];
 				MockPropertyBuilder.Build(writer, property);
-
-				if (i != properties.Length - 1)
-				{
-					writer.WriteLine();
-				}
 			}
 		}
 
@@ -71,26 +61,15 @@ internal static class MockMakeBuilder
 
 		if (indexers.Length > 0)
 		{
-			if (mockType.Methods.Length > 0 || properties.Length > 0)
-			{
-				writer.WriteLine();
-			}
-
 			for (var i = 0; i < indexers.Length; i++)
 			{
 				var indexer = indexers[i];
 				MockIndexerBuilder.Build(writer, indexer);
-
-				if (i != indexers.Length - 1)
-				{
-					writer.WriteLine();
-				}
 			}
 		}
 
 		if (mockType.Events.Length > 0)
 		{
-			writer.WriteLine();
 			MockEventsBuilder.Build(writer, mockType.Events);
 		}
 

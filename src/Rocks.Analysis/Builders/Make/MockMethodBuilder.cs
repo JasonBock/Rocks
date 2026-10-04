@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Analysis.Builders.Create;
+using Rocks.Analysis.Extensions;
 using Rocks.Analysis.Models;
 using System.CodeDom.Compiler;
 
@@ -147,6 +148,11 @@ internal static class MockMethodBuilder
 		}
 
 		writer.Indent--;
-		writer.WriteLine("}");
+		writer.WriteLines(
+			"""
+			}
+
+			""");
+			
 	}
 }

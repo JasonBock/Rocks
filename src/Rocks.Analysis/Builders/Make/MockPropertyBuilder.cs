@@ -1,4 +1,5 @@
-﻿using Rocks.Analysis.Models;
+﻿using Rocks.Analysis.Extensions;
+using Rocks.Analysis.Models;
 using System.CodeDom.Compiler;
 
 namespace Rocks.Analysis.Builders.Make;
@@ -63,6 +64,10 @@ internal static class MockPropertyBuilder
 		}
 
 		writer.Indent--;
-		writer.WriteLine("}");
+		writer.WriteLines(
+			"""
+			}
+			
+			""");
 	}
 }

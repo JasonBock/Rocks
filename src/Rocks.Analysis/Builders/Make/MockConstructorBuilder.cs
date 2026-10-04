@@ -73,6 +73,8 @@ internal static class MockConstructorBuilder
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
+
+		writer.WriteLine();
 	}
 
 	private static void BuildFieldSetters(IndentedTextWriter writer, VariablesNamingContext namingContext,

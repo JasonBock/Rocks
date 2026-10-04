@@ -2,6 +2,7 @@
 using Rocks.Analysis.Builders.Shim;
 using Rocks.Analysis.Models;
 using System.CodeDom.Compiler;
+using MakeMockMethodBuilder = Rocks.Analysis.Builders.Make.MockMethodBuilder;
 
 namespace Rocks.Analysis.Builders.Create;
 
@@ -47,6 +48,11 @@ internal static class MockTypeBuilder
 		foreach (var method in type.Methods)
 		{
 			MockMethodBuilder.Build(writer, type, method, canRaiseEvents, expectationsFullyQualifiedName);
+		}
+
+		foreach (var inaccessibleMethod in type.InaccessibleAbstractMethods)
+		{
+			MakeMockMethodBuilder.Build(writer, inaccessibleMethod);
 		}
 
 		var hasProperties = false;
