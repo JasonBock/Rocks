@@ -124,7 +124,11 @@ internal sealed class MockableMethodDiscovery
 			}
 		}
 
-		return new MockableMethods([.. methods], inaccessibleAbstractMembers.Count > 0, false);
+		return new MockableMethods(
+			[.. methods], 
+			[.. inaccessibleAbstractMembers.Select(
+				method => new MockableMethodResult(method, mockType, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, RequiresHiding.No, 0))], 
+			false);
 	}
 
 	private static MockableMethods GetMethodsForInterface(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol,
@@ -138,7 +142,7 @@ internal sealed class MockableMethodDiscovery
 			method.MethodKind == MethodKind.Ordinary && method.CanBeReferencedByName;
 
 		var methods = new List<MockableMethodResult>();
-		var inaccessibleAbstractMembers = false;
+		var inaccessibleAbstractMembers = new List<IMethodSymbol>();
 		var hasStaticAbstractMethods = false;
 
 		foreach (var selfMethod in mockType.GetMembers().OfType<IMethodSymbol>())
@@ -151,7 +155,7 @@ internal sealed class MockableMethodDiscovery
 				if (!selfMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol, compilation) &&
 					(selfMethod.IsAbstract || selfMethod.IsVirtual))
 				{
-					inaccessibleAbstractMembers = true;
+					inaccessibleAbstractMembers.Add(selfMethod);
 				}
 				else
 				{
@@ -199,7 +203,7 @@ internal sealed class MockableMethodDiscovery
 				{
 					if (!selfBaseMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol, compilation))
 					{
-						inaccessibleAbstractMembers = true;
+						inaccessibleAbstractMembers.Add(selfBaseMethod);
 					}
 					else
 					{
@@ -286,7 +290,11 @@ internal sealed class MockableMethodDiscovery
 			}
 		}
 
-		return new MockableMethods([.. methods], inaccessibleAbstractMembers, hasStaticAbstractMethods);
+		return new MockableMethods(
+			[.. methods], 
+			[.. inaccessibleAbstractMembers.Select(
+				method => new MockableMethodResult(method, mockType, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, RequiresHiding.No, 0))], 
+			hasStaticAbstractMethods);
 	}
 
 	internal MockableMethods Methods { get; }

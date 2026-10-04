@@ -6,12 +6,12 @@ internal sealed class MockableMethods
 {
 	internal MockableMethods(
 		ImmutableArray<MockableMethodResult> results,
-		bool hasInaccessibleAbstractMembers,
+		ImmutableArray<MockableMethodResult> inaccessibleAbstractMembers,
 		bool hasStaticAbstractMembers) =>
-		(this.Results, this.HasInaccessibleAbstractMembers, this.HasStaticAbstractMembers) =
-			(results, hasInaccessibleAbstractMembers, hasStaticAbstractMembers);
+		(this.Results, this.InaccessibleAbstractMembers, this.HasStaticAbstractMembers) =
+			(results, inaccessibleAbstractMembers, hasStaticAbstractMembers);
 
 	internal bool HasStaticAbstractMembers { get; }
-	internal bool HasInaccessibleAbstractMembers { get; }
+	internal ImmutableArray<MockableMethodResult> InaccessibleAbstractMembers { get; }
 	internal ImmutableArray<MockableMethodResult> Results { get; }
 }

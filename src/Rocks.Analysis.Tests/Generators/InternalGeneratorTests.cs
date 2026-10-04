@@ -27,7 +27,7 @@ public static class InternalGeneratorTests
 		var sourceCompilation = CSharpCompilation.Create("Source", [sourceSyntaxTree],
 			sourceReferences,
 			new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
-		var sourceReference = sourceCompilation.ToMetadataReference()!;
+		var sourceReference = sourceCompilation.ToMetadataReference();
 
 		var code =
 			"""

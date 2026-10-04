@@ -9,6 +9,54 @@ namespace Rocks.Analysis.Tests.Discovery;
 public static class MockableMethodDiscoveryTests
 {
 	[Test]
+	public static async Task GetMockableMethodsWithInaccessibleAbstractMethodsAsync()
+	{
+		const string targetTypeName = "DerivingHolder";
+
+		var source =
+			"""
+			public abstract class Holder
+			{
+				protected Holder() { }
+
+				protected abstract void ProcessData(Data data);
+
+				protected internal class Data { }
+			}
+			""";
+
+		var sourceReferences = Shared.References.Value
+			.Cast<MetadataReference>();
+		var sourceSyntaxTree = CSharpSyntaxTree.ParseText(source);
+		var sourceCompilation = CSharpCompilation.Create("Source", [sourceSyntaxTree],
+			sourceReferences,
+			new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+		var sourceReference = sourceCompilation.ToMetadataReference()!;
+
+		var code =
+			"""
+			public abstract class DerivingHolder
+				: Holder { }
+			""";
+
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName, [sourceCompilation.ToMetadataReference()]);
+		var memberIdentifier = 0u;
+		var shims = new HashSet<ITypeSymbol>();
+		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
+
+		using (Assert.EnterMultipleScope())
+		{
+			Assert.That(result.InaccessibleAbstractMembers, Has.Length.EqualTo(1));
+			var inaccessibleMethod = result.InaccessibleAbstractMembers[0];
+			Assert.That(inaccessibleMethod.Value.Name, Is.EqualTo("ProcessData"));
+			Assert.That(inaccessibleMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
+			Assert.That(inaccessibleMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+			Assert.That(inaccessibleMethod.RequiresHiding, Is.EqualTo(RequiresHiding.No));
+			Assert.That(inaccessibleMethod.MemberIdentifier, Is.Zero);
+		}
+	}
+
+	[Test]
 	public static async Task GetMockableMethodsWithNewAbstractMethodWithOverrideAsync()
 	{
 		const string targetMethodName = "GetData";
@@ -34,14 +82,14 @@ public static class MockableMethodDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName, []);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Has.Length.Zero);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(4));
 			var getHashCodeMethod = methods.Single(_ => _.Value.Name == nameof(GetHashCode));
@@ -82,14 +130,14 @@ public static class MockableMethodDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName, []);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Has.Length.Zero);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(4));
 			var getHashCodeMethod = methods.Single(_ => _.Value.Name == nameof(GetHashCode));
@@ -118,14 +166,14 @@ public static class MockableMethodDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName, []);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Has.Length.Zero);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(1));
 			var fooMethod = methods.Single(_ => _.Value.Name == targetMethodName);
@@ -149,14 +197,14 @@ public static class MockableMethodDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName, []);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Has.Length.Zero);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(1));
 			var fooMethod = methods.Single(_ => _.Value.Name == targetMethodName);
@@ -184,14 +232,14 @@ public static class MockableMethodDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName, []);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Has.Length.Zero);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(2));
 			var baseMethod = methods.Single(_ => _.Value.Name == baseMethodName);
@@ -221,14 +269,14 @@ public static class MockableMethodDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName, []);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Has.Length.Zero);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(1));
 			var targetMethod = methods.Single(_ => _.Value.Name == targetMethodName && _.Value.ContainingType.Name == targetTypeName);
@@ -264,14 +312,14 @@ public static class MockableMethodDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName, []);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Has.Length.Zero);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(3));
 			var baseOneMethod = methods.Single(_ => _.Value.Name == baseMethodName && _.Value.ContainingType.Name == baseOneTypeName);
@@ -311,14 +359,14 @@ public static class MockableMethodDiscoveryTests
 			{ }
 			""";
 
-		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName, []);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Has.Length.Zero);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(2));
 			var baseOneMethod = methods.Single(_ => _.Value.Name == baseMethodName && _.Value.ContainingType.Name == baseOneTypeName);
@@ -344,14 +392,14 @@ public static class MockableMethodDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName, []);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Has.Length.Zero);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(4));
 			var getHashCodeMethod = methods.Single(_ => _.Value.Name == nameof(GetHashCode));
@@ -372,14 +420,14 @@ public static class MockableMethodDiscoveryTests
 
 		var code = $"public class {targetTypeName} {{ }}";
 
-		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName, []);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Has.Length.Zero);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(3));
 			var getHashCodeMethod = methods.Single(_ => _.Value.Name == nameof(GetHashCode));
@@ -391,11 +439,12 @@ public static class MockableMethodDiscoveryTests
 		}
 	}
 
-	private static async Task<(ITypeSymbol, Compilation)> GetTypeSymbolAsync(string source, string targetTypeName)
+	private static async Task<(ITypeSymbol, Compilation)> GetTypeSymbolAsync(string source, string targetTypeName,
+		IEnumerable<MetadataReference> additionalReferences)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
-			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+			Shared.References.Value.Concat(additionalReferences), new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
 		var typeSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
