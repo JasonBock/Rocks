@@ -18,12 +18,12 @@ public static class PropertyModelTests
 				public string Value { get; set; }
 			}
 			""";
-		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
+		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code, []);
 		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
 		var model = new PropertyModel(property, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
-			 PropertyAccessor.GetAndSet, memberIdentifier);
+			 PropertyAccessor.GetAndSet, false, memberIdentifier);
 
 		using (Assert.EnterMultipleScope())
 		{
@@ -54,6 +54,52 @@ public static class PropertyModelTests
 	}
 
 	[Test]
+	public static async Task CreateWithInaccessibleAbstractPropertyGetSetAsync()
+	{
+		var source =
+			"""
+			public abstract class Holder
+			{
+				protected Holder() { }
+
+				protected abstract Data Value { get; set; }
+
+				protected internal class Data { }
+			}
+			""";
+
+		var sourceReferences = Shared.References.Value
+			.Cast<MetadataReference>();
+		var sourceSyntaxTree = CSharpSyntaxTree.ParseText(source);
+		var sourceCompilation = CSharpCompilation.Create("Source", [sourceSyntaxTree],
+			sourceReferences,
+			new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+		var sourceReference = sourceCompilation.ToMetadataReference()!;
+
+		var code =
+			"""
+			public abstract class DerivingHolder
+				: Holder { }
+			""";
+
+		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code, [sourceCompilation.ToMetadataReference()]);
+		var mockType = modelContext.CreateTypeReference(type);
+		const uint memberIdentifier = 1;
+		var model = new PropertyModel(property, mockType, modelContext,
+			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
+			 PropertyAccessor.Get, false, memberIdentifier);
+
+		using (Assert.EnterMultipleScope())
+		{
+			Assert.That(model.GetCanBeSeenByContainingAssembly, Is.True);
+			Assert.That(model.GetMethod, Is.Not.Null);
+			Assert.That(model.InitCanBeSeenByContainingAssembly, Is.False);
+			Assert.That(model.SetCanBeSeenByContainingAssembly, Is.True);
+			Assert.That(model.SetMethod, Is.Not.Null);
+		}
+	}
+
+	[Test]
 	public static async Task CreateWithGetOnlyAsync()
 	{
 		var code =
@@ -63,12 +109,12 @@ public static class PropertyModelTests
 				public string Value { get; }
 			}
 			""";
-		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
+		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code, []);
 		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
 		var model = new PropertyModel(property, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
-			 PropertyAccessor.Get, memberIdentifier);
+			 PropertyAccessor.Get, false, memberIdentifier);
 
 		using (Assert.EnterMultipleScope())
 		{
@@ -90,12 +136,12 @@ public static class PropertyModelTests
 				public string Value { init; }
 			}
 			""";
-		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
+		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code, []);
 		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
 		var model = new PropertyModel(property, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
-			 PropertyAccessor.Init, memberIdentifier);
+			 PropertyAccessor.Init, false, memberIdentifier);
 
 		using (Assert.EnterMultipleScope())
 		{
@@ -117,12 +163,12 @@ public static class PropertyModelTests
 				public string Value { set; }
 			}
 			""";
-		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
+		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code, []);
 		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
 		var model = new PropertyModel(property, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
-			 PropertyAccessor.Set, memberIdentifier);
+			 PropertyAccessor.Set, false, memberIdentifier);
 
 		using (Assert.EnterMultipleScope())
 		{
@@ -144,12 +190,12 @@ public static class PropertyModelTests
 				public virtual string Value { get; }
 			}
 			""";
-		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
+		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code, []);
 		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
 		var model = new PropertyModel(property, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
-			 PropertyAccessor.Get, memberIdentifier);
+			 PropertyAccessor.Get, false, memberIdentifier);
 
 		Assert.That(model.IsVirtual, Is.True);
 	}
@@ -164,12 +210,12 @@ public static class PropertyModelTests
 				public abstract string Value { get; }
 			}
 			""";
-		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
+		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code, []);
 		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
 		var model = new PropertyModel(property, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
-			 PropertyAccessor.Get, memberIdentifier);
+			 PropertyAccessor.Get, false, memberIdentifier);
 
 		Assert.That(model.IsAbstract, Is.True);
 	}
@@ -184,12 +230,12 @@ public static class PropertyModelTests
 				public abstract string this[string data] { get; }
 			}
 			""";
-		(var indexer, var type, var modelContext) = await GetSymbolsForIndexerCompilationAsync(code);
+		(var indexer, var type, var modelContext) = await GetSymbolsForIndexerCompilationAsync(code, []);
 		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
 		var model = new PropertyModel(indexer, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
-			 PropertyAccessor.Get, memberIdentifier);
+			 PropertyAccessor.Get, false, memberIdentifier);
 
 		using (Assert.EnterMultipleScope())
 		{
@@ -209,12 +255,12 @@ public static class PropertyModelTests
 				public unsafe int* Value { get; }
 			}
 			""";
-		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
+		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code, []);
 		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
 		var model = new PropertyModel(property, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
-			 PropertyAccessor.Get, memberIdentifier);
+			 PropertyAccessor.Get, false, memberIdentifier);
 
 		Assert.That(model.IsUnsafe, Is.True);
 	}
@@ -229,12 +275,12 @@ public static class PropertyModelTests
 				public ref int Value { get; }
 			}
 			""";
-		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
+		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code, []);
 		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
 		var model = new PropertyModel(property, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
-			 PropertyAccessor.Get, memberIdentifier);
+			 PropertyAccessor.Get, false, memberIdentifier);
 
 		Assert.That(model.ReturnsByRef, Is.True);
 	}
@@ -249,12 +295,12 @@ public static class PropertyModelTests
 				public ref readonly int Value { get; }
 			}
 			""";
-		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
+		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code, []);
 		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
 		var model = new PropertyModel(property, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
-			 PropertyAccessor.Get, memberIdentifier);
+			 PropertyAccessor.Get, false, memberIdentifier);
 
 		Assert.That(model.ReturnsByRefReadOnly, Is.True);
 	}
@@ -269,12 +315,12 @@ public static class PropertyModelTests
 				public int Value { get; }
 			}
 			""";
-		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
+		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code, []);
 		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
 		var model = new PropertyModel(property, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No,
-			 PropertyAccessor.Get, memberIdentifier);
+			 PropertyAccessor.Get, false, memberIdentifier);
 
 		Assert.That(model.OverridingCodeValue, Is.Null);
 	}
@@ -294,12 +340,12 @@ public static class PropertyModelTests
 				public string Value { get; set; }
 			}
 			""";
-		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code);
+		(var property, var type, var modelContext) = await GetSymbolsCompilationAsync(code, []);
 		var mockType = modelContext.CreateTypeReference(type);
 		const uint memberIdentifier = 1;
 		var model = new PropertyModel(property, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
-			 PropertyAccessor.GetAndSet, memberIdentifier);
+			 PropertyAccessor.GetAndSet, false, memberIdentifier);
 
 		using (Assert.EnterMultipleScope())
 		{
@@ -308,11 +354,12 @@ public static class PropertyModelTests
 		}
 	}
 
-	private static async Task<(IPropertySymbol, ITypeSymbol, ModelContext)> GetSymbolsCompilationAsync(string code)
+	private static async Task<(IPropertySymbol, ITypeSymbol, ModelContext)> GetSymbolsCompilationAsync(
+		string code, IEnumerable<MetadataReference> additionalReferences)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
-			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
+			Shared.References.Value.Concat(additionalReferences), new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 		var root = await syntaxTree.GetRootAsync();
 		var typeSyntax = root.DescendantNodes(_ => true)
@@ -322,11 +369,12 @@ public static class PropertyModelTests
 		return (model.GetDeclaredSymbol(propertySyntax)!, model.GetDeclaredSymbol(typeSyntax)!, new(model));
 	}
 
-	private static async Task<(IPropertySymbol, ITypeSymbol, ModelContext)> GetSymbolsForIndexerCompilationAsync(string code)
+	private static async Task<(IPropertySymbol, ITypeSymbol, ModelContext)> GetSymbolsForIndexerCompilationAsync(
+		string code, IEnumerable<MetadataReference> additionalReferences)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
-			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
+			Shared.References.Value.Concat(additionalReferences), new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 		var root = await syntaxTree.GetRootAsync();
 		var typeSyntax = root.DescendantNodes(_ => true)

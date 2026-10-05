@@ -7,7 +7,7 @@ internal sealed record PropertyModel
 {
 	internal PropertyModel(IPropertySymbol property, ITypeReferenceModel mockType, ModelContext modelContext,
 		RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation, RequiresOverride requiresOverride,
-		PropertyAccessor accessors, uint memberIdentifier)
+		PropertyAccessor accessors, bool isInaccessibleAbstractMember, uint memberIdentifier)
 	{
 		var compilation = modelContext.SemanticModel.Compilation;
 
@@ -39,38 +39,59 @@ internal sealed record PropertyModel
 
 		if (this.Accessors == PropertyAccessor.Get || this.Accessors == PropertyAccessor.GetAndSet || this.Accessors == PropertyAccessor.GetAndInit)
 		{
-			this.GetCanBeSeenByContainingAssembly = property.GetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly, compilation);
-
-			if (this.GetCanBeSeenByContainingAssembly)
+			if (isInaccessibleAbstractMember)
 			{
-				this.GetMethod = new MethodModel(property.GetMethod!, mockType, modelContext,
-					requiresExplicitInterfaceImplementation, requiresOverride, RequiresHiding.No, memberIdentifier);
+				this.GetCanBeSeenByContainingAssembly = true;
+			}
+			else
+			{
+				this.GetCanBeSeenByContainingAssembly = property.GetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly, compilation);
+
+				if (this.GetCanBeSeenByContainingAssembly)
+				{
+					this.GetMethod = new MethodModel(property.GetMethod!, mockType, modelContext,
+						requiresExplicitInterfaceImplementation, requiresOverride, RequiresHiding.No, memberIdentifier);
+				}
 			}
 		}
 
 		if (this.Accessors == PropertyAccessor.Set || this.Accessors == PropertyAccessor.GetAndSet)
 		{
-			this.SetCanBeSeenByContainingAssembly = property.SetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly, compilation);
-
-			if (this.SetCanBeSeenByContainingAssembly)
+			if (isInaccessibleAbstractMember)
 			{
-				this.SetMethod = new MethodModel(property.SetMethod!, mockType, modelContext,
-					requiresExplicitInterfaceImplementation, requiresOverride, RequiresHiding.No,
-					this.Accessors == PropertyAccessor.Set ? memberIdentifier :
-						this.GetCanBeSeenByContainingAssembly ? memberIdentifier + 1 : memberIdentifier);
+				this.SetCanBeSeenByContainingAssembly = true;
+			}
+			else
+			{
+				this.SetCanBeSeenByContainingAssembly = property.SetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly, compilation);
+
+				if (this.SetCanBeSeenByContainingAssembly)
+				{
+					this.SetMethod = new MethodModel(property.SetMethod!, mockType, modelContext,
+						requiresExplicitInterfaceImplementation, requiresOverride, RequiresHiding.No,
+						this.Accessors == PropertyAccessor.Set ? memberIdentifier :
+							this.GetCanBeSeenByContainingAssembly ? memberIdentifier + 1 : memberIdentifier);
+				}
 			}
 		}
 
 		if (this.Accessors == PropertyAccessor.Init || this.Accessors == PropertyAccessor.GetAndInit)
 		{
-			this.InitCanBeSeenByContainingAssembly = property.SetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly, compilation);
-
-			if (this.InitCanBeSeenByContainingAssembly)
+			if (isInaccessibleAbstractMember)
 			{
-				this.SetMethod = new MethodModel(property.SetMethod!, mockType, modelContext,
-					requiresExplicitInterfaceImplementation, requiresOverride, RequiresHiding.No,
-					this.Accessors == PropertyAccessor.Init ? memberIdentifier :
-						this.GetCanBeSeenByContainingAssembly ? memberIdentifier + 1 : memberIdentifier);
+				this.InitCanBeSeenByContainingAssembly = true;
+			}
+			else
+			{
+				this.InitCanBeSeenByContainingAssembly = property.SetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly, compilation);
+
+				if (this.InitCanBeSeenByContainingAssembly)
+				{
+					this.SetMethod = new MethodModel(property.SetMethod!, mockType, modelContext,
+						requiresExplicitInterfaceImplementation, requiresOverride, RequiresHiding.No,
+						this.Accessors == PropertyAccessor.Init ? memberIdentifier :
+							this.GetCanBeSeenByContainingAssembly ? memberIdentifier + 1 : memberIdentifier);
+				}
 			}
 		}
 	}

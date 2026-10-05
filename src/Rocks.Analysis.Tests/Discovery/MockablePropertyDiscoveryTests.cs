@@ -9,6 +9,53 @@ namespace Rocks.Analysis.Tests.Discovery;
 public static class MockablePropertyDiscoveryTests
 {
 	[Test]
+	public static async Task GetMockableMethodsWithInaccessibleAbstractPropertiesAsync()
+	{
+		const string targetTypeName = "DerivingHolder";
+
+		var source =
+			"""
+			public abstract class Holder
+			{
+				protected Holder() { }
+
+				protected abstract Data Value { get; }
+
+				protected internal class Data { }
+			}
+			""";
+
+		var sourceReferences = Shared.References.Value
+			.Cast<MetadataReference>();
+		var sourceSyntaxTree = CSharpSyntaxTree.ParseText(source);
+		var sourceCompilation = CSharpCompilation.Create("Source", [sourceSyntaxTree],
+			sourceReferences,
+			new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+		var sourceReference = sourceCompilation.ToMetadataReference()!;
+
+		var code =
+			"""
+			public abstract class DerivingHolder
+				: Holder { }
+			""";
+
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName, [sourceCompilation.ToMetadataReference()]);
+		var memberIdentifier = 0u;
+		var shims = new HashSet<ITypeSymbol>();
+		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier, compilation).Properties;
+
+		using (Assert.EnterMultipleScope())
+		{
+			Assert.That(result.InaccessibleAbstractMembers, Has.Length.EqualTo(1));
+			var inaccessibleProperty = result.InaccessibleAbstractMembers[0];
+			Assert.That(inaccessibleProperty.Value.Name, Is.EqualTo("Value"));
+			Assert.That(inaccessibleProperty.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
+			Assert.That(inaccessibleProperty.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+			Assert.That(inaccessibleProperty.MemberIdentifier, Is.Zero);
+		}
+	}
+
+	[Test]
 	public static async Task GetMockablePropertiesFromInterfaceWithStaticNonVirtualPropertiesAsync()
 	{
 		const string targetTypeName = "ITest";
@@ -22,14 +69,14 @@ public static class MockablePropertyDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName, []);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier, compilation).Properties;
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Is.Zero);
 			var properties = result.Results;
 			Assert.That(properties, Has.Length.EqualTo(1));
 
@@ -52,14 +99,14 @@ public static class MockablePropertyDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName, []);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier, compilation).Properties;
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Is.Zero);
 			var properties = result.Results;
 			Assert.That(properties, Has.Length.EqualTo(2));
 
@@ -86,14 +133,14 @@ public static class MockablePropertyDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName, []);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier, compilation).Properties;
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Is.Zero);
 			var properties = result.Results;
 			Assert.That(properties, Has.Length.EqualTo(3));
 
@@ -139,14 +186,14 @@ public static class MockablePropertyDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName, []);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier, compilation).Properties;
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Is.Zero);
 			var properties = result.Results;
 			Assert.That(properties, Has.Length.EqualTo(1));
 
@@ -182,14 +229,14 @@ public static class MockablePropertyDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName, []);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier, compilation).Properties;
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Is.Zero);
 			var properties = result.Results;
 			Assert.That(properties, Has.Length.EqualTo(1));
 
@@ -199,11 +246,12 @@ public static class MockablePropertyDiscoveryTests
 		}
 	}
 
-	private static async Task<(ITypeSymbol, Compilation)> GetTypeSymbolAsync(string source, string targetTypeName)
+	private static async Task<(ITypeSymbol, Compilation)> GetTypeSymbolAsync(string source, string targetTypeName,
+		IEnumerable<MetadataReference> additionalReferences)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
-			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+			Shared.References.Value.Concat(additionalReferences), new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
 		var typeSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)

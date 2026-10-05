@@ -56,7 +56,11 @@ internal sealed record TypeMockModel
 		this.Properties = [.. properties.Results.Select(_ =>
 			new PropertyModel(_.Value, this.Type, modelContext,
 				_.RequiresExplicitInterfaceImplementation, _.RequiresOverride,
-				_.Accessors, _.MemberIdentifier))];
+				_.Accessors, false, _.MemberIdentifier))];
+		this.InaccessibleAbstractProperties = [.. properties.InaccessibleAbstractMembers.Select(_ =>
+			new PropertyModel(_.Value, this.Type, modelContext,
+				_.RequiresExplicitInterfaceImplementation, _.RequiresOverride,
+				_.Accessors, true, _.MemberIdentifier))];
 		this.Events = [.. events.Results.Select(_ =>
 			new EventModel(_.Value, modelContext,
 				_.RequiresExplicitInterfaceImplementation, _.RequiresOverride))];
@@ -182,6 +186,7 @@ internal sealed record TypeMockModel
 	internal string ExpectationsPropertyName { get; }
 	internal EquatableArray<EventModel> Events { get; }
 	internal EquatableArray<MethodModel> InaccessibleAbstractMethods { get; }
+	internal EquatableArray<PropertyModel> InaccessibleAbstractProperties { get; }
 	internal bool IsPartial { get; }
 	internal TypeMockModelMemberCount MemberCount { get; }
 	internal EquatableArray<MethodModel> Methods { get; }

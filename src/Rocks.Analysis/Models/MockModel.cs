@@ -97,8 +97,7 @@ internal sealed record MockModel
 			}
 		}
 
-		if (properties.HasInaccessibleAbstractMembers ||
-			events.HasInaccessibleAbstractMembers || typeToMock.HasInaccessibleAstractMembersWithInvalidIdentifiers(containingAssembly, compilation))
+		if (events.HasInaccessibleAbstractMembers || typeToMock.HasInaccessibleAstractMembersWithInvalidIdentifiers(containingAssembly, compilation))
 		{
 			diagnostics.Add(TypeHasInaccessibleAbstractMembersDiagnostic.Create(node, typeToMock));
 		}

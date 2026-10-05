@@ -104,7 +104,11 @@ internal sealed class MockablePropertyDiscovery
 			}
 		}
 
-		return new([.. properties], inaccessibleAbstractMembers.Count > 0, false);
+		return new(
+			[.. properties],
+			[.. inaccessibleAbstractMembers.Select(
+				property => new MockablePropertyResult(property, mockType, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, 0))],
+			false);
 	}
 
 	private static MockableProperties GetPropertiesForInterface(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol,
@@ -115,7 +119,7 @@ internal sealed class MockablePropertyDiscovery
 			(property.IsIndexer || property.CanBeReferencedByName);
 
 		var properties = new List<MockablePropertyResult>();
-		var inaccessibleAbstractMembers = false;
+		var inaccessibleAbstractMembers = new List<IPropertySymbol>();
 		var hasStaticAbstractProperties = false;
 
 		foreach (var selfProperty in mockType.GetMembers().OfType<IPropertySymbol>())
@@ -127,7 +131,7 @@ internal sealed class MockablePropertyDiscovery
 			{
 				if (!selfProperty.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol, compilation))
 				{
-					inaccessibleAbstractMembers = true;
+					inaccessibleAbstractMembers.Add(selfProperty);
 				}
 				else
 				{
@@ -163,7 +167,7 @@ internal sealed class MockablePropertyDiscovery
 				{
 					if (!selfBaseProperty.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol, compilation))
 					{
-						inaccessibleAbstractMembers = true;
+						inaccessibleAbstractMembers.Add(selfBaseProperty);
 					}
 					else
 					{
@@ -264,7 +268,11 @@ internal sealed class MockablePropertyDiscovery
 			}
 		}
 
-		return new MockableProperties([.. properties], inaccessibleAbstractMembers, hasStaticAbstractProperties);
+		return new MockableProperties(
+			[.. properties],
+			[.. inaccessibleAbstractMembers.Select(
+				property => new MockablePropertyResult(property, mockType, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, 0))],
+			hasStaticAbstractProperties);
 	}
 
 	internal MockableProperties Properties { get; }

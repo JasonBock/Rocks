@@ -57,6 +57,17 @@ internal static class MockMakeBuilder
 			}
 		}
 
+		var inaccessibleProperties = mockType.InaccessibleAbstractProperties.Where(_ => !_.IsIndexer).ToArray();
+
+		if (inaccessibleProperties.Length > 0)
+		{
+			for (var i = 0; i < inaccessibleProperties.Length; i++)
+			{
+				var inaccessibleProperty = inaccessibleProperties[i];
+				MockPropertyBuilder.Build(writer, inaccessibleProperty);
+			}
+		}
+
 		var indexers = mockType.Properties.Where(_ => _.IsIndexer).ToArray();
 
 		if (indexers.Length > 0)
@@ -65,6 +76,17 @@ internal static class MockMakeBuilder
 			{
 				var indexer = indexers[i];
 				MockIndexerBuilder.Build(writer, indexer);
+			}
+		}
+
+		var inaccessibleIndexers = mockType.InaccessibleAbstractProperties.Where(_ => _.IsIndexer).ToArray();
+
+		if (inaccessibleIndexers.Length > 0)
+		{
+			for (var i = 0; i < inaccessibleIndexers.Length; i++)
+			{
+				var inaccessibleIndexer = inaccessibleIndexers[i];
+				MockPropertyBuilder.Build(writer, inaccessibleIndexer);
 			}
 		}
 

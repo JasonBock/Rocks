@@ -2,7 +2,9 @@
 using Rocks.Analysis.Builders.Shim;
 using Rocks.Analysis.Models;
 using System.CodeDom.Compiler;
+using MakeMockIndexerBuilder = Rocks.Analysis.Builders.Make.MockIndexerBuilder;
 using MakeMockMethodBuilder = Rocks.Analysis.Builders.Make.MockMethodBuilder;
+using MakeMockPropertyBuilder = Rocks.Analysis.Builders.Make.MockPropertyBuilder;
 
 namespace Rocks.Analysis.Builders.Create;
 
@@ -63,6 +65,12 @@ internal static class MockTypeBuilder
 			MockPropertyBuilder.Build(writer, type, property, canRaiseEvents);
 		}
 
+		foreach (var inaccessibleProperty in type.InaccessibleAbstractProperties.Where(_ => !_.IsIndexer))
+		{
+			hasProperties = true;
+			MakeMockPropertyBuilder.Build(writer, inaccessibleProperty);
+		}
+
 		if (hasProperties)
 		{
 			writer.WriteLine();
@@ -74,6 +82,12 @@ internal static class MockTypeBuilder
 		{
 			hasIndexers = true;
 			MockIndexerBuilder.Build(writer, type, indexer, canRaiseEvents);
+		}
+
+		foreach (var inaccessibleIndexer in type.InaccessibleAbstractProperties.Where(_ => _.IsIndexer))
+		{
+			hasIndexers = true;
+			MakeMockIndexerBuilder.Build(writer, inaccessibleIndexer);
 		}
 
 		if (hasIndexers)
