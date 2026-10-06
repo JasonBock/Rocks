@@ -2,28 +2,41 @@ I'll keep it simple. Gather all the inaccessible abstract members, and emit them
 
 Note: we can't remove `ROCK8` because of `HasInaccessibleAbstractMembersWithInvalidIdentifiers()`. Maybe we reword the explanation of the diagnostic.
 
+```c#
+public abstract class Holder
+{
+    protected Holder() { }
+
+    public abstract Data Value { get; protected set; }
+
+    protected internal struct Data { }
+}
+```
+
+If the property is an inaccessible abstract member like the code above, what we need to do is ... well, I got it to work :)
+
 Properties:
-* `PropertyModelTests` - can't assume that `PropertyDeclarationSyntax` will exist, rather, pass in property name and look for that off of `ITypeSymbol`
-* `InternalGeneratorTests.GenerateWhenAbstractClassUsedInaccessibleNestedClassInPropertyAsync()` - make sure it passes
+* DONE - `PropertyModelTests` - can't assume that `PropertyDeclarationSyntax` will exist, rather, pass in property name and look for that off of `ITypeSymbol`
+* DONE - `InternalGeneratorTests.GenerateWhenAbstractClassUsedInaccessibleNestedClassInPropertyAsync()` - make sure it passes
 
 TODOs:
 * Types to change
     * DONE - `MockableMethods`
-    * `MockableProperties`
-        * Properties
-        * Indexers
+    * DONE - `MockableProperties`
+        * DONE - Properties
+        * DONE - Indexers
     * `MockableEvents`
     * `MockableConstructors` ?
         * Pass an `ImmutableArray<MockableXYZResult>` for `inaccessibleAbstractMembers`
         * During mock type creation, look for the `InaccesibleAbstractMembers`, and implement them like a "make" (no-op or return `default!`);
 * DONE - For the makes, need to just put a `WriteLine()` at the end of every member generation, oh well, we'll have one extra blank line at the end, so be it :)
 * Tests to change
-    * Properties
-        * Without intermediate
-        * With intermediate
-    * Indexers
-        * Without intermediate
-        * With intermediate
+    * DONE - Properties
+        * DONE - Without intermediate
+        * DONE - With intermediate
+    * DONE - Indexers
+        * DONE - Without intermediate
+        * DONE - With intermediate
     * Events
         * Without intermediate
         * With intermediate

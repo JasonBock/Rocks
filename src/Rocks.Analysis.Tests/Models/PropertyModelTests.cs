@@ -33,6 +33,7 @@ public static class PropertyModelTests
 			Assert.That(model.ContainingType.FullyQualifiedName, Is.EqualTo("global::Target"));
 			Assert.That(model.GetCanBeSeenByContainingAssembly, Is.True);
 			Assert.That(model.GetMethod, Is.Not.Null);
+			Assert.That(model.IsInaccessibleAbstractMember, Is.False);
 			Assert.That(model.InitCanBeSeenByContainingAssembly, Is.False);
 			Assert.That(model.IsAbstract, Is.False);
 			Assert.That(model.IsIndexer, Is.False);
@@ -87,14 +88,15 @@ public static class PropertyModelTests
 		const uint memberIdentifier = 1;
 		var model = new PropertyModel(property, mockType, modelContext,
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No,
-			 PropertyAccessor.Get, false, memberIdentifier);
+			 PropertyAccessor.GetAndSet, true, memberIdentifier);
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(model.GetCanBeSeenByContainingAssembly, Is.True);
+			Assert.That(model.IsInaccessibleAbstractMember, Is.True);
+			Assert.That(model.GetCanBeSeenByContainingAssembly, Is.False);
 			Assert.That(model.GetMethod, Is.Not.Null);
 			Assert.That(model.InitCanBeSeenByContainingAssembly, Is.False);
-			Assert.That(model.SetCanBeSeenByContainingAssembly, Is.True);
+			Assert.That(model.SetCanBeSeenByContainingAssembly, Is.False);
 			Assert.That(model.SetMethod, Is.Not.Null);
 		}
 	}
@@ -364,9 +366,13 @@ public static class PropertyModelTests
 		var root = await syntaxTree.GetRootAsync();
 		var typeSyntax = root.DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single();
-		var propertySyntax = root.DescendantNodes(_ => true)
-			.OfType<PropertyDeclarationSyntax>().Single();
-		return (model.GetDeclaredSymbol(propertySyntax)!, model.GetDeclaredSymbol(typeSyntax)!, new(model));
+		var typeSymbol = model.GetDeclaredSymbol(typeSyntax)!;
+		var typeProperties = typeSymbol.GetMembers().OfType<IPropertySymbol>().ToArray();
+		var propertySymbol = 
+			typeProperties.Length > 0 ? 
+				typeProperties[0] :
+				typeSymbol.BaseType!.GetMembers().OfType<IPropertySymbol>().ToArray()[0];
+		return (propertySymbol, typeSymbol, new(model));
 	}
 
 	private static async Task<(IPropertySymbol, ITypeSymbol, ModelContext)> GetSymbolsForIndexerCompilationAsync(
@@ -379,8 +385,12 @@ public static class PropertyModelTests
 		var root = await syntaxTree.GetRootAsync();
 		var typeSyntax = root.DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single();
-		var indexerSyntax = root.DescendantNodes(_ => true)
-			.OfType<IndexerDeclarationSyntax>().Single();
-		return (model.GetDeclaredSymbol(indexerSyntax)!, model.GetDeclaredSymbol(typeSyntax)!, new(model));
+		var typeSymbol = model.GetDeclaredSymbol(typeSyntax)!;
+		var typeProperties = typeSymbol.GetMembers().OfType<IPropertySymbol>().ToArray();
+		var indexerSymbol =
+			typeProperties.Length > 0 ?
+				typeProperties[0] :
+				typeSymbol.BaseType!.GetMembers().OfType<IPropertySymbol>().ToArray()[0];
+		return (indexerSymbol, typeSymbol, new(model));
 	}
 }

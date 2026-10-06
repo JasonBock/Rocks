@@ -86,7 +86,7 @@ internal static class MockMakeBuilder
 			for (var i = 0; i < inaccessibleIndexers.Length; i++)
 			{
 				var inaccessibleIndexer = inaccessibleIndexers[i];
-				MockPropertyBuilder.Build(writer, inaccessibleIndexer);
+				MockIndexerBuilder.Build(writer, inaccessibleIndexer);
 			}
 		}
 

@@ -31,7 +31,7 @@ internal static class MockIndexerBuilder
 		writer.Indent++;
 
 		if ((indexer.Accessors == PropertyAccessor.Get || indexer.Accessors == PropertyAccessor.GetAndSet || indexer.Accessors == PropertyAccessor.GetAndInit) &&
-			indexer.GetCanBeSeenByContainingAssembly)
+			(indexer.IsInaccessibleAbstractMember || indexer.GetCanBeSeenByContainingAssembly))
 		{
 			var methodVisibility = indexer.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 				$"{indexer.GetMethod!.OverridingCodeValue} " : string.Empty;
@@ -49,7 +49,7 @@ internal static class MockIndexerBuilder
 		}
 
 		if ((indexer.Accessors == PropertyAccessor.Set || indexer.Accessors == PropertyAccessor.GetAndSet) &&
-			indexer.SetCanBeSeenByContainingAssembly)
+			(indexer.IsInaccessibleAbstractMember || indexer.SetCanBeSeenByContainingAssembly))
 		{
 			var methodVisibility = indexer.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 				$"{indexer.SetMethod!.OverridingCodeValue} " : string.Empty;
@@ -58,7 +58,7 @@ internal static class MockIndexerBuilder
 			writer.WriteLine($"{setVisibility}set {{ }}");
 		}
 		else if ((indexer.Accessors == PropertyAccessor.Init || indexer.Accessors == PropertyAccessor.GetAndInit) &&
-			indexer.InitCanBeSeenByContainingAssembly)
+			(indexer.IsInaccessibleAbstractMember || indexer.InitCanBeSeenByContainingAssembly))
 		{
 			var methodVisibility = indexer.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 				$"{indexer.SetMethod!.OverridingCodeValue} " : string.Empty;
