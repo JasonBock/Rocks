@@ -28,7 +28,7 @@ public static class MockableEventDiscoveryTests
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Has.Length.Zero);
 			var events = result.Results;
 			Assert.That(events, Has.Length.EqualTo(1));
 
@@ -58,7 +58,7 @@ public static class MockableEventDiscoveryTests
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Has.Length.Zero);
 			var events = result.Results;
 			Assert.That(events, Has.Length.EqualTo(1));
 
@@ -90,7 +90,7 @@ public static class MockableEventDiscoveryTests
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Has.Length.Zero);
 			var events = result.Results;
 			Assert.That(events, Has.Length.EqualTo(1));
 
@@ -120,7 +120,7 @@ public static class MockableEventDiscoveryTests
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Has.Length.Zero);
 			var events = result.Results;
 			Assert.That(events, Has.Length.EqualTo(1));
 
@@ -151,7 +151,7 @@ public static class MockableEventDiscoveryTests
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Has.Length.Zero);
 			var events = result.Results;
 			Assert.That(events, Has.Length.EqualTo(1));
 
@@ -187,7 +187,7 @@ public static class MockableEventDiscoveryTests
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Has.Length.Zero);
 			var events = result.Results;
 			Assert.That(events, Has.Length.EqualTo(2));
 
@@ -232,7 +232,7 @@ public static class MockableEventDiscoveryTests
 
 		using (Assert.EnterMultipleScope())
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Has.Length.Zero);
 			var events = result.Results;
 			Assert.That(events, Has.Length.EqualTo(3));
 

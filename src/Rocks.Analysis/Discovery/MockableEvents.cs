@@ -5,9 +5,10 @@ namespace Rocks.Analysis.Discovery;
 internal sealed class MockableEvents
 {
 	internal MockableEvents(
-		ImmutableArray<MockableEventResult> results, bool hasInaccessibleAbstractMembers) =>
-		(this.Results, this.HasInaccessibleAbstractMembers) = (results, hasInaccessibleAbstractMembers);
+		ImmutableArray<MockableEventResult> results,
+		ImmutableArray<MockableEventResult> inaccessibleAbstractMembers) =>
+		(this.Results, this.InaccessibleAbstractMembers) = (results, inaccessibleAbstractMembers);
 
-	internal bool HasInaccessibleAbstractMembers { get; }
+	internal ImmutableArray<MockableEventResult> InaccessibleAbstractMembers { get; }
 	internal ImmutableArray<MockableEventResult> Results { get; }
 }

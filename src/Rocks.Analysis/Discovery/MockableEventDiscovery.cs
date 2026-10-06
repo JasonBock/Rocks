@@ -16,7 +16,7 @@ internal sealed class MockableEventDiscovery
 		Compilation compilation)
 	{
 		var events = new List<MockableEventResult>();
-		var inaccessibleAbstractMembers = false;
+		var inaccessibleAbstractMembers = new List<IEventSymbol>();
 
 		foreach (var selfEvent in mockType.GetMembers().OfType<IEventSymbol>()
 			.Where(_ => !_.IsStatic && _.CanBeReferencedByName &&
@@ -26,7 +26,7 @@ internal sealed class MockableEventDiscovery
 
 			if (!canBeSeen && selfEvent.IsAbstract)
 			{
-				inaccessibleAbstractMembers = true;
+				inaccessibleAbstractMembers.Add(selfEvent);
 			}
 			else if (canBeSeen)
 			{
@@ -34,7 +34,10 @@ internal sealed class MockableEventDiscovery
 			}
 		}
 
-		return new([.. events], inaccessibleAbstractMembers);
+		return new(
+			[.. events],
+			[.. inaccessibleAbstractMembers.Select(
+				@event => new MockableEventResult(@event, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes))]);
 	}
 
 	private static MockableEvents GetEventsForInterface(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol,
@@ -46,14 +49,14 @@ internal sealed class MockableEventDiscovery
 			@event.CanBeReferencedByName;
 
 		var events = new List<MockableEventResult>();
-		var inaccessibleAbstractMembers = false;
+		var inaccessibleAbstractMembers = new List<IEventSymbol>();
 
 		foreach (var selfEvent in mockType.GetMembers().OfType<IEventSymbol>()
 			.Where(IsEventToExamine))
 		{
 			if (!selfEvent.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol, compilation))
 			{
-				inaccessibleAbstractMembers = true;
+				inaccessibleAbstractMembers.Add(selfEvent);
 			}
 			else
 			{
@@ -70,7 +73,7 @@ internal sealed class MockableEventDiscovery
 			{
 				if (!selfBaseEvent.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol, compilation))
 				{
-					inaccessibleAbstractMembers = true;
+					inaccessibleAbstractMembers.Add(selfBaseEvent);
 				}
 				else
 				{
@@ -114,7 +117,10 @@ internal sealed class MockableEventDiscovery
 			}
 		}
 
-		return new([.. events], inaccessibleAbstractMembers);
+		return new(
+			[.. events],
+			[.. inaccessibleAbstractMembers.Select(
+				@event => new MockableEventResult(@event, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes))]);
 	}
 
 	internal MockableEvents Events { get; }
