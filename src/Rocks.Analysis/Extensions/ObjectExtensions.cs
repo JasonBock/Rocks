@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using System.Globalization;
 
 namespace Rocks.Analysis.Extensions;
 
@@ -15,7 +16,7 @@ public static class ObjectExtensions
 	{
 		if (selfType.TypeKind == TypeKind.Enum)
 		{
-			return $"({selfType.GetFullyQualifiedName(compilation)})({self})";
+			return $"({selfType.GetFullyQualifiedName(compilation)})({Convert.ToString(self, CultureInfo.InvariantCulture)})";
 		}
 		else
 		{
@@ -37,7 +38,9 @@ public static class ObjectExtensions
 				ushort us => us.GetUnsignedShortValue(),
 				null => selfType.IsValueType ? "default" :
 					selfType.TypeKind == TypeKind.TypeParameter ? "default!" : "null",
-				_ => self.ToString() ?? string.Empty
+				_ => self is IFormattable formattable ?
+				formattable.ToString(null, CultureInfo.InvariantCulture) :
+				self.ToString() ?? string.Empty
 			};
 		}
 	}
@@ -47,7 +50,7 @@ public static class ObjectExtensions
 		{
 			byte.MaxValue => "byte.MaxValue",
 			byte.MinValue => "byte.MinValue",
-			_ => self.ToString()
+			_ => self.ToString(CultureInfo.InvariantCulture)
 		};
 
 	private static string GetSignedByteValue(this sbyte self) =>
@@ -55,7 +58,7 @@ public static class ObjectExtensions
 		{
 			sbyte.MaxValue => "sbyte.MaxValue",
 			sbyte.MinValue => "sbyte.MinValue",
-			_ => self.ToString()
+			_ => self.ToString(CultureInfo.InvariantCulture)
 		};
 
 	private static string GetCharValue(this char self) =>
@@ -74,7 +77,7 @@ public static class ObjectExtensions
 			decimal.MinValue => "decimal.MinValue",
 			decimal.One => "decimal.One",
 			decimal.Zero => "decimal.Zero",
-			_ => self.ToString()
+			_ => self.ToString(CultureInfo.InvariantCulture)
 		};
 
 	private static string GetDoubleValue(this double self) =>
@@ -86,7 +89,7 @@ public static class ObjectExtensions
 			double.NaN => "double.NaN",
 			double.NegativeInfinity => "double.NegativeInfinity",
 			double.PositiveInfinity => "double.PositiveInfinity",
-			_ => self.ToString()
+			_ => self.ToString(CultureInfo.InvariantCulture)
 		};
 
 	private static string GetFloatValue(this float self) =>
@@ -98,7 +101,7 @@ public static class ObjectExtensions
 			float.NaN => "float.NaN",
 			float.NegativeInfinity => "float.NegativeInfinity",
 			float.PositiveInfinity => "float.PositiveInfinity",
-			_ => self.ToString()
+			_ => self.ToString(CultureInfo.InvariantCulture)
 		};
 
 	private static string GetIntValue(this int self) =>
@@ -106,7 +109,7 @@ public static class ObjectExtensions
 		{
 			int.MaxValue => "int.MaxValue",
 			int.MinValue => "int.MinValue",
-			_ => self.ToString()
+			_ => self.ToString(CultureInfo.InvariantCulture)
 		};
 
 	private static string GetUnsignedIntValue(this uint self) =>
@@ -114,7 +117,7 @@ public static class ObjectExtensions
 		{
 			uint.MaxValue => "uint.MaxValue",
 			uint.MinValue => "uint.MinValue",
-			_ => self.ToString()
+			_ => self.ToString(CultureInfo.InvariantCulture)
 		};
 
 	private static string GetLongValue(this long self) =>
@@ -122,7 +125,7 @@ public static class ObjectExtensions
 		{
 			long.MaxValue => "long.MaxValue",
 			long.MinValue => "long.MinValue",
-			_ => self.ToString()
+			_ => self.ToString(CultureInfo.InvariantCulture)
 		};
 
 	private static string GetUnsignedLongValue(this ulong self) =>
@@ -130,7 +133,7 @@ public static class ObjectExtensions
 		{
 			ulong.MaxValue => "ulong.MaxValue",
 			ulong.MinValue => "ulong.MinValue",
-			_ => self.ToString()
+			_ => self.ToString(CultureInfo.InvariantCulture)
 		};
 
 	private static string GetShortValue(this short self) =>
@@ -138,7 +141,7 @@ public static class ObjectExtensions
 		{
 			short.MaxValue => "short.MaxValue",
 			short.MinValue => "short.MinValue",
-			_ => self.ToString()
+			_ => self.ToString(CultureInfo.InvariantCulture)
 		};
 
 	private static string GetUnsignedShortValue(this ushort self) =>
@@ -146,6 +149,6 @@ public static class ObjectExtensions
 		{
 			ushort.MaxValue => "ushort.MaxValue",
 			ushort.MinValue => "ushort.MinValue",
-			_ => self.ToString()
+			_ => self.ToString(CultureInfo.InvariantCulture)
 		};
 }
