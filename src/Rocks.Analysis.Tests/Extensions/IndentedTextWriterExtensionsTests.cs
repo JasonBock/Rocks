@@ -19,7 +19,8 @@ internal static class IndentedTextWriterExtensionsTests
 			Third Line
 			""");
 
-		Assert.That(writer.ToString(), Is.EqualTo("First Line\r\nSecond Line\r\nThird Line\r\n"));
+		var expected = string.Join(Environment.NewLine, "First Line", "Second Line", "Third Line") + Environment.NewLine;
+		Assert.That(writer.ToString(), Is.EqualTo(expected));
 	}
 
 	[Test]
@@ -35,6 +36,7 @@ internal static class IndentedTextWriterExtensionsTests
 			Third Line
 			""", 2);
 
-		Assert.That(writer.ToString(), Is.EqualTo("\t\tFirst Line\r\n\t\tSecond Line\r\n\t\tThird Line\r\n"));
+		var expected = string.Join(Environment.NewLine, "\t\tFirst Line", "\t\tSecond Line", "\t\tThird Line") + Environment.NewLine;
+		Assert.That(writer.ToString(), Is.EqualTo(expected));
 	}
 }
