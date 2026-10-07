@@ -38,6 +38,7 @@ TODOs:
         * DONE - Without intermediate
         * DONE - With intermediate
     * Events
+        * DONE - Add case in `MockableEventDiscoveryTests`
         * Without intermediate
         * With intermediate
     * Constructors ?

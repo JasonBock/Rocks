@@ -18,19 +18,28 @@ internal sealed class MockableEventDiscovery
 		var events = new List<MockableEventResult>();
 		var inaccessibleAbstractMembers = new List<IEventSymbol>();
 
-		foreach (var selfEvent in mockType.GetMembers().OfType<IEventSymbol>()
-			.Where(_ => !_.IsStatic && _.CanBeReferencedByName &&
-				(_.IsAbstract || _.IsVirtual)))
-		{
-			var canBeSeen = selfEvent.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol, compilation);
+		var hierarchy = mockType.GetInheritanceHierarchy();
 
-			if (!canBeSeen && selfEvent.IsAbstract)
+		foreach (var hierarchyType in hierarchy)
+		{
+			foreach (var hierarchyEvent in hierarchyType.GetMembers().OfType<IEventSymbol>()
+				.Where(_ => !_.IsStatic && _.CanBeReferencedByName &&
+					(_.IsAbstract || _.IsVirtual || _.IsOverride)))
 			{
-				inaccessibleAbstractMembers.Add(selfEvent);
-			}
-			else if (canBeSeen)
-			{
-				events.Add(new(selfEvent, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes));
+				var canBeSeen = hierarchyEvent.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol, compilation);
+
+				if (!canBeSeen && hierarchyEvent.IsAbstract)
+				{
+					inaccessibleAbstractMembers.Add(hierarchyEvent);
+				}
+				else if (canBeSeen)
+				{
+					events.Add(new(hierarchyEvent, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes));
+				}
+				else if (hierarchyEvent.IsOverride && hierarchyEvent.OverriddenEvent is not null)
+				{
+					inaccessibleAbstractMembers.Remove(hierarchyEvent.OverriddenEvent);
+				}
 			}
 		}
 

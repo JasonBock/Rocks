@@ -9,6 +9,96 @@ namespace Rocks.Analysis.Tests.Discovery;
 public static class MockableEventDiscoveryTests
 {
 	[Test]
+	public static async Task GetMockableMethodsWithInaccessibleAbstractMethodsAsync()
+	{
+		const string targetTypeName = "DerivingHolder";
+
+		var source =
+			"""
+			using System;
+
+			public abstract class Holder
+			{
+				protected Holder() { }
+
+				protected abstract event EventHandler<DataEventArgs> Test;
+
+				protected internal class DataEventArgs 
+					: EventArgs { }
+			}
+			""";
+
+		var sourceReferences = Shared.References.Value
+			.Cast<MetadataReference>();
+		var sourceSyntaxTree = CSharpSyntaxTree.ParseText(source);
+		var sourceCompilation = CSharpCompilation.Create("Source", [sourceSyntaxTree],
+			sourceReferences,
+			new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+		var sourceReference = sourceCompilation.ToMetadataReference()!;
+
+		var code =
+			"""
+			public abstract class DerivingHolder
+				: Holder { }
+			""";
+
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName, [sourceCompilation.ToMetadataReference()]);
+		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
+
+		using (Assert.EnterMultipleScope())
+		{
+			Assert.That(result.InaccessibleAbstractMembers, Has.Length.EqualTo(1));
+			var inaccessibleEvent = result.InaccessibleAbstractMembers[0];
+			Assert.That(inaccessibleEvent.Value.Name, Is.EqualTo("Test"));
+			Assert.That(inaccessibleEvent.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
+			Assert.That(inaccessibleEvent.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+		}
+	}
+
+	[Test]
+	public static async Task GetMockableMethodsWithInaccessibleAbstractMethodsWithOverrideAsync()
+	{
+		const string targetTypeName = "DerivingHolder";
+
+		var source =
+			"""
+			using System;
+
+			public abstract class Holder
+			{
+				protected Holder() { }
+
+				protected abstract event EventHandler<DataEventArgs> Test;
+
+				protected internal class DataEventArgs 
+					: EventArgs { }
+			}
+			""";
+
+		var sourceReferences = Shared.References.Value
+			.Cast<MetadataReference>();
+		var sourceSyntaxTree = CSharpSyntaxTree.ParseText(source);
+		var sourceCompilation = CSharpCompilation.Create("Source", [sourceSyntaxTree],
+			sourceReferences,
+			new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+		var sourceReference = sourceCompilation.ToMetadataReference()!;
+
+		var code =
+			"""
+			public class DerivingHolder
+				: Holder 
+			{ 
+				protected override sealed event EventHandler<DataEventArgs> Test;
+			}
+			""";
+
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName, [sourceCompilation.ToMetadataReference()]);
+		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
+
+		Assert.That(result.InaccessibleAbstractMembers, Has.Length.Zero);
+	}
+
+	[Test]
 	public static async Task GetMockableEventsFromAbstractClassAsync()
 	{
 		const string targetTypeName = "TestClass";
@@ -23,7 +113,7 @@ public static class MockableEventDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName, []);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
 		using (Assert.EnterMultipleScope())
@@ -53,7 +143,7 @@ public static class MockableEventDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName, []);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
 		using (Assert.EnterMultipleScope())
@@ -85,7 +175,7 @@ public static class MockableEventDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName, []);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
 		using (Assert.EnterMultipleScope())
@@ -115,7 +205,7 @@ public static class MockableEventDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName, []);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
 		using (Assert.EnterMultipleScope())
@@ -146,7 +236,7 @@ public static class MockableEventDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName, []);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
 		using (Assert.EnterMultipleScope())
@@ -182,7 +272,7 @@ public static class MockableEventDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName, []);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
 		using (Assert.EnterMultipleScope())
@@ -227,7 +317,7 @@ public static class MockableEventDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName);
+		var (typeSymbol, compilation) = await GetTypeSymbolAsync(code, targetTypeName, []);
 		var result = new MockableEventDiscovery(typeSymbol, typeSymbol.ContainingAssembly, compilation).Events;
 
 		using (Assert.EnterMultipleScope())
@@ -250,11 +340,13 @@ public static class MockableEventDiscoveryTests
 		}
 	}
 
-	private static async Task<(ITypeSymbol, Compilation)> GetTypeSymbolAsync(string source, string targetTypeName)
+	private static async Task<(ITypeSymbol, Compilation)> GetTypeSymbolAsync(
+		string source, string targetTypeName,
+		IEnumerable<MetadataReference> additionalReferences)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var compilation = CSharpCompilation.Create("generator", [syntaxTree],
-			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+			Shared.References.Value.Concat(additionalReferences), new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
 		var typeSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
