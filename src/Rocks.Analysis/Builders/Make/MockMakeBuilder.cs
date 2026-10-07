@@ -95,6 +95,11 @@ internal static class MockMakeBuilder
 			MockEventsBuilder.Build(writer, mockType.Events);
 		}
 
+		if (mockType.InaccessibleAbstractEvents.Length > 0)
+		{
+			MockEventsBuilder.Build(writer, mockType.InaccessibleAbstractEvents);
+		}
+
 		writer.Indent--;
 		writer.WriteLine("}");
 	}

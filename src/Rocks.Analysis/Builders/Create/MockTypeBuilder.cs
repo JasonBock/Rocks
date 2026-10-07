@@ -5,6 +5,7 @@ using System.CodeDom.Compiler;
 using MakeMockIndexerBuilder = Rocks.Analysis.Builders.Make.MockIndexerBuilder;
 using MakeMockMethodBuilder = Rocks.Analysis.Builders.Make.MockMethodBuilder;
 using MakeMockPropertyBuilder = Rocks.Analysis.Builders.Make.MockPropertyBuilder;
+using MakeMockEventsBuilder = Rocks.Analysis.Builders.Make.MockEventsBuilder;
 
 namespace Rocks.Analysis.Builders.Create;
 
@@ -98,6 +99,14 @@ internal static class MockTypeBuilder
 		if (canRaiseEvents)
 		{
 			MockEventsBuilder.Build(writer, type.Events, type.MockName);
+			writer.WriteLine();
+		}
+
+		// These need to be generated regardless
+		// of the value of canRaiseEvents.
+		if (type.InaccessibleAbstractEvents.Length > 0)
+		{
+			MakeMockEventsBuilder.Build(writer, type.InaccessibleAbstractEvents);
 			writer.WriteLine();
 		}
 

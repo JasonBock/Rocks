@@ -64,6 +64,9 @@ internal sealed record TypeMockModel
 		this.Events = [.. events.Results.Select(_ =>
 			new EventModel(_.Value, modelContext,
 				_.RequiresExplicitInterfaceImplementation, _.RequiresOverride))];
+		this.InaccessibleAbstractEvents = [.. events.InaccessibleAbstractMembers.Select(_ =>
+			new EventModel(_.Value, modelContext,
+				_.RequiresExplicitInterfaceImplementation, _.RequiresOverride))];
 		this.Shims = shouldResolveShims ?
 			[.. shims.Select(_ => MockModel.Create(node, _, null, modelContext, BuildType.Create, codeVisibility, false).Information!.Type)] :
 			[];
@@ -185,6 +188,7 @@ internal sealed record TypeMockModel
 	internal string? ExpectationsNamespace { get; }
 	internal string ExpectationsPropertyName { get; }
 	internal EquatableArray<EventModel> Events { get; }
+	internal EquatableArray<EventModel> InaccessibleAbstractEvents { get; }
 	internal EquatableArray<MethodModel> InaccessibleAbstractMethods { get; }
 	internal EquatableArray<PropertyModel> InaccessibleAbstractProperties { get; }
 	internal bool IsPartial { get; }
