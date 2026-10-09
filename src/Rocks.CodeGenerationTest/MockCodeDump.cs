@@ -1,18 +1,9 @@
 ﻿namespace Stuff;
 
-public abstract class Holder
+public abstract class InternalTargets { public abstract void VisibleWork(); protected abstract void Work(string value); }
+
+public abstract class IntermediateInternalTargets
+	: InternalTargets
 {
-	protected Holder() { }
-
-	protected abstract event EventHandler<DataEventArgs> Test;
-
-	protected internal class DataEventArgs
-		: EventArgs
-	{ }
-}
-
-public class DerivingHolder
-	: Holder
-{
-	protected override sealed event EventHandler<DataEventArgs>? Test { add { } remove { } }
+	protected override sealed void Work(string value) => throw new NotImplementedException();
 }
