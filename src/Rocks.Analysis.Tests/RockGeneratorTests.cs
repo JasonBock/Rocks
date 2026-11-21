@@ -65,7 +65,7 @@ public static class RockGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.IContainNullableReferences.DoSomething(String,String)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.IContainNullableReferences.DoSomething(global::System.String,global::System.String)"/>.
 					/// </summary>
 					internal global::MockTests.IContainNullableReferencesCreateExpectations.Adornments.DoSomethingAdornmentsA89416BF DoSomething(global::Rocks.Argument<string?> @a, global::Rocks.Argument<string> @b)
 					{

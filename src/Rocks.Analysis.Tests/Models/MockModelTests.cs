@@ -12,7 +12,6 @@ public static class MockModelTests
 	[TestCase("using System; [Obsolete(\"Old\", error: true)]public class DoNotUse { } public class UsesObsolete { public virtual void ObsoleteMethod(DoNotUse use) { } }")]
 	[TestCase("using System; [Obsolete(\"Old\", error: true)]public class DoNotUse { } public class UsesObsolete { public virtual DoNotUse ObsoleteMethod() => default!; }")]
 	[TestCase("using System; [Obsolete(\"Old\", error: true)]public class DoNotUse { } public class UsesObsolete { public virtual DoNotUse ObsoleteProperty { get; } }")]
-	[TestCase("using System; [Obsolete(\"Old\", error: true)]public class DoNotUse { } public class UsesObsolete { public virtual DoNotUse ObsoleteProperty { get; } }")]
 	[TestCase("using System; [Obsolete(\"Old\", error: true)]public class DoNotUse { } public class UsesObsolete { public virtual int this[DoNotUse value] { get; } }")]
 	public static async Task CreateWhenMemberUsesObsoleteTypeAsync(string code)
 	{

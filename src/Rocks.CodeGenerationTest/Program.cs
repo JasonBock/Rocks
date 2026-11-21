@@ -2,6 +2,7 @@
 //#define INCLUDE_FAILING
 
 using DotNet.Testcontainers.Containers;
+using Grpc.Core;
 using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 using R3;
@@ -538,5 +539,30 @@ static void PrintIssues(ImmutableArray<Issue> issues)
 		}
 
 		Console.ForegroundColor = currentColor;
+	}
+}
+
+namespace Grpc.Core
+{
+	public class TestClientBase
+		: ClientBase<TestClientBase>
+	{
+		public TestClientBase()
+		{
+		}
+
+		private TestClientBase(ClientBaseConfiguration configuration) : base(configuration)
+		{
+		}
+
+		public TestClientBase(ChannelBase channel) : base(channel)
+		{
+		}
+
+		public TestClientBase(CallInvoker callInvoker) : base(callInvoker)
+		{
+		}
+
+		protected override sealed TestClientBase NewInstance(ClientBaseConfiguration configuration) => new(configuration);
 	}
 }

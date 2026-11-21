@@ -65,7 +65,7 @@ public static class ExplicitImplementationGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IImplement{T, T2}.GetValue2()"/>.
+					/// Sets an expectation for <see cref="global::ISame{T, T2}.GetValue2()"/>.
 					/// </summary>
 					internal global::IImplementCreateExpectations<T, T2>.Adornments.GetValue2Adornments2D2816FE GetValue2()
 					{
@@ -1382,7 +1382,7 @@ public static class ExplicitImplementationGeneratorTests
 						}
 						
 						/// <summary>
-						/// Contains expectation setups for the <see cref="global::ILeft" property./>.
+						/// Contains expectation setups for the <see cref="global::ILeft.Value"/> property.
 						/// </summary>
 						internal global::ILeftRightCreateExpectations.SetupsExpectations.ExplicitForILeftExpectations.ValuePropertyExpectations Value => new(this.parent);
 						
@@ -1434,7 +1434,7 @@ public static class ExplicitImplementationGeneratorTests
 						}
 						
 						/// <summary>
-						/// Contains expectation setups for the <see cref="global::IRight" property./>.
+						/// Contains expectation setups for the <see cref="global::IRight.Value"/> property.
 						/// </summary>
 						internal global::ILeftRightCreateExpectations.SetupsExpectations.ExplicitForIRightExpectations.ValuePropertyExpectations Value => new(this.parent);
 						
@@ -2122,7 +2122,7 @@ public static class ExplicitImplementationGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ISetupList.GetEnumerator()"/>.
+					/// Sets an expectation for <see cref="global::System.Collections.Generic.IEnumerable{T}.GetEnumerator()"/>.
 					/// </summary>
 					internal global::ISetupListCreateExpectations.Adornments.GetEnumeratorAdornments2D2816FE GetEnumerator()
 					{

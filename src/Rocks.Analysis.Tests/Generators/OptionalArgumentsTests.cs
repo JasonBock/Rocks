@@ -65,7 +65,7 @@ public static class OptionalArgumentsTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ICallerParameter.Do(String)"/>.
+					/// Sets an expectation for <see cref="global::ICallerParameter.Do(global::System.String)"/>.
 					/// </summary>
 					internal global::ICallerParameterCreateExpectations.Adornments.DoAdornments3129B210 Do(global::Rocks.Argument<string?> @propertyName)
 					{
@@ -83,7 +83,7 @@ public static class OptionalArgumentsTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ICallerParameter.Do(String)"/>.
+					/// Sets an expectation for <see cref="global::ICallerParameter.Do(global::System.String)"/>.
 					/// </summary>
 					internal global::ICallerParameterCreateExpectations.Adornments.DoAdornments3129B210 Do(string? @propertyName = null) =>
 						this.Do(global::Rocks.Arg.Is(@propertyName));
@@ -95,7 +95,7 @@ public static class OptionalArgumentsTests
 							this.parent = parent;
 					
 						/// <summary>
-						/// Sets an expectation for <see cref="global::IBaseCallerParameter.Do(String)"/>.
+						/// Sets an expectation for <see cref="global::IBaseCallerParameter.Do(global::System.String)"/>.
 						/// </summary>
 						internal global::ICallerParameterCreateExpectations.Adornments.DoAdornments138A9575 Do(global::Rocks.Argument<string?> @propertyName)
 						{
@@ -113,7 +113,7 @@ public static class OptionalArgumentsTests
 						}
 						
 						/// <summary>
-						/// Sets an expectation for <see cref="global::IBaseCallerParameter.Do(String)"/>.
+						/// Sets an expectation for <see cref="global::IBaseCallerParameter.Do(global::System.String)"/>.
 						/// </summary>
 						internal global::ICallerParameterCreateExpectations.Adornments.DoAdornments138A9575 Do(string? @propertyName = null) =>
 							this.Do(global::Rocks.Arg.Is(@propertyName));
@@ -413,7 +413,7 @@ public static class OptionalArgumentsTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IHaveOptionalArguments.Foo(Int32,String,Double)"/>.
+					/// Sets an expectation for <see cref="global::IHaveOptionalArguments.Foo(global::System.Int32,global::System.String,global::System.Double)"/>.
 					/// </summary>
 					internal global::IHaveOptionalArgumentsCreateExpectations.Adornments.FooAdornments0E162FE7 Foo(global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b, global::Rocks.Argument<double> @c)
 					{
@@ -435,7 +435,7 @@ public static class OptionalArgumentsTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IHaveOptionalArguments.Foo(Int32,String,Double)"/>.
+					/// Sets an expectation for <see cref="global::IHaveOptionalArguments.Foo(global::System.Int32,global::System.String,global::System.Double)"/>.
 					/// </summary>
 					internal global::IHaveOptionalArgumentsCreateExpectations.Adornments.FooAdornments0E162FE7 Foo(global::Rocks.Argument<int> @a, string @b = "b", double @c = 3.2) =>
 						this.Foo(@a, global::Rocks.Arg.Is(@b), global::Rocks.Arg.Is(@c));
@@ -455,7 +455,7 @@ public static class OptionalArgumentsTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::IHaveOptionalArguments.this[Int32,String]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::IHaveOptionalArguments.this[global::System.Int32,global::System.String]" /> property.
 						/// </summary>
 						internal global::IHaveOptionalArgumentsCreateExpectations.Adornments.thisGetsAdornmentsD443FCB6 Gets()
 						{
@@ -473,7 +473,7 @@ public static class OptionalArgumentsTests
 						}
 						
 						/// <summary>
-						/// Sets a "set" expectation for the <see cref="global::IHaveOptionalArguments.this[Int32,String]" /> property.
+						/// Sets a "set" expectation for the <see cref="global::IHaveOptionalArguments.this[global::System.Int32,global::System.String]" /> property.
 						/// </summary>
 						internal global::IHaveOptionalArgumentsCreateExpectations.Adornments.thisSetsAdornments02547E49 Sets(global::Rocks.Argument<int> @value)
 						{
@@ -494,7 +494,7 @@ public static class OptionalArgumentsTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IHaveOptionalArguments.this[Int32,String]"/>.
+					/// Sets an expectation for <see cref="global::IHaveOptionalArguments.this[global::System.Int32,global::System.String]"/>.
 					/// </summary>
 					
 					internal global::IHaveOptionalArgumentsCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b] => new(this.parent, @a, @b);
@@ -874,7 +874,7 @@ public static class OptionalArgumentsTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IStuff.Perform(Int32,String,Int32)"/>.
+					/// Sets an expectation for <see cref="global::IStuff.Perform(global::System.Int32,global::System.String,global::System.Int32)"/>.
 					/// </summary>
 					internal global::IStuffCreateExpectations.Adornments.PerformAdornments02547E49 Perform(global::Rocks.Argument<int> @mustHave, global::Rocks.Argument<string> @data, global::Rocks.Argument<int> @value)
 					{
@@ -896,7 +896,7 @@ public static class OptionalArgumentsTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IStuff.Perform(Int32,String,Int32)"/>.
+					/// Sets an expectation for <see cref="global::IStuff.Perform(global::System.Int32,global::System.String,global::System.Int32)"/>.
 					/// </summary>
 					internal global::IStuffCreateExpectations.Adornments.PerformAdornments02547E49 Perform(global::Rocks.Argument<int> @mustHave, global::Rocks.Argument<string> @data, [global::System.Runtime.InteropServices.Optional, global::System.Runtime.InteropServices.DefaultParameterValue(3)] int @value) =>
 						this.Perform(@mustHave, @data, global::Rocks.Arg.Is(@value));
@@ -1146,7 +1146,7 @@ public static class OptionalArgumentsTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IStuff.Perform(Int32,Int32,String)"/>.
+					/// Sets an expectation for <see cref="global::IStuff.Perform(global::System.Int32,global::System.Int32,global::System.String)"/>.
 					/// </summary>
 					internal global::IStuffCreateExpectations.Adornments.PerformAdornments37C9D115 Perform(global::Rocks.Argument<int> @mustHave, global::Rocks.Argument<int> @value, global::Rocks.Argument<string> @data)
 					{
@@ -1168,7 +1168,7 @@ public static class OptionalArgumentsTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IStuff.Perform(Int32,Int32,String)"/>.
+					/// Sets an expectation for <see cref="global::IStuff.Perform(global::System.Int32,global::System.Int32,global::System.String)"/>.
 					/// </summary>
 					internal global::IStuffCreateExpectations.Adornments.PerformAdornments37C9D115 Perform(global::Rocks.Argument<int> @mustHave, [global::System.Runtime.InteropServices.Optional, global::System.Runtime.InteropServices.DefaultParameterValue(3)] int @value, global::Rocks.Argument<string> @data) =>
 						this.Perform(@mustHave, global::Rocks.Arg.Is(@value), @data);

@@ -11,14 +11,16 @@ internal static class AttributeDataExtensions
 	internal static string GetDescription(this AttributeData self, Compilation compilation)
 	{
 		static string GetTypedConstantValue(TypedConstant value, Compilation compilation) =>
-			value.Kind switch
-			{
-				TypedConstantKind.Primitive => GetValue(value.Value, compilation),
-				TypedConstantKind.Type => $"typeof({((INamedTypeSymbol)value.Value!).GetFullyQualifiedName(compilation)})",
-				TypedConstantKind.Array => $"new[] {{ {string.Join(", ", value.Values.Select(v => GetValue(v, compilation)))} }}",
-				TypedConstantKind.Enum => $"({value.Type!.GetFullyQualifiedName(compilation)})({value.Value})",
-				_ => value.Value?.ToString() ?? string.Empty
-			};
+			value.IsNull ? 
+				"null!" :
+				value.Kind switch
+				{
+					TypedConstantKind.Primitive => GetValue(value.Value, compilation),
+					TypedConstantKind.Type => $"typeof({((INamedTypeSymbol)value.Value!).GetFullyQualifiedName(compilation)})",
+					TypedConstantKind.Array => $"new[] {{ {string.Join(", ", value.Values.Select(v => GetValue(v, compilation)))} }}",
+					TypedConstantKind.Enum => $"({value.Type!.GetFullyQualifiedName(compilation)})({value.Value})",
+					_ => value.Value?.ToString() ?? string.Empty
+				};
 
 		static string GetValue(object? value, Compilation compilation) =>
 			value switch

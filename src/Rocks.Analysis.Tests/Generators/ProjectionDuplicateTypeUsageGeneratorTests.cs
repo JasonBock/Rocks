@@ -56,7 +56,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ISpecialTypes.Use(ArgIterator,ArgIterator,int*)"/>.
+					/// Sets an expectation for <see cref="global::ISpecialTypes.Use(global::System.ArgIterator,global::System.ArgIterator,int*)"/>.
 					/// </summary>
 					internal global::ISpecialTypesCreateExpectations.Adornments.UseAdornmentsA8B7E65D Use(global::Rocks.Projections.ArgIteratorArgument @value1, global::Rocks.Projections.ArgIteratorArgument @value2, global::Rocks.Projections.PointerArgument<int> @value3)
 					{
@@ -452,7 +452,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "get" expectation for the <see cref="global::ISpecialTypes.this[ArgIterator,ArgIterator,int*]" /> property.
+						/// Sets a "get" expectation for the <see cref="global::ISpecialTypes.this[global::System.ArgIterator,global::System.ArgIterator,int*]" /> property.
 						/// </summary>
 						internal global::ISpecialTypesCreateExpectations.Adornments.thisGetsAdornmentsA8B7E65D Gets()
 						{
@@ -471,7 +471,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 						}
 						
 						/// <summary>
-						/// Sets a "set" expectation for the <see cref="global::ISpecialTypes.this[ArgIterator,ArgIterator,int*]" /> property.
+						/// Sets a "set" expectation for the <see cref="global::ISpecialTypes.this[global::System.ArgIterator,global::System.ArgIterator,int*]" /> property.
 						/// </summary>
 						internal global::ISpecialTypesCreateExpectations.Adornments.thisSetsAdornmentsB3D2A43E Sets(global::Rocks.Projections.PointerArgument<int> @value)
 						{
@@ -493,7 +493,7 @@ public static class ProjectionDuplicateTypeUsageGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ISpecialTypes.this[ArgIterator,ArgIterator,int*]"/>.
+					/// Sets an expectation for <see cref="global::ISpecialTypes.this[global::System.ArgIterator,global::System.ArgIterator,int*]"/>.
 					/// </summary>
 					
 					internal global::ISpecialTypesCreateExpectations.SetupsExpectations.Indexer0Expectations this[global::Rocks.Projections.ArgIteratorArgument @value1, global::Rocks.Projections.ArgIteratorArgument @value2, global::Rocks.Projections.PointerArgument<int> @value3] => new(this.parent, @value1, @value2, @value3);

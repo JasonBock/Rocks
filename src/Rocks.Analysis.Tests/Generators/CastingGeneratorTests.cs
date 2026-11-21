@@ -64,7 +64,7 @@ public static class CastingGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.IHaveOpenGenerics{Q}.HasGenerics{T}(T,String,Q)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.IHaveOpenGenerics{Q}.HasGenerics{T}(T,global::System.String,Q)"/>.
 					/// </summary>
 					internal global::MockTests.IHaveOpenGenericsCreateExpectations<Q>.Adornments.HasGenericsAdornments72A60832<T> HasGenerics<T>(global::Rocks.Argument<T> @value, global::Rocks.Argument<string> @data, global::Rocks.Argument<Q> @information)
 					{
@@ -86,7 +86,7 @@ public static class CastingGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.IHaveOpenGenerics{Q}.HasGenericsWithReturn{T}(T,String,Q)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.IHaveOpenGenerics{Q}.HasGenericsWithReturn{T}(T,global::System.String,Q)"/>.
 					/// </summary>
 					internal global::MockTests.IHaveOpenGenericsCreateExpectations<Q>.Adornments.HasGenericsWithReturnAdornments72A60832<T> HasGenericsWithReturn<T>(global::Rocks.Argument<T> @value, global::Rocks.Argument<string> @data, global::Rocks.Argument<Q> @information)
 					{
@@ -108,7 +108,7 @@ public static class CastingGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.IHaveOpenGenerics{Q}.NoGenerics(Int32,String)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.IHaveOpenGenerics{Q}.NoGenerics(global::System.Int32,global::System.String)"/>.
 					/// </summary>
 					internal global::MockTests.IHaveOpenGenericsCreateExpectations<Q>.Adornments.NoGenericsAdornmentsD443FCB6 NoGenerics(global::Rocks.Argument<int> @value, global::Rocks.Argument<string> @data)
 					{
@@ -128,7 +128,7 @@ public static class CastingGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.IHaveOpenGenerics{Q}.NoGenericsWithReturn(Int32,String)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.IHaveOpenGenerics{Q}.NoGenericsWithReturn(global::System.Int32,global::System.String)"/>.
 					/// </summary>
 					internal global::MockTests.IHaveOpenGenericsCreateExpectations<Q>.Adornments.NoGenericsWithReturnAdornmentsD443FCB6 NoGenericsWithReturn(global::Rocks.Argument<int> @value, global::Rocks.Argument<string> @data)
 					{

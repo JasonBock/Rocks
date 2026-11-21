@@ -56,7 +56,7 @@ public static class ProjectionSpecialTypesGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ISpecialTypes.Use(ArgIterator)"/>.
+					/// Sets an expectation for <see cref="global::ISpecialTypes.Use(global::System.ArgIterator)"/>.
 					/// </summary>
 					internal global::ISpecialTypesCreateExpectations.Adornments.UseAdornmentsB90096B4 Use(global::Rocks.Projections.ArgIteratorArgument @value)
 					{
@@ -359,7 +359,7 @@ public static class ProjectionSpecialTypesGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ISpecialTypes.Use(RuntimeArgumentHandle)"/>.
+					/// Sets an expectation for <see cref="global::ISpecialTypes.Use(global::System.RuntimeArgumentHandle)"/>.
 					/// </summary>
 					internal global::ISpecialTypesCreateExpectations.Adornments.UseAdornments9319DCE5 Use(global::Rocks.Projections.RuntimeArgumentHandleArgument @value)
 					{
@@ -662,7 +662,7 @@ public static class ProjectionSpecialTypesGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ISpecialTypes.Use(TypedReference)"/>.
+					/// Sets an expectation for <see cref="global::ISpecialTypes.Use(global::System.TypedReference)"/>.
 					/// </summary>
 					internal global::ISpecialTypesCreateExpectations.Adornments.UseAdornmentsEC4279F3 Use(global::Rocks.Projections.TypedReferenceArgument @value)
 					{

@@ -17,6 +17,19 @@ internal sealed record ParameterModel
 
 		this.Type = modelContext.CreateTypeReference(parameter.Type);
 
+		// Crefs must match the member's declaration: the modifier is part of
+		// the signature, and a parameter of a constructed generic type (e.g. T
+		// in IBase<string>) must render as it is declared (T), not substituted.
+		var direction = parameter.RefKind switch
+		{
+			RefKind.Ref => "ref ",
+			RefKind.Out => "out ",
+			RefKind.In => "in ",
+			RefKind.RefReadOnlyParameter => "ref readonly ",
+			_ => string.Empty
+		};
+		this.XmlCommentName = $"{direction}{modelContext.CreateTypeReference(parameter.OriginalDefinition.Type).XmlCommentName}";
+
 		this.HasExplicitDefaultValue = parameter.HasExplicitDefaultValue;
 
 		if (this.HasExplicitDefaultValue)
@@ -85,4 +98,5 @@ internal sealed record ParameterModel
 	internal RefKind RefKind { get; }
 	internal bool RequiresNullableAnnotation { get; }
 	internal ITypeReferenceModel Type { get; }
+	internal string XmlCommentName { get; }
 }

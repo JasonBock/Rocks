@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [11.0.0-alpha.1] - Not Yet Released
+## [11.0.0] - Not Yet Released
 
 ### Changed
 
@@ -17,6 +17,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Required properties are now generated correctly in the mock type (issue [#424](https://github.com/JasonBock/Rocks/issues/424))
 - All members defined from an interface that do not require explicit implementation are now marked with `public` visibility in the generated mock type (issue [#426](https://github.com/JasonBock/Rocks/issues/426))
+- More XML comment fixes (issue [#437](https://github.com/JasonBock/Rocks/issues/437))
+
+## [10.3.4] - 2026-09-29
+
+### Fixed
+
+- Attributes with `null` values now works (issue [#438](https://github.com/JasonBock/Rocks/issues/438))
+
+## [10.3.3] - 2026-09-29
+
+### Fixed
+
+- Types with abstract members using nested types that aren't visible have a workaround (issue [#435](https://github.com/JasonBock/Rocks/issues/435))
+
+## [10.3.2] - 2026-09-19
+
+### Fixed
+
+- More XML comment bugs are fixes (issue [#431](https://github.com/JasonBock/Rocks/issues/431) and issue [#433](https://github.com/JasonBock/Rocks/issues/433))
+
+## [10.3.1] - 2026-09-11
+
+### Fixed
+
+- Generated XML commments now works with array types (issue [#429](https://github.com/JasonBock/Rocks/issues/429))
 
 ## [10.3.0] - 2026-06-03
 

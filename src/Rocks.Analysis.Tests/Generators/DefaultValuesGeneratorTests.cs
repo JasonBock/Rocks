@@ -67,7 +67,7 @@ public static class DefaultValuesGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.IRequest{T}.Send(Object,SomeStruct)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.IRequest{T}.Send(global::System.Object,global::MockTests.SomeStruct)"/>.
 					/// </summary>
 					internal global::MockTests.IRequestCreateExpectations<T>.Adornments.SendAdornments2FFDA008 Send(global::Rocks.Argument<object> @values, global::Rocks.Argument<global::MockTests.SomeStruct> @someStruct)
 					{
@@ -87,13 +87,13 @@ public static class DefaultValuesGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.IRequest{T}.Send(Object,SomeStruct)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.IRequest{T}.Send(global::System.Object,global::MockTests.SomeStruct)"/>.
 					/// </summary>
 					internal global::MockTests.IRequestCreateExpectations<T>.Adornments.SendAdornments2FFDA008 Send(global::Rocks.Argument<object> @values, global::MockTests.SomeStruct @someStruct = default) =>
 						this.Send(@values, global::Rocks.Arg.Is(@someStruct));
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.IRequest{T}.Send(T,SomeStruct)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.IRequest{T}.Send(T,global::MockTests.SomeStruct)"/>.
 					/// </summary>
 					internal global::MockTests.IRequestCreateExpectations<T>.Adornments.SendAdornments98EF6FDD Send(global::Rocks.Argument<T> @message, global::Rocks.Argument<global::MockTests.SomeStruct> @someStruct)
 					{
@@ -113,7 +113,7 @@ public static class DefaultValuesGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.IRequest{T}.Send(T,SomeStruct)"/>.
+					/// Sets an expectation for <see cref="global::MockTests.IRequest{T}.Send(T,global::MockTests.SomeStruct)"/>.
 					/// </summary>
 					internal global::MockTests.IRequestCreateExpectations<T>.Adornments.SendAdornments98EF6FDD Send(global::Rocks.Argument<T> @message, global::MockTests.SomeStruct @someStruct = default) =>
 						this.Send(@message, global::Rocks.Arg.Is(@someStruct));
@@ -683,7 +683,7 @@ public static class DefaultValuesGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IUseInfinity.Use(Double)"/>.
+					/// Sets an expectation for <see cref="global::IUseInfinity.Use(global::System.Double)"/>.
 					/// </summary>
 					internal global::IUseInfinityCreateExpectations.Adornments.UseAdornments129F8099 Use(global::Rocks.Argument<double> @value)
 					{
@@ -701,7 +701,7 @@ public static class DefaultValuesGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IUseInfinity.Use(Double)"/>.
+					/// Sets an expectation for <see cref="global::IUseInfinity.Use(global::System.Double)"/>.
 					/// </summary>
 					internal global::IUseInfinityCreateExpectations.Adornments.UseAdornments129F8099 Use(double @value = double.PositiveInfinity) =>
 						this.Use(global::Rocks.Arg.Is(@value));

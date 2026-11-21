@@ -63,7 +63,7 @@ public static class ConstraintsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::SubClass.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::SubClassCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -81,7 +81,7 @@ public static class ConstraintsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::SubClass.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::SubClassCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -92,7 +92,7 @@ public static class ConstraintsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::SubClass.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::SubClassCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -1141,7 +1141,7 @@ public static class ConstraintsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ClassMap{TClass}.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::ClassMapCreateExpectations<TClass>.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -1159,7 +1159,7 @@ public static class ConstraintsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ClassMap{TClass}.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::ClassMapCreateExpectations<TClass>.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -1170,7 +1170,7 @@ public static class ConstraintsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ClassMap{TClass}.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::ClassMapCreateExpectations<TClass>.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -1181,7 +1181,7 @@ public static class ConstraintsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ClassMap{TClass}.MapNullable{TMember}(IList,Boolean)"/>.
+					/// Sets an expectation for <see cref="global::ClassMap{TClass}.MapNullable{TMember}(global::System.Collections.Generic.IList{TMember},global::System.Boolean)"/>.
 					/// </summary>
 					internal global::ClassMapCreateExpectations<TClass>.Adornments.MapNullableAdornments5ED981D2<TMember> MapNullable<TMember>(global::Rocks.Argument<global::System.Collections.Generic.IList<TMember?>> @member, global::Rocks.Argument<bool> @useExistingMap)
 					{
@@ -1201,7 +1201,7 @@ public static class ConstraintsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::ClassMap{TClass}.MapNullable{TMember}(IList,Boolean)"/>.
+					/// Sets an expectation for <see cref="global::ClassMap{TClass}.MapNullable{TMember}(global::System.Collections.Generic.IList{TMember},global::System.Boolean)"/>.
 					/// </summary>
 					internal global::ClassMapCreateExpectations<TClass>.Adornments.MapNullableAdornments5ED981D2<TMember> MapNullable<TMember>(global::Rocks.Argument<global::System.Collections.Generic.IList<TMember?>> @member, bool @useExistingMap = true) =>
 						this.MapNullable<TMember>(@member, global::Rocks.Arg.Is(@useExistingMap));
@@ -1581,7 +1581,7 @@ public static class ConstraintsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::BaseStuff.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::BaseStuffCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -1599,7 +1599,7 @@ public static class ConstraintsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::BaseStuff.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::BaseStuffCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -1610,7 +1610,7 @@ public static class ConstraintsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::BaseStuff.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::BaseStuffCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -1621,7 +1621,7 @@ public static class ConstraintsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::BaseStuff.GetService{T}()"/>.
+					/// Sets an expectation for <see cref="global::BaseStuff.GetService{T}(global::System.Object[])"/>.
 					/// </summary>
 					internal global::BaseStuffCreateExpectations.Adornments.GetServiceAdornmentsD0100A16<T> GetService<T>(global::Rocks.Argument<object[]> @args) where T : class
 					{
@@ -2009,7 +2009,7 @@ public static class ConstraintsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::INeedDelegate.Foo{T}(Int32,Frame)"/>.
+					/// Sets an expectation for <see cref="global::INeedDelegate.Foo{T}(ref global::System.Int32,global::Frame{T})"/>.
 					/// </summary>
 					internal global::INeedDelegateCreateExpectations.Adornments.FooAdornmentsC7F2E118<T> Foo<T>(global::Rocks.Argument<int> @a, global::Rocks.Argument<global::Frame<T>> @frame) where T : unmanaged, global::IDot<T>
 					{
@@ -3107,7 +3107,7 @@ public static class ConstraintsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::TypeConstraints.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::TypeConstraintsCreateExpectations.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -3125,7 +3125,7 @@ public static class ConstraintsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::TypeConstraints.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::TypeConstraintsCreateExpectations.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -3136,7 +3136,7 @@ public static class ConstraintsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::TypeConstraints.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::TypeConstraintsCreateExpectations.Adornments.ToStringAdornments2D2816FE ToString()
 					{
@@ -4059,7 +4059,7 @@ public static class ConstraintsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::IUnmanagedValue.Use{TValue}(Value)"/>.
+					/// Sets an expectation for <see cref="global::IUnmanagedValue.Use{TValue}(global::Value{TValue})"/>.
 					/// </summary>
 					internal global::IUnmanagedValueCreateExpectations.Adornments.UseAdornmentsEB9134B7<TValue> Use<TValue>(global::Rocks.Argument<global::Value<TValue>> @value) where TValue : unmanaged, global::IValue<TValue>
 					{
@@ -4326,7 +4326,7 @@ public static class ConstraintsGeneratorTests
 						this.parent = parent;
 				
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Thing{T}.Equals(Object)"/>.
+					/// Sets an expectation for <see cref="object.Equals(global::System.Object)"/>.
 					/// </summary>
 					internal global::MockTests.ThingCreateExpectations<T>.Adornments.EqualsAdornmentsE60CFEEA Equals(global::Rocks.Argument<object?> @obj)
 					{
@@ -4344,7 +4344,7 @@ public static class ConstraintsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Thing{T}.GetHashCode()"/>.
+					/// Sets an expectation for <see cref="object.GetHashCode()"/>.
 					/// </summary>
 					internal new global::MockTests.ThingCreateExpectations<T>.Adornments.GetHashCodeAdornments2D2816FE GetHashCode()
 					{
@@ -4355,7 +4355,7 @@ public static class ConstraintsGeneratorTests
 					}
 					
 					/// <summary>
-					/// Sets an expectation for <see cref="global::MockTests.Thing{T}.ToString()"/>.
+					/// Sets an expectation for <see cref="object.ToString()"/>.
 					/// </summary>
 					internal new global::MockTests.ThingCreateExpectations<T>.Adornments.ToStringAdornments2D2816FE ToString()
 					{
