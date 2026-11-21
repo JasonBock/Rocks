@@ -117,11 +117,11 @@ public class HandlerLists
 		return handlers!.Count;
 	}
 
-	public static IEnumerable<object[]> Sizes()
+	public static IEnumerable<int> Sizes()
 	{
-		yield return new object[] { 1 };
-		yield return new object[] { 2 };
-		yield return new object[] { 5 };
-		yield return new object[] { 10 };
+		yield return 1;
+		yield return 2;
+		yield return 5;
+		yield return 10;
 	}
 }

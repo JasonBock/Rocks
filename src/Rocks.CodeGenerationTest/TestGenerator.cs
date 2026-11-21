@@ -27,7 +27,7 @@ internal static class TestGenerator
 	* Code access security (SYSLIB0003)
 	* EF "future" warnings (EF9100)
 	* Aspire evaluation warnings (ASPIRE*)
-	* StackExchange.Redis evaluation warnings (SER001, SER003, SER005, SER006, SER007, SER008, SER009)
+	* StackExchange.Redis evaluation warnings (SER001, SER003, SER005, SER006, SER007, SER008, SER009, SER012)
 	* Azure evaluation warnings (SCME0002)
 	* OpenTelemetry (OTEL1001)
 	* CodeAnalysis experiments (RSEXPERIMENTAL006)
@@ -63,6 +63,7 @@ internal static class TestGenerator
 		{ "ASPIRECONTAINERRUNTIME001", ReportDiagnostic.Suppress },
 		{ "ASPIREDOCKERFILEBUILDER001", ReportDiagnostic.Suppress },
 		{ "ASPIREDOTNETTOOL", ReportDiagnostic.Suppress },
+		{ "ASPIREEXTENSION001", ReportDiagnostic.Suppress },
 		{ "ASPIREFILESYSTEM001", ReportDiagnostic.Suppress },
 		{ "ASPIREINTERACTION001", ReportDiagnostic.Suppress },
 		{ "ASPIREPROBES001", ReportDiagnostic.Suppress },
@@ -70,9 +71,12 @@ internal static class TestGenerator
 		{ "ASPIREPIPELINES002", ReportDiagnostic.Suppress },
 		{ "ASPIREPIPELINES003", ReportDiagnostic.Suppress },
 		{ "ASPIREPIPELINES004", ReportDiagnostic.Suppress },
+		{ "ASPIREPIPELINES005", ReportDiagnostic.Suppress },
 		{ "ASPIREPROCESSCOMMAND001", ReportDiagnostic.Suppress },
 		{ "ASPIREPUBLISHERS001", ReportDiagnostic.Suppress },
+		{ "ASPIRETERMINAL001", ReportDiagnostic.Suppress },
 		{ "ASPIREUSERSECRETS001", ReportDiagnostic.Suppress },
+		{ "ASPIREWATCH001", ReportDiagnostic.Suppress },
 		{ "SCME0002", ReportDiagnostic.Suppress },
 		{ "SER001", ReportDiagnostic.Suppress },
 		{ "SER003", ReportDiagnostic.Suppress },
@@ -81,6 +85,7 @@ internal static class TestGenerator
 		{ "SER007", ReportDiagnostic.Suppress },
 		{ "SER008", ReportDiagnostic.Suppress },
 		{ "SER009", ReportDiagnostic.Suppress },
+		{ "SER012", ReportDiagnostic.Suppress },
 		{ "OTEL1001", ReportDiagnostic.Suppress },
 		{ "RSEXPERIMENTAL006", ReportDiagnostic.Suppress },
 		{ "AZID0004", ReportDiagnostic.Suppress },
