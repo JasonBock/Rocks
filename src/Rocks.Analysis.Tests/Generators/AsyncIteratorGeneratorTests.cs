@@ -204,12 +204,17 @@ public static class AsyncIteratorGeneratorTests
 								}
 							}
 							
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {typeof(Mock).GetMemberDescription(0)}
-									obj: {@obj.FormatValue()}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
+										Parameters:
+											obj: {@obj.FormatValue()}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 						else
 						{
@@ -270,12 +275,17 @@ public static class AsyncIteratorGeneratorTests
 								}
 							}
 							
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {typeof(Mock).GetMemberDescription(3)}
-									cancellationToken: {@cancellationToken.FormatValue()}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers match for {typeof(Mock).GetMemberDescription(3)}
+										Parameters:
+											cancellationToken: {@cancellationToken.FormatValue()}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 						else
 						{

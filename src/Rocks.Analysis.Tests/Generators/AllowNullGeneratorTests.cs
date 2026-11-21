@@ -166,11 +166,15 @@ public static class AllowNullGeneratorTests
 								return @result!;
 							}
 							
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {typeof(Mock).GetMemberDescription(0)}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 						[global::Rocks.MemberIdentifier(1)]
 						set
@@ -192,22 +196,32 @@ public static class AllowNullGeneratorTests
 						
 								if (!@foundMatch)
 								{
-									this.Expectations.WasExceptionThrown = true;
-									throw new global::Rocks.Exceptions.ExpectationException(
-										$"""
-										No handlers match for {typeof(Mock).GetMemberDescription(1)}
-											value: {@value.FormatValue()}
-										""");
+									{
+										this.Expectations.WasExceptionThrown = true;
+										var @expectationMessage =
+											$"""
+											No handlers match for {typeof(Mock).GetMemberDescription(1)}
+												Parameters:
+													value: {@value.FormatValue()}
+											""";
+										this.Expectations.ExpectationFailures.Add(@expectationMessage);
+										throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+									}			
 								}
 							}
 							else
 							{
-								this.Expectations.WasExceptionThrown = true;
-								throw new global::Rocks.Exceptions.ExpectationException(
-									$"""
-									No handlers were found for {typeof(Mock).GetMemberDescription(1)}
-										value: {@value.FormatValue()}
-									""");
+								{
+									this.Expectations.WasExceptionThrown = true;
+									var @expectationMessage =
+										$"""
+										No handlers were found for {typeof(Mock).GetMemberDescription(1)}
+											Parameters:
+												value: {@value.FormatValue()}
+										""";
+									this.Expectations.ExpectationFailures.Add(@expectationMessage);
+									throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+								}			
 							}
 						}
 					}
@@ -553,12 +567,17 @@ public static class AllowNullGeneratorTests
 								}
 							}
 							
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {typeof(Mock).GetMemberDescription(0)}
-									obj: {@obj.FormatValue()}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
+										Parameters:
+											obj: {@obj.FormatValue()}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 						else
 						{
@@ -642,12 +661,17 @@ public static class AllowNullGeneratorTests
 						
 								if (!@foundMatch)
 								{
-									this.Expectations.WasExceptionThrown = true;
-									throw new global::Rocks.Exceptions.ExpectationException(
-										$"""
-										No handlers match for {typeof(Mock).GetMemberDescription(4)}
-											value: {@value.FormatValue()}
-										""");
+									{
+										this.Expectations.WasExceptionThrown = true;
+										var @expectationMessage =
+											$"""
+											No handlers match for {typeof(Mock).GetMemberDescription(4)}
+												Parameters:
+													value: {@value.FormatValue()}
+											""";
+										this.Expectations.ExpectationFailures.Add(@expectationMessage);
+										throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+									}			
 								}
 							}
 							else

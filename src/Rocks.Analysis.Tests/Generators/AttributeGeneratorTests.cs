@@ -135,11 +135,15 @@ public static class AttributeGeneratorTests
 						}
 						else
 						{
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers were found for {typeof(Mock).GetMemberDescription(0)}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 					}
 					
@@ -448,12 +452,17 @@ public static class AttributeGeneratorTests
 								}
 							}
 							
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {typeof(Mock).GetMemberDescription(0)}
-									obj: {@obj.FormatValue()}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
+										Parameters:
+											obj: {@obj.FormatValue()}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 						else
 						{
@@ -800,11 +809,15 @@ public static class AttributeGeneratorTests
 								return @result!;
 							}
 							
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {typeof(Mock).GetMemberDescription(0)}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 					}
 					
@@ -1108,12 +1121,17 @@ public static class AttributeGeneratorTests
 								}
 							}
 							
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {typeof(Mock).GetMemberDescription(0)}
-									obj: {@obj.FormatValue()}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
+										Parameters:
+											obj: {@obj.FormatValue()}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 						else
 						{
@@ -1179,13 +1197,18 @@ public static class AttributeGeneratorTests
 							
 							if (!@foundMatch)
 							{
-								this.Expectations.WasExceptionThrown = true;
-								throw new global::Rocks.Exceptions.ExpectationException(
-									$"""
-									No handlers match for {typeof(Mock).GetMemberDescription(3)}
-										newValue: {@newValue.FormatValue()}
-										propertyName: {@propertyName.FormatValue()}
-									""");
+								{
+									this.Expectations.WasExceptionThrown = true;
+									var @expectationMessage =
+										$"""
+										No handlers match for {typeof(Mock).GetMemberDescription(3)}
+											Parameters:
+												newValue: {@newValue.FormatValue()}
+												propertyName: {@propertyName.FormatValue()}
+										""";
+									this.Expectations.ExpectationFailures.Add(@expectationMessage);
+									throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+								}			
 							}
 						}
 						else
@@ -1507,11 +1530,15 @@ public static class AttributeGeneratorTests
 								return @result!;
 							}
 							
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {typeof(Mock).GetMemberDescription(0)}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 					}
 					public string Error
@@ -1529,11 +1556,15 @@ public static class AttributeGeneratorTests
 								return @result!;
 							}
 							
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {typeof(Mock).GetMemberDescription(1)}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers match for {typeof(Mock).GetMemberDescription(1)}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 					}
 					
@@ -1790,11 +1821,15 @@ public static class AttributeGeneratorTests
 								return @result!;
 							}
 							
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {typeof(Mock).GetMemberDescription(0)}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 					}
 					
@@ -2077,12 +2112,17 @@ public static class AttributeGeneratorTests
 								}
 							}
 							
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {typeof(Mock).GetMemberDescription(0)}
-									obj: {@obj.FormatValue()}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
+										Parameters:
+											obj: {@obj.FormatValue()}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 						else
 						{
@@ -2640,12 +2680,17 @@ public static class AttributeGeneratorTests
 								}
 							}
 							
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {typeof(Mock).GetMemberDescription(0)}
-									obj: {@obj.FormatValue()}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
+										Parameters:
+											obj: {@obj.FormatValue()}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 						else
 						{
@@ -2707,12 +2752,17 @@ public static class AttributeGeneratorTests
 								}
 							}
 							
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {typeof(Mock).GetMemberDescription(3)}
-									node: {@node.FormatValue()}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers match for {typeof(Mock).GetMemberDescription(3)}
+										Parameters:
+											node: {@node.FormatValue()}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 						else
 						{
@@ -2737,12 +2787,17 @@ public static class AttributeGeneratorTests
 								}
 							}
 							
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {typeof(Mock).GetMemberDescription(4)}
-									node: {@node.FormatValue()}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers match for {typeof(Mock).GetMemberDescription(4)}
+										Parameters:
+											node: {@node.FormatValue()}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 						else
 						{
@@ -2790,12 +2845,17 @@ public static class AttributeGeneratorTests
 						
 								if (!@foundMatch)
 								{
-									this.Expectations.WasExceptionThrown = true;
-									throw new global::Rocks.Exceptions.ExpectationException(
-										$"""
-										No handlers match for {typeof(Mock).GetMemberDescription(6)}
-											value: {@value.FormatValue()}
-										""");
+									{
+										this.Expectations.WasExceptionThrown = true;
+										var @expectationMessage =
+											$"""
+											No handlers match for {typeof(Mock).GetMemberDescription(6)}
+												Parameters:
+													value: {@value.FormatValue()}
+											""";
+										this.Expectations.ExpectationFailures.Add(@expectationMessage);
+										throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+									}			
 								}
 							}
 							else
@@ -2825,12 +2885,17 @@ public static class AttributeGeneratorTests
 									}
 								}
 								
-								this.Expectations.WasExceptionThrown = true;
-								throw new global::Rocks.Exceptions.ExpectationException(
-									$"""
-									No handlers match for {typeof(Mock).GetMemberDescription(7)}
-										node: {@node.FormatValue()}
-									""");
+								{
+									this.Expectations.WasExceptionThrown = true;
+									var @expectationMessage =
+										$"""
+										No handlers match for {typeof(Mock).GetMemberDescription(7)}
+											Parameters:
+												node: {@node.FormatValue()}
+										""";
+									this.Expectations.ExpectationFailures.Add(@expectationMessage);
+									throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+								}			
 							}
 							else
 							{
@@ -2854,13 +2919,18 @@ public static class AttributeGeneratorTests
 									}
 								}
 								
-								this.Expectations.WasExceptionThrown = true;
-								throw new global::Rocks.Exceptions.ExpectationException(
-									$"""
-									No handlers match for {typeof(Mock).GetMemberDescription(8)}
-										node: {@node.FormatValue()}
-										value: {@value.FormatValue()}
-									""");
+								{
+									this.Expectations.WasExceptionThrown = true;
+									var @expectationMessage =
+										$"""
+										No handlers match for {typeof(Mock).GetMemberDescription(8)}
+											Parameters:
+												node: {@node.FormatValue()}
+												value: {@value.FormatValue()}
+										""";
+									this.Expectations.ExpectationFailures.Add(@expectationMessage);
+									throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+								}			
 							}
 							else
 							{
@@ -3242,11 +3312,15 @@ public static class AttributeGeneratorTests
 								return @result!;
 							}
 							
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {typeof(Mock).GetMemberDescription(0)}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 					}
 					
@@ -3531,12 +3605,17 @@ public static class AttributeGeneratorTests
 								}
 							}
 							
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {typeof(Mock).GetMemberDescription(0)}
-									obj: {@obj.FormatValue()}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
+										Parameters:
+											obj: {@obj.FormatValue()}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 						else
 						{
@@ -3874,11 +3953,15 @@ public static class AttributeGeneratorTests
 						}
 						else
 						{
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers were found for {typeof(Mock).GetMemberDescription(0)}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 					}
 					
@@ -4130,22 +4213,32 @@ public static class AttributeGeneratorTests
 							
 							if (!@foundMatch)
 							{
-								this.Expectations.WasExceptionThrown = true;
-								throw new global::Rocks.Exceptions.ExpectationException(
-									$"""
-									No handlers match for {typeof(Mock).GetMemberDescription(0)}
-										data: {@data.FormatValue()}
-									""");
+								{
+									this.Expectations.WasExceptionThrown = true;
+									var @expectationMessage =
+										$"""
+										No handlers match for {typeof(Mock).GetMemberDescription(0)}
+											Parameters:
+												data: {@data.FormatValue()}
+										""";
+									this.Expectations.ExpectationFailures.Add(@expectationMessage);
+									throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+								}			
 							}
 						}
 						else
 						{
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
-									data: {@data.FormatValue()}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers were found for {typeof(Mock).GetMemberDescription(0)}
+										Parameters:
+											data: {@data.FormatValue()}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 					}
 					
