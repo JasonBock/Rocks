@@ -131,7 +131,6 @@
 		<PackageReference Include="Testcontainers" />
 		<PackageReference Include="Topshelf" />
 		<PackageReference Include="Twilio" />
-		<PackageReference Include="Verify" />
 		<PackageReference Include="Wasmtime" />
 		<PackageReference Include="WireMock.Net" />
 		<PackageReference Include="Wisp" />
