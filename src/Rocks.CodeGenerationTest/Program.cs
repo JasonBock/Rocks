@@ -2,7 +2,6 @@
 //#define INCLUDE_FAILING
 
 using DotNet.Testcontainers.Containers;
-using Grpc.Core;
 using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 using R3;
