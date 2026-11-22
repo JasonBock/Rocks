@@ -64,6 +64,7 @@ internal static class UsesDefaultInterfaceMemberTests
 	// In this test, if I didn't provide a return value for DefaultWork(),
 	// the assertion fails.
 	[Test]
+	[Ignore("Only used to illustrate mocking framework failure")]
 	public static void UseNSubstitute()
 	{
 		var mock = Substitute.For<IHaveDefaultInterfaceMember>();
@@ -75,6 +76,7 @@ internal static class UsesDefaultInterfaceMemberTests
 	}
 
 	[Test]
+	[Ignore("Only used to illustrate mocking framework failure")]
 	public static void UseNSubstituteOverridingDIM()
 	{
 		var mock = Substitute.For<IHaveDefaultInterfaceMember>();
