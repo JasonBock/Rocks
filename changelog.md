@@ -5,11 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [11.0.0] - Not Yet Released
+## [11.0.0] - 2026-11-22
 
 ### Changed
 
-- Updated to .NET 11 Preview 7 (issue [#425](https://github.com/JasonBock/Rocks/issues/425))
+- Updated to .NET 11 (issue [#425](https://github.com/JasonBock/Rocks/issues/425))
 - Small micro-optimization in performance during code generation (issue [#427](https://github.com/JasonBock/Rocks/issues/427))
 - Improvements made to `ExpectationException` message, and all throw `ExpectationException`s are now tracked (issue [#428](https://github.com/JasonBock/Rocks/issues/428))
 
