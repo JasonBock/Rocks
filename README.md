@@ -2,6 +2,8 @@
 
 [![NuGet](https://img.shields.io/nuget/v/Rocks.svg)](https://www.nuget.org/packages/Rocks)
 
+[![CI](https://github.com/JasonBock/Rocks/actions/workflows/ci.yml/badge.svg)](https://github.com/JasonBock/Rocks/actions/workflows/ci.yml)
+
 [![Bugs](https://img.shields.io/github/issues/JasonBock/Rocks/bug)](https://github.com/JasonBock/Rocks/issues?q=is%3Aissue%20state%3Aopen%20label%3Abug)
 
 [![Issues](https://img.shields.io/github/issues/JasonBock/Rocks)](https://github.com/JasonBock/Rocks/issues)

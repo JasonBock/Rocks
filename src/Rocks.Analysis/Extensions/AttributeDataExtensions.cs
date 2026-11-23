@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using System.Collections.Immutable;
 using System.Diagnostics;
+using System.Globalization;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
@@ -18,8 +19,10 @@ internal static class AttributeDataExtensions
 					TypedConstantKind.Primitive => GetValue(value.Value, compilation),
 					TypedConstantKind.Type => $"typeof({((INamedTypeSymbol)value.Value!).GetFullyQualifiedName(compilation)})",
 					TypedConstantKind.Array => $"new[] {{ {string.Join(", ", value.Values.Select(v => GetValue(v, compilation)))} }}",
-					TypedConstantKind.Enum => $"({value.Type!.GetFullyQualifiedName(compilation)})({value.Value})",
-					_ => value.Value?.ToString() ?? string.Empty
+					TypedConstantKind.Enum => $"({value.Type!.GetFullyQualifiedName(compilation)})({Convert.ToString(value.Value, CultureInfo.InvariantCulture)})",
+					_ => value.Value is IFormattable formattable ?
+						formattable.ToString(null, CultureInfo.InvariantCulture) :
+						value.Value?.ToString() ?? string.Empty
 				};
 
 		static string GetValue(object? value, Compilation compilation) =>
@@ -33,7 +36,9 @@ internal static class AttributeDataExtensions
 						.Replace("\r", "\\r").Replace("\t", "\\t").Replace("\v", "\\v")}"
 					""",
 				bool b => $"{(b ? "true" : "false")}",
-				_ => value?.ToString() ?? string.Empty
+				_ => value is IFormattable valueFormattable ?
+						valueFormattable.ToString(null, CultureInfo.InvariantCulture) :
+						value?.ToString() ?? string.Empty
 			};
 
 		var name = self.AttributeClass!.GetFullyQualifiedName(compilation);

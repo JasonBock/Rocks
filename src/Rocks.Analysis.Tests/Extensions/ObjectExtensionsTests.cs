@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
 using Rocks.Analysis.Extensions;
+using System.Globalization;
 
 namespace Rocks.Analysis.Tests.Extensions;
 
@@ -74,6 +75,18 @@ public static class ObjectExtensionsTests
 		Assert.That(parameter.ExplicitDefaultValue.GetDefaultValue(parameter.Type, compilation), Is.EqualTo(expectedResult));
 	}
 
+	[TestCase("public class Test { public void Foo(double value = 22.473) { } }", "22.473")]
+	[TestCase("public class Test { public void Foo(float value = (float)22.473) { } }", "22.473")]
+	[TestCase("public class Test { public void Foo(decimal value = 22.5m) { } }", "22.5")]
+	[TestCase("public class Test { public void Foo(int value = 22) { } }", "22")]
+	public static async Task GetDefaultValueWithCommaDecimalSeparatorAsync(string code, string expectedResult)
+	{
+		using var _ = new CommaDecimalSeparatorScope();
+
+		var (parameter, compilation) = await GetParameterSymbolAsync(code);
+		Assert.That(parameter.ExplicitDefaultValue.GetDefaultValue(parameter.Type, compilation), Is.EqualTo(expectedResult));
+	}
+
 	private static async Task<(IParameterSymbol, Compilation)> GetParameterSymbolAsync(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
@@ -84,5 +97,26 @@ public static class ObjectExtensionsTests
 		var methodSyntax = (await syntaxTree.GetRootAsync()).DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single();
 		return (model.GetDeclaredSymbol(methodSyntax)!.Parameters[0], compilation);
+	}
+
+	private sealed class CommaDecimalSeparatorScope
+		: IDisposable
+	{
+		private readonly CultureInfo currentCulture = CultureInfo.CurrentCulture;
+		private readonly CultureInfo currentUICulture = CultureInfo.CurrentUICulture;
+
+		internal CommaDecimalSeparatorScope()
+		{
+			var commaCulture = (CultureInfo)CultureInfo.InvariantCulture.Clone();
+			commaCulture.NumberFormat.NumberDecimalSeparator = ",";
+			CultureInfo.CurrentCulture = commaCulture;
+			CultureInfo.CurrentUICulture = commaCulture;
+		}
+
+		public void Dispose()
+		{
+			CultureInfo.CurrentCulture = this.currentCulture;
+			CultureInfo.CurrentUICulture = this.currentUICulture;
+		}
 	}
 }

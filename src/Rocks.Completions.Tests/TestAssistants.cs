@@ -33,7 +33,7 @@ internal static class TestAssistants
 		if (addBuildProperty)
 		{
 			test.TestState.AnalyzerConfigFiles.Add(
-				(@"c:\users\example\src\SomeProject",
+				(Path.GetFullPath("SomeProject"),
 				"""
 				is_global = true
 
