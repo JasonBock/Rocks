@@ -137,11 +137,15 @@ public static class ShimBuilderGeneratorTests
 						}
 						else
 						{
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers were found for {typeof(Mock).GetMemberDescription(0)}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers were found for {typeof(Mock).GetMemberDescription(0)}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 					}
 					
@@ -525,11 +529,15 @@ public static class ShimBuilderGeneratorTests
 								return @result!;
 							}
 							
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {typeof(Mock).GetMemberDescription(1)}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers match for {typeof(Mock).GetMemberDescription(1)}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 					}
 					global::IMutableTypeBase? global::IMutableTypeBase.BaseType
@@ -547,11 +555,15 @@ public static class ShimBuilderGeneratorTests
 								return @result!;
 							}
 							
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {typeof(Mock).GetMemberDescription(2)}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers match for {typeof(Mock).GetMemberDescription(2)}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 						[global::Rocks.MemberIdentifier(3)]
 						set
@@ -573,22 +585,32 @@ public static class ShimBuilderGeneratorTests
 						
 								if (!@foundMatch)
 								{
-									this.Expectations.WasExceptionThrown = true;
-									throw new global::Rocks.Exceptions.ExpectationException(
-										$"""
-										No handlers match for {typeof(Mock).GetMemberDescription(3)}
-											value: {@value.FormatValue()}
-										""");
+									{
+										this.Expectations.WasExceptionThrown = true;
+										var @expectationMessage =
+											$"""
+											No handlers match for {typeof(Mock).GetMemberDescription(3)}
+												Parameters:
+													value: {@value.FormatValue()}
+											""";
+										this.Expectations.ExpectationFailures.Add(@expectationMessage);
+										throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+									}			
 								}
 							}
 							else
 							{
-								this.Expectations.WasExceptionThrown = true;
-								throw new global::Rocks.Exceptions.ExpectationException(
-									$"""
-									No handlers were found for {typeof(Mock).GetMemberDescription(3)}
-										value: {@value.FormatValue()}
-									""");
+								{
+									this.Expectations.WasExceptionThrown = true;
+									var @expectationMessage =
+										$"""
+										No handlers were found for {typeof(Mock).GetMemberDescription(3)}
+											Parameters:
+												value: {@value.FormatValue()}
+										""";
+									this.Expectations.ExpectationFailures.Add(@expectationMessage);
+									throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+								}			
 							}
 						}
 					}
@@ -949,12 +971,17 @@ public static class ShimBuilderGeneratorTests
 							
 							if (!@foundMatch)
 							{
-								this.Expectations.WasExceptionThrown = true;
-								throw new global::Rocks.Exceptions.ExpectationException(
-									$"""
-									No handlers match for {typeof(Mock).GetMemberDescription(0)}
-										count: {@count.FormatValue()}
-									""");
+								{
+									this.Expectations.WasExceptionThrown = true;
+									var @expectationMessage =
+										$"""
+										No handlers match for {typeof(Mock).GetMemberDescription(0)}
+											Parameters:
+												count: {@count.FormatValue()}
+										""";
+									this.Expectations.ExpectationFailures.Add(@expectationMessage);
+									throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+								}			
 							}
 						}
 						else
@@ -978,11 +1005,15 @@ public static class ShimBuilderGeneratorTests
 								return @result!;
 							}
 							
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {typeof(Mock).GetMemberDescription(1)}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers match for {typeof(Mock).GetMemberDescription(1)}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 						[global::Rocks.MemberIdentifier(2)]
 						init
@@ -1004,22 +1035,32 @@ public static class ShimBuilderGeneratorTests
 						
 								if (!@foundMatch)
 								{
-									this.Expectations.WasExceptionThrown = true;
-									throw new global::Rocks.Exceptions.ExpectationException(
-										$"""
-										No handlers match for {typeof(Mock).GetMemberDescription(2)}
-											value: {@value.FormatValue()}
-										""");
+									{
+										this.Expectations.WasExceptionThrown = true;
+										var @expectationMessage =
+											$"""
+											No handlers match for {typeof(Mock).GetMemberDescription(2)}
+												Parameters:
+													value: {@value.FormatValue()}
+											""";
+										this.Expectations.ExpectationFailures.Add(@expectationMessage);
+										throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+									}			
 								}
 							}
 							else
 							{
-								this.Expectations.WasExceptionThrown = true;
-								throw new global::Rocks.Exceptions.ExpectationException(
-									$"""
-									No handlers were found for {typeof(Mock).GetMemberDescription(2)}
-										value: {@value.FormatValue()}
-									""");
+								{
+									this.Expectations.WasExceptionThrown = true;
+									var @expectationMessage =
+										$"""
+										No handlers were found for {typeof(Mock).GetMemberDescription(2)}
+											Parameters:
+												value: {@value.FormatValue()}
+										""";
+									this.Expectations.ExpectationFailures.Add(@expectationMessage);
+									throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+								}			
 							}
 						}
 					}
@@ -1604,12 +1645,17 @@ public static class ShimBuilderGeneratorTests
 								}
 							}
 							
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {typeof(Mock).GetMemberDescription(0)}
-									message: {@message.FormatValue()}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers match for {typeof(Mock).GetMemberDescription(0)}
+										Parameters:
+											message: {@message.FormatValue()}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 						else
 						{
@@ -2026,11 +2072,15 @@ public static class ShimBuilderGeneratorTests
 								return @result!;
 							}
 							
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {typeof(Mock).GetMemberDescription(2)}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers match for {typeof(Mock).GetMemberDescription(2)}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 					}
 					global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty> global::IReadOnlyKey.Properties
@@ -2048,11 +2098,15 @@ public static class ShimBuilderGeneratorTests
 								return @result!;
 							}
 							
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {typeof(Mock).GetMemberDescription(3)}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers match for {typeof(Mock).GetMemberDescription(3)}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 					}
 					
@@ -2550,11 +2604,15 @@ public static class ShimBuilderGeneratorTests
 						}
 						else
 						{
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers were found for {typeof(Mock).GetMemberDescription(1)}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers were found for {typeof(Mock).GetMemberDescription(1)}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 					}
 					
@@ -2593,11 +2651,15 @@ public static class ShimBuilderGeneratorTests
 								return @result!;
 							}
 							
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers match for {typeof(Mock).GetMemberDescription(4)}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers match for {typeof(Mock).GetMemberDescription(4)}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 					}
 					
@@ -2621,13 +2683,18 @@ public static class ShimBuilderGeneratorTests
 									}
 								}
 								
-								this.Expectations.WasExceptionThrown = true;
-								throw new global::Rocks.Exceptions.ExpectationException(
-									$"""
-									No handlers match for {typeof(Mock).GetMemberDescription(3)}
-										dimKey: {@dimKey.FormatValue()}
-										dimValue: {@dimValue.FormatValue()}
-									""");
+								{
+									this.Expectations.WasExceptionThrown = true;
+									var @expectationMessage =
+										$"""
+										No handlers match for {typeof(Mock).GetMemberDescription(3)}
+											Parameters:
+												dimKey: {@dimKey.FormatValue()}
+												dimValue: {@dimValue.FormatValue()}
+										""";
+									this.Expectations.ExpectationFailures.Add(@expectationMessage);
+									throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+								}			
 							}
 							else
 							{
@@ -2654,20 +2721,30 @@ public static class ShimBuilderGeneratorTests
 									}
 								}
 								
-								this.Expectations.WasExceptionThrown = true;
-								throw new global::Rocks.Exceptions.ExpectationException(
-									$"""
-									No handlers match for {typeof(Mock).GetMemberDescription(5)}
-										notDimKey: {@notDimKey.FormatValue()}
-									""");
+								{
+									this.Expectations.WasExceptionThrown = true;
+									var @expectationMessage =
+										$"""
+										No handlers match for {typeof(Mock).GetMemberDescription(5)}
+											Parameters:
+												notDimKey: {@notDimKey.FormatValue()}
+										""";
+									this.Expectations.ExpectationFailures.Add(@expectationMessage);
+									throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+								}			
 							}
 							
-							this.Expectations.WasExceptionThrown = true;
-							throw new global::Rocks.Exceptions.ExpectationException(
-								$"""
-								No handlers were found for {typeof(Mock).GetMemberDescription(5)}
-									notDimKey: {@notDimKey.FormatValue()}
-								""");
+							{
+								this.Expectations.WasExceptionThrown = true;
+								var @expectationMessage =
+									$"""
+									No handlers were found for {typeof(Mock).GetMemberDescription(5)}
+										Parameters:
+											notDimKey: {@notDimKey.FormatValue()}
+									""";
+								this.Expectations.ExpectationFailures.Add(@expectationMessage);
+								throw new global::Rocks.Exceptions.ExpectationException(@expectationMessage);		
+							}			
 						}
 					}
 					
